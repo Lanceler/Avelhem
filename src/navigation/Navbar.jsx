@@ -3,7 +3,7 @@ import "./Navbar.css";
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { useLogOut } from "../hooks/useLogout"; // fix capitalization if needed; for some reason, it insists on lower o in 'out', when it should be upper
+import { useLogOut } from "../hooks/useLogOut";
 
 import { useAuthContext } from "../hooks/useAuthContext";
 

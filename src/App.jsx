@@ -11,7 +11,7 @@ import { useState } from "react";
 
 import "./App.css";
 
-import Board from "./components/board";
+import Board from "./components/Board";
 import Piece from "./components/Piece";
 
 import Navbar from "./navigation/navbar";
