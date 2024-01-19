@@ -1,17 +1,28 @@
 import React from "react";
 import "./SkillCard.css";
-import background from "./IgnitionPropulsion.png";
+import ignitionPropulsionBG from "../../assets/skillcards/IgnitionPropulsion.png";
 
-const CPSkillCard = (props) => {
+let image = "";
+  const CPSkillCard = (props) => {
+  switch (props.cardInfo.Name) {
+    case "Ignition Propulsion":
+      image = ignitionPropulsionBG
+      break;
+    default:
+      image = ""
+      break;
+  }
+
+
   return (
     <div
       className={
         props.cardInfo.Stock ? "skill-card" : "skill-card out-of-stock"
       }
       onClick={() => props.addToSkillRepertoire(props.cardInfo.CardId)}
-      // style={{
-      //   backgroundImage: `url(${require("./IgnitionPropulsion.png")})`,
-      // }}
+      style={{
+        backgroundImage: `url(${(image)})`,
+      }}
     >
       <div> {props.cardInfo.Name}</div>
 
