@@ -1,0 +1,42 @@
+.skill-card {
+    width: 100px;
+    height: 140px;
+    background-color: rgb(83, 157, 218);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    border: 2px solid;
+    padding: 5px;
+
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-wrap: break-word;
+    text-align: center;
+    font-size: .7em;
+
+    display: grid;
+    grid-template-columns: 1fr;
+
+    cursor: pointer;
+
+    margin: 5px 5px 5px 5px;
+    background-size: cover;
+    background-position: center;
+}
+
+.out-of-stock {
+
+    background-color: rgb(66, 68, 70);
+    color: white
+
+}
+
+.remaining{
+    background-color: rgba(0, 0, 0, 0.75);
+    color: white;
+    padding: 3px;
+    align-self: flex-end;
+    margin-bottom: 2px;
+}
+
