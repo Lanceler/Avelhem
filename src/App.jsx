@@ -14,7 +14,7 @@ import "./App.css";
 import Board from "./components/Board";
 import Piece from "./components/Piece";
 
-import Navbar from "./navigation/navbar";
+import Navbar from "./navigation/Navbar";
 
 import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
