@@ -18,7 +18,7 @@ export const useCardDatabase = () => {
       CardId: 2,
     },
     {
-      Name: "Blaze of Glory",
+      Name: "Blaze Of Glory",
       Stock: 4,
       Aspect: "Fire",
       Method: "Contingent",
@@ -127,7 +127,7 @@ export const useCardDatabase = () => {
       CardId: 17,
     },
     {
-      Name: "Zip and Zap",
+      Name: "Zip And Zap",
       Stock: 4,
       Aspect: "Lightning",
       Method: "Resonant",
@@ -228,7 +228,7 @@ export const useCardDatabase = () => {
       CardId: 31,
     },
     {
-      Name: "Castle of Thorns",
+      Name: "Castle Of Thorns",
       Stock: 1,
       Aspect: "Plant",
       Method: "Burst",
@@ -243,7 +243,7 @@ export const useCardDatabase = () => {
       CardId: 33,
     },
     {
-      Name: "Tea for Two",
+      Name: "Tea For Two",
       Stock: 2,
       Aspect: "Sovereign",
       Method: "Standard",
@@ -306,14 +306,14 @@ export const useCardDatabase = () => {
       CardId: 42,
     },
     {
-      Name: "Press the Attack",
+      Name: "Press The Attack",
       Stock: 2,
       Aspect: "Sovereign",
       Method: "Resonant",
       CardId: 43,
     },
     {
-      Name: "Power at the Final Hour",
+      Name: "Power At The Final Hour",
       Stock: 2,
       Aspect: "Sovereign",
       Method: "Contingent",
@@ -327,7 +327,7 @@ export const useCardDatabase = () => {
       CardId: 45,
     },
     {
-      Name: "Match Made in Heaven",
+      Name: "Match Made In Heaven",
       Stock: 2,
       Aspect: "Sovereign",
       Method: "Contingent",

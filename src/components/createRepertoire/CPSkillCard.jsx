@@ -1,18 +1,12 @@
 import React from "react";
 import "./SkillCard.css";
-import ignitionPropulsionBG from "../../assets/skillcards/IgnitionPropulsion.png";
 
-let image = "";
-  const CPSkillCard = (props) => {
-  switch (props.cardInfo.Name) {
-    case "Ignition Propulsion":
-      image = ignitionPropulsionBG
-      break;
-    default:
-      image = ""
-      break;
-  }
+import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 
+const CPSkillCard = (props) => {
+  const { getImage } = useCardImageSwitch();
+  let image = "";
+  image = getImage(props.cardInfo.Name);
 
   return (
     <div
@@ -21,10 +15,10 @@ let image = "";
       }
       onClick={() => props.addToSkillRepertoire(props.cardInfo.CardId)}
       style={{
-        backgroundImage: `url(${(image)})`,
+        backgroundImage: `url(${image})`,
       }}
     >
-      <div> {props.cardInfo.Name}</div>
+      {!image && <div> {props.cardInfo.Name}</div>}
 
       <div className="remaining">Remaining: {props.cardInfo.Stock}</div>
     </div>

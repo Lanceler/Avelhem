@@ -12,7 +12,7 @@ export default function CreateRepertoire() {
   const [skillRepertoire, setSkillRepertoire] = useState([]);
 
   const addToSkillRepertoire = (skillCardId) => {
-    if (cardPool[skillCardId - 1].Stock > 0) {
+    if (skillRepertoire.length < 60 && cardPool[skillCardId - 1].Stock > 0) {
       let newSkillRepertoire = [...skillRepertoire];
       newSkillRepertoire.push(skillCardList[skillCardId - 1]);
 
