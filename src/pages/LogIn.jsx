@@ -1,7 +1,7 @@
 import "./LogIn.css";
 
 import { useState, useEffect } from "react";
-import { useLogIn } from "../hooks/useLogin";
+import { useLogIn } from "../hooks/useLogIn";
 
 export default function LogIn() {
   useEffect(() => {
