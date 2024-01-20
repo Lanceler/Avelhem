@@ -8,6 +8,48 @@ export const useCardDatabase = () => {
       Method: "Avelhem",
       CardId: 1,
     },
+    {
+      Name: "Water Avelhem",
+      Stock: 4,
+      Method: "Avelhem",
+      CardId: 2,
+    },
+    {
+      Name: "Wind Avelhem",
+      Stock: 4,
+      Method: "Avelhem",
+      CardId: 3,
+    },
+    {
+      Name: "Land Avelhem",
+      Stock: 4,
+      Method: "Avelhem",
+      CardId: 4,
+    },
+    {
+      Name: "Lightning Avelhem",
+      Stock: 4,
+      Method: "Avelhem",
+      CardId: 5,
+    },
+    {
+      Name: "Mana Avelhem",
+      Stock: 4,
+      Method: "Avelhem",
+      CardId: 6,
+    },
+    {
+      Name: "Metal Avelhem",
+      Stock: 4,
+      Method: "Avelhem",
+      CardId: 7,
+    },
+    {
+      Name: "Plant Avelhem",
+      Stock: 4,
+      Method: "Avelhem",
+      CardId: 8,
+    },
   ];
 
   const skillCardList = [
@@ -365,5 +407,5 @@ export const useCardDatabase = () => {
     },
   ];
 
-  return { skillCardList };
+  return { avelhemCardList, skillCardList };
 };

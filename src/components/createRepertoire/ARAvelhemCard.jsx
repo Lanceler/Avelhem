@@ -3,7 +3,7 @@ import "./SkillCard.css";
 
 import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 
-const SRSkillCard = (props) => {
+const ARAvelhemCard = (props) => {
   const { getImage } = useCardImageSwitch();
   let image = "";
   image = getImage(props.cardInfo.Name);
@@ -15,7 +15,7 @@ const SRSkillCard = (props) => {
         backgroundImage: `url(${image})`,
       }}
       onClick={() =>
-        props.returnToSkillCardPool(props.index, props.cardInfo.CardId)
+        props.returnToAvelhemCardPool(props.index, props.cardInfo.CardId)
       }
     >
       {!image && <div> {props.cardInfo.Name}</div>}
@@ -23,4 +23,4 @@ const SRSkillCard = (props) => {
   );
 };
 
-export default SRSkillCard;
+export default ARAvelhemCard;
