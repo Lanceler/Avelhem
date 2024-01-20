@@ -1,6 +1,15 @@
 import React from "react";
 
 export const useCardDatabase = () => {
+  const avelhemCardList = [
+    {
+      Name: "Fire Avelhem",
+      Stock: 4,
+      Method: "Avelhem",
+      CardId: 1,
+    },
+  ];
+
   const skillCardList = [
     //fire
     {

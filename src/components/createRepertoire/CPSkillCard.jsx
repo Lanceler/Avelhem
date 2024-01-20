@@ -19,7 +19,8 @@ const CPSkillCard = (props) => {
       }}
     >
       {!image && <div> {props.cardInfo.Name}</div>}
-      <div className="remaining">Remaining: {props.cardInfo.Name}</div>
+      <div></div>
+      <div className="remaining">Kappa: {props.cardInfo.Name}</div>
       <div className="remaining">Remaining: {props.cardInfo.Stock}</div>
     </div>
   );
