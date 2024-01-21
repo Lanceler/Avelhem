@@ -9,7 +9,15 @@ import ARAvelhemCard from "../components/createRepertoire/ARAvelhemCard";
 import { useCardDatabase } from "../hooks/useCardDatabase";
 
 import { db } from "../config/firebaseConfig";
-import { addDoc } from "firebase/firestore";
+import {
+  collection,
+  updateDoc,
+  query,
+  where,
+  getDocs,
+  doc,
+} from "firebase/firestore";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 export default function CreateRepertoire() {
   const { avelhemCardList, skillCardList } = useCardDatabase();
@@ -18,7 +26,11 @@ export default function CreateRepertoire() {
   const [avelhemCardPool, setAvelhemCardPool] = useState(avelhemCardList);
   const [avelhemRepertoire, setAvelhemRepertoire] = useState([]);
 
+  const [repertoireName, setRepertoireName] = useState("");
+  const { user } = useAuthContext();
+
   const [loading, setLoading] = useState(false);
+  const [saveError, setSaveError] = useState("");
 
   const addToSkillRepertoire = (skillCardId) => {
     if (
@@ -48,7 +60,7 @@ export default function CreateRepertoire() {
 
   const addToAvelhemRepertoire = (avelhemCardId) => {
     if (
-      avelhemRepertoire.length < 60 &&
+      avelhemRepertoire.length < 30 &&
       avelhemCardPool[avelhemCardId - 1].Stock > 0
     ) {
       let newAvelhemRepertoire = [...avelhemRepertoire];
@@ -72,18 +84,96 @@ export default function CreateRepertoire() {
     setAvelhemCardPool(newCardPool);
   };
 
-  const onSave = () => {};
+  const getSkillIndexes = () => {
+    let skillIndexes = [];
+
+    for (let i = 0; i < 60; i++) {
+      skillIndexes.push(skillRepertoire[i].CardId);
+    }
+    return skillIndexes;
+  };
+
+  const getAvelhemIndexes = () => {
+    let avelhemIndexes = [];
+
+    for (let i = 0; i < 30; i++) {
+      avelhemIndexes.push(avelhemRepertoire[i].CardId);
+    }
+    return avelhemIndexes;
+  };
+
+  const findIndexOfNullRepertoire = (array) => {
+    for (let i = 0; i < array.length; i++) {
+      if (array[i].repertoire === null) {
+        return i;
+      }
+    }
+    return array.length;
+  };
+
+  const onSave = async () => {
+    if (skillRepertoire.length < 60 || avelhemRepertoire.length < 30) {
+      setSaveError(
+        "Skill and Avelhem repertoires must have 60 and 30 cards, respectively."
+      );
+    } else {
+      setLoading(true);
+      setSaveError("");
+
+      const userInfoRef = query(
+        collection(db, "userInfo"),
+        where("userId", "==", user.uid)
+      );
+
+      let results = [];
+      let repertoireResults = [];
+      let newIndex = null;
+
+      getDocs(userInfoRef)
+        .then((snapshot) => {
+          if (snapshot.empty) {
+            // setError("No exam found.");
+            // setIsLoading(false);
+          } else {
+            snapshot.docs.forEach((doc) => {
+              results.push({ ...doc.data() });
+            });
+          }
+        })
+        .then(() => {
+          repertoireResults = [...results[0].repertoire];
+          newIndex = findIndexOfNullRepertoire(repertoireResults);
+        })
+        .then(() => {
+          const newRepertoire = [...repertoireResults];
+          newRepertoire[newIndex] = {
+            name: repertoireName,
+            skillRepertoire: getSkillIndexes(),
+            avelhemRepertoire: getAvelhemIndexes(),
+          };
+
+          const userDoc = doc(db, "userInfo", results[0].id);
+
+          updateDoc(userDoc, {
+            repertoire: newRepertoire,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      setLoading(false);
+    }
+  };
 
   return (
     <div>
       CreateRepertoire
       <div className="main-division">
-      <div className="division">
-        Selected Card
-            <div className="sub-divisionC">
-            //To change
-          </div>
-      </div>
+        <div className="division">
+          Selected Card
+          <div className="sub-divisionC">//To change</div>
+        </div>
 
         <div className="division">
           Skill Repertoire: {skillRepertoire.length} / 60
@@ -140,7 +230,18 @@ export default function CreateRepertoire() {
           </div>
         </div>
       </div>
-      <button disabled={loading}>Save</button>
+      <label>
+        <span>Repertoire Name:</span>
+        <input
+          type="text"
+          onChange={(e) => setRepertoireName(e.target.value)}
+          value={repertoireName}
+        />
+      </label>
+      {saveError && <div>{saveError}</div>}
+      <button disabled={loading} onClick={onSave}>
+        Save
+      </button>
     </div>
   );
 }

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
+import "./MyRepertoires.css";
+
 import { useAuthContext } from "../hooks/useAuthContext";
 
 import { db } from "../config/firebaseConfig";
@@ -18,8 +20,10 @@ import {
 export default function MyRepertoires() {
   const { user } = useAuthContext();
 
-  var userInfoRef = collection(db, "userInfo");
-  userInfoRef = query(userInfoRef, where("userId", "==", user.uid));
+  const userInfoRef = query(
+    collection(db, "userInfo"),
+    where("userId", "==", user.uid)
+  );
 
   const [userData, setUserData] = useState(null);
 
@@ -49,8 +53,9 @@ export default function MyRepertoires() {
       <div>
         {userData &&
           userData.repertoire.map((rep, index) => (
-            <div key={index}>
+            <div key={index} className="repertoire-box">
               <h2>{rep.name}</h2>
+              <button>Edit</button>
             </div>
           ))}
       </div>

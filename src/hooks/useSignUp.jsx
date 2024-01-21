@@ -97,6 +97,7 @@ export const useSignUp = () => {
       const userDoc = doc(db, "userInfo", userRef.id);
 
       await updateDoc(userDoc, {
+        id: userRef.id,
         repertoire: [
           {
             name: "Starter Repertoire",
