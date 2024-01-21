@@ -8,12 +8,17 @@ import CPAvelhemCard from "../components/createRepertoire/CPAvelhemCard";
 import ARAvelhemCard from "../components/createRepertoire/ARAvelhemCard";
 import { useCardDatabase } from "../hooks/useCardDatabase";
 
+import { db } from "../config/firebaseConfig";
+import { addDoc } from "firebase/firestore";
+
 export default function CreateRepertoire() {
   const { avelhemCardList, skillCardList } = useCardDatabase();
   const [skillCardPool, setSkillCardPool] = useState(skillCardList);
   const [skillRepertoire, setSkillRepertoire] = useState([]);
   const [avelhemCardPool, setAvelhemCardPool] = useState(avelhemCardList);
   const [avelhemRepertoire, setAvelhemRepertoire] = useState([]);
+
+  const [loading, setLoading] = useState(false);
 
   const addToSkillRepertoire = (skillCardId) => {
     if (
@@ -27,7 +32,7 @@ export default function CreateRepertoire() {
       setSkillRepertoire(newSkillRepertoire);
 
       let newCardPool = [...skillCardPool];
-      newCardPool = [...newCardPool, newCardPool[skillCardId - 1].Stock--];
+      newCardPool[skillCardId - 1].Stock--;
       setSkillCardPool(newCardPool);
     }
   };
@@ -37,7 +42,7 @@ export default function CreateRepertoire() {
     newSkillRepertoire.splice(skillCardIndex, 1);
     setSkillRepertoire(newSkillRepertoire);
     let newCardPool = [...skillCardPool];
-    newCardPool = [...newCardPool, newCardPool[skillCardId - 1].Stock++];
+    newCardPool[skillCardId - 1].Stock++;
     setSkillCardPool(newCardPool);
   };
 
@@ -53,7 +58,7 @@ export default function CreateRepertoire() {
       setAvelhemRepertoire(newAvelhemRepertoire);
 
       let newCardPool = [...avelhemCardPool];
-      newCardPool = [...newCardPool, newCardPool[avelhemCardId - 1].Stock--];
+      newCardPool[avelhemCardId - 1].Stock--;
       setAvelhemCardPool(newCardPool);
     }
   };
@@ -63,9 +68,11 @@ export default function CreateRepertoire() {
     newAvelhemRepertoire.splice(avelhemCardIndex, 1);
     setAvelhemRepertoire(newAvelhemRepertoire);
     let newCardPool = [...avelhemCardPool];
-    newCardPool = [...newCardPool, newCardPool[avelhemCardId - 1].Stock++];
+    newCardPool[avelhemCardId - 1].Stock++;
     setAvelhemCardPool(newCardPool);
   };
+
+  const onSave = () => {};
 
   return (
     <div>
@@ -126,6 +133,7 @@ export default function CreateRepertoire() {
           </div>
         </div>
       </div>
+      <button disabled={loading}>Save</button>
     </div>
   );
 }
