@@ -71,6 +71,13 @@ export default function CreateRepertoire() {
     <div>
       CreateRepertoire
       <div className="main-division">
+      <div className="division">
+        Selected Card
+            <div className="sub-divisionC">
+            //To change
+          </div>
+      </div>
+
         <div className="division">
           Skill Repertoire: {skillRepertoire.length} / 60
           <div className="sub-divisionB">
