@@ -10,7 +10,7 @@ const SRSkillCard = (props) => {
 
   return (
     <div
-      className="skill-card"
+      className="repertoire-card"
       style={{
         backgroundImage: `url(${image})`,
       }}

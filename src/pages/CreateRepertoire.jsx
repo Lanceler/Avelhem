@@ -73,7 +73,7 @@ export default function CreateRepertoire() {
       <div className="main-division">
         <div className="division">
           Skill Repertoire: {skillRepertoire.length} / 60
-          <div className="sub-division">
+          <div className="sub-divisionB">
             {skillRepertoire.map((card, index) => (
               <SRSkillCard
                 key={index}
