@@ -1,4 +1,6 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+
 import { useState, useEffect } from "react";
 import "./CreateRepertoire.css";
 
@@ -31,6 +33,8 @@ export default function CreateRepertoire() {
 
   const [loading, setLoading] = useState(false);
   const [saveError, setSaveError] = useState("");
+
+  const navigate = useNavigate();
 
   const addToSkillRepertoire = (skillCardId) => {
     if (
@@ -102,17 +106,22 @@ export default function CreateRepertoire() {
     return avelhemIndexes;
   };
 
-  const findIndexOfNullRepertoire = (array) => {
-    for (let i = 0; i < array.length; i++) {
-      if (array[i].repertoire === null) {
-        return i;
-      }
-    }
-    return array.length;
-  };
+  function hasSpecialCharacter(inputString) {
+    const specialCharacterRegex = /[!@#$%^&*(),.?":{}|<>]/;
+    return specialCharacterRegex.test(inputString);
+  }
 
   const onSave = async () => {
-    if (skillRepertoire.length < 60 || avelhemRepertoire.length < 30) {
+    const repertoireNameTrimmed = repertoireName.trim();
+
+    if (
+      repertoireNameTrimmed.length > 20 ||
+      hasSpecialCharacter(repertoireNameTrimmed)
+    ) {
+      setSaveError(
+        "Repertoire name must have a length of 20 or less and contain no special characters."
+      );
+    } else if (skillRepertoire.length < 60 || avelhemRepertoire.length < 30) {
       setSaveError(
         "Skill and Avelhem repertoires must have 60 and 30 cards, respectively."
       );
@@ -125,38 +134,33 @@ export default function CreateRepertoire() {
         where("userId", "==", user.uid)
       );
 
-      let results = [];
-      let repertoireResults = [];
-      let newIndex = null;
+      let results = null;
 
       getDocs(userInfoRef)
         .then((snapshot) => {
           if (snapshot.empty) {
-            // setError("No exam found.");
-            // setIsLoading(false);
+            throw new Error("No user found.");
           } else {
-            snapshot.docs.forEach((doc) => {
-              results.push({ ...doc.data() });
-            });
+            const UserDoc = snapshot.docs[0];
+            results = { ...UserDoc.data() };
           }
         })
         .then(() => {
-          repertoireResults = [...results[0].repertoire];
-          newIndex = findIndexOfNullRepertoire(repertoireResults);
-        })
-        .then(() => {
-          const newRepertoire = [...repertoireResults];
-          newRepertoire[newIndex] = {
-            name: repertoireName,
-            skillRepertoire: getSkillIndexes(),
-            avelhemRepertoire: getAvelhemIndexes(),
-          };
+          if (results.repertoire.length >= 5) {
+            setSaveError("Repertoire limit (5) exceeded.");
+          } else {
+            const newRepertoire = {
+              name: repertoireName,
+              skillRepertoire: getSkillIndexes(),
+              avelhemRepertoire: getAvelhemIndexes(),
+            };
 
-          const userDoc = doc(db, "userInfo", results[0].id);
+            const updatedRepertoire = [...results.repertoire, newRepertoire];
+            const userDoc = doc(db, "userInfo", results.id);
+            updateDoc(userDoc, { repertoire: updatedRepertoire });
 
-          updateDoc(userDoc, {
-            repertoire: newRepertoire,
-          });
+            navigate("/repertoires");
+          }
         })
         .catch((err) => {
           console.log(err);
