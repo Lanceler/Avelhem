@@ -22,6 +22,10 @@ import {
 import { useAuthContext } from "../hooks/useAuthContext";
 
 export default function CreateRepertoire() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const { avelhemCardList, skillCardList } = useCardDatabase();
   const [skillCardPool, setSkillCardPool] = useState(skillCardList);
   const [skillRepertoire, setSkillRepertoire] = useState([]);
@@ -91,7 +95,7 @@ export default function CreateRepertoire() {
   const getSkillIndexes = () => {
     let skillIndexes = [];
 
-    for (let i = 0; i < 60; i++) {
+    for (let i = 0; i < skillIndexes.length; i++) {
       skillIndexes.push(skillRepertoire[i].CardId);
     }
     return skillIndexes;
@@ -100,7 +104,7 @@ export default function CreateRepertoire() {
   const getAvelhemIndexes = () => {
     let avelhemIndexes = [];
 
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < avelhemIndexes.length; i++) {
       avelhemIndexes.push(avelhemRepertoire[i].CardId);
     }
     return avelhemIndexes;
@@ -121,7 +125,7 @@ export default function CreateRepertoire() {
       setSaveError(
         "Repertoire name must have a length of 20 or less and contain no special characters."
       );
-    } else if (skillRepertoire.length < 60 || avelhemRepertoire.length < 30) {
+    } else if (skillRepertoire.length < 1 || avelhemRepertoire.length < 1) {
       setSaveError(
         "Skill and Avelhem repertoires must have 60 and 30 cards, respectively."
       );

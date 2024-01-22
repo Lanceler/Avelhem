@@ -20,6 +20,10 @@ import {
 } from "firebase/firestore";
 
 export default function MyRepertoires() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const [isLoading, setIsLoading] = useState(false);
   const [refresher, setRefresher] = useState(false);
   const [showYesNo, setShowYesNo] = useState(false);
@@ -58,9 +62,39 @@ export default function MyRepertoires() {
       });
   }, [refresher]);
 
+  //=====================ANTON DOWN
+
+  // const onDelete = async (index) => {
+  //   await setShowYesNo(true);
+  //   deleteHelper(index);
+  // };
+
+  // const deleteHelper = (index) => {
+  //   if (confirmDelete) {
+  //     if (!isLoading) {
+  //       setIsLoading(true);
+  //       let updatedRepertoire = [...userData.repertoire];
+  //       updatedRepertoire.splice(index, 1);
+
+  //       const userDoc = doc(db, "userInfo", userData.id);
+
+  //       try {
+  //         updateDoc(userDoc, { repertoire: updatedRepertoire });
+  //         setRefresher(!refresher);
+  //       } catch (err) {
+  //         console.error(err);
+  //       }
+  //       setIsLoading(false);
+  //     }
+  //   }
+  // };
+
+  //=====================ANTON
+
   const onDelete = async (index) => {
-    setShowYesNo(true);
+    setConfirmDelete(false);
     setIndexToDelete(index);
+    setShowYesNo(true);
   };
 
   useEffect(() => {
@@ -73,8 +107,9 @@ export default function MyRepertoires() {
         const userDoc = doc(db, "userInfo", userData.id);
 
         try {
-          updateDoc(userDoc, { repertoire: updatedRepertoire });
-          setRefresher(!refresher);
+          updateDoc(userDoc, { repertoire: updatedRepertoire }).then(() => {
+            setRefresher(!refresher);
+          });
         } catch (err) {
           console.error(err);
         }
