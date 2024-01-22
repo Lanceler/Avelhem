@@ -1,5 +1,5 @@
 import React from "react";
-import "./YesNo.css";
+import "./Modal.css";
 
 const YesNo = (props) => {
   return (

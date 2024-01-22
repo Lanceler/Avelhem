@@ -1,5 +1,5 @@
 import React from "react";
-import "./SkillCard.css";
+import "./AvelhemCard.css";
 
 import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 
@@ -11,15 +11,30 @@ const CPSkillCard = (props) => {
   return (
     <div
       className={
-        props.cardInfo.Stock ? "skill-card" : "skill-card out-of-stock"
+        props.cardInfo.Stock
+          ? "full-skill-card"
+          : "full-skill-card out-of-stock"
       }
-      onClick={() => props.addToSkillRepertoire(props.cardInfo.CardId)}
       style={{
         backgroundImage: `url(${image})`,
       }}
     >
-      <div className="remaining">{props.cardInfo.Name}</div>
-      <div className="remaining">Remaining: {props.cardInfo.Stock}</div>
+      <button
+        className="view-button"
+        onClick={() => {
+          props.selectViewCard(props.cardInfo);
+        }}
+      >
+        View
+      </button>
+
+      <div
+        className="skill-card"
+        onClick={() => props.addToSkillRepertoire(props.cardInfo.CardId)}
+      >
+        <div className="remaining">{props.cardInfo.Name}</div>
+        <div className="remaining">Remaining: {props.cardInfo.Stock}</div>
+      </div>
     </div>
   );
 };

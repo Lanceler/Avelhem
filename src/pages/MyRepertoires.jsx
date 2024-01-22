@@ -8,6 +8,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import { db } from "../config/firebaseConfig";
 
 import YesNo from "../components/modals/YesNo";
+import Loading from "../components/modals/Loading";
 
 import {
   collection,
@@ -145,6 +146,7 @@ export default function MyRepertoires() {
           getResponse={getResponse}
         />
       )}
+      {isLoading && <Loading />}
     </div>
   );
 }

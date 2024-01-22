@@ -1,26 +1,23 @@
 import React from "react";
-import "./AvelhemCard.css";
+import "./DisplayedCard.css";
 
 import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 
-const ARAvelhemCard = (props) => {
+const DisplayedCard = (props) => {
   const { getImage } = useCardImageSwitch();
   let image = "";
   image = getImage(props.cardInfo.Name);
 
   return (
     <div
-      className="avelhem-card"
+      className="display-card"
       style={{
         backgroundImage: `url(${image})`,
       }}
-      onClick={() =>
-        props.returnToAvelhemCardPool(props.index, props.cardInfo.CardId)
-      }
     >
       {!image && <div> {props.cardInfo.Name}</div>}
     </div>
   );
 };
 
-export default ARAvelhemCard;
+export default DisplayedCard;

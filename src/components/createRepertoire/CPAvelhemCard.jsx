@@ -1,5 +1,5 @@
 import React from "react";
-import "./SkillCard.css";
+import "./AvelhemCard.css";
 
 import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 
@@ -11,7 +11,7 @@ const CPAvelhemCard = (props) => {
   return (
     <div
       className={
-        props.cardInfo.Stock ? "skill-card" : "skill-card out-of-stock"
+        props.cardInfo.Stock ? "avelhem-card" : "avelhem-card out-of-stock"
       }
       onClick={() => props.addToAvelhemRepertoire(props.cardInfo.CardId)}
       style={{

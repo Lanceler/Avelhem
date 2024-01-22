@@ -1,7 +1,7 @@
 import React from "react";
 
 import FrenzyBladeSm from "../assets/skillcards/FrenzyBladeSm.png";
-import AmbidexteritySmall from "../assets/skillcards/AmbidexteritySmall.png";
+import AmbidexterityMed from "../assets/skillcards/AmbidexterityMed.png";
 
 import IgnitionPropulsion from "../assets/skillcards/IgnitionPropulsion.png";
 import Conflagration from "../assets/skillcards/Conflagration.png";
@@ -154,7 +154,7 @@ export const useCardImageSwitch = (cardName) => {
       //   return Transmute;
       case "Ambidexterity":
         // return Ambidexterity;
-        return AmbidexteritySmall;
+        return AmbidexterityMed;
       // case "Providence":
       //   return Providence;
       // case "Fervent Prayer":

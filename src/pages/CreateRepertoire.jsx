@@ -8,7 +8,11 @@ import CPSkillCard from "../components/createRepertoire/CPSkillCard";
 import SRSkillCard from "../components/createRepertoire/SRSkillCard";
 import CPAvelhemCard from "../components/createRepertoire/CPAvelhemCard";
 import ARAvelhemCard from "../components/createRepertoire/ARAvelhemCard";
+import DisplayedCard from "../components/displays/DisplayedCard";
+
 import { useCardDatabase } from "../hooks/useCardDatabase";
+
+import Loading from "../components/modals/Loading";
 
 import { db } from "../config/firebaseConfig";
 import {
@@ -35,8 +39,10 @@ export default function CreateRepertoire() {
   const [repertoireName, setRepertoireName] = useState("");
   const { user } = useAuthContext();
 
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [saveError, setSaveError] = useState("");
+
+  const [displayCard, setDisplayCard] = useState(null);
 
   const navigate = useNavigate();
 
@@ -92,6 +98,10 @@ export default function CreateRepertoire() {
     setAvelhemCardPool(newCardPool);
   };
 
+  const selectViewCard = (card) => {
+    setDisplayCard(card);
+  };
+
   const getSkillIndexes = () => {
     let skillIndexes = [];
 
@@ -125,12 +135,12 @@ export default function CreateRepertoire() {
       setSaveError(
         "Repertoire name must have a length of 20 or less and contain no special characters."
       );
-    } else if (skillRepertoire.length < 1 || avelhemRepertoire.length < 1) {
+    } else if (skillRepertoire.length < 60 || avelhemRepertoire.length < 30) {
       setSaveError(
         "Skill and Avelhem repertoires must have 60 and 30 cards, respectively."
       );
     } else {
-      setLoading(true);
+      setIsLoading(true);
       setSaveError("");
 
       const userInfoRef = query(
@@ -170,7 +180,7 @@ export default function CreateRepertoire() {
           console.log(err);
         });
 
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -180,7 +190,9 @@ export default function CreateRepertoire() {
       <div className="main-division">
         <div className="division">
           Selected Card
-          <div className="sub-divisionC">//To change</div>
+          <div className="sub-divisionC">
+            {displayCard && <DisplayedCard cardInfo={displayCard} />}
+          </div>
         </div>
 
         <div className="division">
@@ -205,6 +217,7 @@ export default function CreateRepertoire() {
                 key={index}
                 cardInfo={card}
                 addToSkillRepertoire={addToSkillRepertoire}
+                selectViewCard={selectViewCard}
               />
             ))}
           </div>
@@ -247,9 +260,10 @@ export default function CreateRepertoire() {
         />
       </label>
       {saveError && <div>{saveError}</div>}
-      <button disabled={loading} onClick={onSave}>
+      <button disabled={isLoading} onClick={onSave}>
         Save
       </button>
+      {isLoading && <Loading />}
     </div>
   );
 }
