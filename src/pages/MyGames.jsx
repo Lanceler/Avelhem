@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
 import { useAuthContext } from "../hooks/useAuthContext";
+import { useNavigate } from "react-router-dom";
 
 import { db } from "../config/firebaseConfig";
-
 import {
   collection,
   addDoc,
@@ -18,6 +18,7 @@ import {
 export default function MyGames() {
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useAuthContext();
+  const navigate = useNavigate();
 
   const onCreateGame = async () => {
     if (!isLoading) {
@@ -70,6 +71,7 @@ export default function MyGames() {
 
         await updateDoc(gameDoc, { id: gameRef.id });
         setIsLoading(false);
+        navigate(`/game?g=${gameRef.id}`);
       } catch (err) {
         console.error(err);
         setIsLoading(false);
