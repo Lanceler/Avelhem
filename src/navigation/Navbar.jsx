@@ -21,6 +21,7 @@ const Navbar = () => {
           </Link>
           <div>
             <div>
+              {user && <Link to="/my-games">My Games</Link>}
               {user && <Link to="/repertoires">My Repertoires</Link>}
               {!user && <Link to="/login">Login</Link>}
               {!user && <Link to="/signup">Sign up</Link>}

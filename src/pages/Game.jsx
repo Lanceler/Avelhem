@@ -2,6 +2,8 @@ import { useAuthContext } from "../hooks/useAuthContext";
 
 import { useEffect } from "react";
 
+import Board from "../components/Board";
+
 export default function Game() {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -9,5 +11,12 @@ export default function Game() {
 
   const { user } = useAuthContext();
 
-  return <div>Game</div>;
+  return (
+    <>
+      <div>Game</div>
+      <div>
+        <Board />
+      </div>
+    </>
+  );
 }

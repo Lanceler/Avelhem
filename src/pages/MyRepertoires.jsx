@@ -22,17 +22,11 @@ import {
 } from "firebase/firestore";
 
 export default function MyRepertoires() {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
+  const { user } = useAuthContext();
   const [isLoading, setIsLoading] = useState(false);
   const [showYesNo, setShowYesNo] = useState(false);
-
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [indexToDelete, setIndexToDelete] = useState(null);
-
-  const { user } = useAuthContext();
 
   //---Realtime data functionality below
   const userInfoRef = query(
@@ -43,6 +37,7 @@ export default function MyRepertoires() {
   const [documentId, setDocumentId] = useState(null);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     setIsLoading(true);
     getDocs(userInfoRef)
       .then((snapshot) => {
@@ -64,7 +59,7 @@ export default function MyRepertoires() {
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    let unsubscribe = () => {};
+    let unsubscribe;
     if (documentId) {
       let documentRef = doc(db, "userInfo", documentId);
 
@@ -78,7 +73,7 @@ export default function MyRepertoires() {
       });
     }
 
-    return () => unsubscribe();
+    return () => unsubscribe?.();
   }, [documentId]);
   //---Realtime data functionality above
 

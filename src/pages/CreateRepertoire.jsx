@@ -1,16 +1,15 @@
-import React from "react";
+import "./CreateRepertoire.css";
+
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { useState, useEffect } from "react";
-import "./CreateRepertoire.css";
+import { useCardDatabase } from "../hooks/useCardDatabase";
 
 import CPSkillCard from "../components/createRepertoire/CPSkillCard";
 import SRSkillCard from "../components/createRepertoire/SRSkillCard";
 import CPAvelhemCard from "../components/createRepertoire/CPAvelhemCard";
 import ARAvelhemCard from "../components/createRepertoire/ARAvelhemCard";
 import DisplayedCard from "../components/displays/DisplayedCard";
-
-import { useCardDatabase } from "../hooks/useCardDatabase";
 
 import Loading from "../components/modals/Loading";
 
