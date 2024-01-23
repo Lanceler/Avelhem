@@ -18,6 +18,7 @@ import {
   query,
   where,
   getDocs,
+  onSnapshot,
 } from "firebase/firestore";
 
 export default function MyRepertoires() {
@@ -26,7 +27,6 @@ export default function MyRepertoires() {
   }, []);
 
   const [isLoading, setIsLoading] = useState(false);
-  const [refresher, setRefresher] = useState(false);
   const [showYesNo, setShowYesNo] = useState(false);
 
   const [confirmDelete, setConfirmDelete] = useState(false);
@@ -34,12 +34,13 @@ export default function MyRepertoires() {
 
   const { user } = useAuthContext();
 
+  //---Realtime data functionality below
   const userInfoRef = query(
     collection(db, "userInfo"),
     where("userId", "==", user.uid)
   );
 
-  const [userData, setUserData] = useState(null);
+  const [documentId, setDocumentId] = useState(null);
 
   useEffect(() => {
     setIsLoading(true);
@@ -48,56 +49,40 @@ export default function MyRepertoires() {
         if (snapshot.empty) {
           throw new Error("No user found");
         } else {
-          let results = null;
           const UserDoc = snapshot.docs[0];
-          results = { ...UserDoc.data() };
+          setDocumentId(UserDoc.data().id);
 
-          setUserData(results);
           setIsLoading(false);
-          console.log({ ...UserDoc.data() });
         }
       })
       .catch((err) => {
         console.log(err);
         setIsLoading(false);
       });
-  }, [refresher]);
+  }, []);
 
-  //=====================ANTON DOWN
+  const [userData, setUserData] = useState(null);
 
-  // const onDelete = async (index) => {
-  //   await setShowYesNo(true);
-  //   deleteHelper(index);
-  // };
+  useEffect(() => {
+    let unsubscribe = () => {};
+    if (documentId) {
+      let documentRef = doc(db, "userInfo", documentId);
 
-  // const deleteHelper = (index) => {
-  //   if (confirmDelete) {
-  //     if (!isLoading) {
-  //       setIsLoading(true);
-  //       let updatedRepertoire = [...userData.repertoire];
-  //       updatedRepertoire.splice(index, 1);
+      unsubscribe = onSnapshot(documentRef, (docSnapshot) => {
+        if (docSnapshot.exists()) {
+          setUserData(docSnapshot.data());
+          console.log("Change!");
+        } else {
+          console.log("Document does not exist");
+        }
+      });
+    }
 
-  //       const userDoc = doc(db, "userInfo", userData.id);
+    return () => unsubscribe();
+  }, [documentId]);
+  //---Realtime data functionality above
 
-  //       try {
-  //         updateDoc(userDoc, { repertoire: updatedRepertoire });
-  //         setRefresher(!refresher);
-  //       } catch (err) {
-  //         console.error(err);
-  //       }
-  //       setIsLoading(false);
-  //     }
-  //   }
-  // };
-
-  //=====================ANTON
-
-  const onDelete = async (index) => {
-    setConfirmDelete(false);
-    setIndexToDelete(index);
-    setShowYesNo(true);
-  };
-
+  //---Delete repertoire functionality below
   useEffect(() => {
     if (confirmDelete) {
       if (!isLoading) {
@@ -108,21 +93,27 @@ export default function MyRepertoires() {
         const userDoc = doc(db, "userInfo", userData.id);
 
         try {
-          updateDoc(userDoc, { repertoire: updatedRepertoire }).then(() => {
-            setRefresher(!refresher);
-          });
+          updateDoc(userDoc, { repertoire: updatedRepertoire });
+          setIsLoading(false);
         } catch (err) {
           console.error(err);
+          setIsLoading(false);
         }
-        setIsLoading(false);
       }
     }
   }, [confirmDelete]);
+
+  const onDelete = async (index) => {
+    setConfirmDelete(false);
+    setIndexToDelete(index);
+    setShowYesNo(true);
+  };
 
   const getResponse = (resp) => {
     setConfirmDelete(resp);
     setShowYesNo(false);
   };
+  //---Delete repertoire functionality above
 
   return (
     <div>
