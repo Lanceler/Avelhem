@@ -2,12 +2,12 @@ import { useAuthContext } from "../hooks/useAuthContext";
 
 import { useEffect } from "react";
 
-export default function Home() {
+export default function Game() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   const { user } = useAuthContext();
 
-  return <div>Hello, {user.displayName}</div>;
+  return <div>Game</div>;
 }

@@ -46,55 +46,58 @@ export default function CreateRepertoire() {
 
   const navigate = useNavigate();
 
-  const addToSkillRepertoire = (skillCardId) => {
-    if (
-      skillRepertoire.length < 60 &&
-      skillCardPool[skillCardId - 1].Stock > 0
-    ) {
+  const addToSkillRepertoire = (cardPoolIndex) => {
+    if (skillRepertoire.length < 60 && skillCardPool[cardPoolIndex].Stock > 0) {
       let newSkillRepertoire = [...skillRepertoire];
-      newSkillRepertoire.push(skillCardList[skillCardId - 1]);
+      newSkillRepertoire.push({
+        Name: skillCardList[cardPoolIndex].Name,
+        CardPoolIndex: cardPoolIndex,
+      });
 
-      newSkillRepertoire.sort((a, b) => a.CardId - b.CardId);
+      newSkillRepertoire.sort((a, b) => a.CardPoolIndex - b.CardPoolIndex);
       setSkillRepertoire(newSkillRepertoire);
 
       let newCardPool = [...skillCardPool];
-      newCardPool[skillCardId - 1].Stock--;
+      newCardPool[cardPoolIndex].Stock--;
       setSkillCardPool(newCardPool);
     }
   };
 
-  const returnToSkillCardPool = (skillCardIndex, skillCardId) => {
+  const returnToSkillCardPool = (skillCardIndex, cardPoolIndex) => {
     let newSkillRepertoire = [...skillRepertoire];
     newSkillRepertoire.splice(skillCardIndex, 1);
     setSkillRepertoire(newSkillRepertoire);
     let newCardPool = [...skillCardPool];
-    newCardPool[skillCardId - 1].Stock++;
+    newCardPool[cardPoolIndex].Stock++;
     setSkillCardPool(newCardPool);
   };
 
-  const addToAvelhemRepertoire = (avelhemCardId) => {
+  const addToAvelhemRepertoire = (cardPoolIndex) => {
     if (
       avelhemRepertoire.length < 30 &&
-      avelhemCardPool[avelhemCardId - 1].Stock > 0
+      avelhemCardPool[cardPoolIndex].Stock > 0
     ) {
       let newAvelhemRepertoire = [...avelhemRepertoire];
-      newAvelhemRepertoire.push(avelhemCardList[avelhemCardId - 1]);
+      newAvelhemRepertoire.push({
+        Name: avelhemCardList[cardPoolIndex].Name,
+        CardPoolIndex: cardPoolIndex,
+      });
 
-      newAvelhemRepertoire.sort((a, b) => a.CardId - b.CardId);
+      newAvelhemRepertoire.sort((a, b) => a.CardPoolIndex - b.CardPoolIndex);
       setAvelhemRepertoire(newAvelhemRepertoire);
 
       let newCardPool = [...avelhemCardPool];
-      newCardPool[avelhemCardId - 1].Stock--;
+      newCardPool[cardPoolIndex].Stock--;
       setAvelhemCardPool(newCardPool);
     }
   };
 
-  const returnToAvelhemCardPool = (avelhemCardIndex, avelhemCardId) => {
+  const returnToAvelhemCardPool = (avelhemCardIndex, cardPoolIndex) => {
     let newAvelhemRepertoire = [...avelhemRepertoire];
     newAvelhemRepertoire.splice(avelhemCardIndex, 1);
     setAvelhemRepertoire(newAvelhemRepertoire);
     let newCardPool = [...avelhemCardPool];
-    newCardPool[avelhemCardId - 1].Stock++;
+    newCardPool[cardPoolIndex].Stock++;
     setAvelhemCardPool(newCardPool);
   };
 
@@ -215,6 +218,7 @@ export default function CreateRepertoire() {
             {skillCardPool.map((card, index) => (
               <CPSkillCard
                 key={index}
+                index={index}
                 cardInfo={card}
                 addToSkillRepertoire={addToSkillRepertoire}
                 selectViewCard={selectViewCard}
@@ -244,6 +248,7 @@ export default function CreateRepertoire() {
             {avelhemCardPool.map((card, index) => (
               <CPAvelhemCard
                 key={index}
+                index={index}
                 cardInfo={card}
                 addToAvelhemRepertoire={addToAvelhemRepertoire}
               />

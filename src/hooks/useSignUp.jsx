@@ -12,51 +12,88 @@ export const useSignUp = () => {
 
   const starterSkillRepertoire = [
     //Ignition Propulsiom
-    1, 1, 1, 1,
+    "1-1",
+    "1-1",
+    "1-1",
+    "1-1",
     //Conflagration
-    2, 2, 2, 2,
+    "1-2",
+    "1-2",
+    "1-2",
+    "1-2",
     //Blaze of Glory
-    3, 3, 3,
+    "1-3",
+    "1-3",
+    "1-3",
     //Resplendence
-    4,
+    "1-4",
     //Purification
-    5, 5, 5, 5,
+    "2-1",
+    "2-1",
+    "2-1",
+    "2-1",
     //Crystallization
-    13, 13, 13, 13,
+    "4-1",
+    "4-1",
+    "4-1",
+    "4-1",
     //Upheaval
-    14, 14, 14, 14,
+    "4-2",
+    "4-2",
+    "4-2",
+    "4-2",
     //Pitfall Trap
-    15, 15, 15,
+    "4-3",
+    "4-3",
+    "4-3",
     //Geomancy
-    16,
+    "4-4",
     //Surge
-    21, 21, 21, 21,
+    "6-1",
+    "6-1",
+    "6-1",
+    "6-1",
     //Diffusion
-    22, 22, 22, 22,
+    "6-2",
+    "6-2",
+    "6-2",
+    "6-2",
     //Aegis
-    23, 23, 23, 23,
+    "6-3",
+    "6-3",
+    "6-3",
+    "6-3",
     //Disruption Field
-    24,
+    "6-4",
     //Arsenal Onslaught
-    28,
+    "7-4",
     //Heir's Endeavor
-    33, 33,
+    "SA-1",
+    "SA-1",
     //Tea For Two
-    34, 34,
+    "SA-2",
+    "SA-2",
     //Dark Halo
-    36, 36,
+    "SA-4",
+    "SA-4",
     //Reminiscence
-    37, 37,
+    "SA-5",
+    "SA-5",
     //Transmute
-    39, 39,
+    "SB-1",
+    "SB-1",
     //Ambidexterity
-    40, 40,
+    "SB-2",
+    "SB-2",
     //Fervent Prayer
-    42, 42,
+    "SB-4",
+    "SB-4",
     //Press The Attack
-    43, 43,
+    "SB-5",
+    "SB-5",
     //Power At The Final Hour
-    44, 44,
+    "SC-1",
+    "SC-1",
   ];
 
   const starterAvelhemRepertoire = [
@@ -98,6 +135,7 @@ export const useSignUp = () => {
 
       await updateDoc(userDoc, {
         id: userRef.id,
+        displayName: res.user.displayName,
         repertoire: [
           {
             name: "Starter Repertoire",

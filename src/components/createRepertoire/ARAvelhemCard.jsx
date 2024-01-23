@@ -15,7 +15,7 @@ const ARAvelhemCard = (props) => {
         backgroundImage: `url(${image})`,
       }}
       onClick={() =>
-        props.returnToAvelhemCardPool(props.index, props.cardInfo.CardId)
+        props.returnToAvelhemCardPool(props.index, props.cardInfo.CardPoolIndex)
       }
     >
       {!image && <div> {props.cardInfo.Name}</div>}

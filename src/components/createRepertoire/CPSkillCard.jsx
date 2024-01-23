@@ -30,7 +30,7 @@ const CPSkillCard = (props) => {
 
       <div
         className="skill-card"
-        onClick={() => props.addToSkillRepertoire(props.cardInfo.CardId)}
+        onClick={() => props.addToSkillRepertoire(props.index)}
       >
         <div className="remaining">{props.cardInfo.Name}</div>
         <div className="remaining">Remaining: {props.cardInfo.Stock}</div>

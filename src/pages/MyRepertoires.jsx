@@ -146,6 +146,7 @@ export default function MyRepertoires() {
           getResponse={getResponse}
         />
       )}
+
       {isLoading && <Loading />}
     </div>
   );

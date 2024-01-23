@@ -13,7 +13,7 @@ const CPAvelhemCard = (props) => {
       className={
         props.cardInfo.Stock ? "avelhem-card" : "avelhem-card out-of-stock"
       }
-      onClick={() => props.addToAvelhemRepertoire(props.cardInfo.CardId)}
+      onClick={() => props.addToAvelhemRepertoire(props.index)}
       style={{
         backgroundImage: `url(${image})`,
       }}

@@ -21,6 +21,7 @@ import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
 import MyRepertoires from "./pages/MyRepertoires";
 import CreateRepertoire from "./pages/CreateRepertoire";
+import Game from "./pages/Game";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -32,7 +33,11 @@ function App() {
         <BrowserRouter>
           <Navbar />
           <Routes>
-            <Route exact path="/" element={<Home />} />
+            <Route
+              exact
+              path="/"
+              element={user ? <Home /> : <Navigate to="/login" />}
+            />
 
             <Route
               path="/login"
@@ -51,6 +56,8 @@ function App() {
               path="/create-repertoire"
               element={user ? <CreateRepertoire /> : <Navigate to="/login" />}
             />
+
+            <Route path="/game" element={<Game />} />
           </Routes>
         </BrowserRouter>
       )}
