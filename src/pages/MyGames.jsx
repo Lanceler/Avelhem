@@ -51,7 +51,7 @@ export default function MyGames() {
             tactics: null,
             currentResolution: [],
             eventLog: [],
-            skillRepertoires: { player1: [], player2: [] },
+            skillRepertoires: { player1: null, player2: null },
             skillVestiges: { player1: [], player2: [] },
             skillShattered: { player1: [], player2: [] },
             avelhemRepertoires: { player1: [], player2: [] },

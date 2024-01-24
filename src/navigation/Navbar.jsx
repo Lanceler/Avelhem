@@ -19,6 +19,7 @@ const Navbar = () => {
           <Link to="/">
             <h1>Avelhem</h1>
           </Link>
+          <h3>{user && user.displayName}</h3>
           <div>
             <div>
               {user && <Link to="/my-games">My Games</Link>}

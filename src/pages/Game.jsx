@@ -120,10 +120,22 @@ export default function Game() {
       } else {
         console.log("Play");
         playerSituation = 1;
+
+        if (!gameData.GameState.skillRepertoires.player1) {
+          playerSituation = 1.5;
+        } else if (!gameData.GameState.skillRepertoires.player2) {
+          playerSituation = 1.6;
+        }
       }
     } else if (gameData && user.uid === gameData.guestId) {
       console.log("Play");
       playerSituation = 1;
+
+      if (!gameData.GameState.skillRepertoires.player2) {
+        playerSituation = 1.5;
+      } else if (!gameData.GameState.skillRepertoires.player1) {
+        playerSituation = 1.6;
+      }
     } else if (gameData) {
       if (!gameData.guestId) {
         console.log("Do you want to join?");
@@ -138,7 +150,26 @@ export default function Game() {
       case 0:
         return <div>Waiting</div>;
       case 1:
-        return <div>Play</div>;
+        return (
+          <>
+            <div>Play</div>
+          </>
+        );
+
+      case 1.5:
+        return (
+          <>
+            <div>Select your repertoire</div>
+          </>
+        );
+
+      case 1.6:
+        return (
+          <>
+            <div>Waiting for opponent to select repertoire</div>
+          </>
+        );
+
       case 2:
         return (
           <>
@@ -152,7 +183,7 @@ export default function Game() {
     }
   };
 
-  //---Player situations functionality below
+  //---Player situations functionality above
 
   return (
     <>
