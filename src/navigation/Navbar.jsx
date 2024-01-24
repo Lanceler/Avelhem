@@ -16,10 +16,13 @@ const Navbar = () => {
       <div className="pushDown"></div>
       <div className="navbar">
         <nav>
+          <div className="leftContainer">
           <Link to="/">
             <h1>Avelhem</h1>
           </Link>
           <h3>{user && user.displayName}</h3>
+          </div>
+         
           <div>
             <div>
               {user && <Link to="/my-games">My Games</Link>}

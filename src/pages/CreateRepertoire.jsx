@@ -188,7 +188,19 @@ export default function CreateRepertoire() {
 
   return (
     <div>
-      CreateRepertoire
+      
+      <label>
+        <span>Repertoire Name:</span>
+        <input
+          type="text"
+          onChange={(e) => setRepertoireName(e.target.value)}
+          value={repertoireName}
+        />
+      </label>
+      {saveError && <div>{saveError}</div>}
+      <button disabled={isLoading} onClick={onSave}>
+        Save
+      </button>
       <div className="main-division">
         <div className="division">
           Selected Card
@@ -226,7 +238,7 @@ export default function CreateRepertoire() {
           </div>
         </div>
       </div>
-      <div className="main-division">
+      <div className="main-division main-division2">
         <div className="division">
           Avelhem Repertoire: {avelhemRepertoire.length} / 30
           <div className="sub-division">
@@ -255,18 +267,7 @@ export default function CreateRepertoire() {
           </div>
         </div>
       </div>
-      <label>
-        <span>Repertoire Name:</span>
-        <input
-          type="text"
-          onChange={(e) => setRepertoireName(e.target.value)}
-          value={repertoireName}
-        />
-      </label>
-      {saveError && <div>{saveError}</div>}
-      <button disabled={isLoading} onClick={onSave}>
-        Save
-      </button>
+    
       {isLoading && <Loading />}
     </div>
   );

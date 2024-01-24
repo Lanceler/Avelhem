@@ -1,6 +1,10 @@
 import React from "react";
 import "./AvelhemCard.css";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+
+
 import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 
 const CPSkillCard = (props) => {
@@ -25,7 +29,8 @@ const CPSkillCard = (props) => {
           props.selectViewCard(props.cardInfo);
         }}
       >
-        View
+        <FontAwesomeIcon icon={faMagnifyingGlass}/>
+
       </button>
 
       <div
