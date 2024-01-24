@@ -17,6 +17,7 @@ import {
 } from "firebase/firestore";
 
 import SelectRepertoire from "../components/modals/SelectRepertoire";
+import Loading from "../components/modals/Loading";
 
 export default function Game() {
   const { user } = useAuthContext();
@@ -27,6 +28,8 @@ export default function Game() {
 
   const [gameId, setGameId] = useState(null);
   const [gameData, setGameData] = useState(null);
+
+  const [playerNumber, SetPlayerNumber] = useState("player2");
 
   const queryString = useLocation().search;
   const queryParams = new URLSearchParams(queryString);
@@ -71,7 +74,12 @@ export default function Game() {
   }, [queryGame]);
 
   useEffect(() => {
+    setIsLoading(true);
+
+    console.log(playerNumber);
+
     let unsubscribe;
+
     if (gameId) {
       let documentRef = doc(db, "gameInfo", gameId);
 
@@ -86,16 +94,21 @@ export default function Game() {
       });
     }
 
+    setIsLoading(false);
+
     return () => unsubscribe?.();
   }, [gameId]);
+
+  useEffect(() => {
+    if (gameData && user.uid === gameData.hostId) {
+      SetPlayerNumber("player1");
+    }
+    console.log("NOOO!!!");
+  }, [gameData && gameData.hostId]);
 
   //---Realtime data functionality above
 
   //---Player situation functionality below
-
-  // useEffect(() => {
-  //   readGameState();
-  // }, [gameData]);
 
   const onJoinGame = async () => {
     setIsLoading(true);
@@ -120,22 +133,10 @@ export default function Game() {
       const gameDoc = doc(db, "gameInfo", gameId);
 
       let newGameState = JSON.parse(JSON.stringify(gameData.GameState));
+      newGameState.skillRepertoires[playerNumber] = rep.skillRepertoire;
+      newGameState.avelhemRepertoires[playerNumber] = rep.avelhemRepertoire;
 
-      if (user.uid === gameData.hostId) {
-        newGameState.skillRepertoires.player1 = rep.skillRepertoire;
-        newGameState.avelhemRepertoires.player1 = rep.avelhemRepertoire;
-
-        await updateDoc(gameDoc, {
-          GameState: newGameState,
-        });
-      } else {
-        newGameState.skillRepertoires.player2 = rep.skillRepertoire;
-        newGameState.avelhemRepertoires.player2 = rep.avelhemRepertoire;
-
-        await updateDoc(gameDoc, {
-          GameState: newGameState,
-        });
-      }
+      await updateDoc(gameDoc, { GameState: newGameState });
 
       setIsLoading(false);
     } catch (err) {
@@ -188,7 +189,7 @@ export default function Game() {
       case 1:
         return (
           <>
-            <div>Play</div>
+            <div>Play, {playerNumber}</div>
           </>
         );
 
@@ -229,6 +230,7 @@ export default function Game() {
       {gameData && <div>Creator: {gameData.hostName}</div>}
       {error && <div>Error: {error}</div>}
       {readGameState()}
+      {isLoading && <Loading />}
     </>
   );
 }
