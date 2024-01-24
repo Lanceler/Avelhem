@@ -3,10 +3,17 @@
     grid-template-columns: 2fr 3fr 3fr;
     grid-gap: 10px;
     max-width: 1200px;
-    margin: 40px auto;
-    background-color: rgb(240, 240, 240);
+    margin: 40px 10px;
+    /* background-color: rgb(240, 240, 240); */
         /* background-color: rgb(185, 95, 95); */
     padding: 20px;
+    
+}
+
+.main-division2 {
+
+    grid-template-columns: 1fr 1fr;
+
     
 }
 
