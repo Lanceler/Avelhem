@@ -16,6 +16,8 @@ import {
   onSnapshot,
 } from "firebase/firestore";
 
+import SelectRepertoire from "../components/modals/SelectRepertoire";
+
 export default function Game() {
   const { user } = useAuthContext();
   const navigate = useNavigate();
@@ -90,6 +92,7 @@ export default function Game() {
   //---Realtime data functionality above
 
   //---Player situation functionality below
+
   // useEffect(() => {
   //   readGameState();
   // }, [gameData]);
@@ -110,11 +113,43 @@ export default function Game() {
     }
   };
 
+  const onSelectRepertoire = async (rep) => {
+    setIsLoading(true);
+
+    try {
+      const gameDoc = doc(db, "gameInfo", gameId);
+
+      let newGameState = JSON.parse(JSON.stringify(gameData.GameState));
+
+      if (user.uid === gameData.hostId) {
+        newGameState.skillRepertoires.player1 = rep.skillRepertoire;
+        newGameState.avelhemRepertoires.player1 = rep.avelhemRepertoire;
+
+        await updateDoc(gameDoc, {
+          GameState: newGameState,
+        });
+      } else {
+        newGameState.skillRepertoires.player2 = rep.skillRepertoire;
+        newGameState.avelhemRepertoires.player2 = rep.avelhemRepertoire;
+
+        await updateDoc(gameDoc, {
+          GameState: newGameState,
+        });
+      }
+
+      setIsLoading(false);
+    } catch (err) {
+      setError(err.message);
+      setIsLoading(false);
+    }
+  };
+
   const readGameState = () => {
     let playerSituation = 0;
 
     if (gameData && user.uid === gameData.hostId) {
       console.log("Host");
+
       if (!gameData.guestId) {
         console.log("Waiting");
       } else {
@@ -128,6 +163,7 @@ export default function Game() {
         }
       }
     } else if (gameData && user.uid === gameData.guestId) {
+      console.log("Guest");
       console.log("Play");
       playerSituation = 1;
 
@@ -160,6 +196,7 @@ export default function Game() {
         return (
           <>
             <div>Select your repertoire</div>
+            <SelectRepertoire onSelectRepertoire={onSelectRepertoire} />
           </>
         );
 
@@ -188,9 +225,9 @@ export default function Game() {
   return (
     <>
       <div>Game</div>
-      {gameId && <div>gameId: {gameId}</div>}
-      {gameData && <div>gameData: {gameData.hostName}</div>}
-      {error && <div>{error}</div>}
+      {gameId && <div>Game Id: {gameId}</div>}
+      {gameData && <div>Creator: {gameData.hostName}</div>}
+      {error && <div>Error: {error}</div>}
       {readGameState()}
     </>
   );
