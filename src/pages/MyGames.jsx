@@ -67,9 +67,9 @@ export default function MyGames() {
           hostName: user.displayName,
           guestId: null,
           guestName: null,
-          GameState: {
+          gameState: {
             turnCount: 0,
-            turnPlayer: 0,
+            turnPlayer: null,
             turnPhase: null,
             tactics: null,
             currentResolution: [],
@@ -83,6 +83,7 @@ export default function MyGames() {
               avelhemRepertoire: [],
               avelhemVestige: [],
               hand: [],
+              units: [],
               bountyPoints: 0,
               bountyUpgrades: {},
               fateDefiances: 3,
@@ -96,6 +97,7 @@ export default function MyGames() {
               avelhemRepertoire: [],
               avelhemVestige: [],
               hand: [],
+              units: [],
               bountyPoints: 0,
               bountyUpgrades: {},
               fateDefiances: 3,
