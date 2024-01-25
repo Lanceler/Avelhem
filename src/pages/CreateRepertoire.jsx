@@ -52,7 +52,7 @@ export default function CreateRepertoire() {
       newSkillRepertoire.push({
         Name: skillCardList[cardPoolIndex].Name,
         CardPoolIndex: cardPoolIndex,
-        kappa: newSkillRepertoire.length,
+        timeAdded: new Date(),
       });
 
       newSkillRepertoire.sort((a, b) => a.CardPoolIndex - b.CardPoolIndex);
@@ -64,25 +64,20 @@ export default function CreateRepertoire() {
     }
   };
 
-  // const returnToSkillCardPool = (skillCardIndex, cardPoolIndex) => {
-  const returnToSkillCardPool = (cardInfo) => {
-    if (!isLoading) {
-      setIsLoading(true);
+  const returnToSkillCardPool = (cardInfo, index) => {
+    if (true) {
+      let newSkillRepertoire = [...skillRepertoire];
+      newSkillRepertoire.splice(index, 1);
+      setSkillRepertoire(newSkillRepertoire);
 
-      // let newSkillRepertoire = [...skillRepertoire];
-      // newSkillRepertoire.splice(skillCardIndex, 1);
-      // setSkillRepertoire(newSkillRepertoire);
-      setSkillRepertoire((prev) =>
-        prev.filter((skillRepertoire) => skillRepertoire !== cardInfo)
-      );
       let newCardPool = [...skillCardPool];
+
       let limit = skillCardList[cardInfo.CardPoolIndex].Stock;
       newCardPool[cardInfo.CardPoolIndex].Stock = Math.min(
         newCardPool[cardInfo.CardPoolIndex].Stock + 1,
         limit
       );
       setSkillCardPool(newCardPool);
-      setTimeout(setIsLoading(false), 3200);
     }
   };
 
@@ -228,9 +223,9 @@ export default function CreateRepertoire() {
           <div className="sub-divisionB">
             <AnimatePresence mode={"popLayout"}>
               {skillRepertoire.map((card, index) => (
-                
                 <SRSkillCard
-                  key={JSON.stringify({c:card})}
+                  key={JSON.stringify({ c: card })}
+                  index={index}
                   cardInfo={card}
                   returnToSkillCardPool={returnToSkillCardPool}
                 />
