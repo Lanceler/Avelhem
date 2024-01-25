@@ -2,7 +2,26 @@ import React from "react";
 
 import Tile from "./Tile";
 
-const Board = () => {
+import SelectFirstPlayer from "./modals/SelectFirstPlayer";
+
+import { useState, useEffect } from "react";
+
+import { db } from "../config/firebaseConfig";
+
+import {
+  getDocs,
+  collection,
+  query,
+  where,
+  addDoc,
+  updateDoc,
+  doc,
+  onSnapshot,
+} from "firebase/firestore";
+
+const Board = (props) => {
+  const gameDoc = doc(db, "gameInfo", props.gameId);
+
   class Zone {
     constructor(row, column) {
       this.row = row;
@@ -46,15 +65,6 @@ const Board = () => {
       }
 
       return zonesInRange;
-    }
-  }
-
-  let zones = [];
-
-  for (let r = 0; r < 10; r++) {
-    zones.push([]);
-    for (let c = 0; c < 5; c++) {
-      zones[r][c] = new Zone(r, c);
     }
   }
 
@@ -181,25 +191,71 @@ const Board = () => {
 
   var units = [[], []];
 
-  //------------------------------------------------------------------------------
+  // let zones = [];
 
+  // for (let r = 0; r < 10; r++) {
+  //   zones.push([]);
+  //   for (let c = 0; c < 5; c++) {
+  //     zones[r][c] = new Zone(r, c);
+  //   }
+  // }
+
+  //------------------------------------------------------------------------------
   //   zones[0][0].occupied = true;
 
-  units[0][0] = new Unit(0, 0, 0, 0);
+  // units[0][0] = new Unit(0, 0, 0, 0);
 
-  units[0][0].move(1, 1);
+  // units[0][0].move(1, 1);
 
-  units[0][1] = new Unit(0, 1, 3, 2);
+  // units[0][1] = new Unit(0, 1, 3, 2);
+
+  const [zones, setZones] = useState([]);
+  const [displayZones, setDisplayZones] = useState();
+
+  useEffect(() => {
+    setZones(JSON.parse(props.gameState.zones));
+  }, [props.gameState]);
+
+  useEffect(() => {
+    if (props.userRole === "guest") {
+      let zoneReversal = [...zones.reverse()];
+
+      for (let row in zoneReversal) {
+        zoneReversal[row].reverse();
+      }
+
+      setDisplayZones(zoneReversal);
+    } else {
+      setDisplayZones(zones);
+    }
+  }, [zones]);
+
+  const onSetFirstPlayer = async (choice) => {
+    try {
+      let newGameState = JSON.parse(JSON.stringify(props.gameState));
+      newGameState.turnPlayer = choice;
+      await updateDoc(gameDoc, { gameState: newGameState });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
-    <div className="tile-grid">
-      {zones.map((row, rowIndex) =>
-        row.map((zone, columnIndex) => (
-          <div key={[rowIndex, columnIndex]}>
-            <Tile zone={zone} />
-          </div>
-        ))
+    <div>
+      Turn Player: {props.gameState && props.gameState.turnPlayer}
+      {!props.gameState.turnPlayer && props.userRole === "host" && (
+        <SelectFirstPlayer onSetFirstPlayer={onSetFirstPlayer} />
       )}
+      <div className="tile-grid">
+        {displayZones &&
+          displayZones.map((row, rowIndex) =>
+            row.map((zone, columnIndex) => (
+              <div key={[rowIndex, columnIndex]}>
+                <Tile zone={zone} />
+              </div>
+            ))
+          )}
+      </div>
     </div>
   );
 };

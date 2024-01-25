@@ -85,7 +85,7 @@ export default function Game() {
         if (docSnapshot.exists()) {
           setGameData(docSnapshot.data());
           console.log("Change!");
-          // readGameState();
+          // readgameState();
         } else {
           console.log("Game does not exist");
         }
@@ -136,11 +136,11 @@ export default function Game() {
     try {
       const gameDoc = doc(db, "gameInfo", gameId);
 
-      let newGameState = JSON.parse(JSON.stringify(gameData.GameState));
+      let newGameState = JSON.parse(JSON.stringify(gameData.gameState));
       newGameState[userRole].skillRepertoire = rep.skillRepertoire;
       newGameState[userRole].avelhemRepertoire = rep.avelhemRepertoire;
 
-      await updateDoc(gameDoc, { GameState: newGameState });
+      await updateDoc(gameDoc, { gameState: newGameState });
 
       setIsLoading(false);
     } catch (err) {
@@ -149,7 +149,7 @@ export default function Game() {
     }
   };
 
-  const readGameState = () => {
+  const readgameState = () => {
     let playerSituation = 0;
 
     if (gameData && userRole === "host") {
@@ -157,9 +157,9 @@ export default function Game() {
       } else {
         playerSituation = 1;
 
-        if (!gameData.GameState.host.skillRepertoire) {
+        if (!gameData.gameState.host.skillRepertoire) {
           playerSituation = 1.5;
-        } else if (!gameData.GameState.guest.skillRepertoire) {
+        } else if (!gameData.gameState.guest.skillRepertoire) {
           playerSituation = 1.6;
         }
       }
@@ -168,9 +168,9 @@ export default function Game() {
 
       playerSituation = 1;
 
-      if (!gameData.GameState.guest.skillRepertoire) {
+      if (!gameData.gameState.guest.skillRepertoire) {
         playerSituation = 1.5;
-      } else if (!gameData.GameState.host.skillRepertoire) {
+      } else if (!gameData.gameState.host.skillRepertoire) {
         playerSituation = 1.6;
       }
     } else if (gameData) {
@@ -188,7 +188,11 @@ export default function Game() {
         return (
           <>
             <div>Play, {userRole}</div>
-            <Board gameState={gameData.gameState} gameId={gameData.id} />
+            <Board
+              gameState={gameData.gameState}
+              gameId={gameData.id}
+              userRole={userRole}
+            />
           </>
         );
 
@@ -228,7 +232,7 @@ export default function Game() {
       {gameId && <div>Game Id: {gameId}</div>}
       {gameData && <div>Creator: {gameData.hostName}</div>}
       {error && <div>Error: {error}</div>}
-      {readGameState()}
+      {readgameState()}
       {isLoading && <Loading />}
     </>
   );
