@@ -15,7 +15,8 @@ const SRSkillCard = (props) => {
         backgroundImage: `url(${image})`,
       }}
       onClick={() =>
-        props.returnToSkillCardPool(props.index, props.cardInfo.CardPoolIndex)
+        // props.returnToSkillCardPool(props.index, props.cardInfo.CardPoolIndex)
+        props.returnToSkillCardPool(props.cardInfo)
       }
     >
       {!image && <div> {props.cardInfo.Name}</div>}

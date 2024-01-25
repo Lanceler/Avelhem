@@ -37,6 +37,29 @@ export default function MyGames() {
         };
         createTime = createTime.toLocaleString("en-US", dateConversion);
 
+        // let zones = [];
+        // let column = 0;
+        // let row = 0;
+        // for (let i = 0; i < 50; i++) {
+        //   zones.push({ column: column, row: row });
+        //   row++;
+        //   if (row > 9) {
+        //     row = 0;
+        //     column++;
+        //   }
+        // }
+
+        let zones = [];
+
+        for (let r = 0; r < 10; r++) {
+          zones.push([]);
+          for (let c = 0; c < 5; c++) {
+            zones[r][c] = { row: r, column: c };
+          }
+        }
+
+        zones = JSON.stringify(zones);
+
         const createdGamesRef = collection(db, "gameInfo");
         const gameRef = await addDoc(createdGamesRef, {
           date: createTime,
@@ -51,7 +74,7 @@ export default function MyGames() {
             tactics: null,
             currentResolution: [],
             eventLog: [],
-            zones: [],
+            zones: zones,
 
             host: {
               skillRepertoire: null,

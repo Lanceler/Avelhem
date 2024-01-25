@@ -18,6 +18,7 @@ import {
 
 import SelectRepertoire from "../components/modals/SelectRepertoire";
 import Loading from "../components/modals/Loading";
+import Board from "../components/board";
 
 export default function Game() {
   const { user } = useAuthContext();
@@ -187,6 +188,7 @@ export default function Game() {
         return (
           <>
             <div>Play, {userRole}</div>
+            <Board gameState={gameData.gameState} gameId={gameData.id} />
           </>
         );
 

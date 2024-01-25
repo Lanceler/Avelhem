@@ -51,6 +51,7 @@ export default function CreateRepertoire() {
       newSkillRepertoire.push({
         Name: skillCardList[cardPoolIndex].Name,
         CardPoolIndex: cardPoolIndex,
+        kappa: newSkillRepertoire.length,
       });
 
       newSkillRepertoire.sort((a, b) => a.CardPoolIndex - b.CardPoolIndex);
@@ -62,13 +63,20 @@ export default function CreateRepertoire() {
     }
   };
 
-  const returnToSkillCardPool = (skillCardIndex, cardPoolIndex) => {
-    let newSkillRepertoire = [...skillRepertoire];
-    newSkillRepertoire.splice(skillCardIndex, 1);
-    setSkillRepertoire(newSkillRepertoire);
+  // const returnToSkillCardPool = (skillCardIndex, cardPoolIndex) => {
+  const returnToSkillCardPool = (cardInfo) => {
+    // let newSkillRepertoire = [...skillRepertoire];
+    // newSkillRepertoire.splice(skillCardIndex, 1);
+    // setSkillRepertoire(newSkillRepertoire);
+    console.log(cardInfo);
+    console.log(skillRepertoire);
+    setSkillRepertoire((prev) =>
+      prev.filter((skillRepertoire) => skillRepertoire !== cardInfo)
+    );
     let newCardPool = [...skillCardPool];
-    newCardPool[cardPoolIndex].Stock++;
+    newCardPool[cardInfo.CardPoolIndex].Stock++;
     setSkillCardPool(newCardPool);
+    console.log(skillRepertoire);
   };
 
   const addToAvelhemRepertoire = (cardPoolIndex) => {
@@ -188,7 +196,6 @@ export default function CreateRepertoire() {
 
   return (
     <div>
-      
       <label>
         <span>Repertoire Name:</span>
         <input
@@ -215,7 +222,6 @@ export default function CreateRepertoire() {
             {skillRepertoire.map((card, index) => (
               <SRSkillCard
                 key={index}
-                index={index}
                 cardInfo={card}
                 returnToSkillCardPool={returnToSkillCardPool}
               />
@@ -267,7 +273,7 @@ export default function CreateRepertoire() {
           </div>
         </div>
       </div>
-    
+
       {isLoading && <Loading />}
     </div>
   );
