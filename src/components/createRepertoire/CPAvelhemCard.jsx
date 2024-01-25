@@ -1,6 +1,8 @@
 import React from "react";
 import "./AvelhemCard.css";
 
+import {motion} from "framer-motion"
+
 import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 
 const CPAvelhemCard = (props) => {
@@ -9,7 +11,7 @@ const CPAvelhemCard = (props) => {
   image = getImage(props.cardInfo.Name);
 
   return (
-    <div
+    <motion.div
       className={
         props.cardInfo.Stock ? "avelhem-card" : "avelhem-card out-of-stock"
       }
@@ -20,7 +22,7 @@ const CPAvelhemCard = (props) => {
     >
       <div className="remaining">{props.cardInfo.Name}</div>
       <div className="remaining">Remaining: {props.cardInfo.Stock}</div>
-    </div>
+    </motion.div>
   );
 };
 

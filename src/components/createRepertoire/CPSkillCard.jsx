@@ -7,6 +7,8 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 
+import {motion} from "framer-motion"
+
 const CPSkillCard = (props) => {
   const { getImage } = useCardImageSwitch();
   let image = "";

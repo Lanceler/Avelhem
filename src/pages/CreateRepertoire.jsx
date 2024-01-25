@@ -23,6 +23,7 @@ import {
   doc,
 } from "firebase/firestore";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { AnimatePresence } from "framer-motion";
 
 export default function CreateRepertoire() {
   useEffect(() => {
@@ -65,18 +66,28 @@ export default function CreateRepertoire() {
 
   // const returnToSkillCardPool = (skillCardIndex, cardPoolIndex) => {
   const returnToSkillCardPool = (cardInfo) => {
-    // let newSkillRepertoire = [...skillRepertoire];
-    // newSkillRepertoire.splice(skillCardIndex, 1);
-    // setSkillRepertoire(newSkillRepertoire);
-    console.log(cardInfo);
-    console.log(skillRepertoire);
-    setSkillRepertoire((prev) =>
-      prev.filter((skillRepertoire) => skillRepertoire !== cardInfo)
-    );
-    let newCardPool = [...skillCardPool];
-    newCardPool[cardInfo.CardPoolIndex].Stock++;
-    setSkillCardPool(newCardPool);
-    console.log(skillRepertoire);
+    if (!isLoading) {
+      setIsLoading(true);
+
+      // let newSkillRepertoire = [...skillRepertoire];
+      // newSkillRepertoire.splice(skillCardIndex, 1);
+      // setSkillRepertoire(newSkillRepertoire);
+      console.log(cardInfo);
+      console.log(skillRepertoire);
+      setSkillRepertoire((prev) =>
+        prev.filter((skillRepertoire) => skillRepertoire !== cardInfo)
+      );
+      let newCardPool = [...skillCardPool];
+      let limit = skillCardList[cardInfo.CardPoolIndex].Stock;
+      newCardPool[cardInfo.CardPoolIndex].Stock = Math.min(
+        newCardPool[cardInfo.CardPoolIndex].Stock + 1,
+        limit
+      );
+      setSkillCardPool(newCardPool);
+      console.log(skillRepertoire);
+
+      setTimeout(setIsLoading(false), 3200);
+    }
   };
 
   const addToAvelhemRepertoire = (cardPoolIndex) => {
@@ -219,13 +230,15 @@ export default function CreateRepertoire() {
         <div className="division">
           Skill Repertoire: {skillRepertoire.length} / 60
           <div className="sub-divisionB">
-            {skillRepertoire.map((card, index) => (
-              <SRSkillCard
-                key={index}
-                cardInfo={card}
-                returnToSkillCardPool={returnToSkillCardPool}
-              />
-            ))}
+            <AnimatePresence initial={false}>
+              {skillRepertoire.map((card, index) => (
+                <SRSkillCard
+                  key={index}
+                  cardInfo={card}
+                  returnToSkillCardPool={returnToSkillCardPool}
+                />
+              ))}
+            </AnimatePresence>
           </div>
         </div>
 
