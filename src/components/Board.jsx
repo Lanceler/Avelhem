@@ -210,10 +210,25 @@ const Board = (props) => {
   // units[0][1] = new Unit(0, 1, 3, 2);
 
   const [zones, setZones] = useState([]);
+  const [displayZones, setDisplayZones] = useState();
 
   useEffect(() => {
     setZones(JSON.parse(props.gameState.zones));
   }, [props.gameState]);
+
+  useEffect(() => {
+    if (props.userRole === "guest") {
+      let zoneReversal = [...zones.reverse()];
+
+      for (let row in zoneReversal) {
+        zoneReversal[row].reverse();
+      }
+
+      setDisplayZones(zoneReversal);
+    } else {
+      setDisplayZones(zones);
+    }
+  }, [zones]);
 
   const onSetFirstPlayer = async (choice) => {
     try {
@@ -232,8 +247,8 @@ const Board = (props) => {
         <SelectFirstPlayer onSetFirstPlayer={onSetFirstPlayer} />
       )}
       <div className="tile-grid">
-        {zones &&
-          zones.map((row, rowIndex) =>
+        {displayZones &&
+          displayZones.map((row, rowIndex) =>
             row.map((zone, columnIndex) => (
               <div key={[rowIndex, columnIndex]}>
                 <Tile zone={zone} />
