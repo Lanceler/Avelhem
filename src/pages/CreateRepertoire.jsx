@@ -23,6 +23,7 @@ import {
   doc,
 } from "firebase/firestore";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { AnimatePresence } from "framer-motion";
 
 export default function CreateRepertoire() {
   useEffect(() => {
@@ -67,7 +68,8 @@ export default function CreateRepertoire() {
     newSkillRepertoire.splice(skillCardIndex, 1);
     setSkillRepertoire(newSkillRepertoire);
     let newCardPool = [...skillCardPool];
-    newCardPool[cardPoolIndex].Stock++;
+    let limit = skillCardList[cardPoolIndex].Stock;
+    newCardPool[cardPoolIndex].Stock = Math.min(newCardPool[cardPoolIndex].Stock+1,limit);
     setSkillCardPool(newCardPool);
   };
 
@@ -212,6 +214,8 @@ export default function CreateRepertoire() {
         <div className="division">
           Skill Repertoire: {skillRepertoire.length} / 60
           <div className="sub-divisionB">
+          <AnimatePresence initial={false}>
+
             {skillRepertoire.map((card, index) => (
               <SRSkillCard
                 key={index}
@@ -220,6 +224,7 @@ export default function CreateRepertoire() {
                 returnToSkillCardPool={returnToSkillCardPool}
               />
             ))}
+            </AnimatePresence>
           </div>
         </div>
 
@@ -234,7 +239,7 @@ export default function CreateRepertoire() {
                 addToSkillRepertoire={addToSkillRepertoire}
                 selectViewCard={selectViewCard}
               />
-            ))}
+            ))}          
           </div>
         </div>
       </div>
