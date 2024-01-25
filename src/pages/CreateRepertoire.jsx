@@ -72,8 +72,6 @@ export default function CreateRepertoire() {
       // let newSkillRepertoire = [...skillRepertoire];
       // newSkillRepertoire.splice(skillCardIndex, 1);
       // setSkillRepertoire(newSkillRepertoire);
-      console.log(cardInfo);
-      console.log(skillRepertoire);
       setSkillRepertoire((prev) =>
         prev.filter((skillRepertoire) => skillRepertoire !== cardInfo)
       );
@@ -84,8 +82,6 @@ export default function CreateRepertoire() {
         limit
       );
       setSkillCardPool(newCardPool);
-      console.log(skillRepertoire);
-
       setTimeout(setIsLoading(false), 3200);
     }
   };
@@ -230,10 +226,11 @@ export default function CreateRepertoire() {
         <div className="division">
           Skill Repertoire: {skillRepertoire.length} / 60
           <div className="sub-divisionB">
-            <AnimatePresence initial={false}>
+            <AnimatePresence mode={"popLayout"}>
               {skillRepertoire.map((card, index) => (
+                
                 <SRSkillCard
-                  key={index}
+                  key={JSON.stringify({c:card})}
                   cardInfo={card}
                   returnToSkillCardPool={returnToSkillCardPool}
                 />

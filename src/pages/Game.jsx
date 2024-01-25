@@ -18,7 +18,7 @@ import {
 
 import SelectRepertoire from "../components/modals/SelectRepertoire";
 import Loading from "../components/modals/Loading";
-import Board from "../components/board";
+import Board from "../components/Board";
 
 export default function Game() {
   const { user } = useAuthContext();
