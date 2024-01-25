@@ -21,8 +21,6 @@ export default function SelectRepertoire(props) {
   const [documentId, setDocumentId] = useState(null);
   const [repertoireList, setRepertoireList] = useState(null);
 
-  //   const userId = props.user.uid;
-
   //---Realtime data functionality below
   const userInfoRef = query(
     collection(db, "userInfo"),

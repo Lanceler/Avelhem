@@ -29,7 +29,7 @@ export default function Game() {
   const [gameId, setGameId] = useState(null);
   const [gameData, setGameData] = useState(null);
 
-  const [playerNumber, SetPlayerNumber] = useState("player2");
+  const [userRole, SetUserRole] = useState("");
 
   const queryString = useLocation().search;
   const queryParams = new URLSearchParams(queryString);
@@ -75,9 +75,6 @@ export default function Game() {
 
   useEffect(() => {
     setIsLoading(true);
-
-    console.log(playerNumber);
-
     let unsubscribe;
 
     if (gameId) {
@@ -101,10 +98,14 @@ export default function Game() {
 
   useEffect(() => {
     if (gameData && user.uid === gameData.hostId) {
-      SetPlayerNumber("player1");
+      SetUserRole("host");
+    } else if (gameData && user.uid === gameData.guestId) {
+      SetUserRole("guest");
+    } else {
+      SetUserRole("");
     }
-    console.log("NOOO!!!");
-  }, [gameData && gameData.hostId]);
+    console.log("Role identified");
+  }, [gameData && gameData.hostId, gameData && gameData.guestId]);
 
   //---Realtime data functionality above
 
@@ -118,8 +119,10 @@ export default function Game() {
 
       await updateDoc(gameDoc, {
         guestId: user.uid,
+        guestName: user.displayName,
       });
       setIsLoading(false);
+      SetUserRole("guest");
     } catch (err) {
       setError(err.message);
       setIsLoading(false);
@@ -133,8 +136,8 @@ export default function Game() {
       const gameDoc = doc(db, "gameInfo", gameId);
 
       let newGameState = JSON.parse(JSON.stringify(gameData.GameState));
-      newGameState.skillRepertoires[playerNumber] = rep.skillRepertoire;
-      newGameState.avelhemRepertoires[playerNumber] = rep.avelhemRepertoire;
+      newGameState[userRole].skillRepertoire = rep.skillRepertoire;
+      newGameState[userRole].avelhemRepertoire = rep.avelhemRepertoire;
 
       await updateDoc(gameDoc, { GameState: newGameState });
 
@@ -148,37 +151,31 @@ export default function Game() {
   const readGameState = () => {
     let playerSituation = 0;
 
-    if (gameData && user.uid === gameData.hostId) {
-      console.log("Host");
-
+    if (gameData && userRole === "host") {
       if (!gameData.guestId) {
-        console.log("Waiting");
       } else {
-        console.log("Play");
         playerSituation = 1;
 
-        if (!gameData.GameState.skillRepertoires.player1) {
+        if (!gameData.GameState.host.skillRepertoire) {
           playerSituation = 1.5;
-        } else if (!gameData.GameState.skillRepertoires.player2) {
+        } else if (!gameData.GameState.guest.skillRepertoire) {
           playerSituation = 1.6;
         }
       }
-    } else if (gameData && user.uid === gameData.guestId) {
+    } else if (gameData && userRole === "guest") {
       console.log("Guest");
-      console.log("Play");
+
       playerSituation = 1;
 
-      if (!gameData.GameState.skillRepertoires.player2) {
+      if (!gameData.GameState.guest.skillRepertoire) {
         playerSituation = 1.5;
-      } else if (!gameData.GameState.skillRepertoires.player1) {
+      } else if (!gameData.GameState.host.skillRepertoire) {
         playerSituation = 1.6;
       }
     } else if (gameData) {
       if (!gameData.guestId) {
-        console.log("Do you want to join?");
         playerSituation = 2;
       } else {
-        console.log("Spectate?");
         playerSituation = 3;
       }
     }
@@ -189,7 +186,7 @@ export default function Game() {
       case 1:
         return (
           <>
-            <div>Play, {playerNumber}</div>
+            <div>Play, {userRole}</div>
           </>
         );
 
