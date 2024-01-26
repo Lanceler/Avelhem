@@ -408,5 +408,13 @@ export const useCardDatabase = () => {
     },
   ];
 
-  return { avelhemCardList, skillCardList };
+  const getAvelhemById = (id) => {
+    return avelhemCardList.find((card) => card.CardId === id);
+  };
+
+  const getSkillById = (id) => {
+    return skillCardList.find((card) => card.CardId === id);
+  };
+
+  return { avelhemCardList, skillCardList, getAvelhemById, getSkillById };
 };

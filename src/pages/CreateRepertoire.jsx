@@ -30,7 +30,8 @@ export default function CreateRepertoire() {
     window.scrollTo(0, 0);
   }, []);
 
-  const { avelhemCardList, skillCardList } = useCardDatabase();
+  const { avelhemCardList, skillCardList, getAvelhemById, getSkillById } =
+    useCardDatabase();
   const [skillCardPool, setSkillCardPool] = useState(skillCardList);
   const [skillRepertoire, setSkillRepertoire] = useState([]);
   const [avelhemCardPool, setAvelhemCardPool] = useState(avelhemCardList);
