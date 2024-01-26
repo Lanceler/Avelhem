@@ -7,6 +7,21 @@
     /* Set the container to relative positioning */
 }
 
+.hand-container {
+    display: flex;
+}
+
+.handCard {
+    width: 100px;
+    /* Adjust the width as needed */
+    height: 150px;
+    /* Adjust the height as needed */
+    background-color: green;
+    border: 2px solid black;
+    margin-right: 10px;
+    /* Adjust the margin between cards as needed */
+}
+
 .card {
     width: 100%;
     height:100%;

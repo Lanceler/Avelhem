@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useNavigate } from "react-router-dom";
@@ -16,6 +16,10 @@ import {
 } from "firebase/firestore";
 
 export default function MyGames() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useAuthContext();
   const navigate = useNavigate();

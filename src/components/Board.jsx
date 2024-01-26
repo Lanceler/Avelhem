@@ -249,6 +249,11 @@ const Board = (props) => {
       newGameState.turnPlayer = choice;
 
       let hostSkillRepertoire = [...props.gameState.host.skillRepertoire];
+      let hostStartingHand = hostSkillRepertoire.splice(
+        hostSkillRepertoire.length - 4,
+        4
+      );
+      newGameState.host.skillHand = hostStartingHand;
       newGameState.host.skillRepertoire =
         shuffleRepertoire(hostSkillRepertoire);
 
@@ -258,6 +263,11 @@ const Board = (props) => {
       );
 
       let guestSkillRepertoire = [...props.gameState.guest.skillRepertoire];
+      let guestStartingHand = guestSkillRepertoire.splice(
+        guestSkillRepertoire.length - 4,
+        4
+      );
+      newGameState.guest.skillHand = guestStartingHand;
       newGameState.guest.skillRepertoire =
         shuffleRepertoire(guestSkillRepertoire);
 
@@ -305,35 +315,7 @@ const Board = (props) => {
                 </div>
                 <div className="lcml-player-right">
                   <div className="avel-used"></div>
-                  <div className="skill-used">
-                    
-                    <div className="deck-container">
-                    {/* {ownRepertoire &&
-                        
-                          <div
-                            
-                            className="card"
-                          >
-                            
-                          </div>
-
-                        } */}
-                      {ownRepertoire &&
-                        ownRepertoire.map((card, index) => (
-                          <div
-                            key={index}
-                            className="card"
-                            style={{
-                              zIndex: index,
-                              marginTop: `${index}px`,
-                            }}
-                          >
-                            {card}
-                          </div>
-                        ))}
-                    </div>
-
-                  </div>
+                  <div className="skill-used"></div>
                 </div>
               </div>
             </div>
@@ -363,7 +345,33 @@ const Board = (props) => {
         <div className="phase-indicator"></div>
         <div className="right-container"></div>
       </div>
-      <br></br>
+      <br />
+      Own Deck:
+      <div style={{ position: "relative" }}>
+        <div className="deck-container">
+          {ownRepertoire &&
+            ownRepertoire.map((card, index) => (
+              <div
+                key={index}
+                className="card"
+                style={{
+                  zIndex: index,
+                  marginTop: `${index * -0.3}px`,
+                }}
+              >
+                {card}
+              </div>
+            ))}
+        </div>
+      </div>
+      <br />
+      <div className="hand-container">
+        {props.gameState[props.userRole].skillHand.map((card, index) => (
+          <div key={index} className="handCard">
+            {card}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
