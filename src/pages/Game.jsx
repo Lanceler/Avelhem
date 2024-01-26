@@ -85,7 +85,6 @@ export default function Game() {
         if (docSnapshot.exists()) {
           setGameData(docSnapshot.data());
           console.log("Change!");
-          // readgameState();
         } else {
           console.log("Game does not exist");
         }
@@ -105,7 +104,7 @@ export default function Game() {
     } else {
       SetUserRole("");
     }
-    console.log("Role identified");
+    console.log("Role identified: " + userRole);
   }, [gameData && gameData.hostId, gameData && gameData.guestId]);
 
   //---Realtime data functionality above

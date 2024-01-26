@@ -12,11 +12,6 @@ const SRSkillCard = (props) => {
 
   // console.log("key: " + props.key1)
   const [isLoading, setIsLoading] = useState(false);
-  const [stringedFunction, setStringedFunction] = useState("");
-
-  let testt = () => {
-    props.returnToSkillCardPool(props.cardInfo);
-  };
 
   const allowFunction = () => {
     if (!isLoading) {
@@ -36,7 +31,6 @@ const SRSkillCard = (props) => {
       style={{
         backgroundImage: `url(${image})`,
       }}
-      // onClick={() => props.returnToSkillCardPool(props.cardInfo, props.index)}
       onClick={() => allowFunction()}
     >
       {!image && <div> {props.cardInfo.Name}</div>}

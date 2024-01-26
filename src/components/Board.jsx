@@ -218,7 +218,6 @@ const Board = (props) => {
   useEffect(() => {
     setZones(JSON.parse(props.gameState.zones));
     setOwnRepertoire(props.gameState[props.userRole].skillRepertoire);
-    console.log(props.gameState[props.userRole].skillRepertoire);
   }, [props.gameState]);
 
   useEffect(() => {
@@ -235,10 +234,38 @@ const Board = (props) => {
     }
   }, [zones]);
 
+  const shuffleRepertoire = (repertoire) => {
+    for (let i = repertoire.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [repertoire[i], repertoire[j]] = [repertoire[j], repertoire[i]];
+    }
+    return repertoire;
+  };
+
   const onSetFirstPlayer = async (choice) => {
     try {
       let newGameState = JSON.parse(JSON.stringify(props.gameState));
+
       newGameState.turnPlayer = choice;
+
+      let hostSkillRepertoire = [...props.gameState.host.skillRepertoire];
+      newGameState.host.skillRepertoire =
+        shuffleRepertoire(hostSkillRepertoire);
+
+      let hostAvelhemRepertoire = [...props.gameState.host.avelhemRepertoire];
+      newGameState.host.avelhemRepertoire = shuffleRepertoire(
+        hostAvelhemRepertoire
+      );
+
+      let guestSkillRepertoire = [...props.gameState.guest.skillRepertoire];
+      newGameState.guest.skillRepertoire =
+        shuffleRepertoire(guestSkillRepertoire);
+
+      let guestAvelhemRepertoire = [...props.gameState.guest.avelhemRepertoire];
+      newGameState.guest.avelhemRepertoire = shuffleRepertoire(
+        guestAvelhemRepertoire
+      );
+
       await updateDoc(gameDoc, { gameState: newGameState });
     } catch (err) {
       console.log(err);
@@ -268,12 +295,15 @@ const Board = (props) => {
               key={index}
               className="card"
               style={{
-                zIndex: ownRepertoire.length - index,
-                marginTop: `${index * 1}px`,
+                zIndex: index,
+                marginTop: `${index * -1}px`,
               }}
-            ></div>
+            >
+              {card}
+            </div>
           ))}
       </div>
+      <br></br>
     </div>
   );
 };

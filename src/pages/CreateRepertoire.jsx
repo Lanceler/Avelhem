@@ -51,6 +51,7 @@ export default function CreateRepertoire() {
       let newSkillRepertoire = [...skillRepertoire];
       newSkillRepertoire.push({
         Name: skillCardList[cardPoolIndex].Name,
+        CardId: skillCardList[cardPoolIndex].CardId,
         CardPoolIndex: cardPoolIndex,
         timeAdded: new Date(),
       });
@@ -89,7 +90,9 @@ export default function CreateRepertoire() {
       let newAvelhemRepertoire = [...avelhemRepertoire];
       newAvelhemRepertoire.push({
         Name: avelhemCardList[cardPoolIndex].Name,
+        CardId: avelhemCardList[cardPoolIndex].CardId,
         CardPoolIndex: cardPoolIndex,
+        timeAdded: new Date(),
       });
 
       newAvelhemRepertoire.sort((a, b) => a.CardPoolIndex - b.CardPoolIndex);
@@ -117,7 +120,7 @@ export default function CreateRepertoire() {
   const getSkillIndexes = () => {
     let skillIndexes = [];
 
-    for (let i = 0; i < skillIndexes.length; i++) {
+    for (let i = 0; i < skillRepertoire.length; i++) {
       skillIndexes.push(skillRepertoire[i].CardId);
     }
     return skillIndexes;
@@ -126,7 +129,7 @@ export default function CreateRepertoire() {
   const getAvelhemIndexes = () => {
     let avelhemIndexes = [];
 
-    for (let i = 0; i < avelhemIndexes.length; i++) {
+    for (let i = 0; i < avelhemRepertoire.length; i++) {
       avelhemIndexes.push(avelhemRepertoire[i].CardId);
     }
     return avelhemIndexes;
@@ -180,6 +183,8 @@ export default function CreateRepertoire() {
               skillRepertoire: getSkillIndexes(),
               avelhemRepertoire: getAvelhemIndexes(),
             };
+
+            console.log(newRepertoire);
 
             const updatedRepertoire = [...results.repertoire, newRepertoire];
             const userDoc = doc(db, "userInfo", results.id);
