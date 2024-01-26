@@ -1,0 +1,153 @@
+.deck-container {
+    /* position: relative; */
+    /* Set the container to relative positioning */
+}
+
+.card {
+    width: 100px;
+    /* Set your desired width */
+    height: 150px;
+    /* Set your desired height */
+    margin: 10px;
+    /* Adjust margin as needed */
+    background-color: rgb(62, 62, 138);
+    border: 1px solid rgb(82, 82, 82);
+    border-radius: 5px;
+    /* Optional: Add border radius for rounded corners */
+    
+    /* transform: rotateY(180deg); */
+
+    /* Rotate the card face down */
+    position: absolute;
+    /* Set the cards to absolute positioning */
+}
+
+.section {
+    background-color: rgb(255, 255, 255);
+    height: 100vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    
+}
+
+.left-container {
+    // background-color: rgb(212, 183, 104);
+    width: 25%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .fd{
+        background-color: #ffbb00;
+        height: 50%;
+        width: 100%;
+    }
+    .cp{
+        background-color: #f75656;
+        height: 50%;
+        width: 100%;
+    }
+
+    .skill-used{
+        background-color: #4d64b1;
+        height: 50%;
+        width: 100%;
+    }
+
+    .avel-used{
+        background-color: #7cc07c;
+        height: 50%;
+        width: 100%;
+    }
+
+    .lc-middle{
+        // background-color: #919e89;
+        width: 100%;
+        height: 50%;
+        display: flex;
+        justify-content: center;
+    
+    
+        .lcm-left{
+            // background-color: rgb(134, 94, 94);
+            height: 100%;
+            width: 60%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-end;
+
+            .lcml-player{
+                // background-color: black;
+                height: 20%;
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .lcml-player-left{
+                background-color: green;
+                height: 100%;
+                width: 20%;
+            }
+
+            .lcml-player-right{
+                background-color: #98b44b;
+                height: 100%;
+                width: 30%;
+            }
+
+            .dice-results {
+                background-color: #9b9b9b;
+                height: 60%;
+                width: 80%;
+            }
+        }
+        
+        
+        .lcm-right{
+            background-color: rgb(209, 184, 184);
+            height: 100%;
+            width: 40%;
+        }
+    }
+    
+    .lc-player{
+        // background-color: #8fa8df;
+        width: 100%;
+        height: 15%;
+
+
+        .avel-hand{
+            background-color: #96e0a6;
+            height: 40%;
+            width: 100%;
+        }
+        .skill-hand{
+            background-color: #5797b4;
+            height: 60%;
+            width: 100%;
+        }
+    }
+}
+
+.middle-container {
+    background-color: rgb(108, 134, 108);
+    width: 25%;
+    height: 70%;
+}
+
+.phase-indicator {
+    background-color: green;
+    width: 5%;
+    height: 70%;
+}
+
+.right-container {
+    background-color: rgb(221, 162, 0);
+    width: 20%;
+    height: 70%;
+}
+
