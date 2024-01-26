@@ -305,7 +305,35 @@ const Board = (props) => {
                 </div>
                 <div className="lcml-player-right">
                   <div className="avel-used"></div>
-                  <div className="skill-used"></div>
+                  <div className="skill-used">
+                    
+                    <div className="deck-container">
+                    {/* {ownRepertoire &&
+                        
+                          <div
+                            
+                            className="card"
+                          >
+                            
+                          </div>
+
+                        } */}
+                      {ownRepertoire &&
+                        ownRepertoire.map((card, index) => (
+                          <div
+                            key={index}
+                            className="card"
+                            style={{
+                              zIndex: index,
+                              marginTop: `${index}px`,
+                            }}
+                          >
+                            {card}
+                          </div>
+                        ))}
+                    </div>
+
+                  </div>
                 </div>
               </div>
             </div>
@@ -334,21 +362,6 @@ const Board = (props) => {
         </div>
         <div className="phase-indicator"></div>
         <div className="right-container"></div>
-      </div>
-      <div className="deck-container">
-        {ownRepertoire &&
-          ownRepertoire.map((card, index) => (
-            <div
-              key={index}
-              className="card"
-              style={{
-                zIndex: index,
-                marginTop: `${index * -1}px`,
-              }}
-            >
-              {card}
-            </div>
-          ))}
       </div>
       <br></br>
     </div>
