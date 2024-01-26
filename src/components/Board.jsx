@@ -1,3 +1,5 @@
+import "./Board.css";
+
 import React from "react";
 
 import Tile from "./Tile";
@@ -211,9 +213,12 @@ const Board = (props) => {
 
   const [zones, setZones] = useState([]);
   const [displayZones, setDisplayZones] = useState();
+  const [ownRepertoire, setOwnRepertoire] = useState();
 
   useEffect(() => {
     setZones(JSON.parse(props.gameState.zones));
+    setOwnRepertoire(props.gameState[props.userRole].skillRepertoire);
+    console.log(props.gameState[props.userRole].skillRepertoire);
   }, [props.gameState]);
 
   useEffect(() => {
@@ -255,6 +260,19 @@ const Board = (props) => {
               </div>
             ))
           )}
+      </div>
+      <div className="deck-container">
+        {ownRepertoire &&
+          ownRepertoire.map((card, index) => (
+            <div
+              key={index}
+              className="card"
+              style={{
+                zIndex: ownRepertoire.length - index,
+                marginTop: `${index * 1}px`,
+              }}
+            ></div>
+          ))}
       </div>
     </div>
   );

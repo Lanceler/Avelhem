@@ -404,7 +404,7 @@ export const useCardDatabase = () => {
       Stock: 1,
       Aspect: "Sovereign",
       Method: "Burst",
-      CardId: "SC-6",
+      CardId: "SD-1",
     },
   ];
 

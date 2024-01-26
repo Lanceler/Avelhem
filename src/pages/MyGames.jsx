@@ -37,18 +37,6 @@ export default function MyGames() {
         };
         createTime = createTime.toLocaleString("en-US", dateConversion);
 
-        // let zones = [];
-        // let column = 0;
-        // let row = 0;
-        // for (let i = 0; i < 50; i++) {
-        //   zones.push({ column: column, row: row });
-        //   row++;
-        //   if (row > 9) {
-        //     row = 0;
-        //     column++;
-        //   }
-        // }
-
         let zones = [];
 
         for (let r = 0; r < 10; r++) {
@@ -80,9 +68,10 @@ export default function MyGames() {
               skillRepertoire: null,
               skillVestige: [],
               skillShattered: [],
+              skillHand: [],
               avelhemRepertoire: [],
               avelhemVestige: [],
-              hand: [],
+              avelhemHand: [],
               units: [],
               bountyPoints: 0,
               bountyUpgrades: {},
@@ -94,9 +83,10 @@ export default function MyGames() {
               skillRepertoire: null,
               skillVestige: [],
               skillShattered: [],
+              skillHand: [],
               avelhemRepertoire: [],
               avelhemVestige: [],
-              hand: [],
+              avelhemHand: [],
               units: [],
               bountyPoints: 0,
               bountyUpgrades: {},

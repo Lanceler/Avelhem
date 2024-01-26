@@ -1,0 +1,23 @@
+.deck-container {
+    position: relative;
+    /* Set the container to relative positioning */
+}
+
+.card {
+    width: 100px;
+    /* Set your desired width */
+    height: 150px;
+    /* Set your desired height */
+    margin: 10px;
+    /* Adjust margin as needed */
+    background-color: rgb(62, 62, 138);
+    border: 1px solid rgb(82, 82, 82);
+    border-radius: 5px;
+    /* Optional: Add border radius for rounded corners */
+    
+    /* transform: rotateY(180deg); */
+
+    /* Rotate the card face down */
+    position: absolute;
+    /* Set the cards to absolute positioning */
+}
