@@ -315,28 +315,27 @@ const Board = (props) => {
             </div>
           </div>
 
-
           <div className="lc-player">
             <div className="avel-hand"></div>
             <div className="skill-hand"></div>
           </div>
         </div>
-        <div className="middle-container"></div>
+        <div className="middle-container">
+          <div className="tile-grid">
+            {displayZones &&
+              displayZones.map((row, rowIndex) =>
+                row.map((zone, columnIndex) => (
+                  <div key={[rowIndex, columnIndex]}>
+                    <Tile zone={zone} />
+                  </div>
+                ))
+              )}
+          </div>
+        </div>
         <div className="phase-indicator"></div>
         <div className="right-container"></div>
       </div>
-     
-      <div className="tile-grid">
-          {displayZones &&
-            displayZones.map((row, rowIndex) =>
-              row.map((zone, columnIndex) => (
-                <div key={[rowIndex, columnIndex]}>
-                  <Tile zone={zone} />
-                </div>
-              ))
-            )}
-        </div>
-        <div className="deck-container">
+      <div className="deck-container">
         {ownRepertoire &&
           ownRepertoire.map((card, index) => (
             <div
