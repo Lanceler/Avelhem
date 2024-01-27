@@ -55,5 +55,22 @@ export const useUnitAndZoneClasses = () => {
     }
   }
 
-  return { Zone };
+  class Unit {
+    constructor(player, unitIndex, row, column) {
+      this.stats = {};
+      this.stats.player = player;
+      this.stats.unitIndex = unitIndex;
+      this.stats.row = row;
+      this.stats.column = column;
+    }
+  }
+
+  class Pawn extends Unit {
+    constructor(player, unitIndex, row, column) {
+      super(player, unitIndex, row, column);
+      this.stats.unitClass = "Pawn";
+    }
+  }
+
+  return { Zone, Unit, Pawn };
 };
