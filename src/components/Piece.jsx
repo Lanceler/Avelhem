@@ -13,7 +13,6 @@ export const Piece = (props) => {
 
   return (
     <>
-      {/* {console.log(props)} */}
       {props.player && props.hostUnits && props.guestUnits && (
         <div className="piece">
           <>

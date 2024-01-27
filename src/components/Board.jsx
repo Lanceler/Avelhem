@@ -38,7 +38,7 @@ const Board = (props) => {
 
   //Gets data regarding zones and units
   useEffect(() => {
-    console.log("props.gameState changed");
+    console.log("Change!");
     setZones(JSON.parse(props.gameState.zones));
     setHostUnits(props.gameState.host.units);
     setGuestUnits(props.gameState.guest.units);
@@ -127,36 +127,27 @@ const Board = (props) => {
         guestAvelhemRepertoire
       );
 
-      newGameState.host.units = [
-        JSON.parse(JSON.stringify(new Pawn("host", 0, 6, 3))).stats,
-        JSON.parse(JSON.stringify(new Pawn("host", 1, 6, 2))).stats,
-        JSON.parse(JSON.stringify(new Pawn("host", 2, 6, 1))).stats,
-      ];
-      setHostUnits(newGameState.host.units);
-      newGameState.guest.units = [
-        JSON.parse(JSON.stringify(new Pawn("guest", 0, 3, 3))).stats,
-        JSON.parse(JSON.stringify(new Pawn("guest", 1, 3, 2))).stats,
-        JSON.parse(JSON.stringify(new Pawn("guest", 2, 3, 1))).stats,
-      ];
-      setGuestUnits(newGameState.guest.units);
+      newGameState.host.units[0] = JSON.parse(
+        JSON.stringify(new Pawn("host", 0, 6, 3))
+      ).stats;
+      newGameState.host.units[1] = JSON.parse(
+        JSON.stringify(new Pawn("host", 1, 6, 2))
+      ).stats;
+      newGameState.host.units[2] = JSON.parse(
+        JSON.stringify(new Pawn("host", 2, 6, 1))
+      ).stats;
 
-      // let newZoneInfo = JSON.parse(props.gameState.zones);
-      // newZoneInfo[6][3].player = "host";
-      // newZoneInfo[6][3].unitIndex = 0;
-      // newZoneInfo[6][2].player = "host";
-      // newZoneInfo[6][2].unitIndex = 1;
-      // newZoneInfo[6][1].player = "host";
-      // newZoneInfo[6][1].unitIndex = 2;
-
-      // newZoneInfo[3][3].player = "guest";
-      // newZoneInfo[3][3].unitIndex = 0;
-      // newZoneInfo[3][2].player = "guest";
-      // newZoneInfo[3][2].unitIndex = 1;
-      // newZoneInfo[3][1].player = "guest";
-      // newZoneInfo[3][1].unitIndex = 2;
+      newGameState.guest.units[0] = JSON.parse(
+        JSON.stringify(new Pawn("guest", 0, 3, 3))
+      ).stats;
+      newGameState.guest.units[1] = JSON.parse(
+        JSON.stringify(new Pawn("guest", 1, 3, 2))
+      ).stats;
+      newGameState.guest.units[2] = JSON.parse(
+        JSON.stringify(new Pawn("guest", 2, 3, 1))
+      ).stats;
 
       let newZoneInfo = [...zonesClass];
-
       newGameState.zones = JSON.stringify(newZoneInfo);
 
       await updateDoc(gameDoc, { gameState: newGameState });
@@ -228,6 +219,24 @@ const Board = (props) => {
       tempZonesClass[row][column].unitIndex = unitIndex;
 
       setZonesClass(tempZonesClass);
+
+      if (player === "host") {
+        setHostUnits((prevHostUnits) => {
+          const updatedHostUnits = [...prevHostUnits];
+          updatedHostUnits[unitIndex] = this.stats;
+
+          console.log(prevHostUnits);
+          console.log(updatedHostUnits);
+
+          return updatedHostUnits;
+        });
+      } else {
+        setGuestUnits((prevGuestUnits) => {
+          const updatedGuestUnits = [...prevGuestUnits];
+          updatedGuestUnits[unitIndex] = this.stats;
+          return updatedGuestUnits;
+        });
+      }
     }
   }
 

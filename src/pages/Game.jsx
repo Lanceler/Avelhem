@@ -84,7 +84,6 @@ export default function Game() {
       unsubscribe = onSnapshot(documentRef, (docSnapshot) => {
         if (docSnapshot.exists()) {
           setGameData(docSnapshot.data());
-          console.log("Change!");
         } else {
           console.log("Game does not exist");
         }
@@ -163,8 +162,6 @@ export default function Game() {
         }
       }
     } else if (gameData && userRole === "guest") {
-      console.log("Guest");
-
       playerSituation = 1;
 
       if (!gameData.gameState.guest.skillRepertoire) {
