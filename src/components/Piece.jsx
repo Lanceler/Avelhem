@@ -13,12 +13,12 @@ export const Piece = (props) => {
 
   return (
     <>
-      {props.player && props.hostUnits && props.guestUnits && (
+      {props.player && props[owner][props.unitIndex] && (
         <div className="piece">
           <>
-            {props[owner][props.unitIndex].player}
+            {props[owner][props.unitIndex].stats.player}
             <br />
-            {props[owner][props.unitIndex].unitIndex}
+            {props[owner][props.unitIndex].stats.unitIndex}
           </>
         </div>
       )}

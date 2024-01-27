@@ -12,16 +12,7 @@ import { db } from "../config/firebaseConfig";
 
 import { useCardDatabase } from "../hooks/useCardDatabase";
 
-import {
-  getDocs,
-  collection,
-  query,
-  where,
-  addDoc,
-  updateDoc,
-  doc,
-  onSnapshot,
-} from "firebase/firestore";
+import { updateDoc, doc } from "firebase/firestore";
 
 const Board = (props) => {
   const gameDoc = doc(db, "gameInfo", props.gameId);
@@ -30,11 +21,12 @@ const Board = (props) => {
     useCardDatabase();
 
   const [zones, setZones] = useState([]);
-  const [zonesClass, setZonesClass] = useState(null);
+  const [zonesClass, setZonesClass] = useState([]);
 
   const [hostUnits, setHostUnits] = useState([]);
-  const [hostUnitsClass, setHostUnitsClass] = useState(null);
+  const [hostUnitsClass, setHostUnitsClass] = useState([]);
   const [guestUnits, setGuestUnits] = useState([]);
+  const [guestUnitsClass, setGuestUnitsClass] = useState([]);
 
   //Gets data regarding zones and units
   useEffect(() => {
@@ -65,21 +57,46 @@ const Board = (props) => {
     }
   }, [zones]);
 
-  //Converts zone data (Firebase) into classes
+  //Converts hostUnit data (Firebase) into classes
   useEffect(() => {
-    if (hostUnits.length) {
-      let hU = [];
-      for (let unit = 0; unit < hostUnits.length; unit++) {
-        if (!unit) {
-          hU.push(null);
-        } else {
-          hU.push;
+    if (zonesClass.length) {
+      console.log("USE EFFECT HOST UNIT");
+
+      for (let i = 0; i < hostUnits.length; i++) {
+        if (hostUnits[i].stats.unitClass === "Pawn") {
+          console.log("NEW PAWN");
+          setHostUnitsClass((prevHostUnits) => {
+            const updatedHostUnits = [...prevHostUnits];
+            updatedHostUnits[i] = new Pawn(hostUnits[i].stats);
+
+            // console.log(prevHostUnits);
+            // console.log(updatedHostUnits);
+
+            return updatedHostUnits;
+          });
         }
       }
-
-      setHostUnitsClass([...hU]);
     }
-  }, [hostUnits]);
+  }, [hostUnits, zonesClass.length]);
+
+  //Converts guestUnit data (Firebase) into classes
+  useEffect(() => {
+    if (zonesClass.length) {
+      console.log("USE EFFECT GUEST UNIT");
+
+      for (let i = 0; i < guestUnits.length; i++) {
+        if (guestUnits[i].stats.unitClass === "Pawn") {
+          console.log("NEW PAWN");
+          setGuestUnitsClass((prevGuestUnits) => {
+            const updatedGuestUnits = [...prevGuestUnits];
+            updatedGuestUnits[i] = new Pawn(guestUnits[i].stats);
+
+            return updatedGuestUnits;
+          });
+        }
+      }
+    }
+  }, [guestUnits, zonesClass.length]);
 
   const shuffleRepertoire = (repertoire) => {
     for (let i = repertoire.length - 1; i > 0; i--) {
@@ -127,25 +144,61 @@ const Board = (props) => {
         guestAvelhemRepertoire
       );
 
+      // newGameState.host.units[0] = JSON.parse(
+      //   JSON.stringify(new Pawn("host", 0, 6, 3))
+      // );
+      // newGameState.host.units[1] = JSON.parse(
+      //   JSON.stringify(new Pawn("host", 1, 6, 2))
+      // );
+      // newGameState.host.units[2] = JSON.parse(
+      //   JSON.stringify(new Pawn("host", 2, 6, 1))
+      // );
+
+      // newGameState.guest.units[0] = JSON.parse(
+      //   JSON.stringify(new Pawn("guest", 0, 3, 3))
+      // );
+      // newGameState.guest.units[1] = JSON.parse(
+      //   JSON.stringify(new Pawn("guest", 1, 3, 2))
+      // );
+      // newGameState.guest.units[2] = JSON.parse(
+      //   JSON.stringify(new Pawn("guest", 2, 3, 1))
+      // );
+
       newGameState.host.units[0] = JSON.parse(
-        JSON.stringify(new Pawn("host", 0, 6, 3))
-      ).stats;
+        JSON.stringify(
+          new Pawn({ player: "host", unitIndex: 0, row: 6, column: 3 })
+        )
+      );
+
+      console.log("Host Unit 0");
+      console.log(newGameState.host.units[0]);
+
       newGameState.host.units[1] = JSON.parse(
-        JSON.stringify(new Pawn("host", 1, 6, 2))
-      ).stats;
+        JSON.stringify(
+          new Pawn({ player: "host", unitIndex: 1, row: 6, column: 2 })
+        )
+      );
       newGameState.host.units[2] = JSON.parse(
-        JSON.stringify(new Pawn("host", 2, 6, 1))
-      ).stats;
+        JSON.stringify(
+          new Pawn({ player: "host", unitIndex: 2, row: 6, column: 1 })
+        )
+      );
 
       newGameState.guest.units[0] = JSON.parse(
-        JSON.stringify(new Pawn("guest", 0, 3, 3))
-      ).stats;
+        JSON.stringify(
+          new Pawn({ player: "guest", unitIndex: 0, row: 3, column: 3 })
+        )
+      );
       newGameState.guest.units[1] = JSON.parse(
-        JSON.stringify(new Pawn("guest", 1, 3, 2))
-      ).stats;
+        JSON.stringify(
+          new Pawn({ player: "guest", unitIndex: 1, row: 3, column: 2 })
+        )
+      );
       newGameState.guest.units[2] = JSON.parse(
-        JSON.stringify(new Pawn("guest", 2, 3, 1))
-      ).stats;
+        JSON.stringify(
+          new Pawn({ player: "guest", unitIndex: 2, row: 3, column: 1 })
+        )
+      );
 
       let newZoneInfo = [...zonesClass];
       newGameState.zones = JSON.stringify(newZoneInfo);
@@ -206,34 +259,28 @@ const Board = (props) => {
   }
 
   class Unit {
-    constructor(player, unitIndex, row, column) {
-      this.stats = {};
-      this.stats.player = player;
-      this.stats.unitIndex = unitIndex;
-      this.stats.row = row;
-      this.stats.column = column;
+    constructor(statInfo) {
+      this.stats = statInfo;
 
       let tempZonesClass = [...zonesClass];
 
-      tempZonesClass[row][column].player = player;
-      tempZonesClass[row][column].unitIndex = unitIndex;
+      tempZonesClass[statInfo.row][statInfo.column].player = statInfo.player;
+      tempZonesClass[statInfo.row][statInfo.column].unitIndex =
+        statInfo.unitIndex;
 
       setZonesClass(tempZonesClass);
 
-      if (player === "host") {
-        setHostUnits((prevHostUnits) => {
+      if (statInfo.player === "host") {
+        setHostUnitsClass((prevHostUnits) => {
           const updatedHostUnits = [...prevHostUnits];
-          updatedHostUnits[unitIndex] = this.stats;
-
-          console.log(prevHostUnits);
-          console.log(updatedHostUnits);
+          updatedHostUnits[statInfo.unitIndex] = { stats: this.stats };
 
           return updatedHostUnits;
         });
       } else {
-        setGuestUnits((prevGuestUnits) => {
+        setGuestUnitsClass((prevGuestUnits) => {
           const updatedGuestUnits = [...prevGuestUnits];
-          updatedGuestUnits[unitIndex] = this.stats;
+          updatedGuestUnits[statInfo.unitIndex] = { stats: this.stats };
           return updatedGuestUnits;
         });
       }
@@ -241,8 +288,8 @@ const Board = (props) => {
   }
 
   class Pawn extends Unit {
-    constructor(player, unitIndex, row, column) {
-      super(player, unitIndex, row, column);
+    constructor(statInfo) {
+      super(statInfo);
       this.stats.unitClass = "Pawn";
     }
   }
@@ -337,8 +384,8 @@ const Board = (props) => {
                     userRole={props.userRole}
                     key={[rowIndex, columnIndex]}
                     zone={zone}
-                    hostUnits={hostUnits}
-                    guestUnits={guestUnits}
+                    hostUnits={hostUnitsClass}
+                    guestUnits={guestUnitsClass}
                   />
                 ))
               )}
