@@ -13,6 +13,9 @@ const Tile = (props) => {
       )}
       {props.zone.player && (
         <>
+          {console.log("From tile: " + props.hostUnits)}
+          {console.log("From tile: " + props.guestUnits)}
+
           <Piece
             player={props.zone.player}
             unitIndex={props.zone.unitIndex}
