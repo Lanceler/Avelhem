@@ -5,11 +5,20 @@ import Piece from "./Piece";
 
 const Tile = (props) => {
   return (
-    <div className="tile">
-      <div>
-        {!props.zone.occupied && `[${props.zone.row},${props.zone.column}]`}
-      </div>
-      <div>{props.zone.occupied && <Piece />}</div>
+    <div className={props.userRole !== "guest" ? "tile" : "tile reversed-tile"}>
+      {!props.zone.stats.player && (
+        <>
+          [{props.zone.stats.row},{props.zone.stats.column}]
+        </>
+      )}
+      {props.zone.stats.player && (
+        <>
+          <Piece
+            player={props.zone.stats.player}
+            unitIndex={props.zone.stats.unitIndex}
+          />
+        </>
+      )}
     </div>
   );
 };
