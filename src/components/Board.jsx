@@ -14,6 +14,8 @@ import { useCardDatabase } from "../hooks/useCardDatabase";
 
 import { updateDoc, doc } from "firebase/firestore";
 
+import AcquisitionPhaseSelection from "./modals/AcquisitionPhaseSelection";
+
 const Board = (props) => {
   const gameDoc = doc(db, "gameInfo", props.gameId);
 
@@ -28,9 +30,13 @@ const Board = (props) => {
   const [guestUnits, setGuestUnits] = useState([]);
   const [guestUnitsClass, setGuestUnitsClass] = useState([]);
 
+  //====================================================================
+  //====================================================================
+  //UseEffects below
+
   //Gets data regarding zones and units
   useEffect(() => {
-    console.log("Change!");
+    console.log("Updated local from database");
     setZones(JSON.parse(props.gameState.zones));
     setHostUnits(props.gameState.host.units);
     setGuestUnits(props.gameState.guest.units);
@@ -39,6 +45,7 @@ const Board = (props) => {
   //Converts zone data (Firebase) into classes
   useEffect(() => {
     if (zones.length) {
+      console.log("Local update: zones");
       let z = [];
       for (let r = 0; r < 10; r++) {
         z.push([]);
@@ -52,7 +59,6 @@ const Board = (props) => {
           );
         }
       }
-
       setZonesClass([...z]);
     }
   }, [zones]);
@@ -60,7 +66,7 @@ const Board = (props) => {
   //Converts hostUnit data (Firebase) into classes
   useEffect(() => {
     if (zonesClass.length) {
-      console.log("USE EFFECT HOST UNIT");
+      console.log("Local update: host units");
 
       for (let i = 0; i < hostUnits.length; i++) {
         if (hostUnits[i].stats.unitClass === "Pawn") {
@@ -79,7 +85,7 @@ const Board = (props) => {
   //Converts guestUnit data (Firebase) into classes
   useEffect(() => {
     if (zonesClass.length) {
-      console.log("USE EFFECT GUEST UNIT");
+      console.log("Local update: Guest units");
 
       for (let i = 0; i < guestUnits.length; i++) {
         if (guestUnits[i].stats.unitClass === "Pawn") {
@@ -94,6 +100,58 @@ const Board = (props) => {
       }
     }
   }, [guestUnits, zonesClass.length]);
+
+  //Gives prompts depending on current (latest) resolution
+
+  useEffect(() => {
+    console.log("current resolution changed");
+  }, [props.gameState.currentResolution]);
+
+  //====================================================================
+  //====================================================================
+  //Helper functions below
+
+  const currentResolutionPrompt = () => {
+    let lastResolution = null;
+
+    if (props.gameState.currentResolution.length > 0) {
+      lastResolution =
+        props.gameState.currentResolution[
+          props.gameState.currentResolution.length - 1
+        ].resolution;
+    }
+
+    switch (lastResolution) {
+      case "Acquisition Phase Selection":
+        return (
+          <>
+            {props.userRole === props.gameState.turnPlayer && (
+              <AcquisitionPhaseSelection drawAvelhem={drawAvelhem} />
+            )}
+          </>
+        );
+    }
+  };
+
+  const drawAvelhem = async () => {
+    console.log("drawAvelhem");
+    try {
+      let newGameState = JSON.parse(JSON.stringify(props.gameState));
+      if (props.userRole === "host") {
+        newGameState.host.avelhemHand.push(
+          newGameState.host.avelhemRepertoire.pop()
+        );
+      } else {
+        newGameState.guest.avelhemHand.push(
+          newGameState.guest.avelhemRepertoire.pop()
+        );
+      }
+
+      await updateDoc(gameDoc, { gameState: newGameState });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const shuffleRepertoire = (repertoire) => {
     for (let i = repertoire.length - 1; i > 0; i--) {
@@ -182,6 +240,9 @@ const Board = (props) => {
 
       newGameState.turnCount = 1;
       newGameState.turnPhase = "Acquisition";
+      newGameState.currentResolution.push({
+        resolution: "Acquisition Phase Selection",
+      });
 
       await updateDoc(gameDoc, { gameState: newGameState });
     } catch (err) {
@@ -189,7 +250,9 @@ const Board = (props) => {
     }
   };
 
-  const moveHost1To5_2 = () => {};
+  //====================================================================
+  //====================================================================
+  //classes below
 
   class Zone {
     constructor(row, column, player, unitIndex) {
@@ -274,9 +337,20 @@ const Board = (props) => {
     }
   }
 
+  //====================================================================
+  //====================================================================
+
   return (
     <div>
       Turn Player: {props.gameState && props.gameState.turnPlayer}
+      <br />
+      Phase: {props.gameState && props.gameState.turnPhase}
+      <br />
+      Resolution:{" "}
+      {props.gameState.currentResolution.length > 0 &&
+        props.gameState.currentResolution[
+          props.gameState.currentResolution.length - 1
+        ].resolution}
       {!props.gameState.turnPlayer && props.userRole === "host" && (
         <SelectFirstPlayer onSetFirstPlayer={onSetFirstPlayer} />
       )}
@@ -419,6 +493,7 @@ const Board = (props) => {
           </div>
         ))}
       </div>
+      {currentResolutionPrompt()}
     </div>
   );
 };
