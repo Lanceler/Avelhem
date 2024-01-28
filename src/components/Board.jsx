@@ -149,6 +149,7 @@ const Board = (props) => {
             {props.userRole === props.gameState.turnPlayer && (
               <AcquisitionPhaseSelection
                 drawAvelhem={drawAvelhem}
+                drawSkill={drawSkill}
                 nextPhase={nextPhase}
               />
             )}
@@ -174,6 +175,27 @@ const Board = (props) => {
       } else {
         newGameState.guest.avelhemHand.push(
           newGameState.guest.avelhemRepertoire.pop()
+        );
+      }
+      return newGameState;
+    });
+
+    setUpdateFirebase(!updateFirebase);
+  };
+
+  const drawSkill = () => {
+    console.log("drawSkill");
+
+    setLocalGameState((prev) => {
+      const newGameState = JSON.parse(JSON.stringify(prev));
+
+      if (props.userRole === "host") {
+        newGameState.host.skillHand.push(
+          newGameState.host.skillRepertoire.pop()
+        );
+      } else {
+        newGameState.guest.skillHand.push(
+          newGameState.guest.skillRepertoire.pop()
         );
       }
       return newGameState;

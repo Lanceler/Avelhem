@@ -8,6 +8,11 @@ const AcquisitionPhaseSelection = (props) => {
     props.nextPhase();
   };
 
+  const onCultivate = () => {
+    props.drawSkill();
+    props.nextPhase();
+  };
+
   return (
     <div className="modal-backdrop">
       <div className="modal">
@@ -22,7 +27,7 @@ const AcquisitionPhaseSelection = (props) => {
             <h3>Bequeath</h3>
             <h4>Draw 2 Avelhems.</h4>
           </div>
-          <div className="choiceWithDescription">
+          <div className="choiceWithDescription" onClick={() => onCultivate()}>
             <h3>Cultivate</h3>
             <h4>Draw 1 skill.</h4>
             <h5>
