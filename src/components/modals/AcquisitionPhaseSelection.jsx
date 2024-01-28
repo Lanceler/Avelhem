@@ -2,6 +2,10 @@ import React from "react";
 import "./Modal.css";
 
 const AcquisitionPhaseSelection = (props) => {
+  const onAppoint = () => {
+    props.findNullUnitIndex();
+  };
+
   const onBequeth = () => {
     props.drawAvelhem();
     props.drawAvelhem();
@@ -19,7 +23,7 @@ const AcquisitionPhaseSelection = (props) => {
         <h2>Acquisition Phase</h2>
 
         <div className="acquisitionPhase">
-          <div className="choiceWithDescription">
+          <div className="choiceWithDescription" onClick={() => onAppoint()}>
             <h3>Appoint</h3>
             <h4>Deploy a pawn in your frontier.</h4>
           </div>

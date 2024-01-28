@@ -151,6 +151,7 @@ const Board = (props) => {
                 drawAvelhem={drawAvelhem}
                 drawSkill={drawSkill}
                 nextPhase={nextPhase}
+                findNullUnitIndex={findNullUnitIndex}
               />
             )}
           </>
@@ -256,6 +257,22 @@ const Board = (props) => {
     setUpdateFirebase(!updateFirebase);
   };
 
+  const findNullUnitIndex = () => {
+    let nullIndex = -1;
+    let userUnits = hostUnitsClass;
+
+    if (props.userRole === "guest") {
+      userUnits = guestUnitsClass;
+    }
+
+    nullIndex = userUnits.indexOf(null);
+    if (nullIndex === -1) {
+      nullIndex = userUnits.length;
+    }
+    console.log("1st Null Index is " + nullIndex);
+    return nullIndex;
+  };
+
   const shuffleRepertoire = (repertoire) => {
     for (let i = repertoire.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -304,7 +321,7 @@ const Board = (props) => {
 
       newGameState.host.units[0] = JSON.parse(
         JSON.stringify(
-          new Pawn({ player: "host", unitIndex: 0, row: 6, column: 3 })
+          new Pawn({ player: "host", unitIndex: 0, row: 6, column: 0 })
         )
       );
 
@@ -315,13 +332,13 @@ const Board = (props) => {
       );
       newGameState.host.units[2] = JSON.parse(
         JSON.stringify(
-          new Pawn({ player: "host", unitIndex: 2, row: 6, column: 1 })
+          new Pawn({ player: "host", unitIndex: 2, row: 6, column: 4 })
         )
       );
 
       newGameState.guest.units[0] = JSON.parse(
         JSON.stringify(
-          new Pawn({ player: "guest", unitIndex: 0, row: 3, column: 3 })
+          new Pawn({ player: "guest", unitIndex: 0, row: 3, column: 4 })
         )
       );
       newGameState.guest.units[1] = JSON.parse(
@@ -331,7 +348,7 @@ const Board = (props) => {
       );
       newGameState.guest.units[2] = JSON.parse(
         JSON.stringify(
-          new Pawn({ player: "guest", unitIndex: 2, row: 3, column: 1 })
+          new Pawn({ player: "guest", unitIndex: 2, row: 3, column: 0 })
         )
       );
 
