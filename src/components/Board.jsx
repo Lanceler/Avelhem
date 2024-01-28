@@ -69,9 +69,6 @@ const Board = (props) => {
             const updatedHostUnits = [...prevHostUnits];
             updatedHostUnits[i] = new Pawn(hostUnits[i].stats);
 
-            // console.log(prevHostUnits);
-            // console.log(updatedHostUnits);
-
             return updatedHostUnits;
           });
         }
@@ -144,26 +141,6 @@ const Board = (props) => {
         guestAvelhemRepertoire
       );
 
-      // newGameState.host.units[0] = JSON.parse(
-      //   JSON.stringify(new Pawn("host", 0, 6, 3))
-      // );
-      // newGameState.host.units[1] = JSON.parse(
-      //   JSON.stringify(new Pawn("host", 1, 6, 2))
-      // );
-      // newGameState.host.units[2] = JSON.parse(
-      //   JSON.stringify(new Pawn("host", 2, 6, 1))
-      // );
-
-      // newGameState.guest.units[0] = JSON.parse(
-      //   JSON.stringify(new Pawn("guest", 0, 3, 3))
-      // );
-      // newGameState.guest.units[1] = JSON.parse(
-      //   JSON.stringify(new Pawn("guest", 1, 3, 2))
-      // );
-      // newGameState.guest.units[2] = JSON.parse(
-      //   JSON.stringify(new Pawn("guest", 2, 3, 1))
-      // );
-
       newGameState.host.units[0] = JSON.parse(
         JSON.stringify(
           new Pawn({ player: "host", unitIndex: 0, row: 6, column: 3 })
@@ -202,6 +179,9 @@ const Board = (props) => {
 
       let newZoneInfo = [...zonesClass];
       newGameState.zones = JSON.stringify(newZoneInfo);
+
+      newGameState.turnCount = 1;
+      newGameState.turnPhase = "Acquisition";
 
       await updateDoc(gameDoc, { gameState: newGameState });
     } catch (err) {
