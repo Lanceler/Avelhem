@@ -22,6 +22,8 @@ const Board = (props) => {
   const { avelhemCardList, skillCardList, getAvelhemById, getSkillById } =
     useCardDatabase();
 
+  const [localGameState, setLocalGameState] = useState(null);
+
   const [zones, setZones] = useState([]);
   const [zonesClass, setZonesClass] = useState([]);
 
@@ -30,9 +32,27 @@ const Board = (props) => {
   const [guestUnits, setGuestUnits] = useState([]);
   const [guestUnitsClass, setGuestUnitsClass] = useState([]);
 
+  const [updateFirebase, setUpdateFirebase] = useState(false);
+
   //====================================================================
   //====================================================================
   //UseEffects below
+
+  useEffect(() => {
+    console.log("local gamestate changed");
+  }, [localGameState]);
+
+  //Updates Firebase
+  useEffect(() => {
+    if (localGameState) {
+      ("Uploading Local Changes");
+      try {
+        updateDoc(gameDoc, { gameState: localGameState });
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }, [updateFirebase]);
 
   //Gets data regarding zones and units
   useEffect(() => {
@@ -40,6 +60,7 @@ const Board = (props) => {
     setZones(JSON.parse(props.gameState.zones));
     setHostUnits(props.gameState.host.units);
     setGuestUnits(props.gameState.guest.units);
+    setLocalGameState(props.gameState);
   }, [props.gameState]);
 
   //Converts zone data (Firebase) into classes
@@ -109,7 +130,7 @@ const Board = (props) => {
 
   //====================================================================
   //====================================================================
-  //Helper functions below
+  //Current Resolution Prompt below
 
   const currentResolutionPrompt = () => {
     let lastResolution = null;
@@ -126,17 +147,26 @@ const Board = (props) => {
         return (
           <>
             {props.userRole === props.gameState.turnPlayer && (
-              <AcquisitionPhaseSelection drawAvelhem={drawAvelhem} />
+              <AcquisitionPhaseSelection
+                drawAvelhem={drawAvelhem}
+                nextPhase={nextPhase}
+              />
             )}
           </>
         );
     }
   };
 
-  const drawAvelhem = async () => {
+  //====================================================================
+  //====================================================================
+  //Helper functions below
+
+  const drawAvelhem = () => {
     console.log("drawAvelhem");
-    try {
-      let newGameState = JSON.parse(JSON.stringify(props.gameState));
+
+    setLocalGameState((prev) => {
+      const newGameState = JSON.parse(JSON.stringify(prev));
+
       if (props.userRole === "host") {
         newGameState.host.avelhemHand.push(
           newGameState.host.avelhemRepertoire.pop()
@@ -146,11 +176,62 @@ const Board = (props) => {
           newGameState.guest.avelhemRepertoire.pop()
         );
       }
+      return newGameState;
+    });
 
-      await updateDoc(gameDoc, { gameState: newGameState });
-    } catch (err) {
-      console.log(err);
-    }
+    setUpdateFirebase(!updateFirebase);
+  };
+
+  const nextPhase = () => {
+    console.log("Changing Phase");
+
+    setLocalGameState((prev) => {
+      const newGameState = JSON.parse(JSON.stringify(prev));
+
+      if (newGameState.turnPhase === "Acquisition") {
+        newGameState.turnPhase = "Bounty";
+        newGameState.currentResolution.pop();
+        newGameState.currentResolution.push({
+          resolution: "Bounty Phase Selection",
+        });
+      } else if (newGameState.turnPhase === "Bounty") {
+        newGameState.turnPhase = "Coordination";
+        newGameState.currentResolution.pop();
+        newGameState.currentResolution.push({
+          resolution: "Coordination Phase Selection",
+        });
+      } else if (newGameState.turnPhase === "Coordination") {
+        newGameState.turnPhase = "Defiance";
+        newGameState.currentResolution.pop();
+        newGameState.currentResolution.push({
+          resolution: "Defiance Phase Selection",
+        });
+      } else if (newGameState.turnPhase === "Defiance") {
+        newGameState.turnPhase = "Execution";
+        newGameState.currentResolution.pop();
+      } else if (newGameState.turnPhase === "Execution") {
+        newGameState.turnPhase = "Final";
+        newGameState.currentResolution.pop();
+        newGameState.currentResolution.push({
+          resolution: "Final Phase Selection",
+        });
+      } else if (newGameState.turnPhase === "Final") {
+        newGameState.turnPhase = "Acquisition";
+        if (newGameState.turnPlayer === "host") {
+          newGameState.turnPlayer = "guest";
+        } else {
+          newGameState.turnPlayer = "host";
+        }
+        newGameState.currentResolution.pop();
+        newGameState.currentResolution.push({
+          resolution: "Bounty Phase Selection",
+        });
+      }
+
+      return newGameState;
+    });
+
+    setUpdateFirebase(!updateFirebase);
   };
 
   const shuffleRepertoire = (repertoire) => {
@@ -162,14 +243,15 @@ const Board = (props) => {
   };
 
   const onSetFirstPlayer = async (choice) => {
-    try {
-      let newGameState = JSON.parse(JSON.stringify(props.gameState));
+    console.log("Set First Player");
+
+    setLocalGameState((prev) => {
+      const newGameState = JSON.parse(JSON.stringify(prev));
 
       newGameState.turnPlayer = choice;
 
-      let hostSkillRepertoire = [...props.gameState.host.skillRepertoire];
+      let hostSkillRepertoire = [...prev.host.skillRepertoire];
       hostSkillRepertoire = shuffleRepertoire(hostSkillRepertoire);
-
       let hostStartingHand = hostSkillRepertoire.splice(
         hostSkillRepertoire.length - 4,
         4
@@ -178,12 +260,11 @@ const Board = (props) => {
       newGameState.host.skillHand = hostStartingHand;
       newGameState.host.skillRepertoire = hostSkillRepertoire;
 
-      let hostAvelhemRepertoire = [...props.gameState.host.avelhemRepertoire];
+      let hostAvelhemRepertoire = [...prev.host.avelhemRepertoire];
       newGameState.host.avelhemRepertoire = shuffleRepertoire(
         hostAvelhemRepertoire
       );
-
-      let guestSkillRepertoire = [...props.gameState.guest.skillRepertoire];
+      let guestSkillRepertoire = [...prev.guest.skillRepertoire];
       guestSkillRepertoire = shuffleRepertoire(guestSkillRepertoire);
 
       let guestStartingHand = guestSkillRepertoire.splice(
@@ -194,7 +275,7 @@ const Board = (props) => {
       newGameState.guest.skillHand = guestStartingHand;
       newGameState.guest.skillRepertoire = guestSkillRepertoire;
 
-      let guestAvelhemRepertoire = [...props.gameState.guest.avelhemRepertoire];
+      let guestAvelhemRepertoire = [...prev.guest.avelhemRepertoire];
       newGameState.guest.avelhemRepertoire = shuffleRepertoire(
         guestAvelhemRepertoire
       );
@@ -204,9 +285,6 @@ const Board = (props) => {
           new Pawn({ player: "host", unitIndex: 0, row: 6, column: 3 })
         )
       );
-
-      console.log("Host Unit 0");
-      console.log(newGameState.host.units[0]);
 
       newGameState.host.units[1] = JSON.parse(
         JSON.stringify(
@@ -244,10 +322,10 @@ const Board = (props) => {
         resolution: "Acquisition Phase Selection",
       });
 
-      await updateDoc(gameDoc, { gameState: newGameState });
-    } catch (err) {
-      console.log(err);
-    }
+      return newGameState;
+    });
+
+    setUpdateFirebase(!updateFirebase);
   };
 
   //====================================================================

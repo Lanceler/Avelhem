@@ -2,9 +2,10 @@ import React from "react";
 import "./Modal.css";
 
 const AcquisitionPhaseSelection = (props) => {
-  const onBequeth = async () => {
-    await props.drawAvelhem();
-    await props.drawAvelhem();
+  const onBequeth = () => {
+    props.drawAvelhem();
+    props.drawAvelhem();
+    props.nextPhase();
   };
 
   return (
