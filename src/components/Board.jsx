@@ -31,6 +31,9 @@ const Board = (props) => {
   const [hostUnitsClass, setHostUnitsClass] = useState([]);
   const [guestUnits, setGuestUnits] = useState([]);
   const [guestUnitsClass, setGuestUnitsClass] = useState([]);
+  const [povUnitClass, setPovUnitClass] = useState(null);
+
+  const [allLocalReady, setAllLocalReady] = useState(false);
 
   const [updateFirebase, setUpdateFirebase] = useState(false);
 
@@ -41,6 +44,20 @@ const Board = (props) => {
   useEffect(() => {
     console.log("local gamestate changed");
   }, [localGameState]);
+
+  useEffect(() => {
+    if (localGameState && zonesClass && hostUnitsClass && guestUnitsClass) {
+      setAllLocalReady(true);
+    }
+  }, [localGameState, zonesClass, hostUnitsClass, guestUnitsClass]);
+
+  useEffect(() => {
+    if (props.userRole === "host") {
+      setPovUnitClass(hostUnitsClass);
+    } else {
+      setPovUnitClass(guestUnitsClass);
+    }
+  }, [props.userRole]);
 
   //Updates Firebase
   useEffect(() => {
@@ -73,6 +90,7 @@ const Board = (props) => {
         for (let c = 0; c < 5; c++) {
           let stats = zones[r][c];
           z[r][c] = new Zone(
+            stats.id,
             stats.row,
             stats.column,
             stats.player,
@@ -152,6 +170,7 @@ const Board = (props) => {
                 drawSkill={drawSkill}
                 nextPhase={nextPhase}
                 findNullUnitIndex={findNullUnitIndex}
+                getVacantFrontier={getVacantFrontier}
               />
             )}
           </>
@@ -169,15 +188,10 @@ const Board = (props) => {
     setLocalGameState((prev) => {
       const newGameState = JSON.parse(JSON.stringify(prev));
 
-      if (props.userRole === "host") {
-        newGameState.host.avelhemHand.push(
-          newGameState.host.avelhemRepertoire.pop()
-        );
-      } else {
-        newGameState.guest.avelhemHand.push(
-          newGameState.guest.avelhemRepertoire.pop()
-        );
-      }
+      newGameState[props.userRole].avelhemHand.push(
+        newGameState[props.userRole].avelhemRepertoire.pop()
+      );
+
       return newGameState;
     });
 
@@ -190,15 +204,10 @@ const Board = (props) => {
     setLocalGameState((prev) => {
       const newGameState = JSON.parse(JSON.stringify(prev));
 
-      if (props.userRole === "host") {
-        newGameState.host.skillHand.push(
-          newGameState.host.skillRepertoire.pop()
-        );
-      } else {
-        newGameState.guest.skillHand.push(
-          newGameState.guest.skillRepertoire.pop()
-        );
-      }
+      newGameState[props.userRole].skillHand.push(
+        newGameState[props.userRole].skillRepertoire.pop()
+      );
+
       return newGameState;
     });
 
@@ -259,18 +268,38 @@ const Board = (props) => {
 
   const findNullUnitIndex = () => {
     let nullIndex = -1;
-    let userUnits = hostUnitsClass;
 
-    if (props.userRole === "guest") {
-      userUnits = guestUnitsClass;
-    }
-
-    nullIndex = userUnits.indexOf(null);
+    nullIndex = povUnitClass.indexOf(null);
     if (nullIndex === -1) {
-      nullIndex = userUnits.length;
+      nullIndex = povUnitClass.length;
     }
     console.log("1st Null Index is " + nullIndex);
     return nullIndex;
+  };
+
+  const getVacantFrontier = () => {
+    let frontierLength =
+      1 + localGameState[props.userRole].bountyUpgrades.frontier;
+
+    let validZones = [];
+
+    if (props.userRole === "host") {
+      for (let r = 9; r >= 9 - frontierLength; r--) {
+        for (let c = 0; c <= 4; c++) {
+          validZones.push(zonesClass[r][c].id);
+        }
+      }
+    } else {
+      for (let r = 0; r <= 0 + frontierLength; r++) {
+        for (let c = 0; c <= 4; c++) {
+          validZones.push(zonesClass[r][c].id);
+        }
+      }
+    }
+
+    validZones = validZones.filter((zone) => !zone.player);
+
+    return validZones;
   };
 
   const shuffleRepertoire = (repertoire) => {
@@ -372,7 +401,8 @@ const Board = (props) => {
   //classes below
 
   class Zone {
-    constructor(row, column, player, unitIndex) {
+    constructor(id, row, column, player, unitIndex) {
+      this.id = id;
       this.row = row;
       this.column = column;
       this.player = player;
@@ -458,49 +488,49 @@ const Board = (props) => {
   //====================================================================
 
   return (
-    <div>
-      Turn Player: {props.gameState && props.gameState.turnPlayer}
-      <br />
-      Phase: {props.gameState && props.gameState.turnPhase}
-      <br />
-      Resolution:{" "}
-      {props.gameState.currentResolution.length > 0 &&
-        props.gameState.currentResolution[
-          props.gameState.currentResolution.length - 1
-        ].resolution}
-      {!props.gameState.turnPlayer && props.userRole === "host" && (
-        <SelectFirstPlayer onSetFirstPlayer={onSetFirstPlayer} />
-      )}
-      <div className="section">
-        <div className="left-container">
-          <div className="lc-player">
-            <div className="avel-hand"></div>
-            <div className="skill-hand"></div>
-          </div>
-
-          <div className="lc-middle">
-            <div className="lcm-left">
-              <div className="lcml-player">
-                <div className="lcml-player-left">
-                  <div className="cp"></div>
-                  <div className="fd"></div>
-                </div>
-                <div className="lcml-player-right">
-                  <div className="skill-used"></div>
-                  <div className="avel-used"></div>
-                </div>
+    <>
+      {allLocalReady && (
+        <div>
+          Turn Player: {props.gameState && props.gameState.turnPlayer}
+          <br />
+          Phase: {props.gameState && props.gameState.turnPhase}
+          <br />
+          Resolution:{" "}
+          {props.gameState.currentResolution.length > 0 &&
+            props.gameState.currentResolution[
+              props.gameState.currentResolution.length - 1
+            ].resolution}
+          {!props.gameState.turnPlayer && props.userRole === "host" && (
+            <SelectFirstPlayer onSetFirstPlayer={onSetFirstPlayer} />
+          )}
+          <div className="section">
+            <div className="left-container">
+              <div className="lc-player">
+                <div className="avel-hand"></div>
+                <div className="skill-hand"></div>
               </div>
-              <div className="dice-results"></div>
-              <div className="lcml-player">
-                <div className="lcml-player-left">
-                  <div className="fd"></div>
-                  <div className="cp"></div>
-                </div>
-                <div className="lcml-player-right">
-                  <div className="avel-used"></div>
-                  <div className="skill-used">
-                    {props.gameState[props.userRole].skillRepertoire.length && (
-                      <>
+
+              <div className="lc-middle">
+                <div className="lcm-left">
+                  <div className="lcml-player">
+                    <div className="lcml-player-left">
+                      <div className="cp"></div>
+                      <div className="fd"></div>
+                    </div>
+                    <div className="lcml-player-right">
+                      <div className="skill-used"></div>
+                      <div className="avel-used"></div>
+                    </div>
+                  </div>
+                  <div className="dice-results"></div>
+                  <div className="lcml-player">
+                    <div className="lcml-player-left">
+                      <div className="fd"></div>
+                      <div className="cp"></div>
+                    </div>
+                    <div className="lcml-player-right">
+                      <div className="avel-used"></div>
+                      <div className="skill-used">
                         <div className="card"></div>
                         <div
                           className="cardThickness"
@@ -513,105 +543,102 @@ const Board = (props) => {
                             }px`,
                           }}
                         ></div>
-                      </>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="lcm-right">
+                  <div className="lcmr-enemy"></div>
+                  <div className="lcmr-user"></div>
+                </div>
+              </div>
+
+              <div className="lc-player">
+                <div className="avel-hand"></div>
+                <div className="skill-hand">
+                  <div className="hand-container">
+                    {props.gameState[props.userRole].skillHand.map(
+                      (card, index) => (
+                        <div key={index} className="handCard">
+                          {card}
+                        </div>
+                      )
                     )}
                   </div>
                 </div>
               </div>
             </div>
-            <div className="lcm-right">
-              <div className="lcmr-enemy"></div>
-              <div className="lcmr-user"></div>
-            </div>
-          </div>
-
-          <div className="lc-player">
-            <div className="avel-hand"></div>
-            <div className="skill-hand">
-              <div className="hand-container">
-                {props.gameState[props.userRole].skillHand.map(
-                  (card, index) => (
-                    <div key={index} className="handCard">
-                      {card}
-                    </div>
-                  )
+            <div className="middle-container">
+              <div
+                className={
+                  props.userRole !== "guest"
+                    ? "tile-grid"
+                    : "tile-grid reversed-tile-grid"
+                }
+              >
+                {zonesClass.map((row, r) =>
+                  row.map((zone, c) => (
+                    <Tile
+                      userRole={props.userRole}
+                      key={zone.id}
+                      zone={zone}
+                      hostUnits={hostUnitsClass}
+                      guestUnits={guestUnitsClass}
+                    />
+                  ))
                 )}
               </div>
             </div>
+            <div className="phase-indicator"></div>
+            <div className="right-container"></div>
           </div>
-        </div>
-        <div className="middle-container">
-          <div
-            className={
-              props.userRole !== "guest"
-                ? "tile-grid"
-                : "tile-grid reversed-tile-grid"
-            }
-          >
-            {zonesClass &&
-              zonesClass.map((row, rowIndex) =>
-                row.map((zone, columnIndex) => (
-                  <Tile
-                    userRole={props.userRole}
-                    key={[rowIndex, columnIndex]}
-                    zone={zone}
-                    hostUnits={hostUnitsClass}
-                    guestUnits={guestUnitsClass}
-                  />
-                ))
-              )}
+          <br />
+          Own Deck2:
+          <>
+            <div className="card"></div>
+            <div
+              className="cardThickness"
+              style={{
+                height: `${
+                  (props.gameState[props.userRole].skillRepertoire.length - 1) *
+                  0.2
+                }px`,
+              }}
+            ></div>
+          </>
+          <br />
+          Own Deck:
+          <div style={{ position: "relative" }}>
+            <div className="deck-container">
+              {props.gameState[props.userRole].skillRepertoire
+                .slice()
+                .reverse()
+                .map((card, index) => (
+                  <div
+                    key={index}
+                    className="card-container"
+                    // style={{ marginTop: `${index !== 0 ? 1 : 0}px` }}
+                  >
+                    <div className="card">
+                      {/* {card} */}
+                      {index === 0 ? card : null}
+                    </div>
+                  </div>
+                ))}
+            </div>
           </div>
-        </div>
-        <div className="phase-indicator"></div>
-        <div className="right-container"></div>
-      </div>
-      <br />
-      Own Deck2:
-      {props.gameState[props.userRole].skillRepertoire.length && (
-        <>
-          <div className="card"></div>
-          <div
-            className="cardThickness"
-            style={{
-              height: `${
-                (props.gameState[props.userRole].skillRepertoire.length - 1) *
-                0.2
-              }px`,
-            }}
-          ></div>
-        </>
-      )}
-      <br />
-      Own Deck:
-      <div style={{ position: "relative" }}>
-        <div className="deck-container">
-          {props.gameState[props.userRole].skillRepertoire
-            .slice()
-            .reverse()
-            .map((card, index) => (
-              <div
-                key={index}
-                className="card-container"
-                // style={{ marginTop: `${index !== 0 ? 1 : 0}px` }}
-              >
-                <div className="card">
-                  {/* {card} */}
-                  {index === 0 ? card : null}
-                </div>
+          <br />
+          <div className="hand-container">
+            {props.gameState[props.userRole].skillHand.map((card, index) => (
+              <div key={index} className="handCard">
+                {card}
               </div>
             ))}
-        </div>
-      </div>
-      <br />
-      <div className="hand-container">
-        {props.gameState[props.userRole].skillHand.map((card, index) => (
-          <div key={index} className="handCard">
-            {card}
           </div>
-        ))}
-      </div>
-      {currentResolutionPrompt()}
-    </div>
+          {currentResolutionPrompt()}
+        </div>
+      )}
+    </>
   );
 };
 

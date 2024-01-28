@@ -46,11 +46,33 @@ export default function MyGames() {
         for (let r = 0; r < 10; r++) {
           zones.push([]);
           for (let c = 0; c < 5; c++) {
-            zones[r][c] = { row: r, column: c };
+            zones[r][c] = { id: r * 5 + c, row: r, column: c };
           }
         }
 
         zones = JSON.stringify(zones);
+
+        const playerData = {
+          skillRepertoire: null,
+          skillVestige: [],
+          skillShattered: [],
+          skillHand: [],
+          avelhemRepertoire: [],
+          avelhemVestige: [],
+          avelhemHand: [],
+          units: [],
+          bountyPoints: 0,
+          bountyUpgrades: {
+            victory: 0,
+            frontier: 0,
+            acquisition: 0,
+            coordination: 0,
+            tactics: 0,
+            avelhem: 0,
+          },
+          fateDefiances: 3,
+          score: 0,
+        };
 
         const createdGamesRef = collection(db, "gameInfo");
         const gameRef = await addDoc(createdGamesRef, {
@@ -63,40 +85,14 @@ export default function MyGames() {
             turnCount: 0,
             turnPlayer: null,
             turnPhase: null,
-            tactics: null,
+            tactics: [],
             currentResolution: [],
             eventLog: [],
             zones: zones,
 
-            host: {
-              skillRepertoire: null,
-              skillVestige: [],
-              skillShattered: [],
-              skillHand: [],
-              avelhemRepertoire: [],
-              avelhemVestige: [],
-              avelhemHand: [],
-              units: [],
-              bountyPoints: 0,
-              bountyUpgrades: {},
-              fateDefiances: 3,
-              score: 0,
-            },
+            host: playerData,
 
-            guest: {
-              skillRepertoire: null,
-              skillVestige: [],
-              skillShattered: [],
-              skillHand: [],
-              avelhemRepertoire: [],
-              avelhemVestige: [],
-              avelhemHand: [],
-              units: [],
-              bountyPoints: 0,
-              bountyUpgrades: {},
-              fateDefiances: 3,
-              score: 0,
-            },
+            guest: playerData,
             winner: null,
           },
         });

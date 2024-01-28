@@ -2,8 +2,25 @@ import React from "react";
 import "./Modal.css";
 
 const AcquisitionPhaseSelection = (props) => {
+  let canAppoint = true;
+
+  if (
+    props.findNullUnitIndex() === 8 ||
+    props.getVacantFrontier().length === 0
+  ) {
+    console.log("Cannot Appoint");
+    canAppoint = false;
+  } else {
+    console.log("Can Appoint");
+  }
+
   const onAppoint = () => {
-    props.findNullUnitIndex();
+    if (canAppoint) {
+      if (props.findNullUnitIndex() === 8) {
+        console.log("Unit limit (8) exceeded");
+      }
+      console.log(props.getVacantFrontier());
+    }
   };
 
   const onBequeth = () => {
@@ -23,7 +40,12 @@ const AcquisitionPhaseSelection = (props) => {
         <h2>Acquisition Phase</h2>
 
         <div className="acquisitionPhase">
-          <div className="choiceWithDescription" onClick={() => onAppoint()}>
+          <div
+            className={`choiceWithDescription ${
+              canAppoint ? "" : "disabledOption"
+            }`}
+            onClick={() => onAppoint()}
+          >
             <h3>Appoint</h3>
             <h4>Deploy a pawn in your frontier.</h4>
           </div>

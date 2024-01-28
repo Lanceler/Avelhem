@@ -31,7 +31,17 @@
     cursor: pointer;
 }
 
-.choiceWithDescription:hover {
+.choiceWithDescription:not(.disabledOption):hover {
     background: rgb(99, 192, 63)
 }
 
+.disabledOption{
+    background-color: rgb(24, 21, 21);
+    color: white;
+    /* filter: grayscale(100%); */
+    cursor: default;
+}
+
+.disabledOption:hover {
+background: rgb(117, 13, 13)
+}
