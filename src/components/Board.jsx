@@ -37,6 +37,9 @@ const Board = (props) => {
 
   const [updateFirebase, setUpdateFirebase] = useState(false);
 
+  const [deployPawnMode, setDeployPawnMode] = useState(false);
+  const [validDeployZones, setValidDeployZones] = useState([]);
+
   //====================================================================
   //====================================================================
   //UseEffects below
@@ -57,7 +60,7 @@ const Board = (props) => {
     } else {
       setPovUnitClass(guestUnitsClass);
     }
-  }, [props.userRole]);
+  }, [props.userRole, hostUnitsClass, guestUnitsClass]);
 
   //Updates Firebase
   useEffect(() => {
@@ -157,10 +160,12 @@ const Board = (props) => {
       lastResolution =
         props.gameState.currentResolution[
           props.gameState.currentResolution.length - 1
-        ].resolution;
+        ];
+    } else {
+      lastResolution = { resolution: "" };
     }
 
-    switch (lastResolution) {
+    switch (lastResolution.resolution) {
       case "Acquisition Phase Selection":
         return (
           <>
@@ -171,10 +176,24 @@ const Board = (props) => {
                 nextPhase={nextPhase}
                 findNullUnitIndex={findNullUnitIndex}
                 getVacantFrontier={getVacantFrontier}
+                enterDeployMode={enterDeployMode}
               />
             )}
           </>
         );
+      case "Deploying Pawn":
+        return (
+          <>
+            {props.userRole === "host" && !deployPawnMode && (
+              <>
+                {setDeployPawnMode(true)}
+                {setValidDeployZones(lastResolution.zoneIds)}
+              </>
+            )}
+          </>
+        );
+      default:
+        return;
     }
   };
 
@@ -207,6 +226,57 @@ const Board = (props) => {
       newGameState[props.userRole].skillHand.push(
         newGameState[props.userRole].skillRepertoire.pop()
       );
+
+      return newGameState;
+    });
+
+    setUpdateFirebase(!updateFirebase);
+  };
+
+  const deployPawn = (r, c) => {
+    console.log("deploy pawn on row" + r + " column" + c);
+
+    setLocalGameState((prev) => {
+      const newGameState = JSON.parse(JSON.stringify(prev));
+
+      new Pawn({
+        player: props.userRole,
+        unitIndex: findNullUnitIndex(),
+        row: r,
+        column: c,
+      });
+
+      newGameState[props.userRole].units[getVacantFrontier()] = JSON.parse(
+        JSON.stringify(
+          new Pawn({
+            player: props.userRole,
+            unitIndex: findNullUnitIndex(),
+            row: r,
+            column: c,
+          })
+        )
+      );
+
+      let newZoneInfo = [...zonesClass];
+      newGameState.zones = JSON.stringify(newZoneInfo);
+
+      return newGameState;
+    });
+
+    setUpdateFirebase(!updateFirebase);
+  };
+
+  const enterDeployMode = (zoneIds) => {
+    console.log("enterDeployMode");
+
+    setLocalGameState((prev) => {
+      const newGameState = JSON.parse(JSON.stringify(prev));
+
+      newGameState.currentResolution.pop();
+      newGameState.currentResolution.push({
+        resolution: "Deploying Pawn",
+        zoneIds: zoneIds,
+      });
 
       return newGameState;
     });
@@ -268,6 +338,9 @@ const Board = (props) => {
 
   const findNullUnitIndex = () => {
     let nullIndex = -1;
+
+    console.log(povUnitClass);
+    console.log(hostUnitsClass);
 
     nullIndex = povUnitClass.indexOf(null);
     if (nullIndex === -1) {
@@ -491,9 +564,9 @@ const Board = (props) => {
     <>
       {allLocalReady && (
         <div>
-          Turn Player: {props.gameState && props.gameState.turnPlayer}
+          Turn Player: {props.gameState.turnPlayer}
           <br />
-          Phase: {props.gameState && props.gameState.turnPhase}
+          Phase: {props.gameState.turnPhase}
           <br />
           Resolution:{" "}
           {props.gameState.currentResolution.length > 0 &&
@@ -584,6 +657,9 @@ const Board = (props) => {
                       zone={zone}
                       hostUnits={hostUnitsClass}
                       guestUnits={guestUnitsClass}
+                      deployPawnMode={deployPawnMode}
+                      validDeployZones={validDeployZones}
+                      deployPawn={deployPawn}
                     />
                   ))
                 )}

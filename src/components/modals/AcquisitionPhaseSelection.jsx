@@ -4,8 +4,10 @@ import "./Modal.css";
 const AcquisitionPhaseSelection = (props) => {
   let canAppoint = true;
 
+  console.log(props.findNullUnitIndex());
+
   if (
-    props.findNullUnitIndex() === 8 ||
+    props.findNullUnitIndex() >= 8 ||
     props.getVacantFrontier().length === 0
   ) {
     console.log("Cannot Appoint");
@@ -16,10 +18,7 @@ const AcquisitionPhaseSelection = (props) => {
 
   const onAppoint = () => {
     if (canAppoint) {
-      if (props.findNullUnitIndex() === 8) {
-        console.log("Unit limit (8) exceeded");
-      }
-      console.log(props.getVacantFrontier());
+      props.enterDeployMode(props.getVacantFrontier());
     }
   };
 
@@ -59,7 +58,7 @@ const AcquisitionPhaseSelection = (props) => {
             <h5>
               Upgrade:
               <br />
-              If your hand has 4 or less skills, you may draw 1 skill again.
+              If your hand has 4 or less skills, you may draw 1 more.
             </h5>
           </div>
           <div className="choiceWithDescription">

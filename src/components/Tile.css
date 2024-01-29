@@ -7,6 +7,16 @@
     align-items: center;
 }
 
+.selectable  .tile {
+    background-color: rgb(102, 149, 248);
+
+}
+
+.selectable .tile:hover{
+background-color: rgb(99, 192, 63);
+    cursor: pointer
+}
+
 .tile-grid {
     display: grid;
     /* grid-template-columns: 1fr 1fr 1fr 1fr 1fr; */
@@ -18,8 +28,10 @@
 
 .reversed-tile{
     direction: ltr;
+    transform: rotate(180deg);
 }
 
 .reversed-tile-grid, .reversed-tile-grid>.reversed-tile{
     transform: rotate(180deg);
 }
+
