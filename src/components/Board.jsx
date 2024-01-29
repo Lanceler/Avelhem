@@ -64,13 +64,14 @@ const Board = (props) => {
 
   //Updates Firebase
   useEffect(() => {
-    if (localGameState) {
+    if (localGameState && updateFirebase) {
       ("Uploading Local Changes");
       try {
         updateDoc(gameDoc, { gameState: localGameState });
       } catch (err) {
         console.log(err);
       }
+      setUpdateFirebase(false);
     }
   }, [updateFirebase]);
 
@@ -184,12 +185,13 @@ const Board = (props) => {
       case "Deploying Pawn":
         return (
           <>
-            {props.userRole === "host" && !deployPawnMode && (
-              <>
-                {setDeployPawnMode(true)}
-                {setValidDeployZones(lastResolution.zoneIds)}
-              </>
-            )}
+            {props.userRole === props.gameState.turnPlayer &&
+              !deployPawnMode && (
+                <>
+                  {setDeployPawnMode(true)}
+                  {setValidDeployZones(lastResolution.zoneIds)}
+                </>
+              )}
           </>
         );
       default:
@@ -214,7 +216,7 @@ const Board = (props) => {
       return newGameState;
     });
 
-    setUpdateFirebase(!updateFirebase);
+    setUpdateFirebase(true);
   };
 
   const drawSkill = () => {
@@ -230,11 +232,13 @@ const Board = (props) => {
       return newGameState;
     });
 
-    setUpdateFirebase(!updateFirebase);
+    setUpdateFirebase(true);
   };
 
-  const deployPawn = (r, c) => {
+  const deployPawn = (r, c, zid) => {
     console.log("deploy pawn on row" + r + " column" + c);
+
+    setValidDeployZones(validDeployZones.filter((zone) => zone.id !== zid));
 
     setLocalGameState((prev) => {
       const newGameState = JSON.parse(JSON.stringify(prev));
@@ -246,7 +250,7 @@ const Board = (props) => {
         column: c,
       });
 
-      newGameState[props.userRole].units[getVacantFrontier()] = JSON.parse(
+      newGameState[props.userRole].units[findNullUnitIndex()] = JSON.parse(
         JSON.stringify(
           new Pawn({
             player: props.userRole,
@@ -259,6 +263,9 @@ const Board = (props) => {
 
       let newZoneInfo = [...zonesClass];
       newGameState.zones = JSON.stringify(newZoneInfo);
+
+      console.log("newGameState");
+      console.log(newGameState);
 
       return newGameState;
     });
@@ -281,7 +288,7 @@ const Board = (props) => {
       return newGameState;
     });
 
-    setUpdateFirebase(!updateFirebase);
+    setUpdateFirebase(true);
   };
 
   const nextPhase = () => {
@@ -333,7 +340,7 @@ const Board = (props) => {
       return newGameState;
     });
 
-    setUpdateFirebase(!updateFirebase);
+    setUpdateFirebase(true);
   };
 
   const findNullUnitIndex = () => {
@@ -466,7 +473,7 @@ const Board = (props) => {
       return newGameState;
     });
 
-    setUpdateFirebase(!updateFirebase);
+    setUpdateFirebase(true);
   };
 
   //====================================================================
@@ -660,6 +667,7 @@ const Board = (props) => {
                       deployPawnMode={deployPawnMode}
                       validDeployZones={validDeployZones}
                       deployPawn={deployPawn}
+                      turnPlayer={localGameState.turnPlayer}
                     />
                   ))
                 )}

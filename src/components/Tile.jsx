@@ -6,14 +6,23 @@ import Piece from "./Piece";
 const Tile = (props) => {
   let deployable = false;
 
-  if (props.validDeployZones.includes(props.zone.id)) {
+  if (
+    props.userRole === props.turnPlayer &&
+    props.validDeployZones.includes(props.zone.id)
+  ) {
     deployable = true;
   }
+
+  const onClickTile = () => {
+    if (deployable) {
+      props.deployPawn(props.zone.row, props.zone.column, props.zone.id);
+    }
+  };
 
   return (
     <div
       className={deployable ? "selectable" : ""}
-      onClick={() => props.deployPawn(props.zone.row, props.zone.column)}
+      onClick={() => onClickTile()}
     >
       <div
         className={`tile ${props.userRole !== "guest" ? "" : "reversed-tile"}`}
