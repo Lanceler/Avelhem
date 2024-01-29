@@ -136,17 +136,16 @@ const Board = (props) => {
     if (zonesClass.length) {
       console.log("Local update: Guest units");
 
+      let newGuestUnitClass = [];
+
       for (let i = 0; i < guestUnits.length; i++) {
         if (guestUnits[i].stats.unitClass === "Pawn") {
-          console.log("NEW PAWN");
-          setGuestUnitsClass((prevGuestUnits) => {
-            const updatedGuestUnits = [...prevGuestUnits];
-            updatedGuestUnits[i] = new Pawn(guestUnits[i].stats);
-
-            return updatedGuestUnits;
-          });
+          newGuestUnitClass.push(new Pawn(guestUnits[i].stats));
+        } else if (hostUnits[i] === null) {
+          newGuestUnitClass.push(null);
         }
       }
+      setGuestUnitsClass(newGuestUnitClass);
     }
   }, [guestUnits, zonesClass.length]);
 
@@ -242,11 +241,18 @@ const Board = (props) => {
     setUpdateFirebase(true);
   };
 
+  const moveHostUnitUp = (unitIndex) => {
+    console.log(hostUnitsClass[unitIndex]);
+    hostUnitsClass[unitIndex].moveUp();
+
+    setUpdateFirebase(true);
+  };
+
   const deployPawn = (r, c) => {
     console.log("deploy pawn on row" + r + " column" + c);
 
     setValidDeployZones([]);
-    // setDeployPawnMode(false);
+    // setDeployPawnMode(false); <--- DO NOT UNCOMMENT
 
     setLocalGameState((prev) => {
       const newGameState = JSON.parse(JSON.stringify(prev));
@@ -545,13 +551,23 @@ const Board = (props) => {
     constructor(statInfo) {
       this.stats = statInfo;
 
-      let tempZonesClass = [...zonesClass];
+      setZonesClass((prevZonesClass) => {
+        const updatedZonesClass = [...prevZonesClass];
+        updatedZonesClass[this.stats.row][this.stats.column].player =
+          this.stats.player;
+        updatedZonesClass[this.stats.row][this.stats.column].unitIndex =
+          this.stats.unitIndex;
 
-      tempZonesClass[statInfo.row][statInfo.column].player = statInfo.player;
-      tempZonesClass[statInfo.row][statInfo.column].unitIndex =
-        statInfo.unitIndex;
+        return updatedZonesClass;
+      });
 
-      setZonesClass(tempZonesClass);
+      // let tempZonesClass = [...zonesClass];
+
+      // tempZonesClass[statInfo.row][statInfo.column].player = statInfo.player;
+      // tempZonesClass[statInfo.row][statInfo.column].unitIndex =
+      //   statInfo.unitIndex;
+
+      // setZonesClass(tempZonesClass);
 
       // if (statInfo.player === "host") {
       //   setHostUnitsClass((prevHostUnits) => {
@@ -567,6 +583,36 @@ const Board = (props) => {
       //     return updatedGuestUnits;
       //   });
       // }
+    }
+
+    moveUp() {
+      let newHostUnitClass = [];
+
+      for (let i = 0; i < hostUnits.length; i++) {
+        if (hostUnits[i].stats.unitClass === "Pawn") {
+          newHostUnitClass.push(new Pawn(hostUnits[i].stats));
+        } else if (hostUnits[i] === null) {
+          newHostUnitClass.push(null);
+        }
+      }
+
+      console.log("newHostUnitClass[this.stats.unitIndex]");
+      console.log(newHostUnitClass[this.stats.unitIndex]);
+
+      newHostUnitClass[this.stats.unitIndex].stats.row =
+        newHostUnitClass[this.stats.unitIndex].stats.row - 1;
+
+      setHostUnitsClass(newHostUnitClass);
+
+      setZonesClass((prevZonesClass) => {
+        const updatedZonesClass = [...prevZonesClass];
+
+        updatedZonesClass[this.stats.row + 1][this.stats.column].player = null;
+        updatedZonesClass[this.stats.row + 1][this.stats.column].unitIndex =
+          null;
+
+        return updatedZonesClass;
+      });
     }
   }
 
@@ -681,6 +727,7 @@ const Board = (props) => {
                       validDeployZones={validDeployZones}
                       deployPawn={deployPawn}
                       turnPlayer={localGameState.turnPlayer}
+                      moveHostUnitUp={moveHostUnitUp}
                     />
                   ))
                 )}
