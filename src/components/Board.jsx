@@ -235,10 +235,10 @@ const Board = (props) => {
     setUpdateFirebase(true);
   };
 
-  const deployPawn = (r, c, zid) => {
+  const deployPawn = (r, c) => {
     console.log("deploy pawn on row" + r + " column" + c);
 
-    setValidDeployZones(validDeployZones.filter((zone) => zone.id !== zid));
+    setValidDeployZones([]);
 
     setLocalGameState((prev) => {
       const newGameState = JSON.parse(JSON.stringify(prev));
@@ -261,11 +261,9 @@ const Board = (props) => {
         )
       );
 
-      let newZoneInfo = [...zonesClass];
-      newGameState.zones = JSON.stringify(newZoneInfo);
+      newGameState.zones = JSON.stringify(zonesClass);
 
-      console.log("newGameState");
-      console.log(newGameState);
+      newGameState.currentResolution.pop();
 
       return newGameState;
     });
