@@ -111,17 +111,23 @@ const Board = (props) => {
     if (zonesClass.length) {
       console.log("Local update: host units");
 
+      let newHostUnitClass = [];
+
       for (let i = 0; i < hostUnits.length; i++) {
         if (hostUnits[i].stats.unitClass === "Pawn") {
-          console.log("NEW PAWN");
-          setHostUnitsClass((prevHostUnits) => {
-            const updatedHostUnits = [...prevHostUnits];
-            updatedHostUnits[i] = new Pawn(hostUnits[i].stats);
+          // setHostUnitsClass((prevHostUnits) => {
+          //   const updatedHostUnits = [...prevHostUnits];
+          //   updatedHostUnits[i] = new Pawn(hostUnits[i].stats);
 
-            return updatedHostUnits;
-          });
+          //   return updatedHostUnits;
+          // });
+
+          newHostUnitClass.push(new Pawn(hostUnits[i].stats));
+        } else if (hostUnits[i] === null) {
+          newHostUnitClass.push(null);
         }
       }
+      setHostUnitsClass(newHostUnitClass);
     }
   }, [hostUnits, zonesClass.length]);
 
@@ -194,6 +200,7 @@ const Board = (props) => {
               )}
           </>
         );
+
       default:
         return;
     }
@@ -239,6 +246,7 @@ const Board = (props) => {
     console.log("deploy pawn on row" + r + " column" + c);
 
     setValidDeployZones([]);
+    // setDeployPawnMode(false);
 
     setLocalGameState((prev) => {
       const newGameState = JSON.parse(JSON.stringify(prev));
@@ -263,7 +271,13 @@ const Board = (props) => {
 
       newGameState.zones = JSON.stringify(zonesClass);
 
-      newGameState.currentResolution.pop();
+      if (newGameState.turnPhase === "Acquisition") {
+        newGameState.turnPhase = "Bounty";
+        newGameState.currentResolution.pop();
+        newGameState.currentResolution.push({
+          resolution: "Bounty Phase Selection",
+        });
+      }
 
       return newGameState;
     });
@@ -278,6 +292,7 @@ const Board = (props) => {
       const newGameState = JSON.parse(JSON.stringify(prev));
 
       newGameState.currentResolution.pop();
+
       newGameState.currentResolution.push({
         resolution: "Deploying Pawn",
         zoneIds: zoneIds,
@@ -331,7 +346,7 @@ const Board = (props) => {
         }
         newGameState.currentResolution.pop();
         newGameState.currentResolution.push({
-          resolution: "Bounty Phase Selection",
+          resolution: "Acquisition Phase Selection",
         });
       }
 
@@ -538,20 +553,20 @@ const Board = (props) => {
 
       setZonesClass(tempZonesClass);
 
-      if (statInfo.player === "host") {
-        setHostUnitsClass((prevHostUnits) => {
-          const updatedHostUnits = [...prevHostUnits];
-          updatedHostUnits[statInfo.unitIndex] = { stats: this.stats };
+      // if (statInfo.player === "host") {
+      //   setHostUnitsClass((prevHostUnits) => {
+      //     const updatedHostUnits = [...prevHostUnits];
+      //     updatedHostUnits[statInfo.unitIndex] = { stats: this.stats };
 
-          return updatedHostUnits;
-        });
-      } else {
-        setGuestUnitsClass((prevGuestUnits) => {
-          const updatedGuestUnits = [...prevGuestUnits];
-          updatedGuestUnits[statInfo.unitIndex] = { stats: this.stats };
-          return updatedGuestUnits;
-        });
-      }
+      //     return updatedHostUnits;
+      //   });
+      // } else {
+      //   setGuestUnitsClass((prevGuestUnits) => {
+      //     const updatedGuestUnits = [...prevGuestUnits];
+      //     updatedGuestUnits[statInfo.unitIndex] = { stats: this.stats };
+      //     return updatedGuestUnits;
+      //   });
+      // }
     }
   }
 

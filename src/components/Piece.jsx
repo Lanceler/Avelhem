@@ -14,7 +14,10 @@ export const Piece = (props) => {
   return (
     <>
       {props.player && props[owner][props.unitIndex] && (
-        <div className="piece">
+        <div
+          className="piece"
+          onClick={() => props.moveHostUnitUp(props.unitIndex)}
+        >
           <>
             {props[owner][props.unitIndex].stats.player}
             <br />
