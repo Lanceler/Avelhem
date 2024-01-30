@@ -39,7 +39,7 @@ const Tile = (props) => {
               unitIndex={props.zone.unitIndex}
               hostUnits={props.hostUnits}
               guestUnits={props.guestUnits}
-              moveHostUnitUp={props.moveHostUnitUp}
+              moveUnitUp={props.moveUnitUp}
             />
           </>
         )}

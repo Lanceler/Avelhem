@@ -26,10 +26,7 @@ const Board = (props) => {
 
   const [zones, setZones] = useState([]);
 
-  const [hostUnits, setHostUnits] = useState([]);
-  const [guestUnits, setGuestUnits] = useState([]);
-
-  const [allLocalReady, setAllLocalReady] = useState(false);
+  const [gameStateReady, setGameStateReady] = useState(false);
 
   const [updateFirebase, setUpdateFirebase] = useState(false);
 
@@ -43,7 +40,7 @@ const Board = (props) => {
   useEffect(() => {
     if (localGameState) {
       console.log("local gamestate changed");
-      setAllLocalReady(true);
+      setGameStateReady(true);
     }
   }, [localGameState]);
 
@@ -72,17 +69,8 @@ const Board = (props) => {
   useEffect(() => {
     console.log("Updated local from database");
     setZones(JSON.parse(props.gameState.zones));
-    setHostUnits(props.gameState.host.units);
-    setGuestUnits(props.gameState.guest.units);
     setLocalGameState(props.gameState);
   }, [props.gameState]);
-
-  //Gives prompts depending on current (latest) resolution
-  // useEffect(() => {
-  //   if (localGameState) {
-  //     console.log("current resolution changed");
-  //   }
-  // }, [localGameState.currentResolution]);
 
   //====================================================================
   //====================================================================
@@ -163,15 +151,65 @@ const Board = (props) => {
       newGameState[props.userRole].skillHand.push(
         newGameState[props.userRole].skillRepertoire.pop()
       );
+      setUpdateFirebase(true);
+      return newGameState;
+    });
+  };
 
+  const moveUnitUp = (player, unitIndex) => {
+    console.log("moveHostUnitUp");
+
+    setLocalGameState((prev) => {
+      const newGameState = JSON.parse(JSON.stringify(prev));
+
+      let newZoneInfo = [...zones];
+      newZoneInfo[newGameState[player].units[unitIndex].stats.row][
+        newGameState[player].units[unitIndex].stats.column
+      ].player = null;
+      newZoneInfo[newGameState[player].units[unitIndex].stats.row][
+        newGameState[player].units[unitIndex].stats.column
+      ].unitIndex = null;
+
+      newZoneInfo[newGameState[player].units[unitIndex].stats.row - 1][
+        newGameState[player].units[unitIndex].stats.column
+      ].player = newGameState[player].units[unitIndex].stats.player;
+      newZoneInfo[newGameState[player].units[unitIndex].stats.row - 1][
+        newGameState[player].units[unitIndex].stats.column
+      ].unitIndex = newGameState[player].units[unitIndex].stats.unitIndex;
+
+      newGameState.zones = JSON.stringify(newZoneInfo);
+
+      newGameState[player].units[unitIndex].stats.row =
+        newGameState[player].units[unitIndex].stats.row - 1;
+
+      setUpdateFirebase(true);
       return newGameState;
     });
 
-    setUpdateFirebase(true);
-  };
+    // this.setState(
+    //   (prev) => {
+    //     const newGameState = JSON.parse(JSON.stringify(prev.localGameState));
 
-  const moveHostUnitUp = (unitIndex) => {
-    console.log("moveHostUnitUp");
+    //     let newZoneInfo = [...zones];
+    //     const { player, unitIndex } =
+    //       newGameState[player].units[unitIndex].stats;
+
+    //     newZoneInfo[player][unitIndex].player = null;
+    //     newZoneInfo[player][unitIndex].unitIndex = null;
+
+    //     newZoneInfo[player - 1][unitIndex].player =
+    //       newGameState[player][unitIndex].stats.player;
+    //     newZoneInfo[player - 1][unitIndex].unitIndex =
+    //       newGameState[player][unitIndex].stats.unitIndex;
+
+    //     newGameState[player].units[unitIndex].stats.row = player - 1;
+
+    //     return { localGameState: newGameState };
+    //   },
+    //   () => {
+    //     setUpdateFirebase(true);
+    //   }
+    // );
   };
 
   const deployPawn = (r, c) => {
@@ -430,7 +468,7 @@ const Board = (props) => {
             player: "guest",
             unitIndex: 2,
             row: 3,
-            column: 2,
+            column: 0,
             unitClass: "pawn",
             hp: 1,
           },
@@ -471,7 +509,7 @@ const Board = (props) => {
 
   return (
     <>
-      {allLocalReady && (
+      {gameStateReady && (
         <div>
           Turn Player: {props.gameState.turnPlayer}
           <br />
@@ -482,6 +520,8 @@ const Board = (props) => {
             props.gameState.currentResolution[
               props.gameState.currentResolution.length - 1
             ].resolution}
+          <br />
+          {JSON.stringify(deployPawnMode)} {validDeployZones.length}
           {!props.gameState.turnPlayer && props.userRole === "host" && (
             <SelectFirstPlayer onSetFirstPlayer={onSetFirstPlayer} />
           )}
@@ -570,7 +610,7 @@ const Board = (props) => {
                       validDeployZones={validDeployZones}
                       deployPawn={deployPawn}
                       turnPlayer={localGameState.turnPlayer}
-                      moveHostUnitUp={moveHostUnitUp}
+                      moveUnitUp={moveUnitUp}
                     />
                   ))
                 )}
