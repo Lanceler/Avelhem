@@ -25,13 +25,9 @@ const Board = (props) => {
   const [localGameState, setLocalGameState] = useState(null);
 
   const [zones, setZones] = useState([]);
-  const [zonesClass, setZonesClass] = useState([]);
 
   const [hostUnits, setHostUnits] = useState([]);
-  const [hostUnitsClass, setHostUnitsClass] = useState([]);
   const [guestUnits, setGuestUnits] = useState([]);
-  const [guestUnitsClass, setGuestUnitsClass] = useState([]);
-  const [povUnitClass, setPovUnitClass] = useState(null);
 
   const [allLocalReady, setAllLocalReady] = useState(false);
 
@@ -45,22 +41,19 @@ const Board = (props) => {
   //UseEffects below
 
   useEffect(() => {
-    console.log("local gamestate changed");
-  }, [localGameState]);
-
-  useEffect(() => {
-    if (localGameState && zonesClass && hostUnitsClass && guestUnitsClass) {
+    if (localGameState) {
+      console.log("local gamestate changed");
       setAllLocalReady(true);
     }
-  }, [localGameState, zonesClass, hostUnitsClass, guestUnitsClass]);
+  }, [localGameState]);
 
-  useEffect(() => {
-    if (props.userRole === "host") {
-      setPovUnitClass(hostUnitsClass);
-    } else {
-      setPovUnitClass(guestUnitsClass);
-    }
-  }, [props.userRole, hostUnitsClass, guestUnitsClass]);
+  // useEffect(() => {
+
+  // if(props.userRole === "host"){
+  //   setPovUnit()
+  // }
+
+  //   }, [allLocalReady]);
 
   //Updates Firebase
   useEffect(() => {
@@ -84,76 +77,12 @@ const Board = (props) => {
     setLocalGameState(props.gameState);
   }, [props.gameState]);
 
-  //Converts zone data (Firebase) into classes
-  useEffect(() => {
-    if (zones.length) {
-      console.log("Local update: zones");
-      let z = [];
-      for (let r = 0; r < 10; r++) {
-        z.push([]);
-        for (let c = 0; c < 5; c++) {
-          let stats = zones[r][c];
-          z[r][c] = new Zone(
-            stats.id,
-            stats.row,
-            stats.column,
-            stats.player,
-            stats.unitIndex
-          );
-        }
-      }
-      setZonesClass([...z]);
-    }
-  }, [zones]);
-
-  //Converts hostUnit data (Firebase) into classes
-  useEffect(() => {
-    if (zonesClass.length) {
-      console.log("Local update: host units");
-
-      let newHostUnitClass = [];
-
-      for (let i = 0; i < hostUnits.length; i++) {
-        if (hostUnits[i].stats.unitClass === "Pawn") {
-          // setHostUnitsClass((prevHostUnits) => {
-          //   const updatedHostUnits = [...prevHostUnits];
-          //   updatedHostUnits[i] = new Pawn(hostUnits[i].stats);
-
-          //   return updatedHostUnits;
-          // });
-
-          newHostUnitClass.push(new Pawn(hostUnits[i].stats));
-        } else if (hostUnits[i] === null) {
-          newHostUnitClass.push(null);
-        }
-      }
-      setHostUnitsClass(newHostUnitClass);
-    }
-  }, [hostUnits, zonesClass.length]);
-
-  //Converts guestUnit data (Firebase) into classes
-  useEffect(() => {
-    if (zonesClass.length) {
-      console.log("Local update: Guest units");
-
-      let newGuestUnitClass = [];
-
-      for (let i = 0; i < guestUnits.length; i++) {
-        if (guestUnits[i].stats.unitClass === "Pawn") {
-          newGuestUnitClass.push(new Pawn(guestUnits[i].stats));
-        } else if (hostUnits[i] === null) {
-          newGuestUnitClass.push(null);
-        }
-      }
-      setGuestUnitsClass(newGuestUnitClass);
-    }
-  }, [guestUnits, zonesClass.length]);
-
   //Gives prompts depending on current (latest) resolution
-
-  useEffect(() => {
-    console.log("current resolution changed");
-  }, [props.gameState.currentResolution]);
+  // useEffect(() => {
+  //   if (localGameState) {
+  //     console.log("current resolution changed");
+  //   }
+  // }, [localGameState.currentResolution]);
 
   //====================================================================
   //====================================================================
@@ -162,10 +91,10 @@ const Board = (props) => {
   const currentResolutionPrompt = () => {
     let lastResolution = null;
 
-    if (props.gameState.currentResolution.length > 0) {
+    if (localGameState.currentResolution.length > 0) {
       lastResolution =
-        props.gameState.currentResolution[
-          props.gameState.currentResolution.length - 1
+        localGameState.currentResolution[
+          localGameState.currentResolution.length - 1
         ];
     } else {
       lastResolution = { resolution: "" };
@@ -190,7 +119,7 @@ const Board = (props) => {
       case "Deploying Pawn":
         return (
           <>
-            {props.userRole === props.gameState.turnPlayer &&
+            {props.userRole === localGameState.turnPlayer &&
               !deployPawnMode && (
                 <>
                   {setDeployPawnMode(true)}
@@ -242,40 +171,34 @@ const Board = (props) => {
   };
 
   const moveHostUnitUp = (unitIndex) => {
-    console.log(hostUnitsClass[unitIndex]);
-    hostUnitsClass[unitIndex].moveUp();
-
-    setUpdateFirebase(true);
+    console.log("moveHostUnitUp");
   };
 
   const deployPawn = (r, c) => {
     console.log("deploy pawn on row" + r + " column" + c);
 
-    setValidDeployZones([]);
+    // setValidDeployZones([]);
     // setDeployPawnMode(false); <--- DO NOT UNCOMMENT
 
     setLocalGameState((prev) => {
       const newGameState = JSON.parse(JSON.stringify(prev));
 
-      new Pawn({
-        player: props.userRole,
-        unitIndex: findNullUnitIndex(),
-        row: r,
-        column: c,
-      });
+      newGameState[props.userRole].units[findNullUnitIndex()] = {
+        stats: {
+          player: props.userRole,
+          unitIndex: findNullUnitIndex(),
+          row: r,
+          column: c,
+          unitClass: "pawn",
+          hp: 1,
+        },
+      };
 
-      newGameState[props.userRole].units[findNullUnitIndex()] = JSON.parse(
-        JSON.stringify(
-          new Pawn({
-            player: props.userRole,
-            unitIndex: findNullUnitIndex(),
-            row: r,
-            column: c,
-          })
-        )
-      );
+      let newZoneInfo = [...zones];
+      newZoneInfo[r][c].player = props.userRole;
+      newZoneInfo[r][c].unitIndex = findNullUnitIndex();
 
-      newGameState.zones = JSON.stringify(zonesClass);
+      newGameState.zones = JSON.stringify(newZoneInfo);
 
       if (newGameState.turnPhase === "Acquisition") {
         newGameState.turnPhase = "Bounty";
@@ -285,10 +208,14 @@ const Board = (props) => {
         });
       }
 
+      setUpdateFirebase((prev) => {
+        setValidDeployZones([]);
+        setDeployPawnMode(false);
+        return true;
+      });
+
       return newGameState;
     });
-
-    setUpdateFirebase(!updateFirebase);
   };
 
   const enterDeployMode = (zoneIds) => {
@@ -365,12 +292,9 @@ const Board = (props) => {
   const findNullUnitIndex = () => {
     let nullIndex = -1;
 
-    console.log(povUnitClass);
-    console.log(hostUnitsClass);
-
-    nullIndex = povUnitClass.indexOf(null);
+    nullIndex = localGameState[props.userRole].units.indexOf(null);
     if (nullIndex === -1) {
-      nullIndex = povUnitClass.length;
+      nullIndex = localGameState[props.userRole].units.length;
     }
     console.log("1st Null Index is " + nullIndex);
     return nullIndex;
@@ -385,13 +309,13 @@ const Board = (props) => {
     if (props.userRole === "host") {
       for (let r = 9; r >= 9 - frontierLength; r--) {
         for (let c = 0; c <= 4; c++) {
-          validZones.push(zonesClass[r][c].id);
+          validZones.push(zones[r][c].id);
         }
       }
     } else {
       for (let r = 0; r <= 0 + frontierLength; r++) {
         for (let c = 0; c <= 4; c++) {
-          validZones.push(zonesClass[r][c].id);
+          validZones.push(zones[r][c].id);
         }
       }
     }
@@ -447,40 +371,87 @@ const Board = (props) => {
         guestAvelhemRepertoire
       );
 
-      newGameState.host.units[0] = JSON.parse(
-        JSON.stringify(
-          new Pawn({ player: "host", unitIndex: 0, row: 6, column: 0 })
-        )
-      );
+      newGameState.host.units = [
+        {
+          stats: {
+            player: "host",
+            unitIndex: 0,
+            row: 6,
+            column: 0,
+            unitClass: "pawn",
+            hp: 1,
+          },
+        },
+        {
+          stats: {
+            player: "host",
+            unitIndex: 1,
+            row: 6,
+            column: 2,
+            unitClass: "pawn",
+            hp: 1,
+          },
+        },
+        {
+          stats: {
+            player: "host",
+            unitIndex: 2,
+            row: 6,
+            column: 4,
+            unitClass: "pawn",
+            hp: 1,
+          },
+        },
+      ];
 
-      newGameState.host.units[1] = JSON.parse(
-        JSON.stringify(
-          new Pawn({ player: "host", unitIndex: 1, row: 6, column: 2 })
-        )
-      );
-      newGameState.host.units[2] = JSON.parse(
-        JSON.stringify(
-          new Pawn({ player: "host", unitIndex: 2, row: 6, column: 4 })
-        )
-      );
+      newGameState.guest.units = [
+        {
+          stats: {
+            player: "guest",
+            unitIndex: 0,
+            row: 3,
+            column: 4,
+            unitClass: "pawn",
+            hp: 1,
+          },
+        },
+        {
+          stats: {
+            player: "guest",
+            unitIndex: 1,
+            row: 3,
+            column: 2,
+            unitClass: "pawn",
+            hp: 1,
+          },
+        },
+        {
+          stats: {
+            player: "guest",
+            unitIndex: 2,
+            row: 3,
+            column: 2,
+            unitClass: "pawn",
+            hp: 1,
+          },
+        },
+      ];
 
-      newGameState.guest.units[0] = JSON.parse(
-        JSON.stringify(
-          new Pawn({ player: "guest", unitIndex: 0, row: 3, column: 4 })
-        )
-      );
-      newGameState.guest.units[1] = JSON.parse(
-        JSON.stringify(
-          new Pawn({ player: "guest", unitIndex: 1, row: 3, column: 2 })
-        )
-      );
-      newGameState.guest.units[2] = JSON.parse(
-        JSON.stringify(
-          new Pawn({ player: "guest", unitIndex: 2, row: 3, column: 0 })
-        )
-      );
+      let newZoneInfo = [...zones];
 
-      let newZoneInfo = [...zonesClass];
+      newZoneInfo[6][0].player = "host";
+      newZoneInfo[6][0].unitIndex = 0;
+      newZoneInfo[6][2].player = "host";
+      newZoneInfo[6][2].unitIndex = 1;
+      newZoneInfo[6][4].player = "host";
+      newZoneInfo[6][4].unitIndex = 2;
+      newZoneInfo[3][0].player = "guest";
+      newZoneInfo[3][0].unitIndex = 2;
+      newZoneInfo[3][2].player = "guest";
+      newZoneInfo[3][2].unitIndex = 1;
+      newZoneInfo[3][4].player = "guest";
+      newZoneInfo[3][4].unitIndex = 0;
+
       newGameState.zones = JSON.stringify(newZoneInfo);
 
       newGameState.turnCount = 1;
@@ -494,134 +465,6 @@ const Board = (props) => {
 
     setUpdateFirebase(true);
   };
-
-  //====================================================================
-  //====================================================================
-  //classes below
-
-  class Zone {
-    constructor(id, row, column, player, unitIndex) {
-      this.id = id;
-      this.row = row;
-      this.column = column;
-      this.player = player;
-      this.unitIndex = unitIndex;
-    }
-
-    clearInfo() {
-      this.player = null;
-      this.unitIndex = null;
-    }
-
-    getZonesInRange(includeSelf, range) {
-      let zonesInRange = [];
-
-      for (let r = this.row - range; r <= this.row + range; r++) {
-        if (r < 0) {
-          r++;
-        } else if (r > 9) {
-          break;
-        } else {
-          for (let c = this.column - range; c <= this.column + range; c++) {
-            if (c < 0) {
-              c++;
-            } else if (c > 4) {
-              {
-                break;
-              }
-            } else {
-              zonesInRange.push([r, c]);
-            }
-          }
-        }
-      }
-
-      if (!includeSelf) {
-        zonesInRange = zonesInRange.filter(
-          (zone) =>
-            JSON.stringify(zone) !== JSON.stringify([this.row, this.column])
-        );
-      }
-
-      return zonesInRange;
-    }
-  }
-
-  class Unit {
-    constructor(statInfo) {
-      this.stats = statInfo;
-
-      setZonesClass((prevZonesClass) => {
-        const updatedZonesClass = [...prevZonesClass];
-        updatedZonesClass[this.stats.row][this.stats.column].player =
-          this.stats.player;
-        updatedZonesClass[this.stats.row][this.stats.column].unitIndex =
-          this.stats.unitIndex;
-
-        return updatedZonesClass;
-      });
-
-      // let tempZonesClass = [...zonesClass];
-
-      // tempZonesClass[statInfo.row][statInfo.column].player = statInfo.player;
-      // tempZonesClass[statInfo.row][statInfo.column].unitIndex =
-      //   statInfo.unitIndex;
-
-      // setZonesClass(tempZonesClass);
-
-      // if (statInfo.player === "host") {
-      //   setHostUnitsClass((prevHostUnits) => {
-      //     const updatedHostUnits = [...prevHostUnits];
-      //     updatedHostUnits[statInfo.unitIndex] = { stats: this.stats };
-
-      //     return updatedHostUnits;
-      //   });
-      // } else {
-      //   setGuestUnitsClass((prevGuestUnits) => {
-      //     const updatedGuestUnits = [...prevGuestUnits];
-      //     updatedGuestUnits[statInfo.unitIndex] = { stats: this.stats };
-      //     return updatedGuestUnits;
-      //   });
-      // }
-    }
-
-    moveUp() {
-      let newHostUnitClass = [];
-
-      for (let i = 0; i < hostUnits.length; i++) {
-        if (hostUnits[i].stats.unitClass === "Pawn") {
-          newHostUnitClass.push(new Pawn(hostUnits[i].stats));
-        } else if (hostUnits[i] === null) {
-          newHostUnitClass.push(null);
-        }
-      }
-
-      console.log("newHostUnitClass[this.stats.unitIndex]");
-      console.log(newHostUnitClass[this.stats.unitIndex]);
-
-      newHostUnitClass[this.stats.unitIndex].stats.row =
-        newHostUnitClass[this.stats.unitIndex].stats.row - 1;
-
-      setHostUnitsClass(newHostUnitClass);
-
-      setZonesClass((prevZonesClass) => {
-        const updatedZonesClass = [...prevZonesClass];
-
-        updatedZonesClass[this.stats.row + 1][this.stats.column].player = null;
-        updatedZonesClass[this.stats.row + 1][this.stats.column].unitIndex =
-          null;
-
-        return updatedZonesClass;
-      });
-    }
-  }
-
-  class Pawn extends Unit {
-    constructor(statInfo) {
-      super(statInfo);
-      this.stats.unitClass = "Pawn";
-    }
-  }
 
   //====================================================================
   //====================================================================
@@ -715,14 +558,14 @@ const Board = (props) => {
                     : "tile-grid reversed-tile-grid"
                 }
               >
-                {zonesClass.map((row, r) =>
+                {zones.map((row, r) =>
                   row.map((zone, c) => (
                     <Tile
                       userRole={props.userRole}
                       key={zone.id}
                       zone={zone}
-                      hostUnits={hostUnitsClass}
-                      guestUnits={guestUnitsClass}
+                      hostUnits={localGameState.host.units}
+                      guestUnits={localGameState.guest.units}
                       deployPawnMode={deployPawnMode}
                       validDeployZones={validDeployZones}
                       deployPawn={deployPawn}
