@@ -10,17 +10,12 @@ import { useState, useEffect } from "react";
 
 import { db } from "../config/firebaseConfig";
 
-import { useCardDatabase } from "../hooks/useCardDatabase";
-
 import { updateDoc, doc } from "firebase/firestore";
 
 import AcquisitionPhaseSelection from "./modals/AcquisitionPhaseSelection";
 
 const Board = (props) => {
   const gameDoc = doc(db, "gameInfo", props.gameId);
-
-  const { avelhemCardList, skillCardList, getAvelhemById, getSkillById } =
-    useCardDatabase();
 
   const [localGameState, setLocalGameState] = useState(null);
 
@@ -43,14 +38,6 @@ const Board = (props) => {
       setGameStateReady(true);
     }
   }, [localGameState]);
-
-  // useEffect(() => {
-
-  // if(props.userRole === "host"){
-  //   setPovUnit()
-  // }
-
-  //   }, [allLocalReady]);
 
   //Updates Firebase
   useEffect(() => {
@@ -116,6 +103,17 @@ const Board = (props) => {
               )}
           </>
         );
+      case "Deploying Pawn Ended":
+        return (
+          <>
+            {props.userRole === localGameState.turnPlayer && (
+              <>
+                {popResolution()}
+                {nextPhase()}
+              </>
+            )}
+          </>
+        );
 
       default:
         return;
@@ -163,6 +161,7 @@ const Board = (props) => {
       const newGameState = JSON.parse(JSON.stringify(prev));
 
       let newZoneInfo = [...zones];
+      //vacate current zone
       newZoneInfo[newGameState[player].units[unitIndex].stats.row][
         newGameState[player].units[unitIndex].stats.column
       ].player = null;
@@ -170,6 +169,7 @@ const Board = (props) => {
         newGameState[player].units[unitIndex].stats.column
       ].unitIndex = null;
 
+      //enter new zone
       newZoneInfo[newGameState[player].units[unitIndex].stats.row - 1][
         newGameState[player].units[unitIndex].stats.column
       ].player = newGameState[player].units[unitIndex].stats.player;
@@ -177,46 +177,20 @@ const Board = (props) => {
         newGameState[player].units[unitIndex].stats.column
       ].unitIndex = newGameState[player].units[unitIndex].stats.unitIndex;
 
+      //stringify for firebase
       newGameState.zones = JSON.stringify(newZoneInfo);
 
+      //update unit itself
       newGameState[player].units[unitIndex].stats.row =
         newGameState[player].units[unitIndex].stats.row - 1;
 
       setUpdateFirebase(true);
       return newGameState;
     });
-
-    // this.setState(
-    //   (prev) => {
-    //     const newGameState = JSON.parse(JSON.stringify(prev.localGameState));
-
-    //     let newZoneInfo = [...zones];
-    //     const { player, unitIndex } =
-    //       newGameState[player].units[unitIndex].stats;
-
-    //     newZoneInfo[player][unitIndex].player = null;
-    //     newZoneInfo[player][unitIndex].unitIndex = null;
-
-    //     newZoneInfo[player - 1][unitIndex].player =
-    //       newGameState[player][unitIndex].stats.player;
-    //     newZoneInfo[player - 1][unitIndex].unitIndex =
-    //       newGameState[player][unitIndex].stats.unitIndex;
-
-    //     newGameState[player].units[unitIndex].stats.row = player - 1;
-
-    //     return { localGameState: newGameState };
-    //   },
-    //   () => {
-    //     setUpdateFirebase(true);
-    //   }
-    // );
   };
 
   const deployPawn = (r, c) => {
     console.log("deploy pawn on row" + r + " column" + c);
-
-    // setValidDeployZones([]);
-    // setDeployPawnMode(false); <--- DO NOT UNCOMMENT
 
     setLocalGameState((prev) => {
       const newGameState = JSON.parse(JSON.stringify(prev));
@@ -238,13 +212,19 @@ const Board = (props) => {
 
       newGameState.zones = JSON.stringify(newZoneInfo);
 
-      if (newGameState.turnPhase === "Acquisition") {
-        newGameState.turnPhase = "Bounty";
-        newGameState.currentResolution.pop();
-        newGameState.currentResolution.push({
-          resolution: "Bounty Phase Selection",
-        });
-      }
+      // if (newGameState.turnPhase === "Acquisition") {
+      //   newGameState.turnPhase = "Bounty";
+      //   newGameState.currentResolution.pop();
+      //   newGameState.currentResolution.push({
+      //     resolution: "Bounty Phase Selection",
+      //   });
+      // }
+
+      newGameState.currentResolution.pop();
+
+      newGameState.currentResolution.push({
+        resolution: "Deploying Pawn Ended",
+      });
 
       setUpdateFirebase((prev) => {
         setValidDeployZones([]);
@@ -262,17 +242,26 @@ const Board = (props) => {
     setLocalGameState((prev) => {
       const newGameState = JSON.parse(JSON.stringify(prev));
 
-      newGameState.currentResolution.pop();
+      // newGameState.currentResolution.pop();
 
       newGameState.currentResolution.push({
         resolution: "Deploying Pawn",
         zoneIds: zoneIds,
       });
-
+      setUpdateFirebase(true);
       return newGameState;
     });
+  };
 
-    setUpdateFirebase(true);
+  const popResolution = () => {
+    setLocalGameState((prev) => {
+      const newGameState = JSON.parse(JSON.stringify(prev));
+
+      newGameState.currentResolution.pop();
+
+      setUpdateFirebase(true);
+      return newGameState;
+    });
   };
 
   const nextPhase = () => {
@@ -320,11 +309,9 @@ const Board = (props) => {
           resolution: "Acquisition Phase Selection",
         });
       }
-
+      setUpdateFirebase(true);
       return newGameState;
     });
-
-    setUpdateFirebase(true);
   };
 
   const findNullUnitIndex = () => {
@@ -334,7 +321,6 @@ const Board = (props) => {
     if (nullIndex === -1) {
       nullIndex = localGameState[props.userRole].units.length;
     }
-    console.log("1st Null Index is " + nullIndex);
     return nullIndex;
   };
 
@@ -347,20 +333,30 @@ const Board = (props) => {
     if (props.userRole === "host") {
       for (let r = 9; r >= 9 - frontierLength; r--) {
         for (let c = 0; c <= 4; c++) {
-          validZones.push(zones[r][c].id);
+          validZones.push(zones[r][c]);
         }
       }
     } else {
       for (let r = 0; r <= 0 + frontierLength; r++) {
         for (let c = 0; c <= 4; c++) {
-          validZones.push(zones[r][c].id);
+          validZones.push(zones[r][c]);
         }
       }
     }
 
     validZones = validZones.filter((zone) => !zone.player);
 
-    return validZones;
+    console.log(validZones);
+
+    let validZonesIds = [];
+
+    for (let i = 0; i < validZones.length; i++) {
+      validZonesIds.push(validZones[i].id);
+    }
+
+    console.log(validZonesIds);
+
+    return validZonesIds;
   };
 
   const shuffleRepertoire = (repertoire) => {
