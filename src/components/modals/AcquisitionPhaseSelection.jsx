@@ -4,8 +4,6 @@ import "./Modal.css";
 const AcquisitionPhaseSelection = (props) => {
   let canAppoint = true;
 
-  console.log(props.findNullUnitIndex());
-
   if (
     props.findNullUnitIndex() >= 8 ||
     props.getVacantFrontier().length === 0
@@ -14,6 +12,24 @@ const AcquisitionPhaseSelection = (props) => {
     canAppoint = false;
   } else {
     console.log("Can Appoint");
+  }
+
+  let canDivine = false;
+
+  if (props.bountyUpgrades.acquisition > 0) {
+    console.log("Can Divine");
+    canDivine = true;
+  } else {
+    console.log("Cannot Divine");
+  }
+
+  let canExpedite = false;
+
+  if (props.bountyUpgrades.acquisition > 2) {
+    console.log("Can Expedite");
+    canExpedite = true;
+  } else {
+    console.log("Cannot Expedite");
   }
 
   const onAppoint = () => {
@@ -29,6 +45,16 @@ const AcquisitionPhaseSelection = (props) => {
   };
 
   const onCultivate = () => {
+    props.drawSkill();
+    props.nextPhase();
+  };
+
+  const onDivine = () => {
+    //To-do
+  };
+
+  const onExpedite = () => {
+    props.drawSkill();
     props.drawSkill();
     props.nextPhase();
   };
@@ -61,7 +87,12 @@ const AcquisitionPhaseSelection = (props) => {
               If your hand has 4 or less skills, you may draw 1 more.
             </h5>
           </div>
-          <div className="choiceWithDescription">
+          <div
+            className={`choiceWithDescription ${
+              canDivine ? "" : "disabledOption"
+            }`}
+            onClick={() => onDivine()}
+          >
             <h3>Divine</h3>
             <h4>Must be unlocked.</h4>
             <h5>
@@ -70,7 +101,12 @@ const AcquisitionPhaseSelection = (props) => {
               You may recover 1 “Transcendence” or draw 1 Avelhem.
             </h5>
           </div>
-          <div className="choiceWithDescription">
+          <div
+            className={`choiceWithDescription ${
+              canExpedite ? "" : "disabledOption"
+            }`}
+            onClick={() => onExpedite()}
+          >
             <h3>Expedite</h3>
             <h4>Must be unlocked.</h4>
             <h5>Draw 2 skills.</h5>

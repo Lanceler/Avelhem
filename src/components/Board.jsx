@@ -87,6 +87,7 @@ const Board = (props) => {
                 findNullUnitIndex={findNullUnitIndex}
                 getVacantFrontier={getVacantFrontier}
                 enterDeployMode={enterDeployMode}
+                bountyUpgrades={localGameState[props.userRole].bountyUpgrades}
               />
             )}
           </>
