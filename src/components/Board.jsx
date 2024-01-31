@@ -13,6 +13,8 @@ import { db } from "../config/firebaseConfig";
 import { updateDoc, doc } from "firebase/firestore";
 
 import AcquisitionPhaseSelection from "./modals/AcquisitionPhaseSelection";
+import BountyStore from "./modals/BountyStore";
+import CoordinationPhaseSelection from "./modals/CoordinationPhaseSelection";
 
 const Board = (props) => {
   const gameDoc = doc(db, "gameInfo", props.gameId);
@@ -110,8 +112,39 @@ const Board = (props) => {
             {props.userRole === localGameState.turnPlayer && (
               <>
                 {popResolution()}
-                {nextPhase()}
+                {localGameState.turnPhase === "Acquisition" && nextPhase()}
               </>
+            )}
+          </>
+        );
+
+      case "Bounty Phase Selection":
+        return (
+          <>
+            {props.userRole === props.gameState.turnPlayer && (
+              <BountyStore
+                nextPhase={nextPhase}
+                bountyUpgrades={localGameState[props.userRole].bountyUpgrades}
+                bountyPoints={localGameState[props.userRole].bountyPoints}
+                fateDefiances={localGameState[props.userRole].fateDefiances}
+                score={localGameState[props.userRole].score}
+              />
+            )}
+          </>
+        );
+
+      case "Coordination Phase Selection":
+        return (
+          <>
+            {props.userRole === props.gameState.turnPlayer && (
+              <CoordinationPhaseSelection
+                nextPhase={nextPhase}
+                skillHandSize={localGameState[props.userRole].skillHand.length}
+                bountyUpgradesC={
+                  localGameState[props.userRole].bountyUpgrades.coordination
+                }
+                rollTactic={rollTactic}
+              />
             )}
           </>
         );
@@ -133,12 +166,14 @@ const Board = (props) => {
 
       newGameState[props.userRole].avelhemHand.push(
         newGameState[props.userRole].avelhemRepertoire.pop()
+
+        //To do: If deck empties, shuffle discard pile into it.
       );
 
       return newGameState;
     });
 
-    setUpdateFirebase(true);
+    // setUpdateFirebase(true);
   };
 
   const drawSkill = () => {
@@ -149,8 +184,10 @@ const Board = (props) => {
 
       newGameState[props.userRole].skillHand.push(
         newGameState[props.userRole].skillRepertoire.pop()
+
+        //To do: If deck empties, shuffle discard pile into it.
       );
-      setUpdateFirebase(true);
+      // setUpdateFirebase(true);
       return newGameState;
     });
   };
@@ -213,14 +250,6 @@ const Board = (props) => {
 
       newGameState.zones = JSON.stringify(newZoneInfo);
 
-      // if (newGameState.turnPhase === "Acquisition") {
-      //   newGameState.turnPhase = "Bounty";
-      //   newGameState.currentResolution.pop();
-      //   newGameState.currentResolution.push({
-      //     resolution: "Bounty Phase Selection",
-      //   });
-      // }
-
       newGameState.currentResolution.pop();
 
       newGameState.currentResolution.push({
@@ -249,9 +278,22 @@ const Board = (props) => {
         resolution: "Deploying Pawn",
         zoneIds: zoneIds,
       });
-      setUpdateFirebase(true);
+      // setUpdateFirebase(true);
       return newGameState;
     });
+  };
+
+  const rollTactic = () => {
+    const dieFaces = [
+      "advance",
+      "advance",
+      "mobilize",
+      "mobilize",
+      "assault",
+      "invoke",
+    ];
+
+    return dieFaces[Math.floor(Math.random() * dieFaces.length)];
   };
 
   const popResolution = () => {
@@ -260,7 +302,7 @@ const Board = (props) => {
 
       newGameState.currentResolution.pop();
 
-      setUpdateFirebase(true);
+      // setUpdateFirebase(true);
       return newGameState;
     });
   };

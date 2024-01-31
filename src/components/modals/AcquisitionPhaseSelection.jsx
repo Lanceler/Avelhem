@@ -64,7 +64,7 @@ const AcquisitionPhaseSelection = (props) => {
       <div className="modal">
         <h2>Acquisition Phase</h2>
 
-        <div className="acquisitionPhase">
+        <div className="phaseSelection">
           <div
             className={`choiceWithDescription ${
               canAppoint ? "" : "disabledOption"

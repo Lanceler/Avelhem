@@ -14,10 +14,7 @@ export const Piece = (props) => {
   return (
     <>
       {props.player && props[owner][props.unitIndex] && (
-        <div
-          className="piece"
-          onClick={() => props.moveUnitUp(props.player, props.unitIndex)}
-        >
+        <div className="piece">
           <>
             {props[owner][props.unitIndex].stats.player}
             <br />
