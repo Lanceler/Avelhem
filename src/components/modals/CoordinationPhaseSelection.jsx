@@ -3,7 +3,6 @@ import "./Modal.css";
 
 const CoordinationPhaseSelection = (props) => {
   let canBattleCry = false;
-  const battleCryUpgrade = props.bountyUpgradesC;
 
   if (props.skillHandSize >= 3) {
     console.log("Can Battle Cry");
@@ -13,7 +12,8 @@ const CoordinationPhaseSelection = (props) => {
   }
 
   const onAssent = () => {
-    console.log(props.rollTactic());
+    props.assignTactics(props.rollTactic(), props.rollTactic());
+    props.nextPhase();
   };
 
   return (

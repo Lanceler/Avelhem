@@ -144,6 +144,7 @@ const Board = (props) => {
                   localGameState[props.userRole].bountyUpgrades.coordination
                 }
                 rollTactic={rollTactic}
+                assignTactics={assignTactics}
               />
             )}
           </>
@@ -284,16 +285,30 @@ const Board = (props) => {
   };
 
   const rollTactic = () => {
+    const mobilizeLimit =
+      3 + Math.floor(localGameState[props.userRole].bountyUpgrades.tactics / 3);
+
     const dieFaces = [
-      "advance",
-      "advance",
-      "mobilize",
-      "mobilize",
-      "assault",
-      "invoke",
+      { face: "advance", stock: 1 },
+      { face: "advance", stock: 1 },
+      { face: "mobilize", stock: mobilizeLimit, limit: mobilizeLimit },
+      { face: "mobilize", stock: mobilizeLimit, limit: mobilizeLimit },
+      { face: "assault", stock: 1 },
+      { face: "invoke", stock: 1 },
     ];
 
     return dieFaces[Math.floor(Math.random() * dieFaces.length)];
+  };
+
+  const assignTactics = (first, second) => {
+    setLocalGameState((prev) => {
+      const newGameState = JSON.parse(JSON.stringify(prev));
+
+      newGameState.tactics = [first, second];
+
+      // setUpdateFirebase(true);
+      return newGameState;
+    });
   };
 
   const popResolution = () => {
