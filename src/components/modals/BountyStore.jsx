@@ -60,7 +60,8 @@ export default function BountyStore(props) {
               You may float 1 Avelhem at the start of the Final Phase.
             </h4>
             <h4 className="choiceWithDescription">
-              Upgrade your Avelhems’ effects.
+              Upgrade your Avelhems’ effect: Grant the unit Shield{" "}
+              {String.fromCharCode(123)}2 turns{String.fromCharCode(125)}.
             </h4>
             <h4 className="choiceWithDescription">
               Once per Execution Phase, you can spend or float 1 Avelhem in lieu

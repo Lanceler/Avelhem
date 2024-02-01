@@ -15,6 +15,7 @@ import { updateDoc, doc } from "firebase/firestore";
 import AcquisitionPhaseSelection from "./modals/AcquisitionPhaseSelection";
 import BountyStore from "./modals/BountyStore";
 import CoordinationPhaseSelection from "./modals/CoordinationPhaseSelection";
+import DefiancePhaseSelection from "./modals/DefiancePhaseSelection";
 
 const Board = (props) => {
   const gameDoc = doc(db, "gameInfo", props.gameId);
@@ -132,7 +133,6 @@ const Board = (props) => {
             )}
           </>
         );
-
       case "Coordination Phase Selection":
         return (
           <>
@@ -143,6 +143,19 @@ const Board = (props) => {
                 bountyUpgradesC={
                   localGameState[props.userRole].bountyUpgrades.coordination
                 }
+                rollTactic={rollTactic}
+                assignTactics={assignTactics}
+              />
+            )}
+          </>
+        );
+      case "Defiance Phase Selection":
+        return (
+          <>
+            {props.userRole === props.gameState.turnPlayer && (
+              <DefiancePhaseSelection
+                nextPhase={nextPhase}
+                fateDefiances={localGameState[props.userRole].fateDefiances}
                 rollTactic={rollTactic}
                 assignTactics={assignTactics}
               />
@@ -311,6 +324,10 @@ const Board = (props) => {
     });
   };
 
+  const endExecutionPhase = () => {
+    nextPhase();
+  };
+
   const popResolution = () => {
     setLocalGameState((prev) => {
       const newGameState = JSON.parse(JSON.stringify(prev));
@@ -349,11 +366,15 @@ const Board = (props) => {
       } else if (newGameState.turnPhase === "Defiance") {
         newGameState.turnPhase = "Execution";
         newGameState.currentResolution.pop();
+
+        newGameState.currentResolution.push({
+          resolution: "Execution Phase",
+        });
       } else if (newGameState.turnPhase === "Execution") {
         newGameState.turnPhase = "Final";
         newGameState.currentResolution.pop();
         newGameState.currentResolution.push({
-          resolution: "Final Phase Selection",
+          resolution: "Final Phase Conclusion",
         });
       } else if (newGameState.turnPhase === "Final") {
         newGameState.turnPhase = "Acquisition";
@@ -598,7 +619,18 @@ const Board = (props) => {
                       <div className="avel-used"></div>
                     </div>
                   </div>
-                  <div className="dice-results"></div>
+                  <div className="dice-results">
+                    <p>
+                      1st tactic:{" "}
+                      {localGameState.tactics[0] &&
+                        localGameState.tactics[0].face}
+                    </p>
+                    <p>
+                      2nd tactic:{" "}
+                      {localGameState.tactics[1] &&
+                        localGameState.tactics[1].face}
+                    </p>
+                  </div>
                   <div className="lcml-player">
                     <div className="lcml-player-left">
                       <div className="fd"></div>
@@ -669,6 +701,13 @@ const Board = (props) => {
                   ))
                 )}
               </div>
+              {props.userRole === localGameState.turnPlayer &&
+                localGameState.currentResolution.length > 0 &&
+                localGameState.currentResolution[
+                  localGameState.currentResolution.length - 1
+                ].resolution === "Execution Phase" && (
+                  <button onClick={() => endExecutionPhase()}>End</button>
+                )}
             </div>
             <div className="phase-indicator"></div>
             <div className="right-container"></div>
