@@ -16,6 +16,8 @@ const Tile = (props) => {
   const onClickTile = () => {
     if (deployable) {
       props.deployPawn(props.zone.row, props.zone.column);
+    } else {
+      props.getZonesInRange(props.zone.row, props.zone.column, 1, false);
     }
   };
 

@@ -403,6 +403,37 @@ const Board = (props) => {
     return nullIndex;
   };
 
+  const getZonesInRange = (cRow, cColumn, range, includeSelf) => {
+    let zonesInRange = [];
+
+    for (let r = cRow - range; r <= cRow + range; r++) {
+      if (r < 0) {
+        r = 0;
+      }
+
+      if (r > 9) {
+        break;
+      } else {
+        for (let c = cColumn - range; c <= cColumn + range; c++) {
+          if (c < 0) {
+            c = 0;
+          }
+          if (c > 4) {
+            break;
+          } else {
+            zonesInRange.push(zones[r][c].id);
+          }
+        }
+      }
+    }
+
+    if (!includeSelf) {
+      zonesInRange = zonesInRange.filter((z) => z !== zones[cRow][cColumn].id);
+    }
+
+    console.log(zonesInRange);
+  };
+
   const getVacantFrontier = () => {
     let frontierLength =
       1 + localGameState[props.userRole].bountyUpgrades.frontier;
@@ -697,6 +728,7 @@ const Board = (props) => {
                       deployPawn={deployPawn}
                       turnPlayer={localGameState.turnPlayer}
                       moveUnitUp={moveUnitUp}
+                      getZonesInRange={getZonesInRange}
                     />
                   ))
                 )}
