@@ -9,7 +9,6 @@ import SelectFirstPlayer from "./modals/SelectFirstPlayer";
 import { useState, useEffect } from "react";
 
 import { db } from "../config/firebaseConfig";
-
 import { updateDoc, doc } from "firebase/firestore";
 
 import AcquisitionPhaseSelection from "./modals/AcquisitionPhaseSelection";
@@ -29,11 +28,26 @@ const Board = (props) => {
   const [updateFirebase, setUpdateFirebase] = useState(false);
 
   const [deployPawnMode, setDeployPawnMode] = useState(false);
-  const [validDeployZones, setValidDeployZones] = useState([]);
+  const [moveMode, setMoveMode] = useState(false);
+  const [validZones, setValidZones] = useState([]);
+  const [movingUnitIndex, setMovingUnitIndex] = useState(null);
+  const [movingPlayer, setMovingPlayer] = useState(null);
+
+  const [self, setSelf] = useState(null);
+  const [enemy, setEnemy] = useState(null);
 
   //====================================================================
   //====================================================================
   //UseEffects below
+  useEffect(() => {
+    if (props.userRole === "host") {
+      setSelf("host");
+      setEnemy("guest");
+    } else if (props.userRole === "guest") {
+      setSelf("guest");
+      setEnemy("host");
+    }
+  }, []);
 
   useEffect(() => {
     if (localGameState) {
@@ -82,7 +96,7 @@ const Board = (props) => {
       case "Acquisition Phase Selection":
         return (
           <>
-            {props.userRole === props.gameState.turnPlayer && (
+            {self === props.gameState.turnPlayer && (
               <AcquisitionPhaseSelection
                 drawAvelhem={drawAvelhem}
                 drawSkill={drawSkill}
@@ -90,7 +104,7 @@ const Board = (props) => {
                 findNullUnitIndex={findNullUnitIndex}
                 getVacantFrontier={getVacantFrontier}
                 enterDeployMode={enterDeployMode}
-                bountyUpgrades={localGameState[props.userRole].bountyUpgrades}
+                bountyUpgrades={localGameState[self].bountyUpgrades}
               />
             )}
           </>
@@ -98,19 +112,18 @@ const Board = (props) => {
       case "Deploying Pawn":
         return (
           <>
-            {props.userRole === localGameState.turnPlayer &&
-              !deployPawnMode && (
-                <>
-                  {setDeployPawnMode(true)}
-                  {setValidDeployZones(lastResolution.zoneIds)}
-                </>
-              )}
+            {self === localGameState.turnPlayer && !deployPawnMode && (
+              <>
+                {setDeployPawnMode(true)}
+                {setValidZones(lastResolution.zoneIds)}
+              </>
+            )}
           </>
         );
       case "Deploying Pawn Ended":
         return (
           <>
-            {props.userRole === localGameState.turnPlayer && (
+            {self === localGameState.turnPlayer && (
               <>
                 {popResolution()}
                 {localGameState.turnPhase === "Acquisition" && nextPhase()}
@@ -122,13 +135,13 @@ const Board = (props) => {
       case "Bounty Phase Selection":
         return (
           <>
-            {props.userRole === props.gameState.turnPlayer && (
+            {self === props.gameState.turnPlayer && (
               <BountyStore
                 nextPhase={nextPhase}
-                bountyUpgrades={localGameState[props.userRole].bountyUpgrades}
-                bountyPoints={localGameState[props.userRole].bountyPoints}
-                fateDefiances={localGameState[props.userRole].fateDefiances}
-                score={localGameState[props.userRole].score}
+                bountyUpgrades={localGameState[self].bountyUpgrades}
+                bountyPoints={localGameState[self].bountyPoints}
+                fateDefiances={localGameState[self].fateDefiances}
+                score={localGameState[self].score}
               />
             )}
           </>
@@ -136,12 +149,12 @@ const Board = (props) => {
       case "Coordination Phase Selection":
         return (
           <>
-            {props.userRole === props.gameState.turnPlayer && (
+            {self === props.gameState.turnPlayer && (
               <CoordinationPhaseSelection
                 nextPhase={nextPhase}
-                skillHandSize={localGameState[props.userRole].skillHand.length}
+                skillHandSize={localGameState[self].skillHand.length}
                 bountyUpgradesC={
-                  localGameState[props.userRole].bountyUpgrades.coordination
+                  localGameState[self].bountyUpgrades.coordination
                 }
                 rollTactic={rollTactic}
                 assignTactics={assignTactics}
@@ -152,13 +165,27 @@ const Board = (props) => {
       case "Defiance Phase Selection":
         return (
           <>
-            {props.userRole === props.gameState.turnPlayer && (
+            {self === props.gameState.turnPlayer && (
               <DefiancePhaseSelection
                 nextPhase={nextPhase}
-                fateDefiances={localGameState[props.userRole].fateDefiances}
+                fateDefiances={localGameState[self].fateDefiances}
                 rollTactic={rollTactic}
                 assignTactics={assignTactics}
               />
+            )}
+          </>
+        );
+
+      case "Moving Unit":
+        return (
+          <>
+            {self === localGameState.turnPlayer && !moveMode && (
+              <>
+                {setMoveMode(true)}
+                {setValidZones(lastResolution.zoneIds)}
+                {setMovingUnitIndex(lastResolution.unitIndex)}
+                {setMovingPlayer(lastResolution.player)}
+              </>
             )}
           </>
         );
@@ -178,8 +205,8 @@ const Board = (props) => {
     setLocalGameState((prev) => {
       const newGameState = JSON.parse(JSON.stringify(prev));
 
-      newGameState[props.userRole].avelhemHand.push(
-        newGameState[props.userRole].avelhemRepertoire.pop()
+      newGameState[self].avelhemHand.push(
+        newGameState[self].avelhemRepertoire.pop()
 
         //To do: If deck empties, shuffle discard pile into it.
       );
@@ -196,12 +223,71 @@ const Board = (props) => {
     setLocalGameState((prev) => {
       const newGameState = JSON.parse(JSON.stringify(prev));
 
-      newGameState[props.userRole].skillHand.push(
-        newGameState[props.userRole].skillRepertoire.pop()
+      newGameState[self].skillHand.push(
+        newGameState[self].skillRepertoire.pop()
 
         //To do: If deck empties, shuffle discard pile into it.
       );
       // setUpdateFirebase(true);
+      return newGameState;
+    });
+  };
+
+  const moveUnit = (player, unitIndex, zoneId) => {
+    setLocalGameState((prev) => {
+      const newGameState = JSON.parse(JSON.stringify(prev));
+
+      let moverStats = newGameState[player].units[unitIndex].stats;
+
+      let newZoneInfo = [...zones];
+
+      //vacate current zone
+      newZoneInfo[moverStats.row][moverStats.column].player = null;
+      newZoneInfo[moverStats.row][moverStats.column].unitIndex = null;
+
+      //enter new zone
+      newZoneInfo[Math.floor(zoneId / 5)][zoneId % 5].player =
+        moverStats.player;
+      newZoneInfo[Math.floor(zoneId / 5)][zoneId % 5].unitIndex =
+        moverStats.unitIndex;
+
+      //stringify for firebase
+      newGameState.zones = JSON.stringify(newZoneInfo);
+
+      //update unit itself
+      newGameState[player].units[unitIndex].stats.row = Math.floor(zoneId / 5);
+      newGameState[player].units[unitIndex].stats.column = zoneId % 5;
+
+      newGameState.currentResolution.pop();
+
+      setUpdateFirebase(() => {
+        setValidZones([]);
+        setMoveMode(false);
+        setMovingUnitIndex(null);
+        setMovingPlayer(null);
+
+        return true;
+      });
+      return newGameState;
+    });
+  };
+
+  const enterMoveMode = (zoneIds, unitIndex, player) => {
+    console.log("enterMoveMode");
+    console.log(zoneIds);
+
+    setLocalGameState((prev) => {
+      const newGameState = JSON.parse(JSON.stringify(prev));
+
+      // newGameState.currentResolution.pop();
+
+      newGameState.currentResolution.push({
+        resolution: "Moving Unit",
+        zoneIds: zoneIds,
+        player: player,
+        unitIndex: unitIndex,
+      });
+      setUpdateFirebase(true);
       return newGameState;
     });
   };
@@ -247,9 +333,9 @@ const Board = (props) => {
     setLocalGameState((prev) => {
       const newGameState = JSON.parse(JSON.stringify(prev));
 
-      newGameState[props.userRole].units[findNullUnitIndex()] = {
+      newGameState[self].units[findNullUnitIndex()] = {
         stats: {
-          player: props.userRole,
+          player: self,
           unitIndex: findNullUnitIndex(),
           row: r,
           column: c,
@@ -259,7 +345,7 @@ const Board = (props) => {
       };
 
       let newZoneInfo = [...zones];
-      newZoneInfo[r][c].player = props.userRole;
+      newZoneInfo[r][c].player = self;
       newZoneInfo[r][c].unitIndex = findNullUnitIndex();
 
       newGameState.zones = JSON.stringify(newZoneInfo);
@@ -270,8 +356,8 @@ const Board = (props) => {
         resolution: "Deploying Pawn Ended",
       });
 
-      setUpdateFirebase((prev) => {
-        setValidDeployZones([]);
+      setUpdateFirebase(() => {
+        setValidZones([]);
         setDeployPawnMode(false);
         return true;
       });
@@ -299,7 +385,7 @@ const Board = (props) => {
 
   const rollTactic = () => {
     const mobilizeLimit =
-      3 + Math.floor(localGameState[props.userRole].bountyUpgrades.tactics / 3);
+      3 + Math.floor(localGameState[self].bountyUpgrades.tactics / 3);
 
     const dieFaces = [
       { face: "advance", stock: 1 },
@@ -396,9 +482,9 @@ const Board = (props) => {
   const findNullUnitIndex = () => {
     let nullIndex = -1;
 
-    nullIndex = localGameState[props.userRole].units.indexOf(null);
+    nullIndex = localGameState[self].units.indexOf(null);
     if (nullIndex === -1) {
-      nullIndex = localGameState[props.userRole].units.length;
+      nullIndex = localGameState[self].units.length;
     }
     return nullIndex;
   };
@@ -431,16 +517,18 @@ const Board = (props) => {
       zonesInRange = zonesInRange.filter((z) => z !== zones[cRow][cColumn].id);
     }
 
+    console.log("zonesInRange");
     console.log(zonesInRange);
+
+    return [...zonesInRange];
   };
 
   const getVacantFrontier = () => {
-    let frontierLength =
-      1 + localGameState[props.userRole].bountyUpgrades.frontier;
+    let frontierLength = 1 + localGameState[self].bountyUpgrades.frontier;
 
     let validZones = [];
 
-    if (props.userRole === "host") {
+    if (self === "host") {
       for (let r = 9; r >= 9 - frontierLength; r--) {
         for (let c = 0; c <= 4; c++) {
           validZones.push(zones[r][c]);
@@ -627,8 +715,10 @@ const Board = (props) => {
               props.gameState.currentResolution.length - 1
             ].resolution}
           <br />
-          {JSON.stringify(deployPawnMode)} {validDeployZones.length}
-          {!props.gameState.turnPlayer && props.userRole === "host" && (
+          {JSON.stringify(deployPawnMode)} {validZones.length}
+          <br />
+          {JSON.stringify(moveMode)} {validZones.length}
+          {!props.gameState.turnPlayer && self === "host" && (
             <SelectFirstPlayer onSetFirstPlayer={onSetFirstPlayer} />
           )}
           <div className="section">
@@ -675,8 +765,7 @@ const Board = (props) => {
                           className="cardThickness"
                           style={{
                             height: `${
-                              (props.gameState[props.userRole].skillRepertoire
-                                .length -
+                              (props.gameState[self].skillRepertoire.length -
                                 1) *
                               0.2
                             }px`,
@@ -696,13 +785,11 @@ const Board = (props) => {
                 <div className="avel-hand"></div>
                 <div className="skill-hand">
                   <div className="hand-container">
-                    {props.gameState[props.userRole].skillHand.map(
-                      (card, index) => (
-                        <div key={index} className="handCard">
-                          {card}
-                        </div>
-                      )
-                    )}
+                    {props.gameState[self].skillHand.map((card, index) => (
+                      <div key={index} className="handCard">
+                        {card}
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -710,7 +797,7 @@ const Board = (props) => {
             <div className="middle-container">
               <div
                 className={
-                  props.userRole !== "guest"
+                  self !== "guest"
                     ? "tile-grid"
                     : "tile-grid reversed-tile-grid"
                 }
@@ -718,22 +805,27 @@ const Board = (props) => {
                 {zones.map((row, r) =>
                   row.map((zone, c) => (
                     <Tile
-                      userRole={props.userRole}
+                      userRole={self}
                       key={zone.id}
                       zone={zone}
                       hostUnits={localGameState.host.units}
                       guestUnits={localGameState.guest.units}
                       deployPawnMode={deployPawnMode}
-                      validDeployZones={validDeployZones}
+                      validZones={validZones}
                       deployPawn={deployPawn}
                       turnPlayer={localGameState.turnPlayer}
-                      moveUnitUp={moveUnitUp}
                       getZonesInRange={getZonesInRange}
+                      moveMode={moveMode}
+                      enterMoveMode={enterMoveMode}
+                      popResolution={popResolution}
+                      movingUnitIndex={movingUnitIndex}
+                      movingPlayer={movingPlayer}
+                      moveUnit={moveUnit}
                     />
                   ))
                 )}
               </div>
-              {props.userRole === localGameState.turnPlayer &&
+              {self === localGameState.turnPlayer &&
                 localGameState.currentResolution.length > 0 &&
                 localGameState.currentResolution[
                   localGameState.currentResolution.length - 1
@@ -752,8 +844,7 @@ const Board = (props) => {
               className="cardThickness"
               style={{
                 height: `${
-                  (props.gameState[props.userRole].skillRepertoire.length - 1) *
-                  0.2
+                  (props.gameState[self].skillRepertoire.length - 1) * 0.2
                 }px`,
               }}
             ></div>
@@ -762,7 +853,7 @@ const Board = (props) => {
           Own Deck:
           <div style={{ position: "relative" }}>
             <div className="deck-container">
-              {props.gameState[props.userRole].skillRepertoire
+              {props.gameState[self].skillRepertoire
                 .slice()
                 .reverse()
                 .map((card, index) => (
@@ -781,7 +872,7 @@ const Board = (props) => {
           </div>
           <br />
           <div className="hand-container">
-            {props.gameState[props.userRole].skillHand.map((card, index) => (
+            {props.gameState[self].skillHand.map((card, index) => (
               <div key={index} className="handCard">
                 {card}
               </div>
