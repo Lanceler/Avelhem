@@ -58,6 +58,8 @@ const Tile = (props) => {
               moveMode={props.moveMode}
               deployPawnMode={props.deployPawnMode}
               getZonesInRange={props.getZonesInRange}
+              turnPlayer={props.turnPlayer}
+              userRole={props.userRole}
             />
           </>
         )}

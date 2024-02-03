@@ -23,7 +23,7 @@ export const Piece = (props) => {
 
   const handleClick = () => {
     if (!props.deployPawnMode) {
-      if (!props.moveMode) {
+      if (!props.moveMode && props.userRole === props.turnPlayer) {
         props.enterMoveMode(
           props.getZonesInRange(
             props.unit.stats.row,
@@ -44,7 +44,7 @@ export const Piece = (props) => {
       {props.unit && (
         <div className={`piece ${props.player}`} onClick={() => handleClick()}>
           <>
-            <img src={MetalScion} className="scionClass" />
+            <img src={PlantScion} className="scionClass" />
 
             {/* {props[owner][props.unitIndex].stats.player}
             <br />
