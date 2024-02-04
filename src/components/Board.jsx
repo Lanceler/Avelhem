@@ -23,18 +23,40 @@ const Board = (props) => {
 
   const [zones, setZones] = useState([]);
 
-  const [gameStateReady, setGameStateReady] = useState(false);
-
-  const [updateFirebase, setUpdateFirebase] = useState(false);
+  const [validZones, setValidZones] = useState([]);
 
   const [deployPawnMode, setDeployPawnMode] = useState(false);
+
   const [moveMode, setMoveMode] = useState(false);
-  const [validZones, setValidZones] = useState([]);
   const [movingUnitIndex, setMovingUnitIndex] = useState(null);
   const [movingPlayer, setMovingPlayer] = useState(null);
 
   const [self, setSelf] = useState(null);
   const [enemy, setEnemy] = useState(null);
+
+  const newPawnStats = (player, index, row, column) => {
+    return {
+      stats: {
+        player: player,
+        unitIndex: index,
+        row: row,
+        column: column,
+        unitClass: "pawn",
+        hp: 1,
+        virtue: 1,
+        afflictions: {},
+        enhancements: {},
+      },
+    };
+  };
+
+  const updateFirebase = (newGameState) => {
+    try {
+      updateDoc(gameDoc, { gameState: newGameState });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   //====================================================================
   //====================================================================
@@ -50,24 +72,8 @@ const Board = (props) => {
   }, []);
 
   useEffect(() => {
-    if (localGameState) {
-      console.log("local gamestate changed");
-      setGameStateReady(true);
-    }
+    console.log("local gamestate changed");
   }, [localGameState]);
-
-  //Updates Firebase
-  useEffect(() => {
-    if (localGameState && updateFirebase) {
-      ("Uploading Local Changes");
-      try {
-        updateDoc(gameDoc, { gameState: localGameState });
-      } catch (err) {
-        console.log(err);
-      }
-      setUpdateFirebase(false);
-    }
-  }, [updateFirebase]);
 
   //Gets data regarding zones and units
   useEffect(() => {
@@ -202,185 +208,126 @@ const Board = (props) => {
   const drawAvelhem = () => {
     console.log("drawAvelhem");
 
-    setLocalGameState((prev) => {
-      const newGameState = JSON.parse(JSON.stringify(prev));
+    const newGameState = JSON.parse(JSON.stringify(localGameState));
+    newGameState[self].avelhemHand.push(
+      newGameState[self].avelhemRepertoire.pop()
+    );
 
-      newGameState[self].avelhemHand.push(
-        newGameState[self].avelhemRepertoire.pop()
+    //To do: If deck empties, shuffle discard pile into it.
 
-        //To do: If deck empties, shuffle discard pile into it.
-      );
+    setLocalGameState(newGameState);
 
-      return newGameState;
-    });
-
-    // setUpdateFirebase(true);
+    // updateFirebase(newGameState);
   };
 
   const drawSkill = () => {
     console.log("drawSkill");
 
-    setLocalGameState((prev) => {
-      const newGameState = JSON.parse(JSON.stringify(prev));
+    const newGameState = JSON.parse(JSON.stringify(localGameState));
 
-      newGameState[self].skillHand.push(
-        newGameState[self].skillRepertoire.pop()
+    newGameState[self].skillHand.push(newGameState[self].skillRepertoire.pop());
+    //To do: If deck empties, shuffle discard pile into it.
 
-        //To do: If deck empties, shuffle discard pile into it.
-      );
-      // setUpdateFirebase(true);
-      return newGameState;
-    });
+    setLocalGameState(newGameState);
+
+    // updateFirebase(newGameState);
   };
 
   const moveUnit = (player, unitIndex, zoneId) => {
-    setLocalGameState((prev) => {
-      const newGameState = JSON.parse(JSON.stringify(prev));
+    const newGameState = JSON.parse(JSON.stringify(localGameState));
 
-      let moverStats = newGameState[player].units[unitIndex].stats;
+    let moverStats = newGameState[player].units[unitIndex].stats;
 
-      let newZoneInfo = [...zones];
+    let newZoneInfo = [...zones];
 
-      //vacate current zone
-      newZoneInfo[moverStats.row][moverStats.column].player = null;
-      newZoneInfo[moverStats.row][moverStats.column].unitIndex = null;
+    //vacate current zone
+    newZoneInfo[moverStats.row][moverStats.column].player = null;
+    newZoneInfo[moverStats.row][moverStats.column].unitIndex = null;
 
-      //enter new zone
-      newZoneInfo[Math.floor(zoneId / 5)][zoneId % 5].player =
-        moverStats.player;
-      newZoneInfo[Math.floor(zoneId / 5)][zoneId % 5].unitIndex =
-        moverStats.unitIndex;
+    //enter new zone
+    newZoneInfo[Math.floor(zoneId / 5)][zoneId % 5].player = moverStats.player;
+    newZoneInfo[Math.floor(zoneId / 5)][zoneId % 5].unitIndex =
+      moverStats.unitIndex;
 
-      //stringify for firebase
-      newGameState.zones = JSON.stringify(newZoneInfo);
+    //stringify for firebase
+    newGameState.zones = JSON.stringify(newZoneInfo);
 
-      //update unit itself
-      newGameState[player].units[unitIndex].stats.row = Math.floor(zoneId / 5);
-      newGameState[player].units[unitIndex].stats.column = zoneId % 5;
+    //update unit itself
+    newGameState[player].units[unitIndex].stats.row = Math.floor(zoneId / 5);
+    newGameState[player].units[unitIndex].stats.column = zoneId % 5;
 
-      newGameState.currentResolution.pop();
+    newGameState.currentResolution.pop();
 
-      setUpdateFirebase(() => {
-        setValidZones([]);
-        setMoveMode(false);
-        setMovingUnitIndex(null);
-        setMovingPlayer(null);
+    setValidZones([]);
+    setMoveMode(false);
+    setMovingUnitIndex(null);
+    setMovingPlayer(null);
 
-        return true;
-      });
-      return newGameState;
-    });
+    setLocalGameState(newGameState);
+
+    updateFirebase(newGameState);
   };
 
   const enterMoveMode = (zoneIds, unitIndex, player) => {
     console.log("enterMoveMode");
     console.log(zoneIds);
 
-    setLocalGameState((prev) => {
-      const newGameState = JSON.parse(JSON.stringify(prev));
+    const newGameState = JSON.parse(JSON.stringify(localGameState));
 
-      // newGameState.currentResolution.pop();
-
-      newGameState.currentResolution.push({
-        resolution: "Moving Unit",
-        zoneIds: zoneIds,
-        player: player,
-        unitIndex: unitIndex,
-      });
-      setUpdateFirebase(true);
-      return newGameState;
+    newGameState.currentResolution.push({
+      resolution: "Moving Unit",
+      zoneIds: zoneIds,
+      player: player,
+      unitIndex: unitIndex,
     });
-  };
 
-  const moveUnitUp = (player, unitIndex) => {
-    console.log("moveHostUnitUp");
+    setLocalGameState(newGameState);
 
-    setLocalGameState((prev) => {
-      const newGameState = JSON.parse(JSON.stringify(prev));
-
-      let newZoneInfo = [...zones];
-      //vacate current zone
-      newZoneInfo[newGameState[player].units[unitIndex].stats.row][
-        newGameState[player].units[unitIndex].stats.column
-      ].player = null;
-      newZoneInfo[newGameState[player].units[unitIndex].stats.row][
-        newGameState[player].units[unitIndex].stats.column
-      ].unitIndex = null;
-
-      //enter new zone
-      newZoneInfo[newGameState[player].units[unitIndex].stats.row - 1][
-        newGameState[player].units[unitIndex].stats.column
-      ].player = newGameState[player].units[unitIndex].stats.player;
-      newZoneInfo[newGameState[player].units[unitIndex].stats.row - 1][
-        newGameState[player].units[unitIndex].stats.column
-      ].unitIndex = newGameState[player].units[unitIndex].stats.unitIndex;
-
-      //stringify for firebase
-      newGameState.zones = JSON.stringify(newZoneInfo);
-
-      //update unit itself
-      newGameState[player].units[unitIndex].stats.row =
-        newGameState[player].units[unitIndex].stats.row - 1;
-
-      setUpdateFirebase(true);
-      return newGameState;
-    });
+    // updateFirebase(newGameState);
   };
 
   const deployPawn = (r, c) => {
     console.log("deploy pawn on row" + r + " column" + c);
 
-    setLocalGameState((prev) => {
-      const newGameState = JSON.parse(JSON.stringify(prev));
+    const newGameState = JSON.parse(JSON.stringify(localGameState));
 
-      newGameState[self].units[findNullUnitIndex()] = {
-        stats: {
-          player: self,
-          unitIndex: findNullUnitIndex(),
-          row: r,
-          column: c,
-          unitClass: "pawn",
-          hp: 1,
-        },
-      };
+    newGameState[self].units[findNullUnitIndex()] = newPawnStats(
+      self,
+      findNullUnitIndex(),
+      r,
+      c
+    );
 
-      let newZoneInfo = [...zones];
-      newZoneInfo[r][c].player = self;
-      newZoneInfo[r][c].unitIndex = findNullUnitIndex();
+    let newZoneInfo = [...zones];
+    newZoneInfo[r][c].player = self;
+    newZoneInfo[r][c].unitIndex = findNullUnitIndex();
 
-      newGameState.zones = JSON.stringify(newZoneInfo);
+    newGameState.zones = JSON.stringify(newZoneInfo);
 
-      newGameState.currentResolution.pop();
-
-      newGameState.currentResolution.push({
-        resolution: "Deploying Pawn Ended",
-      });
-
-      setUpdateFirebase(() => {
-        setValidZones([]);
-        setDeployPawnMode(false);
-        return true;
-      });
-
-      return newGameState;
+    newGameState.currentResolution.pop();
+    newGameState.currentResolution.push({
+      resolution: "Deploying Pawn Ended",
     });
+
+    setLocalGameState(newGameState);
+    setValidZones([]);
+    setDeployPawnMode(false);
+
+    updateFirebase(newGameState);
   };
 
   const enterDeployMode = (zoneIds) => {
     console.log("enterDeployMode");
 
-    setLocalGameState((prev) => {
-      const newGameState = JSON.parse(JSON.stringify(prev));
-
-      // newGameState.currentResolution.pop();
-
-      newGameState.currentResolution.push({
-        resolution: "Deploying Pawn",
-        zoneIds: zoneIds,
-      });
-      // setUpdateFirebase(true);
-      return newGameState;
+    const newGameState = JSON.parse(JSON.stringify(localGameState));
+    newGameState.currentResolution.push({
+      resolution: "Deploying Pawn",
+      zoneIds: zoneIds,
     });
+
+    setLocalGameState(newGameState);
+
+    // updateFirebase(newGameState);
   };
 
   const rollTactic = () => {
@@ -400,14 +347,13 @@ const Board = (props) => {
   };
 
   const assignTactics = (first, second) => {
-    setLocalGameState((prev) => {
-      const newGameState = JSON.parse(JSON.stringify(prev));
+    const newGameState = JSON.parse(JSON.stringify(localGameState));
 
-      newGameState.tactics = [first, second];
+    newGameState.tactics = [first, second];
 
-      // setUpdateFirebase(true);
-      return newGameState;
-    });
+    setLocalGameState(newGameState);
+
+    // updateFirebase(newGameState);
   };
 
   const endExecutionPhase = () => {
@@ -415,68 +361,67 @@ const Board = (props) => {
   };
 
   const popResolution = () => {
-    setLocalGameState((prev) => {
-      const newGameState = JSON.parse(JSON.stringify(prev));
+    const newGameState = JSON.parse(JSON.stringify(localGameState));
 
-      newGameState.currentResolution.pop();
+    newGameState.currentResolution.pop();
 
-      // setUpdateFirebase(true);
-      return newGameState;
-    });
+    setLocalGameState(newGameState);
+
+    // updateFirebase(newGameState);
   };
 
   const nextPhase = () => {
     console.log("Changing Phase");
 
-    setLocalGameState((prev) => {
-      const newGameState = JSON.parse(JSON.stringify(prev));
+    const newGameState = JSON.parse(JSON.stringify(localGameState));
 
-      if (newGameState.turnPhase === "Acquisition") {
-        newGameState.turnPhase = "Bounty";
-        newGameState.currentResolution.pop();
-        newGameState.currentResolution.push({
-          resolution: "Bounty Phase Selection",
-        });
-      } else if (newGameState.turnPhase === "Bounty") {
-        newGameState.turnPhase = "Coordination";
-        newGameState.currentResolution.pop();
-        newGameState.currentResolution.push({
-          resolution: "Coordination Phase Selection",
-        });
-      } else if (newGameState.turnPhase === "Coordination") {
-        newGameState.turnPhase = "Defiance";
-        newGameState.currentResolution.pop();
-        newGameState.currentResolution.push({
-          resolution: "Defiance Phase Selection",
-        });
-      } else if (newGameState.turnPhase === "Defiance") {
-        newGameState.turnPhase = "Execution";
-        newGameState.currentResolution.pop();
+    if (newGameState.turnPhase === "Acquisition") {
+      newGameState.turnPhase = "Bounty";
+      newGameState.currentResolution.pop();
+      newGameState.currentResolution.push({
+        resolution: "Bounty Phase Selection",
+      });
+    } else if (newGameState.turnPhase === "Bounty") {
+      newGameState.turnPhase = "Coordination";
+      newGameState.currentResolution.pop();
+      newGameState.currentResolution.push({
+        resolution: "Coordination Phase Selection",
+      });
+    } else if (newGameState.turnPhase === "Coordination") {
+      newGameState.turnPhase = "Defiance";
+      newGameState.currentResolution.pop();
+      newGameState.currentResolution.push({
+        resolution: "Defiance Phase Selection",
+      });
+    } else if (newGameState.turnPhase === "Defiance") {
+      newGameState.turnPhase = "Execution";
+      newGameState.currentResolution.pop();
 
-        newGameState.currentResolution.push({
-          resolution: "Execution Phase",
-        });
-      } else if (newGameState.turnPhase === "Execution") {
-        newGameState.turnPhase = "Final";
-        newGameState.currentResolution.pop();
-        newGameState.currentResolution.push({
-          resolution: "Final Phase Conclusion",
-        });
-      } else if (newGameState.turnPhase === "Final") {
-        newGameState.turnPhase = "Acquisition";
-        if (newGameState.turnPlayer === "host") {
-          newGameState.turnPlayer = "guest";
-        } else {
-          newGameState.turnPlayer = "host";
-        }
-        newGameState.currentResolution.pop();
-        newGameState.currentResolution.push({
-          resolution: "Acquisition Phase Selection",
-        });
+      newGameState.currentResolution.push({
+        resolution: "Execution Phase",
+      });
+    } else if (newGameState.turnPhase === "Execution") {
+      newGameState.turnPhase = "Final";
+      newGameState.currentResolution.pop();
+      newGameState.currentResolution.push({
+        resolution: "Final Phase Conclusion",
+      });
+    } else if (newGameState.turnPhase === "Final") {
+      newGameState.turnPhase = "Acquisition";
+      if (newGameState.turnPlayer === "host") {
+        newGameState.turnPlayer = "guest";
+      } else {
+        newGameState.turnPlayer = "host";
       }
-      setUpdateFirebase(true);
-      return newGameState;
-    });
+      newGameState.currentResolution.pop();
+      newGameState.currentResolution.push({
+        resolution: "Acquisition Phase Selection",
+      });
+    }
+
+    setLocalGameState(newGameState);
+
+    updateFirebase(newGameState);
   };
 
   const findNullUnitIndex = () => {
@@ -568,134 +513,80 @@ const Board = (props) => {
   const onSetFirstPlayer = async (choice) => {
     console.log("Set First Player");
 
-    setLocalGameState((prev) => {
-      const newGameState = JSON.parse(JSON.stringify(prev));
+    const newGameState = JSON.parse(JSON.stringify(localGameState));
 
-      newGameState.turnPlayer = choice;
+    newGameState.turnPlayer = choice;
 
-      let hostSkillRepertoire = [...prev.host.skillRepertoire];
-      hostSkillRepertoire = shuffleRepertoire(hostSkillRepertoire);
-      let hostStartingHand = hostSkillRepertoire.splice(
-        hostSkillRepertoire.length - 4,
-        4
-      );
+    let hostSkillRepertoire = [...newGameState.host.skillRepertoire];
+    hostSkillRepertoire = shuffleRepertoire(hostSkillRepertoire);
+    let hostStartingHand = hostSkillRepertoire.splice(
+      hostSkillRepertoire.length - 4,
+      4
+    );
 
-      newGameState.host.skillHand = hostStartingHand;
-      newGameState.host.skillRepertoire = hostSkillRepertoire;
+    newGameState.host.skillHand = hostStartingHand;
+    newGameState.host.skillRepertoire = hostSkillRepertoire;
 
-      let hostAvelhemRepertoire = [...prev.host.avelhemRepertoire];
-      newGameState.host.avelhemRepertoire = shuffleRepertoire(
-        hostAvelhemRepertoire
-      );
-      let guestSkillRepertoire = [...prev.guest.skillRepertoire];
-      guestSkillRepertoire = shuffleRepertoire(guestSkillRepertoire);
+    let hostAvelhemRepertoire = [...newGameState.host.avelhemRepertoire];
+    newGameState.host.avelhemRepertoire = shuffleRepertoire(
+      hostAvelhemRepertoire
+    );
+    let guestSkillRepertoire = [...newGameState.guest.skillRepertoire];
+    guestSkillRepertoire = shuffleRepertoire(guestSkillRepertoire);
 
-      let guestStartingHand = guestSkillRepertoire.splice(
-        guestSkillRepertoire.length - 4,
-        4
-      );
+    let guestStartingHand = guestSkillRepertoire.splice(
+      guestSkillRepertoire.length - 4,
+      4
+    );
 
-      newGameState.guest.skillHand = guestStartingHand;
-      newGameState.guest.skillRepertoire = guestSkillRepertoire;
+    newGameState.guest.skillHand = guestStartingHand;
+    newGameState.guest.skillRepertoire = guestSkillRepertoire;
 
-      let guestAvelhemRepertoire = [...prev.guest.avelhemRepertoire];
-      newGameState.guest.avelhemRepertoire = shuffleRepertoire(
-        guestAvelhemRepertoire
-      );
+    let guestAvelhemRepertoire = [...newGameState.guest.avelhemRepertoire];
+    newGameState.guest.avelhemRepertoire = shuffleRepertoire(
+      guestAvelhemRepertoire
+    );
 
-      newGameState.host.units = [
-        {
-          stats: {
-            player: "host",
-            unitIndex: 0,
-            row: 6,
-            column: 0,
-            unitClass: "pawn",
-            hp: 1,
-          },
-        },
-        {
-          stats: {
-            player: "host",
-            unitIndex: 1,
-            row: 6,
-            column: 2,
-            unitClass: "pawn",
-            hp: 1,
-          },
-        },
-        {
-          stats: {
-            player: "host",
-            unitIndex: 2,
-            row: 6,
-            column: 4,
-            unitClass: "pawn",
-            hp: 1,
-          },
-        },
-      ];
+    newGameState.host.units = [
+      newPawnStats("host", 0, 6, 0),
+      newPawnStats("host", 1, 6, 2),
+      newPawnStats("host", 2, 6, 4),
+    ];
 
-      newGameState.guest.units = [
-        {
-          stats: {
-            player: "guest",
-            unitIndex: 0,
-            row: 3,
-            column: 4,
-            unitClass: "pawn",
-            hp: 1,
-          },
-        },
-        {
-          stats: {
-            player: "guest",
-            unitIndex: 1,
-            row: 3,
-            column: 2,
-            unitClass: "pawn",
-            hp: 1,
-          },
-        },
-        {
-          stats: {
-            player: "guest",
-            unitIndex: 2,
-            row: 3,
-            column: 0,
-            unitClass: "pawn",
-            hp: 1,
-          },
-        },
-      ];
+    newGameState.guest.units = [
+      newPawnStats("guest", 0, 3, 4),
+      newPawnStats("guest", 1, 3, 2),
+      newPawnStats("guest", 2, 3, 0),
+    ];
 
-      let newZoneInfo = [...zones];
+    let newZoneInfo = [...zones];
 
-      newZoneInfo[6][0].player = "host";
-      newZoneInfo[6][0].unitIndex = 0;
-      newZoneInfo[6][2].player = "host";
-      newZoneInfo[6][2].unitIndex = 1;
-      newZoneInfo[6][4].player = "host";
-      newZoneInfo[6][4].unitIndex = 2;
-      newZoneInfo[3][0].player = "guest";
-      newZoneInfo[3][0].unitIndex = 2;
-      newZoneInfo[3][2].player = "guest";
-      newZoneInfo[3][2].unitIndex = 1;
-      newZoneInfo[3][4].player = "guest";
-      newZoneInfo[3][4].unitIndex = 0;
+    newZoneInfo[6][0].player = "host";
+    newZoneInfo[6][0].unitIndex = 0;
+    newZoneInfo[6][2].player = "host";
+    newZoneInfo[6][2].unitIndex = 1;
+    newZoneInfo[6][4].player = "host";
+    newZoneInfo[6][4].unitIndex = 2;
+    newZoneInfo[3][0].player = "guest";
+    newZoneInfo[3][0].unitIndex = 2;
+    newZoneInfo[3][2].player = "guest";
+    newZoneInfo[3][2].unitIndex = 1;
+    newZoneInfo[3][4].player = "guest";
+    newZoneInfo[3][4].unitIndex = 0;
 
-      newGameState.zones = JSON.stringify(newZoneInfo);
+    newGameState.zones = JSON.stringify(newZoneInfo);
 
-      newGameState.turnCount = 1;
-      newGameState.turnPhase = "Acquisition";
-      newGameState.currentResolution.push({
-        resolution: "Acquisition Phase Selection",
-      });
-
-      return newGameState;
+    newGameState.turnCount = 1;
+    newGameState.turnPhase = "Acquisition";
+    newGameState.currentResolution.push({
+      resolution: "Acquisition Phase Selection",
     });
 
-    setUpdateFirebase(true);
+    setLocalGameState(newGameState);
+
+    console.log(newGameState);
+
+    updateFirebase(newGameState);
   };
 
   //====================================================================
@@ -703,7 +594,7 @@ const Board = (props) => {
 
   return (
     <>
-      {gameStateReady && (
+      {localGameState && (
         <div>
           Turn Player: {props.gameState.turnPlayer}
           <br />

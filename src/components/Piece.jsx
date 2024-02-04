@@ -44,7 +44,7 @@ export const Piece = (props) => {
       {props.unit && (
         <div className={`piece ${props.player}`} onClick={() => handleClick()}>
           <>
-            <img src={PlantScion} className="scionClass" />
+            <img src={WaterScion} className="scionClass" />
 
             {/* {props[owner][props.unitIndex].stats.player}
             <br />
