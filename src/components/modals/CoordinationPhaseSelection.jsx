@@ -1,19 +1,53 @@
 import React from "react";
 import "./Modal.css";
+import { useSelector, useDispatch } from "react-redux";
+import { updateState } from "../../redux/gameState";
+import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 const CoordinationPhaseSelection = (props) => {
-  let canBattleCry = false;
+  const { localGameState } = useSelector((state) => state.gameState);
+  const { self } = useSelector((state) => state.teams);
+  const dispatch = useDispatch();
 
-  if (props.skillHandSize >= 3) {
+  const { assignTactics, rollTactic } = useRecurringEffects();
+
+  let canBattleCry = false;
+  let skillHandSize = localGameState[self].skillHand.length;
+
+  if (skillHandSize >= 3) {
     console.log("Can Battle Cry");
     canBattleCry = true;
   } else {
     console.log("Cannot Battle Cry");
   }
 
+  const nextPhase = (gameState) => {
+    gameState.turnPhase = "Defiance";
+    gameState.currentResolution.pop();
+    gameState.currentResolution.push({
+      resolution: "Defiance Phase Selection",
+    });
+
+    return gameState;
+  };
+
   const onAssent = () => {
-    props.assignTactics(props.rollTactic(), props.rollTactic());
-    props.nextPhase();
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    let extraMobilize = 0;
+    if (newGameState[self].bountyUpgrades.tactics >= 3) {
+      extraMobilize = 1;
+    }
+
+    newGameState = assignTactics(
+      newGameState,
+      rollTactic(extraMobilize),
+      rollTactic(extraMobilize)
+    );
+    newGameState = nextPhase(newGameState);
+
+    dispatch(updateState(newGameState));
+    props.updateFirebase(newGameState);
   };
 
   return (

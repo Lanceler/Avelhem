@@ -1,4 +1,6 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { updateState } from "../redux/gameState";
 
 import "./Piece.css";
 
@@ -13,45 +15,37 @@ import ManaScion from "../assets/scionIcons/ManaScion.png";
 import PlantScion from "../assets/scionIcons/PlantScion.png";
 
 export const Piece = (props) => {
-  let owner = "";
-
-  if (props.player === "host") {
-    owner = "hostUnits";
-  } else if (props.player === "guest") {
-    owner = "guestUnits";
-  }
+  const { localGameState } = useSelector((state) => state.gameState);
+  const { self } = useSelector((state) => state.teams);
 
   const handleClick = () => {
-    if (!props.deployPawnMode) {
-      if (!props.moveMode && props.userRole === props.turnPlayer) {
-        props.enterMoveMode(
-          props.getZonesInRange(
-            props.unit.stats.row,
-            props.unit.stats.column,
-            1,
-            false
-          ),
-          props.unit.stats.unitIndex,
-          props.player
-        );
-      }
+    if (!props.tileMode && self === localGameState.turnPlayer) {
+      props.enterMoveMode(
+        props.getZonesInRange(
+          props.unit.stats.row,
+          props.unit.stats.column,
+          1,
+          false
+        ),
+        props.unit.stats.unitIndex,
+        props.unit.stats.player
+      );
     }
   };
 
   return (
     <>
-      {/* {props.player && props[owner][props.unitIndex] && ( */}
       {props.unit && (
-        <div className={`piece ${props.player}`} onClick={() => handleClick()}>
+        <div
+          className={`piece ${props.unit.stats.player}`}
+          onClick={() => handleClick()}
+        >
           <>
-            <img src={WaterScion} className="scionClass" />
-
-            {/* {props[owner][props.unitIndex].stats.player}
-            <br />
-            {props[owner][props.unitIndex].stats.unitIndex} */}
+            <img src={MetalScion} className="scionClass" />
           </>
         </div>
       )}
+      {!props.unit && <div className="piece"></div>}
     </>
   );
 };

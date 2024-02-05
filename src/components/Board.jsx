@@ -7,32 +7,36 @@ import Tile from "./Tile";
 import SelectFirstPlayer from "./modals/SelectFirstPlayer";
 
 import { useState, useEffect } from "react";
-
+import { useSelector, useDispatch } from "react-redux";
+import { updateState } from "../redux/gameState";
+import { updateSelf, updateEnemy } from "../redux/teams";
 import { db } from "../config/firebaseConfig";
 import { updateDoc, doc } from "firebase/firestore";
+
+import { useRecurringEffects } from "../hooks/useRecurringEffects";
 
 import AcquisitionPhaseSelection from "./modals/AcquisitionPhaseSelection";
 import BountyStore from "./modals/BountyStore";
 import CoordinationPhaseSelection from "./modals/CoordinationPhaseSelection";
 import DefiancePhaseSelection from "./modals/DefiancePhaseSelection";
+import Piece from "./Piece";
 
 const Board = (props) => {
   const gameDoc = doc(db, "gameInfo", props.gameId);
+  const dispatch = useDispatch();
 
-  const [localGameState, setLocalGameState] = useState(null);
+  const { localGameState } = useSelector((state) => state.gameState);
 
-  const [zones, setZones] = useState([]);
+  const { self } = useSelector((state) => state.teams);
+  const { enemy } = useSelector((state) => state.teams);
+
+  const [zones, setZones] = useState(null);
 
   const [validZones, setValidZones] = useState([]);
 
-  const [deployPawnMode, setDeployPawnMode] = useState(false);
-
-  const [moveMode, setMoveMode] = useState(false);
+  const [tileMode, setTileMode] = useState(false);
   const [movingUnitIndex, setMovingUnitIndex] = useState(null);
   const [movingPlayer, setMovingPlayer] = useState(null);
-
-  const [self, setSelf] = useState(null);
-  const [enemy, setEnemy] = useState(null);
 
   const newPawnStats = (player, index, row, column) => {
     return {
@@ -63,11 +67,11 @@ const Board = (props) => {
   //UseEffects below
   useEffect(() => {
     if (props.userRole === "host") {
-      setSelf("host");
-      setEnemy("guest");
+      dispatch(updateSelf("host"));
+      dispatch(updateEnemy("guest"));
     } else if (props.userRole === "guest") {
-      setSelf("guest");
-      setEnemy("host");
+      dispatch(updateSelf("guest"));
+      dispatch(updateEnemy("host"));
     }
   }, []);
 
@@ -77,9 +81,9 @@ const Board = (props) => {
 
   //Gets data regarding zones and units
   useEffect(() => {
-    console.log("Updated local from database");
+    console.log("Updated local from online");
     setZones(JSON.parse(props.gameState.zones));
-    setLocalGameState(props.gameState);
+    dispatch(updateState(props.gameState));
   }, [props.gameState]);
 
   //====================================================================
@@ -102,38 +106,12 @@ const Board = (props) => {
       case "Acquisition Phase Selection":
         return (
           <>
-            {self === props.gameState.turnPlayer && (
+            {self === localGameState.turnPlayer && (
               <AcquisitionPhaseSelection
-                drawAvelhem={drawAvelhem}
-                drawSkill={drawSkill}
-                nextPhase={nextPhase}
-                findNullUnitIndex={findNullUnitIndex}
                 getVacantFrontier={getVacantFrontier}
                 enterDeployMode={enterDeployMode}
-                bountyUpgrades={localGameState[self].bountyUpgrades}
+                updateFirebase={updateFirebase}
               />
-            )}
-          </>
-        );
-      case "Deploying Pawn":
-        return (
-          <>
-            {self === localGameState.turnPlayer && !deployPawnMode && (
-              <>
-                {setDeployPawnMode(true)}
-                {setValidZones(lastResolution.zoneIds)}
-              </>
-            )}
-          </>
-        );
-      case "Deploying Pawn Ended":
-        return (
-          <>
-            {self === localGameState.turnPlayer && (
-              <>
-                {popResolution()}
-                {localGameState.turnPhase === "Acquisition" && nextPhase()}
-              </>
             )}
           </>
         );
@@ -141,13 +119,13 @@ const Board = (props) => {
       case "Bounty Phase Selection":
         return (
           <>
-            {self === props.gameState.turnPlayer && (
+            {self === localGameState.turnPlayer && (
               <BountyStore
-                nextPhase={nextPhase}
-                bountyUpgrades={localGameState[self].bountyUpgrades}
-                bountyPoints={localGameState[self].bountyPoints}
-                fateDefiances={localGameState[self].fateDefiances}
-                score={localGameState[self].score}
+                // bountyUpgrades={localGameState[self].bountyUpgrades}
+                // bountyPoints={localGameState[self].bountyPoints}
+                // fateDefiances={localGameState[self].fateDefiances}
+                // score={localGameState[self].score}
+                updateFirebase={updateFirebase}
               />
             )}
           </>
@@ -155,39 +133,36 @@ const Board = (props) => {
       case "Coordination Phase Selection":
         return (
           <>
-            {self === props.gameState.turnPlayer && (
-              <CoordinationPhaseSelection
-                nextPhase={nextPhase}
-                skillHandSize={localGameState[self].skillHand.length}
-                bountyUpgradesC={
-                  localGameState[self].bountyUpgrades.coordination
-                }
-                rollTactic={rollTactic}
-                assignTactics={assignTactics}
-              />
+            {self === localGameState.turnPlayer && (
+              <CoordinationPhaseSelection updateFirebase={updateFirebase} />
             )}
           </>
         );
       case "Defiance Phase Selection":
         return (
           <>
-            {self === props.gameState.turnPlayer && (
-              <DefiancePhaseSelection
-                nextPhase={nextPhase}
-                fateDefiances={localGameState[self].fateDefiances}
-                rollTactic={rollTactic}
-                assignTactics={assignTactics}
-              />
+            {self === localGameState.turnPlayer && (
+              <DefiancePhaseSelection updateFirebase={updateFirebase} />
             )}
           </>
         );
-
+      case "Deploying Pawn":
+        return (
+          <>
+            {self === localGameState.turnPlayer && tileMode !== "deploy" && (
+              <>
+                {setTileMode("deploy")}
+                {setValidZones(lastResolution.zoneIds)}
+              </>
+            )}
+          </>
+        );
       case "Moving Unit":
         return (
           <>
-            {self === localGameState.turnPlayer && !moveMode && (
+            {self === localGameState.turnPlayer && tileMode !== "move" && (
               <>
-                {setMoveMode(true)}
+                {setTileMode("move")}
                 {setValidZones(lastResolution.zoneIds)}
                 {setMovingUnitIndex(lastResolution.unitIndex)}
                 {setMovingPlayer(lastResolution.player)}
@@ -205,30 +180,72 @@ const Board = (props) => {
   //====================================================================
   //Helper functions below
 
-  const drawAvelhem = () => {
-    console.log("drawAvelhem");
+  const enterDeployMode = (zoneIds) => {
+    console.log("enterDeployMode");
 
     const newGameState = JSON.parse(JSON.stringify(localGameState));
-    newGameState[self].avelhemHand.push(
-      newGameState[self].avelhemRepertoire.pop()
-    );
+    newGameState.currentResolution.push({
+      resolution: "Deploying Pawn",
+      zoneIds: zoneIds,
+    });
 
-    //To do: If deck empties, shuffle discard pile into it.
-
-    setLocalGameState(newGameState);
+    dispatch(updateState(newGameState));
 
     // updateFirebase(newGameState);
   };
 
-  const drawSkill = () => {
-    console.log("drawSkill");
+  const endExecutionPhase = () => {
+    nextPhase();
+  };
+
+  const deployPawn = (r, c) => {
+    console.log("deploy pawn on row" + r + " column" + c);
+
+    const newGameState = JSON.parse(JSON.stringify(localGameState));
+    let newIndex = newGameState[self].units.indexOf(null);
+    if (newIndex === -1) {
+      newIndex = newGameState[self].units.length;
+    }
+
+    //creating pawn
+    newGameState[self].units[newIndex] = newPawnStats(self, newIndex, r, c);
+
+    //updating zones info
+    let newZoneInfo = [...zones];
+    newZoneInfo[r][c].player = self;
+    newZoneInfo[r][c].unitIndex = newIndex;
+    newGameState.zones = JSON.stringify(newZoneInfo);
+
+    newGameState.currentResolution.pop();
+    if (localGameState.turnPhase === "Acquisition") {
+      newGameState.turnPhase = "Bounty";
+      newGameState.currentResolution.pop();
+      newGameState.currentResolution.push({
+        resolution: "Bounty Phase Selection",
+      });
+    }
+
+    dispatch(updateState(newGameState));
+    setValidZones([]);
+    setTileMode(null);
+
+    updateFirebase(newGameState);
+  };
+
+  const enterMoveMode = (zoneIds, unitIndex, player) => {
+    console.log("enterMoveMode");
 
     const newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    newGameState[self].skillHand.push(newGameState[self].skillRepertoire.pop());
-    //To do: If deck empties, shuffle discard pile into it.
+    newGameState.currentResolution.push({
+      resolution: "Moving Unit",
+      zoneIds: zoneIds,
+      player: player,
+      unitIndex: unitIndex,
+    });
 
-    setLocalGameState(newGameState);
+    // setLocalGameState(newGameState);
+    dispatch(updateState(newGameState));
 
     // updateFirebase(newGameState);
   };
@@ -259,148 +276,20 @@ const Board = (props) => {
     newGameState.currentResolution.pop();
 
     setValidZones([]);
-    setMoveMode(false);
+    setTileMode(null);
     setMovingUnitIndex(null);
     setMovingPlayer(null);
 
-    setLocalGameState(newGameState);
+    dispatch(updateState(newGameState));
 
     updateFirebase(newGameState);
-  };
-
-  const enterMoveMode = (zoneIds, unitIndex, player) => {
-    console.log("enterMoveMode");
-    console.log(zoneIds);
-
-    const newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    newGameState.currentResolution.push({
-      resolution: "Moving Unit",
-      zoneIds: zoneIds,
-      player: player,
-      unitIndex: unitIndex,
-    });
-
-    setLocalGameState(newGameState);
-
-    // updateFirebase(newGameState);
-  };
-
-  const deployPawn = (r, c) => {
-    console.log("deploy pawn on row" + r + " column" + c);
-
-    const newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    newGameState[self].units[findNullUnitIndex()] = newPawnStats(
-      self,
-      findNullUnitIndex(),
-      r,
-      c
-    );
-
-    let newZoneInfo = [...zones];
-    newZoneInfo[r][c].player = self;
-    newZoneInfo[r][c].unitIndex = findNullUnitIndex();
-
-    newGameState.zones = JSON.stringify(newZoneInfo);
-
-    newGameState.currentResolution.pop();
-    newGameState.currentResolution.push({
-      resolution: "Deploying Pawn Ended",
-    });
-
-    setLocalGameState(newGameState);
-    setValidZones([]);
-    setDeployPawnMode(false);
-
-    updateFirebase(newGameState);
-  };
-
-  const enterDeployMode = (zoneIds) => {
-    console.log("enterDeployMode");
-
-    const newGameState = JSON.parse(JSON.stringify(localGameState));
-    newGameState.currentResolution.push({
-      resolution: "Deploying Pawn",
-      zoneIds: zoneIds,
-    });
-
-    setLocalGameState(newGameState);
-
-    // updateFirebase(newGameState);
-  };
-
-  const rollTactic = () => {
-    const mobilizeLimit =
-      3 + Math.floor(localGameState[self].bountyUpgrades.tactics / 3);
-
-    const dieFaces = [
-      { face: "advance", stock: 1 },
-      { face: "advance", stock: 1 },
-      { face: "mobilize", stock: mobilizeLimit, limit: mobilizeLimit },
-      { face: "mobilize", stock: mobilizeLimit, limit: mobilizeLimit },
-      { face: "assault", stock: 1 },
-      { face: "invoke", stock: 1 },
-    ];
-
-    return dieFaces[Math.floor(Math.random() * dieFaces.length)];
-  };
-
-  const assignTactics = (first, second) => {
-    const newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    newGameState.tactics = [first, second];
-
-    setLocalGameState(newGameState);
-
-    // updateFirebase(newGameState);
-  };
-
-  const endExecutionPhase = () => {
-    nextPhase();
-  };
-
-  const popResolution = () => {
-    const newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    newGameState.currentResolution.pop();
-
-    setLocalGameState(newGameState);
-
-    // updateFirebase(newGameState);
   };
 
   const nextPhase = () => {
     console.log("Changing Phase");
-
     const newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    if (newGameState.turnPhase === "Acquisition") {
-      newGameState.turnPhase = "Bounty";
-      newGameState.currentResolution.pop();
-      newGameState.currentResolution.push({
-        resolution: "Bounty Phase Selection",
-      });
-    } else if (newGameState.turnPhase === "Bounty") {
-      newGameState.turnPhase = "Coordination";
-      newGameState.currentResolution.pop();
-      newGameState.currentResolution.push({
-        resolution: "Coordination Phase Selection",
-      });
-    } else if (newGameState.turnPhase === "Coordination") {
-      newGameState.turnPhase = "Defiance";
-      newGameState.currentResolution.pop();
-      newGameState.currentResolution.push({
-        resolution: "Defiance Phase Selection",
-      });
-    } else if (newGameState.turnPhase === "Defiance") {
-      newGameState.turnPhase = "Execution";
-      newGameState.currentResolution.pop();
-
-      newGameState.currentResolution.push({
-        resolution: "Execution Phase",
-      });
-    } else if (newGameState.turnPhase === "Execution") {
+    if (newGameState.turnPhase === "Execution") {
       newGameState.turnPhase = "Final";
       newGameState.currentResolution.pop();
       newGameState.currentResolution.push({
@@ -408,30 +297,17 @@ const Board = (props) => {
       });
     } else if (newGameState.turnPhase === "Final") {
       newGameState.turnPhase = "Acquisition";
-      if (newGameState.turnPlayer === "host") {
-        newGameState.turnPlayer = "guest";
-      } else {
-        newGameState.turnPlayer = "host";
-      }
+      newGameState.turnPlayer = enemy;
+
       newGameState.currentResolution.pop();
       newGameState.currentResolution.push({
         resolution: "Acquisition Phase Selection",
       });
     }
 
-    setLocalGameState(newGameState);
+    dispatch(updateState(newGameState));
 
     updateFirebase(newGameState);
-  };
-
-  const findNullUnitIndex = () => {
-    let nullIndex = -1;
-
-    nullIndex = localGameState[self].units.indexOf(null);
-    if (nullIndex === -1) {
-      nullIndex = localGameState[self].units.length;
-    }
-    return nullIndex;
   };
 
   const getZonesInRange = (cRow, cColumn, range, includeSelf) => {
@@ -462,9 +338,6 @@ const Board = (props) => {
       zonesInRange = zonesInRange.filter((z) => z !== zones[cRow][cColumn].id);
     }
 
-    console.log("zonesInRange");
-    console.log(zonesInRange);
-
     return [...zonesInRange];
   };
 
@@ -487,17 +360,14 @@ const Board = (props) => {
       }
     }
 
+    //get zones that are empty
     validZones = validZones.filter((zone) => !zone.player);
-
-    console.log(validZones);
 
     let validZonesIds = [];
 
     for (let i = 0; i < validZones.length; i++) {
       validZonesIds.push(validZones[i].id);
     }
-
-    console.log(validZonesIds);
 
     return validZonesIds;
   };
@@ -582,9 +452,8 @@ const Board = (props) => {
       resolution: "Acquisition Phase Selection",
     });
 
-    setLocalGameState(newGameState);
-
-    console.log(newGameState);
+    // setLocalGameState(newGameState);
+    dispatch(updateState(newGameState));
 
     updateFirebase(newGameState);
   };
@@ -594,22 +463,20 @@ const Board = (props) => {
 
   return (
     <>
-      {localGameState && (
+      {zones && localGameState && (
         <div>
-          Turn Player: {props.gameState.turnPlayer}
+          Turn Player: {localGameState.turnPlayer}
           <br />
-          Phase: {props.gameState.turnPhase}
+          Phase: {localGameState.turnPhase}
           <br />
           Resolution:{" "}
-          {props.gameState.currentResolution.length > 0 &&
-            props.gameState.currentResolution[
-              props.gameState.currentResolution.length - 1
+          {localGameState.currentResolution.length > 0 &&
+            localGameState.currentResolution[
+              localGameState.currentResolution.length - 1
             ].resolution}
           <br />
-          {JSON.stringify(deployPawnMode)} {validZones.length}
-          <br />
-          {JSON.stringify(moveMode)} {validZones.length}
-          {!props.gameState.turnPlayer && self === "host" && (
+          {JSON.stringify(tileMode)} {validZones.length}
+          {!localGameState.turnPlayer && self === "host" && (
             <SelectFirstPlayer onSetFirstPlayer={onSetFirstPlayer} />
           )}
           <div className="section">
@@ -652,16 +519,18 @@ const Board = (props) => {
                       <div className="avel-used"></div>
                       <div className="skill-used">
                         <div className="card"></div>
-                        <div
-                          className="cardThickness"
-                          style={{
-                            height: `${
-                              (props.gameState[self].skillRepertoire.length -
-                                1) *
-                              0.2
-                            }px`,
-                          }}
-                        ></div>
+                        {localGameState[self] && (
+                          <div
+                            className="cardThickness"
+                            style={{
+                              height: `${
+                                (localGameState[self].skillRepertoire.length -
+                                  1) *
+                                0.2
+                              }px`,
+                            }}
+                          ></div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -675,17 +544,92 @@ const Board = (props) => {
               <div className="lc-player">
                 <div className="avel-hand"></div>
                 <div className="skill-hand">
-                  <div className="hand-container">
-                    {props.gameState[self].skillHand.map((card, index) => (
-                      <div key={index} className="handCard">
-                        {card}
-                      </div>
-                    ))}
-                  </div>
+                  {localGameState[self] && (
+                    <div className="hand-container">
+                      {localGameState[self].skillHand.map((card, index) => (
+                        <div key={index} className="handCard">
+                          {card}
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
             <div className="middle-container">
+              {/* <div
+                style={{
+                  position: "absolute",
+                  zIndex: 100,
+                  top: 12,
+                  left: 12 + 78 * 4,
+                }}
+              >
+                <Piece />
+              </div> */}
+
+              {localGameState.host.units.map((unit, i) => (
+                <div key={i}>
+                  {unit.stats && (
+                    <div
+                      style={
+                        self === "host"
+                          ? {
+                              position: "absolute",
+                              zIndex: 100 + i,
+                              top: 12 + 78 * unit.stats.row,
+                              left: 12 + 78 * unit.stats.column,
+                            }
+                          : {
+                              position: "absolute",
+                              zIndex: 100 + i,
+                              top: 12 + 78 * (9 - unit.stats.row),
+                              left: 12 + 78 * (4 - unit.stats.column),
+                            }
+                      }
+                    >
+                      <Piece
+                        unit={unit}
+                        enterMoveMode={enterMoveMode}
+                        getZonesInRange={getZonesInRange}
+                        tileMode={tileMode}
+                      />
+                    </div>
+                  )}
+                </div>
+              ))}
+
+              {localGameState.guest.units.map((unit, i) => (
+                <div key={i}>
+                  {unit.stats && (
+                    <div
+                      style={
+                        self === "host"
+                          ? {
+                              position: "absolute",
+                              zIndex: 100 + i,
+                              top: 12 + 78 * unit.stats.row,
+                              left: 12 + 78 * unit.stats.column,
+                            }
+                          : {
+                              position: "absolute",
+                              zIndex: 100 + i,
+                              top: 12 + 78 * (9 - unit.stats.row),
+                              left: 12 + 78 * (4 - unit.stats.column),
+                            }
+                      }
+                    >
+                      <Piece
+                        unit={unit}
+                        enterMoveMode={enterMoveMode}
+                        getZonesInRange={getZonesInRange}
+                        tileMode={tileMode}
+                      />
+                    </div>
+                  )}
+                </div>
+              ))}
+
               <div
                 className={
                   self !== "guest"
@@ -696,22 +640,16 @@ const Board = (props) => {
                 {zones.map((row, r) =>
                   row.map((zone, c) => (
                     <Tile
-                      userRole={self}
                       key={zone.id}
                       zone={zone}
-                      hostUnits={localGameState.host.units}
-                      guestUnits={localGameState.guest.units}
-                      deployPawnMode={deployPawnMode}
                       validZones={validZones}
                       deployPawn={deployPawn}
-                      turnPlayer={localGameState.turnPlayer}
                       getZonesInRange={getZonesInRange}
-                      moveMode={moveMode}
                       enterMoveMode={enterMoveMode}
-                      popResolution={popResolution}
                       movingUnitIndex={movingUnitIndex}
                       movingPlayer={movingPlayer}
                       moveUnit={moveUnit}
+                      tileMode={tileMode}
                     />
                   ))
                 )}
@@ -728,47 +666,16 @@ const Board = (props) => {
             <div className="right-container"></div>
           </div>
           <br />
-          Own Deck2:
-          <>
-            <div className="card"></div>
-            <div
-              className="cardThickness"
-              style={{
-                height: `${
-                  (props.gameState[self].skillRepertoire.length - 1) * 0.2
-                }px`,
-              }}
-            ></div>
-          </>
           <br />
-          Own Deck:
-          <div style={{ position: "relative" }}>
-            <div className="deck-container">
-              {props.gameState[self].skillRepertoire
-                .slice()
-                .reverse()
-                .map((card, index) => (
-                  <div
-                    key={index}
-                    className="card-container"
-                    // style={{ marginTop: `${index !== 0 ? 1 : 0}px` }}
-                  >
-                    <div className="card">
-                      {/* {card} */}
-                      {index === 0 ? card : null}
-                    </div>
-                  </div>
-                ))}
+          {localGameState[self] && (
+            <div className="hand-container">
+              {localGameState[self].skillHand.map((card, index) => (
+                <div key={index} className="handCard">
+                  {card}
+                </div>
+              ))}
             </div>
-          </div>
-          <br />
-          <div className="hand-container">
-            {props.gameState[self].skillHand.map((card, index) => (
-              <div key={index} className="handCard">
-                {card}
-              </div>
-            ))}
-          </div>
+          )}
           {currentResolutionPrompt()}
         </div>
       )}

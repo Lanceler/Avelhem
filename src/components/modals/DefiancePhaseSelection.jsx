@@ -1,13 +1,38 @@
 import React from "react";
 import "./Modal.css";
+import { useSelector, useDispatch } from "react-redux";
+import { updateState } from "../../redux/gameState";
 
 const DefiancePhaseSelection = (props) => {
+  const { localGameState } = useSelector((state) => state.gameState);
+  const { self } = useSelector((state) => state.teams);
+  const dispatch = useDispatch();
+
+  const nextPhase = (gameState) => {
+    gameState.turnPhase = "Execution";
+    gameState.currentResolution.pop();
+    gameState.currentResolution.push({
+      resolution: "Execution Phase",
+    });
+
+    return gameState;
+  };
+
+  const onSkip = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    newGameState = nextPhase(newGameState);
+
+    dispatch(updateState(newGameState));
+    props.updateFirebase(newGameState);
+  };
+
   return (
     <div className="modal-backdrop">
       <div className="modal">
         <div className="twoColumn bountyHeader">
           <h2>Defiance Phase </h2>
-          <h2>FD: {props.fateDefiances}</h2>
+          <h2>FD: {localGameState[self].fateDefiances}</h2>
         </div>
 
         <div className="phaseSelection">
@@ -50,7 +75,7 @@ const DefiancePhaseSelection = (props) => {
         </div>
 
         <div>
-          <button onClick={() => props.nextPhase()}>Skip</button>
+          <button onClick={() => onSkip()}>Skip</button>
         </div>
       </div>
     </div>

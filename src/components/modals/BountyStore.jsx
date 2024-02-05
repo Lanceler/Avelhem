@@ -1,6 +1,31 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { updateState } from "../../redux/gameState";
 
 export default function BountyStore(props) {
+  const { localGameState } = useSelector((state) => state.gameState);
+  const { self } = useSelector((state) => state.teams);
+  const dispatch = useDispatch();
+
+  const nextPhase = (gameState) => {
+    gameState.turnPhase = "Coordination";
+    gameState.currentResolution.pop();
+    gameState.currentResolution.push({
+      resolution: "Coordination Phase Selection",
+    });
+
+    return gameState;
+  };
+
+  const onSkip = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    newGameState = nextPhase(newGameState);
+
+    dispatch(updateState(newGameState));
+    props.updateFirebase(newGameState);
+  };
+
   return (
     <div className="modal-backdrop">
       <div className="modal ">
@@ -87,7 +112,7 @@ export default function BountyStore(props) {
           {/* space */}
         </div>
         <div>
-          <button onClick={() => props.nextPhase()}>Next</button>
+          <button onClick={() => onSkip()}>Skip</button>
         </div>
       </div>
     </div>

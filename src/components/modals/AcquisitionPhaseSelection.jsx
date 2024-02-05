@@ -1,13 +1,24 @@
 import React from "react";
 import "./Modal.css";
+import { useSelector, useDispatch } from "react-redux";
+import { updateState } from "../../redux/gameState";
+import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 const AcquisitionPhaseSelection = (props) => {
+  const { localGameState } = useSelector((state) => state.gameState);
+  const { self } = useSelector((state) => state.teams);
+  const dispatch = useDispatch();
+
+  const { drawSkill, drawAvelhem, findNullUnitIndex } = useRecurringEffects();
+
   let canAppoint = true;
 
-  if (
-    props.findNullUnitIndex() >= 8 ||
-    props.getVacantFrontier().length === 0
-  ) {
+  let newIndex = localGameState[self].units.indexOf(null);
+  if (newIndex === -1) {
+    newIndex = localGameState[self].units.length;
+  }
+
+  if (newIndex >= 8 || props.getVacantFrontier().length === 0) {
     console.log("Cannot Appoint");
     canAppoint = false;
   } else {
@@ -16,7 +27,7 @@ const AcquisitionPhaseSelection = (props) => {
 
   let canDivine = false;
 
-  if (props.bountyUpgrades.acquisition > 0) {
+  if (localGameState[self].bountyUpgrades.acquisition > 0) {
     console.log("Can Divine");
     canDivine = true;
   } else {
@@ -25,12 +36,22 @@ const AcquisitionPhaseSelection = (props) => {
 
   let canExpedite = false;
 
-  if (props.bountyUpgrades.acquisition > 2) {
+  if (localGameState[self].bountyUpgrades.acquisition > 2) {
     console.log("Can Expedite");
     canExpedite = true;
   } else {
     console.log("Cannot Expedite");
   }
+
+  const nextPhase = (gameState) => {
+    gameState.turnPhase = "Bounty";
+    gameState.currentResolution.pop();
+    gameState.currentResolution.push({
+      resolution: "Bounty Phase Selection",
+    });
+
+    return gameState;
+  };
 
   const onAppoint = () => {
     if (canAppoint) {
@@ -39,14 +60,22 @@ const AcquisitionPhaseSelection = (props) => {
   };
 
   const onBequeth = () => {
-    props.drawAvelhem();
-    props.drawAvelhem();
-    props.nextPhase();
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    newGameState = drawAvelhem(newGameState);
+    newGameState = drawAvelhem(newGameState);
+    newGameState = nextPhase(newGameState);
+
+    dispatch(updateState(newGameState));
+    props.updateFirebase(newGameState);
   };
 
   const onCultivate = () => {
-    props.drawSkill();
-    props.nextPhase();
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    newGameState = drawSkill(newGameState);
+    newGameState = nextPhase(newGameState);
+
+    dispatch(updateState(newGameState));
+    props.updateFirebase(newGameState);
   };
 
   const onDivine = () => {
@@ -54,9 +83,13 @@ const AcquisitionPhaseSelection = (props) => {
   };
 
   const onExpedite = () => {
-    props.drawSkill();
-    props.drawSkill();
-    props.nextPhase();
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    newGameState = drawSkill(newGameState);
+    newGameState = drawSkill(newGameState);
+    newGameState = nextPhase(newGameState);
+
+    dispatch(updateState(newGameState));
+    props.updateFirebase(newGameState);
   };
 
   return (

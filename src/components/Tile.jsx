@@ -1,5 +1,6 @@
 import React from "react";
 import "./Tile.css";
+import { useSelector } from "react-redux";
 
 import Piece from "./Piece";
 
@@ -7,22 +8,26 @@ const Tile = (props) => {
   let deployable = false;
   let movable = false;
 
+  const { localGameState } = useSelector((state) => state.gameState);
+  const { self } = useSelector((state) => state.teams);
+  // const dispatch = useDispatch();
+
   if (
     props.validZones.includes(props.zone.id) &&
-    props.userRole === props.turnPlayer
+    self === localGameState.turnPlayer
   ) {
-    if (props.deployPawnMode) {
+    if (props.tileMode === "deploy") {
       deployable = true;
-    } else if (props.moveMode && !props.zone.player) {
+    } else if (props.tileMode === "move" && !props.zone.player) {
       movable = true;
     }
   }
 
   let unit = null;
   if (props.zone.player === "host") {
-    unit = props.hostUnits[props.zone.unitIndex];
+    unit = localGameState.host.units[props.zone.unitIndex];
   } else if (props.zone.player === "guest") {
-    unit = props.guestUnits[props.zone.unitIndex];
+    unit = localGameState.guest.units[props.zone.unitIndex];
   }
 
   const onClickTile = () => {
@@ -40,27 +45,10 @@ const Tile = (props) => {
       className={deployable || movable ? "selectable" : ""}
       onClick={() => onClickTile()}
     >
-      <div
-        className={`tile ${props.userRole !== "guest" ? "" : "reversed-tile"}`}
-      >
+      <div className={`tile ${self !== "guest" ? "" : "reversed-tile"}`}>
         {!props.zone.player && (
           <>
             [{props.zone.row},{props.zone.column}]
-          </>
-        )}
-        {props.zone.player && (
-          <>
-            <Piece
-              player={props.zone.player}
-              unitIndex={props.zone.unitIndex}
-              unit={unit}
-              enterMoveMode={props.enterMoveMode}
-              moveMode={props.moveMode}
-              deployPawnMode={props.deployPawnMode}
-              getZonesInRange={props.getZonesInRange}
-              turnPlayer={props.turnPlayer}
-              userRole={props.userRole}
-            />
           </>
         )}
       </div>

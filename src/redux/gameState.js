@@ -3,11 +3,12 @@ import { createSlice } from "@reduxjs/toolkit"
 export const gameStateSlice = createSlice({
     name: "gameState",
     initialState:{
-        value: {}
+        localGameState: null
     },
     reducers: {
-        updateState: (state) => {
-            state.value = action.payload;
+        updateState: (state, action) => {
+
+            state.localGameState = action.payload;
         }
     }
 })
