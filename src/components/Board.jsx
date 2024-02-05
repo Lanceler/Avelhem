@@ -38,6 +38,8 @@ const Board = (props) => {
   const [movingUnitIndex, setMovingUnitIndex] = useState(null);
   const [movingPlayer, setMovingPlayer] = useState(null);
 
+  const { getZonesInRange } = useRecurringEffects();
+
   const newPawnStats = (player, index, row, column) => {
     return {
       stats: {
@@ -310,37 +312,6 @@ const Board = (props) => {
     updateFirebase(newGameState);
   };
 
-  const getZonesInRange = (cRow, cColumn, range, includeSelf) => {
-    let zonesInRange = [];
-
-    for (let r = cRow - range; r <= cRow + range; r++) {
-      if (r < 0) {
-        r = 0;
-      }
-
-      if (r > 9) {
-        break;
-      } else {
-        for (let c = cColumn - range; c <= cColumn + range; c++) {
-          if (c < 0) {
-            c = 0;
-          }
-          if (c > 4) {
-            break;
-          } else {
-            zonesInRange.push(zones[r][c].id);
-          }
-        }
-      }
-    }
-
-    if (!includeSelf) {
-      zonesInRange = zonesInRange.filter((z) => z !== zones[cRow][cColumn].id);
-    }
-
-    return [...zonesInRange];
-  };
-
   const getVacantFrontier = () => {
     let frontierLength = 1 + localGameState[self].bountyUpgrades.frontier;
 
@@ -557,17 +528,6 @@ const Board = (props) => {
               </div>
             </div>
             <div className="middle-container">
-              {/* <div
-                style={{
-                  position: "absolute",
-                  zIndex: 100,
-                  top: 12,
-                  left: 12 + 78 * 4,
-                }}
-              >
-                <Piece />
-              </div> */}
-
               {localGameState.host.units.map((unit, i) => (
                 <div key={i}>
                   {unit.stats && (
@@ -644,8 +604,6 @@ const Board = (props) => {
                       zone={zone}
                       validZones={validZones}
                       deployPawn={deployPawn}
-                      getZonesInRange={getZonesInRange}
-                      enterMoveMode={enterMoveMode}
                       movingUnitIndex={movingUnitIndex}
                       movingPlayer={movingPlayer}
                       moveUnit={moveUnit}
