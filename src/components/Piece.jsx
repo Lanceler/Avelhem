@@ -65,13 +65,13 @@ export const Piece = (props) => {
   const handleClick = () => {
     // canAegis(props.unit);
 
-    if (!props.tileMode && self === localGameState.turnPlayer) {
-      if (props.expandedPiece === props.id) {
-        props.selectExpandPiece(null);
-      } else {
-        props.selectExpandPiece(props.id);
-      }
+    // if (!props.tileMode) {
+    if (props.expandedPiece === props.id) {
+      props.selectExpandPiece(null);
+    } else {
+      props.selectExpandPiece(props.id);
     }
+    // }
   };
 
   const handleTactic = () => {
@@ -98,19 +98,29 @@ export const Piece = (props) => {
               <div className="pieceOption" style={{ top: -17, left: -17 }}>
                 Info
               </div>
-              <div
-                className="pieceOption"
-                style={{ top: -17, left: 54 }}
-                onClick={() => handleTactic()}
-              >
-                Dice
-              </div>
-              <div className="pieceOption" style={{ top: 54, left: 54 }}>
-                Abi.
-              </div>
-              <div className="pieceOption" style={{ top: 54, left: -17 }}>
-                Ski.
-              </div>
+
+              {localGameState.currentResolution.length &&
+                localGameState.currentResolution[
+                  localGameState.currentResolution.length - 1
+                ].resolution === "Execution Phase" &&
+                self === props.unit.stats.player &&
+                self === localGameState.turnPlayer && (
+                  <>
+                    <div
+                      className="pieceOption"
+                      style={{ top: -17, left: 54 }}
+                      onClick={() => handleTactic()}
+                    >
+                      Dice
+                    </div>
+                    <div className="pieceOption" style={{ top: 54, left: 54 }}>
+                      Abi.
+                    </div>
+                    <div className="pieceOption" style={{ top: 54, left: -17 }}>
+                      Ski.
+                    </div>
+                  </>
+                )}
             </>
           )}
 
