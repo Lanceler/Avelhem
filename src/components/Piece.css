@@ -26,3 +26,22 @@
 .guest {
     background-color: rgb(163, 0, 0);
 }
+
+.pieceOption{
+
+    width: 25px;
+    height: 25px;
+    border: 2px solid black;
+    border-radius: 100%;
+    background-color: rgb(255, 255, 255);
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    position: absolute;
+    font-size: small;
+}
+
+.pieceOption:hover {
+    background-color: rgb(252, 247, 180);
+    cursor: pointer
+}

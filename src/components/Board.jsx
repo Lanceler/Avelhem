@@ -37,6 +37,7 @@ const Board = (props) => {
   const [tileMode, setTileMode] = useState(false);
   const [movingUnitIndex, setMovingUnitIndex] = useState(null);
   const [movingPlayer, setMovingPlayer] = useState(null);
+  const [expandedPiece, setExpandedPiece] = useState(null);
 
   const { getZonesInRange } = useRecurringEffects();
 
@@ -79,6 +80,7 @@ const Board = (props) => {
 
   useEffect(() => {
     console.log("local gamestate changed");
+    setExpandedPiece(null);
   }, [localGameState]);
 
   //Gets data regarding zones and units
@@ -181,6 +183,10 @@ const Board = (props) => {
   //====================================================================
   //====================================================================
   //Helper functions below
+
+  const selectExpandPiece = (id) => {
+    setExpandedPiece(id);
+  };
 
   const enterDeployMode = (zoneIds) => {
     console.log("enterDeployMode");
@@ -536,13 +542,13 @@ const Board = (props) => {
                         self === "host"
                           ? {
                               position: "absolute",
-                              zIndex: 100 + i,
+                              zIndex: 100,
                               top: 12 + 78 * unit.stats.row,
                               left: 12 + 78 * unit.stats.column,
                             }
                           : {
                               position: "absolute",
-                              zIndex: 100 + i,
+                              zIndex: 100,
                               top: 12 + 78 * (9 - unit.stats.row),
                               left: 12 + 78 * (4 - unit.stats.column),
                             }
@@ -553,6 +559,9 @@ const Board = (props) => {
                         enterMoveMode={enterMoveMode}
                         getZonesInRange={getZonesInRange}
                         tileMode={tileMode}
+                        id={i}
+                        expandedPiece={expandedPiece}
+                        selectExpandPiece={selectExpandPiece}
                       />
                     </div>
                   )}
@@ -560,20 +569,20 @@ const Board = (props) => {
               ))}
 
               {localGameState.guest.units.map((unit, i) => (
-                <div key={i}>
+                <div key={-i - 1}>
                   {unit.stats && (
                     <div
                       style={
                         self === "host"
                           ? {
                               position: "absolute",
-                              zIndex: 100 + i,
+                              zIndex: 100,
                               top: 12 + 78 * unit.stats.row,
                               left: 12 + 78 * unit.stats.column,
                             }
                           : {
                               position: "absolute",
-                              zIndex: 100 + i,
+                              zIndex: 100,
                               top: 12 + 78 * (9 - unit.stats.row),
                               left: 12 + 78 * (4 - unit.stats.column),
                             }
@@ -584,6 +593,9 @@ const Board = (props) => {
                         enterMoveMode={enterMoveMode}
                         getZonesInRange={getZonesInRange}
                         tileMode={tileMode}
+                        id={-i - 1}
+                        expandedPiece={expandedPiece}
+                        selectExpandPiece={selectExpandPiece}
                       />
                     </div>
                   )}

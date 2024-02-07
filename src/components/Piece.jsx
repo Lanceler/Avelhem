@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../redux/gameState";
 
@@ -59,36 +59,70 @@ export const Piece = (props) => {
 
     default:
       classIcon = Pawn;
+      break;
   }
 
   const handleClick = () => {
-    canAegis(props.unit);
+    // canAegis(props.unit);
 
-    // if (!props.tileMode && self === localGameState.turnPlayer) {
-    //   props.enterMoveMode(
-    //     props.getZonesInRange(
-    //       props.unit.stats.row,
-    //       props.unit.stats.column,
-    //       1,
-    //       false
-    //     ),
-    //     props.unit.stats.unitIndex,
-    //     props.unit.stats.player
-    //   );
-    // }
+    if (!props.tileMode && self === localGameState.turnPlayer) {
+      if (props.expandedPiece === props.id) {
+        props.selectExpandPiece(null);
+      } else {
+        props.selectExpandPiece(props.id);
+      }
+    }
+  };
+
+  const handleTactic = () => {
+    props.selectExpandPiece(null);
+
+    props.enterMoveMode(
+      props.getZonesInRange(
+        props.unit.stats.row,
+        props.unit.stats.column,
+        1,
+        false
+      ),
+      props.unit.stats.unitIndex,
+      props.unit.stats.player
+    );
   };
 
   return (
     <>
       {props.unit && (
-        <div
-          className={`piece ${props.unit.stats.player}`}
-          onClick={() => handleClick()}
-        >
-          <>
-            <img src={classIcon} className="scionClass" />
-          </>
-        </div>
+        <>
+          {props.expandedPiece === props.id && (
+            <>
+              <div className="pieceOption" style={{ top: -17, left: -17 }}>
+                Info
+              </div>
+              <div
+                className="pieceOption"
+                style={{ top: -17, left: 54 }}
+                onClick={() => handleTactic()}
+              >
+                Dice
+              </div>
+              <div className="pieceOption" style={{ top: 54, left: 54 }}>
+                Abi.
+              </div>
+              <div className="pieceOption" style={{ top: 54, left: -17 }}>
+                Ski.
+              </div>
+            </>
+          )}
+
+          <div
+            className={`piece ${props.unit.stats.player}`}
+            onClick={() => handleClick()}
+          >
+            <>
+              <img src={classIcon} className="scionClass" />
+            </>
+          </div>
+        </>
       )}
       {!props.unit && <div className="piece"></div>}
     </>

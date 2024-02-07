@@ -104,7 +104,6 @@ export const useRecurringEffects = () => {
     for (let i in adjacentZones) {
       let zone = zones[Math.floor(adjacentZones[i] / 5)][adjacentZones[i] % 5];
       if (zone.player === team) {
-        console.log(localGameState[team].units[zone.unitIndex]);
         if (
           localGameState[team].units[zone.unitIndex].stats.unitClass ===
             "manaScion" &&
