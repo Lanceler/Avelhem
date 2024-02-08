@@ -4,7 +4,8 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.5)
+    background: rgba(0,0,0,0.5);
+    z-index: 500
 }
 
 .modal{
@@ -14,6 +15,10 @@
     margin: 200px auto;
     background: rgb(255, 255, 255);
     border-radius: 10px;
+}
+
+.bountyHeader {
+    justify-content: space-between;
 }
 
 .phaseSelection{
@@ -70,6 +75,14 @@ background: rgb(117, 13, 13)
     padding: 3px
 }
 
-.bountyHeader{
-    justify-content: space-between;
+.tactic{
+    border: 2px solid;
+    padding: 10px;
+    height: 300px;
+    width: 300px;
+    margin: 10px;
+
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
 }

@@ -19,6 +19,9 @@ import AcquisitionPhaseSelection from "./modals/AcquisitionPhaseSelection";
 import BountyStore from "./modals/BountyStore";
 import CoordinationPhaseSelection from "./modals/CoordinationPhaseSelection";
 import DefiancePhaseSelection from "./modals/DefiancePhaseSelection";
+
+import TacticSelection from "./modals/TacticSelection";
+
 import Piece from "./Piece";
 
 const Board = (props) => {
@@ -43,17 +46,15 @@ const Board = (props) => {
 
   const newPawnStats = (player, index, row, column) => {
     return {
-      stats: {
-        player: player,
-        unitIndex: index,
-        row: row,
-        column: column,
-        unitClass: "pawn",
-        hp: 1,
-        virtue: 1,
-        afflictions: {},
-        enhancements: {},
-      },
+      player: player,
+      unitIndex: index,
+      row: row,
+      column: column,
+      unitClass: "pawn",
+      hp: 1,
+      virtue: 1,
+      afflictions: {},
+      enhancements: {},
     };
   };
 
@@ -175,6 +176,15 @@ const Board = (props) => {
           </>
         );
 
+      case "Activating Tactic":
+        return (
+          <>
+            {self === localGameState.turnPlayer && (
+              <TacticSelection updateFirebase={updateFirebase} />
+            )}
+          </>
+        );
+
       default:
         return;
     }
@@ -184,8 +194,16 @@ const Board = (props) => {
   //====================================================================
   //Helper functions below
 
-  const selectExpandPiece = (id) => {
-    setExpandedPiece(id);
+  const activateTactic = (unit) => {
+    const newGameState = JSON.parse(JSON.stringify(localGameState));
+    newGameState.currentResolution.push({
+      resolution: "Activating Tactic",
+      unit: unit,
+    });
+
+    dispatch(updateState(newGameState));
+
+    // updateFirebase(newGameState);
   };
 
   const enterDeployMode = (zoneIds) => {
@@ -261,7 +279,7 @@ const Board = (props) => {
   const moveUnit = (player, unitIndex, zoneId) => {
     const newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    let moverStats = newGameState[player].units[unitIndex].stats;
+    let moverStats = newGameState[player].units[unitIndex];
 
     let newZoneInfo = [...zones];
 
@@ -278,8 +296,8 @@ const Board = (props) => {
     newGameState.zones = JSON.stringify(newZoneInfo);
 
     //update unit itself
-    newGameState[player].units[unitIndex].stats.row = Math.floor(zoneId / 5);
-    newGameState[player].units[unitIndex].stats.column = zoneId % 5;
+    newGameState[player].units[unitIndex].row = Math.floor(zoneId / 5);
+    newGameState[player].units[unitIndex].column = zoneId % 5;
 
     newGameState.currentResolution.pop();
 
@@ -347,6 +365,10 @@ const Board = (props) => {
     }
 
     return validZonesIds;
+  };
+
+  const selectExpandPiece = (id) => {
+    setExpandedPiece(id);
   };
 
   const shuffleRepertoire = (repertoire) => {
@@ -536,21 +558,21 @@ const Board = (props) => {
             <div className="middle-container">
               {localGameState.host.units.map((unit, i) => (
                 <div key={i}>
-                  {unit.stats && (
+                  {unit && (
                     <div
                       style={
                         self === "host"
                           ? {
                               position: "absolute",
                               zIndex: 100,
-                              top: 12 + 78 * unit.stats.row,
-                              left: 12 + 78 * unit.stats.column,
+                              top: 12 + 78 * unit.row,
+                              left: 12 + 78 * unit.column,
                             }
                           : {
                               position: "absolute",
                               zIndex: 100,
-                              top: 12 + 78 * (9 - unit.stats.row),
-                              left: 12 + 78 * (4 - unit.stats.column),
+                              top: 12 + 78 * (9 - unit.row),
+                              left: 12 + 78 * (4 - unit.column),
                             }
                       }
                     >
@@ -562,6 +584,7 @@ const Board = (props) => {
                         id={i}
                         expandedPiece={expandedPiece}
                         selectExpandPiece={selectExpandPiece}
+                        activateTactic={activateTactic}
                       />
                     </div>
                   )}
@@ -570,21 +593,21 @@ const Board = (props) => {
 
               {localGameState.guest.units.map((unit, i) => (
                 <div key={-i - 1}>
-                  {unit.stats && (
+                  {unit && (
                     <div
                       style={
                         self === "host"
                           ? {
                               position: "absolute",
                               zIndex: 100,
-                              top: 12 + 78 * unit.stats.row,
-                              left: 12 + 78 * unit.stats.column,
+                              top: 12 + 78 * unit.row,
+                              left: 12 + 78 * unit.column,
                             }
                           : {
                               position: "absolute",
                               zIndex: 100,
-                              top: 12 + 78 * (9 - unit.stats.row),
-                              left: 12 + 78 * (4 - unit.stats.column),
+                              top: 12 + 78 * (9 - unit.row),
+                              left: 12 + 78 * (4 - unit.column),
                             }
                       }
                     >
@@ -596,6 +619,7 @@ const Board = (props) => {
                         id={-i - 1}
                         expandedPiece={expandedPiece}
                         selectExpandPiece={selectExpandPiece}
+                        activateTactic={activateTactic}
                       />
                     </div>
                   )}

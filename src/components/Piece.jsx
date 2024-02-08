@@ -24,7 +24,7 @@ export const Piece = (props) => {
 
   let classIcon = null;
 
-  switch (props.unit.stats.unitClass) {
+  switch (props.unit.unitClass) {
     case "fireScion":
       classIcon = FireScion;
       break;
@@ -75,17 +75,16 @@ export const Piece = (props) => {
   };
 
   const handleTactic = () => {
+    props.activateTactic();
+  };
+
+  const handleSkill = () => {
     props.selectExpandPiece(null);
 
     props.enterMoveMode(
-      props.getZonesInRange(
-        props.unit.stats.row,
-        props.unit.stats.column,
-        1,
-        false
-      ),
-      props.unit.stats.unitIndex,
-      props.unit.stats.player
+      props.getZonesInRange(props.unit.row, props.unit.column, 1, false),
+      props.unit.unitIndex,
+      props.unit.player
     );
   };
 
@@ -103,29 +102,40 @@ export const Piece = (props) => {
                 localGameState.currentResolution[
                   localGameState.currentResolution.length - 1
                 ].resolution === "Execution Phase" &&
-                self === props.unit.stats.player &&
+                self === props.unit.player &&
                 self === localGameState.turnPlayer && (
                   <>
                     <div
                       className="pieceOption"
                       style={{ top: -17, left: 54 }}
-                      onClick={() => handleTactic()}
+                      onClick={() => handleTactic(props.unit)}
                     >
                       Dice
                     </div>
-                    <div className="pieceOption" style={{ top: 54, left: 54 }}>
-                      Abi.
-                    </div>
-                    <div className="pieceOption" style={{ top: 54, left: -17 }}>
-                      Ski.
-                    </div>
+                    {props.unit.unitClass !== "pawn" && (
+                      <>
+                        <div
+                          className="pieceOption"
+                          style={{ top: 54, left: 54 }}
+                        >
+                          Abi.
+                        </div>
+                        <div
+                          className="pieceOption"
+                          style={{ top: 54, left: -17 }}
+                          onClick={() => handleSkill()}
+                        >
+                          Ski.
+                        </div>
+                      </>
+                    )}
                   </>
                 )}
             </>
           )}
 
           <div
-            className={`piece ${props.unit.stats.player}`}
+            className={`piece ${props.unit.player}`}
             onClick={() => handleClick()}
           >
             <>

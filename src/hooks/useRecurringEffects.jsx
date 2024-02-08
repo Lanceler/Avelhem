@@ -39,12 +39,12 @@ export const useRecurringEffects = () => {
     const mobilizeLimit = 3 + extraMobilize;
 
     const dieFaces = [
-      { face: "advance", stock: 1 },
-      { face: "advance", stock: 1 },
-      { face: "mobilize", stock: mobilizeLimit, limit: mobilizeLimit },
-      { face: "mobilize", stock: mobilizeLimit, limit: mobilizeLimit },
-      { face: "assault", stock: 1 },
-      { face: "invoke", stock: 1 },
+      { face: "Advance", stock: 1 },
+      { face: "Advance", stock: 1 },
+      { face: "Mobilize", stock: mobilizeLimit, limit: mobilizeLimit },
+      { face: "Mobilize", stock: mobilizeLimit, limit: mobilizeLimit },
+      { face: "Assault", stock: 1 },
+      { face: "Invoke", stock: 1 },
     ];
 
     return dieFaces[Math.floor(Math.random() * dieFaces.length)];
@@ -54,17 +54,16 @@ export const useRecurringEffects = () => {
     const enemyUnit = gameState[enemy].units[enemyIndex];
 
     if (gameState[enemy].skillHand.length) {
-      if (enemyUnit.stats.unitClass === "metalScion" && !isMuted(enemyUnit)) {
+      if (enemyUnit.unitClass === "metalScion" && !isMuted(enemyUnit)) {
         //prompt metal scion passive
       } else if (
         !bypassTarget &&
         //Thunder Thaumaturge
-        ((enemyUnit.stats.unitClass === "lightningScion" &&
-          !isMuted(enemyUnit)) ||
+        ((enemyUnit.unitClass === "lightningScion" && !isMuted(enemyUnit)) ||
           //Aegis
           canAegis(enemyUnit) ||
           //Blaze of Glory
-          (enemyUnit.stats.fever &&
+          (enemyUnit.fever &&
             !isMuted(enemyUnit) &&
             gameState[enemy].skillHand.length > 1))
       ) {
@@ -74,7 +73,7 @@ export const useRecurringEffects = () => {
   };
 
   const isMuted = (unit) => {
-    const afflictions = unit.stats.afflictions;
+    const afflictions = unit.afflictions;
 
     if (
       afflictions.anathema ||
@@ -89,23 +88,18 @@ export const useRecurringEffects = () => {
   };
 
   const canAegis = (unit) => {
-    const team = unit.stats.player;
+    const team = unit.player;
     const zones = JSON.parse(localGameState.zones);
 
     //get Adjacent zones
-    let adjacentZones = getZonesInRange(
-      unit.stats.row,
-      unit.stats.column,
-      1,
-      true
-    );
+    let adjacentZones = getZonesInRange(unit.row, unit.column, 1, true);
 
     //return true if any zone contains an unmuted ally Mana Scion
     for (let i in adjacentZones) {
       let zone = zones[Math.floor(adjacentZones[i] / 5)][adjacentZones[i] % 5];
       if (zone.player === team) {
         if (
-          localGameState[team].units[zone.unitIndex].stats.unitClass ===
+          localGameState[team].units[zone.unitIndex].unitClass ===
             "manaScion" &&
           !isMuted(localGameState[team].units[zone.unitIndex])
         ) {
