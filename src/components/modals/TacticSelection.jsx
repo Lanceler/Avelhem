@@ -42,31 +42,23 @@ const TacticSelection = (props) => {
   };
 
   const handleClickTactic = (i) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    if (localGameState.tactics[i].stock > 0) {
+      let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    //endTactic resolution
-
-    console.log(
-      newGameState.currentResolution[newGameState.currentResolution.length - 1]
-        .resolution
-    );
-    if (
-      newGameState.currentResolution[newGameState.currentResolution.length - 1]
-        .resolution === "Activating Tactic"
-    ) {
+      //endTactic resolution
       newGameState.currentResolution.pop();
-    }
 
-    if (newGameState.tactics[i].face === "Advance") {
-      console.log("Advanced used by Unit " + props.unit.unitIndex);
+      if (newGameState.tactics[i].face === "Advance") {
+        console.log("Advanced used by Unit " + props.unit.unitIndex);
 
-      props.enterMoveMode(
-        getZonesInRange(props.unit.row, props.unit.column, 1, false),
-        props.unit.unitIndex,
-        props.unit.player,
-        newGameState,
-        i
-      );
+        props.enterMoveMode(
+          getZonesInRange(props.unit.row, props.unit.column, 1, false),
+          props.unit.unitIndex,
+          props.unit.player,
+          newGameState,
+          i
+        );
+      }
     }
   };
 
@@ -76,25 +68,21 @@ const TacticSelection = (props) => {
         <h2>Select Tactic</h2>
 
         <div className="twoColumn">
-          <div
-            className="tactic"
-            onClick={() => handleClickTactic(0)}
-            style={{
-              backgroundImage: `url(${getImage(0)})`,
-            }}
-          >
-            {localGameState.tactics[0].face}
-          </div>
-
-          <div
-            className="tactic"
-            onClick={() => handleClickTactic(1)}
-            style={{
-              backgroundImage: `url(${getImage(1)})`,
-            }}
-          >
-            {localGameState.tactics[1].face}
-          </div>
+          {localGameState.tactics.map((tactic, index) => (
+            <div
+              key={index}
+              className="tactic"
+              onClick={() => handleClickTactic(index)}
+              style={{
+                backgroundImage: `url(${getImage(index)})`,
+              }}
+            >
+              {console.log(tactic)}
+              {tactic.face}
+              <br />
+              Stock: {tactic.stock}
+            </div>
+          ))}
         </div>
 
         <button onClick={() => handleReturn()}>Return</button>
