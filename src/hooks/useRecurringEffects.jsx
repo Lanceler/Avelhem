@@ -35,6 +35,34 @@ export const useRecurringEffects = () => {
     return gameState;
   };
 
+  const move = (gamestate, zones, player, unitIndex, zoneId) => {
+    let mover = gamestate[player].units[unitIndex];
+
+    let newZoneInfo = [...zones];
+
+    console.log(newZoneInfo);
+
+    //vacate current zone
+    newZoneInfo[mover.row][mover.column].player = null;
+    newZoneInfo[mover.row][mover.column].unitIndex = null;
+
+    //enter new zone
+    newZoneInfo[Math.floor(zoneId / 5)][zoneId % 5].player = mover.player;
+    newZoneInfo[Math.floor(zoneId / 5)][zoneId % 5].unitIndex = mover.unitIndex;
+
+    //stringify for firebase
+    gamestate.zones = JSON.stringify(newZoneInfo);
+
+    //update unit itself
+    gamestate[player].units[unitIndex].row = Math.floor(zoneId / 5);
+    gamestate[player].units[unitIndex].column = zoneId % 5;
+
+    //pop "Moving Unit" resolution
+    gamestate.currentResolution.pop();
+
+    return gamestate;
+  };
+
   const rollTactic = (extraMobilize) => {
     const mobilizeLimit = 3 + extraMobilize;
 
@@ -149,6 +177,7 @@ export const useRecurringEffects = () => {
     canAegis,
     drawAvelhem,
     drawSkill,
+    move,
     getZonesInRange,
     rollTactic,
   };

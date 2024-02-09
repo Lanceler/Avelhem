@@ -40,9 +40,10 @@ const Board = (props) => {
   const [tileMode, setTileMode] = useState(false);
   const [movingUnitIndex, setMovingUnitIndex] = useState(null);
   const [movingPlayer, setMovingPlayer] = useState(null);
+  const [tacticUsed, setTacticUsed] = useState(null);
   const [expandedPiece, setExpandedPiece] = useState(null);
 
-  const { getZonesInRange } = useRecurringEffects();
+  const { move } = useRecurringEffects();
 
   const newPawnStats = (player, index, row, column) => {
     return {
@@ -171,6 +172,7 @@ const Board = (props) => {
                 {setValidZones(lastResolution.zoneIds)}
                 {setMovingUnitIndex(lastResolution.unitIndex)}
                 {setMovingPlayer(lastResolution.player)}
+                {setTacticUsed(lastResolution.tactic)}
               </>
             )}
           </>
@@ -180,7 +182,11 @@ const Board = (props) => {
         return (
           <>
             {self === localGameState.turnPlayer && (
-              <TacticSelection updateFirebase={updateFirebase} />
+              <TacticSelection
+                updateFirebase={updateFirebase}
+                unit={lastResolution.unit}
+                enterMoveMode={enterMoveMode}
+              />
             )}
           </>
         );
@@ -258,16 +264,22 @@ const Board = (props) => {
     updateFirebase(newGameState);
   };
 
-  const enterMoveMode = (zoneIds, unitIndex, player) => {
+  const enterMoveMode = (zoneIds, unitIndex, player, gameState, tactic) => {
     console.log("enterMoveMode");
 
-    const newGameState = JSON.parse(JSON.stringify(localGameState));
+    let newGameState = null;
+    if (gameState) {
+      newGameState = gameState;
+    } else {
+      newGameState = JSON.parse(JSON.stringify(localGameState));
+    }
 
     newGameState.currentResolution.push({
       resolution: "Moving Unit",
       zoneIds: zoneIds,
       player: player,
       unitIndex: unitIndex,
+      tactic: tactic,
     });
 
     // setLocalGameState(newGameState);
@@ -277,34 +289,19 @@ const Board = (props) => {
   };
 
   const moveUnit = (player, unitIndex, zoneId) => {
-    const newGameState = JSON.parse(JSON.stringify(localGameState));
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    let moverStats = newGameState[player].units[unitIndex];
+    newGameState = move(newGameState, zones, player, unitIndex, zoneId);
 
-    let newZoneInfo = [...zones];
-
-    //vacate current zone
-    newZoneInfo[moverStats.row][moverStats.column].player = null;
-    newZoneInfo[moverStats.row][moverStats.column].unitIndex = null;
-
-    //enter new zone
-    newZoneInfo[Math.floor(zoneId / 5)][zoneId % 5].player = moverStats.player;
-    newZoneInfo[Math.floor(zoneId / 5)][zoneId % 5].unitIndex =
-      moverStats.unitIndex;
-
-    //stringify for firebase
-    newGameState.zones = JSON.stringify(newZoneInfo);
-
-    //update unit itself
-    newGameState[player].units[unitIndex].row = Math.floor(zoneId / 5);
-    newGameState[player].units[unitIndex].column = zoneId % 5;
-
-    newGameState.currentResolution.pop();
+    if (tacticUsed !== null) {
+      newGameState.tactics[tacticUsed].stock--;
+    }
 
     setValidZones([]);
     setTileMode(null);
     setMovingUnitIndex(null);
     setMovingPlayer(null);
+    setTacticUsed(null);
 
     dispatch(updateState(newGameState));
 
@@ -479,6 +476,107 @@ const Board = (props) => {
             <SelectFirstPlayer onSetFirstPlayer={onSetFirstPlayer} />
           )}
           <div className="section">
+            <div className="right-container"></div>
+            <div className="middle-container">
+              {localGameState.host.units.map((unit, i) => (
+                <div key={i}>
+                  {unit && (
+                    <div
+                      style={
+                        self === "host"
+                          ? {
+                              position: "absolute",
+                              zIndex: 100,
+                              top: 12 + 78 * unit.row,
+                              left: 12 + 78 * unit.column,
+                            }
+                          : {
+                              position: "absolute",
+                              zIndex: 100,
+                              top: 12 + 78 * (9 - unit.row),
+                              left: 12 + 78 * (4 - unit.column),
+                            }
+                      }
+                    >
+                      <Piece
+                        unit={unit}
+                        enterMoveMode={enterMoveMode}
+                        tileMode={tileMode}
+                        id={i}
+                        expandedPiece={expandedPiece}
+                        selectExpandPiece={selectExpandPiece}
+                        activateTactic={activateTactic}
+                      />
+                    </div>
+                  )}
+                </div>
+              ))}
+
+              {localGameState.guest.units.map((unit, i) => (
+                <div key={-i - 1}>
+                  {unit && (
+                    <div
+                      style={
+                        self === "host"
+                          ? {
+                              position: "absolute",
+                              zIndex: 100,
+                              top: 12 + 78 * unit.row,
+                              left: 12 + 78 * unit.column,
+                            }
+                          : {
+                              position: "absolute",
+                              zIndex: 100,
+                              top: 12 + 78 * (9 - unit.row),
+                              left: 12 + 78 * (4 - unit.column),
+                            }
+                      }
+                    >
+                      <Piece
+                        unit={unit}
+                        enterMoveMode={enterMoveMode}
+                        tileMode={tileMode}
+                        id={-i - 1}
+                        expandedPiece={expandedPiece}
+                        selectExpandPiece={selectExpandPiece}
+                        activateTactic={activateTactic}
+                      />
+                    </div>
+                  )}
+                </div>
+              ))}
+
+              <div
+                className={
+                  self !== "guest"
+                    ? "tile-grid"
+                    : "tile-grid reversed-tile-grid"
+                }
+              >
+                {zones.map((row, r) =>
+                  row.map((zone, c) => (
+                    <Tile
+                      key={zone.id}
+                      zone={zone}
+                      validZones={validZones}
+                      deployPawn={deployPawn}
+                      movingUnitIndex={movingUnitIndex}
+                      movingPlayer={movingPlayer}
+                      moveUnit={moveUnit}
+                      tileMode={tileMode}
+                    />
+                  ))
+                )}
+              </div>
+              {self === localGameState.turnPlayer &&
+                localGameState.currentResolution.length > 0 &&
+                localGameState.currentResolution[
+                  localGameState.currentResolution.length - 1
+                ].resolution === "Execution Phase" && (
+                  <button onClick={() => endExecutionPhase()}>End</button>
+                )}
+            </div>
+            {/* <div className="phase-indicator"></div> */}
             <div className="left-container">
               <div className="lc-player">
                 <div className="avel-hand"></div>
@@ -555,109 +653,6 @@ const Board = (props) => {
                 </div>
               </div>
             </div>
-            <div className="middle-container">
-              {localGameState.host.units.map((unit, i) => (
-                <div key={i}>
-                  {unit && (
-                    <div
-                      style={
-                        self === "host"
-                          ? {
-                              position: "absolute",
-                              zIndex: 100,
-                              top: 12 + 78 * unit.row,
-                              left: 12 + 78 * unit.column,
-                            }
-                          : {
-                              position: "absolute",
-                              zIndex: 100,
-                              top: 12 + 78 * (9 - unit.row),
-                              left: 12 + 78 * (4 - unit.column),
-                            }
-                      }
-                    >
-                      <Piece
-                        unit={unit}
-                        enterMoveMode={enterMoveMode}
-                        getZonesInRange={getZonesInRange}
-                        tileMode={tileMode}
-                        id={i}
-                        expandedPiece={expandedPiece}
-                        selectExpandPiece={selectExpandPiece}
-                        activateTactic={activateTactic}
-                      />
-                    </div>
-                  )}
-                </div>
-              ))}
-
-              {localGameState.guest.units.map((unit, i) => (
-                <div key={-i - 1}>
-                  {unit && (
-                    <div
-                      style={
-                        self === "host"
-                          ? {
-                              position: "absolute",
-                              zIndex: 100,
-                              top: 12 + 78 * unit.row,
-                              left: 12 + 78 * unit.column,
-                            }
-                          : {
-                              position: "absolute",
-                              zIndex: 100,
-                              top: 12 + 78 * (9 - unit.row),
-                              left: 12 + 78 * (4 - unit.column),
-                            }
-                      }
-                    >
-                      <Piece
-                        unit={unit}
-                        enterMoveMode={enterMoveMode}
-                        getZonesInRange={getZonesInRange}
-                        tileMode={tileMode}
-                        id={-i - 1}
-                        expandedPiece={expandedPiece}
-                        selectExpandPiece={selectExpandPiece}
-                        activateTactic={activateTactic}
-                      />
-                    </div>
-                  )}
-                </div>
-              ))}
-
-              <div
-                className={
-                  self !== "guest"
-                    ? "tile-grid"
-                    : "tile-grid reversed-tile-grid"
-                }
-              >
-                {zones.map((row, r) =>
-                  row.map((zone, c) => (
-                    <Tile
-                      key={zone.id}
-                      zone={zone}
-                      validZones={validZones}
-                      deployPawn={deployPawn}
-                      movingUnitIndex={movingUnitIndex}
-                      movingPlayer={movingPlayer}
-                      moveUnit={moveUnit}
-                      tileMode={tileMode}
-                    />
-                  ))
-                )}
-              </div>
-              {self === localGameState.turnPlayer &&
-                localGameState.currentResolution.length > 0 &&
-                localGameState.currentResolution[
-                  localGameState.currentResolution.length - 1
-                ].resolution === "Execution Phase" && (
-                  <button onClick={() => endExecutionPhase()}>End</button>
-                )}
-            </div>
-            <div className="phase-indicator"></div>
-            <div className="right-container"></div>
           </div>
           <br />
           <br />

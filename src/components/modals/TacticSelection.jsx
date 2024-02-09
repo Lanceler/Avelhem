@@ -15,6 +15,8 @@ const TacticSelection = (props) => {
   const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
+  const { getZonesInRange } = useRecurringEffects();
+
   const getImage = (i) => {
     if (localGameState && localGameState.tactics[i]) {
       switch (localGameState.tactics[i].face) {
@@ -39,6 +41,35 @@ const TacticSelection = (props) => {
     dispatch(updateState(newGameState));
   };
 
+  const handleClickTactic = (i) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //endTactic resolution
+
+    console.log(
+      newGameState.currentResolution[newGameState.currentResolution.length - 1]
+        .resolution
+    );
+    if (
+      newGameState.currentResolution[newGameState.currentResolution.length - 1]
+        .resolution === "Activating Tactic"
+    ) {
+      newGameState.currentResolution.pop();
+    }
+
+    if (newGameState.tactics[i].face === "Advance") {
+      console.log("Advanced used by Unit " + props.unit.unitIndex);
+
+      props.enterMoveMode(
+        getZonesInRange(props.unit.row, props.unit.column, 1, false),
+        props.unit.unitIndex,
+        props.unit.player,
+        newGameState,
+        i
+      );
+    }
+  };
+
   return (
     <div className="modal-backdrop">
       <div className="modal">
@@ -47,6 +78,7 @@ const TacticSelection = (props) => {
         <div className="twoColumn">
           <div
             className="tactic"
+            onClick={() => handleClickTactic(0)}
             style={{
               backgroundImage: `url(${getImage(0)})`,
             }}
@@ -56,6 +88,7 @@ const TacticSelection = (props) => {
 
           <div
             className="tactic"
+            onClick={() => handleClickTactic(1)}
             style={{
               backgroundImage: `url(${getImage(1)})`,
             }}

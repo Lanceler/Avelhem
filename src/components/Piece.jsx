@@ -20,7 +20,7 @@ export const Piece = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
 
-  const { canAegis } = useRecurringEffects();
+  const { getZonesInRange } = useRecurringEffects();
 
   let classIcon = null;
 
@@ -74,15 +74,15 @@ export const Piece = (props) => {
     // }
   };
 
-  const handleTactic = () => {
-    props.activateTactic();
+  const handleTactic = (unit) => {
+    props.activateTactic(unit);
   };
 
   const handleSkill = () => {
     props.selectExpandPiece(null);
 
     props.enterMoveMode(
-      props.getZonesInRange(props.unit.row, props.unit.column, 1, false),
+      getZonesInRange(props.unit.row, props.unit.column, 1, false),
       props.unit.unitIndex,
       props.unit.player
     );
@@ -112,7 +112,8 @@ export const Piece = (props) => {
                     >
                       Dice
                     </div>
-                    {props.unit.unitClass !== "pawn" && (
+                    {
+                      // props.unit.unitClass !== "pawn" &&
                       <>
                         <div
                           className="pieceOption"
@@ -128,7 +129,7 @@ export const Piece = (props) => {
                           Ski.
                         </div>
                       </>
-                    )}
+                    }
                   </>
                 )}
             </>

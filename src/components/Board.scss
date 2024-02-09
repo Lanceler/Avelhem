@@ -99,26 +99,45 @@
     
 }
 
+
+// actually left container
+.right-container {
+    background-color: rgb(221, 162, 0);
+    width: 20%;
+    height: 70%;
+}
+
+.middle-container {
+    background-color: rgb(108, 134, 108);
+    width: 25%;
+    height: 70%;
+    // height: fit-content;
+    width: fit-content;
+    position: relative;
+}
+
+//actually right container
 .left-container {
     // background-color: rgb(212, 183, 104);
-    width: 25%;
+    width: 45%;
     height: 80%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 
-    .fd{
+    .fd {
         background-color: #ffbb00;
         height: 50%;
         width: 100%;
     }
-    .cp{
+
+    .cp {
         background-color: #f75656;
         height: 50%;
         width: 100%;
     }
 
-    .skill-used{
+    .skill-used {
         background-color: #cfcfcf;
         // height: 50%;
         // width: 100%;
@@ -127,21 +146,21 @@
         padding: 5px
     }
 
-    .avel-used{
+    .avel-used {
         background-color: #7cc07c;
         height: 50%;
         width: 100%;
     }
 
-    .lc-middle{
+    .lc-middle {
         // background-color: #919e89;
         width: 100%;
         height: 50%;
         display: flex;
         justify-content: center;
-    
-    
-        .lcm-left{
+
+
+        .lcm-left {
             // background-color: rgb(134, 94, 94);
             height: 100%;
             width: 60%;
@@ -150,7 +169,7 @@
             justify-content: space-between;
             align-items: flex-end;
 
-            .lcml-player{
+            .lcml-player {
                 // background-color: black;
                 height: 20%;
                 width: 100%;
@@ -158,13 +177,13 @@
                 justify-content: space-between;
             }
 
-            .lcml-player-left{
+            .lcml-player-left {
                 background-color: green;
                 height: 100%;
                 width: 20%;
             }
 
-            .lcml-player-right{
+            .lcml-player-right {
                 background-color: #98b44b;
                 height: 100%;
                 width: 30%;
@@ -176,27 +195,28 @@
                 width: 80%;
             }
         }
-        
-        
-        .lcm-right{
+
+
+        .lcm-right {
             background-color: rgb(209, 184, 184);
             height: 100%;
             width: 40%;
         }
     }
-    
-    .lc-player{
+
+    .lc-player {
         // background-color: #8fa8df;
         width: 100%;
         height: 15%;
 
 
-        .avel-hand{
+        .avel-hand {
             background-color: #96e0a6;
             height: 40%;
             width: 100%;
         }
-        .skill-hand{
+
+        .skill-hand {
             background-color: #5797b4;
             height: 60%;
             width: 100%;
@@ -204,25 +224,11 @@
     }
 }
 
-.middle-container {
-    background-color: rgb(108, 134, 108);
-    width: 25%;
-    // height: 70%;
-    height: fit-content;
-    width: fit-content;
-    position: relative
-}
+// .phase-indicator {
+//     background-color: green;
+//     width: 5%;
+//     height: 70%;
+// }
 
-.phase-indicator {
-    background-color: green;
-    width: 5%;
-    height: 70%;
-}
-
-.right-container {
-    background-color: rgb(221, 162, 0);
-    width: 20%;
-    height: 70%;
-}
 
 

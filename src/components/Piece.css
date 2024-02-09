@@ -6,6 +6,7 @@
     color:rgb(49, 109, 31);
     text-align: center;
     position: relative;
+    user-select: none;
 }
 
 .scionClass{
@@ -43,5 +44,5 @@
 
 .pieceOption:hover {
     background-color: rgb(252, 247, 180);
-    cursor: pointer
+    cursor: pointer;
 }
