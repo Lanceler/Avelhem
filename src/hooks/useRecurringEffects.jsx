@@ -16,6 +16,39 @@ export const useRecurringEffects = () => {
     return gamestate;
   };
 
+  const canAegis = (unit) => {
+    const team = unit.player;
+    const zones = JSON.parse(localGameState.zones);
+
+    //get Adjacent zones
+    let adjacentZones = getZonesInRange(unit.row, unit.column, 1, true);
+
+    //return true if any zone contains an unmuted ally Mana Scion
+    for (let i in adjacentZones) {
+      let zone = zones[Math.floor(adjacentZones[i] / 5)][adjacentZones[i] % 5];
+      if (zone.player === team) {
+        if (
+          localGameState[team].units[zone.unitIndex].unitClass ===
+            "manaScion" &&
+          !isMuted(localGameState[team].units[zone.unitIndex])
+        ) {
+          console.log("Can Aegis");
+          return true;
+        }
+      }
+    }
+    console.log("Cannot Aegis");
+    return false;
+  };
+
+  const canMove = (unit) => {
+    if (getVacantAdjacentZones(unit).length > 0) {
+      return true;
+    }
+
+    return false;
+  };
+
   const drawAvelhem = (gameState) => {
     console.log("drawAvelhem");
 
@@ -115,31 +148,6 @@ export const useRecurringEffects = () => {
     return false;
   };
 
-  const canAegis = (unit) => {
-    const team = unit.player;
-    const zones = JSON.parse(localGameState.zones);
-
-    //get Adjacent zones
-    let adjacentZones = getZonesInRange(unit.row, unit.column, 1, true);
-
-    //return true if any zone contains an unmuted ally Mana Scion
-    for (let i in adjacentZones) {
-      let zone = zones[Math.floor(adjacentZones[i] / 5)][adjacentZones[i] % 5];
-      if (zone.player === team) {
-        if (
-          localGameState[team].units[zone.unitIndex].unitClass ===
-            "manaScion" &&
-          !isMuted(localGameState[team].units[zone.unitIndex])
-        ) {
-          console.log("Can Aegis");
-          return true;
-        }
-      }
-    }
-    console.log("Cannot Aegis");
-    return false;
-  };
-
   const getZonesInRange = (cRow, cColumn, range, includeSelf) => {
     const zones = JSON.parse(localGameState.zones);
     let zonesInRange = [];
@@ -172,12 +180,26 @@ export const useRecurringEffects = () => {
     return zonesInRange;
   };
 
+  const getVacantAdjacentZones = (unit) => {
+    const zones = JSON.parse(localGameState.zones);
+
+    let adjacentZones = getZonesInRange(unit.row, unit.column, 1, false);
+
+    adjacentZones = adjacentZones.filter(
+      (z) => !zones[Math.floor(z / 5)][z % 5].player
+    );
+
+    return adjacentZones;
+  };
+
   return {
     assignTactics,
     canAegis,
+    canMove,
     drawAvelhem,
     drawSkill,
     move,
+    getVacantAdjacentZones,
     getZonesInRange,
     rollTactic,
   };

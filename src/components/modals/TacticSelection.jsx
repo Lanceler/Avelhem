@@ -51,13 +51,21 @@ const TacticSelection = (props) => {
       if (newGameState.tactics[i].face === "Advance") {
         console.log("Advanced used by Unit " + props.unit.unitIndex);
 
-        props.enterMoveMode(
-          getZonesInRange(props.unit.row, props.unit.column, 1, false),
-          props.unit.unitIndex,
-          props.unit.player,
-          newGameState,
-          i
-        );
+        newGameState.currentResolution.push({
+          resolution: "Using Advance Tactic",
+          unit: props.unit,
+          tactic: i,
+        });
+
+        dispatch(updateState(newGameState));
+
+        // props.enterMoveMode(
+        //   getZonesInRange(props.unit.row, props.unit.column, 1, false),
+        //   props.unit.unitIndex,
+        //   props.unit.player,
+        //   newGameState,
+        //   i
+        // );
       }
     }
   };
@@ -71,7 +79,8 @@ const TacticSelection = (props) => {
           {localGameState.tactics.map((tactic, index) => (
             <div
               key={index}
-              className="tactic"
+              // className="tactic"
+              className={`tactic ${tactic.stock ? "" : "disabledTactic"}`}
               onClick={() => handleClickTactic(index)}
               style={{
                 backgroundImage: `url(${getImage(index)})`,

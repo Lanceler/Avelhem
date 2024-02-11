@@ -21,6 +21,7 @@ import CoordinationPhaseSelection from "./modals/CoordinationPhaseSelection";
 import DefiancePhaseSelection from "./modals/DefiancePhaseSelection";
 
 import TacticSelection from "./modals/TacticSelection";
+import TacticAdvance from "./modals/TacticAdvance";
 
 import Piece from "./Piece";
 
@@ -185,6 +186,20 @@ const Board = (props) => {
               <TacticSelection
                 updateFirebase={updateFirebase}
                 unit={lastResolution.unit}
+                enterMoveMode={enterMoveMode}
+              />
+            )}
+          </>
+        );
+
+      case "Using Advance Tactic":
+        return (
+          <>
+            {self === localGameState.turnPlayer && (
+              <TacticAdvance
+                updateFirebase={updateFirebase}
+                unit={lastResolution.unit}
+                tactic={lastResolution.tactic}
                 enterMoveMode={enterMoveMode}
               />
             )}

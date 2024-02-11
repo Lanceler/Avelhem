@@ -79,12 +79,16 @@ export const Piece = (props) => {
   };
 
   const handleSkill = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
     props.selectExpandPiece(null);
 
     props.enterMoveMode(
       getZonesInRange(props.unit.row, props.unit.column, 1, false),
       props.unit.unitIndex,
-      props.unit.player
+      props.unit.player,
+      newGameState,
+      null
     );
   };
 
