@@ -75,6 +75,11 @@ const TacticSelection = (props) => {
         <div className="twoColumn">
           {localGameState.tactics.map((tactic, index) => (
             <div className="center">
+              <div 
+                className={`tacticBG ${tactic.stock ? "" : "disabledTacticBG"}`}
+
+              >
+
               <div
                 key={index}
                 // className="tactic"
@@ -86,6 +91,8 @@ const TacticSelection = (props) => {
               >
                 {console.log(tactic)}
               </div>
+                </div>
+             
               {tactic.face}
               <br />
               Instances: {tactic.stock}
