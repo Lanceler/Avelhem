@@ -75,9 +75,14 @@ const TacticAdvance = (props) => {
     }
   };
 
+  const handleViewBoard = () => {
+    props.hideOrRevealModale();
+  };
+
   return (
     <div className="modal-backdrop">
       <div className="modal">
+        <button onClick={() => handleViewBoard()}>View Board</button>
         <h2>Advance Tactic</h2>
 
         <div className="twoColumn">

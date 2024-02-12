@@ -27,9 +27,14 @@ const DefiancePhaseSelection = (props) => {
     props.updateFirebase(newGameState);
   };
 
+  const handleViewBoard = () => {
+    props.hideOrRevealModale();
+  };
+
   return (
     <div className="modal-backdrop">
       <div className="modal">
+        <button onClick={() => handleViewBoard()}>View Board</button>
         <div className="twoColumn bountyHeader">
           <h2>Defiance Phase </h2>
           <h2>FD: {localGameState[self].fateDefiances}</h2>

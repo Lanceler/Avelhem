@@ -131,13 +131,10 @@ const Board = (props) => {
       case "Bounty Phase Selection":
         return (
           <>
-            {self === localGameState.turnPlayer && (
+            {self === localGameState.turnPlayer && !hideModal && (
               <BountyStore
-                // bountyUpgrades={localGameState[self].bountyUpgrades}
-                // bountyPoints={localGameState[self].bountyPoints}
-                // fateDefiances={localGameState[self].fateDefiances}
-                // score={localGameState[self].score}
                 updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
               />
             )}
           </>
@@ -145,16 +142,22 @@ const Board = (props) => {
       case "Coordination Phase Selection":
         return (
           <>
-            {self === localGameState.turnPlayer && (
-              <CoordinationPhaseSelection updateFirebase={updateFirebase} />
+            {self === localGameState.turnPlayer && !hideModal && (
+              <CoordinationPhaseSelection
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
             )}
           </>
         );
       case "Defiance Phase Selection":
         return (
           <>
-            {self === localGameState.turnPlayer && (
-              <DefiancePhaseSelection updateFirebase={updateFirebase} />
+            {self === localGameState.turnPlayer && !hideModal && (
+              <DefiancePhaseSelection
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
             )}
           </>
         );
@@ -216,13 +219,14 @@ const Board = (props) => {
       case "Using Advance Tactic":
         return (
           <>
-            {self === localGameState.turnPlayer && (
+            {self === localGameState.turnPlayer && !hideModal && (
               <TacticAdvance
                 updateFirebase={updateFirebase}
                 unit={lastResolution.unit}
                 tactic={lastResolution.tactic}
                 enterMoveMode={enterMoveMode}
                 enterSelectUnitMode={enterSelectUnitMode}
+                hideOrRevealModale={hideOrRevealModale}
               />
             )}
           </>

@@ -50,9 +50,14 @@ const CoordinationPhaseSelection = (props) => {
     props.updateFirebase(newGameState);
   };
 
+  const handleViewBoard = () => {
+    props.hideOrRevealModale();
+  };
+
   return (
     <div className="modal-backdrop">
       <div className="modal">
+        <button onClick={() => handleViewBoard()}>View Board</button>
         <h2>Coordination Phase</h2>
 
         <div className="phaseSelection">

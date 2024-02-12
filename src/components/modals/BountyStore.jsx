@@ -26,10 +26,15 @@ export default function BountyStore(props) {
     props.updateFirebase(newGameState);
   };
 
+  const handleViewBoard = () => {
+    props.hideOrRevealModale();
+  };
+
   return (
     <div className="modal-backdrop">
       <div className="modal ">
         <div className="twoColumn bountyHeader">
+          <button onClick={() => handleViewBoard()}>View Board</button>
           <h2>Bounty Phase </h2>
           <h2>BP: {props.bountyPoints}</h2>
         </div>
