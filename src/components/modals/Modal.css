@@ -73,6 +73,7 @@
 
 .tacticBG {
     width: fit-content;
+    margin: 0 5px 0 5px;
     height: fit-content;
     border: 2px solid;
     /* background-color: rgb(72, 64, 92); */
