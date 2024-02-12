@@ -117,11 +117,12 @@ const Board = (props) => {
       case "Acquisition Phase Selection":
         return (
           <>
-            {self === localGameState.turnPlayer && (
+            {self === localGameState.turnPlayer && !hideModal && (
               <AcquisitionPhaseSelection
                 getVacantFrontier={getVacantFrontier}
                 enterDeployMode={enterDeployMode}
                 updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
               />
             )}
           </>
