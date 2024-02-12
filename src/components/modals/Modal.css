@@ -58,13 +58,17 @@
     background-repeat: no-repeat;
     background-position: center;
 
-    filter: hue-rotate(180deg);
+    filter: brightness(0.51) contrast(5.4) hue-rotate(20deg);
+    /* hue-rotate(180deg) */
     background-color: #39426400;
+    cursor: pointer;
 }
 
 
 .disabledTactic{
     filter: saturate(0) brightness(0.8);
+    cursor: not-allowed;
+
 }
 
 .tacticBG {
