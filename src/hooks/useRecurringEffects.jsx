@@ -10,10 +10,115 @@ export const useRecurringEffects = () => {
   //=========================================
   //Exported functions below
 
-  const assignTactics = (gamestate, first, second) => {
-    gamestate.tactics = [first, second];
+  const applyDamage = (
+    newGameState,
+    attackerInfo,
+    victimInfo,
+    type,
+    special
+  ) => {
+    //Update arguments
+    let attacker =
+      newGameState[attackerInfo.player].units[attackerInfo.unitIndex];
+    let victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
 
-    return gamestate;
+    let newZoneInfo = JSON.parse(newGameState.zones);
+
+    if (isMuted(attacker)) {
+      return;
+    }
+
+    //checkBypassShield
+    let bypassShield = false;
+    if (victim.afflictions.frostbite && attacker.unitClass === "waterScion") {
+      bypassShield = true;
+    } else if (attacker.sharpness == 2) {
+      bypassShield = true;
+    } else if (special === "sowAndReapBlast") {
+      bypassShield = true;
+    }
+
+    //calculate AP
+    let aP = 1;
+    if (["geomancy", "surge"].includes(special)) {
+      aP = 2;
+    } else {
+      //check for AP modifiers
+      if (attacker.temporary.galeConjuration) {
+        aP = 2;
+        delete newGameState[attacker.player].units[attacker.unitIndex].temporary
+          .galeConjuration;
+      }
+      if (attacker.sharpness) {
+        aP = aP + attacker.sharpness;
+      }
+      if (victim.temporary.adamantArmor) {
+        aP = Math.max(0, aP - 1);
+        delete newGameState[victim.player].units[victim.unitIndex].temporary
+          .adamantArmor;
+      }
+      if (special === "Virtue-blast-blocked") {
+        aP = Math.max(0, aP - 1);
+      }
+    }
+
+    //reduce HP
+    if (victim.enhancements.ward) {
+      delete newGameState[victim.player].units[victim.unitIndex].enhancements
+        .ward;
+    } else if (bypassShield && victim.enhancements.shield) {
+      delete newGameState[victim.player].units[victim.unitIndex].enhancements
+        .shield;
+      newGameState[victim.player].units[victim.unitIndex].hp = victim.hp - aP;
+    } else if (victim.enhancements.shield) {
+      delete newGameState[victim.player].units[victim.unitIndex].enhancements
+        .shield;
+    } else {
+      newGameState[victim.player].units[victim.unitIndex].hp = victim.hp - aP;
+    }
+
+    //survival or elimination
+    if (newGameState[victim.player].units[victim.unitIndex].hp > 0) {
+      console.log(`${victim.unitClass} - ${victim.unitIndex} survived.`);
+      //to do: survival contingency
+    } else {
+      //grant BP
+      if (victim.player === "guest") {
+        newGameState.host.bountyPoints = Math.min(
+          10,
+          newGameState.host.bountyPoints + 1
+        );
+      } else {
+        newGameState.guest.bountyPoints = Math.min(
+          10,
+          newGameState.guest.bountyPoints + 1
+        );
+      }
+
+      //strike movement
+      if (type === "strike") {
+        //to do move
+      }
+
+      //elimination contingency
+      //to do: trigger elimination contingency
+
+      //elimination talents
+      //to do: elimination talents
+
+      //turn to null
+      newGameState[victim.player].units[victim.unitIndex] = null;
+      newZoneInfo[victim.row][victim.column].player = null;
+      newZoneInfo[victim.row][victim.column].unitIndex = null;
+      newGameState.zones = JSON.stringify(newZoneInfo);
+    }
+    return newGameState;
+  };
+
+  const assignTactics = (newGameState, first, second) => {
+    newGameState.tactics = [first, second];
+
+    return newGameState;
   };
 
   const canAegis = (unit) => {
@@ -46,91 +151,26 @@ export const useRecurringEffects = () => {
       return true;
     }
 
+    //To do: Rooted and hand size?
+
     return false;
   };
 
-  const drawAvelhem = (gameState) => {
-    console.log("drawAvelhem");
-
-    gameState[self].avelhemHand.push(gameState[self].avelhemRepertoire.pop());
+  const drawAvelhem = (newGameState) => {
+    newGameState[self].avelhemHand.push(
+      newGameState[self].avelhemRepertoire.pop()
+    );
 
     //To do: If deck empties, shuffle discard pile into it.
 
-    return gameState;
+    return newGameState;
   };
 
-  const drawSkill = (gameState) => {
-    console.log("drawSkill");
-
-    gameState[self].skillHand.push(gameState[self].skillRepertoire.pop());
+  const drawSkill = (newGameState) => {
+    newGameState[self].skillHand.push(newGameState[self].skillRepertoire.pop());
     //To do: If deck empties, shuffle discard pile into it.
 
-    return gameState;
-  };
-
-  const move = (gamestate, zones, player, unitIndex, zoneId) => {
-    let mover = gamestate[player].units[unitIndex];
-
-    let newZoneInfo = [...zones];
-
-    console.log(newZoneInfo);
-
-    //vacate current zone
-    newZoneInfo[mover.row][mover.column].player = null;
-    newZoneInfo[mover.row][mover.column].unitIndex = null;
-
-    //enter new zone
-    newZoneInfo[Math.floor(zoneId / 5)][zoneId % 5].player = mover.player;
-    newZoneInfo[Math.floor(zoneId / 5)][zoneId % 5].unitIndex = mover.unitIndex;
-
-    //stringify for firebase
-    gamestate.zones = JSON.stringify(newZoneInfo);
-
-    //update unit itself
-    gamestate[player].units[unitIndex].row = Math.floor(zoneId / 5);
-    gamestate[player].units[unitIndex].column = zoneId % 5;
-
-    //pop "Moving Unit" resolution
-    gamestate.currentResolution.pop();
-
-    return gamestate;
-  };
-
-  const rollTactic = (extraMobilize) => {
-    const mobilizeLimit = 3 + extraMobilize;
-
-    const dieFaces = [
-      { face: "Advance", stock: 1 },
-      { face: "Advance", stock: 1 },
-      { face: "Mobilize", stock: mobilizeLimit, limit: mobilizeLimit },
-      { face: "Mobilize", stock: mobilizeLimit, limit: mobilizeLimit },
-      { face: "Assault", stock: 1 },
-      { face: "Invoke", stock: 1 },
-    ];
-
-    return dieFaces[Math.floor(Math.random() * dieFaces.length)];
-  };
-
-  const strike = (gameState, selfIndex, enemyIndex, bypassTarget) => {
-    const enemyUnit = gameState[enemy].units[enemyIndex];
-
-    if (gameState[enemy].skillHand.length) {
-      if (enemyUnit.unitClass === "metalScion" && !isMuted(enemyUnit)) {
-        //prompt metal scion passive
-      } else if (
-        !bypassTarget &&
-        //Thunder Thaumaturge
-        ((enemyUnit.unitClass === "lightningScion" && !isMuted(enemyUnit)) ||
-          //Aegis
-          canAegis(enemyUnit) ||
-          //Blaze of Glory
-          (enemyUnit.fever &&
-            !isMuted(enemyUnit) &&
-            gameState[enemy].skillHand.length > 1))
-      ) {
-        //prompt target contingent skill
-      }
-    }
+    return newGameState;
   };
 
   const isMuted = (unit) => {
@@ -192,15 +232,178 @@ export const useRecurringEffects = () => {
     return adjacentZones;
   };
 
+  const getZonesWithEnemies = (unit, range) => {
+    const zones = JSON.parse(localGameState.zones);
+
+    let enemyPlayer = "";
+    if (unit.player === "host") {
+      enemyPlayer = "guest";
+    } else if (unit.player === "guest") {
+      enemyPlayer = "host";
+    }
+
+    let enemyZones = getZonesInRange(unit.row, unit.column, range, false);
+
+    enemyZones = enemyZones.filter(
+      (z) => zones[Math.floor(z / 5)][z % 5].player === enemyPlayer
+    );
+
+    return enemyZones;
+  };
+
+  const move = (newGameState, player, unitIndex, zoneId) => {
+    let mover = newGameState[player].units[unitIndex];
+
+    // let newZoneInfo = [...zones];
+    let newZoneInfo = JSON.parse(newGameState.zones);
+
+    //vacate current zone
+    newZoneInfo[mover.row][mover.column].player = null;
+    newZoneInfo[mover.row][mover.column].unitIndex = null;
+
+    //enter new zone
+    newZoneInfo[Math.floor(zoneId / 5)][zoneId % 5].player = mover.player;
+    newZoneInfo[Math.floor(zoneId / 5)][zoneId % 5].unitIndex = mover.unitIndex;
+
+    //stringify for firebase
+    newGameState.zones = JSON.stringify(newZoneInfo);
+
+    //update unit itself
+    newGameState[player].units[unitIndex].row = Math.floor(zoneId / 5);
+    newGameState[player].units[unitIndex].column = zoneId % 5;
+
+    //pop "Moving Unit" resolution
+    newGameState.currentResolution.pop();
+
+    return newGameState;
+  };
+
+  const rollTactic = (extraMobilize) => {
+    const mobilizeLimit = 3 + extraMobilize;
+
+    const dieFaces = [
+      { face: "Advance", stock: 1 },
+      { face: "Advance", stock: 1 },
+      { face: "Mobilize", stock: mobilizeLimit, limit: mobilizeLimit },
+      { face: "Mobilize", stock: mobilizeLimit, limit: mobilizeLimit },
+      { face: "Assault", stock: 1 },
+      { face: "Invoke", stock: 1 },
+    ];
+
+    return dieFaces[Math.floor(Math.random() * dieFaces.length)];
+  };
+
+  const strike = (newGameState, selfIndex, enemyIndex, bypassTarget) => {
+    const enemyUnit = newGameState[enemy].units[enemyIndex];
+
+    if (newGameState[enemy].skillHand.length) {
+      if (enemyUnit.unitClass === "metalScion" && !isMuted(enemyUnit)) {
+        //prompt metal scion passive
+      } else if (
+        !bypassTarget &&
+        //Thunder Thaumaturge
+        ((enemyUnit.unitClass === "lightningScion" && !isMuted(enemyUnit)) ||
+          //Aegis
+          canAegis(enemyUnit) ||
+          //Blaze of Glory
+          (enemyUnit.fever &&
+            !isMuted(enemyUnit) &&
+            newGameState[enemy].skillHand.length > 1))
+      ) {
+        //prompt target contingent skill
+      }
+    }
+  };
+
+  const triggerTarget = (victim, type, bypassTarget) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    if (newGameState[victim.player.skillHand.length]) {
+      if (
+        ["strike", "virtue-blast", "paralyze"].includes(type) &&
+        victim.unitClass === "metalScion" &&
+        victim.virtue &&
+        !victim.temporary.usedAdamantArmor
+      ) {
+        //prompt AdamantArmor
+      } else {
+        if (!bypassTarget) {
+          if (
+            (victim.unitClass === "lightningScion" && !isMuted(victim)) ||
+            canAegis(victim) ||
+            (victim.fever &&
+              !isMuted(victim) &&
+              newGameState[victim.player].skillHand >= 2)
+          ) {
+            //prompt contingentSkill
+          }
+        }
+      }
+    }
+  };
+
+  const virtueBlast = (newGameState, attacker, victim, bypassTarget) => {
+    //pop "Selecting Unit" resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Apply Damage",
+      attacker: attacker,
+      victim: victim,
+      type: "blast",
+    });
+
+    if (victim.virtue && !isMuted(victim)) {
+      newGameState.currentResolution.push({
+        resolution: "Blocking Virtue-Blast",
+        attacker: attacker,
+        victim: victim,
+      });
+    }
+
+    if (!bypassTarget) {
+      //triggerTarget(attacker, victim, bypassTarget);
+    }
+
+    newGameState[attacker.player].units[attacker.unitIndex].virtue = false;
+
+    return newGameState;
+  };
+
+  const virtueBlastNo = (newGameState) => {
+    newGameState.currentResolution.pop();
+
+    return newGameState;
+  };
+
+  const virtueBlastYes = (newGameState, attacker, victim) => {
+    newGameState.currentResolution.pop();
+    newGameState.currentResolution[
+      newGameState.currentResolution.length - 1
+    ].special = "Virtue-blast-blocked";
+
+    newGameState[victim.player].units[victim.unitIndex].virtue = false;
+
+    newGameState[attacker.player].units[attacker.unitIndex].virtue = true;
+
+    return newGameState;
+  };
+
   return {
+    applyDamage,
     assignTactics,
     canAegis,
     canMove,
     drawAvelhem,
     drawSkill,
-    move,
     getVacantAdjacentZones,
     getZonesInRange,
+    getZonesWithEnemies,
+    isMuted,
+    move,
     rollTactic,
+    virtueBlast,
+    virtueBlastNo,
+    virtueBlastYes,
   };
 };

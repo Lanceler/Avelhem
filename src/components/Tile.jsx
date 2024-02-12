@@ -2,11 +2,10 @@ import React from "react";
 import "./Tile.css";
 import { useSelector } from "react-redux";
 
-import Piece from "./Piece";
-
 const Tile = (props) => {
   let deployable = false;
   let movable = false;
+  let unitSelectable = false;
 
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
@@ -20,6 +19,8 @@ const Tile = (props) => {
       deployable = true;
     } else if (props.tileMode === "move" && !props.zone.player) {
       movable = true;
+    } else if (props.tileMode === "selectUnit") {
+      unitSelectable = true;
     }
   }
 
@@ -42,7 +43,7 @@ const Tile = (props) => {
 
   return (
     <div
-      className={deployable || movable ? "selectable" : ""}
+      className={deployable || movable || unitSelectable ? "selectable" : ""}
       onClick={() => onClickTile()}
     >
       <div className={`tile ${self !== "guest" ? "" : "reversed-tile"}`}>

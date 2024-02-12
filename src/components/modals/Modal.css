@@ -11,7 +11,7 @@
 .modal{
     padding: 30px;
     width: fit-content;
-    /* max-width: 880px; */
+    max-width: 850px;
     margin: 200px auto;
     background: rgb(255, 255, 255);
     border-radius: 10px;

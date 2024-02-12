@@ -6,7 +6,7 @@ import Tile from "./Tile";
 
 import SelectFirstPlayer from "./modals/SelectFirstPlayer";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../redux/gameState";
 import { updateSelf, updateEnemy } from "../redux/teams";
@@ -22,6 +22,7 @@ import DefiancePhaseSelection from "./modals/DefiancePhaseSelection";
 
 import TacticSelection from "./modals/TacticSelection";
 import TacticAdvance from "./modals/TacticAdvance";
+import VirtueBlastBlock from "./modals/VirtueBlastBlock";
 
 import Piece from "./Piece";
 
@@ -44,7 +45,9 @@ const Board = (props) => {
   const [tacticUsed, setTacticUsed] = useState(null);
   const [expandedPiece, setExpandedPiece] = useState(null);
 
-  const { move } = useRecurringEffects();
+  const [hideModal, setHideModal] = useState(false);
+
+  const { applyDamage, move, virtueBlast } = useRecurringEffects();
 
   const newPawnStats = (player, index, row, column) => {
     return {
@@ -57,6 +60,7 @@ const Board = (props) => {
       virtue: 1,
       afflictions: {},
       enhancements: {},
+      temporary: {},
     };
   };
 
@@ -179,6 +183,22 @@ const Board = (props) => {
           </>
         );
 
+      case "Selecting Unit":
+        return (
+          <>
+            {self === localGameState.turnPlayer &&
+              tileMode !== "selectUnit" && (
+                <>
+                  {setTileMode("selectUnit")}
+                  {setValidZones(lastResolution.zoneIds)}
+                  {setMovingUnitIndex(lastResolution.unitIndex)}
+                  {setMovingPlayer(lastResolution.player)}
+                  {setTacticUsed(lastResolution.tactic)}
+                </>
+              )}
+          </>
+        );
+
       case "Activating Tactic":
         return (
           <>
@@ -201,10 +221,46 @@ const Board = (props) => {
                 unit={lastResolution.unit}
                 tactic={lastResolution.tactic}
                 enterMoveMode={enterMoveMode}
+                enterSelectUnitMode={enterSelectUnitMode}
               />
             )}
           </>
         );
+
+      case "Blocking Virtue-Blast":
+        return (
+          <>
+            {self === lastResolution.victim.player && !hideModal && (
+              <VirtueBlastBlock
+                updateFirebase={updateFirebase}
+                attacker={lastResolution.attacker}
+                victim={lastResolution.victim}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Apply Damage":
+        return (
+          <>
+            {self === lastResolution.attacker.player && (
+              <>
+                {resolveApplyDamage(
+                  lastResolution.attacker,
+                  lastResolution.victim,
+                  lastResolution.type,
+                  lastResolution.special
+                )}
+              </>
+            )}
+          </>
+        );
+
+      //Apply Damage
+
+      case "Final Phase Conclusion":
+        return <>{self === localGameState.turnPlayer && <>{nextPhase()}</>}</>;
 
       default:
         return;
@@ -225,24 +281,6 @@ const Board = (props) => {
     dispatch(updateState(newGameState));
 
     // updateFirebase(newGameState);
-  };
-
-  const enterDeployMode = (zoneIds) => {
-    console.log("enterDeployMode");
-
-    const newGameState = JSON.parse(JSON.stringify(localGameState));
-    newGameState.currentResolution.push({
-      resolution: "Deploying Pawn",
-      zoneIds: zoneIds,
-    });
-
-    dispatch(updateState(newGameState));
-
-    // updateFirebase(newGameState);
-  };
-
-  const endExecutionPhase = () => {
-    nextPhase();
   };
 
   const deployPawn = (r, c) => {
@@ -279,6 +317,24 @@ const Board = (props) => {
     updateFirebase(newGameState);
   };
 
+  const endExecutionPhase = () => {
+    nextPhase();
+  };
+
+  const enterDeployMode = (zoneIds) => {
+    console.log("enterDeployMode");
+
+    const newGameState = JSON.parse(JSON.stringify(localGameState));
+    newGameState.currentResolution.push({
+      resolution: "Deploying Pawn",
+      zoneIds: zoneIds,
+    });
+
+    dispatch(updateState(newGameState));
+
+    // updateFirebase(newGameState);
+  };
+
   const enterMoveMode = (zoneIds, unitIndex, player, gameState, tactic) => {
     console.log("enterMoveMode");
 
@@ -297,55 +353,38 @@ const Board = (props) => {
       tactic: tactic,
     });
 
-    // setLocalGameState(newGameState);
     dispatch(updateState(newGameState));
 
     // updateFirebase(newGameState);
   };
 
-  const moveUnit = (player, unitIndex, zoneId) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
+  const enterSelectUnitMode = (
+    zoneIds,
+    unitIndex,
+    player,
+    gameState,
+    tactic
+  ) => {
+    console.log("enterSelectUnitMode");
 
-    newGameState = move(newGameState, zones, player, unitIndex, zoneId);
-
-    if (tacticUsed !== null) {
-      newGameState.tactics[tacticUsed].stock--;
+    let newGameState = null;
+    if (gameState) {
+      newGameState = gameState;
+    } else {
+      newGameState = JSON.parse(JSON.stringify(localGameState));
     }
 
-    setValidZones([]);
-    setTileMode(null);
-    setMovingUnitIndex(null);
-    setMovingPlayer(null);
-    setTacticUsed(null);
+    newGameState.currentResolution.push({
+      resolution: "Selecting Unit",
+      zoneIds: zoneIds,
+      player: player,
+      unitIndex: unitIndex,
+      tactic: tactic,
+    });
 
     dispatch(updateState(newGameState));
 
-    updateFirebase(newGameState);
-  };
-
-  const nextPhase = () => {
-    console.log("Changing Phase");
-    const newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    if (newGameState.turnPhase === "Execution") {
-      newGameState.turnPhase = "Final";
-      newGameState.currentResolution.pop();
-      newGameState.currentResolution.push({
-        resolution: "Final Phase Conclusion",
-      });
-    } else if (newGameState.turnPhase === "Final") {
-      newGameState.turnPhase = "Acquisition";
-      newGameState.turnPlayer = enemy;
-
-      newGameState.currentResolution.pop();
-      newGameState.currentResolution.push({
-        resolution: "Acquisition Phase Selection",
-      });
-    }
-
-    dispatch(updateState(newGameState));
-
-    updateFirebase(newGameState);
+    // updateFirebase(newGameState);
   };
 
   const getVacantFrontier = () => {
@@ -379,6 +418,102 @@ const Board = (props) => {
     return validZonesIds;
   };
 
+  const hideOrRevealModale = () => {
+    setHideModal(!hideModal);
+    setExpandedPiece(null);
+  };
+
+  const moveUnit = (player, unitIndex, zoneId) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    newGameState = move(newGameState, player, unitIndex, zoneId);
+
+    if (tacticUsed !== null) {
+      newGameState.tactics[tacticUsed].stock--;
+    }
+
+    setValidZones([]);
+    setTileMode(null);
+    setMovingUnitIndex(null);
+    setMovingPlayer(null);
+    setTacticUsed(null);
+
+    dispatch(updateState(newGameState));
+
+    updateFirebase(newGameState);
+  };
+
+  const nextPhase = () => {
+    console.log("Changing Phase");
+    const newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    if (newGameState.turnPhase === "Execution") {
+      newGameState.turnPhase = "Final";
+      newGameState.currentResolution.pop();
+      newGameState.currentResolution.push({
+        resolution: "Final Phase Conclusion",
+      });
+    } else if (newGameState.turnPhase === "Final") {
+      newGameState.turnPhase = "Acquisition";
+      newGameState.turnPlayer = enemy;
+      newGameState.turnCount = newGameState.turnCount + 1;
+      newGameState.tactics = [];
+
+      newGameState.currentResolution.pop();
+      newGameState.currentResolution.push({
+        resolution: "Acquisition Phase Selection",
+      });
+    }
+
+    dispatch(updateState(newGameState));
+
+    updateFirebase(newGameState);
+  };
+
+  const resolveApplyDamage = (attackerInfo, victimInfo, type, special) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    newGameState.currentResolution.pop();
+
+    newGameState = applyDamage(
+      newGameState,
+      attackerInfo,
+      victimInfo,
+      type,
+      special
+    );
+
+    dispatch(updateState(newGameState));
+
+    updateFirebase(newGameState);
+  };
+
+  const selectUnit = (player, unitIndex, selectedUnit, type) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    if (tacticUsed !== null) {
+      newGameState.tactics[tacticUsed].stock--;
+    }
+
+    if (type === "virtue-blast") {
+      newGameState = virtueBlast(
+        newGameState,
+        newGameState[player].units[unitIndex],
+        selectedUnit
+      );
+    }
+
+    setValidZones([]);
+    setTileMode(null);
+    setMovingUnitIndex(null);
+    setMovingPlayer(null);
+    setTacticUsed(null);
+
+    dispatch(updateState(newGameState));
+
+    updateFirebase(newGameState);
+  };
+
   const selectExpandPiece = (id) => {
     setExpandedPiece(id);
   };
@@ -391,6 +526,8 @@ const Board = (props) => {
     return repertoire;
   };
 
+  //=========================
+  //=========================
   const onSetFirstPlayer = async (choice) => {
     console.log("Set First Player");
 
@@ -487,6 +624,13 @@ const Board = (props) => {
             ].resolution}
           <br />
           {JSON.stringify(tileMode)} {validZones.length}
+          <br />
+          {hideModal && (
+            <button onClick={() => hideOrRevealModale()}>
+              Return to options
+            </button>
+          )}
+          <br />
           {!localGameState.turnPlayer && self === "host" && (
             <SelectFirstPlayer onSetFirstPlayer={onSetFirstPlayer} />
           )}
@@ -516,11 +660,15 @@ const Board = (props) => {
                       <Piece
                         unit={unit}
                         enterMoveMode={enterMoveMode}
+                        movingUnitIndex={movingUnitIndex}
+                        movingPlayer={movingPlayer}
                         tileMode={tileMode}
                         id={i}
                         expandedPiece={expandedPiece}
                         selectExpandPiece={selectExpandPiece}
                         activateTactic={activateTactic}
+                        validZones={validZones}
+                        selectUnit={selectUnit}
                       />
                     </div>
                   )}
@@ -550,11 +698,15 @@ const Board = (props) => {
                       <Piece
                         unit={unit}
                         enterMoveMode={enterMoveMode}
+                        movingUnitIndex={movingUnitIndex}
+                        movingPlayer={movingPlayer}
                         tileMode={tileMode}
                         id={-i - 1}
                         expandedPiece={expandedPiece}
                         selectExpandPiece={selectExpandPiece}
                         activateTactic={activateTactic}
+                        validZones={validZones}
+                        selectUnit={selectUnit}
                       />
                     </div>
                   )}

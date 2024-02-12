@@ -10,7 +10,8 @@ const TacticAdvance = (props) => {
   const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const { canMove, getVacantAdjacentZones } = useRecurringEffects();
+  const { canMove, getVacantAdjacentZones, getZonesWithEnemies, isMuted } =
+    useRecurringEffects();
 
   let canTraverse = false;
   if (canMove(props.unit)) {
@@ -18,6 +19,19 @@ const TacticAdvance = (props) => {
   } else {
     console.log(canMove(props.unit));
     console.log("Cannot Traverse.");
+  }
+
+  let canVirtueBlast = false;
+
+  if (
+    props.unit.virtue &&
+    getZonesWithEnemies(props.unit, 1).length &&
+    !isMuted(props.unit) &&
+    !props.unit.afflictions.root
+  ) {
+    canVirtueBlast = true;
+  } else {
+    console.log("Cannot VBlast");
   }
 
   const handleReturn = () => {
@@ -44,6 +58,23 @@ const TacticAdvance = (props) => {
     }
   };
 
+  const handleVirtueBlast = () => {
+    if (canVirtueBlast) {
+      let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+      //end Advance Tactic resolution
+      newGameState.currentResolution.pop();
+
+      props.enterSelectUnitMode(
+        getZonesWithEnemies(props.unit, 1),
+        props.unit.unitIndex,
+        props.unit.player,
+        newGameState,
+        props.tactic
+      );
+    }
+  };
+
   return (
     <div className="modal-backdrop">
       <div className="modal">
@@ -60,7 +91,12 @@ const TacticAdvance = (props) => {
             <h4>Move to an adjacent vacant zone.</h4>
           </div>
 
-          <div className="choiceWithDescription">
+          <div
+            className={`choiceWithDescription ${
+              canVirtueBlast ? "" : "disabledOption"
+            }`}
+            onClick={() => handleVirtueBlast()}
+          >
             <h2>Virtue-blast</h2>
             <h4>Spend your virtue to blast an adjcent enemy.</h4>
             <h4>

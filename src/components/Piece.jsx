@@ -62,16 +62,32 @@ export const Piece = (props) => {
       break;
   }
 
+  let pieceSelectable = false;
+
+  if (props.validZones.includes(props.unit.row * 5 + props.unit.column)) {
+    pieceSelectable = true;
+  }
+
   const handleClick = () => {
     // canAegis(props.unit);
 
-    // if (!props.tileMode) {
-    if (props.expandedPiece === props.id) {
-      props.selectExpandPiece(null);
+    if (props.tileMode === "selectUnit") {
+      if (pieceSelectable) {
+        console.log("unit Selected");
+        props.selectUnit(
+          props.movingPlayer,
+          props.movingUnitIndex,
+          props.unit,
+          "virtue-blast"
+        );
+      }
     } else {
-      props.selectExpandPiece(props.id);
+      if (props.expandedPiece === props.id) {
+        props.selectExpandPiece(null);
+      } else {
+        props.selectExpandPiece(props.id);
+      }
     }
-    // }
   };
 
   const handleTactic = (unit) => {
