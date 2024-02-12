@@ -58,43 +58,38 @@ const TacticSelection = (props) => {
         });
 
         dispatch(updateState(newGameState));
-
-        // props.enterMoveMode(
-        //   getZonesInRange(props.unit.row, props.unit.column, 1, false),
-        //   props.unit.unitIndex,
-        //   props.unit.player,
-        //   newGameState,
-        //   i
-        // );
       }
     }
+  };
+
+  const handleViewBoard = () => {
+    props.hideOrRevealModale();
   };
 
   return (
     <div className="modal-backdrop">
       <div className="modal">
+        <button onClick={() => handleViewBoard()}>View Board</button>
         <h2>Select Tactic</h2>
 
         <div className="twoColumn">
           {localGameState.tactics.map((tactic, index) => (
             <div className="center">
               <div
-              key={index}
-              // className="tactic"
-              className={`tactic ${tactic.stock ? "" : "disabledTactic"}`}
-              onClick={() => handleClickTactic(index)}
-              style={{
-                backgroundImage: `url(${getImage(index)})`,
-              }}
-            >
-              {console.log(tactic)}
-              
+                key={index}
+                // className="tactic"
+                className={`tactic ${tactic.stock ? "" : "disabledTactic"}`}
+                onClick={() => handleClickTactic(index)}
+                style={{
+                  backgroundImage: `url(${getImage(index)})`,
+                }}
+              >
+                {console.log(tactic)}
+              </div>
+              {tactic.face}
+              <br />
+              Instances: {tactic.stock}
             </div>
-            {tactic.face}
-            <br />
-            Instances: {tactic.stock}
-            </div>
-            
           ))}
         </div>
 

@@ -206,11 +206,12 @@ const Board = (props) => {
       case "Activating Tactic":
         return (
           <>
-            {self === localGameState.turnPlayer && (
+            {self === localGameState.turnPlayer && !hideModal && (
               <TacticSelection
                 updateFirebase={updateFirebase}
                 unit={lastResolution.unit}
                 enterMoveMode={enterMoveMode}
+                hideOrRevealModale={hideOrRevealModale}
               />
             )}
           </>
