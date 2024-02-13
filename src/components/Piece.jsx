@@ -73,12 +73,11 @@ export const Piece = (props) => {
 
     if (props.tileMode === "selectUnit") {
       if (pieceSelectable) {
-        console.log("unit Selected");
         props.selectUnit(
           props.movingPlayer,
           props.movingUnitIndex,
           props.unit,
-          "virtue-blast"
+          props.selectUnitReason
         );
       }
     } else {

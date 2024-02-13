@@ -22,6 +22,7 @@ import DefiancePhaseSelection from "./modals/DefiancePhaseSelection";
 
 import TacticSelection from "./modals/TacticSelection";
 import TacticAdvance from "./modals/TacticAdvance";
+import TacticAssault from "./modals/TacticAssault";
 import VirtueBlastBlock from "./modals/VirtueBlastBlock";
 
 import Piece from "./Piece";
@@ -40,6 +41,7 @@ const Board = (props) => {
   const [validZones, setValidZones] = useState([]);
 
   const [tileMode, setTileMode] = useState(false);
+  const [selectUnitReason, setSelectUnitReason] = useState(null);
   const [movingUnitIndex, setMovingUnitIndex] = useState(null);
   const [movingPlayer, setMovingPlayer] = useState(null);
   const [tacticUsed, setTacticUsed] = useState(null);
@@ -199,6 +201,7 @@ const Board = (props) => {
                   {setMovingUnitIndex(lastResolution.unitIndex)}
                   {setMovingPlayer(lastResolution.player)}
                   {setTacticUsed(lastResolution.tactic)}
+                  {setSelectUnitReason(lastResolution.reason)}
                 </>
               )}
           </>
@@ -223,6 +226,22 @@ const Board = (props) => {
           <>
             {self === localGameState.turnPlayer && !hideModal && (
               <TacticAdvance
+                updateFirebase={updateFirebase}
+                unit={lastResolution.unit}
+                tactic={lastResolution.tactic}
+                enterMoveMode={enterMoveMode}
+                enterSelectUnitMode={enterSelectUnitMode}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Using Assault Tactic":
+        return (
+          <>
+            {self === localGameState.turnPlayer && !hideModal && (
+              <TacticAssault
                 updateFirebase={updateFirebase}
                 unit={lastResolution.unit}
                 tactic={lastResolution.tactic}
@@ -376,10 +395,9 @@ const Board = (props) => {
     unitIndex,
     player,
     gameState,
-    tactic
+    tactic,
+    reason
   ) => {
-    console.log("enterSelectUnitMode");
-
     let newGameState = null;
     if (gameState) {
       newGameState = gameState;
@@ -393,6 +411,7 @@ const Board = (props) => {
       player: player,
       unitIndex: unitIndex,
       tactic: tactic,
+      reason: reason,
     });
 
     dispatch(updateState(newGameState));
@@ -515,23 +534,26 @@ const Board = (props) => {
     updateFirebase(newGameState);
   };
 
-  const selectUnit = (player, unitIndex, selectedUnit, type) => {
+  const selectUnit = (player, unitIndex, selectedUnit, reason) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
     if (tacticUsed !== null) {
       newGameState.tactics[tacticUsed].stock--;
     }
 
-    if (type === "virtue-blast") {
+    if (reason === "virtue-blast") {
       newGameState = virtueBlast(
         newGameState,
         newGameState[player].units[unitIndex],
         selectedUnit
       );
+    } else if (reason === "strike") {
+      console.log("Strike!!!!!");
     }
 
     setValidZones([]);
     setTileMode(null);
+    setSelectUnitReason(null);
     setMovingUnitIndex(null);
     setMovingPlayer(null);
     setTacticUsed(null);
@@ -690,7 +712,8 @@ const Board = (props) => {
                         movingUnitIndex={movingUnitIndex}
                         movingPlayer={movingPlayer}
                         tileMode={tileMode}
-                        id={i}
+                        selectUnitReason={selectUnitReason}
+                        id={i} // hostUnitIds
                         expandedPiece={expandedPiece}
                         selectExpandPiece={selectExpandPiece}
                         activateTactic={activateTactic}
@@ -728,7 +751,8 @@ const Board = (props) => {
                         movingUnitIndex={movingUnitIndex}
                         movingPlayer={movingPlayer}
                         tileMode={tileMode}
-                        id={-i - 1}
+                        selectUnitReason={selectUnitReason}
+                        id={-i - 1} // guestUnitIds
                         expandedPiece={expandedPiece}
                         selectExpandPiece={selectExpandPiece}
                         activateTactic={activateTactic}

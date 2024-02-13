@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
-const TacticAdvance = (props) => {
+const TacticAssault = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
@@ -21,17 +21,16 @@ const TacticAdvance = (props) => {
     console.log("Cannot Traverse.");
   }
 
-  let canVirtueBlast = false;
+  let canStrike = false;
 
   if (
-    props.unit.virtue &&
     getZonesWithEnemies(props.unit, 1).length &&
     !isMuted(props.unit) &&
     !props.unit.afflictions.root
   ) {
-    canVirtueBlast = true;
+    canStrike = true;
   } else {
-    console.log("Cannot VBlast");
+    console.log("Cannot Strike");
   }
 
   const handleReturn = () => {
@@ -45,7 +44,7 @@ const TacticAdvance = (props) => {
     if (canTraverse) {
       let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-      //end Advance Tactic resolution
+      //end Assault Tactic resolution
       newGameState.currentResolution.pop();
 
       props.enterMoveMode(
@@ -58,11 +57,11 @@ const TacticAdvance = (props) => {
     }
   };
 
-  const handleVirtueBlast = () => {
-    if (canVirtueBlast) {
+  const handleStrike = () => {
+    if (canStrike) {
       let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-      //end Advance Tactic resolution
+      //end Assault Tactic resolution
       newGameState.currentResolution.pop();
 
       props.enterSelectUnitMode(
@@ -71,7 +70,7 @@ const TacticAdvance = (props) => {
         props.unit.player,
         newGameState,
         props.tactic,
-        "virtue-blast"
+        "strike"
       );
     }
   };
@@ -84,7 +83,7 @@ const TacticAdvance = (props) => {
     <div className="modal-backdrop">
       <div className="modal">
         <button onClick={() => handleViewBoard()}>View Board</button>
-        <h2>Advance Tactic</h2>
+        <h2>Assault Tactic</h2>
 
         <div className="twoColumn">
           <div
@@ -99,15 +98,16 @@ const TacticAdvance = (props) => {
 
           <div
             className={`choiceWithDescription ${
-              canVirtueBlast ? "" : "disabledOption"
+              canStrike ? "" : "disabledOption"
             }`}
-            onClick={() => handleVirtueBlast()}
+            onClick={() => handleStrike()}
           >
-            <h2>Virtue-blast</h2>
-            <h4>Spend your virtue to blast an adjcent enemy.</h4>
+            <h2>Strike</h2>
+            <h4>Target an adjacent enemy.</h4>
+            <h4>Attack them.</h4>
             <h4>
-              The enemy may spend their Virtue to reduce the attack’s AP by 1.
-              If they do, restore your Virtue.
+              If the attack was lethal, move {"("}bypass motion contingent
+              skills{")"} into the zone they were occupying.
             </h4>
           </div>
         </div>
@@ -118,4 +118,4 @@ const TacticAdvance = (props) => {
   );
 };
 
-export default TacticAdvance;
+export default TacticAssault;

@@ -72,6 +72,13 @@ const TacticSelection = (props) => {
           newGameState,
           i
         );
+      } else if (newGameState.tactics[i].face === "Assault") {
+        newGameState.currentResolution.push({
+          resolution: "Using Assault Tactic",
+          unit: props.unit,
+          tactic: i,
+        });
+        dispatch(updateState(newGameState));
       }
     }
   };
@@ -91,7 +98,9 @@ const TacticSelection = (props) => {
             <div className="center" key={index}>
               <div
                 className={`tacticBG ${
-                  !tactic.stock || !canUseTactic[index]
+                  !tactic.stock ||
+                  !canUseTactic[index] ||
+                  tactic.face === "Invoke"
                     ? "disabledTacticBG"
                     : ""
                 }`}
@@ -99,7 +108,9 @@ const TacticSelection = (props) => {
                 <div
                   key={index}
                   className={`tactic ${
-                    !tactic.stock || !canUseTactic[index]
+                    !tactic.stock ||
+                    !canUseTactic[index] ||
+                    tactic.face === "Invoke"
                       ? "disabledTactic"
                       : ""
                   }`}
@@ -116,48 +127,6 @@ const TacticSelection = (props) => {
               Instances: {tactic.stock}
             </div>
           ))}
-
-          {/* <div className="center">
-            <div
-              className={`tacticBG ${
-                !localGameState.tactics[0].stock ? "disabledTacticBG" : ""
-              }`}
-            >
-              <div
-                className={`tactic ${
-                  !localGameState.tactics[0].stock ? "disabledTactic" : ""
-                }`}
-                onClick={() => handleClickTactic(0)}
-                style={{
-                  backgroundImage: `url(${getImage(0)})`,
-                }}
-              ></div>
-            </div>
-            {localGameState.tactics[0].face}
-            <br />
-            Instances: {localGameState.tactics[0].stock}
-          </div>
-
-          <div className="center">
-            <div
-              className={`tacticBG ${
-                !localGameState.tactics[1].stock ? "disabledTacticBG" : ""
-              }`}
-            >
-              <div
-                className={`tactic ${
-                  !localGameState.tactics[1].stock ? "disabledTactic" : ""
-                }`}
-                onClick={() => handleClickTactic(1)}
-                style={{
-                  backgroundImage: `url(${getImage(1)})`,
-                }}
-              ></div>
-            </div>
-            {localGameState.tactics[1].face}
-            <br />
-            Instances: {localGameState.tactics[1].stock}
-          </div> */}
         </div>
 
         <button onClick={() => handleReturn()}>Return</button>
