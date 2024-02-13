@@ -47,7 +47,8 @@ const Board = (props) => {
 
   const [hideModal, setHideModal] = useState(false);
 
-  const { applyDamage, move, virtueBlast } = useRecurringEffects();
+  const { applyDamage, endFinalPhase, move, virtueBlast } =
+    useRecurringEffects();
 
   const newPawnStats = (player, index, row, column) => {
     return {
@@ -266,7 +267,13 @@ const Board = (props) => {
       //Apply Damage
 
       case "Final Phase Conclusion":
-        return <>{self === localGameState.turnPlayer && <>{nextPhase()}</>}</>;
+        return (
+          <>
+            {self === localGameState.turnPlayer && (
+              <>{resolveEndFinalPhase()}</>
+            )}
+          </>
+        );
 
       default:
         return;
@@ -436,6 +443,12 @@ const Board = (props) => {
 
     if (tacticUsed !== null) {
       newGameState.tactics[tacticUsed].stock--;
+
+      if (tacticUsed === 0) {
+        newGameState[player].units[unitIndex].temporary.used0thTactic = true;
+      } else if (tacticUsed === 1) {
+        newGameState[player].units[unitIndex].temporary.used1stTactic = true;
+      }
     }
 
     setValidZones([]);
@@ -489,6 +502,14 @@ const Board = (props) => {
       special
     );
 
+    dispatch(updateState(newGameState));
+
+    updateFirebase(newGameState);
+  };
+
+  const resolveEndFinalPhase = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    newGameState = endFinalPhase(newGameState, self, enemy);
     dispatch(updateState(newGameState));
 
     updateFirebase(newGameState);

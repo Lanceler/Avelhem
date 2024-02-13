@@ -15,7 +15,7 @@ const TacticSelection = (props) => {
   const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const { getZonesInRange } = useRecurringEffects();
+  const { getVacantAdjacentZones, getZonesInRange } = useRecurringEffects();
 
   const getImage = (i) => {
     if (localGameState && localGameState.tactics[i]) {
@@ -34,6 +34,15 @@ const TacticSelection = (props) => {
     }
   };
 
+  let canUseTactic = [true, true];
+
+  if (props.unit.temporary.used0thTactic) {
+    canUseTactic[0] = false;
+  }
+  if (props.unit.temporary.used1stTactic) {
+    canUseTactic[1] = false;
+  }
+
   const handleReturn = () => {
     const newGameState = JSON.parse(JSON.stringify(localGameState));
     newGameState.currentResolution.pop();
@@ -42,22 +51,27 @@ const TacticSelection = (props) => {
   };
 
   const handleClickTactic = (i) => {
-    if (localGameState.tactics[i].stock > 0) {
+    if (canUseTactic[i] && localGameState.tactics[i].stock > 0) {
       let newGameState = JSON.parse(JSON.stringify(localGameState));
 
       //endTactic resolution
       newGameState.currentResolution.pop();
 
       if (newGameState.tactics[i].face === "Advance") {
-        console.log("Advanced used by Unit " + props.unit.unitIndex);
-
         newGameState.currentResolution.push({
           resolution: "Using Advance Tactic",
           unit: props.unit,
           tactic: i,
         });
-
         dispatch(updateState(newGameState));
+      } else if (newGameState.tactics[i].face === "Mobilize") {
+        props.enterMoveMode(
+          getVacantAdjacentZones(props.unit),
+          props.unit.unitIndex,
+          props.unit.player,
+          newGameState,
+          i
+        );
       }
     }
   };
@@ -74,30 +88,76 @@ const TacticSelection = (props) => {
 
         <div className="twoColumn">
           {localGameState.tactics.map((tactic, index) => (
-            <div className="center">
-              <div 
-                className={`tacticBG ${tactic.stock ? "" : "disabledTacticBG"}`}
-
-              >
-
+            <div className="center" key={index}>
               <div
-                key={index}
-                // className="tactic"
-                className={`tactic ${tactic.stock ? "" : "disabledTactic"}`}
-                onClick={() => handleClickTactic(index)}
-                style={{
-                  backgroundImage: `url(${getImage(index)})`,
-                }}
+                className={`tacticBG ${
+                  !tactic.stock || !canUseTactic[index]
+                    ? "disabledTacticBG"
+                    : ""
+                }`}
               >
-                {console.log(tactic)}
-              </div>
+                <div
+                  key={index}
+                  className={`tactic ${
+                    !tactic.stock || !canUseTactic[index]
+                      ? "disabledTactic"
+                      : ""
+                  }`}
+                  onClick={() => handleClickTactic(index)}
+                  style={{
+                    backgroundImage: `url(${getImage(index)})`,
+                  }}
+                >
+                  {console.log(tactic)}
                 </div>
-             
+              </div>
               {tactic.face}
               <br />
               Instances: {tactic.stock}
             </div>
           ))}
+
+          {/* <div className="center">
+            <div
+              className={`tacticBG ${
+                !localGameState.tactics[0].stock ? "disabledTacticBG" : ""
+              }`}
+            >
+              <div
+                className={`tactic ${
+                  !localGameState.tactics[0].stock ? "disabledTactic" : ""
+                }`}
+                onClick={() => handleClickTactic(0)}
+                style={{
+                  backgroundImage: `url(${getImage(0)})`,
+                }}
+              ></div>
+            </div>
+            {localGameState.tactics[0].face}
+            <br />
+            Instances: {localGameState.tactics[0].stock}
+          </div>
+
+          <div className="center">
+            <div
+              className={`tacticBG ${
+                !localGameState.tactics[1].stock ? "disabledTacticBG" : ""
+              }`}
+            >
+              <div
+                className={`tactic ${
+                  !localGameState.tactics[1].stock ? "disabledTactic" : ""
+                }`}
+                onClick={() => handleClickTactic(1)}
+                style={{
+                  backgroundImage: `url(${getImage(1)})`,
+                }}
+              ></div>
+            </div>
+            {localGameState.tactics[1].face}
+            <br />
+            Instances: {localGameState.tactics[1].stock}
+          </div> */}
         </div>
 
         <button onClick={() => handleReturn()}>Return</button>

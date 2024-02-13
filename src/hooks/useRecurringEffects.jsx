@@ -106,11 +106,16 @@ export const useRecurringEffects = () => {
       //elimination talents
       //to do: elimination talents
 
-      //turn to null
+      //remove eliminated unit
       newGameState[victim.player].units[victim.unitIndex] = null;
       newZoneInfo[victim.row][victim.column].player = null;
       newZoneInfo[victim.row][victim.column].unitIndex = null;
       newGameState.zones = JSON.stringify(newZoneInfo);
+
+      //Anathema-delay
+      newGameState[attacker.player].units[
+        attacker.unitIndex
+      ].anathemaDelay = true;
     }
     return newGameState;
   };
@@ -156,6 +161,23 @@ export const useRecurringEffects = () => {
     return false;
   };
 
+  const decrementStatuses = (unit) => {
+    unit.afflictions.anathema ? unit.afflictions.anathema-- : null;
+    unit.afflictions.paralysis ? unit.afflictions.paralysis-- : null;
+    unit.afflictions.frostbite ? unit.afflictions.frostbite-- : null;
+
+    unit.enhancements.shield ? unit.enhancements.shield-- : null;
+    unit.enhancements.ward ? unit.enhancements.ward-- : null;
+
+    unit.enhancements.torrent ? unit.enhancements.torrent-- : null;
+    unit.enhancements.disruption ? unit.enhancements.disruption-- : null;
+    unit.enhancements.proliferation ? unit.enhancements.proliferation-- : null;
+
+    unit.temporary = {};
+
+    return unit;
+  };
+
   const drawAvelhem = (newGameState) => {
     newGameState[self].avelhemHand.push(
       newGameState[self].avelhemRepertoire.pop()
@@ -169,6 +191,41 @@ export const useRecurringEffects = () => {
   const drawSkill = (newGameState) => {
     newGameState[self].skillHand.push(newGameState[self].skillRepertoire.pop());
     //To do: If deck empties, shuffle discard pile into it.
+
+    return newGameState;
+  };
+
+  const endFinalPhase = (newGameState, player, enemy) => {
+    //to do: discard Avelhems
+    //to do: discard skills
+    //to do: decrementBurn
+    //to do: score
+
+    newGameState.turnPhase = "Acquisition";
+    newGameState.turnPlayer = enemy;
+    newGameState.turnCount = newGameState.turnCount + 1;
+    newGameState.tactics = [];
+
+    newGameState.currentResolution.pop();
+    newGameState.currentResolution.push({
+      resolution: "Acquisition Phase Selection",
+    });
+
+    let playerUnits = newGameState[player].units;
+    for (let i in playerUnits) {
+      if (playerUnits[i] !== null) {
+        playerUnits[i] = decrementStatuses(playerUnits[i]);
+      }
+    }
+    newGameState[player].units = playerUnits;
+
+    let enemyUnits = newGameState[enemy].units;
+    for (let i in enemyUnits) {
+      if (enemyUnits[i] !== null) {
+        enemyUnits[i] = resetAdamantArmor(enemyUnits[i]);
+      }
+    }
+    newGameState[enemy].units = enemyUnits;
 
     return newGameState;
   };
@@ -276,6 +333,12 @@ export const useRecurringEffects = () => {
     newGameState.currentResolution.pop();
 
     return newGameState;
+  };
+
+  const resetAdamantArmor = (unit) => {
+    delete unit.temporary.usedAdamantArmor;
+
+    return unit;
   };
 
   const rollTactic = (extraMobilize) => {
@@ -396,6 +459,7 @@ export const useRecurringEffects = () => {
     canMove,
     drawAvelhem,
     drawSkill,
+    endFinalPhase,
     getVacantAdjacentZones,
     getZonesInRange,
     getZonesWithEnemies,
