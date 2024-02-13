@@ -49,7 +49,7 @@ const Board = (props) => {
 
   const [hideModal, setHideModal] = useState(false);
 
-  const { applyDamage, endFinalPhase, move, virtueBlast } =
+  const { applyDamage, endFinalPhase, move, strike, virtueBlast } =
     useRecurringEffects();
 
   const newPawnStats = (player, index, row, column) => {
@@ -548,7 +548,11 @@ const Board = (props) => {
         selectedUnit
       );
     } else if (reason === "strike") {
-      console.log("Strike!!!!!");
+      newGameState = strike(
+        newGameState,
+        newGameState[player].units[unitIndex],
+        selectedUnit
+      );
     }
 
     setValidZones([]);

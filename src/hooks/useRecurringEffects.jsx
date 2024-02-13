@@ -95,9 +95,34 @@ export const useRecurringEffects = () => {
         );
       }
 
+      //remove eliminated unit
+      newGameState[victim.player].units[victim.unitIndex] = null;
+      newZoneInfo[victim.row][victim.column].player = null;
+      newZoneInfo[victim.row][victim.column].unitIndex = null;
+      newGameState.zones = JSON.stringify(newZoneInfo);
+
       //strike movement
       if (type === "strike") {
         //to do move
+
+        // //vacate current zone
+        // newZoneInfo[attacker.row][attacker.column].player = null;
+        // newZoneInfo[attacker.row][attacker.column].unitIndex = null;
+
+        // //enter new zone
+        // newGameState[attacker.player].units[attacker.unitIndex].row =
+        //   victim.row;
+        // newGameState[attacker.player].units[attacker.unitIndex].column =
+        //   victim.column;
+        // newZoneInfo[victim.row][victim.column].player = attacker.player;
+        // newZoneInfo[victim.row][victim.column].unitIndex = attacker.unitIndex;
+
+        newGameState = move(
+          newGameState,
+          attacker.player,
+          attacker.unitIndex,
+          victim.row * 5 + victim.column
+        );
       }
 
       //elimination contingency
@@ -105,12 +130,6 @@ export const useRecurringEffects = () => {
 
       //elimination talents
       //to do: elimination talents
-
-      //remove eliminated unit
-      newGameState[victim.player].units[victim.unitIndex] = null;
-      newZoneInfo[victim.row][victim.column].player = null;
-      newZoneInfo[victim.row][victim.column].unitIndex = null;
-      newGameState.zones = JSON.stringify(newZoneInfo);
 
       //Anathema-delay
       newGameState[attacker.player].units[
@@ -330,7 +349,12 @@ export const useRecurringEffects = () => {
     newGameState[player].units[unitIndex].column = zoneId % 5;
 
     //pop "Moving Unit" resolution
-    newGameState.currentResolution.pop();
+    if (
+      newGameState.currentResolution[newGameState.currentResolution.length - 1]
+        .resolution === "Moving Unit"
+    ) {
+      newGameState.currentResolution.pop();
+    }
 
     return newGameState;
   };
@@ -356,26 +380,24 @@ export const useRecurringEffects = () => {
     return dieFaces[Math.floor(Math.random() * dieFaces.length)];
   };
 
-  const strike = (newGameState, selfIndex, enemyIndex, bypassTarget) => {
-    const enemyUnit = newGameState[enemy].units[enemyIndex];
+  const strike = (newGameState, attacker, victim, bypassTarget) => {
+    //pop "Selecting Unit" resolution
+    newGameState.currentResolution.pop();
 
-    if (newGameState[enemy].skillHand.length) {
-      if (enemyUnit.unitClass === "metalScion" && !isMuted(enemyUnit)) {
-        //prompt metal scion passive
-      } else if (
-        !bypassTarget &&
-        //Thunder Thaumaturge
-        ((enemyUnit.unitClass === "lightningScion" && !isMuted(enemyUnit)) ||
-          //Aegis
-          canAegis(enemyUnit) ||
-          //Blaze of Glory
-          (enemyUnit.fever &&
-            !isMuted(enemyUnit) &&
-            newGameState[enemy].skillHand.length > 1))
-      ) {
-        //prompt target contingent skill
-      }
+    newGameState.currentResolution.push({
+      resolution: "Apply Damage",
+      attacker: attacker,
+      victim: victim,
+      type: "strike",
+    });
+
+    if (!bypassTarget) {
+      //to do: triggerTarget(attacker, victim, bypassTarget);
     }
+
+    newGameState[attacker.player].units[attacker.unitIndex].virtue = false;
+
+    return newGameState;
   };
 
   const triggerTarget = (victim, type, bypassTarget) => {
@@ -425,7 +447,7 @@ export const useRecurringEffects = () => {
     }
 
     if (!bypassTarget) {
-      //triggerTarget(attacker, victim, bypassTarget);
+      //to do: triggerTarget(attacker, victim, bypassTarget);
     }
 
     newGameState[attacker.player].units[attacker.unitIndex].virtue = false;
@@ -466,6 +488,7 @@ export const useRecurringEffects = () => {
     isMuted,
     move,
     rollTactic,
+    strike,
     virtueBlast,
     virtueBlastNo,
     virtueBlastYes,
