@@ -801,8 +801,28 @@ const Board = (props) => {
             {/* <div className="phase-indicator"></div> */}
             <div className="left-container">
               <div className="lc-player">
-                <div className="avel-hand"></div>
-                <div className="skill-hand"></div>
+                <div className="avel-hand">
+                  {localGameState[enemy] && (
+                    <div className="hand-container">
+                      {localGameState[enemy].avelhemHand.map((card, index) => (
+                        <div key={index} className="handCard">
+                          {card}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                <div className="skill-hand">
+                  {localGameState[enemy] && (
+                    <div className="hand-container">
+                      {localGameState[enemy].skillHand.map((card, index) => (
+                        <div key={index} className="handCard">
+                          {card}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
 
               <div className="lc-middle">
@@ -861,7 +881,17 @@ const Board = (props) => {
               </div>
 
               <div className="lc-player">
-                <div className="avel-hand"></div>
+                <div className="avel-hand">
+                  {localGameState[self] && (
+                    <div className="hand-container">
+                      {localGameState[self].avelhemHand.map((card, index) => (
+                        <div key={index} className="handCard">
+                          {card}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
                 <div className="skill-hand">
                   {localGameState[self] && (
                     <div className="hand-container">
@@ -878,15 +908,6 @@ const Board = (props) => {
           </div>
           <br />
           <br />
-          {localGameState[self] && (
-            <div className="hand-container">
-              {localGameState[self].skillHand.map((card, index) => (
-                <div key={index} className="handCard">
-                  {card}
-                </div>
-              ))}
-            </div>
-          )}
           {currentResolutionPrompt()}
         </div>
       )}
