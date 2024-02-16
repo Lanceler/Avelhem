@@ -1,6 +1,5 @@
 import React from "react";
 
-import FrenzyBladeSm from "../assets/skillcards/FrenzyBladeSm.png";
 import IgnitionPropulsion from "../assets/skillcards/IgnitionPropulsion.png";
 import Conflagration from "../assets/skillcards/Conflagration.png";
 import BlazeOfGlory from "../assets/skillcards/BlazeOfGlory.png";
@@ -9,7 +8,7 @@ import Resplendence from "../assets/skillcards/Resplendence.png";
 import Purification from "../assets/skillcards/Purification.png";
 import FrigidBreath from "../assets/skillcards/FrigidBreath.png";
 import HealingRain from "../assets/skillcards/HealingRain.png";
-// import GlacialTorrent from "../assets/skillcards/GlacialTorrent.png";
+import GlacialTorrent from "../assets/skillcards/GlacialTorrent.png";
 
 import AerialImpetus from "../assets/skillcards/AerialImpetus.png";
 import GaleConjuration from "../assets/skillcards/GaleConjuration.png";
@@ -78,8 +77,8 @@ export const useCardImageSwitch = (cardName) => {
         return FrigidBreath;
       case "Healing Rain":
         return HealingRain;
-      // case "Glacial Torrent":
-      //   return GlacialTorrent;
+      case "Glacial Torrent":
+        return GlacialTorrent;
 
       case "Aerial Impetus":
         return AerialImpetus;

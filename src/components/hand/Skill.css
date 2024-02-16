@@ -1,0 +1,17 @@
+.select-skill{
+    width: 180px;
+    height: 252px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+
+    cursor: pointer;
+
+    margin: 5px;
+    padding: 0 auto;
+    background-size: cover;
+    background-position: center;
+
+    border-radius: 10px;
+}

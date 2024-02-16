@@ -5,6 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
+import Skill from "../hand/Skill";
+
 const ScionSkillSelect = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
@@ -43,9 +45,11 @@ const ScionSkillSelect = (props) => {
       <div className="modal">
         <h2>Select Skill</h2>
 
-        {usableSkills.map((skill, i) => (
-          <div key={i}>{skill.id}</div>
-        ))}
+        <div className="fourColumn scrollable scrollable-y-only">
+          {usableSkills.map((skill, i) => (
+            <Skill key={i} cardId={skill.id} />
+          ))}
+        </div>
 
         <button onClick={() => handleReturn()}>Return</button>
       </div>
