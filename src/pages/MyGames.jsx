@@ -57,9 +57,11 @@ export default function MyGames() {
           skillVestige: [],
           skillShattered: [],
           skillHand: [],
+          skillFloat: 0,
           avelhemRepertoire: [],
           avelhemVestige: [],
           avelhemHand: [],
+          avelhemFloat: 0,
           units: [],
           bountyPoints: 0,
           bountyUpgrades: {

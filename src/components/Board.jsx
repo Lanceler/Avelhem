@@ -25,6 +25,8 @@ import TacticAdvance from "./modals/TacticAdvance";
 import TacticAssault from "./modals/TacticAssault";
 import VirtueBlastBlock from "./modals/VirtueBlastBlock";
 
+import ScionSkillSelect from "./modals/ScionSkillSelect";
+
 import Piece from "./Piece";
 
 const Board = (props) => {
@@ -58,7 +60,7 @@ const Board = (props) => {
       unitIndex: index,
       row: row,
       column: column,
-      unitClass: "pawn",
+      unitClass: "Pawn",
       hp: 1,
       virtue: 1,
       afflictions: {},
@@ -283,7 +285,13 @@ const Board = (props) => {
           </>
         );
 
-      //Apply Damage
+      case "Selecting Scion Skill":
+        return (
+          <>
+            {self === lastResolution.unit.player} &&{" "}
+            <ScionSkillSelect unit={lastResolution.unit} />
+          </>
+        );
 
       case "Final Phase Conclusion":
         return (

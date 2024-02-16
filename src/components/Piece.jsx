@@ -19,41 +19,42 @@ import { useRecurringEffects } from "../hooks/useRecurringEffects";
 export const Piece = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
+  const dispatch = useDispatch();
 
   const { getZonesInRange } = useRecurringEffects();
 
   let classIcon = null;
 
   switch (props.unit.unitClass) {
-    case "fireScion":
+    case "Fire Scion":
       classIcon = FireScion;
       break;
 
-    case "waterScion":
+    case "Water Scion":
       classIcon = WaterScion;
       break;
 
-    case "windScion":
+    case "Wind Scion":
       classIcon = WindScion;
       break;
 
-    case "landScion":
+    case "Land Scion":
       classIcon = LandScion;
       break;
 
-    case "metalScion":
+    case "Metal Scion":
       classIcon = MetalScion;
       break;
 
-    case "lightningScion":
+    case "Lightning Scion":
       classIcon = LightningScion;
       break;
 
-    case "manaScion":
+    case "Mana Scion":
       classIcon = ManaScion;
       break;
 
-    case "plantScion":
+    case "Plant Scion":
       classIcon = PlantScion;
       break;
 
@@ -89,11 +90,7 @@ export const Piece = (props) => {
     }
   };
 
-  const handleTactic = (unit) => {
-    props.activateTactic(unit);
-  };
-
-  const handleSkill = () => {
+  const handleInfo = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
     props.selectExpandPiece(null);
@@ -107,13 +104,31 @@ export const Piece = (props) => {
     );
   };
 
+  const handleSkill = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    newGameState.currentResolution.push({
+      resolution: "Selecting Scion Skill",
+      unit: props.unit,
+    });
+    dispatch(updateState(newGameState));
+  };
+
+  const handleTactic = (unit) => {
+    props.activateTactic(unit);
+  };
+
   return (
     <>
       {props.unit && (
         <>
           {props.expandedPiece === props.id && (
             <>
-              <div className="pieceOption" style={{ top: -17, left: -17 }}>
+              <div
+                className="pieceOption"
+                style={{ top: -17, left: -17 }}
+                onClick={() => handleInfo()}
+              >
                 Info
               </div>
 
@@ -132,7 +147,7 @@ export const Piece = (props) => {
                       Dice
                     </div>
                     {
-                      // props.unit.unitClass !== "pawn" &&
+                      // props.unit.unitClass !== "Pawn" &&
                       <>
                         <div
                           className="pieceOption"

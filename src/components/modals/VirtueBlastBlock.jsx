@@ -12,22 +12,6 @@ const VirtueBlastBlock = (props) => {
 
   const { virtueBlastNo, virtueBlastYes } = useRecurringEffects();
 
-  const capitalizeClass = (input) => {
-    // Capitalize the first letter
-    let unitClassName = input.charAt(0).toUpperCase() + input.slice(1);
-
-    // Add a space before each capitalized word (except the first one)
-    for (let i = 1; i < unitClassName.length; i++) {
-      if (unitClassName[i] === unitClassName[i].toUpperCase()) {
-        unitClassName =
-          unitClassName.slice(0, i) + " " + unitClassName.slice(i);
-        i++; // Skip the next character (which is now a space)
-      }
-    }
-
-    return unitClassName;
-  };
-
   const handleViewBoard = () => {
     props.hideOrRevealModale();
   };
@@ -50,13 +34,7 @@ const VirtueBlastBlock = (props) => {
     props.updateFirebase(newGameState);
   };
 
-  const message = `Enemy ${capitalizeClass(props.attacker.unitClass)} (Row ${
-    props.attacker.row
-  } Col. ${
-    props.attacker.column
-  }) is about to Virtue-blast your ${capitalizeClass(
-    props.victim.unitClass
-  )} (Row ${props.victim.row} Col. ${props.victim.column}).`;
+  const message = `Enemy ${props.attacker.unitClass} (Row ${props.attacker.row} Col. ${props.attacker.column}) is about to Virtue-blast your ${props.victim.unitClass} (Row ${props.victim.row} Col. ${props.victim.column}).`;
 
   return (
     <div className="modal-backdrop">
