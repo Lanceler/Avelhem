@@ -16,6 +16,9 @@ import PlantScion from "../assets/scionIcons/PlantScion.png";
 
 import { useRecurringEffects } from "../hooks/useRecurringEffects";
 
+import Shield from "../assets/attributeIcons/Shield.png";
+import Ward from "../assets/attributeIcons/Ward.png";
+
 export const Piece = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
@@ -122,6 +125,33 @@ export const Piece = (props) => {
     <>
       {props.unit && (
         <>
+          <div
+            className={`piece ${props.unit.player}`}
+            onClick={() => handleClick()}
+          >
+            <>
+              <img src={classIcon} className="scionClass" />
+            </>
+          </div>
+
+          {props.unit.enhancements.ward > 0 && (
+            <img
+              src={Ward}
+              className={`shieldAndWard ${
+                props.unit.enhancements.ward === 1 ? "fade-in-out" : ""
+              }`}
+            />
+          )}
+
+          {props.unit.enhancements.shield > 0 && (
+            <img
+              src={Shield}
+              className={`shieldAndWard ${
+                props.unit.enhancements.shield === 1 ? "fade-in-out" : ""
+              }`}
+            />
+          )}
+
           {props.expandedPiece === props.id && (
             <>
               <div
@@ -146,8 +176,7 @@ export const Piece = (props) => {
                     >
                       Dice
                     </div>
-                    {
-                      // props.unit.unitClass !== "Pawn" &&
+                    {props.unit.unitClass !== "Pawn" && (
                       <>
                         <div
                           className="pieceOption"
@@ -163,20 +192,11 @@ export const Piece = (props) => {
                           Ski.
                         </div>
                       </>
-                    }
+                    )}
                   </>
                 )}
             </>
           )}
-
-          <div
-            className={`piece ${props.unit.player}`}
-            onClick={() => handleClick()}
-          >
-            <>
-              <img src={classIcon} className="scionClass" />
-            </>
-          </div>
         </>
       )}
       {!props.unit && <div className="piece"></div>}

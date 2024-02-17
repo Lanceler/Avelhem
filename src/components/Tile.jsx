@@ -1,6 +1,11 @@
 import React from "react";
+
+import { useSelector, useDispatch } from "react-redux";
+
 import "./Tile.css";
-import { useSelector } from "react-redux";
+
+import Shield from "../assets/attributeIcons/Shield.png";
+import Ward from "../assets/attributeIcons/Ward.png";
 
 const Tile = (props) => {
   let deployable = false;

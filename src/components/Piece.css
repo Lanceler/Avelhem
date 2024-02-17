@@ -1,6 +1,9 @@
 .piece {
     width: 60px;
     height: 60px;
+    /* width: 55px;
+    height: 55px; */
+
     border: 3px solid black;
     border-radius: 100%;
     color:rgb(49, 109, 31);
@@ -40,9 +43,39 @@
     display: flex;
     position: absolute;
     font-size: small;
+    z-index: 400;
 }
 
 .pieceOption:hover {
     background-color: rgb(252, 247, 180);
     cursor: pointer;
+}
+
+.shieldAndWard {
+
+    /* height: 100px;
+    width: 100px; */
+    height: 25px;
+    position: absolute;
+    transform: translateX(22px) translateY(50px);
+    z-index: 200;
+    pointer-events: none;
+    top: 0
+    
+
+}
+
+
+.fade-in-out {
+    animation: fadeInOut 0.75s infinite alternate;
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0.1;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
