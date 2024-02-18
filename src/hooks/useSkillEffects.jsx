@@ -18,6 +18,13 @@ export const useSkillEffects = () => {
     //consume unit's fever
     newGameState[unit.player].units[unit.unitIndex].fever--;
 
+    //giveUnit activationCounter
+    newGameState[unit.player].units[unit.unitIndex].temporary.activation
+      ? newGameState[unit.player].units[unit.unitIndex].temporary.activation++
+      : (newGameState[unit.player].units[
+          unit.unitIndex
+        ].temporary.activation = 1);
+
     newGameState.currentResolution.push({
       resolution: "Ignition Propulsion1",
       unit: unit,

@@ -15,6 +15,7 @@ import { updateDoc, doc } from "firebase/firestore";
 
 import { useRecurringEffects } from "../hooks/useRecurringEffects";
 import { useSkillEffects } from "../hooks/useSkillEffects";
+import { useCardDatabase } from "../hooks/useCardDatabase";
 
 import AcquisitionPhaseSelection from "./modals/AcquisitionPhaseSelection";
 import BountyStore from "./modals/BountyStore";
@@ -30,6 +31,8 @@ import VirtueBlastBlock from "./modals/VirtueBlastBlock";
 import ScionSkillSelect from "./modals/ScionSkillSelect";
 
 import IgnitionPropulsion1 from "./skillModals/IgnitionPropulsion1";
+
+import DisplayedCard from "./displays/DisplayedCard";
 
 import Piece from "./Piece";
 
@@ -65,6 +68,7 @@ const Board = (props) => {
   } = useRecurringEffects();
 
   const { ignitionPropulsionEffect1 } = useSkillEffects();
+  const { getSkillById } = useCardDatabase();
 
   const newPawnStats = (player, index, row, column) => {
     return {
@@ -119,6 +123,8 @@ const Board = (props) => {
   //Current Resolution Prompt below
 
   const currentResolutionPrompt = () => {
+    // setTimeout(() => {}, 1000)
+
     let lastResolution = null;
 
     if (localGameState.currentResolution.length > 0) {
@@ -300,11 +306,12 @@ const Board = (props) => {
       case "Selecting Scion Skill":
         return (
           <>
-            {self === lastResolution.unit.player} &&{" "}
-            <ScionSkillSelect
-              updateFirebase={updateFirebase}
-              unit={lastResolution.unit}
-            />
+            {self === lastResolution.unit.player && (
+              <ScionSkillSelect
+                updateFirebase={updateFirebase}
+                unit={lastResolution.unit}
+              />
+            )}
           </>
         );
 
@@ -374,6 +381,11 @@ const Board = (props) => {
           </>
         );
 
+      case "Animation Delay":
+        return (
+          <>{self === localGameState.turnPlayer && <>{animationDelay()}</>}</>
+        );
+
       default:
         return;
     }
@@ -392,7 +404,19 @@ const Board = (props) => {
 
     dispatch(updateState(newGameState));
 
-    // updateFirebase(newGameState);
+    //
+  };
+
+  const animationDelay = () => {
+    setTimeout(() => {
+      const newGameState = JSON.parse(JSON.stringify(localGameState));
+
+      newGameState.currentResolution.pop();
+
+      dispatch(updateState(newGameState));
+
+      updateFirebase(newGameState);
+    }, 2000);
   };
 
   const deployPawn = (r, c) => {
@@ -660,18 +684,27 @@ const Board = (props) => {
       newGameState[player].skillVestige.push(skill);
     }
 
+    newGameState[unit.player].units[unit.unitIndex].temporary.activation
+      ? newGameState[unit.player].units[unit.unitIndex].temporary.activation--
+      : null;
+
+    if (
+      !newGameState[unit.player].units[unit.unitIndex].temporary.activation &&
+      newGameState[unit.player].units[unit.unitIndex].temporary.anathemaDelay
+    ) {
+      delete newGameState[unit.player].units[unit.unitIndex].temporary
+        .anathemaDelay;
+
+      //to do: give unit Anathema
+    }
+
+    newGameState.activatingSkill.pop();
+    newGameState.activatingUnit.pop();
+
     dispatch(updateState(newGameState));
 
     updateFirebase(newGameState);
   };
-
-  // const shuffleRepertoire = (repertoire) => {
-  //   for (let i = repertoire.length - 1; i > 0; i--) {
-  //     const j = Math.floor(Math.random() * (i + 1));
-  //     [repertoire[i], repertoire[j]] = [repertoire[j], repertoire[i]];
-  //   }
-  //   return repertoire;
-  // };
 
   //=========================
   //=========================
@@ -781,7 +814,20 @@ const Board = (props) => {
             <SelectFirstPlayer onSetFirstPlayer={onSetFirstPlayer} />
           )}
           <div className="section">
-            <div className="right-container"></div>
+            <div className="right-container">
+              {localGameState.activatingSkill.length && (
+                <>
+                  <DisplayedCard
+                    cardInfo={getSkillById(
+                      localGameState.activatingSkill[
+                        localGameState.activatingSkill.length - 1
+                      ]
+                    )}
+                    inGame={true}
+                  />
+                </>
+              )}
+            </div>
             <div className="middle-container">
               {localGameState.host.units.map((unit, i) => (
                 <div key={i}>

@@ -10,7 +10,7 @@ const DisplayedCard = (props) => {
 
   return (
     <div
-      className="display-card"
+      className={`${props.inGame ? "inGame-card" : "display-card"}`}
       style={{
         backgroundImage: `url(${image})`,
       }}

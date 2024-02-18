@@ -35,6 +35,9 @@ export const useRecurringEffects = () => {
       unit: unit,
     });
 
+    newGameState.activatingSkill.push("01-01");
+    newGameState.activatingUnit.push(unit);
+
     if (triggerScreech(unit)) {
       newGameState.currentResolution.push({
         resolution: "Triggering Screech",
@@ -179,7 +182,7 @@ export const useRecurringEffects = () => {
       //Anathema-delay
       newGameState[attacker.player].units[
         attacker.unitIndex
-      ].anathemaDelay = true;
+      ].temporary.anathemaDelay = true;
     }
     return newGameState;
   };
@@ -446,6 +449,20 @@ export const useRecurringEffects = () => {
     return zonesInRange;
   };
 
+  const getZonesWithAllies = (unit, range, includeSelf) => {
+    const zones = JSON.parse(localGameState.zones);
+
+    const ally = unit.player;
+
+    let allyZones = getZonesInRange(unit.row, unit.column, range, includeSelf);
+
+    allyZones = allyZones.filter(
+      (z) => zones[Math.floor(z / 5)][z % 5].player === ally
+    );
+
+    return allyZones;
+  };
+
   const getZonesWithEnemies = (unit, range) => {
     const zones = JSON.parse(localGameState.zones);
 
@@ -563,10 +580,27 @@ export const useRecurringEffects = () => {
   };
 
   const triggerScreech = (unit) => {
+    const zones = JSON.parse(localGameState.zones);
+
+    //if activator is Wind Scion or adjacent to an unmuted ally Wind Scion, Screech will not trigger
+    const allyZones = getZonesWithAllies(unit, 1, true);
+
+    console.log("allyZones");
+    console.log(allyZones);
+
+    for (let z of allyZones) {
+      const unitIndex = zones[Math.floor(z / 5)][z % 5].unitIndex;
+
+      if (
+        localGameState[self].units[unitIndex].unitClass === "Wind Scion" &&
+        !isMuted(localGameState[self].units[unitIndex])
+      ) {
+        return false;
+      }
+    }
+
     if (localGameState[enemy].skillHand.length) {
       const enemyZones = getZonesWithEnemies(unit, 2);
-      const zones = JSON.parse(localGameState.zones);
-
       for (let z of enemyZones) {
         const unitIndex = zones[Math.floor(z / 5)][z % 5].unitIndex;
 

@@ -72,6 +72,21 @@ export const Piece = (props) => {
     pieceSelectable = true;
   }
 
+  let activatingUnit = null;
+  let isActivatingUnit = false;
+
+  if (localGameState.activatingUnit.length) {
+    activatingUnit =
+      localGameState.activatingUnit[localGameState.activatingUnit.length - 1];
+
+    if (
+      props.unit.player === activatingUnit.player &&
+      props.unit.unitIndex === activatingUnit.unitIndex
+    ) {
+      isActivatingUnit = true;
+    }
+  }
+
   const handleClick = () => {
     // canAegis(props.unit);
 
@@ -114,6 +129,7 @@ export const Piece = (props) => {
       resolution: "Selecting Scion Skill",
       unit: props.unit,
     });
+
     dispatch(updateState(newGameState));
   };
 
@@ -130,6 +146,7 @@ export const Piece = (props) => {
             onClick={() => handleClick()}
           >
             <>
+              {isActivatingUnit && <div className="glow animating"></div>}
               <img src={classIcon} className="scionClass" />
             </>
           </div>
