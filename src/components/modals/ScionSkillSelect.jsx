@@ -12,11 +12,8 @@ const ScionSkillSelect = (props) => {
   const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const { getScionSet } = useRecurringEffects();
-
-  //   const usableSkills = [...localGameState[self].skillHand].filter((skill) =>
-  //     getScionSet(props.unit.unitClass).includes(skill)
-  //   );
+  const { activateSkill, canActivateSkill, getScionSet } =
+    useRecurringEffects();
 
   let usableSkills = [];
 
@@ -28,7 +25,7 @@ const ScionSkillSelect = (props) => {
     ) {
       usableSkills.push({
         id: localGameState[self].skillHand[i],
-        index: i,
+        handIndex: i,
       });
     }
   }
@@ -40,6 +37,12 @@ const ScionSkillSelect = (props) => {
     dispatch(updateState(newGameState));
   };
 
+  const handleActivateSkill = (unit, skill) => {
+    console.log("ACTIVATE SKILL");
+
+    handleActivateSkill(unit, skill);
+  };
+
   return (
     <div className="modal-backdrop">
       <div className="modal">
@@ -47,7 +50,13 @@ const ScionSkillSelect = (props) => {
 
         <div className="fourColumn scrollable scrollable-y-only">
           {usableSkills.map((skill, i) => (
-            <Skill key={i} cardId={skill.id} />
+            <Skill
+              key={i}
+              skill={skill}
+              unit={props.unit}
+              canActivateSkill={canActivateSkill(props.unit, skill.id)}
+              updateFirebase={props.updateFirebase}
+            />
           ))}
         </div>
 

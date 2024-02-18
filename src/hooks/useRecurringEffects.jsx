@@ -1,14 +1,59 @@
 import React from "react";
 
 import { useSelector, useDispatch } from "react-redux";
+import { updateState } from "../redux/gameState";
 import gameState from "../redux/gameState";
 
 export const useRecurringEffects = () => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
+  const dispatch = useDispatch();
 
   //=========================================
   //Exported functions below
+
+  const activateIgnitionPropulsion = (newGameState, unit) => {
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    let conclusion = "discard";
+    if (unit.temporary.ambidexterity) {
+      conclusion = "float";
+      delete newGameState[unit.player].units[unit.unitIndex].temporary
+        .ambidexterity;
+    }
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      skill: "01-01",
+      conclusion: conclusion,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Activating Ignition Propulsion",
+      unit: unit,
+    });
+
+    if (triggerScreech(unit)) {
+      newGameState.currentResolution.push({
+        resolution: "Triggering Screech",
+        player: enemy,
+      });
+    }
+
+    return newGameState;
+  };
+
+  const activateSkill = (newGameState, unit, skill) => {
+    switch (skill) {
+      case "01-01":
+        return activateIgnitionPropulsion(newGameState, unit);
+
+      default:
+        return false;
+    }
+  };
 
   const applyDamage = (
     newGameState,
@@ -49,7 +94,7 @@ export const useRecurringEffects = () => {
         delete newGameState[attacker.player].units[attacker.unitIndex].temporary
           .galeConjuration;
       }
-      if (attacker.sharpness) {
+      if (attacker.sharpness && type === "strike") {
         aP = aP + attacker.sharpness;
       }
       if (victim.temporary.adamantArmor) {
@@ -170,12 +215,81 @@ export const useRecurringEffects = () => {
     return false;
   };
 
+  const canActivateSkill = (unit, skill) => {
+    switch (skill) {
+      case "01-01":
+        return canIgnitionPropulsion(unit);
+
+      case "01-02":
+        return canConflagration(unit);
+
+      case "01-03":
+        return false;
+
+      case "01-04":
+        return true;
+
+      default:
+        return false;
+    }
+  };
+
+  const canBlast = (unit) => {
+    if (getZonesWithEnemies(unit, 1).length && !isMuted(unit)) {
+      return true;
+    }
+
+    return false;
+  };
+
+  const canConflagration = (unit) => {
+    if (!unit.fever) {
+      return false;
+    }
+
+    if (!canBlast(unit)) {
+      return false;
+    }
+
+    if (localGameState[self].skillHand.length < 2) {
+      return false;
+    }
+
+    return true;
+  };
+
+  const canIgnitionPropulsion = (unit) => {
+    if (!unit.fever) {
+      return false;
+    }
+
+    if (!canMove(unit) && !canStrike(unit)) {
+      return false;
+    }
+
+    if (localGameState[self].skillHand.length < 2) {
+      return false;
+    }
+
+    return true;
+  };
+
   const canMove = (unit) => {
     if (getVacantAdjacentZones(unit).length > 0) {
       return true;
     }
 
-    //To do: Rooted and hand size?
+    return false;
+  };
+
+  const canStrike = (unit) => {
+    if (
+      getZonesWithEnemies(unit, 1).length &&
+      !isMuted(unit) &&
+      !unit.afflictions.root
+    ) {
+      return true;
+    }
 
     return false;
   };
@@ -355,6 +469,7 @@ export const useRecurringEffects = () => {
     const afflictions = unit.afflictions;
 
     if (
+      unit.enhancements.score ||
       afflictions.anathema ||
       afflictions.paralysis ||
       afflictions.frostbite ||
@@ -419,6 +534,14 @@ export const useRecurringEffects = () => {
     return dieFaces[Math.floor(Math.random() * dieFaces.length)];
   };
 
+  const shuffleRepertoire = (repertoire) => {
+    for (let i = repertoire.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [repertoire[i], repertoire[j]] = [repertoire[j], repertoire[i]];
+    }
+    return repertoire;
+  };
+
   const strike = (newGameState, attacker, victim, bypassTarget) => {
     //pop "Selecting Unit" resolution
     newGameState.currentResolution.pop();
@@ -437,6 +560,26 @@ export const useRecurringEffects = () => {
     newGameState[attacker.player].units[attacker.unitIndex].virtue = false;
 
     return newGameState;
+  };
+
+  const triggerScreech = (unit) => {
+    if (localGameState[enemy].skillHand.length) {
+      const enemyZones = getZonesWithEnemies(unit, 2);
+      const zones = JSON.parse(localGameState.zones);
+
+      for (let z of enemyZones) {
+        const unitIndex = zones[Math.floor(z / 5)][z % 5].unitIndex;
+
+        if (
+          localGameState[enemy].units[unitIndex].unitClass === "Wind Scion" &&
+          !isMuted(localGameState[enemy].units[unitIndex])
+        ) {
+          return true;
+        }
+      }
+    }
+
+    return false;
   };
 
   const triggerTarget = (victim, type, bypassTarget) => {
@@ -514,10 +657,14 @@ export const useRecurringEffects = () => {
   };
 
   return {
+    activateSkill,
     applyDamage,
     assignTactics,
+    canActivateSkill,
     canAegis,
+    canBlast,
     canMove,
+    canStrike,
     drawAvelhem,
     drawSkill,
     endFinalPhase,
@@ -528,6 +675,7 @@ export const useRecurringEffects = () => {
     isMuted,
     move,
     rollTactic,
+    shuffleRepertoire,
     strike,
     virtueBlast,
     virtueBlastNo,

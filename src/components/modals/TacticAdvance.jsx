@@ -10,8 +10,13 @@ const TacticAdvance = (props) => {
   const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const { canMove, getVacantAdjacentZones, getZonesWithEnemies, isMuted } =
-    useRecurringEffects();
+  const {
+    canBlast,
+    canMove,
+    getVacantAdjacentZones,
+    getZonesWithEnemies,
+    isMuted,
+  } = useRecurringEffects();
 
   let canTraverse = false;
   if (canMove(props.unit)) {
@@ -25,8 +30,7 @@ const TacticAdvance = (props) => {
 
   if (
     props.unit.virtue &&
-    getZonesWithEnemies(props.unit, 1).length &&
-    !isMuted(props.unit) &&
+    canBlast(props.unit) &&
     !props.unit.afflictions.root
   ) {
     canVirtueBlast = true;

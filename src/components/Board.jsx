@@ -14,6 +14,7 @@ import { db } from "../config/firebaseConfig";
 import { updateDoc, doc } from "firebase/firestore";
 
 import { useRecurringEffects } from "../hooks/useRecurringEffects";
+import { useSkillEffects } from "../hooks/useSkillEffects";
 
 import AcquisitionPhaseSelection from "./modals/AcquisitionPhaseSelection";
 import BountyStore from "./modals/BountyStore";
@@ -26,6 +27,8 @@ import TacticAssault from "./modals/TacticAssault";
 import VirtueBlastBlock from "./modals/VirtueBlastBlock";
 
 import ScionSkillSelect from "./modals/ScionSkillSelect";
+
+import IgnitionPropulsion1 from "./skillModals/IgnitionPropulsion1";
 
 import Piece from "./Piece";
 
@@ -51,8 +54,16 @@ const Board = (props) => {
 
   const [hideModal, setHideModal] = useState(false);
 
-  const { applyDamage, endFinalPhase, move, strike, virtueBlast } =
-    useRecurringEffects();
+  const {
+    applyDamage,
+    endFinalPhase,
+    move,
+    shuffleRepertoire,
+    strike,
+    virtueBlast,
+  } = useRecurringEffects();
+
+  const { ignitionPropulsionEffect } = useSkillEffects();
 
   const newPawnStats = (player, index, row, column) => {
     return {
@@ -289,7 +300,40 @@ const Board = (props) => {
         return (
           <>
             {self === lastResolution.unit.player} &&{" "}
-            <ScionSkillSelect unit={lastResolution.unit} />
+            <ScionSkillSelect
+              updateFirebase={updateFirebase}
+              unit={lastResolution.unit}
+            />
+          </>
+        );
+
+      case "Skill Conclusion":
+        return (
+          <>
+            {self === lastResolution.player && (
+              <>
+                {skillConclusion(
+                  lastResolution.player,
+                  lastResolution.skill,
+                  lastResolution.conclusion
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Activating Ignition Propulsion":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <IgnitionPropulsion1
+                updateFirebase={updateFirebase}
+                unit={lastResolution.unit}
+                enterMoveMode={enterMoveMode}
+                enterSelectUnitMode={enterSelectUnitMode}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
           </>
         );
 
@@ -579,13 +623,27 @@ const Board = (props) => {
     setExpandedPiece(id);
   };
 
-  const shuffleRepertoire = (repertoire) => {
-    for (let i = repertoire.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [repertoire[i], repertoire[j]] = [repertoire[j], repertoire[i]];
+  const skillConclusion = (player, skill, conclusion) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    newGameState.currentResolution.pop();
+
+    if (conclusion === "discard") {
+      newGameState[player].skillVestige.push(skill);
     }
-    return repertoire;
+
+    dispatch(updateState(newGameState));
+
+    updateFirebase(newGameState);
   };
+
+  // const shuffleRepertoire = (repertoire) => {
+  //   for (let i = repertoire.length - 1; i > 0; i--) {
+  //     const j = Math.floor(Math.random() * (i + 1));
+  //     [repertoire[i], repertoire[j]] = [repertoire[j], repertoire[i]];
+  //   }
+  //   return repertoire;
+  // };
 
   //=========================
   //=========================
@@ -661,7 +719,6 @@ const Board = (props) => {
       resolution: "Acquisition Phase Selection",
     });
 
-    // setLocalGameState(newGameState);
     dispatch(updateState(newGameState));
 
     updateFirebase(newGameState);
