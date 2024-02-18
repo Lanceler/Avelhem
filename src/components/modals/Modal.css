@@ -126,3 +126,13 @@ background: rgb(117, 13, 13)
     justify-content: center;
     align-items: center;
 }
+
+.scionSkills{
+    margin: 1px;
+    border-radius: 10px;
+}
+
+.selectedSkill {
+    background-color: rgb(72, 209, 30);
+
+}

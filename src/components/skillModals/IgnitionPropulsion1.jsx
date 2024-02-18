@@ -14,8 +14,6 @@ const IgnitionPropulsion1 = (props) => {
 
   let canTraverse = false;
   if (canMove(props.unit)) {
-    //to-do: rootedUnit must spend 1 skill
-
     canTraverse = true;
   } else {
     console.log(canMove(props.unit));
@@ -26,7 +24,7 @@ const IgnitionPropulsion1 = (props) => {
     if (canTraverse) {
       let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-      //end "Activating Ignition Propulsion" resolution
+      //end "Ignition Propulsion1" resolution
       newGameState.currentResolution.pop();
 
       props.enterMoveMode(

@@ -21,6 +21,7 @@ import BountyStore from "./modals/BountyStore";
 import CoordinationPhaseSelection from "./modals/CoordinationPhaseSelection";
 import DefiancePhaseSelection from "./modals/DefiancePhaseSelection";
 
+import SelectSkillDiscard from "./modals/SelectSkillDiscard";
 import TacticSelection from "./modals/TacticSelection";
 import TacticAdvance from "./modals/TacticAdvance";
 import TacticAssault from "./modals/TacticAssault";
@@ -63,7 +64,7 @@ const Board = (props) => {
     virtueBlast,
   } = useRecurringEffects();
 
-  const { ignitionPropulsionEffect } = useSkillEffects();
+  const { ignitionPropulsionEffect1 } = useSkillEffects();
 
   const newPawnStats = (player, index, row, column) => {
     return {
@@ -323,6 +324,33 @@ const Board = (props) => {
         );
 
       case "Activating Ignition Propulsion":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {dispatch(
+                  updateState(ignitionPropulsionEffect1(lastResolution.unit))
+                )}
+                {updateFirebase(ignitionPropulsionEffect1(lastResolution.unit))}
+              </>
+            )}
+          </>
+        );
+
+      case "Ignition Propulsion0":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <SelectSkillDiscard
+                updateFirebase={updateFirebase}
+                unit={lastResolution.unit}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Ignition Propulsion1":
         return (
           <>
             {self === lastResolution.unit.player && !hideModal && (

@@ -4,54 +4,36 @@ import "./Modal.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
-import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import Skill from "../hand/Skill";
 
-const ScionSkillSelect = (props) => {
+const SelectSkillDiscard = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
-
-  const { activateSkill, canActivateSkill, getScionSet } =
-    useRecurringEffects();
 
   const [selectedSkill, setSelectedSkill] = useState(null);
 
   let usableSkills = [];
   for (let i in localGameState[self].skillHand) {
-    if (
-      getScionSet(props.unit.unitClass).includes(
-        localGameState[self].skillHand[i]
-      )
-    ) {
-      usableSkills.push({
-        id: localGameState[self].skillHand[i],
-        handIndex: i,
-      });
-    }
+    usableSkills.push({
+      id: localGameState[self].skillHand[i],
+      handIndex: i,
+    });
   }
-
-  const handleReturn = () => {
-    const newGameState = JSON.parse(JSON.stringify(localGameState));
-    newGameState.currentResolution.pop();
-
-    dispatch(updateState(newGameState));
-  };
 
   const handleSelect = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    //remove activated card from hand but do not send to vestige
-    newGameState[self].skillHand.splice(
-      usableSkills[selectedSkill].handIndex,
-      1
-    );
+    //end Discarding Skill resolution
+    newGameState.currentResolution.pop();
 
-    newGameState = activateSkill(
-      newGameState,
-      props.unit,
-      usableSkills[selectedSkill].id
+    //send selected skill to vestige
+    newGameState[self].skillVestige.push(
+      ...newGameState[self].skillHand.splice(
+        usableSkills[selectedSkill].handIndex,
+        1
+      )
     );
 
     dispatch(updateState(newGameState));
@@ -61,7 +43,7 @@ const ScionSkillSelect = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <h2>Select Skill</h2>
+        <h2>Discard Skill</h2>
 
         <div className="fourColumn scrollable scrollable-y-only">
           {usableSkills.map((usableSkill, i) => (
@@ -74,14 +56,13 @@ const ScionSkillSelect = (props) => {
               <Skill
                 i={i}
                 usableSkill={usableSkill}
-                canActivateSkill={canActivateSkill(props.unit, usableSkill.id)}
+                canActivateSkill={true} // any skill can be discarded
                 setSelectedSkill={setSelectedSkill}
               />
             </div>
           ))}
         </div>
 
-        <button onClick={() => handleReturn()}>Return</button>
         {selectedSkill && (
           <button onClick={() => handleSelect()}>Select</button>
         )}
@@ -90,4 +71,4 @@ const ScionSkillSelect = (props) => {
   );
 };
 
-export default ScionSkillSelect;
+export default SelectSkillDiscard;
