@@ -322,6 +322,7 @@ const Board = (props) => {
               <>
                 {skillConclusion(
                   lastResolution.player,
+                  lastResolution.unit,
                   lastResolution.skill,
                   lastResolution.conclusion
                 )}
@@ -675,7 +676,7 @@ const Board = (props) => {
     setExpandedPiece(id);
   };
 
-  const skillConclusion = (player, skill, conclusion) => {
+  const skillConclusion = (player, unit, skill, conclusion) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
     newGameState.currentResolution.pop();
@@ -684,18 +685,26 @@ const Board = (props) => {
       newGameState[player].skillVestige.push(skill);
     }
 
-    newGameState[unit.player].units[unit.unitIndex].temporary.activation
-      ? newGameState[unit.player].units[unit.unitIndex].temporary.activation--
-      : null;
+    if (newGameState[unit.player].units[unit.unitIndex] !== null) {
+      if (
+        newGameState[unit.player].units[unit.unitIndex].temporary.activation
+      ) {
+        newGameState[unit.player].units[unit.unitIndex].temporary.activation =
+          newGameState[unit.player].units[unit.unitIndex].temporary.activation -
+          1;
+      }
 
-    if (
-      !newGameState[unit.player].units[unit.unitIndex].temporary.activation &&
-      newGameState[unit.player].units[unit.unitIndex].temporary.anathemaDelay
-    ) {
-      delete newGameState[unit.player].units[unit.unitIndex].temporary
-        .anathemaDelay;
+      if (
+        !newGameState[unit.player].units[unit.unitIndex].temporary.activation &&
+        newGameState[unit.player].units[unit.unitIndex].temporary.anathemaDelay
+      ) {
+        delete newGameState[unit.player].units[unit.unitIndex].temporary
+          .anathemaDelay;
 
-      //to do: give unit Anathema
+        newGameState[unit.player].units[
+          unit.unitIndex
+        ].afflictions.anathema = 2;
+      }
     }
 
     newGameState.activatingSkill.pop();
@@ -815,7 +824,7 @@ const Board = (props) => {
           )}
           <div className="section">
             <div className="right-container">
-              {localGameState.activatingSkill.length && (
+              {localGameState.activatingSkill.length > 0 && (
                 <>
                   <DisplayedCard
                     cardInfo={getSkillById(

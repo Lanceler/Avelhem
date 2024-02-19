@@ -40,9 +40,14 @@ const SelectSkillDiscard = (props) => {
     props.updateFirebase(newGameState);
   };
 
+  const handleViewBoard = () => {
+    props.hideOrRevealModale();
+  };
+
   return (
     <div className="modal-backdrop">
       <div className="modal">
+        <button onClick={() => handleViewBoard()}>View Board</button>
         <h2>Discard Skill</h2>
 
         <div className="fourColumn scrollable scrollable-y-only">

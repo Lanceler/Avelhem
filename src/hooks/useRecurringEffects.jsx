@@ -26,6 +26,7 @@ export const useRecurringEffects = () => {
     newGameState.currentResolution.push({
       resolution: "Skill Conclusion",
       player: self,
+      unit: unit,
       skill: "01-01",
       conclusion: conclusion,
     });
@@ -179,10 +180,16 @@ export const useRecurringEffects = () => {
       //elimination talents
       //to do: elimination talents
 
-      //Anathema-delay
-      newGameState[attacker.player].units[
-        attacker.unitIndex
-      ].temporary.anathemaDelay = true;
+      //Anathema-delay for non-pawns & non-ravagers
+      if (
+        newGameState[attacker.player].units[attacker.unitIndex].class !==
+          "Pawn" ||
+        !newGameState[attacker.player].units[attacker.unitIndex].enhancements
+          .ravager
+      )
+        newGameState[attacker.player].units[
+          attacker.unitIndex
+        ].temporary.anathemaDelay = true;
     }
     return newGameState;
   };
@@ -219,6 +226,10 @@ export const useRecurringEffects = () => {
   };
 
   const canActivateSkill = (unit, skill) => {
+    if (isMuted(unit)) {
+      return false;
+    }
+
     switch (skill) {
       case "01-01":
         return canIgnitionPropulsion(unit);

@@ -148,6 +148,17 @@ export const Piece = (props) => {
             <>
               {isActivatingUnit && <div className="glow animating"></div>}
               <img src={classIcon} className="scionClass" />
+
+              {props.unit.afflictions.anathema && (
+                <div className="anathema-aura">
+                  <div className="cascade-line"></div>
+                  <div className="cascade-line2"></div>
+                </div>
+              )}
+
+              {props.unit.afflictions.anathema === 1 && (
+                <img src={classIcon} className="scionClassAnathema" />
+              )}
             </>
           </div>
 
