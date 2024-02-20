@@ -18,6 +18,7 @@ import { useRecurringEffects } from "../hooks/useRecurringEffects";
 
 import Shield from "../assets/attributeIcons/Shield.png";
 import Ward from "../assets/attributeIcons/Ward.png";
+import Virtue from "../assets/attributeIcons/Virtue.png";
 
 export const Piece = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
@@ -188,17 +189,23 @@ export const Piece = (props) => {
             />
           )}
 
-          {/* {props.unit.fever > 0 && (
-            <div className="fever" style={{ top: 14 }}></div>
-          )}
+          {props.unit.virtue == true && <img src={Virtue} className="virtue" />}
 
-          {props.unit.fever > 1 && (
-            <div className="fever" style={{ top: 28 }}></div>
-          )}
+          {props.unit.unitClass === "Plant Scion" && (
+            <>
+              {props.unit.blossom > 0 && (
+                <div className="blossom" style={{ left: 12 }}></div>
+              )}
 
-          {props.unit.fever > 1 && (
-            <div className="fever" style={{ top: 42 }}></div>
-          )} */}
+              {props.unit.blossom > 1 && (
+                <div className="blossom" style={{ left: 29 }}></div>
+              )}
+
+              {props.unit.blossom > 2 && (
+                <div className="blossom" style={{ left: 46 }}></div>
+              )}
+            </>
+          )}
 
           {props.unit.unitClass === "Lightning Scion" && (
             <>

@@ -1,7 +1,8 @@
 .tile{
     width: 70px;
     height: 70px;
-    background-color: bisque;
+    /* background-color: bisque; */
+    background-color: rgb(235, 250, 255);
     display: flex;
     justify-content: center;
     align-items: center;
