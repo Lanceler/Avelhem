@@ -153,12 +153,15 @@ export const Piece = (props) => {
                 <div className="anathema-aura">
                   <div className="cascade-line"></div>
                   <div className="cascade-line2"></div>
+                  {props.unit.afflictions.anathema > 1 && (
+                    <div className="cascade-line3"></div>
+                  )}
                 </div>
               )}
 
-              {props.unit.afflictions.anathema === 1 && (
+              {/* {props.unit.afflictions.anathema === 1 && (
                 <img src={classIcon} className="scionClassAnathema" />
-              )}
+              )} */}
             </>
           </div>
 
