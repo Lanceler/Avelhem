@@ -23,19 +23,28 @@
 }
 
 .host{
-    background-color: rgb(13, 62, 153);
+    /* background-color: rgb(13, 62, 153); */
+    /* background-color: rgb(201, 154, 0); */
+    background: linear-gradient(25deg, #925f00, #d69316, #f79708)
 }
 
 .guest {
-    background-color: rgb(163, 0, 0);
+    /* background-color: rgb(163, 0, 0); */
+    /* background-color: rgb(105, 105, 105); */
+    background: linear-gradient(25deg, #5a5a5a, #979797, #949494)
 }
 
 .pieceOption{
-
     width: 25px;
     height: 25px;
     border: 2px solid black;
-    border-radius: 100%;
+    
+    /*circle shape*/
+    /* border-radius: 100%; */
+
+    /*diamond shape*/
+    transform: rotate(45deg);
+
     background-color: rgb(255, 255, 255);
     align-items: center;
     justify-content: center;
@@ -48,7 +57,15 @@
 .pieceOption:hover {
     background-color: rgb(252, 247, 180);
     cursor: pointer;
+    scale: 1.5;
 }
+
+.optionIcon {
+    transform: rotate(-45deg);
+}
+
+
+
 
 .shieldAndWard {
 
@@ -132,24 +149,13 @@
     overflow: hidden;
 }
 
-.scionClassAnathema {
-    object-fit: cover;
-    width: 50px;
-    height: 50px;
-    position: absolute;
-    top: 50%;
-    /* left: 50%; */
-    transform: translate(-50%, -50%);
-    animation: fadeInOut 2.8s infinite alternate;
-}
-
 .cascade-line {
     position: absolute;
     left: -5px;
     width: 120%;
     height: 200px;
     /* background: linear-gradient(to bottom, rgba(75, 0, 0,0.5), rgb(75, 0, 0)); */
-    background: linear-gradient(to bottom, rgba(113, 32, 145, 0.4), rgba(113, 32, 145, 0.4) 50%, rgba(172, 0, 157,0.95) 95% ,rgba(0, 0, 0, 1) 100%);
+    background: linear-gradient(to bottom, rgba(113, 32, 145, 0.25), rgba(113, 32, 145, 0.25) 50%, rgba(172, 0, 157,0.95) 95% ,rgba(0, 0, 0, 1) 100%);
     animation: cascadeAnimation 2s linear infinite;
 }
 
@@ -158,7 +164,6 @@
         top: -220px;
     }
     100% {
-
         top: 0px
     }
 }
@@ -168,7 +173,7 @@
     left: -5px;
     width: 120%;
     height: 80px;
-    background: rgba(113, 32, 145, 0.4);
+    background: rgba(113, 32, 145, 0.25);
     animation: cascadeAnimation2 2s linear infinite;
 }
 
@@ -177,7 +182,6 @@
         top: -20px;
     }
     100% {
-
         top: 200px
     }
 }
@@ -196,7 +200,89 @@
         top: -40px;
     }
     100% {
-
         top: 180px
+    }
+}
+
+
+.ravager-line {
+    position: absolute;
+    left: -5px;
+    width: 120%;
+    height: 250px;
+    top: 65px;
+    
+    background: linear-gradient(to bottom, rgb(197, 39, 0), rgba(129, 0, 0, .95) 5%, rgba(129, 0, 0, 0.15) 50%, rgba(129, 0, 0, 0.15) 100%);
+    animation: ravagerAnimation 2s linear infinite;
+}
+
+@keyframes ravagerAnimation {
+    0% {
+        top: 65px;
+    }
+    100% {
+        top: -155px
+    }
+}
+
+.ravager-line2 {
+    position: absolute;
+    left: -5px;
+    width: 120%;
+    height: 80px;
+    background: rgba(129, 0, 0, 0.15);
+    animation: ravagerAnimation2 2s linear infinite;
+}
+
+@keyframes ravagerAnimation2 {
+    0% {
+        top: -15px;
+    }
+    100% {
+        top: -235px
+    }
+}
+
+.blink {
+    animation: fadeInOut 2s infinite alternate;
+}
+
+.fever{
+    transform: rotate(45deg);
+    background: linear-gradient(22deg, #ff0b03,#ff0b03,#dd1e17, #ff8b1e, #ffc1a4, #ffb0b0);
+    border: 0.5px solid #000000de;
+    height: 7.5px;
+    width: 7.5px;
+    position: absolute;
+    animation: moveUpDown 0.95s ease-in-out infinite;
+}
+
+.blossom {
+    transform: rotate(45deg);
+    background: linear-gradient(22deg, #7a137e, #971e9b, #d138d6, #fa69ff, #f7deff, #fcdbff);
+    border: 0.5px solid #000000de;
+    height: 7.5px;
+    width: 7.5px;
+    position: absolute;
+    animation: moveUpDown 0.95s ease-in-out infinite;
+}
+
+.charge {
+    transform: rotate(45deg);
+    background: linear-gradient(22deg, #6e6700, #9b9000, #ddcf08, #ccbe00, #fff241, #fff894);
+    border: 0.5px solid #000000de;
+    height: 7.5px;
+    width: 7.5px;
+    position: absolute;
+    animation: moveUpDown 0.95s ease-in-out infinite;
+}
+
+@keyframes moveUpDown {
+    0%,
+    100% {
+        top: 0;
+    }
+    50% {
+        top: 2.5px;
     }
 }

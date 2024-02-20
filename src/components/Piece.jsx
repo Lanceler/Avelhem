@@ -149,19 +149,24 @@ export const Piece = (props) => {
               {isActivatingUnit && <div className="glow animating"></div>}
               <img src={classIcon} className="scionClass" />
 
-              {props.unit.afflictions.anathema && (
+              {props.unit.afflictions.anathema > 0 && (
                 <div className="anathema-aura">
                   <div className="cascade-line"></div>
                   <div className="cascade-line2"></div>
                   {props.unit.afflictions.anathema > 1 && (
                     <div className="cascade-line3"></div>
                   )}
+                  <img src={classIcon} className="scionClass blink" />
                 </div>
               )}
 
-              {/* {props.unit.afflictions.anathema === 1 && (
-                <img src={classIcon} className="scionClassAnathema" />
-              )} */}
+              {props.unit.enhancements.ravager && (
+                <div className="anathema-aura">
+                  <div className="ravager-line"></div>
+                  <div className="ravager-line2"></div>
+                  <img src={classIcon} className="scionClass blink" />
+                </div>
+              )}
             </>
           </div>
 
@@ -183,6 +188,45 @@ export const Piece = (props) => {
             />
           )}
 
+          {/* {props.unit.fever > 0 && (
+            <div className="fever" style={{ top: 14 }}></div>
+          )}
+
+          {props.unit.fever > 1 && (
+            <div className="fever" style={{ top: 28 }}></div>
+          )}
+
+          {props.unit.fever > 1 && (
+            <div className="fever" style={{ top: 42 }}></div>
+          )} */}
+
+          {props.unit.unitClass === "Lightning Scion" && (
+            <>
+              {props.unit.charge > 0 && (
+                <div className="charge" style={{ left: 12 }}></div>
+              )}
+
+              {props.unit.charge > 1 && (
+                <div className="charge" style={{ left: 29 }}></div>
+              )}
+
+              {props.unit.charge > 2 && (
+                <div className="charge" style={{ left: 46 }}></div>
+              )}
+            </>
+          )}
+
+          {props.unit.unitClass === "Fire Scion" && (
+            <>
+              {props.unit.fever > 0 && (
+                <div className="fever" style={{ left: 20 }}></div>
+              )}
+              {props.unit.fever > 1 && (
+                <div className="fever" style={{ left: 38 }}></div>
+              )}
+            </>
+          )}
+
           {props.expandedPiece === props.id && (
             <>
               <div
@@ -190,7 +234,7 @@ export const Piece = (props) => {
                 style={{ top: -17, left: -17 }}
                 onClick={() => handleInfo()}
               >
-                Info
+                <div className="optionIcon">Info</div>
               </div>
 
               {localGameState.currentResolution.length &&
@@ -205,7 +249,7 @@ export const Piece = (props) => {
                       style={{ top: -17, left: 54 }}
                       onClick={() => handleTactic(props.unit)}
                     >
-                      Dice
+                      <div className="optionIcon">Dice</div>
                     </div>
                     {props.unit.unitClass !== "Pawn" && (
                       <>
@@ -213,14 +257,14 @@ export const Piece = (props) => {
                           className="pieceOption"
                           style={{ top: 54, left: 54 }}
                         >
-                          Abi.
+                          <div className="optionIcon">Abi</div>
                         </div>
                         <div
                           className="pieceOption"
                           style={{ top: 54, left: -17 }}
                           onClick={() => handleSkill()}
                         >
-                          Ski.
+                          <div className="optionIcon">Ski</div>
                         </div>
                       </>
                     )}
