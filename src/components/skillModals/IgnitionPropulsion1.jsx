@@ -50,7 +50,8 @@ const IgnitionPropulsion1 = (props) => {
         props.unit.player,
         newGameState,
         null,
-        "strike"
+        "strike",
+        "Ignition Propulsion"
       );
     }
   };

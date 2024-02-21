@@ -97,7 +97,8 @@ export const Piece = (props) => {
           props.movingPlayer,
           props.movingUnitIndex,
           props.unit,
-          props.selectUnitReason
+          props.selectUnitReason,
+          props.selectUnitSpecial
         );
       }
     } else {

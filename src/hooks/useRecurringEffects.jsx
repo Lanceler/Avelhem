@@ -39,6 +39,11 @@ export const useRecurringEffects = () => {
     newGameState.activatingSkill.push("01-01");
     newGameState.activatingUnit.push(unit);
 
+    //animation delay
+    newGameState.currentResolution.push({
+      resolution: "Animation Delay",
+    });
+
     if (triggerScreech(unit)) {
       newGameState.currentResolution.push({
         resolution: "Triggering Screech",
@@ -73,8 +78,10 @@ export const useRecurringEffects = () => {
 
     let newZoneInfo = JSON.parse(newGameState.zones);
 
+    //this can happen with effects like thunder thaumaturge
     if (isMuted(attacker)) {
       return;
+      // to do: Maybe push a resolution that displays a message
     }
 
     //checkBypassShield
@@ -91,6 +98,12 @@ export const useRecurringEffects = () => {
     let aP = 1;
     if (["geomancy", "surge"].includes(special)) {
       aP = 2;
+    } else if (
+      special === "Ignition Propulsion" &&
+      victim.unitClass === "Fire Scion" &&
+      !isMuted(victim)
+    ) {
+      aP = 0;
     } else {
       //check for AP modifiers
       if (attacker.temporary.galeConjuration) {
@@ -493,6 +506,21 @@ export const useRecurringEffects = () => {
     return enemyZones;
   };
 
+  const isAdjacent = (unit1, unit2) => {
+    if (unit1 == unit2) {
+      return false;
+    }
+
+    if (
+      Math.abs(unit1.row - unit2.row) <= 1 &&
+      Math.abs(unit1.column - unit2.column) <= 1
+    ) {
+      return true;
+    }
+
+    return false;
+  };
+
   const isMuted = (unit) => {
     const afflictions = unit.afflictions;
 
@@ -570,7 +598,7 @@ export const useRecurringEffects = () => {
     return repertoire;
   };
 
-  const strike = (newGameState, attacker, victim, bypassTarget) => {
+  const strike = (newGameState, attacker, victim, special) => {
     //pop "Selecting Unit" resolution
     newGameState.currentResolution.pop();
 
@@ -578,12 +606,13 @@ export const useRecurringEffects = () => {
       resolution: "Apply Damage",
       attacker: attacker,
       victim: victim,
+      special: special,
       type: "strike",
     });
 
-    if (!bypassTarget) {
-      //to do: triggerTarget(attacker, victim, bypassTarget);
-    }
+    // if (!bypassTarget) {
+    //   // to do: triggerTarget(attacker, victim, bypassTarget);
+    // }
 
     newGameState[attacker.player].units[attacker.unitIndex].virtue = false;
 

@@ -51,6 +51,7 @@ const Board = (props) => {
 
   const [tileMode, setTileMode] = useState(false);
   const [selectUnitReason, setSelectUnitReason] = useState(null);
+  const [selectUnitSpecial, setSelectUnitSpecial] = useState(null);
   const [movingUnitIndex, setMovingUnitIndex] = useState(null);
   const [movingPlayer, setMovingPlayer] = useState(null);
   const [tacticUsed, setTacticUsed] = useState(null);
@@ -222,6 +223,7 @@ const Board = (props) => {
                   {setMovingPlayer(lastResolution.player)}
                   {setTacticUsed(lastResolution.tactic)}
                   {setSelectUnitReason(lastResolution.reason)}
+                  {setSelectUnitSpecial(lastResolution.special)}
                 </>
               )}
           </>
@@ -416,8 +418,8 @@ const Board = (props) => {
 
       dispatch(updateState(newGameState));
 
-      updateFirebase(newGameState);
-    }, 2000);
+      // updateFirebase(newGameState);
+    }, 1750);
   };
 
   const deployPawn = (r, c) => {
@@ -501,7 +503,8 @@ const Board = (props) => {
     player,
     gameState,
     tactic,
-    reason
+    reason,
+    special
   ) => {
     let newGameState = null;
     if (gameState) {
@@ -517,6 +520,7 @@ const Board = (props) => {
       unitIndex: unitIndex,
       tactic: tactic,
       reason: reason,
+      special: special,
     });
 
     dispatch(updateState(newGameState));
@@ -639,7 +643,7 @@ const Board = (props) => {
     updateFirebase(newGameState);
   };
 
-  const selectUnit = (player, unitIndex, selectedUnit, reason) => {
+  const selectUnit = (player, unitIndex, selectedUnit, reason, special) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
     if (tacticUsed !== null) {
@@ -656,13 +660,15 @@ const Board = (props) => {
       newGameState = strike(
         newGameState,
         newGameState[player].units[unitIndex],
-        selectedUnit
+        selectedUnit,
+        special
       );
     }
 
     setValidZones([]);
     setTileMode(null);
     setSelectUnitReason(null);
+    setSelectUnitSpecial(null);
     setMovingUnitIndex(null);
     setMovingPlayer(null);
     setTacticUsed(null);
@@ -865,6 +871,7 @@ const Board = (props) => {
                         movingPlayer={movingPlayer}
                         tileMode={tileMode}
                         selectUnitReason={selectUnitReason}
+                        selectUnitSpecial={selectUnitSpecial}
                         id={i} // hostUnitIds
                         expandedPiece={expandedPiece}
                         selectExpandPiece={selectExpandPiece}
@@ -904,6 +911,7 @@ const Board = (props) => {
                         movingPlayer={movingPlayer}
                         tileMode={tileMode}
                         selectUnitReason={selectUnitReason}
+                        selectUnitSpecial={selectUnitSpecial}
                         id={-i - 1} // guestUnitIds
                         expandedPiece={expandedPiece}
                         selectExpandPiece={selectExpandPiece}
