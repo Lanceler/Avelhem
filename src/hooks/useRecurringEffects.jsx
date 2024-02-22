@@ -80,7 +80,7 @@ export const useRecurringEffects = () => {
 
     //this can happen with effects like thunder thaumaturge
     if (isMuted(attacker)) {
-      return;
+      return newGameState;
       // to do: Maybe push a resolution that displays a message
     }
 
@@ -96,7 +96,10 @@ export const useRecurringEffects = () => {
 
     //calculate AP
     let aP = 1;
-    if (["geomancy", "surge"].includes(special)) {
+
+    if (victim.afflictions.anathema) {
+      aP = 5;
+    } else if (["geomancy", "surge"].includes(special)) {
       aP = 2;
     } else if (
       special === "Ignition Propulsion" &&

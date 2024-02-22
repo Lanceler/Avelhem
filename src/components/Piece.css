@@ -7,18 +7,8 @@
     text-align: center;
     position: relative;
     user-select: none;
-    animation: deploy 0.7s ease-in-out;
 }
 
-@keyframes deploy {
-    0% {
-        scale: 1.4;
-    }
-
-    100% {
-        scale: 1;
-    }
-}
 
 .scionClass{
     object-fit: cover;
@@ -112,12 +102,10 @@
 
     0%,
     100% {
-        transform: scale(0.9);
-        /* Start and end scale */
+        transform: scale(1);
     }
     50% {
         transform: scale(1.2);
-        /* Middle scale */
     }
 }
 
