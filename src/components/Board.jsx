@@ -848,6 +848,7 @@ const Board = (props) => {
                 <div key={i}>
                   {unit && (
                     <div
+                      className="board-piece"
                       style={
                         self === "host"
                           ? {
@@ -888,6 +889,7 @@ const Board = (props) => {
                 <div key={-i - 1}>
                   {unit && (
                     <div
+                      className="board-piece"
                       style={
                         self === "host"
                           ? {
