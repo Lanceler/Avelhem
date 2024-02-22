@@ -8,7 +8,7 @@ import SelectFirstPlayer from "./modals/SelectFirstPlayer";
 
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateState } from "../redux/gameState";
+import gameState, { updateState } from "../redux/gameState";
 import { updateSelf, updateEnemy } from "../redux/teams";
 import { db } from "../config/firebaseConfig";
 import { updateDoc, doc } from "firebase/firestore";
@@ -339,10 +339,9 @@ const Board = (props) => {
           <>
             {self === lastResolution.unit.player && (
               <>
-                {dispatch(
-                  updateState(ignitionPropulsionEffect1(lastResolution.unit))
+                {resolutionUpdate(
+                  ignitionPropulsionEffect1(lastResolution.unit)
                 )}
-                {updateFirebase(ignitionPropulsionEffect1(lastResolution.unit))}
               </>
             )}
           </>
@@ -396,15 +395,7 @@ const Board = (props) => {
           <>
             {self === lastResolution.unit.player && (
               <>
-                {dispatch(
-                  updateState(
-                    symphonicScreech1(
-                      lastResolution.unit,
-                      lastResolution.victim
-                    )
-                  )
-                )}
-                {updateFirebase(
+                {resolutionUpdate(
                   symphonicScreech1(lastResolution.unit, lastResolution.victim)
                 )}
               </>
@@ -650,6 +641,11 @@ const Board = (props) => {
     dispatch(updateState(newGameState));
 
     updateFirebase(newGameState);
+  };
+
+  const resolutionUpdate = (gameState) => {
+    dispatch(updateState(gameState));
+    updateFirebase(gameState);
   };
 
   const resolveApplyDamage = (attackerInfo, victimInfo, type, special) => {
