@@ -29,8 +29,7 @@ const IgnitionPropulsion1 = (props) => {
 
       props.enterMoveMode(
         getVacantAdjacentZones(props.unit),
-        props.unit.unitIndex,
-        props.unit.player,
+        props.unit,
         newGameState,
         null
       );
@@ -46,8 +45,7 @@ const IgnitionPropulsion1 = (props) => {
 
       props.enterSelectUnitMode(
         getZonesWithEnemies(props.unit, 1),
-        props.unit.unitIndex,
-        props.unit.player,
+        props.unit,
         newGameState,
         null,
         "strike",

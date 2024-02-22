@@ -67,8 +67,7 @@ const TacticSelection = (props) => {
       } else if (newGameState.tactics[i].face === "Mobilize") {
         props.enterMoveMode(
           getVacantAdjacentZones(props.unit),
-          props.unit.unitIndex,
-          props.unit.player,
+          props.unit,
           newGameState,
           i
         );

@@ -6,7 +6,7 @@ import Tile from "./Tile";
 
 import SelectFirstPlayer from "./modals/SelectFirstPlayer";
 
-import { useState, useEffect, useLayoutEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../redux/gameState";
 import { updateSelf, updateEnemy } from "../redux/teams";
@@ -31,6 +31,7 @@ import VirtueBlastBlock from "./modals/VirtueBlastBlock";
 import ScionSkillSelect from "./modals/ScionSkillSelect";
 
 import IgnitionPropulsion1 from "./skillModals/IgnitionPropulsion1";
+import ContingentSymphonicScreech from "./skillModals/ContingentSymphonicScreech";
 
 import DisplayedCard from "./displays/DisplayedCard";
 
@@ -52,14 +53,16 @@ const Board = (props) => {
   const [tileMode, setTileMode] = useState(false);
   const [selectUnitReason, setSelectUnitReason] = useState(null);
   const [selectUnitSpecial, setSelectUnitSpecial] = useState(null);
-  const [movingUnitIndex, setMovingUnitIndex] = useState(null);
-  const [movingPlayer, setMovingPlayer] = useState(null);
+  const [movingUnit, setMovingUnit] = useState(null);
   const [tacticUsed, setTacticUsed] = useState(null);
   const [expandedPiece, setExpandedPiece] = useState(null);
 
   const [hideModal, setHideModal] = useState(false);
 
+  const [intrudingPlayer, setIntrudingPlayer] = useState(false);
+
   const {
+    activateSymphonicScreech,
     applyDamage,
     endFinalPhase,
     move,
@@ -68,7 +71,7 @@ const Board = (props) => {
     virtueBlast,
   } = useRecurringEffects();
 
-  const { ignitionPropulsionEffect1 } = useSkillEffects();
+  const { ignitionPropulsionEffect1, symphonicScreech1 } = useSkillEffects();
   const { getSkillById } = useCardDatabase();
 
   const newPawnStats = (player, index, row, column) => {
@@ -203,8 +206,7 @@ const Board = (props) => {
               <>
                 {setTileMode("move")}
                 {setValidZones(lastResolution.zoneIds)}
-                {setMovingUnitIndex(lastResolution.unitIndex)}
-                {setMovingPlayer(lastResolution.player)}
+                {setMovingUnit(lastResolution.unit)}
                 {setTacticUsed(lastResolution.tactic)}
               </>
             )}
@@ -214,13 +216,12 @@ const Board = (props) => {
       case "Selecting Unit":
         return (
           <>
-            {self === localGameState.turnPlayer &&
+            {(self === localGameState.turnPlayer || self === intrudingPlayer) &&
               tileMode !== "selectUnit" && (
                 <>
                   {setTileMode("selectUnit")}
                   {setValidZones(lastResolution.zoneIds)}
-                  {setMovingUnitIndex(lastResolution.unitIndex)}
-                  {setMovingPlayer(lastResolution.player)}
+                  {setMovingUnit(lastResolution.unit)}
                   {setTacticUsed(lastResolution.tactic)}
                   {setSelectUnitReason(lastResolution.reason)}
                   {setSelectUnitSpecial(lastResolution.special)}
@@ -375,6 +376,42 @@ const Board = (props) => {
           </>
         );
 
+      case "Triggering Screech":
+        return (
+          <>
+            {self === lastResolution.player && !hideModal && (
+              <ContingentSymphonicScreech
+                updateFirebase={updateFirebase}
+                activator={lastResolution.activator}
+                enterSelectUnitMode={enterSelectUnitMode}
+                hideOrRevealModale={hideOrRevealModale}
+                setIntrudingPlayer={setIntrudingPlayer}
+              />
+            )}
+          </>
+        );
+
+      case "Activating Symphonic Screech":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {dispatch(
+                  updateState(
+                    symphonicScreech1(
+                      lastResolution.unit,
+                      lastResolution.victim
+                    )
+                  )
+                )}
+                {updateFirebase(
+                  symphonicScreech1(lastResolution.unit, lastResolution.victim)
+                )}
+              </>
+            )}
+          </>
+        );
+
       case "Final Phase Conclusion":
         return (
           <>
@@ -385,9 +422,7 @@ const Board = (props) => {
         );
 
       case "Animation Delay":
-        return (
-          <>{self === localGameState.turnPlayer && <>{animationDelay()}</>}</>
-        );
+        return <>{self === lastResolution.priority && animationDelay()}</>;
 
       default:
         return;
@@ -474,7 +509,7 @@ const Board = (props) => {
     // updateFirebase(newGameState);
   };
 
-  const enterMoveMode = (zoneIds, unitIndex, player, gameState, tactic) => {
+  const enterMoveMode = (zoneIds, unit, gameState, tactic) => {
     console.log("enterMoveMode");
 
     let newGameState = null;
@@ -487,8 +522,7 @@ const Board = (props) => {
     newGameState.currentResolution.push({
       resolution: "Moving Unit",
       zoneIds: zoneIds,
-      player: player,
-      unitIndex: unitIndex,
+      unit: unit,
       tactic: tactic,
     });
 
@@ -499,8 +533,7 @@ const Board = (props) => {
 
   const enterSelectUnitMode = (
     zoneIds,
-    unitIndex,
-    player,
+    unit,
     gameState,
     tactic,
     reason,
@@ -516,8 +549,7 @@ const Board = (props) => {
     newGameState.currentResolution.push({
       resolution: "Selecting Unit",
       zoneIds: zoneIds,
-      player: player,
-      unitIndex: unitIndex,
+      unit: unit,
       tactic: tactic,
       reason: reason,
       special: special,
@@ -564,25 +596,28 @@ const Board = (props) => {
     setExpandedPiece(null);
   };
 
-  const moveUnit = (player, unitIndex, zoneId) => {
+  const moveUnit = (unit, zoneId) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    newGameState = move(newGameState, player, unitIndex, zoneId);
+    newGameState = move(newGameState, unit, zoneId);
 
     if (tacticUsed !== null) {
       newGameState.tactics[tacticUsed].stock--;
 
       if (tacticUsed === 0) {
-        newGameState[player].units[unitIndex].temporary.used0thTactic = true;
+        newGameState[unit.unitplayer].units[
+          unit.unitIndex
+        ].temporary.used0thTactic = true;
       } else if (tacticUsed === 1) {
-        newGameState[player].units[unitIndex].temporary.used1stTactic = true;
+        newGameState[unit.player].units[
+          unit.unitIndex
+        ].temporary.used1stTactic = true;
       }
     }
 
     setValidZones([]);
     setTileMode(null);
-    setMovingUnitIndex(null);
-    setMovingPlayer(null);
+    setMovingUnit(null);
     setTacticUsed(null);
 
     dispatch(updateState(newGameState));
@@ -643,35 +678,41 @@ const Board = (props) => {
     updateFirebase(newGameState);
   };
 
-  const selectUnit = (player, unitIndex, selectedUnit, reason, special) => {
+  const selectUnit = (unit, selectedUnit, reason, special) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
     if (tacticUsed !== null) {
       newGameState.tactics[tacticUsed].stock--;
     }
 
+    newGameState.currentResolution.pop();
+
     if (reason === "virtue-blast") {
       newGameState = virtueBlast(
         newGameState,
-        newGameState[player].units[unitIndex],
+        newGameState[unit.player].units[unit.unitIndex],
         selectedUnit
       );
     } else if (reason === "strike") {
       newGameState = strike(
         newGameState,
-        newGameState[player].units[unitIndex],
+        newGameState[unit.player].units[unit.unitIndex],
         selectedUnit,
         special
       );
+    } else if (reason === "symphonic screech") {
+      //unit = activator; selectedUnit = windScion
+
+      newGameState = activateSymphonicScreech(newGameState, selectedUnit, unit);
     }
 
     setValidZones([]);
     setTileMode(null);
     setSelectUnitReason(null);
     setSelectUnitSpecial(null);
-    setMovingUnitIndex(null);
-    setMovingPlayer(null);
+    setMovingUnit(null);
     setTacticUsed(null);
+    setIntrudingPlayer(null);
 
     dispatch(updateState(newGameState));
 
@@ -868,8 +909,7 @@ const Board = (props) => {
                       <Piece
                         unit={unit}
                         enterMoveMode={enterMoveMode}
-                        movingUnitIndex={movingUnitIndex}
-                        movingPlayer={movingPlayer}
+                        movingUnit={movingUnit}
                         tileMode={tileMode}
                         selectUnitReason={selectUnitReason}
                         selectUnitSpecial={selectUnitSpecial}
@@ -909,8 +949,7 @@ const Board = (props) => {
                       <Piece
                         unit={unit}
                         enterMoveMode={enterMoveMode}
-                        movingUnitIndex={movingUnitIndex}
-                        movingPlayer={movingPlayer}
+                        movingUnit={movingUnit}
                         tileMode={tileMode}
                         selectUnitReason={selectUnitReason}
                         selectUnitSpecial={selectUnitSpecial}
@@ -940,10 +979,10 @@ const Board = (props) => {
                       zone={zone}
                       validZones={validZones}
                       deployPawn={deployPawn}
-                      movingUnitIndex={movingUnitIndex}
-                      movingPlayer={movingPlayer}
+                      movingUnit={movingUnit}
                       moveUnit={moveUnit}
                       tileMode={tileMode}
+                      intrudingPlayer={intrudingPlayer}
                     />
                   ))
                 )}

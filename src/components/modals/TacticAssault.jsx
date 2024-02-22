@@ -39,8 +39,7 @@ const TacticAssault = (props) => {
 
       props.enterMoveMode(
         getVacantAdjacentZones(props.unit),
-        props.unit.unitIndex,
-        props.unit.player,
+        props.unit,
         newGameState,
         props.tactic
       );
@@ -56,8 +55,7 @@ const TacticAssault = (props) => {
 
       props.enterSelectUnitMode(
         getZonesWithEnemies(props.unit, 1),
-        props.unit.unitIndex,
-        props.unit.player,
+        props.unit,
         newGameState,
         props.tactic,
         "strike"

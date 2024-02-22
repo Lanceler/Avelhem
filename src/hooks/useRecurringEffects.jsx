@@ -39,17 +39,58 @@ export const useRecurringEffects = () => {
     newGameState.activatingSkill.push("01-01");
     newGameState.activatingUnit.push(unit);
 
-    //animation delay
-    newGameState.currentResolution.push({
-      resolution: "Animation Delay",
-    });
-
     if (triggerScreech(unit)) {
       newGameState.currentResolution.push({
         resolution: "Triggering Screech",
         player: enemy,
+        activator: unit,
+      });
+
+      //animation delay
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: enemy,
+      });
+    } else {
+      //animation delay
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: self,
       });
     }
+
+    return newGameState;
+  };
+
+  const activateSymphonicScreech = (newGameState, unit, victim) => {
+    //remove symphonic screech from hand but do not discard
+    newGameState[self].skillHand.splice(
+      newGameState[self].skillHand.indexOf("03-03"),
+      1
+    );
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      unit: unit,
+      skill: "03-03",
+      conclusion: "discard",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Activating Symphonic Screech",
+      unit: unit,
+      victim: victim,
+    });
+
+    newGameState.activatingSkill.push("03-03");
+    newGameState.activatingUnit.push(unit);
+
+    //animation delay
+    newGameState.currentResolution.push({
+      resolution: "Animation Delay",
+      priority: self,
+    });
 
     return newGameState;
   };
@@ -540,8 +581,8 @@ export const useRecurringEffects = () => {
     return false;
   };
 
-  const move = (newGameState, player, unitIndex, zoneId) => {
-    let mover = newGameState[player].units[unitIndex];
+  const move = (newGameState, unit, zoneId) => {
+    let mover = newGameState[unit.player].units[unit.unitIndex];
 
     // let newZoneInfo = [...zones];
     let newZoneInfo = JSON.parse(newGameState.zones);
@@ -558,8 +599,10 @@ export const useRecurringEffects = () => {
     newGameState.zones = JSON.stringify(newZoneInfo);
 
     //update unit itself
-    newGameState[player].units[unitIndex].row = Math.floor(zoneId / 5);
-    newGameState[player].units[unitIndex].column = zoneId % 5;
+    newGameState[unit.player].units[unit.unitIndex].row = Math.floor(
+      zoneId / 5
+    );
+    newGameState[unit.player].units[unit.unitIndex].column = zoneId % 5;
 
     //pop "Moving Unit" resolution
     if (
@@ -603,7 +646,7 @@ export const useRecurringEffects = () => {
 
   const strike = (newGameState, attacker, victim, special) => {
     //pop "Selecting Unit" resolution
-    newGameState.currentResolution.pop();
+    // newGameState.currentResolution.pop();
 
     newGameState.currentResolution.push({
       resolution: "Apply Damage",
@@ -688,7 +731,7 @@ export const useRecurringEffects = () => {
 
   const virtueBlast = (newGameState, attacker, victim, bypassTarget) => {
     //pop "Selecting Unit" resolution
-    newGameState.currentResolution.pop();
+    // newGameState.currentResolution.pop();
 
     newGameState.currentResolution.push({
       resolution: "Apply Damage",
@@ -735,6 +778,7 @@ export const useRecurringEffects = () => {
 
   return {
     activateSkill,
+    activateSymphonicScreech,
     applyDamage,
     assignTactics,
     canActivateSkill,
@@ -749,6 +793,7 @@ export const useRecurringEffects = () => {
     getVacantAdjacentZones,
     getZonesInRange,
     getZonesWithEnemies,
+    isAdjacent,
     isMuted,
     move,
     rollTactic,

@@ -94,8 +94,7 @@ export const Piece = (props) => {
     if (props.tileMode === "selectUnit") {
       if (pieceSelectable) {
         props.selectUnit(
-          props.movingPlayer,
-          props.movingUnitIndex,
+          props.movingUnit,
           props.unit,
           props.selectUnitReason,
           props.selectUnitSpecial
@@ -117,8 +116,7 @@ export const Piece = (props) => {
 
     props.enterMoveMode(
       getZonesInRange(props.unit.row, props.unit.column, 1, false),
-      props.unit.unitIndex,
-      props.unit.player,
+      props.unit,
       newGameState,
       null
     );

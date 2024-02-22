@@ -54,8 +54,7 @@ const TacticAdvance = (props) => {
 
       props.enterMoveMode(
         getVacantAdjacentZones(props.unit),
-        props.unit.unitIndex,
-        props.unit.player,
+        props.unit,
         newGameState,
         props.tactic
       );
@@ -71,8 +70,7 @@ const TacticAdvance = (props) => {
 
       props.enterSelectUnitMode(
         getZonesWithEnemies(props.unit, 1),
-        props.unit.unitIndex,
-        props.unit.player,
+        props.unit,
         newGameState,
         props.tactic,
         "virtue-blast"

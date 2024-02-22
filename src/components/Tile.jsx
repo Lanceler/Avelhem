@@ -18,7 +18,7 @@ const Tile = (props) => {
 
   if (
     props.validZones.includes(props.zone.id) &&
-    self === localGameState.turnPlayer
+    (self === localGameState.turnPlayer || self === props.intrudingPlayer)
   ) {
     if (props.tileMode === "deploy") {
       deployable = true;
@@ -40,7 +40,7 @@ const Tile = (props) => {
     if (deployable) {
       props.deployPawn(props.zone.row, props.zone.column);
     } else if (movable) {
-      props.moveUnit(props.movingPlayer, props.movingUnitIndex, props.zone.id);
+      props.moveUnit(props.movingUnit, props.zone.id);
     } else {
       // props.getZonesInRange(props.zone.row, props.zone.column, 1, false);
     }

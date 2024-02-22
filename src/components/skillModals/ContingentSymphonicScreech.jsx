@@ -1,30 +1,24 @@
 import React from "react";
 import { useState } from "react";
-import "./Modal.css";
+import "./SkillModal.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
-
 import Skill from "../hand/Skill";
 
-const ScionSkillSelect = (props) => {
+const ContingentSymphonicScreech = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const { activateSkill, canActivateSkill, getScionSet } =
-    useRecurringEffects();
-
   const [selectedSkill, setSelectedSkill] = useState(null);
+
+  const { getZonesWithEnemies, isMuted } = useRecurringEffects();
 
   let usableSkills = [];
   for (let i in localGameState[self].skillHand) {
-    if (
-      getScionSet(props.unit.unitClass).includes(
-        localGameState[self].skillHand[i]
-      )
-    ) {
+    if (localGameState[self].skillHand[i] === "03-03") {
       usableSkills.push({
         id: localGameState[self].skillHand[i],
         handIndex: i,
@@ -32,36 +26,56 @@ const ScionSkillSelect = (props) => {
     }
   }
 
-  const handleReturn = () => {
+  const handleSkip = () => {
     const newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //pop "Triggering Screech"
     newGameState.currentResolution.pop();
-
-    dispatch(updateState(newGameState));
-  };
-
-  const handleSelect = () => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    //remove activated card from hand but do not send to vestige
-    newGameState[self].skillHand.splice(
-      usableSkills[selectedSkill].handIndex,
-      1
-    );
-
-    newGameState = activateSkill(
-      newGameState,
-      props.unit,
-      usableSkills[selectedSkill].id
-    );
+    newGameState.currentResolution.pop();
 
     dispatch(updateState(newGameState));
     props.updateFirebase(newGameState);
   };
 
+  const handleActivate = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    const zones = JSON.parse(newGameState.zones);
+
+    //pop "Triggering Screech"
+    newGameState.currentResolution.pop();
+
+    const zonesWithEnemies = getZonesWithEnemies(props.activator, 2);
+    let zonesWithWindScions = [];
+
+    for (let z of zonesWithEnemies) {
+      const zone = zones[Math.floor(z / 5)][z % 5];
+      const unit = newGameState[zone.player].units[zone.unitIndex];
+
+      if (unit.unitClass === "Wind Scion" && !isMuted(unit)) {
+        zonesWithWindScions.push(z);
+      }
+    }
+
+    props.setIntrudingPlayer(self);
+
+    props.enterSelectUnitMode(
+      zonesWithWindScions,
+      props.activator,
+      newGameState,
+      null,
+      "symphonic screech"
+    );
+  };
+
+  const handleViewBoard = () => {
+    props.hideOrRevealModale();
+  };
+
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <h2>Select Skill</h2>
+        <button onClick={() => handleViewBoard()}>View Board</button>
+        <h2>Contigency Triggered</h2>
 
         <div className="fourColumn scrollable scrollable-y-only">
           {usableSkills.map((usableSkill, i) => (
@@ -74,20 +88,19 @@ const ScionSkillSelect = (props) => {
               <Skill
                 i={i}
                 usableSkill={usableSkill}
-                canActivateSkill={canActivateSkill(props.unit, usableSkill.id)}
+                canActivateSkill={true}
                 setSelectedSkill={setSelectedSkill}
               />
             </div>
           ))}
         </div>
-
-        <button onClick={() => handleReturn()}>Return</button>
+        <button onClick={() => handleSkip()}>Skip</button>
         {selectedSkill !== null && (
-          <button onClick={() => handleSelect()}>Select</button>
+          <button onClick={() => handleActivate()}>Activate</button>
         )}
       </div>
     </div>
   );
 };
 
-export default ScionSkillSelect;
+export default ContingentSymphonicScreech;

@@ -68,7 +68,7 @@ const SelectSkillDiscard = (props) => {
           ))}
         </div>
 
-        {selectedSkill && (
+        {selectedSkill !== null && (
           <button onClick={() => handleSelect()}>Select</button>
         )}
       </div>
