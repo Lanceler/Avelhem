@@ -56,12 +56,6 @@ export const useSkillEffects = () => {
     //end "Negate the effect of the victim's skill
     newGameState.currentResolution.pop();
 
-    newGameState.currentResolution.push({
-      resolution: "Symphonic Screech Negate",
-      player: enemy,
-      canFloat: !isAdjacent(unit, victim),
-    });
-
     //return the skill conclusion of Screech
     newGameState.currentResolution.push(symphonicScreechConclusion);
 
@@ -73,6 +67,14 @@ export const useSkillEffects = () => {
       newGameState.currentResolution.push({
         resolution: "Symphonic Screech2",
         player: self,
+      });
+    }
+
+    if (!isAdjacent(unit, victim)) {
+      newGameState.currentResolution.push({
+        resolution: "Symphonic Screech Negate",
+        player: victim.player,
+        canFloat: !isAdjacent(unit, victim),
       });
     }
 

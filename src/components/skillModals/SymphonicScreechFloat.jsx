@@ -15,13 +15,21 @@ const SymphonicScreechFloat = (props) => {
     const newGameState = JSON.parse(JSON.stringify(localGameState));
     newGameState.currentResolution.pop();
 
+    let backtrack = 2;
+
+    if (
+      newGameState.currentResolution[newGameState.currentResolution.length - 1]
+        .resolution === "Symphonic Screech2"
+    ) {
+      backtrack = 3;
+    }
+
     newGameState.currentResolution[
-      newGameState.currentResolution.length - 1
+      newGameState.currentResolution.length - backtrack
     ].conclusion = "float";
 
     dispatch(updateState(newGameState));
-
-    // no need to update Firebase
+    props.updateFirebase(newGameState);
   };
 
   const handleProceed = () => {
@@ -29,8 +37,7 @@ const SymphonicScreechFloat = (props) => {
     newGameState.currentResolution.pop();
 
     dispatch(updateState(newGameState));
-
-    // no need to update Firebase
+    props.updateFirebase(newGameState);
   };
 
   const handleViewBoard = () => {
