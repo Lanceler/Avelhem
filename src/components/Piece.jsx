@@ -192,43 +192,60 @@ export const Piece = (props) => {
 
           {props.unit.unitClass === "Plant Scion" && (
             <>
-              {props.unit.blossom > 0 && (
+              {props.unit.blossom === 1 && (
                 <div className="blossom" style={{ left: 12 }}></div>
               )}
 
-              {props.unit.blossom > 1 && (
-                <div className="blossom" style={{ left: 29 }}></div>
+              {props.unit.blossom === 2 && (
+                <>
+                  <div className="blossom" style={{ left: 29 }}></div>
+                  <div className="blossom" style={{ left: 12 }}></div>
+                </>
               )}
 
               {props.unit.blossom > 2 && (
-                <div className="blossom" style={{ left: 46 }}></div>
+                <>
+                  <div className="blossom" style={{ left: 29 }}></div>
+                  <div className="blossom" style={{ left: 12 }}></div>
+                  <div className="blossom" style={{ left: 46 }}></div>
+                </>
               )}
             </>
           )}
 
           {props.unit.unitClass === "Lightning Scion" && (
             <>
-              {props.unit.charge > 0 && (
+              {props.unit.charge === 1 && (
                 <div className="charge" style={{ left: 12 }}></div>
               )}
 
-              {props.unit.charge > 1 && (
-                <div className="charge" style={{ left: 29 }}></div>
+              {props.unit.charge === 2 && (
+                <>
+                  <div className="charge" style={{ left: 29 }}></div>
+                  <div className="charge" style={{ left: 12 }}></div>
+                </>
               )}
 
               {props.unit.charge > 2 && (
-                <div className="charge" style={{ left: 46 }}></div>
+                <>
+                  <div className="charge" style={{ left: 29 }}></div>
+                  <div className="charge" style={{ left: 12 }}></div>
+                  <div className="charge" style={{ left: 46 }}></div>
+                </>
               )}
             </>
           )}
 
           {props.unit.unitClass === "Fire Scion" && (
             <>
-              {props.unit.fever > 0 && (
+              {props.unit.fever === 1 && (
                 <div className="fever" style={{ left: 20 }}></div>
               )}
               {props.unit.fever > 1 && (
-                <div className="fever" style={{ left: 38 }}></div>
+                <>
+                  <div className="fever" style={{ left: 20 }}></div>
+                  <div className="fever" style={{ left: 38 }}></div>
+                </>
               )}
             </>
           )}

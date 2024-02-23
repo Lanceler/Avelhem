@@ -32,6 +32,7 @@ import ScionSkillSelect from "./modals/ScionSkillSelect";
 
 import IgnitionPropulsion1 from "./skillModals/IgnitionPropulsion1";
 import ContingentSymphonicScreech from "./skillModals/ContingentSymphonicScreech";
+import SymphonicScreechFloat from "./skillModals/SymphonicScreechFloat";
 
 import DisplayedCard from "./displays/DisplayedCard";
 
@@ -403,6 +404,19 @@ const Board = (props) => {
           </>
         );
 
+      case "Symphonic Screech Negate":
+        return (
+          <>
+            {self === lastResolution.player && !hideModal && (
+              <SymphonicScreechFloat
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+                canFloat={lastResolution.canFloat}
+              />
+            )}
+          </>
+        );
+
       case "Final Phase Conclusion":
         return (
           <>
@@ -726,6 +740,9 @@ const Board = (props) => {
 
     if (conclusion === "discard") {
       newGameState[player].skillVestige.push(skill);
+    } else if (conclusion === "float") {
+      newGameState[player].skillRepertoire.push(skill);
+      newGameState[player].skillFloat = newGameState[player].skillFloat + 1;
     }
 
     if (newGameState[unit.player].units[unit.unitIndex] !== null) {

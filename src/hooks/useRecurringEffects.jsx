@@ -45,18 +45,6 @@ export const useRecurringEffects = () => {
         player: enemy,
         activator: unit,
       });
-
-      //animation delay
-      newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: enemy,
-      });
-    } else {
-      //animation delay
-      newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: self,
-      });
     }
 
     return newGameState;
@@ -85,12 +73,6 @@ export const useRecurringEffects = () => {
 
     newGameState.activatingSkill.push("03-03");
     newGameState.activatingUnit.push(unit);
-
-    //animation delay
-    newGameState.currentResolution.push({
-      resolution: "Animation Delay",
-      priority: self,
-    });
 
     return newGameState;
   };
@@ -209,20 +191,6 @@ export const useRecurringEffects = () => {
 
       //strike movement
       if (type === "strike") {
-        //to do move
-
-        // //vacate current zone
-        // newZoneInfo[attacker.row][attacker.column].player = null;
-        // newZoneInfo[attacker.row][attacker.column].unitIndex = null;
-
-        // //enter new zone
-        // newGameState[attacker.player].units[attacker.unitIndex].row =
-        //   victim.row;
-        // newGameState[attacker.player].units[attacker.unitIndex].column =
-        //   victim.column;
-        // newZoneInfo[victim.row][victim.column].player = attacker.player;
-        // newZoneInfo[victim.row][victim.column].unitIndex = attacker.unitIndex;
-
         newGameState = move(
           newGameState,
           attacker.player,
@@ -240,7 +208,7 @@ export const useRecurringEffects = () => {
       //Anathema-delay for non-pawns & non-ravagers
       if (
         newGameState[attacker.player].units[attacker.unitIndex].class !==
-          "Pawn" ||
+          "Pawn" &&
         !newGameState[attacker.player].units[attacker.unitIndex].enhancements
           .ravager
       )
@@ -520,12 +488,10 @@ export const useRecurringEffects = () => {
   const getZonesWithAllies = (unit, range, includeSelf) => {
     const zones = JSON.parse(localGameState.zones);
 
-    const ally = unit.player;
-
     let allyZones = getZonesInRange(unit.row, unit.column, range, includeSelf);
 
     allyZones = allyZones.filter(
-      (z) => zones[Math.floor(z / 5)][z % 5].player === ally
+      (z) => zones[Math.floor(z / 5)][z % 5].player === unit.player
     );
 
     return allyZones;
@@ -656,13 +622,44 @@ export const useRecurringEffects = () => {
       type: "strike",
     });
 
-    // if (!bypassTarget) {
-    //   // to do: triggerTarget(attacker, victim, bypassTarget);
-    // }
+    //to do in the future: consider bypass Target
+
+    if (triggerTarget(attacker, victim, "strike")) {
+      // to do; do the same for virtue-blast
+    }
 
     newGameState[attacker.player].units[attacker.unitIndex].virtue = false;
 
     return newGameState;
+  };
+
+  const triggerAegis = (victim) => {
+    const zones = JSON.parse(localGameState.zones);
+    const adjacentAllies = getZonesWithAllies(victim, 1, true); // includes self
+
+    for (let i of adjacentAllies) {
+      const zone = zones[Math.floor(i / 5)][i % 5];
+      const unit = gameState[zone.player].units[gameState.unitIndex];
+
+      if (unit.unitClass === "Mana Scion" && !isMuted(unit)) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
+  const triggerBlazeOfGlory = (victim, method) => {
+    if (
+      victim.unitClass === "Fire Scion" && //must be Fire Scion
+      ["strike", "virtue-blast", "blast"].includes(method) && //only attacks can trigger it
+      gameState[victim.player].skillHand.length > 1 && //needs at least 2 cards: Blaze of Glory itself + 1 card to discard
+      victim.fever && //enemy needs fever
+      getZonesWithEnemies(victim, 1).length //must be able to burn an adjacent enemy
+    ) {
+      return true;
+    }
+    return false;
   };
 
   const triggerScreech = (unit) => {
@@ -702,34 +699,30 @@ export const useRecurringEffects = () => {
     return false;
   };
 
-  const triggerTarget = (victim, type, bypassTarget) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    if (newGameState[victim.player.skillHand.length]) {
-      if (
-        ["strike", "virtue-blast", "paralyze"].includes(type) &&
-        victim.unitClass === "metalScion" &&
-        victim.virtue &&
-        !victim.temporary.usedAdamantArmor
-      ) {
-        //prompt AdamantArmor
-      } else {
-        if (!bypassTarget) {
-          if (
-            (victim.unitClass === "lightningScion" && !isMuted(victim)) ||
-            canAegis(victim) ||
-            (victim.fever &&
-              !isMuted(victim) &&
-              newGameState[victim.player].skillHand >= 2)
-          ) {
-            //prompt contingentSkill
-          }
-        }
-      }
+  const triggerTarget = (attacker, victim, method) => {
+    if (
+      triggerBlazeOfGlory(victim, method) ||
+      triggerThunderThaumaturge(attacker, victim) ||
+      triggerAegis(victim)
+    ) {
+      return true;
     }
+
+    return false;
   };
 
-  const virtueBlast = (newGameState, attacker, victim, bypassTarget) => {
+  const triggerThunderThaumaturge = (attacker, victim) => {
+    if (
+      victim.unitClass === "Lightning Scion" && //must be Lightning Scion
+      victim.charge && //enemy needs chrge
+      isAdjacent(attacker, victim) //enemy must be adjacent
+    ) {
+      return true;
+    }
+    return false;
+  };
+
+  const virtueBlast = (newGameState, attacker, victim) => {
     //pop "Selecting Unit" resolution
     // newGameState.currentResolution.pop();
 
@@ -746,10 +739,6 @@ export const useRecurringEffects = () => {
         attacker: attacker,
         victim: victim,
       });
-    }
-
-    if (!bypassTarget) {
-      //to do: triggerTarget(attacker, victim, bypassTarget);
     }
 
     newGameState[attacker.player].units[attacker.unitIndex].virtue = false;
