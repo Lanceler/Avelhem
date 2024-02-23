@@ -610,7 +610,7 @@ const Board = (props) => {
       newGameState.tactics[tacticUsed].stock--;
 
       if (tacticUsed === 0) {
-        newGameState[unit.unitplayer].units[
+        newGameState[unit.player].units[
           unit.unitIndex
         ].temporary.used0thTactic = true;
       } else if (tacticUsed === 1) {
