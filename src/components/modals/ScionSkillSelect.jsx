@@ -32,6 +32,10 @@ const ScionSkillSelect = (props) => {
     }
   }
 
+  const handleResonate = () => {
+    //
+  };
+
   const handleReturn = () => {
     const newGameState = JSON.parse(JSON.stringify(localGameState));
     newGameState.currentResolution.pop();

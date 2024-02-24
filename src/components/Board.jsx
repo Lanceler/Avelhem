@@ -68,14 +68,17 @@ const Board = (props) => {
   const {
     activateSymphonicScreech,
     applyDamage,
+    blast,
     endFinalPhase,
+    getZonesWithEnemies,
     move,
     shuffleRepertoire,
     strike,
     virtueBlast,
   } = useRecurringEffects();
 
-  const { ignitionPropulsionEffect1, symphonicScreech1 } = useSkillEffects();
+  const { conflagration1, ignitionPropulsion1, symphonicScreech1 } =
+    useSkillEffects();
   const { getSkillById } = useCardDatabase();
 
   const newPawnStats = (player, index, row, column) => {
@@ -322,13 +325,30 @@ const Board = (props) => {
           </>
         );
 
+      case "Discard Skill":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <SelectSkillDiscard
+                updateFirebase={updateFirebase}
+                unit={lastResolution.unit}
+                player={lastResolution.player}
+                message={lastResolution.message}
+                restriction={lastResolution.restriction}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
       case "Revealing Skill":
         return (
           <>
-            {self === lastResolution.player && (
+            {self === lastResolution.player && !hideModal && (
               <ViewRevealedSkill
                 updateFirebase={updateFirebase}
                 skill={lastResolution.skill}
+                hideOrRevealModale={hideOrRevealModale}
               />
             )}
           </>
@@ -354,27 +374,7 @@ const Board = (props) => {
         return (
           <>
             {self === lastResolution.unit.player && (
-              <>
-                {resolutionUpdate(
-                  ignitionPropulsionEffect1(lastResolution.unit)
-                )}
-              </>
-            )}
-          </>
-        );
-
-      case "Ignition Propulsion0":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <SelectSkillDiscard
-                updateFirebase={updateFirebase}
-                unit={lastResolution.unit}
-                player={lastResolution.player}
-                message={lastResolution.message}
-                restriction={lastResolution.restriction}
-                hideOrRevealModale={hideOrRevealModale}
-              />
+              <>{resolutionUpdate(ignitionPropulsion1(lastResolution.unit))}</>
             )}
           </>
         );
@@ -390,6 +390,24 @@ const Board = (props) => {
                 enterSelectUnitMode={enterSelectUnitMode}
                 hideOrRevealModale={hideOrRevealModale}
               />
+            )}
+          </>
+        );
+
+      case "Activating Conflagration":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>{resolutionUpdate(conflagration1(lastResolution.unit))}</>
+            )}
+          </>
+        );
+
+      case "ConflagrationBlast":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>{blastSelect(lastResolution.unit, null, "Fire Scion")}</>
             )}
           </>
         );
@@ -494,6 +512,22 @@ const Board = (props) => {
 
       // updateFirebase(newGameState);
     }, 1750);
+  };
+
+  const blastSelect = (unit, tactic, special) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "conflagrationBlast" resolution
+    newGameState.currentResolution.pop();
+
+    enterSelectUnitMode(
+      getZonesWithEnemies(unit, 1),
+      unit,
+      newGameState,
+      tactic,
+      "blast",
+      special
+    );
   };
 
   const deployPawn = (r, c) => {
@@ -736,6 +770,13 @@ const Board = (props) => {
         newGameState,
         newGameState[unit.player].units[unit.unitIndex],
         selectedUnit
+      );
+    } else if (reason === "blast") {
+      newGameState = blast(
+        newGameState,
+        newGameState[unit.player].units[unit.unitIndex],
+        selectedUnit,
+        special
       );
     } else if (reason === "strike") {
       newGameState = strike(

@@ -49,7 +49,7 @@ const IgnitionPropulsion1 = (props) => {
         newGameState,
         null,
         "strike",
-        "Ignition Propulsion"
+        "Fire Scion"
       );
     }
   };

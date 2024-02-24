@@ -12,6 +12,29 @@ export const useRecurringEffects = () => {
   //=========================================
   //Exported functions below
 
+  const activateConflagration = (newGameState, unit) => {
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      unit: unit,
+      skill: "01-02",
+      conclusion: "discard",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Activating Conflagration",
+      unit: unit,
+    });
+
+    newGameState.activatingSkill.push("01-02");
+    newGameState.activatingUnit.push(unit);
+
+    return newGameState;
+  };
+
   const activateIgnitionPropulsion = (newGameState, unit) => {
     //end Select Skill resolution
     newGameState.currentResolution.pop();
@@ -81,6 +104,8 @@ export const useRecurringEffects = () => {
     switch (skill) {
       case "01-01":
         return activateIgnitionPropulsion(newGameState, unit);
+      case "01-02":
+        return activateConflagration(newGameState, unit);
 
       default:
         return false;
@@ -125,7 +150,7 @@ export const useRecurringEffects = () => {
     } else if (["geomancy", "surge"].includes(special)) {
       aP = 2;
     } else if (
-      special === "Ignition Propulsion" &&
+      special === "Fire Scion" &&
       victim.unitClass === "Fire Scion" &&
       !isMuted(victim)
     ) {
@@ -221,6 +246,23 @@ export const useRecurringEffects = () => {
 
   const assignTactics = (newGameState, first, second) => {
     newGameState.tactics = [first, second];
+
+    return newGameState;
+  };
+
+  const blast = (newGameState, attacker, victim, special) => {
+    //pop "Selecting Unit" resolution
+    // newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Apply Damage",
+      attacker: attacker,
+      victim: victim,
+      special: special,
+      type: "blast",
+    });
+
+    // to do: target
 
     return newGameState;
   };
@@ -770,6 +812,7 @@ export const useRecurringEffects = () => {
     activateSymphonicScreech,
     applyDamage,
     assignTactics,
+    blast,
     canActivateSkill,
     canAegis,
     canBlast,

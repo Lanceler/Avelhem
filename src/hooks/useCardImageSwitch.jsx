@@ -41,7 +41,7 @@ import ViridianGrave from "../assets/skillcards/ViridianGrave.png";
 import CastleOfThorns from "../assets/skillcards/CastleOfThorns.png";
 
 // import HeirsEndeavor from "../assets/skillcards/HeirsEndeavor.png";
-// import TeaForTwo from "../assets/skillcards/TeaForTwo.png";
+import TeaForTwo from "../assets/skillcards/TeaForTwo.png";
 // import UnbridledPower from "../assets/skillcards/UnbridledPower.png";
 // import DarkHalo from "../assets/skillcards/DarkHalo.png";
 // import Reminiscence from "../assets/skillcards/Reminiscence.png";
@@ -136,8 +136,8 @@ export const useCardImageSwitch = (cardName) => {
 
       // case "Heir’s Endeavor":
       //   return HeirsEndeavor;
-      // case "Tea For Two":
-      //   return TeaForTwo;
+      case "Tea For Two":
+        return TeaForTwo;
       // case "Unbridled Power":
       //   return UnbridledPower;
       // case "Dark Halo":
