@@ -39,6 +39,7 @@ export const useSkillEffects = () => {
     newGameState.currentResolution.push({
       resolution: "Ignition Propulsion0",
       unit: unit,
+      player: self,
     });
 
     return newGameState;
@@ -66,17 +67,18 @@ export const useSkillEffects = () => {
     ) {
       newGameState.currentResolution.push({
         resolution: "Symphonic Screech2",
+        unit: unit,
         player: self,
+        restriction: ["03-01", "03-02", "03-03", "03-04"],
+        message: "You may reveal 1 Wind skill to draw a floating skill.",
       });
     }
 
-    if (!isAdjacent(unit, victim)) {
-      newGameState.currentResolution.push({
-        resolution: "Symphonic Screech Negate",
-        player: victim.player,
-        canFloat: !isAdjacent(unit, victim),
-      });
-    }
+    newGameState.currentResolution.push({
+      resolution: "Symphonic Screech Negate",
+      player: victim.player,
+      canFloat: !isAdjacent(unit, victim),
+    });
 
     return newGameState;
   };

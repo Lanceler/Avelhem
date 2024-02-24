@@ -136,3 +136,19 @@ background: rgb(117, 13, 13)
     background-color: rgb(72, 209, 30);
 
 }
+
+.revealed-skill {
+    width: 180px;
+    height: 252px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+
+    margin: 5px;
+    padding: 0 auto;
+    background-size: cover;
+    background-position: center;
+
+    border-radius: 10px;
+}

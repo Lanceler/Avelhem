@@ -23,6 +23,9 @@ import CoordinationPhaseSelection from "./modals/CoordinationPhaseSelection";
 import DefiancePhaseSelection from "./modals/DefiancePhaseSelection";
 
 import SelectSkillDiscard from "./modals/SelectSkillDiscard";
+import SelectSkillReveal from "./modals/SelectSkillReveal";
+import ViewRevealedSkill from "./modals/ViewRevealedSkill";
+
 import TacticSelection from "./modals/TacticSelection";
 import TacticAdvance from "./modals/TacticAdvance";
 import TacticAssault from "./modals/TacticAssault";
@@ -319,6 +322,18 @@ const Board = (props) => {
           </>
         );
 
+      case "Revealing Skill":
+        return (
+          <>
+            {self === lastResolution.player && (
+              <ViewRevealedSkill
+                updateFirebase={updateFirebase}
+                skill={lastResolution.skill}
+              />
+            )}
+          </>
+        );
+
       case "Skill Conclusion":
         return (
           <>
@@ -355,6 +370,9 @@ const Board = (props) => {
               <SelectSkillDiscard
                 updateFirebase={updateFirebase}
                 unit={lastResolution.unit}
+                player={lastResolution.player}
+                message={lastResolution.message}
+                restriction={lastResolution.restriction}
                 hideOrRevealModale={hideOrRevealModale}
               />
             )}
@@ -412,6 +430,22 @@ const Board = (props) => {
                 updateFirebase={updateFirebase}
                 hideOrRevealModale={hideOrRevealModale}
                 canFloat={lastResolution.canFloat}
+              />
+            )}
+          </>
+        );
+
+      case "Symphonic Screech2":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <SelectSkillReveal
+                updateFirebase={updateFirebase}
+                unit={lastResolution.unit}
+                player={lastResolution.player}
+                message={lastResolution.message}
+                restriction={lastResolution.restriction}
+                hideOrRevealModale={hideOrRevealModale}
               />
             )}
           </>

@@ -1,6 +1,6 @@
 import React from "react";
 
-import IgnitionPropulsion from "../assets/skillcards/IgnitionPropulsion2.png";
+import IgnitionPropulsion from "../assets/skillcards/IgnitionPropulsion.png";
 import Conflagration from "../assets/skillcards/Conflagration.png";
 import BlazeOfGlory from "../assets/skillcards/BlazeOfGlory.png";
 import Resplendence from "../assets/skillcards/Resplendence.png";

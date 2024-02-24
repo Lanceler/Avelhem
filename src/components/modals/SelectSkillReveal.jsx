@@ -4,13 +4,16 @@ import "./Modal.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
+import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import Skill from "../hand/Skill";
 
-const SelectSkillDiscard = (props) => {
+const SelectSkillReveal = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
-  const { self } = useSelector((state) => state.teams);
+  const { self, enemy } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
+
+  const { drawSkill } = useRecurringEffects();
 
   const [selectedSkill, setSelectedSkill] = useState(null);
 
@@ -22,19 +25,33 @@ const SelectSkillDiscard = (props) => {
     });
   }
 
+  if (props.restriction !== null) {
+    usableSkills = usableSkills.filter((skill) =>
+      props.restriction.includes(skill.id)
+    );
+  }
+
   const handleSelect = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    //end Discarding Skill resolution
+    newGameState = drawSkill(newGameState);
+
+    //end Reveal Skill resolution
     newGameState.currentResolution.pop();
 
-    //send selected skill to vestige
-    newGameState[self].skillVestige.push(
-      ...newGameState[self].skillHand.splice(
-        usableSkills[selectedSkill].handIndex,
-        1
-      )
-    );
+    newGameState.currentResolution.push({
+      resolution: "Revealing Skill",
+      player: enemy,
+      skill: usableSkills[selectedSkill].id,
+    });
+
+    dispatch(updateState(newGameState));
+    props.updateFirebase(newGameState);
+  };
+
+  const handleSkip = () => {
+    const newGameState = JSON.parse(JSON.stringify(localGameState));
+    newGameState.currentResolution.pop();
 
     dispatch(updateState(newGameState));
     props.updateFirebase(newGameState);
@@ -44,13 +61,12 @@ const SelectSkillDiscard = (props) => {
     props.hideOrRevealModale();
   };
 
-  // to do: apply props.restriction; be careful with index after filtering
-
   return (
     <div className="modal-backdrop">
       <div className="modal">
         <button onClick={() => handleViewBoard()}>View Board</button>
-        <h2>Discard Skill</h2>
+        <h2>Reveal Skill</h2>
+        <h3>{props.message}</h3>
 
         <div className="fourColumn scrollable scrollable-y-only">
           {usableSkills.map((usableSkill, i) => (
@@ -63,12 +79,14 @@ const SelectSkillDiscard = (props) => {
               <Skill
                 i={i}
                 usableSkill={usableSkill}
-                canActivateSkill={true} // any skill can be discarded
+                canActivateSkill={true} // any skill can be revealed
                 setSelectedSkill={setSelectedSkill}
               />
             </div>
           ))}
         </div>
+
+        <button onClick={() => handleSkip()}>Skip</button>
 
         {selectedSkill !== null && (
           <button onClick={() => handleSelect()}>Select</button>
@@ -78,4 +96,4 @@ const SelectSkillDiscard = (props) => {
   );
 };
 
-export default SelectSkillDiscard;
+export default SelectSkillReveal;
