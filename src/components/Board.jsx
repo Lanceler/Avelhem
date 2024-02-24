@@ -22,6 +22,8 @@ import BountyStore from "./modals/BountyStore";
 import CoordinationPhaseSelection from "./modals/CoordinationPhaseSelection";
 import DefiancePhaseSelection from "./modals/DefiancePhaseSelection";
 
+import ScionSkillSelect from "./modals/ScionSkillSelect";
+import SelectSkillResonator from "./modals/SelectSkillResonator";
 import SelectSkillDiscard from "./modals/SelectSkillDiscard";
 import SelectSkillReveal from "./modals/SelectSkillReveal";
 import ViewRevealedSkill from "./modals/ViewRevealedSkill";
@@ -30,8 +32,6 @@ import TacticSelection from "./modals/TacticSelection";
 import TacticAdvance from "./modals/TacticAdvance";
 import TacticAssault from "./modals/TacticAssault";
 import VirtueBlastBlock from "./modals/VirtueBlastBlock";
-
-import ScionSkillSelect from "./modals/ScionSkillSelect";
 
 import IgnitionPropulsion1 from "./skillModals/IgnitionPropulsion1";
 import ContingentSymphonicScreech from "./skillModals/ContingentSymphonicScreech";
@@ -309,6 +309,20 @@ const Board = (props) => {
                   lastResolution.special
                 )}
               </>
+            )}
+          </>
+        );
+
+      case "Choose Resonator":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <SelectSkillResonator
+                updateFirebase={updateFirebase}
+                unit={lastResolution.unit}
+                skill={lastResolution.skill}
+                hideOrRevealModale={hideOrRevealModale}
+              />
             )}
           </>
         );

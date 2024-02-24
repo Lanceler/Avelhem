@@ -292,6 +292,20 @@ export const useRecurringEffects = () => {
     return false;
   };
 
+  const canActivateResonance = (unit, skill) => {
+    if (!canActivateSkill(unit, skill)) {
+      return false;
+    }
+
+    switch (skill) {
+      case "01-02":
+        return localGameState[self].skillHand.length > 2;
+
+      default:
+        return false;
+    }
+  };
+
   const canActivateSkill = (unit, skill) => {
     if (isMuted(unit)) {
       return false;
@@ -319,7 +333,6 @@ export const useRecurringEffects = () => {
     if (getZonesWithEnemies(unit, 1).length && !isMuted(unit)) {
       return true;
     }
-
     return false;
   };
 
@@ -327,11 +340,9 @@ export const useRecurringEffects = () => {
     if (!unit.fever) {
       return false;
     }
-
     if (!canBlast(unit)) {
       return false;
     }
-
     if (localGameState[self].skillHand.length < 2) {
       return false;
     }
@@ -813,6 +824,7 @@ export const useRecurringEffects = () => {
     applyDamage,
     assignTactics,
     blast,
+    canActivateResonance,
     canActivateSkill,
     canAegis,
     canBlast,

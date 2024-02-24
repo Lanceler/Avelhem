@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Modal.css";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -13,10 +13,23 @@ const ScionSkillSelect = (props) => {
   const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const { activateSkill, canActivateSkill, getScionSet } =
+  const { activateSkill, canActivateResonance, canActivateSkill, getScionSet } =
     useRecurringEffects();
 
   const [selectedSkill, setSelectedSkill] = useState(null);
+  const [canResonate, setCanResonate] = useState(null);
+
+  useEffect(() => {
+    if (usableSkills[selectedSkill]) {
+      if (canActivateResonance(props.unit, usableSkills[selectedSkill].id)) {
+        console.log("can resonate");
+        setCanResonate(true);
+      } else {
+        console.log("cannot resonate");
+        setCanResonate(false);
+      }
+    }
+  }, [selectedSkill]);
 
   let usableSkills = [];
   for (let i in localGameState[self].skillHand) {
@@ -33,7 +46,15 @@ const ScionSkillSelect = (props) => {
   }
 
   const handleResonate = () => {
-    //
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    newGameState.currentResolution.push({
+      resolution: "Choose Resonator",
+      skill: usableSkills[selectedSkill],
+      unit: props.unit,
+    });
+
+    dispatch(updateState(newGameState));
   };
 
   const handleReturn = () => {
@@ -88,6 +109,9 @@ const ScionSkillSelect = (props) => {
         <button onClick={() => handleReturn()}>Return</button>
         {selectedSkill !== null && (
           <button onClick={() => handleSelect()}>Select</button>
+        )}
+        {canResonate && (
+          <button onClick={() => handleResonate()}>Resonate</button>
         )}
       </div>
     </div>
