@@ -15,6 +15,8 @@ const SelectSkillResonator = (props) => {
 
   const [selectedSkill, setSelectedSkill] = useState(null);
 
+  const { activateSkillAndResonate } = useRecurringEffects();
+
   let usableSkills = [];
   for (let i in localGameState[self].skillHand) {
     usableSkills.push({
@@ -38,7 +40,29 @@ const SelectSkillResonator = (props) => {
   );
 
   const handleSelect = () => {
-    console.log(usableSkills[selectedSkill]);
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    newGameState = activateSkillAndResonate(
+      newGameState,
+      props.unit,
+      props.skill.id,
+      usableSkills[selectedSkill].id
+    );
+
+    const skillHandIndexes = [
+      props.skill.handIndex,
+      usableSkills[selectedSkill].handIndex,
+    ];
+
+    //get index in descending order
+    skillHandIndexes.sort((a, b) => b - a);
+
+    //remove resonating cards from hand but do not send to vestige
+    newGameState[self].skillHand.splice(skillHandIndexes[0], 1);
+    newGameState[self].skillHand.splice(skillHandIndexes[1], 1);
+
+    dispatch(updateState(newGameState));
+    props.updateFirebase(newGameState);
   };
 
   const handleCancel = () => {

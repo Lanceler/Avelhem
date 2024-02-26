@@ -7,18 +7,25 @@ import { updateState } from "../../redux/gameState";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 import Skill from "../hand/Skill";
 
-const ContingentSymphonicScreech = (props) => {
+const ContingentTarget = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
   const [selectedSkill, setSelectedSkill] = useState(null);
 
-  const { getZonesWithEnemies, isMuted } = useRecurringEffects();
+  const {
+    activateBlazeOfGlory,
+    triggerAegis,
+    triggerBlazeOfGlory,
+    triggerThunderThaumaturge,
+  } = useRecurringEffects();
+
+  let targetContingentSkills = ["01-03", "05-03", "06-03"];
 
   let usableSkills = [];
   for (let i in localGameState[self].skillHand) {
-    if (localGameState[self].skillHand[i] === "03-03") {
+    if (targetContingentSkills.includes(localGameState[self].skillHand[i])) {
       usableSkills.push({
         id: localGameState[self].skillHand[i],
         handIndex: i,
@@ -26,45 +33,55 @@ const ContingentSymphonicScreech = (props) => {
     }
   }
 
+  const canActivateContingency = (skill) => {
+    switch (skill) {
+      case "01-03":
+        return triggerBlazeOfGlory(props.victim, props.type);
+
+      case "05-03":
+        return triggerThunderThaumaturge(props.attacker, props.victim);
+
+      case "06-03":
+        return triggerAegis(props.victim);
+
+      default:
+        return false;
+    }
+  };
+
   const handleSkip = () => {
     const newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    //pop "Triggering Screech"
+    //pop "Triggering Target"
     newGameState.currentResolution.pop();
-    // newGameState.currentResolution.pop(); // why is there a second?
 
     dispatch(updateState(newGameState));
     props.updateFirebase(newGameState);
   };
 
   const handleActivate = () => {
+    console.log(usableSkills[selectedSkill].handIndex);
+
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     const zones = JSON.parse(newGameState.zones);
 
-    //pop "Triggering Screech"
+    //pop "Triggering Target"
     newGameState.currentResolution.pop();
 
-    const zonesWithEnemies = getZonesWithEnemies(props.activator, 2);
-    let zonesWithWindScions = [];
+    //remove activated card from hand but do not send to vestige
+    newGameState[self].skillHand.splice(
+      usableSkills[selectedSkill].handIndex,
+      1
+    );
 
-    for (let z of zonesWithEnemies) {
-      const zone = zones[Math.floor(z / 5)][z % 5];
-      const unit = newGameState[zone.player].units[zone.unitIndex];
-
-      if (unit.unitClass === "Wind Scion" && !isMuted(unit)) {
-        zonesWithWindScions.push(z);
-      }
+    if (usableSkills[selectedSkill].id === "01-03") {
+      newGameState = activateBlazeOfGlory(newGameState, props.victim);
     }
 
-    props.setIntrudingPlayer(self);
+    dispatch(updateState(newGameState));
+    props.updateFirebase(newGameState);
 
-    props.enterSelectUnitMode(
-      zonesWithWindScions,
-      props.activator,
-      newGameState,
-      null,
-      "symphonic screech"
-    );
+    // // props.setIntrudingPlayer(self); // <-- need for Aegis
   };
 
   const handleViewBoard = () => {
@@ -75,7 +92,7 @@ const ContingentSymphonicScreech = (props) => {
     <div className="modal-backdrop">
       <div className="modal">
         <button onClick={() => handleViewBoard()}>View Board</button>
-        <h2>Contigency: Activation Triggered</h2>
+        <h2>Contigency: Target Triggered</h2>
 
         <div className="fourColumn scrollable scrollable-y-only">
           {usableSkills.map((usableSkill, i) => (
@@ -88,12 +105,13 @@ const ContingentSymphonicScreech = (props) => {
               <Skill
                 i={i}
                 usableSkill={usableSkill}
-                canActivateSkill={true}
+                canActivateSkill={canActivateContingency(usableSkill.id)}
                 setSelectedSkill={setSelectedSkill}
               />
             </div>
           ))}
         </div>
+
         <button onClick={() => handleSkip()}>Skip</button>
         {selectedSkill !== null && (
           <button onClick={() => handleActivate()}>Activate</button>
@@ -103,4 +121,4 @@ const ContingentSymphonicScreech = (props) => {
   );
 };
 
-export default ContingentSymphonicScreech;
+export default ContingentTarget;

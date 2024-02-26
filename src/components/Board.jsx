@@ -34,6 +34,8 @@ import TacticAssault from "./modals/TacticAssault";
 import VirtueBlastBlock from "./modals/VirtueBlastBlock";
 
 import IgnitionPropulsion1 from "./skillModals/IgnitionPropulsion1";
+
+import ContingentTarget from "./skillModals/ContingentTarget";
 import ContingentSymphonicScreech from "./skillModals/ContingentSymphonicScreech";
 import SymphonicScreechFloat from "./skillModals/SymphonicScreechFloat";
 
@@ -71,6 +73,7 @@ const Board = (props) => {
     blast,
     endFinalPhase,
     getZonesWithEnemies,
+    isMuted,
     move,
     shuffleRepertoire,
     strike,
@@ -318,10 +321,10 @@ const Board = (props) => {
           <>
             {self === lastResolution.unit.player && (
               <SelectSkillResonator
-                updateFirebase={updateFirebase}
                 unit={lastResolution.unit}
                 skill={lastResolution.skill}
                 hideOrRevealModale={hideOrRevealModale}
+                updateFirebase={updateFirebase}
               />
             )}
           </>
@@ -422,6 +425,23 @@ const Board = (props) => {
           <>
             {self === lastResolution.unit.player && (
               <>{blastSelect(lastResolution.unit, null, "Fire Scion")}</>
+            )}
+          </>
+        );
+
+      case "Triggering Target":
+        return (
+          <>
+            {self === lastResolution.victim.player && !hideModal && (
+              <ContingentTarget
+                updateFirebase={updateFirebase}
+                attacker={lastResolution.attacker}
+                victim={lastResolution.victim}
+                type={lastResolution.type}
+                enterSelectUnitMode={enterSelectUnitMode}
+                hideOrRevealModale={hideOrRevealModale}
+                setIntrudingPlayer={setIntrudingPlayer}
+              />
             )}
           </>
         );
@@ -531,17 +551,19 @@ const Board = (props) => {
   const blastSelect = (unit, tactic, special) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    //end "conflagrationBlast" resolution
+    //end "blast" resolution
     newGameState.currentResolution.pop();
 
-    enterSelectUnitMode(
-      getZonesWithEnemies(unit, 1),
-      unit,
-      newGameState,
-      tactic,
-      "blast",
-      special
-    );
+    if (!isMuted(unit) && unit !== null) {
+      enterSelectUnitMode(
+        getZonesWithEnemies(unit, 1),
+        unit,
+        newGameState,
+        tactic,
+        "blast",
+        special
+      );
+    }
   };
 
   const deployPawn = (r, c) => {
@@ -748,6 +770,8 @@ const Board = (props) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
     newGameState.currentResolution.pop();
+
+    // to-do: if attacker is null or muted, skip applyDamage
 
     newGameState = applyDamage(
       newGameState,
@@ -983,6 +1007,16 @@ const Board = (props) => {
                     )}
                     inGame={true}
                   />
+
+                  {localGameState.activatingSkill.length === 1 &&
+                    localGameState.activatingResonator.length === 1 && (
+                      <DisplayedCard
+                        cardInfo={getSkillById(
+                          localGameState.activatingResonator[0]
+                        )}
+                        inGame={true}
+                      />
+                    )}
                 </>
               )}
             </div>

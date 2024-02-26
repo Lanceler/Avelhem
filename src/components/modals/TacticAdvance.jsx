@@ -29,6 +29,7 @@ const TacticAdvance = (props) => {
   let canVirtueBlast = false;
 
   if (
+    props.unit.unitClass !== "Pawn" &&
     props.unit.virtue &&
     canBlast(props.unit) &&
     !props.unit.afflictions.root

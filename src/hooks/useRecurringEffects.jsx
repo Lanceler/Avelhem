@@ -12,6 +12,39 @@ export const useRecurringEffects = () => {
   //=========================================
   //Exported functions below
 
+  const activateBlazeOfGlory = (newGameState, unit) => {
+    //end Triggering Target resolution <-- NOT needed
+    // newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      unit: unit,
+      skill: "01-03",
+      conclusion: "discard",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Activating Blaze of Glory",
+      unit: unit,
+    });
+
+    newGameState.activatingSkill.push("01-03");
+    newGameState.activatingUnit.push(unit);
+
+    if (triggerScreech(unit)) {
+      newGameState.currentResolution.push({
+        resolution: "Triggering Screech",
+        player: enemy,
+        activator: unit,
+      });
+    }
+
+    //to do: alert opponent that contingent skill was used
+
+    return newGameState;
+  };
+
   const activateConflagration = (newGameState, unit) => {
     //end Select Skill resolution
     newGameState.currentResolution.pop();
@@ -30,6 +63,36 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.activatingSkill.push("01-02");
+    newGameState.activatingUnit.push(unit);
+
+    return newGameState;
+  };
+
+  const activateConflagrationAndResonate = (newGameState, unit, resonator) => {
+    //end Select Resonator resolution
+    newGameState.currentResolution.pop();
+
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Resonance Conclusion",
+      player: self,
+      unit: unit,
+      skill: "01-02",
+      skillConclusion: "discard",
+      resonator: resonator,
+      resonatorConclusion: "discard",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Resonating Conflagration",
+      unit: unit,
+      resonator: resonator,
+    });
+
+    newGameState.activatingSkill.push("01-02");
+    newGameState.activatingResonator.push(resonator);
     newGameState.activatingUnit.push(unit);
 
     return newGameState;
@@ -108,7 +171,17 @@ export const useRecurringEffects = () => {
         return activateConflagration(newGameState, unit);
 
       default:
-        return false;
+        return newGameState;
+    }
+  };
+
+  const activateSkillAndResonate = (newGameState, unit, skill, resonator) => {
+    switch (skill) {
+      case "01-02":
+        return activateConflagrationAndResonate(newGameState, unit, resonator);
+
+      default:
+        return newGameState;
     }
   };
 
@@ -251,9 +324,6 @@ export const useRecurringEffects = () => {
   };
 
   const blast = (newGameState, attacker, victim, special) => {
-    //pop "Selecting Unit" resolution
-    // newGameState.currentResolution.pop();
-
     newGameState.currentResolution.push({
       resolution: "Apply Damage",
       attacker: attacker,
@@ -262,7 +332,15 @@ export const useRecurringEffects = () => {
       type: "blast",
     });
 
-    // to do: target
+    //to do in the future: consider bypass Target and Adamant Armor
+    if (triggerTarget(attacker, victim, "virtue-blast")) {
+      newGameState.currentResolution.push({
+        resolution: "Triggering Target",
+        attacker: attacker,
+        victim: victim,
+        type: "virtue-blast",
+      });
+    }
 
     return newGameState;
   };
@@ -664,9 +742,6 @@ export const useRecurringEffects = () => {
   };
 
   const strike = (newGameState, attacker, victim, special) => {
-    //pop "Selecting Unit" resolution
-    // newGameState.currentResolution.pop();
-
     newGameState.currentResolution.push({
       resolution: "Apply Damage",
       attacker: attacker,
@@ -675,13 +750,16 @@ export const useRecurringEffects = () => {
       type: "strike",
     });
 
-    //to do in the future: consider bypass Target
+    //to do in the future: consider bypass Target and Adamant Armor
 
     if (triggerTarget(attacker, victim, "strike")) {
-      // to do; do the same for virtue-blast
+      newGameState.currentResolution.push({
+        resolution: "Triggering Target",
+        attacker: attacker,
+        victim: victim,
+        type: "strike",
+      });
     }
-
-    newGameState[attacker.player].units[attacker.unitIndex].virtue = false;
 
     return newGameState;
   };
@@ -692,7 +770,7 @@ export const useRecurringEffects = () => {
 
     for (let i of adjacentAllies) {
       const zone = zones[Math.floor(i / 5)][i % 5];
-      const unit = gameState[zone.player].units[gameState.unitIndex];
+      const unit = localGameState[zone.player].units[zone.unitIndex];
 
       if (unit.unitClass === "Mana Scion" && !isMuted(unit)) {
         return true;
@@ -706,7 +784,7 @@ export const useRecurringEffects = () => {
     if (
       victim.unitClass === "Fire Scion" && //must be Fire Scion
       ["strike", "virtue-blast", "blast"].includes(method) && //only attacks can trigger it
-      gameState[victim.player].skillHand.length > 1 && //needs at least 2 cards: Blaze of Glory itself + 1 card to discard
+      localGameState[victim.player].skillHand.length > 1 && //needs at least 2 cards: Blaze of Glory itself + 1 card to discard
       victim.fever && //enemy needs fever
       getZonesWithEnemies(victim, 1).length //must be able to burn an adjacent enemy
     ) {
@@ -752,9 +830,9 @@ export const useRecurringEffects = () => {
     return false;
   };
 
-  const triggerTarget = (attacker, victim, method) => {
+  const triggerTarget = (attacker, victim, type) => {
     if (
-      triggerBlazeOfGlory(victim, method) ||
+      triggerBlazeOfGlory(victim, type) ||
       triggerThunderThaumaturge(attacker, victim) ||
       triggerAegis(victim)
     ) {
@@ -776,9 +854,6 @@ export const useRecurringEffects = () => {
   };
 
   const virtueBlast = (newGameState, attacker, victim) => {
-    //pop "Selecting Unit" resolution
-    // newGameState.currentResolution.pop();
-
     newGameState.currentResolution.push({
       resolution: "Apply Damage",
       attacker: attacker,
@@ -794,7 +869,17 @@ export const useRecurringEffects = () => {
       });
     }
 
-    newGameState[attacker.player].units[attacker.unitIndex].virtue = false;
+    //to do in the future: consider bypass Target and Adamant Armor
+    if (triggerTarget(attacker, victim, "virtue-blast")) {
+      newGameState.currentResolution.push({
+        resolution: "Triggering Target",
+        attacker: attacker,
+        victim: victim,
+        type: "virtue-blast",
+      });
+    }
+
+    newGameState[attacker.player].units[attacker.unitIndex].virtue = 0;
 
     return newGameState;
   };
@@ -811,15 +896,17 @@ export const useRecurringEffects = () => {
       newGameState.currentResolution.length - 1
     ].special = "Virtue-blast-blocked";
 
-    newGameState[victim.player].units[victim.unitIndex].virtue = false;
+    newGameState[victim.player].units[victim.unitIndex].virtue = 0;
 
-    newGameState[attacker.player].units[attacker.unitIndex].virtue = true;
+    newGameState[attacker.player].units[attacker.unitIndex].virtue = 1;
 
     return newGameState;
   };
 
   return {
+    activateBlazeOfGlory,
     activateSkill,
+    activateSkillAndResonate,
     activateSymphonicScreech,
     applyDamage,
     assignTactics,
@@ -843,6 +930,9 @@ export const useRecurringEffects = () => {
     rollTactic,
     shuffleRepertoire,
     strike,
+    triggerAegis,
+    triggerBlazeOfGlory,
+    triggerThunderThaumaturge,
     virtueBlast,
     virtueBlastNo,
     virtueBlastYes,

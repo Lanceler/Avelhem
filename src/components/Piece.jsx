@@ -146,6 +146,8 @@ export const Piece = (props) => {
             onClick={() => handleClick()}
           >
             <>
+              {/* anathema / ravager */}
+
               {isActivatingUnit && <div className="glow animating"></div>}
               <img src={classIcon} className="scionClass" />
 
@@ -170,6 +172,8 @@ export const Piece = (props) => {
             </>
           </div>
 
+          {/* ward */}
+
           {props.unit.enhancements.ward > 0 && (
             <img
               src={Ward}
@@ -178,6 +182,8 @@ export const Piece = (props) => {
               }`}
             />
           )}
+
+          {/* shield */}
 
           {props.unit.enhancements.shield > 0 && (
             <img
@@ -188,7 +194,11 @@ export const Piece = (props) => {
             />
           )}
 
+          {/* virtue */}
+
           {props.unit.virtue == true && <img src={Virtue} className="virtue" />}
+
+          {/* attributes */}
 
           {props.unit.unitClass === "Plant Scion" && (
             <>
@@ -248,6 +258,12 @@ export const Piece = (props) => {
                 </>
               )}
             </>
+          )}
+
+          {/* burn */}
+
+          {props.unit.afflictions.burn > 0 && (
+            <div className="fever" style={{ left: 29 }}></div>
           )}
 
           {props.expandedPiece === props.id && (
