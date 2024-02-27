@@ -65,7 +65,45 @@ export const useSkillEffects = () => {
     }
 
     newGameState.currentResolution.push({
-      resolution: "ConflagrationBlast",
+      resolution: "Conflagration1",
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Discard Skill",
+      unit: unit,
+      player: self,
+      message: "Discard 1 skill.",
+    });
+
+    return newGameState;
+  };
+
+  const blazeOfGlory1 = (unit) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Activating Blaze of Glory" resolution
+    newGameState.currentResolution.pop();
+
+    //consume unit's fever
+    newGameState[unit.player].units[unit.unitIndex].fever--;
+
+    //giveUnit activationCounter
+    if (newGameState[unit.player].units[unit.unitIndex].temporary.activation) {
+      newGameState[unit.player].units[unit.unitIndex].temporary.activation =
+        newGameState[unit.player].units[unit.unitIndex].temporary.activation +
+        1;
+    } else {
+      newGameState[unit.player].units[unit.unitIndex].temporary.activation = 1;
+    }
+
+    newGameState.currentResolution.push({
+      resolution: "Blaze of Glory2",
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Blaze of Glory1",
       unit: unit,
     });
 
@@ -120,6 +158,7 @@ export const useSkillEffects = () => {
   return {
     conflagration1,
     ignitionPropulsion1,
+    blazeOfGlory1,
     symphonicScreech1,
   };
 };

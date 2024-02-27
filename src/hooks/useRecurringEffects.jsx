@@ -185,6 +185,25 @@ export const useRecurringEffects = () => {
     }
   };
 
+  const applyBurn = (newGameState, victimInfo) => {
+    //Update info
+    let victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
+
+    if (victim.enhancements.ward) {
+      delete newGameState[victim.player].units[victim.unitIndex].enhancements
+        .ward;
+    } else if (
+      !(
+        !isMuted(victim) &&
+        ["Fire Scion", "Water Scion"].includes(victim.unitClass)
+      )
+    ) {
+      newGameState[victim.player].units[victim.unitIndex].afflictions.burn = 1;
+    }
+
+    return newGameState;
+  };
+
   const applyDamage = (
     newGameState,
     attackerInfo,
@@ -192,7 +211,7 @@ export const useRecurringEffects = () => {
     type,
     special
   ) => {
-    //Update arguments
+    //Update info
     let attacker =
       newGameState[attackerInfo.player].units[attackerInfo.unitIndex];
     let victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
@@ -333,7 +352,7 @@ export const useRecurringEffects = () => {
     });
 
     //to do in the future: consider bypass Target and Adamant Armor
-    if (triggerTarget(attacker, victim, "virtue-blast")) {
+    if (triggerTarget(attacker, victim, "blast")) {
       newGameState.currentResolution.push({
         resolution: "Triggering Target",
         attacker: attacker,
@@ -647,6 +666,28 @@ export const useRecurringEffects = () => {
     return enemyZones;
   };
 
+  const ignite = (newGameState, attacker, victim, special) => {
+    newGameState.currentResolution.push({
+      resolution: "Apply Burn",
+      attacker: attacker,
+      victim: victim,
+      special: special,
+      type: "ignite",
+    });
+
+    //to do in the future: consider bypass Target
+    if (triggerTarget(attacker, victim, "ignite")) {
+      newGameState.currentResolution.push({
+        resolution: "Triggering Target",
+        attacker: attacker,
+        victim: victim,
+        type: "ignite",
+      });
+    }
+
+    return newGameState;
+  };
+
   const isAdjacent = (unit1, unit2) => {
     if (unit1 == unit2) {
       return false;
@@ -908,6 +949,7 @@ export const useRecurringEffects = () => {
     activateSkill,
     activateSkillAndResonate,
     activateSymphonicScreech,
+    applyBurn,
     applyDamage,
     assignTactics,
     blast,
@@ -924,6 +966,7 @@ export const useRecurringEffects = () => {
     getVacantAdjacentZones,
     getZonesInRange,
     getZonesWithEnemies,
+    ignite,
     isAdjacent,
     isMuted,
     move,

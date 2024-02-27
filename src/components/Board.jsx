@@ -69,10 +69,12 @@ const Board = (props) => {
 
   const {
     activateSymphonicScreech,
+    applyBurn,
     applyDamage,
     blast,
     endFinalPhase,
     getZonesWithEnemies,
+    ignite,
     isMuted,
     move,
     shuffleRepertoire,
@@ -80,8 +82,12 @@ const Board = (props) => {
     virtueBlast,
   } = useRecurringEffects();
 
-  const { conflagration1, ignitionPropulsion1, symphonicScreech1 } =
-    useSkillEffects();
+  const {
+    conflagration1,
+    ignitionPropulsion1,
+    blazeOfGlory1,
+    symphonicScreech1,
+  } = useSkillEffects();
   const { getSkillById } = useCardDatabase();
 
   const newPawnStats = (player, index, row, column) => {
@@ -300,6 +306,22 @@ const Board = (props) => {
           </>
         );
 
+      case "Apply Burn":
+        return (
+          <>
+            {self === lastResolution.attacker.player && (
+              <>
+                {resolveApplyBurn(
+                  lastResolution.attacker,
+                  lastResolution.victim,
+                  lastResolution.type,
+                  lastResolution.special
+                )}
+              </>
+            )}
+          </>
+        );
+
       case "Apply Damage":
         return (
           <>
@@ -420,11 +442,32 @@ const Board = (props) => {
           </>
         );
 
-      case "ConflagrationBlast":
+      case "Conflagration1":
         return (
           <>
             {self === lastResolution.unit.player && (
               <>{blastSelect(lastResolution.unit, null, "Fire Scion")}</>
+            )}
+          </>
+        );
+
+      case "Activating Blaze of Glory":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>{resolutionUpdate(blazeOfGlory1(lastResolution.unit))}</>
+            )}
+          </>
+        );
+
+      case "Blaze of Glory1":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {setIntrudingPlayer(self)}
+                {igniteSelect(lastResolution.unit, null, null)}
+              </>
             )}
           </>
         );
@@ -548,13 +591,15 @@ const Board = (props) => {
     }, 1750);
   };
 
-  const blastSelect = (unit, tactic, special) => {
+  const blastSelect = (unitInfo, tactic, special) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
     //end "blast" resolution
     newGameState.currentResolution.pop();
 
-    if (!isMuted(unit) && unit !== null) {
+    if (unit !== null && !isMuted(unit)) {
       enterSelectUnitMode(
         getZonesWithEnemies(unit, 1),
         unit,
@@ -734,6 +779,26 @@ const Board = (props) => {
     updateFirebase(newGameState);
   };
 
+  const igniteSelect = (unitInfo, tactic, special) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "ignite" resolution
+    newGameState.currentResolution.pop();
+
+    if (unit !== null && !isMuted(unit)) {
+      enterSelectUnitMode(
+        getZonesWithEnemies(unit, 1),
+        unit,
+        newGameState,
+        tactic,
+        "ignite",
+        special
+      );
+    }
+  };
+
   const nextPhase = () => {
     console.log("Changing Phase");
     const newGameState = JSON.parse(JSON.stringify(localGameState));
@@ -764,6 +829,20 @@ const Board = (props) => {
   const resolutionUpdate = (gameState) => {
     dispatch(updateState(gameState));
     updateFirebase(gameState);
+  };
+
+  const resolveApplyBurn = (attackerInfo, victimInfo, type, special) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    newGameState.currentResolution.pop();
+
+    // to-do: if attacker is null or muted, skip applyDamage
+
+    newGameState = applyBurn(newGameState, victimInfo);
+
+    dispatch(updateState(newGameState));
+
+    updateFirebase(newGameState);
   };
 
   const resolveApplyDamage = (attackerInfo, victimInfo, type, special) => {
@@ -818,6 +897,13 @@ const Board = (props) => {
       );
     } else if (reason === "strike") {
       newGameState = strike(
+        newGameState,
+        newGameState[unit.player].units[unit.unitIndex],
+        selectedUnit,
+        special
+      );
+    } else if (reason === "ignite") {
+      newGameState = ignite(
         newGameState,
         newGameState[unit.player].units[unit.unitIndex],
         selectedUnit,
