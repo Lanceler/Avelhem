@@ -34,6 +34,7 @@ import TacticAssault from "./modals/TacticAssault";
 import VirtueBlastBlock from "./modals/VirtueBlastBlock";
 
 import IgnitionPropulsion1 from "./skillModals/IgnitionPropulsion1";
+import BlazeOfGloryDraw from "./skillModals/BlazeOfGloryDraw";
 
 import ContingentTarget from "./skillModals/ContingentTarget";
 import ContingentSymphonicScreech from "./skillModals/ContingentSymphonicScreech";
@@ -86,6 +87,7 @@ const Board = (props) => {
     conflagration1,
     ignitionPropulsion1,
     blazeOfGlory1,
+    blazeOfGlory2,
     symphonicScreech1,
   } = useSkillEffects();
   const { getSkillById } = useCardDatabase();
@@ -472,6 +474,32 @@ const Board = (props) => {
           </>
         );
 
+      case "Blaze of Glory2":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  blazeOfGlory2(lastResolution.unit)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Blaze of Glory Draw":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <BlazeOfGloryDraw
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+                unit={lastResolution.unit}
+              />
+            )}
+          </>
+        );
+
       case "Triggering Target":
         return (
           <>
@@ -831,14 +859,23 @@ const Board = (props) => {
     updateFirebase(gameState);
   };
 
+  const resolutionUpdateGameStateOnly = (gameState) => {
+    dispatch(updateState(gameState));
+  };
+
   const resolveApplyBurn = (attackerInfo, victimInfo, type, special) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
+    const attacker =
+      newGameState[attackerInfo.player].units[attackerInfo.unitIndex];
+
     newGameState.currentResolution.pop();
 
-    // to-do: if attacker is null or muted, skip applyDamage
+    if (attacker !== null && !isMuted(attacker)) {
+      newGameState = applyBurn(newGameState, victimInfo);
+    }
 
-    newGameState = applyBurn(newGameState, victimInfo);
+    // to-do: if attacker is null or muted, skip applyDamage
 
     dispatch(updateState(newGameState));
 
@@ -848,17 +885,20 @@ const Board = (props) => {
   const resolveApplyDamage = (attackerInfo, victimInfo, type, special) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
+    const attacker =
+      newGameState[attackerInfo.player].units[attackerInfo.unitIndex];
+
     newGameState.currentResolution.pop();
 
-    // to-do: if attacker is null or muted, skip applyDamage
-
-    newGameState = applyDamage(
-      newGameState,
-      attackerInfo,
-      victimInfo,
-      type,
-      special
-    );
+    if (attacker !== null && !isMuted(attacker)) {
+      newGameState = applyDamage(
+        newGameState,
+        attackerInfo,
+        victimInfo,
+        type,
+        special
+      );
+    }
 
     dispatch(updateState(newGameState));
 

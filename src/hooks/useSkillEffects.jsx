@@ -11,7 +11,7 @@ export const useSkillEffects = () => {
   const { self, enemy } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const { isAdjacent } = useRecurringEffects();
+  const { isAdjacent, isMuted } = useRecurringEffects();
 
   const ignitionPropulsion1 = (unit) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
@@ -117,6 +117,24 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
+  const blazeOfGlory2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Blaze of Glory2"
+    newGameState.currentResolution.pop();
+
+    if (unit !== null && !isMuted(unit) && unit.fever > 0) {
+      newGameState.currentResolution.push({
+        resolution: "Blaze of Glory Draw",
+        unit: unitInfo,
+      });
+    }
+
+    return newGameState;
+  };
+
   const symphonicScreech1 = (unit, victim) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -159,6 +177,7 @@ export const useSkillEffects = () => {
     conflagration1,
     ignitionPropulsion1,
     blazeOfGlory1,
+    blazeOfGlory2,
     symphonicScreech1,
   };
 };

@@ -47,8 +47,8 @@ const VirtueBlastBlock = (props) => {
           1? This will restore the attaking unit’s Virtue.
         </h3>
         <div className="twoColumn">
-          <button onClick={() => handleYes()}>Yes</button>
           <button onClick={() => handleNo()}>No</button>
+          <button onClick={() => handleYes()}>Yes</button>
         </div>
       </div>
     </div>
