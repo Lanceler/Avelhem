@@ -7,7 +7,7 @@ import { updateState } from "../../redux/gameState";
 
 import Skill from "../hand/Skill";
 
-const SelectSkillDiscard = (props) => {
+const YouMaySpend1Skill = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
@@ -37,8 +37,25 @@ const SelectSkillDiscard = (props) => {
       )
     );
 
+    if (props.reason === "Resplendence2") {
+      newGameState.currentResolution.push({
+        resolution: "Resplendence3",
+        unit: props.unit,
+      });
+    }
+
     dispatch(updateState(newGameState));
     props.updateFirebase(newGameState);
+  };
+
+  const handleSkip = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end Discarding Skill resolution
+    newGameState.currentResolution.pop();
+
+    dispatch(updateState(newGameState));
+    // props.updateFirebase(newGameState); // maybe not needed?
   };
 
   const handleViewBoard = () => {
@@ -51,7 +68,7 @@ const SelectSkillDiscard = (props) => {
     <div className="modal-backdrop">
       <div className="modal">
         <button onClick={() => handleViewBoard()}>View Board</button>
-        <h2>Discard Skill</h2>
+        <h2>{props.message}</h2>
 
         <div className="fourColumn scrollable scrollable-y-only">
           {usableSkills.map((usableSkill, i) => (
@@ -71,6 +88,8 @@ const SelectSkillDiscard = (props) => {
           ))}
         </div>
 
+        <button onClick={() => handleSkip()}>Skip</button>
+
         {selectedSkill !== null && (
           <button onClick={() => handleSelect()}>Select</button>
         )}
@@ -79,4 +98,4 @@ const SelectSkillDiscard = (props) => {
   );
 };
 
-export default SelectSkillDiscard;
+export default YouMaySpend1Skill;

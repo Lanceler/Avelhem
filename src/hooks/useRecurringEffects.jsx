@@ -13,8 +13,8 @@ export const useRecurringEffects = () => {
   //Exported functions below
 
   const activateBlazeOfGlory = (newGameState, unit) => {
-    //end Triggering Target resolution <-- NOT needed
-    // newGameState.currentResolution.pop();
+    //end Triggering Target resolution
+    // newGameState.currentResolution.pop() <-- NOT needed
 
     newGameState.currentResolution.push({
       resolution: "Skill Conclusion",
@@ -136,6 +136,29 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const activateResplendence = (newGameState, unit) => {
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      unit: unit,
+      skill: "01-04",
+      conclusion: "shatter",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Activating Resplendence",
+      unit: unit,
+    });
+
+    newGameState.activatingSkill.push("01-04");
+    newGameState.activatingUnit.push(unit);
+
+    return newGameState;
+  };
+
   const activateSymphonicScreech = (newGameState, unit, victim) => {
     //remove symphonic screech from hand but do not discard
     newGameState[self].skillHand.splice(
@@ -169,6 +192,8 @@ export const useRecurringEffects = () => {
         return activateIgnitionPropulsion(newGameState, unit);
       case "01-02":
         return activateConflagration(newGameState, unit);
+      case "01-04":
+        return activateResplendence(newGameState, unit);
 
       default:
         return newGameState;
@@ -185,9 +210,18 @@ export const useRecurringEffects = () => {
     }
   };
 
-  const applyBurn = (newGameState, victimInfo) => {
+  const applyBurn = (newGameState, victimInfo, attackerInfo) => {
     //Update info
     let victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
+
+    const attacker =
+      newGameState[attackerInfo.player].units[attackerInfo.unitIndex];
+
+    //this can happen with effects like thunder thaumaturge
+    if (isMuted(attacker) || attacker === null) {
+      return newGameState;
+      // to do: Maybe push a resolution that displays a message
+    }
 
     if (victim.enhancements.ward) {
       delete newGameState[victim.player].units[victim.unitIndex].enhancements
@@ -219,7 +253,7 @@ export const useRecurringEffects = () => {
     let newZoneInfo = JSON.parse(newGameState.zones);
 
     //this can happen with effects like thunder thaumaturge
-    if (isMuted(attacker)) {
+    if (isMuted(attacker) || attacker === null) {
       return newGameState;
       // to do: Maybe push a resolution that displays a message
     }

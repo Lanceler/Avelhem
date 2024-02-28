@@ -11,25 +11,24 @@ export const useSkillEffects = () => {
   const { self, enemy } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const { isAdjacent, isMuted } = useRecurringEffects();
+  const { getZonesWithEnemies, isAdjacent, isMuted } = useRecurringEffects();
 
-  const ignitionPropulsion1 = (unit) => {
+  const ignitionPropulsion1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
     //end "Activating Ignition Propulsion" resolution
     newGameState.currentResolution.pop();
 
     //consume unit's fever
-    newGameState[unit.player].units[unit.unitIndex].fever--;
+    unit.fever = unit.fever - 1;
 
     //giveUnit activationCounter
-    if (newGameState[unit.player].units[unit.unitIndex].temporary.activation) {
-      newGameState[unit.player].units[unit.unitIndex].temporary.activation =
-        newGameState[unit.player].units[unit.unitIndex].temporary.activation +
-        1;
-    } else {
-      newGameState[unit.player].units[unit.unitIndex].temporary.activation = 1;
-    }
+    unit.temporary.activation
+      ? (unit.temporary.activation = unit.activation + 1)
+      : (unit.temporary.activation = 1);
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     newGameState.currentResolution.push({
       resolution: "Ignition Propulsion1",
@@ -46,23 +45,22 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
-  const conflagration1 = (unit) => {
+  const conflagration1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
     //end "Activating Conflagration" resolution
     newGameState.currentResolution.pop();
 
     //consume unit's fever
-    newGameState[unit.player].units[unit.unitIndex].fever--;
+    unit.fever = unit.fever - 1;
 
     //giveUnit activationCounter
-    if (newGameState[unit.player].units[unit.unitIndex].temporary.activation) {
-      newGameState[unit.player].units[unit.unitIndex].temporary.activation =
-        newGameState[unit.player].units[unit.unitIndex].temporary.activation +
-        1;
-    } else {
-      newGameState[unit.player].units[unit.unitIndex].temporary.activation = 1;
-    }
+    unit.temporary.activation
+      ? (unit.temporary.activation = unit.activation + 1)
+      : (unit.temporary.activation = 1);
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     newGameState.currentResolution.push({
       resolution: "Conflagration1",
@@ -79,23 +77,22 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
-  const blazeOfGlory1 = (unit) => {
+  const blazeOfGlory1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
     //end "Activating Blaze of Glory" resolution
     newGameState.currentResolution.pop();
 
     //consume unit's fever
-    newGameState[unit.player].units[unit.unitIndex].fever--;
+    unit.fever = unit.fever - 1;
 
     //giveUnit activationCounter
-    if (newGameState[unit.player].units[unit.unitIndex].temporary.activation) {
-      newGameState[unit.player].units[unit.unitIndex].temporary.activation =
-        newGameState[unit.player].units[unit.unitIndex].temporary.activation +
-        1;
-    } else {
-      newGameState[unit.player].units[unit.unitIndex].temporary.activation = 1;
-    }
+    unit.temporary.activation
+      ? (unit.temporary.activation = unit.activation + 1)
+      : (unit.temporary.activation = 1);
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     newGameState.currentResolution.push({
       resolution: "Blaze of Glory2",
@@ -119,7 +116,6 @@ export const useSkillEffects = () => {
 
   const blazeOfGlory2 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
-
     const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
     //end "Blaze of Glory2"
@@ -129,6 +125,43 @@ export const useSkillEffects = () => {
       newGameState.currentResolution.push({
         resolution: "Blaze of Glory Draw",
         unit: unitInfo,
+      });
+    }
+
+    return newGameState;
+  };
+
+  const resplendence1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Resplendence" resolution
+    newGameState.currentResolution.pop();
+
+    unit.hp = 2;
+    unit.fever = 2;
+    unit.enhancements.shield
+      ? Math.max(2, unit.enhancements.shield)
+      : (unit.enhancements.shield = 2);
+
+    //giveUnit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation = unit.activation + 1)
+      : (unit.temporary.activation = 1);
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    if (
+      getZonesWithEnemies(unit, 1).length &&
+      newGameState[self].skillHand.length > 0
+    ) {
+      newGameState.currentResolution.push({
+        resolution: "Resplendence2",
+        unit: unit,
+        message:
+          "You may spend 1 skill to ignite an adjacent enemy for 1 turn.",
+        restriction: null,
+        reason: "Resplendence2",
       });
     }
 
@@ -178,6 +211,7 @@ export const useSkillEffects = () => {
     ignitionPropulsion1,
     blazeOfGlory1,
     blazeOfGlory2,
+    resplendence1,
     symphonicScreech1,
   };
 };

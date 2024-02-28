@@ -27,6 +27,7 @@ import SelectSkillResonator from "./modals/SelectSkillResonator";
 import SelectSkillDiscard from "./modals/SelectSkillDiscard";
 import SelectSkillReveal from "./modals/SelectSkillReveal";
 import ViewRevealedSkill from "./modals/ViewRevealedSkill";
+import YouMaySpend1Skill from "./modals/YouMaySpend1Skill";
 
 import TacticSelection from "./modals/TacticSelection";
 import TacticAdvance from "./modals/TacticAdvance";
@@ -88,6 +89,7 @@ const Board = (props) => {
     ignitionPropulsion1,
     blazeOfGlory1,
     blazeOfGlory2,
+    resplendence1,
     symphonicScreech1,
   } = useSkillEffects();
   const { getSkillById } = useCardDatabase();
@@ -500,6 +502,44 @@ const Board = (props) => {
           </>
         );
 
+      case "Activating Resplendence":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  resplendence1(lastResolution.unit)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Resplendence2":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <YouMaySpend1Skill
+                unit={lastResolution.unit}
+                message={lastResolution.message}
+                restriction={lastResolution.restriction}
+                reason={lastResolution.reason}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Resplendence3":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>{igniteSelect(lastResolution.unit, null, null)}</>
+            )}
+          </>
+        );
+
       case "Triggering Target":
         return (
           <>
@@ -872,10 +912,8 @@ const Board = (props) => {
     newGameState.currentResolution.pop();
 
     if (attacker !== null && !isMuted(attacker)) {
-      newGameState = applyBurn(newGameState, victimInfo);
+      newGameState = applyBurn(newGameState, victimInfo, attackerInfo);
     }
-
-    // to-do: if attacker is null or muted, skip applyDamage
 
     dispatch(updateState(newGameState));
 
@@ -982,6 +1020,8 @@ const Board = (props) => {
     } else if (conclusion === "float") {
       newGameState[player].skillRepertoire.push(skill);
       newGameState[player].skillFloat = newGameState[player].skillFloat + 1;
+    } else if (conclusion === "shatter") {
+      newGameState[player].skillShattered.push(skill);
     }
 
     if (newGameState[unit.player].units[unit.unitIndex] !== null) {

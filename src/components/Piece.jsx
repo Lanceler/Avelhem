@@ -19,6 +19,7 @@ import { useRecurringEffects } from "../hooks/useRecurringEffects";
 import Shield from "../assets/attributeIcons/Shield.png";
 import Ward from "../assets/attributeIcons/Ward.png";
 import Virtue from "../assets/attributeIcons/Virtue.png";
+import HP from "../assets/attributeIcons/HP.png";
 
 export const Piece = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
@@ -172,6 +173,14 @@ export const Piece = (props) => {
             </>
           </div>
 
+          {/* HP */}
+
+          {props.unit.hp === 2 && <img src={HP} className="hP" />}
+
+          {/* virtue */}
+
+          {props.unit.virtue == true && <img src={Virtue} className="virtue" />}
+
           {/* ward */}
 
           {props.unit.enhancements.ward > 0 && (
@@ -193,10 +202,6 @@ export const Piece = (props) => {
               }`}
             />
           )}
-
-          {/* virtue */}
-
-          {props.unit.virtue == true && <img src={Virtue} className="virtue" />}
 
           {/* attributes */}
 
