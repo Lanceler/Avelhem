@@ -22,12 +22,15 @@ import BountyStore from "./modals/BountyStore";
 import CoordinationPhaseSelection from "./modals/CoordinationPhaseSelection";
 import DefiancePhaseSelection from "./modals/DefiancePhaseSelection";
 
+import MessageToEnemy from "./modals/MessageToEnemy";
 import ScionSkillSelect from "./modals/ScionSkillSelect";
 import SelectSkillResonator from "./modals/SelectSkillResonator";
 import SelectSkillDiscard from "./modals/SelectSkillDiscard";
 import SelectSkillReveal from "./modals/SelectSkillReveal";
 import ViewRevealedSkill from "./modals/ViewRevealedSkill";
 import YouMaySpend1Skill from "./modals/YouMaySpend1Skill";
+
+import ManaRestructure from "./TalentModals/ManaRestructure";
 
 import TacticSelection from "./modals/TacticSelection";
 import TacticAdvance from "./modals/TacticAdvance";
@@ -613,6 +616,35 @@ const Board = (props) => {
             )}
           </>
         );
+
+      case "Mana Restructuring":
+        return (
+          <>
+            {self === lastResolution.player && !hideModal && (
+              <ManaRestructure
+                player={lastResolution.player}
+                skillInfo={lastResolution.skill}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Mana Restructuring Announcement":
+        return (
+          <>
+            {self === lastResolution.player && (
+              <MessageToEnemy
+                title={lastResolution.title}
+                message={lastResolution.message}
+                updateFirebase={updateFirebase}
+              />
+            )}
+          </>
+        );
+
+      //"Mana Restructuring Announcement",
 
       case "Final Phase Conclusion":
         return (

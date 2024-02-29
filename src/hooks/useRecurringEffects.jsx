@@ -398,31 +398,6 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
-  const canAegis = (unit) => {
-    const team = unit.player;
-    const zones = JSON.parse(localGameState.zones);
-
-    //get Adjacent zones
-    let adjacentZones = getZonesInRange(unit.row, unit.column, 1, true);
-
-    //return true if any zone contains an unmuted ally Mana Scion
-    for (let i in adjacentZones) {
-      let zone = zones[Math.floor(adjacentZones[i] / 5)][adjacentZones[i] % 5];
-      if (zone.player === team) {
-        if (
-          localGameState[team].units[zone.unitIndex].unitClass ===
-            "manaScion" &&
-          !isMuted(localGameState[team].units[zone.unitIndex])
-        ) {
-          console.log("Can Aegis");
-          return true;
-        }
-      }
-    }
-    console.log("Cannot Aegis");
-    return false;
-  };
-
   const canActivateResonance = (unit, skill) => {
     if (!canActivateSkill(unit, skill)) {
       return false;
@@ -601,6 +576,26 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const floatAvelhem = (newGameState, avelhemHandIndex) => {
+    newGameState[self].avelhemRepertoire.push(
+      newGameState[self].avelhemHand.splice(avelhemHandIndex, 1)[0]
+    );
+
+    newGameState[self].avelhemFloat = newGameState[self].avelhemFloat + 1;
+
+    return newGameState;
+  };
+
+  const floatSkill = (newGameState, skillHandIndex) => {
+    newGameState[self].skillRepertoire.push(
+      newGameState[self].skillHand.splice(skillHandIndex, 1)[0]
+    );
+
+    newGameState[self].skillFloat = newGameState[self].skillFloat + 1;
+
+    return newGameState;
+  };
+
   const getScionSet = (unitClass) => {
     switch (unitClass) {
       case "Fire Scion":
@@ -748,6 +743,37 @@ export const useRecurringEffects = () => {
       afflictions.infection
     ) {
       return true;
+    }
+
+    return false;
+  };
+
+  const isRooted = (unit) => {
+    let gameState = JSON.parse(JSON.stringify(localGameState));
+
+    if (
+      ["Wind Scion", "Land Scion", "Plant Scion"].includes(unit.unitClass) &&
+      !isMuted(unit)
+    ) {
+      return false;
+    }
+
+    const zonesWithAdjacentEnemies = getZonesWithEnemies(unit, 1);
+
+    for (let z of zonesWithAdjacentEnemies) {
+      const zone = gameState.zones[Math.floor(z / 5)][z % 5];
+      if (gameState[zone.player].units[zone.unitIndex].overgrowth === true) {
+        return true;
+      }
+    }
+
+    const zonesWithDisantEnemies = getZonesWithEnemies(unit, 2);
+
+    for (let z of zonesWithDisantEnemies) {
+      const zone = gameState.zones[Math.floor(z / 5)][z % 5];
+      if (gameState[zone.player].units[zone.unitIndex].proliferation > 0) {
+        return true;
+      }
     }
 
     return false;
@@ -989,20 +1015,23 @@ export const useRecurringEffects = () => {
     blast,
     canActivateResonance,
     canActivateSkill,
-    canAegis,
     canBlast,
     canMove,
     canStrike,
     drawAvelhem,
     drawSkill,
     endFinalPhase,
+    floatAvelhem,
+    floatSkill,
     getScionSet,
     getVacantAdjacentZones,
     getZonesInRange,
+    getZonesWithAllies,
     getZonesWithEnemies,
     ignite,
     isAdjacent,
     isMuted,
+    isRooted,
     move,
     rollTactic,
     shuffleRepertoire,

@@ -4,6 +4,7 @@ import "./Modal.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
+import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import Skill from "../hand/Skill";
 
@@ -11,6 +12,8 @@ const YouMaySpend1Skill = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
+
+  const { getZonesWithAllies, isMuted } = useRecurringEffects();
 
   const [selectedSkill, setSelectedSkill] = useState(null);
 
@@ -22,26 +25,66 @@ const YouMaySpend1Skill = (props) => {
     });
   }
 
+  const canBeDiscarded = (skill) => {
+    if (props.restriction === null) {
+      return true;
+    }
+    if (props.restriction.includes(skill)) {
+      return true;
+    }
+    return false;
+  };
+
   const handleSelect = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
     //end Discarding Skill resolution
     newGameState.currentResolution.pop();
 
-    //send selected skill to vestige
-    // to do: Mana Scion talent
-    newGameState[self].skillVestige.push(
-      ...newGameState[self].skillHand.splice(
-        usableSkills[selectedSkill].handIndex,
-        1
-      )
-    );
-
     if (props.reason === "Resplendence2") {
       newGameState.currentResolution.push({
         resolution: "Resplendence3",
         unit: props.unit,
       });
+    }
+
+    const isAdjacentToManaScion = (unitInfo) => {
+      const zones = JSON.parse(localGameState.zones);
+      const adjacentAllies = getZonesWithAllies(unitInfo, 1, true); // includes self
+
+      for (let i of adjacentAllies) {
+        const zone = zones[Math.floor(i / 5)][i % 5];
+        const unit = localGameState[zone.player].units[zone.unitIndex];
+
+        if (unit.unitClass === "Mana Scion" && !isMuted(unit)) {
+          return true;
+        }
+      }
+
+      return false;
+    };
+
+    if (
+      ["06-01", "06-02", "06-03", "06-04"].includes(
+        usableSkills[selectedSkill].id
+      ) &&
+      isAdjacentToManaScion(props.unit)
+    ) {
+      // Mana Scion talent: Mana Scions and their adjacent allies may float Mana skills when spending them
+
+      newGameState.currentResolution.push({
+        resolution: "Mana Restructuring",
+        player: self,
+        skill: usableSkills[selectedSkill],
+      });
+    } else {
+      //send selected skill to vestige
+      newGameState[self].skillVestige.push(
+        ...newGameState[self].skillHand.splice(
+          usableSkills[selectedSkill].handIndex,
+          1
+        )
+      );
     }
 
     dispatch(updateState(newGameState));
@@ -62,8 +105,6 @@ const YouMaySpend1Skill = (props) => {
     props.hideOrRevealModale();
   };
 
-  // to do: apply props.restriction; be careful with index after filtering
-
   return (
     <div className="modal-backdrop">
       <div className="modal">
@@ -81,7 +122,7 @@ const YouMaySpend1Skill = (props) => {
               <Skill
                 i={i}
                 usableSkill={usableSkill}
-                canActivateSkill={true} // any skill can be discarded
+                canActivateSkill={canBeDiscarded(usableSkill.id)}
                 setSelectedSkill={setSelectedSkill}
               />
             </div>
