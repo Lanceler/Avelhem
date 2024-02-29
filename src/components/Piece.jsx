@@ -20,6 +20,7 @@ import Shield from "../assets/attributeIcons/Shield.png";
 import Ward from "../assets/attributeIcons/Ward.png";
 import Virtue from "../assets/attributeIcons/Virtue.png";
 import HP from "../assets/attributeIcons/HP.png";
+import Burn from "../assets/attributeIcons/BurnGif.gif";
 
 export const Piece = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
@@ -268,7 +269,11 @@ export const Piece = (props) => {
           {/* burn */}
 
           {props.unit.afflictions.burn > 0 && (
-            <div className="fever" style={{ left: 29 }}></div>
+            <>
+              {/* <div className="fever" style={{ left: 29 }}></div> */}
+
+              <img src={Burn} className="burn" />
+            </>
           )}
 
           {props.expandedPiece === props.id && (

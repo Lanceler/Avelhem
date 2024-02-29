@@ -71,8 +71,88 @@ export const useSkillEffects = () => {
       resolution: "Discard Skill",
       unit: unit,
       player: self,
+      message: "Discard 1 skill to blast an adjacent enemy.",
+      restriction: null,
+    });
+
+    return newGameState;
+  };
+
+  const conflagrationR1 = (unitInfo, resonator) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Resonating Conflagration" resolution
+    newGameState.currentResolution.pop();
+
+    //consume unit's fever
+    unit.fever = unit.fever - 1;
+
+    //giveUnit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation = unit.activation + 1)
+      : (unit.temporary.activation = 1);
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    if (resonator === "01-02") {
+      newGameState.currentResolution.push({
+        resolution: "May float resonant skill",
+        unit: unit,
+        player: unit.player,
+        skill: "01-02",
+      });
+    } else if (resonator === "SA-02") {
+      newGameState.currentResolution.push({
+        resolution: "Tea for Two Resonance",
+        unit: unit,
+      });
+    } else if (resonator === "SA-04") {
+      newGameState.currentResolution.push({
+        resolution: "Dark Halo Resonance",
+        unit: unit,
+      });
+    }
+
+    newGameState.currentResolution.push({
+      resolution: "ConflagrationR1",
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Conflagration1",
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Discard Skill",
+      unit: unit,
+      player: self,
       message: "Discard 1 skill.",
     });
+
+    return newGameState;
+  };
+
+  const conflagrationR2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    console.log(unit);
+
+    //end "ConflagrationR1"
+    newGameState.currentResolution.pop();
+
+    if (
+      unit !== null &&
+      !isMuted(unit) &&
+      getZonesWithEnemies(unit, 1).length > 0
+    ) {
+      newGameState.currentResolution.push({
+        resolution: "ConflagrationR2",
+        unit: unit,
+      });
+    }
 
     return newGameState;
   };
@@ -208,6 +288,8 @@ export const useSkillEffects = () => {
 
   return {
     conflagration1,
+    conflagrationR1,
+    conflagrationR2,
     ignitionPropulsion1,
     blazeOfGlory1,
     blazeOfGlory2,

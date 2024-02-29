@@ -38,11 +38,14 @@ import TacticAssault from "./modals/TacticAssault";
 import VirtueBlastBlock from "./modals/VirtueBlastBlock";
 
 import IgnitionPropulsion1 from "./skillModals/IgnitionPropulsion1";
+import ConflagrationResonance1 from "./skillModals/ConflagrationResonance1";
 import BlazeOfGloryDraw from "./skillModals/BlazeOfGloryDraw";
 
 import ContingentTarget from "./skillModals/ContingentTarget";
 import ContingentSymphonicScreech from "./skillModals/ContingentSymphonicScreech";
 import SymphonicScreechFloat from "./skillModals/SymphonicScreechFloat";
+
+import MayFloatResonantSkill from "./skillModals/MayFloatResonantSkill";
 
 import DisplayedCard from "./displays/DisplayedCard";
 
@@ -88,8 +91,10 @@ const Board = (props) => {
   } = useRecurringEffects();
 
   const {
-    conflagration1,
     ignitionPropulsion1,
+    conflagration1,
+    conflagrationR1,
+    conflagrationR2,
     blazeOfGlory1,
     blazeOfGlory2,
     resplendence1,
@@ -416,6 +421,23 @@ const Board = (props) => {
           </>
         );
 
+      case "May float resonant skill":
+        return (
+          <>
+            {self === lastResolution.player && !hideModal && (
+              <>
+                <MayFloatResonantSkill
+                  unit={lastResolution.unit}
+                  player={lastResolution.player}
+                  skill={lastResolution.skill}
+                  updateFirebase={updateFirebase}
+                  hideOrRevealModale={hideOrRevealModale}
+                />
+              </>
+            )}
+          </>
+        );
+
       case "Activating Ignition Propulsion":
         return (
           <>
@@ -454,6 +476,54 @@ const Board = (props) => {
           <>
             {self === lastResolution.unit.player && (
               <>{blastSelect(lastResolution.unit, null, "Fire Scion")}</>
+            )}
+          </>
+        );
+
+      case "Resonating Conflagration":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdate(
+                  conflagrationR1(lastResolution.unit, lastResolution.resonator)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "ConflagrationR1":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  conflagrationR2(lastResolution.unit)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "ConflagrationR2":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <ConflagrationResonance1
+                updateFirebase={updateFirebase}
+                unit={lastResolution.unit}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "ConflagrationR3":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>{igniteSelect(lastResolution.unit, null, null)}</>
             )}
           </>
         );
