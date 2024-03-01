@@ -80,6 +80,7 @@ const Board = (props) => {
     applyBurn,
     applyDamage,
     blast,
+    drawSkill,
     endFinalPhase,
     getZonesWithEnemies,
     ignite,
@@ -415,6 +416,24 @@ const Board = (props) => {
                   lastResolution.unit,
                   lastResolution.skill,
                   lastResolution.conclusion
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Resonance Conclusion":
+        return (
+          <>
+            {self === lastResolution.player && (
+              <>
+                {skillResonanceConclusion(
+                  lastResolution.player,
+                  lastResolution.unit,
+                  lastResolution.skill,
+                  lastResolution.skillConclusion,
+                  lastResolution.resonator,
+                  lastResolution.resonatorConclusion
                 )}
               </>
             )}
@@ -1115,6 +1134,7 @@ const Board = (props) => {
   const skillConclusion = (player, unit, skill, conclusion) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
+    //end "Skill Conclusion"
     newGameState.currentResolution.pop();
 
     if (conclusion === "discard") {
@@ -1127,6 +1147,7 @@ const Board = (props) => {
     }
 
     if (newGameState[unit.player].units[unit.unitIndex] !== null) {
+      //decrease activation counter
       if (
         newGameState[unit.player].units[unit.unitIndex].temporary.activation
       ) {
@@ -1135,6 +1156,7 @@ const Board = (props) => {
           1;
       }
 
+      //apply anathema
       if (
         !newGameState[unit.player].units[unit.unitIndex].temporary.activation &&
         newGameState[unit.player].units[unit.unitIndex].temporary.anathemaDelay
@@ -1150,6 +1172,75 @@ const Board = (props) => {
 
     newGameState.activatingSkill.pop();
     newGameState.activatingUnit.pop();
+
+    dispatch(updateState(newGameState));
+
+    updateFirebase(newGameState);
+  };
+
+  const skillResonanceConclusion = (
+    player,
+    unit,
+    skill,
+    skillConclusion,
+    resonator,
+    resonatorConclusion
+  ) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Resonance Conclusion"
+    newGameState.currentResolution.pop();
+
+    if (skillConclusion === "discard") {
+      newGameState[player].skillVestige.push(skill);
+    } else if (skillConclusion === "float") {
+      newGameState[player].skillRepertoire.push(skill);
+      newGameState[player].skillFloat = newGameState[player].skillFloat + 1;
+    } else if (skillConclusion === "retain") {
+      newGameState[player].skillHand.push(skill);
+    }
+
+    if (resonatorConclusion === "discard") {
+      newGameState[player].skillVestige.push(resonator);
+    } else if (resonatorConclusion === "float") {
+      newGameState[player].skillRepertoire.push(resonator);
+      newGameState[player].skillFloat = newGameState[player].skillFloat + 1;
+    } else if (resonatorConclusion === "retain") {
+      newGameState[player].skillHand.push(resonator);
+    }
+
+    if (newGameState[unit.player].units[unit.unitIndex] !== null) {
+      //decrease activation counter
+      if (
+        newGameState[unit.player].units[unit.unitIndex].temporary.activation
+      ) {
+        newGameState[unit.player].units[unit.unitIndex].temporary.activation =
+          newGameState[unit.player].units[unit.unitIndex].temporary.activation -
+          1;
+      }
+
+      //apply anathema
+      if (
+        !newGameState[unit.player].units[unit.unitIndex].temporary.activation &&
+        newGameState[unit.player].units[unit.unitIndex].temporary.anathemaDelay
+      ) {
+        delete newGameState[unit.player].units[unit.unitIndex].temporary
+          .anathemaDelay;
+
+        newGameState[unit.player].units[
+          unit.unitIndex
+        ].afflictions.anathema = 2;
+      }
+    }
+
+    //Tea for Two
+    if (resonator === "SA-02") {
+      newGameState = drawSkill(newGameState);
+    }
+
+    newGameState.activatingSkill.pop();
+    newGameState.activatingUnit.pop();
+    newGameState.activatingResonator.pop();
 
     dispatch(updateState(newGameState));
 
