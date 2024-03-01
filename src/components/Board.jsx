@@ -449,6 +449,7 @@ const Board = (props) => {
                   unit={lastResolution.unit}
                   player={lastResolution.player}
                   skill={lastResolution.skill}
+                  resonator={lastResolution.resonator}
                   updateFirebase={updateFirebase}
                   hideOrRevealModale={hideOrRevealModale}
                 />

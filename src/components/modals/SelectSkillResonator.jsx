@@ -25,13 +25,26 @@ const SelectSkillResonator = (props) => {
     });
   }
 
-  const validResonators = [props.skill.id, "SA-02"]; //skill itself & Tea for Two
+  // const validResonators = [props.skill.id, "SA-02"]; //skill itself & Tea for Two
 
-  if (props.unit !== null && props.unit.enhancements.ravager) {
-    validResonators.push("SA-04"); // only Ravagers can resonate with Dark Halo
-  } else if (props.unit === null) {
-    validResonators.push("SA-01"); // only Sovereign Skills can resonate with Heir’s Endeavor
-  }
+  // if (props.unit !== null && props.unit.enhancements.ravager) {
+  //   validResonators.push("SA-04"); // only Ravagers can resonate with Dark Halo
+  // } else if (props.unit === null) {
+  //   validResonators.push("SA-01"); // only Sovereign Skills can resonate with Heir’s Endeavor
+  // }
+
+  const validResonators = [props.skill.id, "SA-01", "SA-02", "SA-04"];
+
+  const canUseResonator = (resonator) => {
+    switch (resonator) {
+      case "SA-01":
+        return props.unit === null; // only Sovereign Skills can resonate with Heir’s Endeavor
+      case "SA-04":
+        return props.unit !== null && props.unit.enhancements.ravager; // only Ravagers can resonate with Dark Halo
+      default:
+        return true;
+    }
+  };
 
   usableSkills = usableSkills.filter(
     (skill) =>
@@ -93,7 +106,7 @@ const SelectSkillResonator = (props) => {
               <Skill
                 i={i}
                 usableSkill={usableSkill}
-                canActivateSkill={true} // skills that cannot be chosen are filtered out
+                canActivateSkill={canUseResonator(usableSkill.id)}
                 setSelectedSkill={setSelectedSkill}
               />
             </div>

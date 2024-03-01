@@ -43,7 +43,7 @@ import CastleOfThorns from "../assets/skillcards/CastleOfThorns.png";
 // import HeirsEndeavor from "../assets/skillcards/HeirsEndeavor.png";
 import TeaForTwo from "../assets/skillcards/TeaForTwo.png";
 // import UnbridledPower from "../assets/skillcards/UnbridledPower.png";
-// import DarkHalo from "../assets/skillcards/DarkHalo.png";
+import DarkHalo from "../assets/skillcards/DarkHalo.png";
 // import Reminiscence from "../assets/skillcards/Reminiscence.png";
 // import Foreshadow from "../assets/skillcards/Foreshadow.png";
 // import Transmute from "../assets/skillcards/Transmute.png";
@@ -140,8 +140,8 @@ export const useCardImageSwitch = (cardName) => {
         return TeaForTwo;
       // case "Unbridled Power":
       //   return UnbridledPower;
-      // case "Dark Halo":
-      //   return DarkHalo;
+      case "Dark Halo":
+        return DarkHalo;
       // case "Reminiscence":
       //   return Reminiscence;
       // case "Foreshadow":

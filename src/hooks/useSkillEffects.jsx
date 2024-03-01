@@ -39,7 +39,7 @@ export const useSkillEffects = () => {
       resolution: "Discard Skill",
       unit: unit,
       player: self,
-      message: "Discard 1 skill.",
+      message: "Spend 1 skill.",
       restriction: null,
     });
 
@@ -72,7 +72,7 @@ export const useSkillEffects = () => {
       resolution: "Discard Skill",
       unit: unit,
       player: self,
-      message: "Discard 1 skill to blast an adjacent enemy.",
+      message: "Spend 1 skill.",
       restriction: null,
     });
 
@@ -96,23 +96,13 @@ export const useSkillEffects = () => {
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
-    if (resonator === "01-02") {
+    if (resonator !== "SA-02") {
       newGameState.currentResolution.push({
         resolution: "May float resonant skill",
         unit: unit,
         player: unit.player,
         skill: "01-02",
-      });
-    }
-    // else if (resonator === "SA-02") {
-    //   newGameState.currentResolution.push({
-    //     resolution: "Tea for Two Resonance",
-    //     unit: unit,
-    //   })}
-    else if (resonator === "SA-04") {
-      newGameState.currentResolution.push({
-        resolution: "Dark Halo Resonance",
-        unit: unit,
+        resonator: resonator,
       });
     }
 
@@ -130,7 +120,7 @@ export const useSkillEffects = () => {
       resolution: "Discard Skill",
       unit: unit,
       player: self,
-      message: "Discard 1 skill.",
+      message: "Spend 1 skill.",
       restriction: null,
     });
 
@@ -191,7 +181,7 @@ export const useSkillEffects = () => {
       resolution: "Discard Skill",
       unit: unit,
       player: self,
-      message: "Discard 1 skill.",
+      message: "Spend 1 skill.",
     });
 
     return newGameState;
