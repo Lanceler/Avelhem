@@ -53,12 +53,30 @@ const TacticAssault = (props) => {
       //end Assault Tactic resolution
       newGameState.currentResolution.pop();
 
+      //giveUnit activationCounter
+      let unit = newGameState[props.unit.player].units[props.unit.unitIndex];
+      console.log(unit);
+      unit.temporary.activation
+        ? (unit.temporary.activation = unit.activation + 1)
+        : (unit.temporary.activation = 1);
+
+      newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+
+      //newGameState.activatingSkill.push("Assault") <-- to do
+      newGameState.activatingUnit.push(unit);
+
+      newGameState.currentResolution.push({
+        resolution: "Tactic End",
+        unit: unit,
+      });
+
       props.enterSelectUnitMode(
         getZonesWithEnemies(props.unit, 1),
         props.unit,
         newGameState,
         props.tactic,
-        "strike"
+        "strike",
+        null
       );
     }
   };

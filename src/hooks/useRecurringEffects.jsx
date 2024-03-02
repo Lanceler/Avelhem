@@ -38,6 +38,16 @@ export const useRecurringEffects = () => {
         player: enemy,
         activator: unit,
       });
+
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: enemy,
+      });
+    } else {
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: self,
+      });
     }
 
     //to do: alert opponent that contingent skill was used
@@ -60,6 +70,11 @@ export const useRecurringEffects = () => {
     newGameState.currentResolution.push({
       resolution: "Activating Conflagration",
       unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Animation Delay",
+      priority: self,
     });
 
     newGameState.activatingSkill.push("01-02");
@@ -89,6 +104,11 @@ export const useRecurringEffects = () => {
       resolution: "Resonating Conflagration",
       unit: unit,
       resonator: resonator,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Animation Delay",
+      priority: self,
     });
 
     newGameState.activatingSkill.push("01-02");
@@ -131,6 +151,16 @@ export const useRecurringEffects = () => {
         player: enemy,
         activator: unit,
       });
+
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: enemy,
+      });
+    } else {
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: self,
+      });
     }
 
     return newGameState;
@@ -151,6 +181,11 @@ export const useRecurringEffects = () => {
     newGameState.currentResolution.push({
       resolution: "Activating Resplendence",
       unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Animation Delay",
+      priority: self,
     });
 
     newGameState.activatingSkill.push("01-04");
@@ -178,6 +213,11 @@ export const useRecurringEffects = () => {
       resolution: "Activating Symphonic Screech",
       unit: unit,
       victim: victim,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Animation Delay",
+      priority: self,
     });
 
     newGameState.activatingSkill.push("03-03");
@@ -233,6 +273,24 @@ export const useRecurringEffects = () => {
       )
     ) {
       newGameState[victim.player].units[victim.unitIndex].afflictions.burn = 1;
+
+      //burn gives frostbite immunity
+      if (
+        newGameState[victim.player].units[victim.unitIndex].afflictions
+          .frostbite > 0
+      ) {
+        delete newGameState[victim.player].units[victim.unitIndex].afflictions
+          .frostbite;
+      }
+
+      //burn gives purges overgrowth
+      if (
+        newGameState[victim.player].units[victim.unitIndex].enhancements
+          .overgrowth === true
+      ) {
+        delete newGameState[victim.player].units[victim.unitIndex].enhancements
+          .overgrowth;
+      }
     }
 
     return newGameState;
@@ -344,8 +402,7 @@ export const useRecurringEffects = () => {
       if (type === "strike") {
         newGameState = move(
           newGameState,
-          attacker.player,
-          attacker.unitIndex,
+          attacker,
           victim.row * 5 + victim.column
         );
       }
@@ -521,7 +578,18 @@ export const useRecurringEffects = () => {
       newGameState[self].avelhemFloat - 1
     );
 
-    //To do: If deck empties, shuffle discard pile into it.
+    //If deck empties, shuffle discard pile into it.
+    if (newGameState[self].avelhemRepertoire.length === 0) {
+      newGameState[self].avelhemVestige = shuffleRepertoire(
+        newGameState[self].avelhemVestige
+      );
+      newGameState[self].avelhemRepertoire = [
+        ...newGameState[self].avelhemVestige.splice(
+          0,
+          newGameState[self].avelhemVestige.length
+        ),
+      ];
+    }
 
     return newGameState;
   };
@@ -536,7 +604,18 @@ export const useRecurringEffects = () => {
       newGameState[self].skillFloat - 1
     );
 
-    //To do: If deck empties, shuffle discard pile into it.
+    //If deck empties, shuffle discard pile into it.
+    if (newGameState[self].skillRepertoire.length === 0) {
+      newGameState[self].skillVestige = shuffleRepertoire(
+        newGameState[self].skillVestige
+      );
+      newGameState[self].skillRepertoire = [
+        ...newGameState[self].skillVestige.splice(
+          0,
+          newGameState[self].skillVestige.length
+        ),
+      ];
+    }
 
     return newGameState;
   };
@@ -780,6 +859,7 @@ export const useRecurringEffects = () => {
   };
 
   const move = (newGameState, unit, zoneId) => {
+    console.log(unit);
     let mover = newGameState[unit.player].units[unit.unitIndex];
 
     // let newZoneInfo = [...zones];

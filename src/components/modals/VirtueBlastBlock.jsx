@@ -34,7 +34,7 @@ const VirtueBlastBlock = (props) => {
     props.updateFirebase(newGameState);
   };
 
-  const message = `Enemy ${props.attacker.unitClass} (Row ${props.attacker.row} Col. ${props.attacker.column}) is about to Virtue-blast your ${props.victim.unitClass} (Row ${props.victim.row} Col. ${props.victim.column}).`;
+  const message = `Enemy ${props.attacker.unitClass} is about to Virtue-blast your ${props.victim.unitClass} (Row ${props.victim.row} Col. ${props.victim.column}).`;
 
   return (
     <div className="modal-backdrop">

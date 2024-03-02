@@ -182,6 +182,7 @@ export const useSkillEffects = () => {
       unit: unit,
       player: self,
       message: "Spend 1 skill.",
+      restriction: null,
     });
 
     return newGameState;

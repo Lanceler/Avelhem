@@ -123,6 +123,8 @@ const Board = (props) => {
       updateDoc(gameDoc, { gameState: newGameState });
     } catch (err) {
       console.log(err);
+      console.log("newGameState");
+      console.log(newGameState);
     }
   };
 
@@ -315,6 +317,15 @@ const Board = (props) => {
                 victim={lastResolution.victim}
                 hideOrRevealModale={hideOrRevealModale}
               />
+            )}
+          </>
+        );
+
+      case "Tactic End":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>{tacticEnd(lastResolution.unit)}</>
             )}
           </>
         );
@@ -746,7 +757,9 @@ const Board = (props) => {
         );
 
       case "Animation Delay":
-        return <>{self === lastResolution.priority && animationDelay()}</>;
+        return (
+          <>{self === lastResolution.priority && <>{animationDelay()}</>}</>
+        );
 
       default:
         return;
@@ -1242,6 +1255,43 @@ const Board = (props) => {
     newGameState.activatingSkill.pop();
     newGameState.activatingUnit.pop();
     newGameState.activatingResonator.pop();
+
+    dispatch(updateState(newGameState));
+
+    updateFirebase(newGameState);
+  };
+
+  const tacticEnd = (unit) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Tactic End"
+    newGameState.currentResolution.pop();
+
+    if (newGameState[unit.player].units[unit.unitIndex] !== null) {
+      //decrease activation counter
+      if (
+        newGameState[unit.player].units[unit.unitIndex].temporary.activation
+      ) {
+        newGameState[unit.player].units[unit.unitIndex].temporary.activation =
+          newGameState[unit.player].units[unit.unitIndex].temporary.activation -
+          1;
+      }
+
+      //apply anathema
+      if (
+        !newGameState[unit.player].units[unit.unitIndex].temporary.activation &&
+        newGameState[unit.player].units[unit.unitIndex].temporary.anathemaDelay
+      ) {
+        delete newGameState[unit.player].units[unit.unitIndex].temporary
+          .anathemaDelay;
+
+        newGameState[unit.player].units[
+          unit.unitIndex
+        ].afflictions.anathema = 2;
+      }
+    }
+
+    newGameState.activatingUnit.pop();
 
     dispatch(updateState(newGameState));
 

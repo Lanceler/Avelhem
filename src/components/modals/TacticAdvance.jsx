@@ -69,12 +69,30 @@ const TacticAdvance = (props) => {
       //end Advance Tactic resolution
       newGameState.currentResolution.pop();
 
+      //giveUnit activationCounter
+      let unit = newGameState[props.unit.player].units[props.unit.unitIndex];
+      console.log(unit);
+      unit.temporary.activation
+        ? (unit.temporary.activation = unit.activation + 1)
+        : (unit.temporary.activation = 1);
+
+      newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+
+      //newGameState.activatingSkill.push("Advance") <-- to do
+      newGameState.activatingUnit.push(unit);
+
+      newGameState.currentResolution.push({
+        resolution: "Tactic End",
+        unit: unit,
+      });
+
       props.enterSelectUnitMode(
         getZonesWithEnemies(props.unit, 1),
         props.unit,
         newGameState,
         props.tactic,
-        "virtue-blast"
+        "virtue-blast",
+        null
       );
     }
   };

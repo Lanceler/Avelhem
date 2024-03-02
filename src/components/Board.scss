@@ -112,7 +112,7 @@
     background-color: rgb(255, 255, 255);
     height: 100vh;
     display: flex;
-    justify-content: space-around;
+    // justify-content: space-around;
     align-items: center;
     
 }
@@ -121,8 +121,11 @@
 // actually left container
 .right-container {
     background-color: rgb(221, 162, 0);
-    width: 20%;
+
     height: 80%;
+
+    // width: 20%;
+    width: 280px;
 }
 
 .middle-container {
@@ -133,6 +136,7 @@
     width: fit-content;
     position: relative;
     // overflow: hidden;
+    justify-self: start
 }
 
 //actually right container
