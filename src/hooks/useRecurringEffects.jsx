@@ -338,10 +338,10 @@ export const useRecurringEffects = () => {
           .frostbite;
       }
 
-      //burn gives purges overgrowth
+      //burn gives purges overgrowth & proliferation (proliferation would be overgrowth: 2)
       if (
         newGameState[victim.player].units[victim.unitIndex].enhancements
-          .overgrowth === true
+          .overgrowth > 0
       ) {
         delete newGameState[victim.player].units[victim.unitIndex].enhancements
           .overgrowth;

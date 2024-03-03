@@ -276,6 +276,14 @@ export const Piece = (props) => {
             </>
           )}
 
+          {/* frostbite */}
+
+          {props.unit.afflictions.frostbite > 0 && (
+            <>
+              <img src={Burn} className="burn blue-tint" />
+            </>
+          )}
+
           {props.expandedPiece === props.id && (
             <>
               <div

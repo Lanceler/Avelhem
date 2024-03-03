@@ -40,36 +40,27 @@ const SearchSkill = (props) => {
   };
 
   const handleSelect = () => {
-    const i = selectedSkill;
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     newGameState.currentResolution.pop();
 
-    if ((props.outcome = "Add")) {
-      // the selected Skill was floating
-      if (i <= newGameState[self].skillFloat - 1) {
-        //add selected skill from repertoire to hand
-        newGameState[self].skillHand.push(
-          floatingRepertoire.splice(i, 1)[0].id
-        );
-        //decrease floating count
-        newGameState[self].skillFloat = newGameState[self].skillFloat - 1;
-      } else {
-        //add selected skill from repertoire to hand
-        newGameState[self].skillHand.push(
-          searchRerpertoire.splice(i - newGameState[self].skillFloat, 1)[0].id
-        );
-      }
+    if (props.outcome === "Add") {
+      //add selected skill from repertoire to hand
+      newGameState[self].skillHand.push(
+        newGameState[self].skillRepertoire.splice(
+          newGameState[self].skillRepertoire.length - 1 - selectedSkill,
+          1
+        )[0]
+      );
 
-      //shuffle repertoire, but retain floating order (after un-reversing)
-      newGameState[self].skillRepertoire = shuffleCards(searchRerpertoire);
-      for (let c in floatingRepertoire) {
-        newGameState[self].skillRepertoire.push(floatingRepertoire[c].id);
+      // if the selected Skill was floating, decrease floating count
+      if (selectedSkill <= newGameState[self].skillFloat - 1) {
+        newGameState[self].skillFloat = newGameState[self].skillFloat - 1;
       }
 
       //reset repertoire if empty
       if (newGameState[self].skillRepertoire.length === 0) {
         newGameState[self].skillVestige = shuffleCards(
-          gameStnewGameStateate[self].skillVestige
+          newGameState[self].skillVestige
         );
         newGameState[self].skillRepertoire = [
           ...newGameState[self].skillVestige.splice(
@@ -78,18 +69,60 @@ const SearchSkill = (props) => {
           ),
         ];
 
-        //to do: maybe alert both players?
+        //to do: alert both players (and give opponent BP)
+      }
+    } else if (props.outcome === "Float") {
+      //take selected card then put it at the top of deck (end of array)
+      newGameState[self].skillRepertoire.push(
+        newGameState[self].skillRepertoire.splice(
+          newGameState[self].skillRepertoire.length - 1 - selectedSkill,
+          1
+        )[0]
+      );
+
+      // if the selected Skill was NOT floating, increase floating count
+      if (selectedSkill > newGameState[self].skillFloat - 1) {
+        newGameState[self].skillFloat = newGameState[self].skillFloat + 1;
       }
     }
 
-    console.log(newGameState[self].skillHand);
-    console.log(newGameState[self].skillFloat);
-    console.log(newGameState[self].skillRepertoire);
+    //shuffle repertoire, but retain floating order
+    const floaters = newGameState[self].skillRepertoire.splice(
+      newGameState[self].skillRepertoire.length - newGameState[self].skillFloat,
+      newGameState[self].skillFloat
+    );
+
+    newGameState[self].skillRepertoire = shuffleCards(
+      newGameState[self].skillRepertoire
+    );
+
+    newGameState[self].skillRepertoire = [
+      ...newGameState[self].skillRepertoire,
+      ...floaters,
+    ];
+
+    dispatch(updateState(newGameState));
+    props.updateFirebase(newGameState);
   };
 
   const handleSkip = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     newGameState.currentResolution.pop();
+
+    //shuffle repertoire, but retain floating order
+    const floaters = newGameState[self].skillRepertoire.splice(
+      newGameState[self].skillRepertoire.length - newGameState[self].skillFloat,
+      newGameState[self].skillFloat
+    );
+
+    newGameState[self].skillRepertoire = shuffleCards(
+      newGameState[self].skillRepertoire
+    );
+
+    newGameState[self].skillRepertoire = [
+      ...newGameState[self].skillRepertoire,
+      ...floaters,
+    ];
 
     dispatch(updateState(newGameState));
   };
