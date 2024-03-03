@@ -648,7 +648,7 @@ export const useRecurringEffects = () => {
 
     //If deck empties, shuffle discard pile into it.
     if (newGameState[self].avelhemRepertoire.length === 0) {
-      newGameState[self].avelhemVestige = shuffleRepertoire(
+      newGameState[self].avelhemVestige = shuffleCards(
         newGameState[self].avelhemVestige
       );
       newGameState[self].avelhemRepertoire = [
@@ -674,7 +674,7 @@ export const useRecurringEffects = () => {
 
     //If deck empties, shuffle discard pile into it.
     if (newGameState[self].skillRepertoire.length === 0) {
-      newGameState[self].skillVestige = shuffleRepertoire(
+      newGameState[self].skillVestige = shuffleCards(
         newGameState[self].skillVestige
       );
       newGameState[self].skillRepertoire = [
@@ -1018,7 +1018,7 @@ export const useRecurringEffects = () => {
     return dieFaces[Math.floor(Math.random() * dieFaces.length)];
   };
 
-  const shuffleRepertoire = (repertoire) => {
+  const shuffleCards = (repertoire) => {
     for (let i = repertoire.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [repertoire[i], repertoire[j]] = [repertoire[j], repertoire[i]];
@@ -1220,7 +1220,7 @@ export const useRecurringEffects = () => {
     move,
     purificationPurge,
     rollTactic,
-    shuffleRepertoire,
+    shuffleCards,
     strike,
     triggerAegis,
     triggerBlazeOfGlory,

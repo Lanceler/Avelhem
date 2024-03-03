@@ -24,6 +24,7 @@ import DefiancePhaseSelection from "./modals/DefiancePhaseSelection";
 
 import MessageToEnemy from "./modals/MessageToEnemy";
 import ScionSkillSelect from "./modals/ScionSkillSelect";
+import SearchSkill from "./modals/SearchSkill";
 import SelectSkillResonator from "./modals/SelectSkillResonator";
 import SelectSkillDiscard from "./modals/SelectSkillDiscard";
 import SelectSkillReveal from "./modals/SelectSkillReveal";
@@ -90,7 +91,7 @@ const Board = (props) => {
     isMuted,
     move,
     purificationPurge,
-    shuffleRepertoire,
+    shuffleCards,
     strike,
     virtueBlast,
   } = useRecurringEffects();
@@ -402,6 +403,21 @@ const Board = (props) => {
               <ScionSkillSelect
                 updateFirebase={updateFirebase}
                 unit={lastResolution.unit}
+              />
+            )}
+          </>
+        );
+
+      case "Search Skill":
+        return (
+          <>
+            {self === lastResolution.player && !hideModal && (
+              <SearchSkill
+                restriction={lastResolution.restriction}
+                outcome={lastResolution.outcome}
+                message={lastResolution.message}
+                hideOrRevealModale={hideOrRevealModale}
+                updateFirebase={updateFirebase}
               />
             )}
           </>
@@ -1132,26 +1148,6 @@ const Board = (props) => {
     }
   };
 
-  const selectBlast = (unitInfo, tactic, special) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    //end "blast" resolution
-    newGameState.currentResolution.pop();
-
-    if (unit !== null && !isMuted(unit)) {
-      enterSelectUnitMode(
-        getZonesWithEnemies(unit, 1),
-        unit,
-        newGameState,
-        tactic,
-        "blast",
-        special
-      );
-    }
-  };
-
   const selectEnemies = (unitInfo, range, tactic, reason, special) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
@@ -1165,26 +1161,6 @@ const Board = (props) => {
         newGameState,
         tactic,
         reason,
-        special
-      );
-    }
-  };
-
-  const selectIgnite = (unitInfo, tactic, special) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    //end "ignite" resolution
-    newGameState.currentResolution.pop();
-
-    if (unit !== null && !isMuted(unit)) {
-      enterSelectUnitMode(
-        getZonesWithEnemies(unit, 1),
-        unit,
-        newGameState,
-        tactic,
-        "ignite",
         special
       );
     }
@@ -1414,7 +1390,7 @@ const Board = (props) => {
     newGameState.turnPlayer = choice;
 
     let hostSkillRepertoire = [...newGameState.host.skillRepertoire];
-    hostSkillRepertoire = shuffleRepertoire(hostSkillRepertoire);
+    hostSkillRepertoire = shuffleCards(hostSkillRepertoire);
     let hostStartingHand = hostSkillRepertoire.splice(
       hostSkillRepertoire.length - 4,
       4
@@ -1424,11 +1400,9 @@ const Board = (props) => {
     newGameState.host.skillRepertoire = hostSkillRepertoire;
 
     let hostAvelhemRepertoire = [...newGameState.host.avelhemRepertoire];
-    newGameState.host.avelhemRepertoire = shuffleRepertoire(
-      hostAvelhemRepertoire
-    );
+    newGameState.host.avelhemRepertoire = shuffleCards(hostAvelhemRepertoire);
     let guestSkillRepertoire = [...newGameState.guest.skillRepertoire];
-    guestSkillRepertoire = shuffleRepertoire(guestSkillRepertoire);
+    guestSkillRepertoire = shuffleCards(guestSkillRepertoire);
 
     let guestStartingHand = guestSkillRepertoire.splice(
       guestSkillRepertoire.length - 4,
@@ -1439,9 +1413,7 @@ const Board = (props) => {
     newGameState.guest.skillRepertoire = guestSkillRepertoire;
 
     let guestAvelhemRepertoire = [...newGameState.guest.avelhemRepertoire];
-    newGameState.guest.avelhemRepertoire = shuffleRepertoire(
-      guestAvelhemRepertoire
-    );
+    newGameState.guest.avelhemRepertoire = shuffleCards(guestAvelhemRepertoire);
 
     newGameState.host.units = [
       newPawnStats("host", 0, 6, 0),

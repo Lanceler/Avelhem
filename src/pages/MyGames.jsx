@@ -78,14 +78,15 @@ export default function MyGames() {
 
         const createdGamesRef = collection(db, "gameInfo");
         const gameRef = await addDoc(createdGamesRef, {
-          activatingSkill: [],
-          activatingUnit: [],
           date: createTime,
           hostId: user.uid,
           hostName: user.displayName,
           guestId: null,
           guestName: null,
           gameState: {
+            activatingSkill: [],
+            activatingUnit: [],
+            activatingResonator: [],
             turnCount: 0,
             turnPlayer: null,
             turnPhase: null,

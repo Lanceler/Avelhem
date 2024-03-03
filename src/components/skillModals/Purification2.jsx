@@ -7,6 +7,7 @@ import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 const Purification2 = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
+  const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
   const { drawSkill } = useRecurringEffects();
@@ -22,7 +23,22 @@ const Purification2 = (props) => {
     props.updateFirebase(newGameState);
   };
 
-  const handleSearch = () => {};
+  const handleSearch = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Search Skill",
+      player: self,
+      restriction: ["02-01", "02-02", "02-03"],
+      message: "Search for then float 1 non-burst Water skill.",
+      outcome: "Float",
+    });
+
+    dispatch(updateState(newGameState));
+    props.updateFirebase(newGameState);
+  };
 
   const handleViewBoard = () => {
     props.hideOrRevealModale();
