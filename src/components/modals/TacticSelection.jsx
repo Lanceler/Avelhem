@@ -5,34 +5,35 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
-import Advance from "../../assets/diceIcons/Advance.png";
-import Assault from "../../assets/diceIcons/Assault.png";
-import Invoke from "../../assets/diceIcons/Invoke.png";
-import Mobilize from "../../assets/diceIcons/Mobilize.png";
+// import Advance from "../../assets/diceIcons/Advance.png";
+// import Assault from "../../assets/diceIcons/Assault.png";
+// import Invoke from "../../assets/diceIcons/Invoke.png";
+// import Mobilize from "../../assets/diceIcons/Mobilize.png";
 
 const TacticSelection = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const { getVacantAdjacentZones, getZonesInRange } = useRecurringEffects();
+  const { getTacticImage, getVacantAdjacentZones, getZonesInRange } =
+    useRecurringEffects();
 
-  const getImage = (i) => {
-    if (localGameState && localGameState.tactics[i]) {
-      switch (localGameState.tactics[i].face) {
-        case "Advance":
-          return Advance;
-        case "Mobilize":
-          return Mobilize;
-        case "Assault":
-          return Assault;
-        case "Invoke":
-          return Invoke;
-        default:
-          return;
-      }
-    }
-  };
+  // const getTacticImage = (i) => {
+  //   if (localGameState && localGameState.tactics[i]) {
+  //     switch (localGameState.tactics[i].face) {
+  //       case "Advance":
+  //         return Advance;
+  //       case "Mobilize":
+  //         return Mobilize;
+  //       case "Assault":
+  //         return Assault;
+  //       case "Invoke":
+  //         return Invoke;
+  //       default:
+  //         return;
+  //     }
+  //   }
+  // };
 
   let canUseTactic = [true, true];
 
@@ -115,11 +116,9 @@ const TacticSelection = (props) => {
                   }`}
                   onClick={() => handleClickTactic(index)}
                   style={{
-                    backgroundImage: `url(${getImage(index)})`,
+                    backgroundImage: `url(${getTacticImage(index)})`,
                   }}
-                >
-                  {console.log(tactic)}
-                </div>
+                ></div>
               </div>
               {tactic.face}
               <br />

@@ -46,6 +46,10 @@ const CoordinationPhaseSelection = (props) => {
     );
     newGameState = nextPhase(newGameState);
 
+    newGameState.currentResolution.push({
+      resolution: "Tactic Results",
+    });
+
     dispatch(updateState(newGameState));
     props.updateFirebase(newGameState);
   };

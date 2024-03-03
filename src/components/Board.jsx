@@ -27,6 +27,7 @@ import ScionSkillSelect from "./modals/ScionSkillSelect";
 import SelectSkillResonator from "./modals/SelectSkillResonator";
 import SelectSkillDiscard from "./modals/SelectSkillDiscard";
 import SelectSkillReveal from "./modals/SelectSkillReveal";
+import TacticResults from "./modals/TacticResults";
 import ViewRevealedSkill from "./modals/ViewRevealedSkill";
 import YouMaySpend1Skill from "./modals/YouMaySpend1Skill";
 
@@ -38,6 +39,7 @@ import TacticAssault from "./modals/TacticAssault";
 import VirtueBlastBlock from "./modals/VirtueBlastBlock";
 
 import IgnitionPropulsion1 from "./skillModals/IgnitionPropulsion1";
+import Purification2 from "./skillModals/Purification2";
 import ConflagrationResonance1 from "./skillModals/ConflagrationResonance1";
 import BlazeOfGloryDraw from "./skillModals/BlazeOfGloryDraw";
 
@@ -82,10 +84,12 @@ const Board = (props) => {
     blast,
     drawSkill,
     endFinalPhase,
+    getZonesWithAllies,
     getZonesWithEnemies,
     ignite,
     isMuted,
     move,
+    purificationPurge,
     shuffleRepertoire,
     strike,
     virtueBlast,
@@ -99,6 +103,7 @@ const Board = (props) => {
     blazeOfGlory1,
     blazeOfGlory2,
     resplendence1,
+    purification1,
     symphonicScreech1,
   } = useSkillEffects();
   const { getSkillById } = useCardDatabase();
@@ -151,6 +156,7 @@ const Board = (props) => {
     console.log("Updated local from online");
     setZones(JSON.parse(props.gameState.zones));
     dispatch(updateState(props.gameState));
+    setHideModal(false);
   }, [props.gameState]);
 
   //====================================================================
@@ -208,6 +214,19 @@ const Board = (props) => {
             )}
           </>
         );
+
+      case "Tactic Results":
+        return (
+          <>
+            {!hideModal && (
+              <TacticResults
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
       case "Defiance Phase Selection":
         return (
           <>
@@ -506,7 +525,18 @@ const Board = (props) => {
         return (
           <>
             {self === lastResolution.unit.player && (
-              <>{blastSelect(lastResolution.unit, null, "Fire Scion")}</>
+              <>
+                {
+                  selectEnemies(
+                    lastResolution.unit,
+                    1,
+                    null,
+                    "blast",
+                    "Fire Scion"
+                  )
+                  // selectBlast(lastResolution.unit, null, "Fire Scion")
+                }
+              </>
             )}
           </>
         );
@@ -554,7 +584,7 @@ const Board = (props) => {
         return (
           <>
             {self === lastResolution.unit.player && (
-              <>{igniteSelect(lastResolution.unit, null, null)}</>
+              <>{selectEnemies(lastResolution.unit, 1, null, "ignite", null)}</>
             )}
           </>
         );
@@ -574,7 +604,7 @@ const Board = (props) => {
             {self === lastResolution.unit.player && (
               <>
                 {setIntrudingPlayer(self)}
-                {igniteSelect(lastResolution.unit, null, null)}
+                {selectEnemies(lastResolution.unit, 1, null, "ignite", null)}
               </>
             )}
           </>
@@ -639,7 +669,45 @@ const Board = (props) => {
         return (
           <>
             {self === lastResolution.unit.player && (
-              <>{igniteSelect(lastResolution.unit, null, null)}</>
+              <>{selectEnemies(lastResolution.unit, 1, null, "ignite", null)}</>
+            )}
+          </>
+        );
+
+      case "Activating Purification":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>{resolutionUpdate(purification1(lastResolution.unit))}</>
+            )}
+          </>
+        );
+
+      case "Purification1":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {selectAllies(
+                  lastResolution.unit,
+                  2,
+                  true,
+                  "purification",
+                  null
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Purification2":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <Purification2
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
             )}
           </>
         );
@@ -792,26 +860,6 @@ const Board = (props) => {
 
       // updateFirebase(newGameState);
     }, 1750);
-  };
-
-  const blastSelect = (unitInfo, tactic, special) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    //end "blast" resolution
-    newGameState.currentResolution.pop();
-
-    if (unit !== null && !isMuted(unit)) {
-      enterSelectUnitMode(
-        getZonesWithEnemies(unit, 1),
-        unit,
-        newGameState,
-        tactic,
-        "blast",
-        special
-      );
-    }
   };
 
   const deployPawn = (r, c) => {
@@ -982,26 +1030,6 @@ const Board = (props) => {
     updateFirebase(newGameState);
   };
 
-  const igniteSelect = (unitInfo, tactic, special) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    //end "ignite" resolution
-    newGameState.currentResolution.pop();
-
-    if (unit !== null && !isMuted(unit)) {
-      enterSelectUnitMode(
-        getZonesWithEnemies(unit, 1),
-        unit,
-        newGameState,
-        tactic,
-        "ignite",
-        special
-      );
-    }
-  };
-
   const nextPhase = () => {
     console.log("Changing Phase");
     const newGameState = JSON.parse(JSON.stringify(localGameState));
@@ -1086,6 +1114,82 @@ const Board = (props) => {
     updateFirebase(newGameState);
   };
 
+  const selectAllies = (unitInfo, range, includeSelf, reason, special) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    newGameState.currentResolution.pop();
+
+    if (unit !== null && !isMuted(unit)) {
+      enterSelectUnitMode(
+        getZonesWithAllies(unit, range, includeSelf),
+        unit,
+        newGameState,
+        null,
+        reason,
+        special
+      );
+    }
+  };
+
+  const selectBlast = (unitInfo, tactic, special) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "blast" resolution
+    newGameState.currentResolution.pop();
+
+    if (unit !== null && !isMuted(unit)) {
+      enterSelectUnitMode(
+        getZonesWithEnemies(unit, 1),
+        unit,
+        newGameState,
+        tactic,
+        "blast",
+        special
+      );
+    }
+  };
+
+  const selectEnemies = (unitInfo, range, tactic, reason, special) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    newGameState.currentResolution.pop();
+
+    if (unit !== null && !isMuted(unit)) {
+      enterSelectUnitMode(
+        getZonesWithEnemies(unit, range),
+        unit,
+        newGameState,
+        tactic,
+        reason,
+        special
+      );
+    }
+  };
+
+  const selectIgnite = (unitInfo, tactic, special) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "ignite" resolution
+    newGameState.currentResolution.pop();
+
+    if (unit !== null && !isMuted(unit)) {
+      enterSelectUnitMode(
+        getZonesWithEnemies(unit, 1),
+        unit,
+        newGameState,
+        tactic,
+        "ignite",
+        special
+      );
+    }
+  };
+
   const selectUnit = (unit, selectedUnit, reason, special) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -1122,6 +1226,8 @@ const Board = (props) => {
         selectedUnit,
         special
       );
+    } else if (reason === "purification") {
+      newGameState = purificationPurge(newGameState, selectedUnit);
     } else if (reason === "symphonic screech") {
       //unit = activator; selectedUnit = windScion
 

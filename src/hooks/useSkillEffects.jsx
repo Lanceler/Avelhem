@@ -242,6 +242,50 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
+  const purification1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Purification" resolution
+    newGameState.currentResolution.pop();
+
+    //giveUnit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation = unit.activation + 1)
+      : (unit.temporary.activation = 1);
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    const isAdjacentToFrostbitten = () => {
+      const zones = JSON.parse(localGameState.zones);
+      const adjacentEnemies = getZonesWithEnemies(unit, 1);
+
+      for (let i of adjacentEnemies) {
+        const zone = zones[Math.floor(i / 5)][i % 5];
+        const enemy = localGameState[zone.player].units[zone.unitIndex];
+
+        if (enemy.afflictions.frostbite > 0) {
+          return true;
+        }
+      }
+      return false;
+    };
+
+    if (isAdjacentToFrostbitten()) {
+      newGameState.currentResolution.push({
+        resolution: "Purification2",
+        unit: unit,
+      });
+    }
+
+    newGameState.currentResolution.push({
+      resolution: "Purification1",
+      unit: unit,
+    });
+
+    return newGameState;
+  };
+
   const symphonicScreech1 = (unit, victim) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -281,13 +325,14 @@ export const useSkillEffects = () => {
   };
 
   return {
+    ignitionPropulsion1,
     conflagration1,
     conflagrationR1,
     conflagrationR2,
-    ignitionPropulsion1,
     blazeOfGlory1,
     blazeOfGlory2,
     resplendence1,
+    purification1,
     symphonicScreech1,
   };
 };

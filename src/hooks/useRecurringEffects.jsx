@@ -4,6 +4,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../redux/gameState";
 import gameState from "../redux/gameState";
 
+import Advance from "../assets/diceIcons/Advance.png";
+import Assault from "../assets/diceIcons/Assault.png";
+import Invoke from "../assets/diceIcons/Invoke.png";
+import Mobilize from "../assets/diceIcons/Mobilize.png";
+
 export const useRecurringEffects = () => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
@@ -166,6 +171,53 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const activatePurification = (newGameState, unit) => {
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    let conclusion = "discard";
+    if (unit.temporary.ambidexterity) {
+      conclusion = "float";
+      delete newGameState[unit.player].units[unit.unitIndex].temporary
+        .ambidexterity;
+    }
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      unit: unit,
+      skill: "02-01",
+      conclusion: conclusion,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Activating Purification",
+      unit: unit,
+    });
+
+    newGameState.activatingSkill.push("02-01");
+    newGameState.activatingUnit.push(unit);
+
+    if (triggerScreech(unit)) {
+      newGameState.currentResolution.push({
+        resolution: "Triggering Screech",
+        player: enemy,
+        activator: unit,
+      });
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: enemy,
+      });
+    } else {
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: self,
+      });
+    }
+
+    return newGameState;
+  };
+
   const activateResplendence = (newGameState, unit) => {
     //end Select Skill resolution
     newGameState.currentResolution.pop();
@@ -234,6 +286,9 @@ export const useRecurringEffects = () => {
         return activateConflagration(newGameState, unit);
       case "01-04":
         return activateResplendence(newGameState, unit);
+
+      case "02-01":
+        return activatePurification(newGameState, unit);
 
       default:
         return newGameState;
@@ -477,14 +532,20 @@ export const useRecurringEffects = () => {
     switch (skill) {
       case "01-01":
         return canIgnitionPropulsion(unit);
-
       case "01-02":
         return canConflagration(unit);
-
       case "01-03":
         return false;
-
       case "01-04":
+        return true;
+
+      case "02-01":
+        return true;
+      case "02-02":
+        return canFrigidBreath(unit);
+      case "02-03":
+        return false;
+      case "02-04":
         return true;
 
       default:
@@ -511,6 +572,13 @@ export const useRecurringEffects = () => {
     }
 
     return true;
+  };
+
+  const canFrigidBreath = (unit) => {
+    if (getZonesWithEnemies(unit, 2).length > 0) {
+      return true;
+    }
+    return false;
   };
 
   const canIgnitionPropulsion = (unit) => {
@@ -696,6 +764,23 @@ export const useRecurringEffects = () => {
 
       default:
         return;
+    }
+  };
+
+  const getTacticImage = (i) => {
+    if (localGameState && localGameState.tactics[i]) {
+      switch (localGameState.tactics[i].face) {
+        case "Advance":
+          return Advance;
+        case "Mobilize":
+          return Mobilize;
+        case "Assault":
+          return Assault;
+        case "Invoke":
+          return Invoke;
+        default:
+          return;
+      }
     }
   };
 
@@ -889,6 +974,25 @@ export const useRecurringEffects = () => {
     ) {
       newGameState.currentResolution.pop();
     }
+
+    return newGameState;
+  };
+
+  const purificationPurge = (newGameState, selectedUnit) => {
+    let unit = newGameState[selectedUnit.player].units[selectedUnit.unitIndex];
+
+    if (unit.enhancements.ward > 0) {
+      unit.enhancements.ward = Math.max(unit.enhancements.ward, 2);
+    } else {
+      unit.enhancements.ward = 2;
+    }
+
+    delete unit.afflictions.paralysis;
+    delete unit.afflictions.frostbite;
+    delete unit.afflictions.burn;
+    delete unit.afflictions.infection;
+
+    newGameState[selectedUnit.player].units[selectedUnit.unitIndex] = unit;
 
     return newGameState;
   };
@@ -1104,6 +1208,7 @@ export const useRecurringEffects = () => {
     floatAvelhem,
     floatSkill,
     getScionSet,
+    getTacticImage,
     getVacantAdjacentZones,
     getZonesInRange,
     getZonesWithAllies,
@@ -1113,6 +1218,7 @@ export const useRecurringEffects = () => {
     isMuted,
     isRooted,
     move,
+    purificationPurge,
     rollTactic,
     shuffleRepertoire,
     strike,

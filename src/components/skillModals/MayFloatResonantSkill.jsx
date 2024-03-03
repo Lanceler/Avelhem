@@ -65,7 +65,8 @@ const MayFloatResonantSkill = (props) => {
     <div className="modal-backdrop">
       <div className="modal">
         <button onClick={() => handleViewBoard()}>View Board</button>
-        <h2>You may float this skill.</h2>
+        <h2>Resonance sub-effect</h2>
+        <h3>You may float this skill.</h3>
         {props.resonator === "SA-04" && (
           <p>
             When a skill resonates with Dark Halo, the sub-effect that would

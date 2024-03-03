@@ -25,14 +25,6 @@ const SelectSkillResonator = (props) => {
     });
   }
 
-  // const validResonators = [props.skill.id, "SA-02"]; //skill itself & Tea for Two
-
-  // if (props.unit !== null && props.unit.enhancements.ravager) {
-  //   validResonators.push("SA-04"); // only Ravagers can resonate with Dark Halo
-  // } else if (props.unit === null) {
-  //   validResonators.push("SA-01"); // only Sovereign Skills can resonate with Heir’s Endeavor
-  // }
-
   const validResonators = [props.skill.id, "SA-01", "SA-02", "SA-04"];
 
   const canUseResonator = (resonator) => {
