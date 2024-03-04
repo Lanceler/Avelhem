@@ -60,7 +60,7 @@ const SymphonicScreechFloat = (props) => {
 
   return (
     <div className="modal-backdrop">
-      <div className="modal">
+      <div className="skill-modal">
         <button onClick={() => handleViewBoard()}>View Board</button>
         <h2>Symphonic Screech</h2>
         <div>The effects of your skill have been negated!</div>

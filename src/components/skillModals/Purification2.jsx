@@ -46,7 +46,7 @@ const Purification2 = (props) => {
 
   return (
     <div className="modal-backdrop">
-      <div className="modal">
+      <div className="skill-modal">
         <button onClick={() => handleViewBoard()}>View Board</button>
         <h2>Purification</h2>
         <h3>Choose 1:</h3>

@@ -73,7 +73,7 @@ const ContingentSymphonicScreech = (props) => {
 
   return (
     <div className="modal-backdrop">
-      <div className="modal">
+      <div className="skill-modal">
         <button onClick={() => handleViewBoard()}>View Board</button>
         <h2>Contigency: Activation Triggered</h2>
 

@@ -16,6 +16,7 @@ import { updateDoc, doc } from "firebase/firestore";
 import { useRecurringEffects } from "../hooks/useRecurringEffects";
 import { useSkillEffects } from "../hooks/useSkillEffects";
 import { useCardDatabase } from "../hooks/useCardDatabase";
+import { useCardImageSwitch } from "../hooks/useCardImageSwitch";
 
 import AcquisitionPhaseSelection from "./modals/AcquisitionPhaseSelection";
 import BountyStore from "./modals/BountyStore";
@@ -82,11 +83,13 @@ const Board = (props) => {
     activateSymphonicScreech,
     applyBurn,
     applyDamage,
+    applyFrostbite,
     blast,
     drawSkill,
     endFinalPhase,
     getZonesWithAllies,
     getZonesWithEnemies,
+    freeze1,
     ignite,
     isMuted,
     move,
@@ -105,9 +108,13 @@ const Board = (props) => {
     blazeOfGlory2,
     resplendence1,
     purification1,
+    frigidBreath1,
+    frigidBreath2,
     symphonicScreech1,
   } = useSkillEffects();
+
   const { getSkillById } = useCardDatabase();
+  const { getImage } = useCardImageSwitch();
 
   const newPawnStats = (player, index, row, column) => {
     return {
@@ -357,9 +364,7 @@ const Board = (props) => {
               <>
                 {resolveApplyBurn(
                   lastResolution.attacker,
-                  lastResolution.victim,
-                  lastResolution.type,
-                  lastResolution.special
+                  lastResolution.victim
                 )}
               </>
             )}
@@ -376,6 +381,21 @@ const Board = (props) => {
                   lastResolution.victim,
                   lastResolution.type,
                   lastResolution.special
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Apply Frostbite":
+        return (
+          <>
+            {self === lastResolution.attacker.player && (
+              <>
+                {resolveApplyFrostbite(
+                  lastResolution.attacker,
+                  lastResolution.victim,
+                  lastResolution.duration
                 )}
               </>
             )}
@@ -724,6 +744,39 @@ const Board = (props) => {
                 updateFirebase={updateFirebase}
                 hideOrRevealModale={hideOrRevealModale}
               />
+            )}
+          </>
+        );
+
+      case "Activating Frigid Breath":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>{resolutionUpdate(frigidBreath1(lastResolution.unit))}</>
+            )}
+          </>
+        );
+
+      case "Frigid Breath1":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {selectEnemies(lastResolution.unit, 2, null, "freeze1", null)}
+              </>
+            )}
+          </>
+        );
+
+      case "Frigid Breath2":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  frigidBreath2(lastResolution.unit)
+                )}
+              </>
             )}
           </>
         );
@@ -1082,7 +1135,7 @@ const Board = (props) => {
     dispatch(updateState(gameState));
   };
 
-  const resolveApplyBurn = (attackerInfo, victimInfo, type, special) => {
+  const resolveApplyBurn = (attackerInfo, victimInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
     const attacker =
@@ -1115,6 +1168,23 @@ const Board = (props) => {
         type,
         special
       );
+    }
+
+    dispatch(updateState(newGameState));
+
+    updateFirebase(newGameState);
+  };
+
+  const resolveApplyFrostbite = (attackerInfo, victimInfo, duration) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    const attacker =
+      newGameState[attackerInfo.player].units[attackerInfo.unitIndex];
+
+    newGameState.currentResolution.pop();
+
+    if (attacker !== null && !isMuted(attacker)) {
+      newGameState = applyFrostbite(newGameState, victimInfo, duration);
     }
 
     dispatch(updateState(newGameState));
@@ -1204,6 +1274,13 @@ const Board = (props) => {
       );
     } else if (reason === "purification") {
       newGameState = purificationPurge(newGameState, selectedUnit);
+    } else if (reason === "freeze1") {
+      newGameState = freeze1(
+        newGameState,
+        newGameState[unit.player].units[unit.unitIndex],
+        selectedUnit,
+        special
+      );
     } else if (reason === "symphonic screech") {
       //unit = activator; selectedUnit = windScion
 
@@ -1627,7 +1704,7 @@ const Board = (props) => {
                     <div className="hand-container">
                       {localGameState[enemy].avelhemHand.map((card, index) => (
                         <div key={index} className="handCard">
-                          {card}
+                          {/* {card} */}
                         </div>
                       ))}
                     </div>
@@ -1638,7 +1715,7 @@ const Board = (props) => {
                     <div className="hand-container">
                       {localGameState[enemy].skillHand.map((card, index) => (
                         <div key={index} className="handCard">
-                          {card}
+                          {/* {card} */}
                         </div>
                       ))}
                     </div>
@@ -1717,8 +1794,16 @@ const Board = (props) => {
                   {localGameState[self] && (
                     <div className="hand-container">
                       {localGameState[self].skillHand.map((card, index) => (
-                        <div key={index} className="handCard">
-                          {card}
+                        <div
+                          key={index}
+                          className="handCard"
+                          style={{
+                            backgroundImage: `url(${getImage(
+                              getSkillById(card).Name
+                            )})`,
+                          }}
+                        >
+                          {/* {card} */}
                         </div>
                       ))}
                     </div>

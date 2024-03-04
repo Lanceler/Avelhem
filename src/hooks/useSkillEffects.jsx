@@ -131,8 +131,6 @@ export const useSkillEffects = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
-    console.log(unit);
-
     //end "ConflagrationR1"
     newGameState.currentResolution.pop();
 
@@ -286,6 +284,55 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
+  const frigidBreath1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Frigid Breath" resolution
+    newGameState.currentResolution.pop();
+
+    //giveUnit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation = unit.activation + 1)
+      : (unit.temporary.activation = 1);
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    newGameState.currentResolution.push({
+      resolution: "Frigid Breath2",
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Frigid Breath1",
+      unit: unit,
+    });
+
+    return newGameState;
+  };
+
+  const frigidBreath2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Frigid Breath2"
+    newGameState.currentResolution.pop();
+
+    if (
+      unit !== null &&
+      !isMuted(unit) &&
+      getZonesWithEnemies(unit, 1).length > 0 &&
+      newGameState[self].skillHand.length > 0
+    ) {
+      newGameState.currentResolution.push({
+        resolution: "frigidBreath3",
+        unit: unit,
+      });
+    }
+
+    return newGameState;
+  };
+
   const symphonicScreech1 = (unit, victim) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -333,6 +380,8 @@ export const useSkillEffects = () => {
     blazeOfGlory2,
     resplendence1,
     purification1,
+    frigidBreath1,
+    frigidBreath2,
     symphonicScreech1,
   };
 };

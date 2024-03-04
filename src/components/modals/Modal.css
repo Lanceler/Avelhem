@@ -10,10 +10,10 @@
 
 .modal{
     padding: 20px;
-    max-height: 1050px;
+    max-height: 1000px;
     width: fit-content;
     /* max-width: 850px; */
-    margin: 120px auto;
+    margin: 100px auto;
     background: rgb(255, 255, 255);
     border-radius: 10px;
 }
@@ -155,5 +155,5 @@ background: rgb(117, 13, 13)
 }
 
 .decreased-height{
-    max-height: 350px !important;
+    max-height: 320px !important;
 }

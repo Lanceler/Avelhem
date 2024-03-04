@@ -60,7 +60,7 @@ const IgnitionPropulsion1 = (props) => {
 
   return (
     <div className="modal-backdrop">
-      <div className="modal">
+      <div className="skill-modal">
         <button onClick={() => handleViewBoard()}>View Board</button>
         <h2>Ignition Propulsion</h2>
 

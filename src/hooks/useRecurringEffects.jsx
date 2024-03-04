@@ -123,6 +123,34 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const activateFrigidBreath = (newGameState, unit) => {
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      unit: unit,
+      skill: "02-02",
+      conclusion: "discard",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Activating Frigid Breath",
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Animation Delay",
+      priority: self,
+    });
+
+    newGameState.activatingSkill.push("02-02");
+    newGameState.activatingUnit.push(unit);
+
+    return newGameState;
+  };
+
   const activateIgnitionPropulsion = (newGameState, unit) => {
     //end Select Skill resolution
     newGameState.currentResolution.pop();
@@ -289,6 +317,8 @@ export const useRecurringEffects = () => {
 
       case "02-01":
         return activatePurification(newGameState, unit);
+      case "02-02":
+        return activateFrigidBreath(newGameState, unit);
 
       default:
         return newGameState;
@@ -305,18 +335,9 @@ export const useRecurringEffects = () => {
     }
   };
 
-  const applyBurn = (newGameState, victimInfo, attackerInfo) => {
+  const applyBurn = (newGameState, victimInfo) => {
     //Update info
     let victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
-
-    const attacker =
-      newGameState[attackerInfo.player].units[attackerInfo.unitIndex];
-
-    //this can happen with effects like thunder thaumaturge
-    if (isMuted(attacker) || attacker === null) {
-      return newGameState;
-      // to do: Maybe push a resolution that displays a message
-    }
 
     if (victim.enhancements.ward) {
       delete newGameState[victim.player].units[victim.unitIndex].enhancements
@@ -482,6 +503,52 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const applyFrostbite = (newGameState, victimInfo, duration) => {
+    //Update info
+    let victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
+
+    if (victim.enhancements.ward) {
+      delete newGameState[victim.player].units[victim.unitIndex].enhancements
+        .ward;
+    } else if (
+      //burning units are immune
+      !victim.afflictions.burn > 0 &&
+      //Fire, Water, and Lightning Scions are immune
+      !(
+        !isMuted(victim) &&
+        ["Fire Scion", "Water Scion", "Lightning Scion"].includes(
+          victim.unitClass
+        )
+      )
+    ) {
+      if (
+        newGameState[victim.player].units[victim.unitIndex].afflictions
+          .frostbite > 0
+      ) {
+        newGameState[victim.player].units[
+          victim.unitIndex
+        ].afflictions.frostbite = Math.max(
+          newGameState[victim.player].units[victim.unitIndex].afflictions
+            .frostbite,
+          duration
+        );
+      } else {
+        newGameState[victim.player].units[
+          victim.unitIndex
+        ].afflictions.frostbite = duration;
+      }
+
+      //frostbite purges overgrowth & proliferation (proliferation would be overgrowth: 2)
+
+      delete newGameState[victim.player].units[victim.unitIndex].enhancements
+        .overgrowth;
+      delete newGameState[victim.player].units[victim.unitIndex].enhancements
+        .disruption;
+    }
+
+    return newGameState;
+  };
+
   const assignTactics = (newGameState, first, second) => {
     newGameState.tactics = [first, second];
 
@@ -511,13 +578,15 @@ export const useRecurringEffects = () => {
   };
 
   const canActivateResonance = (unit, skill) => {
-    if (!canActivateSkill(unit, skill)) {
-      return false;
-    }
-
     switch (skill) {
       case "01-02":
-        return localGameState[self].skillHand.length > 2;
+        return (
+          canActivateSkill(unit, skill) &&
+          localGameState[self].skillHand.length > 2
+        );
+
+      case "02-02":
+        return canActivateSkill(unit, skill);
 
       default:
         return false;
@@ -739,6 +808,52 @@ export const useRecurringEffects = () => {
     );
 
     newGameState[self].skillFloat = newGameState[self].skillFloat + 1;
+
+    return newGameState;
+  };
+
+  const freeze1 = (newGameState, attacker, victim, special) => {
+    newGameState.currentResolution.push({
+      resolution: "Apply Frostbite",
+      attacker: attacker,
+      victim: victim,
+      special: special,
+      type: "freeze1",
+      duration: 1,
+    });
+
+    //to do in the future: consider bypass Target and Adamant Armor
+    if (triggerTarget(attacker, victim, "freeze1")) {
+      newGameState.currentResolution.push({
+        resolution: "Triggering Target",
+        attacker: attacker,
+        victim: victim,
+        type: "freeze1",
+      });
+    }
+
+    return newGameState;
+  };
+
+  const freeze2 = (newGameState, attacker, victim, special) => {
+    newGameState.currentResolution.push({
+      resolution: "Apply Frostbite",
+      attacker: attacker,
+      victim: victim,
+      special: special,
+      type: "freeze1",
+      duration: 2,
+    });
+
+    //to do in the future: consider bypass Target and Adamant Armor
+    if (triggerTarget(attacker, victim, "freeze2")) {
+      newGameState.currentResolution.push({
+        resolution: "Triggering Target",
+        attacker: attacker,
+        victim: victim,
+        type: "freeze2",
+      });
+    }
 
     return newGameState;
   };
@@ -1195,6 +1310,7 @@ export const useRecurringEffects = () => {
     activateSymphonicScreech,
     applyBurn,
     applyDamage,
+    applyFrostbite,
     assignTactics,
     blast,
     canActivateResonance,
@@ -1207,6 +1323,7 @@ export const useRecurringEffects = () => {
     endFinalPhase,
     floatAvelhem,
     floatSkill,
+    freeze1,
     getScionSet,
     getTacticImage,
     getVacantAdjacentZones,

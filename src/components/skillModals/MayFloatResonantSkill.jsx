@@ -63,7 +63,7 @@ const MayFloatResonantSkill = (props) => {
 
   return (
     <div className="modal-backdrop">
-      <div className="modal">
+      <div className="skill-modal">
         <button onClick={() => handleViewBoard()}>View Board</button>
         <h2>Resonance sub-effect</h2>
         <h3>You may float this skill.</h3>

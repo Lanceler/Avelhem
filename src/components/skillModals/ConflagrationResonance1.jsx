@@ -42,7 +42,7 @@ const ConflagrationResonance1 = (props) => {
 
   return (
     <div className="modal-backdrop">
-      <div className="modal">
+      <div className="skill-modal">
         <button onClick={() => handleViewBoard()}>View Board</button>
         <h2>Conflagration</h2>
         <h3>You may ignite an adjacent enemy.</h3>

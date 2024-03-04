@@ -164,7 +164,7 @@ const SearchSkill = (props) => {
           </>
         )}
 
-        <h3>Other skills</h3>
+        <h3>Non-floating skills</h3>
         <div
           className={`fourColumn scrollable scrollable-y-only ${
             localGameState[self].skillFloat > 0 ? "decreased-height" : ""

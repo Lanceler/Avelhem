@@ -66,15 +66,31 @@
 }
 
 .handCard {
-    width: 100px;
-    min-width: 100px;
-    /* Adjust the width as needed */
-    height: 140px;
-    /* Adjust the height as needed */
+    // width: 100px;
+    // height: 140px;
+    width: 120px;
+    height: 168px;
+
+        display: flex;
+        //     flex-direction: column;
+        //     justify-content: flex-end;
+        //     align-items: center;
+
+    background-size: cover;
+    background-position: center;
+
+    border-radius: 5px;
+
     background-color: green;
     border: 2px solid black;
     margin-right: 10px;
-    /* Adjust the margin between cards as needed */
+}
+
+.handCard:hover {
+    width: 150px;
+    height: 210px;
+
+
 }
 
 .card {

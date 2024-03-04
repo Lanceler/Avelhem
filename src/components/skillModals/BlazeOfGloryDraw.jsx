@@ -41,7 +41,7 @@ const BlazeOfGloryDraw = (props) => {
 
   return (
     <div className="modal-backdrop">
-      <div className="modal">
+      <div className="skill-modal">
         <button onClick={() => handleViewBoard()}>View Board</button>
         <h2>You may spend 1 Fever to draw 1 skill.</h2>
 

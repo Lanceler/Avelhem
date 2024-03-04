@@ -15,10 +15,10 @@ import GaleConjuration from "../assets/skillcards/GaleConjuration.png";
 import SymphonicScreech from "../assets/skillcards/SymphonicScreech.png";
 import CataclysmicTempest from "../assets/skillcards/CataclysmicTempest.png";
 
-// import Crystallization from "../assets/skillcards/Crystallization.png";
-// import Upheaval from "../assets/skillcards/Upheaval.png";
+import Crystallization from "../assets/skillcards/Crystallization.png";
+import Upheaval from "../assets/skillcards/Upheaval.png";
 import PitfallTrap from "../assets/skillcards/PitfallTrap.png";
-// import Geomancy from "../assets/skillcards/Geomancy.png";
+import Geomancy from "../assets/skillcards/Geomancy.png";
 
 import ChainLightning from "../assets/skillcards/ChainLightning.png";
 import ZipAndZap from "../assets/skillcards/ZipAndZap.png";
@@ -89,14 +89,14 @@ export const useCardImageSwitch = (cardName) => {
       case "Cataclysmic Tempest":
         return CataclysmicTempest;
 
-      // case "Crystallization":
-      //   return Crystallization;
-      // case "Upheaval":
-      //   return Upheaval;
+      case "Crystallization":
+        return Crystallization;
+      case "Upheaval":
+        return Upheaval;
       case "Pitfall Trap":
         return PitfallTrap;
-      // case "Geomancy":
-      //   return Geomancy;
+      case "Geomancy":
+        return Geomancy;
 
       case "Chain Lightning":
         return ChainLightning;
