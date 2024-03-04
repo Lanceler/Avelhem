@@ -325,8 +325,12 @@ export const useSkillEffects = () => {
       newGameState[self].skillHand.length > 0
     ) {
       newGameState.currentResolution.push({
-        resolution: "frigidBreath3",
+        resolution: "Frigid Breath3",
         unit: unit,
+        reason: "Frigid Breath3",
+        restriction: null,
+        message:
+          "You may float 1 skill to freeze an adjacent enemy for 2 turns.",
       });
     }
 

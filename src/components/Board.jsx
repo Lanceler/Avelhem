@@ -31,6 +31,7 @@ import SelectSkillDiscard from "./modals/SelectSkillDiscard";
 import SelectSkillReveal from "./modals/SelectSkillReveal";
 import TacticResults from "./modals/TacticResults";
 import ViewRevealedSkill from "./modals/ViewRevealedSkill";
+import YouMayFloat1Skill from "./modals/YouMayFloat1Skill";
 import YouMaySpend1Skill from "./modals/YouMaySpend1Skill";
 
 import ManaRestructure from "./TalentModals/ManaRestructure";
@@ -777,6 +778,22 @@ const Board = (props) => {
                   frigidBreath2(lastResolution.unit)
                 )}
               </>
+            )}
+          </>
+        );
+
+      case "Frigid Breath3":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <YouMayFloat1Skill
+                unit={lastResolution.unit}
+                restriction={lastResolution.restriction}
+                message={lastResolution.message}
+                reason={lastResolution.reason}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
             )}
           </>
         );
