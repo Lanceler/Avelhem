@@ -1324,6 +1324,7 @@ export const useRecurringEffects = () => {
     floatAvelhem,
     floatSkill,
     freeze1,
+    freeze2,
     getScionSet,
     getTacticImage,
     getVacantAdjacentZones,

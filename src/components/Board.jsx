@@ -91,6 +91,7 @@ const Board = (props) => {
     getZonesWithAllies,
     getZonesWithEnemies,
     freeze1,
+    freeze2,
     ignite,
     isMuted,
     move,
@@ -798,6 +799,17 @@ const Board = (props) => {
           </>
         );
 
+      case "Frigid Breath4":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {selectEnemies(lastResolution.unit, 1, null, "freeze2", null)}
+              </>
+            )}
+          </>
+        );
+
       case "Triggering Target":
         return (
           <>
@@ -1293,6 +1305,13 @@ const Board = (props) => {
       newGameState = purificationPurge(newGameState, selectedUnit);
     } else if (reason === "freeze1") {
       newGameState = freeze1(
+        newGameState,
+        newGameState[unit.player].units[unit.unitIndex],
+        selectedUnit,
+        special
+      );
+    } else if (reason === "freeze2") {
+      newGameState = freeze2(
         newGameState,
         newGameState[unit.player].units[unit.unitIndex],
         selectedUnit,
