@@ -315,6 +315,17 @@ opacity: 0.8;
     pointer-events: none;
 }
 
+.sharpness {
+    transform: rotate(45deg);
+    background: linear-gradient(22deg, #2b2a2a, #3b3535, #5c4c4c, #ffffff, #cec7c4, #6b6b6b);
+    border: 0.5px solid #000000de;
+    height: 7.5px;
+    width: 7.5px;
+    position: absolute;
+    animation: moveUpDown 0.95s ease-in-out infinite;
+    pointer-events: none;
+}
+
 .blossom {
     transform: rotate(45deg);
     background: linear-gradient(22deg, #7a137e, #971e9b, #d138d6, #fa69ff, #f7deff, #fcdbff);

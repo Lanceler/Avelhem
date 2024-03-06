@@ -177,6 +177,7 @@ export const Piece = (props) => {
           {/* HP */}
 
           {props.unit.hp === 2 && <img src={HP} className="hP" />}
+          {/* to do: hp === 3 */}
 
           {/* virtue */}
 
@@ -261,6 +262,20 @@ export const Piece = (props) => {
                 <>
                   <div className="fever" style={{ left: 20 }}></div>
                   <div className="fever" style={{ left: 38 }}></div>
+                </>
+              )}
+            </>
+          )}
+
+          {props.unit.unitClass === "Metal Scion" && (
+            <>
+              {props.unit.sharpness === 1 && (
+                <div className="sharpness" style={{ left: 20 }}></div>
+              )}
+              {props.unit.sharpness > 1 && (
+                <>
+                  <div className="sharpness" style={{ left: 20 }}></div>
+                  <div className="sharpness" style={{ left: 38 }}></div>
                 </>
               )}
             </>

@@ -161,13 +161,13 @@ const Board = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log("local gamestate changed");
+    // console.log("local gamestate changed");
     setExpandedPiece(null);
   }, [localGameState]);
 
   //Gets data regarding zones and units
   useEffect(() => {
-    console.log("Updated local from online");
+    // console.log("Updated local from online");
     setZones(JSON.parse(props.gameState.zones));
     dispatch(updateState(props.gameState));
     setHideModal(false);

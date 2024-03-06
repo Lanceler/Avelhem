@@ -444,7 +444,6 @@ export const useRecurringEffects = () => {
 
     //calculate AP
     let aP = 1;
-
     if (victim.afflictions.anathema) {
       aP = 5;
     } else if (["geomancy", "surge"].includes(special)) {
@@ -492,8 +491,37 @@ export const useRecurringEffects = () => {
 
     //survival or elimination
     if (newGameState[victim.player].units[victim.unitIndex].hp > 0) {
-      console.log(`${victim.unitClass} - ${victim.unitIndex} survived.`);
-      //to do: survival contingency
+      if (newGameState.turnPlayer === victim.player) {
+        if (triggerSurvivalAlly(victim)) {
+          newGameState.currentResolution.push({
+            resolution: "Ally Survival",
+            player: victim.player,
+            unit: victim,
+          });
+        }
+        if (triggerSurvivalEnemy(victim)) {
+          newGameState.currentResolution.push({
+            resolution: "Enemy Survival",
+            player: victim.player === "host" ? "guest" : "host",
+            unit: victim,
+          });
+        }
+      } else {
+        if (triggerSurvivalEnemy(victim)) {
+          newGameState.currentResolution.push({
+            resolution: "Enemy Survival",
+            player: victim.player === "host" ? "guest" : "host",
+            unit: victim,
+          });
+        }
+        if (triggerSurvivalAlly(victim)) {
+          newGameState.currentResolution.push({
+            resolution: "Ally Survival",
+            player: victim.player,
+            unit: victim,
+          });
+        }
+      }
     } else {
       //grant BP
       if (victim.player === "guest") {
@@ -1255,6 +1283,43 @@ export const useRecurringEffects = () => {
     return false;
   };
 
+  const triggerFrenzyBlade = (victim) => {
+    const zones = JSON.parse(localGameState.zones);
+    const adjacentEnemies = getZonesWithEnemies(victim, 1);
+
+    for (let i of adjacentEnemies) {
+      const zone = zones[Math.floor(i / 5)][i % 5];
+      const unit = localGameState[zone.player].units[zone.unitIndex];
+
+      if (unit.unitClass === "Metal Scion" && !isMuted(unit)) {
+        console.log("FRENZY BLADE");
+        return true;
+      }
+    }
+
+    return false;
+  };
+
+  const triggerHealingRain = (victim) => {
+    const zones = JSON.parse(localGameState.zones);
+    const adjacentAllies = getZonesWithAllies(victim, 1, true); // includes self
+
+    for (let i of adjacentAllies) {
+      const zone = zones[Math.floor(i / 5)][i % 5];
+      const unit = localGameState[zone.player].units[zone.unitIndex];
+
+      if (unit.unitClass === "Water Scion" && !isMuted(unit)) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
+  const triggerPowerAtTheFinalHour = (victim) => {
+    return !isMuted(victim) && victim.unitClass === "Pawn" ? true : false;
+  };
+
   const triggerScreech = (unit) => {
     const zones = JSON.parse(localGameState.zones);
 
@@ -1290,6 +1355,20 @@ export const useRecurringEffects = () => {
     }
 
     return false;
+  };
+
+  const triggerSurvivalAlly = (victim) => {
+    if (localGameState[victim.player].skillHand < 1) {
+      return false;
+    }
+    return triggerPowerAtTheFinalHour(victim) || triggerHealingRain(victim);
+  };
+
+  const triggerSurvivalEnemy = (victim) => {
+    if (localGameState[victim.player].skillHand < 1) {
+      return false;
+    }
+    return triggerFrenzyBlade(victim);
   };
 
   const triggerTarget = (attacker, victim, type) => {
