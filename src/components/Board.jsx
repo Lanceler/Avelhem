@@ -42,9 +42,10 @@ import TacticAssault from "./modals/TacticAssault";
 import VirtueBlastBlock from "./modals/VirtueBlastBlock";
 
 import IgnitionPropulsion1 from "./skillModals/IgnitionPropulsion1";
-import Purification2 from "./skillModals/Purification2";
 import ConflagrationResonance1 from "./skillModals/ConflagrationResonance1";
 import BlazeOfGloryDraw from "./skillModals/BlazeOfGloryDraw";
+import Purification2 from "./skillModals/Purification2";
+import FrigidBreathResonance1 from "./skillModals/FrigidBreathResonance1";
 
 import ContingentTarget from "./skillModals/ContingentTarget";
 import ContingentSymphonicScreech from "./skillModals/ContingentSymphonicScreech";
@@ -90,6 +91,7 @@ const Board = (props) => {
     endFinalPhase,
     getZonesWithAllies,
     getZonesWithEnemies,
+    getZonesWithEnemiesAfflicted,
     freeze1,
     freeze2,
     ignite,
@@ -112,6 +114,8 @@ const Board = (props) => {
     purification1,
     frigidBreath1,
     frigidBreath2,
+    frigidBreathR1,
+    frigidBreathR2,
     symphonicScreech1,
   } = useSkillEffects();
 
@@ -508,6 +512,15 @@ const Board = (props) => {
           </>
         );
 
+      case "Retain resonant skill":
+        return (
+          <>
+            {self === lastResolution.player && (
+              <>{skillResonanceRetain(lastResolution.resonator)}</>
+            )}
+          </>
+        );
+
       case "May float resonant skill":
         return (
           <>
@@ -805,6 +818,63 @@ const Board = (props) => {
             {self === lastResolution.unit.player && (
               <>
                 {selectEnemies(lastResolution.unit, 1, null, "freeze2", null)}
+              </>
+            )}
+          </>
+        );
+
+      case "Resonating Frigid Breath":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdate(
+                  frigidBreathR1(lastResolution.unit, lastResolution.resonator)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Frigid BreathR1":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  frigidBreathR2(lastResolution.unit)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Frigid BreathR2":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <FrigidBreathResonance1
+                updateFirebase={updateFirebase}
+                unit={lastResolution.unit}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Frigid BreathR3":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {selectEnemiesAfflicted(
+                  lastResolution.unit,
+                  1,
+                  null,
+                  "blast",
+                  null,
+                  "frostbite"
+                )}
               </>
             )}
           </>
@@ -1265,6 +1335,31 @@ const Board = (props) => {
     }
   };
 
+  const selectEnemiesAfflicted = (
+    unitInfo,
+    range,
+    tactic,
+    reason,
+    special,
+    affliction
+  ) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    newGameState.currentResolution.pop();
+
+    if (unit !== null && !isMuted(unit)) {
+      enterSelectUnitMode(
+        getZonesWithEnemiesAfflicted(unit, range, affliction),
+        unit,
+        newGameState,
+        tactic,
+        reason,
+        special
+      );
+    }
+  };
+
   const selectUnit = (unit, selectedUnit, reason, special) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -1454,6 +1549,27 @@ const Board = (props) => {
     dispatch(updateState(newGameState));
 
     updateFirebase(newGameState);
+  };
+
+  const skillResonanceRetain = (resonator) => {
+    const newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Retain resonant skill"
+    newGameState.currentResolution.pop();
+
+    //Dark Halo Overides
+    if (resonator !== "SA-04") {
+      newGameState.currentResolution[
+        newGameState.currentResolution.length - 1
+      ].skillConclusion = "retain";
+    } else {
+      newGameState.currentResolution[
+        newGameState.currentResolution.length - 1
+      ].resonatorConclusion = "retain";
+    }
+
+    dispatch(updateState(newGameState));
+    // props.updateFirebase(newGameState);
   };
 
   const tacticEnd = (unit) => {

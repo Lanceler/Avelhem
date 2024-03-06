@@ -151,6 +151,41 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const activateFrigidBreathAndResonate = (newGameState, unit, resonator) => {
+    //end Select Resonator resolution
+    newGameState.currentResolution.pop();
+
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Resonance Conclusion",
+      player: self,
+      unit: unit,
+      skill: "02-02",
+      skillConclusion: "discard",
+      resonator: resonator,
+      resonatorConclusion: "discard",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Resonating Frigid Breath",
+      unit: unit,
+      resonator: resonator,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Animation Delay",
+      priority: self,
+    });
+
+    newGameState.activatingSkill.push("02-02");
+    newGameState.activatingResonator.push(resonator);
+    newGameState.activatingUnit.push(unit);
+
+    return newGameState;
+  };
+
   const activateIgnitionPropulsion = (newGameState, unit) => {
     //end Select Skill resolution
     newGameState.currentResolution.pop();
@@ -329,6 +364,8 @@ export const useRecurringEffects = () => {
     switch (skill) {
       case "01-02":
         return activateConflagrationAndResonate(newGameState, unit, resonator);
+      case "02-02":
+        return activateFrigidBreathAndResonate(newGameState, unit, resonator);
 
       default:
         return newGameState;
@@ -394,7 +431,10 @@ export const useRecurringEffects = () => {
 
     //checkBypassShield
     let bypassShield = false;
-    if (victim.afflictions.frostbite && attacker.unitClass === "waterScion") {
+    if (
+      victim.afflictions.frostbite > 0 &&
+      attacker.unitClass === "Water Scion"
+    ) {
       bypassShield = true;
     } else if (attacker.sharpness == 2) {
       bypassShield = true;
@@ -974,6 +1014,28 @@ export const useRecurringEffects = () => {
     return enemyZones;
   };
 
+  const getZonesWithEnemiesAfflicted = (unit, range, affliction) => {
+    const zones = JSON.parse(localGameState.zones);
+
+    let enemyPlayer = "";
+    if (unit.player === "host") {
+      enemyPlayer = "guest";
+    } else if (unit.player === "guest") {
+      enemyPlayer = "host";
+    }
+
+    let enemyZones = getZonesWithEnemies(unit, range);
+
+    enemyZones = enemyZones.filter(
+      (z) =>
+        localGameState[enemyPlayer].units[
+          zones[Math.floor(z / 5)][z % 5].unitIndex
+        ].afflictions[affliction] > 0
+    );
+
+    return enemyZones;
+  };
+
   const ignite = (newGameState, attacker, victim, special) => {
     newGameState.currentResolution.push({
       resolution: "Apply Burn",
@@ -1331,6 +1393,7 @@ export const useRecurringEffects = () => {
     getZonesInRange,
     getZonesWithAllies,
     getZonesWithEnemies,
+    getZonesWithEnemiesAfflicted,
     ignite,
     isAdjacent,
     isMuted,

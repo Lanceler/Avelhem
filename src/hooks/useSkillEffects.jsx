@@ -11,7 +11,12 @@ export const useSkillEffects = () => {
   const { self, enemy } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const { getZonesWithEnemies, isAdjacent, isMuted } = useRecurringEffects();
+  const {
+    getZonesWithEnemies,
+    getZonesWithEnemiesAfflicted,
+    isAdjacent,
+    isMuted,
+  } = useRecurringEffects();
 
   const ignitionPropulsion1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
@@ -337,6 +342,69 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
+  const frigidBreathR1 = (unitInfo, resonator) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Frigid Breath" resolution
+    newGameState.currentResolution.pop();
+
+    //giveUnit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation = unit.activation + 1)
+      : (unit.temporary.activation = 1);
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    if (resonator !== "SA-02") {
+      newGameState.currentResolution.push({
+        resolution: "Retain resonant skill",
+        unit: unit,
+        player: unit.player,
+        skill: "02-02",
+        resonator: resonator,
+      });
+    }
+
+    newGameState.currentResolution.push({
+      resolution: "Frigid BreathR1",
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Frigid Breath2",
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Frigid Breath1",
+      unit: unit,
+    });
+
+    return newGameState;
+  };
+
+  const frigidBreathR2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "ConflagrationR1"
+    newGameState.currentResolution.pop();
+
+    if (
+      unit !== null &&
+      !isMuted(unit) &&
+      getZonesWithEnemiesAfflicted(unit, 1, "frostbite").length > 0
+    ) {
+      newGameState.currentResolution.push({
+        resolution: "Frigid BreathR2",
+        unit: unit,
+      });
+    }
+
+    return newGameState;
+  };
+
   const symphonicScreech1 = (unit, victim) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -386,6 +454,8 @@ export const useSkillEffects = () => {
     purification1,
     frigidBreath1,
     frigidBreath2,
+    frigidBreathR1,
+    frigidBreathR2,
     symphonicScreech1,
   };
 };
