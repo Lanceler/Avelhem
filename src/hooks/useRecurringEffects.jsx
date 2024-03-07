@@ -186,6 +186,50 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const activateHealingRain = (newGameState, unit, victim) => {
+    //end Triggering Survival Ally resolution
+    // newGameState.currentResolution.pop() <-- NOT needed
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      unit: unit,
+      skill: "02-03",
+      conclusion: "discard",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Activating Healing Rain",
+      unit: unit,
+      victim: victim,
+    });
+
+    newGameState.activatingSkill.push("02-03");
+    newGameState.activatingUnit.push(unit);
+
+    if (triggerScreech(unit)) {
+      newGameState.currentResolution.push({
+        resolution: "Triggering Screech",
+        player: enemy,
+        activator: unit,
+      });
+
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: enemy,
+      });
+    } else {
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: self,
+      });
+    }
+
+    //to do: alert opponent that contingent skill was used
+
+    return newGameState;
+  };
+
   const activateIgnitionPropulsion = (newGameState, unit) => {
     //end Select Skill resolution
     newGameState.currentResolution.pop();
@@ -494,31 +538,35 @@ export const useRecurringEffects = () => {
       if (newGameState.turnPlayer === victim.player) {
         if (triggerSurvivalAlly(victim)) {
           newGameState.currentResolution.push({
-            resolution: "Ally Survival",
+            resolution: "Triggering SurvivalAlly ",
             player: victim.player,
-            unit: victim,
+            victim: victim,
+            attacker: attacker,
           });
         }
         if (triggerSurvivalEnemy(victim)) {
           newGameState.currentResolution.push({
-            resolution: "Enemy Survival",
+            resolution: "Triggering Survival Enemy ",
             player: victim.player === "host" ? "guest" : "host",
-            unit: victim,
+            victim: victim,
+            attacker: attacker,
           });
         }
       } else {
         if (triggerSurvivalEnemy(victim)) {
           newGameState.currentResolution.push({
-            resolution: "Enemy Survival",
+            resolution: "Triggering Survival Enemy",
             player: victim.player === "host" ? "guest" : "host",
-            unit: victim,
+            victim: victim,
+            attacker: attacker,
           });
         }
         if (triggerSurvivalAlly(victim)) {
           newGameState.currentResolution.push({
-            resolution: "Ally Survival",
+            resolution: "Triggering Survival Ally",
             player: victim.player,
-            unit: victim,
+            victim: victim,
+            attacker: attacker,
           });
         }
       }
@@ -1446,6 +1494,7 @@ export const useRecurringEffects = () => {
 
   return {
     activateBlazeOfGlory,
+    activateHealingRain,
     activateSkill,
     activateSkillAndResonate,
     activateSymphonicScreech,
@@ -1484,6 +1533,8 @@ export const useRecurringEffects = () => {
     strike,
     triggerAegis,
     triggerBlazeOfGlory,
+    triggerHealingRain,
+    triggerPowerAtTheFinalHour,
     triggerThunderThaumaturge,
     virtueBlast,
     virtueBlastNo,

@@ -405,6 +405,29 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
+  const healingRain1 = (unitInfo, victimInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+    let victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
+
+    //end "Activating Healing Rain" resolution
+    newGameState.currentResolution.pop();
+
+    //give unit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation = unit.activation + 1)
+      : (unit.temporary.activation = 1);
+
+    //heal victim
+    victim.hp = Math.max(2, victim.hp);
+    victim.virtue = 1;
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+    newGameState[victimInfo.player].units[victimInfo.unitIndex] = victim;
+
+    return newGameState;
+  };
+
   const symphonicScreech1 = (unit, victim) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -456,6 +479,7 @@ export const useSkillEffects = () => {
     frigidBreath2,
     frigidBreathR1,
     frigidBreathR2,
+    healingRain1,
     symphonicScreech1,
   };
 };

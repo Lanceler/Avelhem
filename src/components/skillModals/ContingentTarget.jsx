@@ -60,8 +60,6 @@ const ContingentTarget = (props) => {
   };
 
   const handleActivate = () => {
-    console.log(usableSkills[selectedSkill].handIndex);
-
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     const zones = JSON.parse(newGameState.zones);
 

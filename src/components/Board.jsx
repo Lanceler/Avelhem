@@ -47,6 +47,7 @@ import BlazeOfGloryDraw from "./skillModals/BlazeOfGloryDraw";
 import Purification2 from "./skillModals/Purification2";
 import FrigidBreathResonance1 from "./skillModals/FrigidBreathResonance1";
 
+import ContingentSurvivalAlly from "./skillModals/ContingentSurvivalAlly";
 import ContingentTarget from "./skillModals/ContingentTarget";
 import ContingentSymphonicScreech from "./skillModals/ContingentSymphonicScreech";
 import SymphonicScreechFloat from "./skillModals/SymphonicScreechFloat";
@@ -82,6 +83,7 @@ const Board = (props) => {
   const [intrudingPlayer, setIntrudingPlayer] = useState(false);
 
   const {
+    activateHealingRain,
     activateSymphonicScreech,
     applyBurn,
     applyDamage,
@@ -116,6 +118,7 @@ const Board = (props) => {
     frigidBreath2,
     frigidBreathR1,
     frigidBreathR2,
+    healingRain1,
     symphonicScreech1,
   } = useSkillEffects();
 
@@ -880,6 +883,44 @@ const Board = (props) => {
           </>
         );
 
+      case "Select Healing Rain Activator":
+        return (
+          <>
+            {self === lastResolution.player && (
+              <>{selectHealingRainActivator(lastResolution.victim)}</>
+            )}
+          </>
+        );
+
+      case "Activating Healing Rain":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdate(
+                  healingRain1(lastResolution.unit, lastResolution.victim)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Triggering Survival Ally":
+        return (
+          <>
+            {self === lastResolution.player && !hideModal && (
+              <ContingentSurvivalAlly
+                attacker={lastResolution.attacker}
+                victim={lastResolution.victim}
+                updateFirebase={updateFirebase}
+                enterSelectUnitMode={enterSelectUnitMode}
+                hideOrRevealModale={hideOrRevealModale}
+                setIntrudingPlayer={setIntrudingPlayer}
+              />
+            )}
+          </>
+        );
+
       case "Triggering Target":
         return (
           <>
@@ -980,8 +1021,6 @@ const Board = (props) => {
             )}
           </>
         );
-
-      //"Mana Restructuring Announcement",
 
       case "Final Phase Conclusion":
         return (
@@ -1360,6 +1399,36 @@ const Board = (props) => {
     }
   };
 
+  const selectHealingRainActivator = (victim) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Select Healing Rain Activator"
+    newGameState.currentResolution.pop();
+
+    const zonesWithAllies = getZonesWithAllies(victim, 1, true);
+    let zonesWithWaterScions = [];
+
+    for (let z of zonesWithAllies) {
+      const zone = zones[Math.floor(z / 5)][z % 5];
+      const unit = newGameState[zone.player].units[zone.unitIndex];
+
+      if (unit.unitClass === "Water Scion" && !isMuted(unit)) {
+        zonesWithWaterScions.push(z);
+      }
+    }
+
+    setIntrudingPlayer(self);
+
+    enterSelectUnitMode(
+      zonesWithWaterScions,
+      victim,
+      newGameState,
+      null,
+      "healing rain",
+      null
+    );
+  };
+
   const selectUnit = (unit, selectedUnit, reason, special) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -1412,9 +1481,11 @@ const Board = (props) => {
         selectedUnit,
         special
       );
+    } else if (reason === "healing rain") {
+      //unit = victim; selectedUnit = Water Scion
+      newGameState = activateHealingRain(newGameState, selectedUnit, unit);
     } else if (reason === "symphonic screech") {
-      //unit = activator; selectedUnit = windScion
-
+      //unit = activator; selectedUnit = Wind Scion
       newGameState = activateSymphonicScreech(newGameState, selectedUnit, unit);
     }
 
