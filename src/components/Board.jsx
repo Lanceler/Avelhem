@@ -46,6 +46,7 @@ import ConflagrationResonance1 from "./skillModals/ConflagrationResonance1";
 import BlazeOfGloryDraw from "./skillModals/BlazeOfGloryDraw";
 import Purification2 from "./skillModals/Purification2";
 import FrigidBreathResonance1 from "./skillModals/FrigidBreathResonance1";
+import GlacialTorrent1 from "./skillModals/GlacialTorrent1";
 
 import ContingentSurvivalAlly from "./skillModals/ContingentSurvivalAlly";
 import ContingentTarget from "./skillModals/ContingentTarget";
@@ -119,6 +120,7 @@ const Board = (props) => {
     frigidBreathR1,
     frigidBreathR2,
     healingRain1,
+    glacialTorrent1,
     symphonicScreech1,
   } = useSkillEffects();
 
@@ -136,6 +138,7 @@ const Board = (props) => {
       virtue: 1,
       afflictions: {},
       enhancements: {},
+      boosts: {},
       temporary: {},
     };
   };
@@ -145,8 +148,8 @@ const Board = (props) => {
       updateDoc(gameDoc, { gameState: newGameState });
     } catch (err) {
       console.log(err);
-      console.log("newGameState");
-      console.log(newGameState);
+      // console.log("newGameState");
+      // console.log(newGameState);
     }
   };
 
@@ -703,7 +706,7 @@ const Board = (props) => {
           </>
         );
 
-      case "Resplendence2":
+      case "Resplendence1":
         return (
           <>
             {self === lastResolution.unit.player && !hideModal && (
@@ -719,7 +722,7 @@ const Board = (props) => {
           </>
         );
 
-      case "Resplendence3":
+      case "Resplendence2":
         return (
           <>
             {self === lastResolution.unit.player && (
@@ -901,6 +904,29 @@ const Board = (props) => {
                   healingRain1(lastResolution.unit, lastResolution.victim)
                 )}
               </>
+            )}
+          </>
+        );
+
+      case "Activating Glacial Torrent":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>{resolutionUpdate(glacialTorrent1(lastResolution.unit))}</>
+            )}
+          </>
+        );
+
+      case "Glacial Torrent 1":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <GlacialTorrent1
+                unit={lastResolution.unit}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+                setIntrudingPlayer={setIntrudingPlayer}
+              />
             )}
           </>
         );

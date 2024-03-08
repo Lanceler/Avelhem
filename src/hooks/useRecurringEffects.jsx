@@ -17,6 +17,112 @@ export const useRecurringEffects = () => {
   //=========================================
   //Exported functions below
 
+  const activateAegis = (newGameState, unit) => {
+    //end Triggering Target resolution
+    // newGameState.currentResolution.pop() <-- NOT needed
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      unit: unit,
+      skill: "06-03",
+      conclusion: "discard",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Activating Aegis",
+      unit: unit,
+    });
+
+    newGameState.activatingSkill.push("06-03");
+    newGameState.activatingUnit.push(unit);
+
+    if (triggerScreech(unit)) {
+      newGameState.currentResolution.push({
+        resolution: "Triggering Screech",
+        player: enemy,
+        activator: unit,
+      });
+
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: enemy,
+      });
+    } else {
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: self,
+      });
+    }
+
+    //to do: alert opponent that contingent skill was used
+
+    return newGameState;
+  };
+
+  const activateAerialImpetus = (newGameState, unit) => {
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    let conclusion = "discard";
+    if (unit.boosts.ambidexterity) {
+      conclusion = "float";
+      delete newGameState[unit.player].units[unit.unitIndex].boosts
+        .ambidexterity;
+    }
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      unit: unit,
+      skill: "03-01",
+      conclusion: conclusion,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Activating Aerial Impetus",
+      unit: unit,
+    });
+
+    newGameState.activatingSkill.push("03-01");
+    newGameState.activatingUnit.push(unit);
+
+    newGameState.currentResolution.push({
+      resolution: "Animation Delay",
+      priority: self,
+    });
+
+    return newGameState;
+  };
+
+  const activateArsenalOnslaught = (newGameState, unit) => {
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      unit: unit,
+      skill: "07-04",
+      conclusion: "shatter",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Activating Arsenal Onslaught",
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Animation Delay",
+      priority: self,
+    });
+
+    newGameState.activatingSkill.push("07-04");
+    newGameState.activatingUnit.push(unit);
+
+    return newGameState;
+  };
+
   const activateBlazeOfGlory = (newGameState, unit) => {
     //end Triggering Target resolution
     // newGameState.currentResolution.pop() <-- NOT needed
@@ -56,6 +162,110 @@ export const useRecurringEffects = () => {
     }
 
     //to do: alert opponent that contingent skill was used
+
+    return newGameState;
+  };
+
+  const activateCastleOfThorns = (newGameState, unit) => {
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      unit: unit,
+      skill: "08-04",
+      conclusion: "shatter",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Activating Castle of Thorns",
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Animation Delay",
+      priority: self,
+    });
+
+    newGameState.activatingSkill.push("08-04");
+    newGameState.activatingUnit.push(unit);
+
+    return newGameState;
+  };
+
+  const activateCataclysmicTempest = (newGameState, unit) => {
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      unit: unit,
+      skill: "03-04",
+      conclusion: "shatter",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Activating Cataclysmic Tempest",
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Animation Delay",
+      priority: self,
+    });
+
+    newGameState.activatingSkill.push("03-04");
+    newGameState.activatingUnit.push(unit);
+
+    return newGameState;
+  };
+
+  const activateChainLightning = (newGameState, unit) => {
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    let conclusion = "discard";
+    if (unit.boosts.ambidexterity) {
+      conclusion = "float";
+      delete newGameState[unit.player].units[unit.unitIndex].boosts
+        .ambidexterity;
+    }
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      unit: unit,
+      skill: "05-01",
+      conclusion: conclusion,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Activating Chain Lightning",
+      unit: unit,
+    });
+
+    newGameState.activatingSkill.push("05-01");
+    newGameState.activatingUnit.push(unit);
+
+    if (triggerScreech(unit)) {
+      newGameState.currentResolution.push({
+        resolution: "Triggering Screech",
+        player: enemy,
+        activator: unit,
+      });
+
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: enemy,
+      });
+    } else {
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: self,
+      });
+    }
 
     return newGameState;
   };
@@ -123,6 +333,181 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const activateCrystallization = (newGameState, unit) => {
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    let conclusion = "discard";
+    if (unit.boosts.ambidexterity) {
+      conclusion = "float";
+      delete newGameState[unit.player].units[unit.unitIndex].boosts
+        .ambidexterity;
+    }
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      unit: unit,
+      skill: "04-01",
+      conclusion: conclusion,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Activating Crystallization",
+      unit: unit,
+    });
+
+    newGameState.activatingSkill.push("04-01");
+    newGameState.activatingUnit.push(unit);
+
+    if (triggerScreech(unit)) {
+      newGameState.currentResolution.push({
+        resolution: "Triggering Screech",
+        player: enemy,
+        activator: unit,
+      });
+
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: enemy,
+      });
+    } else {
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: self,
+      });
+    }
+
+    return newGameState;
+  };
+
+  const activateDiffusion = (newGameState, unit) => {
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      unit: unit,
+      skill: "06-02",
+      conclusion: "discard",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Activating Diffusion",
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Animation Delay",
+      priority: self,
+    });
+
+    newGameState.activatingSkill.push("06-02");
+    newGameState.activatingUnit.push(unit);
+
+    return newGameState;
+  };
+
+  const activateDisruptionField = (newGameState, unit) => {
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      unit: unit,
+      skill: "06-04",
+      conclusion: "shatter",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Activating Disruption Field",
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Animation Delay",
+      priority: self,
+    });
+
+    newGameState.activatingSkill.push("06-04");
+    newGameState.activatingUnit.push(unit);
+
+    return newGameState;
+  };
+
+  const activateEfflorescence = (newGameState, unit) => {
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      unit: unit,
+      skill: "08-02",
+      conclusion: "discard",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Activating Efflorescence",
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Animation Delay",
+      priority: self,
+    });
+
+    newGameState.activatingSkill.push("08-02");
+    newGameState.activatingUnit.push(unit);
+
+    return newGameState;
+  };
+
+  const activateFrenzyBlade = (newGameState, unit) => {
+    //end Triggering Target resolution
+    // newGameState.currentResolution.pop() <-- NOT needed
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      unit: unit,
+      skill: "07-03",
+      conclusion: "discard",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Activating Frenzy Blade",
+      unit: unit,
+    });
+
+    newGameState.activatingSkill.push("07-03");
+    newGameState.activatingUnit.push(unit);
+
+    if (triggerScreech(unit)) {
+      newGameState.currentResolution.push({
+        resolution: "Triggering Screech",
+        player: enemy,
+        activator: unit,
+      });
+
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: enemy,
+      });
+    } else {
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: self,
+      });
+    }
+
+    //to do: alert opponent that contingent skill was used
+
+    return newGameState;
+  };
+
   const activateFrigidBreath = (newGameState, unit) => {
     //end Select Skill resolution
     newGameState.currentResolution.pop();
@@ -186,6 +571,90 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const activateGaleConjuration = (newGameState, unit) => {
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      unit: unit,
+      skill: "03-02",
+      conclusion: "discard",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Activating Gale Conjuration",
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Animation Delay",
+      priority: self,
+    });
+
+    newGameState.activatingSkill.push("03-02");
+    newGameState.activatingUnit.push(unit);
+
+    return newGameState;
+  };
+
+  const activateGeomancy = (newGameState, unit) => {
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      unit: unit,
+      skill: "04-04",
+      conclusion: "shatter",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Activating Geomancy",
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Animation Delay",
+      priority: self,
+    });
+
+    newGameState.activatingSkill.push("04-04");
+    newGameState.activatingUnit.push(unit);
+
+    return newGameState;
+  };
+
+  const activateGlacialTorrent = (newGameState, unit) => {
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      unit: unit,
+      skill: "02-04",
+      conclusion: "shatter",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Activating Glacial Torrent",
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Animation Delay",
+      priority: self,
+    });
+
+    newGameState.activatingSkill.push("02-04");
+    newGameState.activatingUnit.push(unit);
+
+    return newGameState;
+  };
+
   const activateHealingRain = (newGameState, unit, victim) => {
     //end Triggering Survival Ally resolution
     // newGameState.currentResolution.pop() <-- NOT needed
@@ -235,9 +704,9 @@ export const useRecurringEffects = () => {
     newGameState.currentResolution.pop();
 
     let conclusion = "discard";
-    if (unit.temporary.ambidexterity) {
+    if (unit.boosts.ambidexterity) {
       conclusion = "float";
-      delete newGameState[unit.player].units[unit.unitIndex].temporary
+      delete newGameState[unit.player].units[unit.unitIndex].boosts
         .ambidexterity;
     }
 
@@ -278,14 +747,105 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const activateMagneticShockwave = (newGameState, unit) => {
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    let conclusion = "discard";
+    if (unit.boosts.ambidexterity) {
+      conclusion = "float";
+      delete newGameState[unit.player].units[unit.unitIndex].boosts
+        .ambidexterity;
+    }
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      unit: unit,
+      skill: "07-01",
+      conclusion: conclusion,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Activating Magnetic Shockwave",
+      unit: unit,
+    });
+
+    newGameState.activatingSkill.push("07-01");
+    newGameState.activatingUnit.push(unit);
+
+    if (triggerScreech(unit)) {
+      newGameState.currentResolution.push({
+        resolution: "Triggering Screech",
+        player: enemy,
+        activator: unit,
+      });
+
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: enemy,
+      });
+    } else {
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: self,
+      });
+    }
+
+    return newGameState;
+  };
+
+  const activatePitfallTrap = (newGameState, unit) => {
+    //end Triggering Target resolution
+    // newGameState.currentResolution.pop() <-- NOT needed
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      unit: unit,
+      skill: "04-03",
+      conclusion: "discard",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Activating PitfallTrap",
+      unit: unit,
+    });
+
+    newGameState.activatingSkill.push("04-03");
+    newGameState.activatingUnit.push(unit);
+
+    if (triggerScreech(unit)) {
+      newGameState.currentResolution.push({
+        resolution: "Triggering Screech",
+        player: enemy,
+        activator: unit,
+      });
+
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: enemy,
+      });
+    } else {
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: self,
+      });
+    }
+
+    //to do: alert opponent that contingent skill was used
+
+    return newGameState;
+  };
+
   const activatePurification = (newGameState, unit) => {
     //end Select Skill resolution
     newGameState.currentResolution.pop();
 
     let conclusion = "discard";
-    if (unit.temporary.ambidexterity) {
+    if (unit.boosts.ambidexterity) {
       conclusion = "float";
-      delete newGameState[unit.player].units[unit.unitIndex].temporary
+      delete newGameState[unit.player].units[unit.unitIndex].boosts
         .ambidexterity;
     }
 
@@ -353,6 +913,34 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const activateReinforce = (newGameState, unit) => {
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      unit: unit,
+      skill: "07-02",
+      conclusion: "discard",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Activating Reinforce",
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Animation Delay",
+      priority: self,
+    });
+
+    newGameState.activatingSkill.push("07-02");
+    newGameState.activatingUnit.push(unit);
+
+    return newGameState;
+  };
+
   const activateSymphonicScreech = (newGameState, unit, victim) => {
     //remove symphonic screech from hand but do not discard
     newGameState[self].skillHand.splice(
@@ -398,6 +986,8 @@ export const useRecurringEffects = () => {
         return activatePurification(newGameState, unit);
       case "02-02":
         return activateFrigidBreath(newGameState, unit);
+      case "02-04":
+        return activateGlacialTorrent(newGameState, unit);
 
       default:
         return newGameState;
@@ -414,6 +1004,272 @@ export const useRecurringEffects = () => {
       default:
         return newGameState;
     }
+  };
+
+  const activateSowAndReap = (newGameState, unit) => {
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    let conclusion = "discard";
+    if (unit.boosts.ambidexterity) {
+      conclusion = "float";
+      delete newGameState[unit.player].units[unit.unitIndex].boosts
+        .ambidexterity;
+    }
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      unit: unit,
+      skill: "08-01",
+      conclusion: conclusion,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Activating Sow And Reap",
+      unit: unit,
+    });
+
+    newGameState.activatingSkill.push("08-01");
+    newGameState.activatingUnit.push(unit);
+
+    if (triggerScreech(unit)) {
+      newGameState.currentResolution.push({
+        resolution: "Triggering Screech",
+        player: enemy,
+        activator: unit,
+      });
+
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: enemy,
+      });
+    } else {
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: self,
+      });
+    }
+
+    return newGameState;
+  };
+
+  const activateSurge = (newGameState, unit) => {
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    let conclusion = "discard";
+    if (unit.boosts.ambidexterity) {
+      conclusion = "float";
+      delete newGameState[unit.player].units[unit.unitIndex].boosts
+        .ambidexterity;
+    }
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      unit: unit,
+      skill: "06-01",
+      conclusion: conclusion,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Activating Surge",
+      unit: unit,
+    });
+
+    newGameState.activatingSkill.push("06-01");
+    newGameState.activatingUnit.push(unit);
+
+    if (triggerScreech(unit)) {
+      newGameState.currentResolution.push({
+        resolution: "Triggering Screech",
+        player: enemy,
+        activator: unit,
+      });
+
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: enemy,
+      });
+    } else {
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: self,
+      });
+    }
+
+    return newGameState;
+  };
+
+  const activateThunderThaumaturge = (newGameState, unit) => {
+    //end Triggering Target resolution
+    // newGameState.currentResolution.pop() <-- NOT needed
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      unit: unit,
+      skill: "05-03",
+      conclusion: "discard",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Activating Thunder Thaumaturge",
+      unit: unit,
+    });
+
+    newGameState.activatingSkill.push("05-03");
+    newGameState.activatingUnit.push(unit);
+
+    if (triggerScreech(unit)) {
+      newGameState.currentResolution.push({
+        resolution: "Triggering Screech",
+        player: enemy,
+        activator: unit,
+      });
+
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: enemy,
+      });
+    } else {
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: self,
+      });
+    }
+
+    //to do: alert opponent that contingent skill was used
+
+    return newGameState;
+  };
+
+  const activateUpheaval = (newGameState, unit) => {
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      unit: unit,
+      skill: "04-02",
+      conclusion: "discard",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Activating Upheaval",
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Animation Delay",
+      priority: self,
+    });
+
+    newGameState.activatingSkill.push("04-02");
+    newGameState.activatingUnit.push(unit);
+
+    return newGameState;
+  };
+
+  const activateValiantSpark = (newGameState, unit) => {
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      unit: unit,
+      skill: "05-04",
+      conclusion: "shatter",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Activating Valiant Spark",
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Animation Delay",
+      priority: self,
+    });
+
+    newGameState.activatingSkill.push("05-04");
+    newGameState.activatingUnit.push(unit);
+
+    return newGameState;
+  };
+
+  const activateViridianGrave = (newGameState, unit) => {
+    //end Triggering Target resolution
+    // newGameState.currentResolution.pop() <-- NOT needed
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      unit: unit,
+      skill: "08-03",
+      conclusion: "discard",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Activating Viridian Grave",
+      unit: unit,
+    });
+
+    newGameState.activatingSkill.push("08-03");
+    newGameState.activatingUnit.push(unit);
+
+    if (triggerScreech(unit)) {
+      newGameState.currentResolution.push({
+        resolution: "Triggering Screech",
+        player: enemy,
+        activator: unit,
+      });
+
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: enemy,
+      });
+    } else {
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: self,
+      });
+    }
+
+    //to do: alert opponent that contingent skill was used
+
+    return newGameState;
+  };
+
+  const activateZipAndZap = (newGameState, unit) => {
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      unit: unit,
+      skill: "05-02",
+      conclusion: "discard",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Activating Zip and Zap",
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Animation Delay",
+      priority: self,
+    });
+
+    newGameState.activatingSkill.push("05-02");
+    newGameState.activatingUnit.push(unit);
+
+    return newGameState;
   };
 
   const applyBurn = (newGameState, victimInfo) => {
@@ -500,9 +1356,9 @@ export const useRecurringEffects = () => {
       aP = 0;
     } else {
       //check for AP modifiers
-      if (attacker.temporary.galeConjuration) {
+      if (attacker.boosts.galeConjuration) {
         aP = 2;
-        delete newGameState[attacker.player].units[attacker.unitIndex].temporary
+        delete newGameState[attacker.player].units[attacker.unitIndex].boosts
           .galeConjuration;
       }
       if (attacker.sharpness && type === "strike") {
@@ -637,6 +1493,8 @@ export const useRecurringEffects = () => {
         )
       )
     ) {
+      newGameState[victim.player].units[victim.unitIndex].boosts = {};
+
       if (
         newGameState[victim.player].units[victim.unitIndex].afflictions
           .frostbite > 0
@@ -714,6 +1572,36 @@ export const useRecurringEffects = () => {
       return false;
     }
 
+    const canConflagration = (unit) => {
+      if (!unit.fever) {
+        return false;
+      }
+      if (!canBlast(unit)) {
+        return false;
+      }
+      if (localGameState[self].skillHand.length < 2) {
+        return false;
+      }
+
+      return true;
+    };
+
+    const canIgnitionPropulsion = (unit) => {
+      if (!unit.fever) {
+        return false;
+      }
+
+      if (!canMove(unit) && !canStrike(unit)) {
+        return false;
+      }
+
+      if (localGameState[self].skillHand.length < 2) {
+        return false;
+      }
+
+      return true;
+    };
+
     switch (skill) {
       case "01-01":
         return canIgnitionPropulsion(unit);
@@ -727,10 +1615,64 @@ export const useRecurringEffects = () => {
       case "02-01":
         return true;
       case "02-02":
-        return canFrigidBreath(unit);
+        return getZonesWithEnemies(unit, 2).length > 0 ? true : false;
       case "02-03":
         return false;
       case "02-04":
+        return true;
+
+      // case "03-01":
+      //   return canAerialImpetus(unit);
+      case "03-02":
+        return true;
+      case "03-03":
+        return false;
+      case "03-04":
+        return getZonesWithEnemies(unit, 1).length > 0 ? true : false;
+
+      case "04-01":
+        return true;
+      case "04-02":
+        return getZonesWithEnemies(unit, 1).length > 0 ? true : false;
+      case "04-03":
+        return false;
+      case "04-04":
+        return true;
+
+      case "05-01":
+        return getZonesWithEnemies(unit, 1).length > 0 ? true : false;
+      // case "05-02":
+      //   return canZipAndZap(unit);
+      case "05-03":
+        return false;
+      case "05-04":
+        return true;
+
+      // case "06-01":
+      //   return canSurge(unit);
+      // case "06-02":
+      //   return canDiffusion(unit);
+      case "06-03":
+        return false;
+      case "06-04":
+        return true;
+
+      case "07-01":
+        return getZonesWithEnemies(unit, 1).length > 0 ? true : false;
+      case "07-02":
+        return true;
+      case "07-03":
+        return false;
+      case "07-04":
+        return canStrike(unit);
+
+      // case "08-01":
+      //   return canSowAndReap(unit);
+      case "08-02":
+        return true;
+      case "08-03":
+        return false;
+      case "08-04":
         return true;
 
       default:
@@ -745,43 +1687,6 @@ export const useRecurringEffects = () => {
     return false;
   };
 
-  const canConflagration = (unit) => {
-    if (!unit.fever) {
-      return false;
-    }
-    if (!canBlast(unit)) {
-      return false;
-    }
-    if (localGameState[self].skillHand.length < 2) {
-      return false;
-    }
-
-    return true;
-  };
-
-  const canFrigidBreath = (unit) => {
-    if (getZonesWithEnemies(unit, 2).length > 0) {
-      return true;
-    }
-    return false;
-  };
-
-  const canIgnitionPropulsion = (unit) => {
-    if (!unit.fever) {
-      return false;
-    }
-
-    if (!canMove(unit) && !canStrike(unit)) {
-      return false;
-    }
-
-    if (localGameState[self].skillHand.length < 2) {
-      return false;
-    }
-
-    return true;
-  };
-
   const canMove = (unit) => {
     if (getVacantAdjacentZones(unit).length > 0) {
       return true;
@@ -794,7 +1699,7 @@ export const useRecurringEffects = () => {
     if (
       getZonesWithEnemies(unit, 1).length &&
       !isMuted(unit) &&
-      !unit.afflictions.root
+      !isRooted(unit)
     ) {
       return true;
     }
@@ -810,11 +1715,11 @@ export const useRecurringEffects = () => {
     unit.enhancements.shield ? unit.enhancements.shield-- : null;
     unit.enhancements.ward ? unit.enhancements.ward-- : null;
 
-    unit.enhancements.torrent ? unit.enhancements.torrent-- : null;
     unit.enhancements.disruption ? unit.enhancements.disruption-- : null;
     unit.enhancements.proliferation ? unit.enhancements.proliferation-- : null;
 
     unit.temporary = {};
+    unit.boosts = {};
 
     return unit;
   };
@@ -1184,9 +2089,9 @@ export const useRecurringEffects = () => {
       }
     }
 
-    const zonesWithDisantEnemies = getZonesWithEnemies(unit, 2);
+    const zonesWithDistantEnemies = getZonesWithEnemies(unit, 2);
 
-    for (let z of zonesWithDisantEnemies) {
+    for (let z of zonesWithDistantEnemies) {
       const zone = gameState.zones[Math.floor(z / 5)][z % 5];
       if (gameState[zone.player].units[zone.unitIndex].proliferation > 0) {
         return true;
@@ -1340,7 +2245,6 @@ export const useRecurringEffects = () => {
       const unit = localGameState[zone.player].units[zone.unitIndex];
 
       if (unit.unitClass === "Metal Scion" && !isMuted(unit)) {
-        console.log("FRENZY BLADE");
         return true;
       }
     }
@@ -1373,9 +2277,6 @@ export const useRecurringEffects = () => {
 
     //if activator is Wind Scion or adjacent to an unmuted ally Wind Scion, Screech will not trigger
     const allyZones = getZonesWithAllies(unit, 1, true);
-
-    console.log("allyZones");
-    console.log(allyZones);
 
     for (let z of allyZones) {
       const unitIndex = zones[Math.floor(z / 5)][z % 5].unitIndex;

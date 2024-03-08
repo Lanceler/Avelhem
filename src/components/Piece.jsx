@@ -267,6 +267,20 @@ export const Piece = (props) => {
             </>
           )}
 
+          {props.unit.unitClass === "Water Scion" && (
+            <>
+              {props.unit.boosts.glacialTorrent === 1 && (
+                <div className="glacial-torrent" style={{ left: 20 }}></div>
+              )}
+              {props.unit.boosts.glacialTorrent > 1 && (
+                <>
+                  <div className="glacial-torrent" style={{ left: 20 }}></div>
+                  <div className="glacial-torrent" style={{ left: 38 }}></div>
+                </>
+              )}
+            </>
+          )}
+
           {props.unit.unitClass === "Metal Scion" && (
             <>
               {props.unit.sharpness === 1 && (

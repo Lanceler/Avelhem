@@ -4,7 +4,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    align-items: center;
+    align-items:flex-end;
 
     margin: 5px;
     padding: 0 auto;
@@ -21,4 +21,27 @@
 .cannotUseSkill{
     filter: grayscale(90%);
 
+}
+
+.multiSelectCard{
+    position: relative;
+    width: 35px;
+    height: 35px;
+    border-radius: 100%;
+    border: black solid 2px;
+    background-color: rgb(216, 212, 212);
+
+        display: flex;
+        flex-direction: column;
+        justify-content: flex;
+        align-items: center;
+
+
+}
+
+.multiSelectIndex{
+    font-size: larger;
+    color: rgb(0, 0, 0);
+    position: absolute;
+    /* top: 10px */
 }

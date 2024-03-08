@@ -233,12 +233,12 @@ export const useSkillEffects = () => {
       newGameState[self].skillHand.length > 0
     ) {
       newGameState.currentResolution.push({
-        resolution: "Resplendence2",
+        resolution: "Resplendence1",
         unit: unit,
         message:
           "You may spend 1 skill to ignite an adjacent enemy for 1 turn.",
         restriction: null,
-        reason: "Resplendence2",
+        reason: "Resplendence1",
       });
     }
 
@@ -428,6 +428,37 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
+  const glacialTorrent1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Glacial Torrent" resolution
+    newGameState.currentResolution.pop();
+
+    //giveUnit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation = unit.activation + 1)
+      : (unit.temporary.activation = 1);
+
+    //give unit ward and boosts
+    unit.boosts.glacialTorrent = 2;
+
+    if (unit.enhancements.ward > 0) {
+      unit.enhancements.ward = Math.max(unit.enhancements.ward, 3);
+    } else {
+      unit.enhancements.ward = 3;
+    }
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    newGameState.currentResolution.push({
+      resolution: "Glacial Torrent 1",
+      unit: unit,
+    });
+
+    return newGameState;
+  };
+
   const symphonicScreech1 = (unit, victim) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -480,6 +511,7 @@ export const useSkillEffects = () => {
     frigidBreathR1,
     frigidBreathR2,
     healingRain1,
+    glacialTorrent1,
     symphonicScreech1,
   };
 };

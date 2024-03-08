@@ -41,9 +41,9 @@ const YouMaySpend1Skill = (props) => {
     //end Discarding Skill resolution
     newGameState.currentResolution.pop();
 
-    if (props.reason === "Resplendence2") {
+    if (props.reason === "Resplendence1") {
       newGameState.currentResolution.push({
-        resolution: "Resplendence3",
+        resolution: "Resplendence2",
         unit: props.unit,
       });
     }
