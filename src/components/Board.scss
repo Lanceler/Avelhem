@@ -29,7 +29,7 @@
 
 .hand-container {
     display: flex;
-    width: 900px;
+    width: 700px;
     flex-wrap: wrap;
     row-gap: 10px;
 }
@@ -84,14 +84,18 @@
     background-color: green;
     border: 2px solid black;
     margin-right: 10px;
+
+    transition: transform 0.4s ease
 }
 
 .handCard:hover {
-    width: 150px;
-    height: 210px;
 
-
+    top: -16.8px;
+    transform: scale(1.2);
+    position: relative
 }
+
+
 
 .card {
     // width: 100%;

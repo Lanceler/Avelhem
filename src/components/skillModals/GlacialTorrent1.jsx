@@ -16,9 +16,10 @@ const GlacialTorrent1 = (props) => {
   const [selectedSkills, setSelectedSkills] = useState([]);
 
   const addLimit = 3;
+  const inspectCount = Math.min(5, localGameState[self].skillRepertoire.length);
 
   let inspection = [...localGameState[self].skillRepertoire].splice(
-    Math.max(0, localGameState[self].skillRepertoire.length - 5),
+    localGameState[self].skillRepertoire.length - inspectCount,
     5
   );
 
@@ -27,7 +28,8 @@ const GlacialTorrent1 = (props) => {
   for (let c in inspection) {
     inspectRerpertoire.unshift({
       id: inspection[c],
-      repertoireIndex: localGameState[self].skillRepertoire.length - 1 - c,
+      repertoireIndex:
+        localGameState[self].skillRepertoire.length + (c - inspectCount),
     });
   }
 
@@ -41,15 +43,47 @@ const GlacialTorrent1 = (props) => {
   };
 
   const handleSelect = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    newGameState.currentResolution.pop();
+
     let selection = [...floatingRepertoire, ...inspectRerpertoire];
 
-    console.log(selection);
+    // console.log("selection");
+    // console.log(selection); // <-- an array of {id, reportoireIndex}
+    // console.log(selectedSkills);
 
-    for (let i in selectedSkills) {
-      //
+    let SelectedRepertoireIndexes = [];
+
+    for (let i of selectedSkills) {
+      SelectedRepertoireIndexes.push(selection[i].repertoireIndex);
+
+      // add selected cards to hand in order they were selected
+      newGameState[self].skillHand.push(selection[i].id);
     }
 
-    // dispatch(updateState(newGameState));
+    SelectedRepertoireIndexes.sort((a, b) => b - a);
+
+    for (let i of SelectedRepertoireIndexes) {
+      // if the selected Skill was floating, decrease floating count
+      if (
+        i >=
+        newGameState[self].skillRepertoire.length -
+          newGameState[self].skillFloat
+      ) {
+        newGameState[self].skillFloat = newGameState[self].skillFloat - 1;
+      }
+
+      //remove card from repertoire
+      newGameState[self].skillRepertoire.splice(i, 1);
+    }
+
+    //INSPECTION DOES NOT SHUFFLE
+
+    // console.log(newGameState[self].skillHand);
+    // console.log(newGameState[self].skillFloat);
+    // console.log(newGameState[self].skillRepertoire);
+
+    dispatch(updateState(newGameState));
     // props.updateFirebase(newGameState);
   };
 
@@ -58,6 +92,7 @@ const GlacialTorrent1 = (props) => {
     newGameState.currentResolution.pop();
 
     dispatch(updateState(newGameState));
+    // props.updateFirebase(newGameState);
   };
 
   const handleViewBoard = () => {
@@ -130,7 +165,10 @@ const GlacialTorrent1 = (props) => {
           ))}
         </div>
 
-        <button onClick={() => handleSkip()}>Skip</button>
+        {selectedSkills.length === 0 && (
+          <button onClick={() => handleSkip()}>Skip</button>
+        )}
+
         {selectedSkills.length > 0 && (
           <button onClick={() => handleSelect()}>Select</button>
         )}
