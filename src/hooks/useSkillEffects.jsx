@@ -459,6 +459,28 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
+  const aerialImpetus1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Aerial Impetus" resolution
+    newGameState.currentResolution.pop();
+
+    //giveUnit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation = unit.activation + 1)
+      : (unit.temporary.activation = 1);
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    newGameState.currentResolution.push({
+      resolution: "Aerial Impetus1",
+      unit: unit,
+    });
+
+    return newGameState;
+  };
+
   const symphonicScreech1 = (unit, victim) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -512,6 +534,7 @@ export const useSkillEffects = () => {
     frigidBreathR2,
     healingRain1,
     glacialTorrent1,
+    aerialImpetus1,
     symphonicScreech1,
   };
 };

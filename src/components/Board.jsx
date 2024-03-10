@@ -47,6 +47,7 @@ import BlazeOfGloryDraw from "./skillModals/BlazeOfGloryDraw";
 import Purification2 from "./skillModals/Purification2";
 import FrigidBreathResonance1 from "./skillModals/FrigidBreathResonance1";
 import GlacialTorrent1 from "./skillModals/GlacialTorrent1";
+import AerialImpetus1 from "./skillModals/AerialImpetus1";
 
 import ContingentSurvivalAlly from "./skillModals/ContingentSurvivalAlly";
 import ContingentTarget from "./skillModals/ContingentTarget";
@@ -56,6 +57,8 @@ import SymphonicScreechFloat from "./skillModals/SymphonicScreechFloat";
 import MayFloatResonantSkill from "./skillModals/MayFloatResonantSkill";
 
 import DisplayedCard from "./displays/DisplayedCard";
+
+import PlayerSkillHand from "./hand/PlayerSkillHand";
 
 import Piece from "./Piece";
 
@@ -92,6 +95,8 @@ const Board = (props) => {
     blast,
     drawSkill,
     endFinalPhase,
+    getZonesAerialImpetusAlly,
+    getVacantAdjacentZones,
     getZonesWithAllies,
     getZonesWithEnemies,
     getZonesWithEnemiesAfflicted,
@@ -121,6 +126,7 @@ const Board = (props) => {
     frigidBreathR2,
     healingRain1,
     glacialTorrent1,
+    aerialImpetus1,
     symphonicScreech1,
   } = useSkillEffects();
 
@@ -211,7 +217,6 @@ const Board = (props) => {
             )}
           </>
         );
-
       case "Bounty Phase Selection":
         return (
           <>
@@ -931,6 +936,39 @@ const Board = (props) => {
           </>
         );
 
+      case "Activating Aerial Impetus":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>{resolutionUpdate(aerialImpetus1(lastResolution.unit))}</>
+            )}
+          </>
+        );
+
+      case "Aerial Impetus1":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <AerialImpetus1
+                updateFirebase={updateFirebase}
+                unit={lastResolution.unit}
+                enterMoveMode={enterMoveMode}
+                enterSelectUnitMode={enterSelectUnitMode}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Aerial Impetus Prompt":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>{selectAerialImpetusMove(lastResolution.unit)}</>
+            )}
+          </>
+        );
+
       case "Triggering Survival Ally":
         return (
           <>
@@ -1148,8 +1186,6 @@ const Board = (props) => {
   };
 
   const enterMoveMode = (zoneIds, unit, gameState, tactic) => {
-    console.log("enterMoveMode");
-
     let newGameState = null;
     if (gameState) {
       newGameState = gameState;
@@ -1352,16 +1388,24 @@ const Board = (props) => {
     }
 
     dispatch(updateState(newGameState));
-
     updateFirebase(newGameState);
   };
 
   const resolveEndFinalPhase = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     newGameState = endFinalPhase(newGameState, self, enemy);
-    dispatch(updateState(newGameState));
 
+    dispatch(updateState(newGameState));
     updateFirebase(newGameState);
+  };
+
+  const selectAerialImpetusMove = (unit) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Aerial Impetus Prompt"
+    newGameState.currentResolution.pop();
+
+    enterMoveMode(getVacantAdjacentZones(unit), unit, newGameState, null);
   };
 
   const selectAllies = (unitInfo, range, includeSelf, reason, special) => {
@@ -1462,6 +1506,7 @@ const Board = (props) => {
       newGameState.tactics[tacticUsed].stock--;
     }
 
+    //end ""Selecting Unit"
     newGameState.currentResolution.pop();
 
     if (reason === "virtue-blast") {
@@ -1510,6 +1555,11 @@ const Board = (props) => {
     } else if (reason === "healing rain") {
       //unit = victim; selectedUnit = Water Scion
       newGameState = activateHealingRain(newGameState, selectedUnit, unit);
+    } else if (reason === "aerial impetus prompt") {
+      newGameState.currentResolution.push({
+        resolution: "Aerial Impetus Prompt",
+        unit: selectedUnit,
+      });
     } else if (reason === "symphonic screech") {
       //unit = activator; selectedUnit = Wind Scion
       newGameState = activateSymphonicScreech(newGameState, selectedUnit, unit);
@@ -2040,23 +2090,7 @@ const Board = (props) => {
                   )}
                 </div>
                 <div className="skill-hand">
-                  {localGameState[self] && (
-                    <div className="hand-container">
-                      {localGameState[self].skillHand.map((card, index) => (
-                        <div
-                          key={index}
-                          className="handCard"
-                          style={{
-                            backgroundImage: `url(${getImage(
-                              getSkillById(card).Name
-                            )})`,
-                          }}
-                        >
-                          {/* {card} */}
-                        </div>
-                      ))}
-                    </div>
-                  )}
+                  <PlayerSkillHand />
                 </div>
               </div>
             </div>

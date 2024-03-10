@@ -989,6 +989,9 @@ export const useRecurringEffects = () => {
       case "02-04":
         return activateGlacialTorrent(newGameState, unit);
 
+      case "03-01":
+        return activateAerialImpetus(newGameState, unit);
+
       default:
         return newGameState;
     }
@@ -1572,6 +1575,34 @@ export const useRecurringEffects = () => {
       return false;
     }
 
+    const canAerialImpetus = (unit) => {
+      if (getZonesWithEnemies(unit, 1).length > 0) {
+        return true;
+      }
+
+      if (getZonesAerialImpetusAlly(unit).length > 0) {
+        return true;
+      }
+      // const zones = JSON.parse(localGameState.zones);
+      // const adjacentAllies = getZonesWithAllies(unit, 1, false); // excludes self
+
+      // for (let i of adjacentAllies) {
+      //   const zone = zones[Math.floor(i / 5)][i % 5];
+      //   const ally = localGameState[zone.player].units[zone.unitIndex];
+
+      //   if (canMove(ally) && !isImmobilized(ally)) {
+      //     if (ally.player === "host" && unit.row < ally.row) {
+      //       return true;
+      //     }
+      //     if (ally.player === "guest" && unit.row > ally.row) {
+      //       return true;
+      //     }
+      //   }
+      // }
+
+      return false;
+    };
+
     const canConflagration = (unit) => {
       if (!unit.fever) {
         return false;
@@ -1621,8 +1652,8 @@ export const useRecurringEffects = () => {
       case "02-04":
         return true;
 
-      // case "03-01":
-      //   return canAerialImpetus(unit);
+      case "03-01":
+        return canAerialImpetus(unit);
       case "03-02":
         return true;
       case "03-03":
@@ -1932,6 +1963,28 @@ export const useRecurringEffects = () => {
     return adjacentZones;
   };
 
+  const getZonesAerialImpetusAlly = (unit) => {
+    const zones = JSON.parse(localGameState.zones);
+    const adjacentAllies = getZonesWithAllies(unit, 1, false); // excludes self
+
+    const AerialImpetusAllyZones = [];
+    for (let i of adjacentAllies) {
+      const zone = zones[Math.floor(i / 5)][i % 5];
+      const ally = localGameState[zone.player].units[zone.unitIndex];
+
+      if (canMove(ally) && !isImmobilized(ally)) {
+        if (ally.player === "host" && unit.row < ally.row) {
+          AerialImpetusAllyZones.push(ally.row * 5 + ally.column);
+        }
+        if (ally.player === "guest" && unit.row > ally.row) {
+          AerialImpetusAllyZones.push(ally.row * 5 + ally.column);
+        }
+      }
+    }
+
+    return AerialImpetusAllyZones;
+  };
+
   const getZonesInRange = (cRow, cColumn, range, includeSelf) => {
     const zones = JSON.parse(localGameState.zones);
     let zonesInRange = [];
@@ -2047,6 +2100,20 @@ export const useRecurringEffects = () => {
     if (
       Math.abs(unit1.row - unit2.row) <= 1 &&
       Math.abs(unit1.column - unit2.column) <= 1
+    ) {
+      return true;
+    }
+
+    return false;
+  };
+
+  const isImmobilized = (unit) => {
+    const afflictions = unit.afflictions;
+
+    if (
+      unit.enhancements.score ||
+      afflictions.paralysis ||
+      afflictions.frostbite
     ) {
       return true;
     }
@@ -2419,6 +2486,7 @@ export const useRecurringEffects = () => {
     getScionSet,
     getTacticImage,
     getVacantAdjacentZones,
+    getZonesAerialImpetusAlly,
     getZonesInRange,
     getZonesWithAllies,
     getZonesWithEnemies,

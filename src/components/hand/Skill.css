@@ -45,3 +45,36 @@
     position: absolute;
     /* top: 10px */
 }
+
+.player-hand-card {
+
+    width: 120px;
+    height: 168px;
+
+    /* display: flex;
+     flex-direction: column; */
+
+    background-size: cover;
+    background-position: center;
+
+    border-radius: 5px;
+
+    background-color: green;
+    border: 2px solid black;
+    margin-right: 10px;
+
+    transition: transform 0.2s ease
+}
+
+.player-hand-card:hover {
+    cursor: pointer;
+    top: -16.8px;
+    transform: scale(1.2);
+    position: relative
+}
+
+.player-hand-container{
+    max-width: 700px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr)
+}

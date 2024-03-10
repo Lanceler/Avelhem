@@ -1,40 +1,48 @@
 import React from "react";
 
+import FireAvelhem from "../assets/avelhemcards/FireAvelhem.png";
 import IgnitionPropulsion from "../assets/skillcards/IgnitionPropulsion.png";
 import Conflagration from "../assets/skillcards/Conflagration.png";
 import BlazeOfGlory from "../assets/skillcards/BlazeOfGlory.png";
 import Resplendence from "../assets/skillcards/Resplendence.png";
 
+import WaterAvelhem from "../assets/avelhemcards/WaterAvelhem.png";
 import Purification from "../assets/skillcards/Purification.png";
 import FrigidBreath from "../assets/skillcards/FrigidBreath.png";
 import HealingRain from "../assets/skillcards/HealingRain.png";
 import GlacialTorrent from "../assets/skillcards/GlacialTorrent.png";
 
+import WindAvelhem from "../assets/avelhemcards/WindAvelhem.png";
 import AerialImpetus from "../assets/skillcards/AerialImpetus.png";
 import GaleConjuration from "../assets/skillcards/GaleConjuration.png";
 import SymphonicScreech from "../assets/skillcards/SymphonicScreech.png";
 import CataclysmicTempest from "../assets/skillcards/CataclysmicTempest.png";
 
+import LandAvelhem from "../assets/avelhemcards/LandAvelhem.png";
 import Crystallization from "../assets/skillcards/Crystallization.png";
 import Upheaval from "../assets/skillcards/Upheaval.png";
 import PitfallTrap from "../assets/skillcards/PitfallTrap.png";
 import Geomancy from "../assets/skillcards/Geomancy.png";
 
+import LightningAvelhem from "../assets/avelhemcards/LightningAvelhem.png";
 import ChainLightning from "../assets/skillcards/ChainLightning.png";
 import ZipAndZap from "../assets/skillcards/ZipAndZap.png";
 import ThunderThaumaturge from "../assets/skillcards/ThunderThaumaturge.png";
 import ValiantSpark from "../assets/skillcards/ValiantSpark.png";
 
+import ManaAvelhem from "../assets/avelhemcards/ManaAvelhem.png";
 import Surge from "../assets/skillcards/Surge.png";
 import Diffusion from "../assets/skillcards/Diffusion.png";
 import Aegis from "../assets/skillcards/Aegis.png";
 import DisruptionField from "../assets/skillcards/DisruptionField.png";
 
+import MetalAvelhem from "../assets/avelhemcards/MetalAvelhem.png";
 import MagneticShockwave from "../assets/skillcards/MagneticShockwave.png";
 import Reinforce from "../assets/skillcards/Reinforce.png";
 import FrenzyBlade from "../assets/skillcards/FrenzyBlade.png";
 import ArsenalOnslaught from "../assets/skillcards/ArsenalOnslaught.png";
 
+import PlantAvelhem from "../assets/avelhemcards/PlantAvelhem.png";
 import SowAndReap from "../assets/skillcards/SowAndReap.png";
 import Efflorescence from "../assets/skillcards/Efflorescence.png";
 import ViridianGrave from "../assets/skillcards/ViridianGrave.png";
@@ -61,9 +69,10 @@ import FatedRivalry from "../assets/skillcards/FatedRivalry.png";
 export const useCardImageSwitch = (cardName) => {
   const getImage = (cardName) => {
     switch (cardName) {
+      case "Fire Avelhem":
+        return FireAvelhem;
       case "Ignition Propulsion":
         return IgnitionPropulsion;
-      // return IgnitionPropulsionSmall;
       case "Conflagration":
         return Conflagration;
       case "Blaze Of Glory":
@@ -71,6 +80,8 @@ export const useCardImageSwitch = (cardName) => {
       case "Resplendence":
         return Resplendence;
 
+      case "Water Avelhem":
+        return WaterAvelhem;
       case "Purification":
         return Purification;
       case "Frigid Breath":
@@ -80,6 +91,8 @@ export const useCardImageSwitch = (cardName) => {
       case "Glacial Torrent":
         return GlacialTorrent;
 
+      case "Wind Avelhem":
+        return WindAvelhem;
       case "Aerial Impetus":
         return AerialImpetus;
       case "Gale Conjuration":
@@ -89,6 +102,8 @@ export const useCardImageSwitch = (cardName) => {
       case "Cataclysmic Tempest":
         return CataclysmicTempest;
 
+      case "Land Avelhem":
+        return LandAvelhem;
       case "Crystallization":
         return Crystallization;
       case "Upheaval":
@@ -98,6 +113,8 @@ export const useCardImageSwitch = (cardName) => {
       case "Geomancy":
         return Geomancy;
 
+      case "Lightning Avelhem":
+        return LightningAvelhem;
       case "Chain Lightning":
         return ChainLightning;
       case "Zip And Zap":
@@ -107,6 +124,8 @@ export const useCardImageSwitch = (cardName) => {
       case "Valiant Spark":
         return ValiantSpark;
 
+      case "Mana Avelhem":
+        return ManaAvelhem;
       case "Surge":
         return Surge;
       case "Diffusion":
@@ -116,6 +135,8 @@ export const useCardImageSwitch = (cardName) => {
       case "Disruption Field":
         return DisruptionField;
 
+      case "Metal Avelhem":
+        return MetalAvelhem;
       case "Magnetic Shockwave":
         return MagneticShockwave;
       case "Reinforce":
@@ -125,6 +146,8 @@ export const useCardImageSwitch = (cardName) => {
       case "Arsenal Onslaught":
         return ArsenalOnslaught;
 
+      case "Plant Avelhem":
+        return PlantAvelhem;
       case "Sow And Reap":
         return SowAndReap;
       case "Efflorescence":
