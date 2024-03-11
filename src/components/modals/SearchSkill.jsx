@@ -156,6 +156,7 @@ const SearchSkill = (props) => {
                     i={i}
                     usableSkill={usableSkill}
                     canActivateSkill={canSearch(usableSkill.id)}
+                    selectedSkill={selectedSkill}
                     setSelectedSkill={setSelectedSkill}
                   />
                 </div>
@@ -183,13 +184,17 @@ const SearchSkill = (props) => {
                 i={i + localGameState[self].skillFloat}
                 usableSkill={usableSkill}
                 canActivateSkill={canSearch(usableSkill.id)}
+                selectedSkill={selectedSkill}
                 setSelectedSkill={setSelectedSkill}
               />
             </div>
           ))}
         </div>
 
-        <button onClick={() => handleSkip()}>Skip</button>
+        {selectedSkill === null && (
+          <button onClick={() => handleSkip()}>Skip</button>
+        )}
+
         {selectedSkill !== null && (
           <button onClick={() => handleSelect()}>Select</button>
         )}

@@ -40,7 +40,8 @@ const Tile = (props) => {
     if (deployable) {
       props.deployPawn(props.zone.row, props.zone.column);
     } else if (movable) {
-      props.moveUnit(props.movingUnit, props.zone.id);
+      props.moveUnit(props.movingUnit, props.zone.id, props.movingSpecial);
+      props.setMovingSpecial(null);
     } else {
       // props.getZonesInRange(props.zone.row, props.zone.column, 1, false);
     }

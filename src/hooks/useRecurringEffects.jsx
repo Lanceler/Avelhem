@@ -795,7 +795,7 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
-  const activatePitfallTrap = (newGameState, unit) => {
+  const activatePitfallTrap = (newGameState, unit, victim) => {
     //end Triggering Target resolution
     // newGameState.currentResolution.pop() <-- NOT needed
 
@@ -808,8 +808,9 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Activating PitfallTrap",
+      resolution: "Activating Pitfall Trap",
       unit: unit,
+      victim: victim,
     });
 
     newGameState.activatingSkill.push("04-03");
@@ -1454,7 +1455,8 @@ export const useRecurringEffects = () => {
         newGameState = move(
           newGameState,
           attacker,
-          victim.row * 5 + victim.column
+          victim.row * 5 + victim.column,
+          "strike"
         );
       }
 
@@ -1496,8 +1498,6 @@ export const useRecurringEffects = () => {
         )
       )
     ) {
-      newGameState[victim.player].units[victim.unitIndex].boosts = {};
-
       if (
         newGameState[victim.player].units[victim.unitIndex].afflictions
           .frostbite > 0
@@ -1515,12 +1515,77 @@ export const useRecurringEffects = () => {
         ].afflictions.frostbite = duration;
       }
 
-      //frostbite purges overgrowth & proliferation (proliferation would be overgrowth: 2)
-
+      //frostbite purges boosts, disruption, overgrowth, & proliferation
+      newGameState[victim.player].units[victim.unitIndex].boosts = {};
+      delete newGameState[victim.player].units[victim.unitIndex].enhancements
+        .disruption;
       delete newGameState[victim.player].units[victim.unitIndex].enhancements
         .overgrowth;
       delete newGameState[victim.player].units[victim.unitIndex].enhancements
+        .proliferation;
+    }
+
+    return newGameState;
+  };
+
+  const applyParalysis = (
+    newGameState,
+    attackerInfo,
+    victimInfo,
+    duration,
+    special
+  ) => {
+    //Update info
+    let attacker =
+      newGameState[attackerInfo.player].units[attackerInfo.unitIndex];
+    let victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
+
+    if (victim.enhancements.ward) {
+      delete newGameState[victim.player].units[victim.unitIndex].enhancements
+        .ward;
+    } else if (
+      //Pitfall Trap cannot affect Land and Wind Scions
+      !(
+        special === "Pitfall Trap" &&
+        ["Wind Scion", "Land Scion"].includes(victim.player) &&
+        !isMuted(victim)
+      )
+    ) {
+      newGameState[victim.player].units[victim.unitIndex].boosts = {};
+
+      //apply duration of paralysis
+      if (
+        newGameState[victim.player].units[victim.unitIndex].afflictions
+          .paralysis > 0
+      ) {
+        newGameState[victim.player].units[
+          victim.unitIndex
+        ].afflictions.paralysis = Math.max(
+          newGameState[victim.player].units[victim.unitIndex].afflictions
+            .paralysis,
+          duration
+        );
+      } else {
+        newGameState[victim.player].units[
+          victim.unitIndex
+        ].afflictions.paralysis = duration;
+      }
+
+      //paralysis purges boosts, disruption, overgrowth, & proliferation
+      newGameState[victim.player].units[victim.unitIndex].boosts = {};
+      delete newGameState[victim.player].units[victim.unitIndex].enhancements
         .disruption;
+      delete newGameState[victim.player].units[victim.unitIndex].enhancements
+        .overgrowth;
+      delete newGameState[victim.player].units[victim.unitIndex].enhancements
+        .proliferation;
+
+      //If PitfallTrap Succeeded
+      if (special === "Pitfall Trap") {
+        attacker.temporary.pitfallTrapBlast = true;
+        newGameState[attackerInfo.player].units[attackerInfo.unitIndex] =
+          attacker;
+      }
     }
 
     return newGameState;
@@ -1874,7 +1939,7 @@ export const useRecurringEffects = () => {
       duration: 1,
     });
 
-    //to do in the future: consider bypass Target and Adamant Armor
+    //to do in the future: consider bypass Target
     if (triggerTarget(attacker, victim, "freeze1")) {
       newGameState.currentResolution.push({
         resolution: "Triggering Target",
@@ -2168,9 +2233,9 @@ export const useRecurringEffects = () => {
     return false;
   };
 
-  const move = (newGameState, unit, zoneId) => {
-    console.log(unit);
+  const move = (newGameState, unit, zoneId, special) => {
     let mover = newGameState[unit.player].units[unit.unitIndex];
+    const moverEnemy = mover.player === "host" ? "guest" : "host";
 
     // let newZoneInfo = [...zones];
     let newZoneInfo = JSON.parse(newGameState.zones);
@@ -2187,10 +2252,10 @@ export const useRecurringEffects = () => {
     newGameState.zones = JSON.stringify(newZoneInfo);
 
     //update unit itself
-    newGameState[unit.player].units[unit.unitIndex].row = Math.floor(
+    newGameState[mover.player].units[mover.unitIndex].row = Math.floor(
       zoneId / 5
     );
-    newGameState[unit.player].units[unit.unitIndex].column = zoneId % 5;
+    newGameState[mover.player].units[mover.unitIndex].column = zoneId % 5;
 
     //pop "Moving Unit" resolution
     if (
@@ -2198,6 +2263,69 @@ export const useRecurringEffects = () => {
         .resolution === "Moving Unit"
     ) {
       newGameState.currentResolution.pop();
+    }
+
+    //Trigger Motion Contingency
+
+    if (
+      newGameState[moverEnemy].skillHand.length > 0 &&
+      !["strike", "AerialImpetusAlly", "Surge"].includes(special) &&
+      triggerMotion(mover)
+    ) {
+      newGameState.currentResolution.push({
+        resolution: "Triggering Motion",
+        mover: mover,
+        player: moverEnemy,
+      });
+    }
+    return newGameState;
+  };
+
+  const paralyze1 = (newGameState, attacker, victim, special) => {
+    if (newGameState === null) {
+      newGameState = JSON.parse(JSON.stringify(localGameState));
+    }
+
+    newGameState.currentResolution.push({
+      resolution: "Apply Paralysis",
+      attacker: attacker,
+      victim: victim,
+      special: special,
+      type: "paralyze1",
+      duration: 1,
+    });
+
+    //to do in the future: consider bypass Target and Adamant Armor
+    if (triggerTarget(attacker, victim, "paralyze1")) {
+      newGameState.currentResolution.push({
+        resolution: "Triggering Target",
+        attacker: attacker,
+        victim: victim,
+        type: "paralyze1",
+      });
+    }
+
+    return newGameState;
+  };
+
+  const paralyze2 = (newGameState, attacker, victim, special) => {
+    newGameState.currentResolution.push({
+      resolution: "Apply Paralysis",
+      attacker: attacker,
+      victim: victim,
+      special: special,
+      type: "paralyze1",
+      duration: 1,
+    });
+
+    //to do in the future: consider bypass Target and Adamant Armor
+    if (triggerTarget(attacker, victim, "paralyze1")) {
+      newGameState.currentResolution.push({
+        resolution: "Triggering Target",
+        attacker: attacker,
+        victim: victim,
+        type: "paralyze1",
+      });
     }
 
     return newGameState;
@@ -2335,6 +2463,30 @@ export const useRecurringEffects = () => {
     return false;
   };
 
+  const triggerMotion = (mover) => {
+    if (triggerPitfallTrap(mover)) {
+      return true;
+    }
+
+    return false;
+  };
+
+  const triggerPitfallTrap = (mover) => {
+    const zones = JSON.parse(localGameState.zones);
+    const adjacentEnemies = getZonesWithEnemies(mover, 1);
+
+    for (let i of adjacentEnemies) {
+      const zone = zones[Math.floor(i / 5)][i % 5];
+      const unit = localGameState[zone.player].units[zone.unitIndex];
+
+      if (unit.unitClass === "Land Scion" && !isMuted(unit)) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
   const triggerPowerAtTheFinalHour = (victim) => {
     return !isMuted(victim) && victim.unitClass === "Pawn" ? true : false;
   };
@@ -2463,12 +2615,14 @@ export const useRecurringEffects = () => {
   return {
     activateBlazeOfGlory,
     activateHealingRain,
+    activatePitfallTrap,
     activateSkill,
     activateSkillAndResonate,
     activateSymphonicScreech,
     applyBurn,
     applyDamage,
     applyFrostbite,
+    applyParalysis,
     assignTactics,
     blast,
     canActivateResonance,
@@ -2496,6 +2650,8 @@ export const useRecurringEffects = () => {
     isMuted,
     isRooted,
     move,
+    paralyze1,
+    paralyze2,
     purificationPurge,
     rollTactic,
     shuffleCards,
@@ -2503,6 +2659,7 @@ export const useRecurringEffects = () => {
     triggerAegis,
     triggerBlazeOfGlory,
     triggerHealingRain,
+    triggerPitfallTrap,
     triggerPowerAtTheFinalHour,
     triggerThunderThaumaturge,
     virtueBlast,

@@ -90,12 +90,16 @@ const ContingentSymphonicScreech = (props) => {
                 i={i}
                 usableSkill={usableSkill}
                 canActivateSkill={true}
+                selectedSkill={selectedSkill}
                 setSelectedSkill={setSelectedSkill}
               />
             </div>
           ))}
         </div>
-        <button onClick={() => handleSkip()}>Skip</button>
+
+        {selectedSkill === null && (
+          <button onClick={() => handleSkip()}>Skip</button>
+        )}
         {selectedSkill !== null && (
           <button onClick={() => handleActivate()}>Activate</button>
         )}

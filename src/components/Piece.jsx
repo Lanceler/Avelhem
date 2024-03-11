@@ -313,6 +313,14 @@ export const Piece = (props) => {
             </>
           )}
 
+          {/* paralysis */}
+
+          {props.unit.afflictions.paralysis > 0 && (
+            <>
+              <img src={Burn} className="burn black-tint" />
+            </>
+          )}
+
           {props.expandedPiece === props.id && (
             <>
               <div

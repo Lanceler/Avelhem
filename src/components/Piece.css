@@ -372,3 +372,7 @@ opacity: 0.8;
 .blue-tint{
     filter: hue-rotate(180deg)
 }
+
+.black-tint {
+    filter: grayscale(95%)
+}

@@ -12,10 +12,13 @@ export const useSkillEffects = () => {
   const dispatch = useDispatch();
 
   const {
+    blast,
     getZonesWithEnemies,
     getZonesWithEnemiesAfflicted,
     isAdjacent,
     isMuted,
+    paralyze1,
+    paralyze2,
   } = useRecurringEffects();
 
   const ignitionPropulsion1 = (unitInfo) => {
@@ -519,6 +522,70 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
+  const pitfallTrap1 = (unitInfo, victimInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+    let victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
+
+    //end "Activating Pitfall Trap" resolution
+    newGameState.currentResolution.pop();
+
+    //giveUnit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation = unit.activation + 1)
+      : (unit.temporary.activation = 1);
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    newGameState.currentResolution.push({
+      resolution: "Pitfall Trap1",
+      unit: unit,
+      victim: victim,
+    });
+
+    newGameState = paralyze1(newGameState, unit, victim, "Pitfall Trap");
+
+    return newGameState;
+  };
+
+  const pitfallTrap2 = (attackerInfo, victimInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let attacker =
+      newGameState[attackerInfo.player].units[attackerInfo.unitIndex];
+    let victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
+
+    //end "Pitfall Trap1" resolution
+    newGameState.currentResolution.pop();
+
+    if (attacker.temporary.pitfallTrapBlast === true) {
+      delete attacker.temporary.pitfallTrapBlast;
+      newGameState[attackerInfo.player].units[attackerInfo.unitIndex] =
+        attacker;
+
+      newGameState.currentResolution.push({
+        resolution: "Pitfall Trap2",
+        unit: attacker,
+        victim: victim,
+      });
+    }
+
+    return newGameState;
+  };
+
+  const pitfallTrap3 = (attackerInfo, victimInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let attacker =
+      newGameState[attackerInfo.player].units[attackerInfo.unitIndex];
+    let victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
+
+    //end "Pitfall Trap3" resolution
+    newGameState.currentResolution.pop();
+
+    newGameState = blast(newGameState, attacker, victim, null);
+
+    return newGameState;
+  };
+
   return {
     ignitionPropulsion1,
     conflagration1,
@@ -536,5 +603,8 @@ export const useSkillEffects = () => {
     glacialTorrent1,
     aerialImpetus1,
     symphonicScreech1,
+    pitfallTrap1,
+    pitfallTrap2,
+    pitfallTrap3,
   };
 };

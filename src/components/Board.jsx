@@ -49,9 +49,11 @@ import FrigidBreathResonance1 from "./skillModals/FrigidBreathResonance1";
 import GlacialTorrent1 from "./skillModals/GlacialTorrent1";
 import AerialImpetus1 from "./skillModals/AerialImpetus1";
 
+import ContingencyMotion from "./skillModals/ContingencyMotion";
 import ContingentSurvivalAlly from "./skillModals/ContingentSurvivalAlly";
-import ContingentTarget from "./skillModals/ContingentTarget";
 import ContingentSymphonicScreech from "./skillModals/ContingentSymphonicScreech";
+import ContingentTarget from "./skillModals/ContingentTarget";
+
 import SymphonicScreechFloat from "./skillModals/SymphonicScreechFloat";
 
 import MayFloatResonantSkill from "./skillModals/MayFloatResonantSkill";
@@ -79,6 +81,7 @@ const Board = (props) => {
   const [selectUnitReason, setSelectUnitReason] = useState(null);
   const [selectUnitSpecial, setSelectUnitSpecial] = useState(null);
   const [movingUnit, setMovingUnit] = useState(null);
+  const [movingSpecial, setMovingSpecial] = useState(null);
   const [tacticUsed, setTacticUsed] = useState(null);
   const [expandedPiece, setExpandedPiece] = useState(null);
 
@@ -88,14 +91,15 @@ const Board = (props) => {
 
   const {
     activateHealingRain,
+    activatePitfallTrap,
     activateSymphonicScreech,
     applyBurn,
     applyDamage,
     applyFrostbite,
+    applyParalysis,
     blast,
     drawSkill,
     endFinalPhase,
-    getZonesAerialImpetusAlly,
     getVacantAdjacentZones,
     getZonesWithAllies,
     getZonesWithEnemies,
@@ -105,6 +109,8 @@ const Board = (props) => {
     ignite,
     isMuted,
     move,
+    paralyze1,
+    paralyze2,
     purificationPurge,
     shuffleCards,
     strike,
@@ -128,6 +134,9 @@ const Board = (props) => {
     glacialTorrent1,
     aerialImpetus1,
     symphonicScreech1,
+    pitfallTrap1,
+    pitfallTrap2,
+    pitfallTrap3,
   } = useSkillEffects();
 
   const { getSkillById } = useCardDatabase();
@@ -413,6 +422,22 @@ const Board = (props) => {
                   lastResolution.attacker,
                   lastResolution.victim,
                   lastResolution.duration
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Apply Paralysis":
+        return (
+          <>
+            {self === lastResolution.attacker.player && (
+              <>
+                {resolveApplyParalysis(
+                  lastResolution.attacker,
+                  lastResolution.victim,
+                  lastResolution.duration,
+                  lastResolution.special
                 )}
               </>
             )}
@@ -969,54 +994,6 @@ const Board = (props) => {
           </>
         );
 
-      case "Triggering Survival Ally":
-        return (
-          <>
-            {self === lastResolution.player && !hideModal && (
-              <ContingentSurvivalAlly
-                attacker={lastResolution.attacker}
-                victim={lastResolution.victim}
-                updateFirebase={updateFirebase}
-                enterSelectUnitMode={enterSelectUnitMode}
-                hideOrRevealModale={hideOrRevealModale}
-                setIntrudingPlayer={setIntrudingPlayer}
-              />
-            )}
-          </>
-        );
-
-      case "Triggering Target":
-        return (
-          <>
-            {self === lastResolution.victim.player && !hideModal && (
-              <ContingentTarget
-                updateFirebase={updateFirebase}
-                attacker={lastResolution.attacker}
-                victim={lastResolution.victim}
-                type={lastResolution.type}
-                enterSelectUnitMode={enterSelectUnitMode}
-                hideOrRevealModale={hideOrRevealModale}
-                setIntrudingPlayer={setIntrudingPlayer}
-              />
-            )}
-          </>
-        );
-
-      case "Triggering Screech":
-        return (
-          <>
-            {self === lastResolution.player && !hideModal && (
-              <ContingentSymphonicScreech
-                updateFirebase={updateFirebase}
-                activator={lastResolution.activator}
-                enterSelectUnitMode={enterSelectUnitMode}
-                hideOrRevealModale={hideOrRevealModale}
-                setIntrudingPlayer={setIntrudingPlayer}
-              />
-            )}
-          </>
-        );
-
       case "Activating Symphonic Screech":
         return (
           <>
@@ -1054,6 +1031,134 @@ const Board = (props) => {
                 message={lastResolution.message}
                 restriction={lastResolution.restriction}
                 hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Select Pitfall Trap Activator":
+        return (
+          <>
+            {self === lastResolution.player && (
+              <>{selectPitfallTrapActivator(lastResolution.mover)}</>
+            )}
+          </>
+        );
+
+      case "Activating Pitfall Trap":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdate(
+                  pitfallTrap1(lastResolution.unit, lastResolution.victim)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Pitfall Trap1":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdate(
+                  pitfallTrap2(lastResolution.unit, lastResolution.victim)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Pitfall Trap2":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <YouMaySpend1Skill
+                unit={lastResolution.unit}
+                victim={lastResolution.victim}
+                message="The affliction succeeded. You may spend 1 skill to blast them."
+                restriction={null}
+                reason="Pitfall Trap"
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Pitfall Trap3":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdate(
+                  pitfallTrap3(lastResolution.unit, lastResolution.victim)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Triggering Motion":
+        return (
+          <>
+            {self === lastResolution.player && !hideModal && (
+              <ContingencyMotion
+                mover={lastResolution.mover}
+                updateFirebase={updateFirebase}
+                enterSelectUnitMode={enterSelectUnitMode}
+                hideOrRevealModale={hideOrRevealModale}
+                setIntrudingPlayer={setIntrudingPlayer}
+              />
+            )}
+          </>
+        );
+
+      case "Triggering Survival Ally":
+        return (
+          <>
+            {self === lastResolution.player && !hideModal && (
+              <ContingentSurvivalAlly
+                attacker={lastResolution.attacker}
+                victim={lastResolution.victim}
+                updateFirebase={updateFirebase}
+                enterSelectUnitMode={enterSelectUnitMode}
+                hideOrRevealModale={hideOrRevealModale}
+                setIntrudingPlayer={setIntrudingPlayer}
+              />
+            )}
+          </>
+        );
+
+      case "Triggering Screech":
+        return (
+          <>
+            {self === lastResolution.player && !hideModal && (
+              <ContingentSymphonicScreech
+                updateFirebase={updateFirebase}
+                activator={lastResolution.activator}
+                enterSelectUnitMode={enterSelectUnitMode}
+                hideOrRevealModale={hideOrRevealModale}
+                setIntrudingPlayer={setIntrudingPlayer}
+              />
+            )}
+          </>
+        );
+
+      case "Triggering Target":
+        return (
+          <>
+            {self === lastResolution.victim.player && !hideModal && (
+              <ContingentTarget
+                updateFirebase={updateFirebase}
+                attacker={lastResolution.attacker}
+                victim={lastResolution.victim}
+                type={lastResolution.type}
+                enterSelectUnitMode={enterSelectUnitMode}
+                hideOrRevealModale={hideOrRevealModale}
+                setIntrudingPlayer={setIntrudingPlayer}
               />
             )}
           </>
@@ -1270,10 +1375,10 @@ const Board = (props) => {
     setExpandedPiece(null);
   };
 
-  const moveUnit = (unit, zoneId) => {
+  const moveUnit = (unit, zoneId, special) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    newGameState = move(newGameState, unit, zoneId);
+    newGameState = move(newGameState, unit, zoneId, special);
 
     if (tacticUsed !== null) {
       newGameState.tactics[tacticUsed].stock--;
@@ -1391,6 +1496,33 @@ const Board = (props) => {
     updateFirebase(newGameState);
   };
 
+  const resolveApplyParalysis = (
+    attackerInfo,
+    victimInfo,
+    duration,
+    special
+  ) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    const attacker =
+      newGameState[attackerInfo.player].units[attackerInfo.unitIndex];
+
+    newGameState.currentResolution.pop();
+
+    if (attacker !== null && !isMuted(attacker)) {
+      newGameState = applyParalysis(
+        newGameState,
+        attackerInfo,
+        victimInfo,
+        duration,
+        special
+      );
+    }
+
+    dispatch(updateState(newGameState));
+    updateFirebase(newGameState);
+  };
+
   const resolveEndFinalPhase = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     newGameState = endFinalPhase(newGameState, self, enemy);
@@ -1406,6 +1538,8 @@ const Board = (props) => {
     newGameState.currentResolution.pop();
 
     enterMoveMode(getVacantAdjacentZones(unit), unit, newGameState, null);
+
+    setMovingSpecial("AerialImpetusAlly");
   };
 
   const selectAllies = (unitInfo, range, includeSelf, reason, special) => {
@@ -1499,6 +1633,36 @@ const Board = (props) => {
     );
   };
 
+  const selectPitfallTrapActivator = (mover) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Select Pitfall Trap Activator"
+    newGameState.currentResolution.pop();
+
+    const zonesWithEnemies = getZonesWithEnemies(mover, 1);
+    let zonesWithLandScions = [];
+
+    for (let z of zonesWithEnemies) {
+      const zone = zones[Math.floor(z / 5)][z % 5];
+      const unit = newGameState[zone.player].units[zone.unitIndex];
+
+      if (unit.unitClass === "Land Scion" && !isMuted(unit)) {
+        zonesWithLandScions.push(z);
+      }
+    }
+
+    setIntrudingPlayer(self);
+
+    enterSelectUnitMode(
+      zonesWithLandScions,
+      mover,
+      newGameState,
+      null,
+      "pitfall trap",
+      null
+    );
+  };
+
   const selectUnit = (unit, selectedUnit, reason, special) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -1563,6 +1727,9 @@ const Board = (props) => {
     } else if (reason === "symphonic screech") {
       //unit = activator; selectedUnit = Wind Scion
       newGameState = activateSymphonicScreech(newGameState, selectedUnit, unit);
+    } else if (reason === "pitfall trap") {
+      //unit = mover; selectedUnit = Land Scion
+      newGameState = activatePitfallTrap(newGameState, selectedUnit, unit);
     }
 
     setValidZones([]);
@@ -1570,6 +1737,7 @@ const Board = (props) => {
     setSelectUnitReason(null);
     setSelectUnitSpecial(null);
     setMovingUnit(null);
+    setMovingSpecial(null);
     setTacticUsed(null);
     setIntrudingPlayer(null);
 
@@ -1681,6 +1849,14 @@ const Board = (props) => {
         newGameState[unit.player].units[
           unit.unitIndex
         ].afflictions.anathema = 2;
+
+        //anathema purges boosts, disruption, overgrowth, & proliferation
+        newGameState[unit.player].units[unit.unitIndex].boosts = {};
+        delete newGameState[unit.unit].units[unit.unit].enhancements.disruption;
+        delete newGameState[unit.unit].units[unit.unitIndex].enhancements
+          .overgrowth;
+        delete newGameState[unit.player].units[unit.unitIndex].enhancements
+          .proliferation;
       }
     }
 
@@ -1746,6 +1922,14 @@ const Board = (props) => {
         newGameState[unit.player].units[
           unit.unitIndex
         ].afflictions.anathema = 2;
+
+        //anathema purges boosts, disruption, overgrowth, & proliferation
+        newGameState[unit.player].units[unit.unitIndex].boosts = {};
+        delete newGameState[unit.unit].units[unit.unit].enhancements.disruption;
+        delete newGameState[unit.unit].units[unit.unitIndex].enhancements
+          .overgrowth;
+        delete newGameState[unit.player].units[unit.unitIndex].enhancements
+          .proliferation;
       }
     }
 
@@ -1980,6 +2164,8 @@ const Board = (props) => {
                       validZones={validZones}
                       deployPawn={deployPawn}
                       movingUnit={movingUnit}
+                      movingSpecial={movingSpecial}
+                      setMovingSpecial={setMovingSpecial}
                       moveUnit={moveUnit}
                       tileMode={tileMode}
                       intrudingPlayer={intrudingPlayer}

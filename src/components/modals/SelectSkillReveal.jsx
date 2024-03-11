@@ -80,13 +80,16 @@ const SelectSkillReveal = (props) => {
                 i={i}
                 usableSkill={usableSkill}
                 canActivateSkill={true} // any skill can be revealed
+                selectedSkill={selectedSkill}
                 setSelectedSkill={setSelectedSkill}
               />
             </div>
           ))}
         </div>
 
-        <button onClick={() => handleSkip()}>Skip</button>
+        {selectedSkill === null && (
+          <button onClick={() => handleSkip()}>Skip</button>
+        )}
 
         {selectedSkill !== null && (
           <button onClick={() => handleSelect()}>Select</button>

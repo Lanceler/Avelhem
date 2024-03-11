@@ -17,7 +17,11 @@ const Skill = (props) => {
 
   const handleClick = () => {
     if (props.canActivateSkill) {
-      props.setSelectedSkill(props.i);
+      if (props.selectedSkill === props.i) {
+        props.setSelectedSkill(null);
+      } else {
+        props.setSelectedSkill(props.i);
+      }
     }
   };
 

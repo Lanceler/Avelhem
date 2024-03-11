@@ -96,13 +96,16 @@ const YouMayFloat1Skill = (props) => {
                 i={i}
                 usableSkill={usableSkill}
                 canActivateSkill={canBeFloated(usableSkill.id)}
+                selectedSkill={selectedSkill}
                 setSelectedSkill={setSelectedSkill}
               />
             </div>
           ))}
         </div>
 
-        <button onClick={() => handleSkip()}>Skip</button>
+        {selectedSkill === null && (
+          <button onClick={() => handleSkip()}>Skip</button>
+        )}
 
         {selectedSkill !== null && (
           <button onClick={() => handleSelect()}>Select</button>

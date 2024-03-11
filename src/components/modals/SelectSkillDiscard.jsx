@@ -107,6 +107,7 @@ const SelectSkillDiscard = (props) => {
                 i={i}
                 usableSkill={usableSkill}
                 canActivateSkill={canBeDiscarded(usableSkill.id)}
+                selectedSkill={selectedSkill}
                 setSelectedSkill={setSelectedSkill}
               />
             </div>

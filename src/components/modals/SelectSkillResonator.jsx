@@ -99,13 +99,16 @@ const SelectSkillResonator = (props) => {
                 i={i}
                 usableSkill={usableSkill}
                 canActivateSkill={canUseResonator(usableSkill.id)}
+                selectedSkill={selectedSkill}
                 setSelectedSkill={setSelectedSkill}
               />
             </div>
           ))}
         </div>
 
-        <button onClick={() => handleCancel()}>Cancel</button>
+        {selectedSkill === null && (
+          <button onClick={() => handleCancel()}>Cancel</button>
+        )}
 
         {selectedSkill !== null && (
           <button onClick={() => handleSelect()}>Select</button>

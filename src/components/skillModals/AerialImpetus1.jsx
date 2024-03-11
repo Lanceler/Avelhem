@@ -20,7 +20,6 @@ const AerialImpetus1 = (props) => {
   let canPrompt = false;
   if (getZonesAerialImpetusAlly(unit).length > 0) {
     canPrompt = true;
-    console.log(getZonesAerialImpetusAlly(unit));
   }
 
   let canPurge = false;

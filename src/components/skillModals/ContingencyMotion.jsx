@@ -7,25 +7,20 @@ import { updateState } from "../../redux/gameState";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 import Skill from "../hand/Skill";
 
-const ContingentTarget = (props) => {
+const ContingencyMotion = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
   const [selectedSkill, setSelectedSkill] = useState(null);
 
-  const {
-    activateBlazeOfGlory,
-    triggerAegis,
-    triggerBlazeOfGlory,
-    triggerThunderThaumaturge,
-  } = useRecurringEffects();
+  const { triggerPitfallTrap } = useRecurringEffects();
 
-  let targetContingentSkills = ["01-03", "05-03", "06-03"];
+  let motionContingentSkills = ["04-03"];
 
   let usableSkills = [];
   for (let i in localGameState[self].skillHand) {
-    if (targetContingentSkills.includes(localGameState[self].skillHand[i])) {
+    if (motionContingentSkills.includes(localGameState[self].skillHand[i])) {
       usableSkills.push({
         id: localGameState[self].skillHand[i],
         handIndex: i,
@@ -35,14 +30,8 @@ const ContingentTarget = (props) => {
 
   const canActivateContingency = (skill) => {
     switch (skill) {
-      case "01-03":
-        return triggerBlazeOfGlory(props.victim, props.type);
-
-      case "05-03":
-        return triggerThunderThaumaturge(props.attacker, props.victim);
-
-      case "06-03":
-        return triggerAegis(props.victim);
+      case "04-03":
+        return triggerPitfallTrap(props.mover);
 
       default:
         return false;
@@ -52,7 +41,7 @@ const ContingentTarget = (props) => {
   const handleSkip = () => {
     const newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    //pop "Triggering Target"
+    //pop "Triggering Motion"
     newGameState.currentResolution.pop();
 
     dispatch(updateState(newGameState));
@@ -63,7 +52,7 @@ const ContingentTarget = (props) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     const zones = JSON.parse(newGameState.zones);
 
-    //pop "Triggering Target"
+    //pop "Triggering Motion"
     newGameState.currentResolution.pop();
 
     //remove activated card from hand but do not send to vestige
@@ -72,14 +61,16 @@ const ContingentTarget = (props) => {
       1
     );
 
-    if (usableSkills[selectedSkill].id === "01-03") {
-      newGameState = activateBlazeOfGlory(newGameState, props.victim);
+    if (usableSkills[selectedSkill].id === "04-03") {
+      newGameState.currentResolution.push({
+        resolution: "Select Pitfall Trap Activator",
+        mover: props.mover,
+        player: self,
+      });
     }
 
     dispatch(updateState(newGameState));
     props.updateFirebase(newGameState);
-
-    // // props.setIntrudingPlayer(self); // <-- need for Aegis
   };
 
   const handleViewBoard = () => {
@@ -90,7 +81,7 @@ const ContingentTarget = (props) => {
     <div className="modal-backdrop">
       <div className="skill-modal">
         <button onClick={() => handleViewBoard()}>View Board</button>
-        <h2>Contigency: Target Triggered</h2>
+        <h2>Contigency: Motion Triggered</h2>
 
         <div className="fourColumn scrollable scrollable-y-only">
           {usableSkills.map((usableSkill, i) => (
@@ -114,6 +105,7 @@ const ContingentTarget = (props) => {
         {selectedSkill === null && (
           <button onClick={() => handleSkip()}>Skip</button>
         )}
+
         {selectedSkill !== null && (
           <button onClick={() => handleActivate()}>Activate</button>
         )}
@@ -122,4 +114,4 @@ const ContingentTarget = (props) => {
   );
 };
 
-export default ContingentTarget;
+export default ContingencyMotion;

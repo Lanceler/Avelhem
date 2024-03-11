@@ -46,6 +46,12 @@ const YouMaySpend1Skill = (props) => {
         resolution: "Resplendence2",
         unit: props.unit,
       });
+    } else if (props.reason === "Pitfall Trap") {
+      newGameState.currentResolution.push({
+        resolution: "Pitfall Trap3",
+        unit: props.unit,
+        victim: props.victim,
+      });
     }
 
     const isAdjacentToManaScion = (unitInfo) => {
@@ -124,13 +130,16 @@ const YouMaySpend1Skill = (props) => {
                 i={i}
                 usableSkill={usableSkill}
                 canActivateSkill={canBeDiscarded(usableSkill.id)}
+                selectedSkill={selectedSkill}
                 setSelectedSkill={setSelectedSkill}
               />
             </div>
           ))}
         </div>
 
-        <button onClick={() => handleSkip()}>Skip</button>
+        {selectedSkill === null && (
+          <button onClick={() => handleSkip()}>Skip</button>
+        )}
 
         {selectedSkill !== null && (
           <button onClick={() => handleSelect()}>Select</button>

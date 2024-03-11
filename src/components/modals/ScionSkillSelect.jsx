@@ -100,13 +100,17 @@ const ScionSkillSelect = (props) => {
                 i={i}
                 usableSkill={usableSkill}
                 canActivateSkill={canActivateSkill(props.unit, usableSkill.id)}
+                selectedSkill={selectedSkill}
                 setSelectedSkill={setSelectedSkill}
               />
             </div>
           ))}
         </div>
 
-        <button onClick={() => handleReturn()}>Return</button>
+        {selectedSkill === null && (
+          <button onClick={() => handleReturn()}>Return</button>
+        )}
+
         {selectedSkill !== null && (
           <button onClick={() => handleSelect()}>Select</button>
         )}
