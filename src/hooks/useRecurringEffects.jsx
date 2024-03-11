@@ -1547,7 +1547,7 @@ export const useRecurringEffects = () => {
       //Pitfall Trap cannot affect Land and Wind Scions
       !(
         special === "Pitfall Trap" &&
-        ["Wind Scion", "Land Scion"].includes(victim.player) &&
+        ["Wind Scion", "Land Scion"].includes(victim.unitClass) &&
         !isMuted(victim)
       )
     ) {

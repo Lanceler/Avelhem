@@ -48,23 +48,23 @@ import Efflorescence from "../assets/skillcards/Efflorescence.png";
 import ViridianGrave from "../assets/skillcards/ViridianGrave.png";
 import CastleOfThorns from "../assets/skillcards/CastleOfThorns.png";
 
-// import HeirsEndeavor from "../assets/skillcards/HeirsEndeavor.png";
+import HeirsEndeavor from "../assets/skillcards/HeirsEndeavor.png";
 import TeaForTwo from "../assets/skillcards/TeaForTwo.png";
 // import UnbridledPower from "../assets/skillcards/UnbridledPower.png";
 import DarkHalo from "../assets/skillcards/DarkHalo.png";
-// import Reminiscence from "../assets/skillcards/Reminiscence.png";
-// import Foreshadow from "../assets/skillcards/Foreshadow.png";
-// import Transmute from "../assets/skillcards/Transmute.png";
+import Reminiscence from "../assets/skillcards/Reminiscence.png";
+import Foreshadow from "../assets/skillcards/Foreshadow.png";
+import Transmute from "../assets/skillcards/Transmute.png";
 import Ambidexterity from "../assets/skillcards/Ambidexterity.png";
 // import Providence from "../assets/skillcards/Providence.png";
 // import FerventPrayer from "../assets/skillcards/FerventPrayer.png";
 // import PressTheAttack from "../assets/skillcards/PressTheAttack.png";
 import PowerAtTheFinalHour from "../assets/skillcards/PowerAtTheFinalHour.png";
 import FatedRivalry from "../assets/skillcards/FatedRivalry.png";
-// import MatchMadeInHeaven from "../assets/skillcards/MatchMadeInHeaven.png";
+import MatchMadeInHeaven from "../assets/skillcards/MatchMadeInHeaven.png";
 // import VengefulLegacy from "../assets/skillcards/VengefulLegacy.png";
 // import BlackBusinessCard from "../assets/skillcards/BlackBusinessCard.png";
-// import Coalescence from "../assets/skillcards/Coalescence.png";
+import Coalescence from "../assets/skillcards/Coalescence.png";
 
 export const useCardImageSwitch = (cardName) => {
   const getImage = (cardName) => {
@@ -157,21 +157,21 @@ export const useCardImageSwitch = (cardName) => {
       case "Castle Of Thorns":
         return CastleOfThorns;
 
-      // case "Heir’s Endeavor":
-      //   return HeirsEndeavor;
+      case "Heir’s Endeavor":
+        return HeirsEndeavor;
       case "Tea For Two":
         return TeaForTwo;
       // case "Unbridled Power":
       //   return UnbridledPower;
       case "Dark Halo":
         return DarkHalo;
-      // case "Reminiscence":
-      //   return Reminiscence;
-      // case "Foreshadow":
-      //   return Foreshadow;
+      case "Reminiscence":
+        return Reminiscence;
+      case "Foreshadow":
+        return Foreshadow;
 
-      // case "Transmute":
-      //   return Transmute;
+      case "Transmute":
+        return Transmute;
       case "Ambidexterity":
         return Ambidexterity;
       // case "Providence":
@@ -184,15 +184,15 @@ export const useCardImageSwitch = (cardName) => {
         return PowerAtTheFinalHour;
       case "Fated Rivalry":
         return FatedRivalry;
-      // case "Match Made In Heaven":
-      //   return MatchMadeInHeaven;
+      case "Match Made In Heaven":
+        return MatchMadeInHeaven;
       // case "Vengeful Legacy":
       //   return VengefulLegacy;
       // case "Black Business Card":
       //   return BlackBusinessCard;
 
-      // case "Coalescence,":
-      //   return Coalescence;
+      case "Coalescence":
+        return Coalescence;
 
       default:
         return "";
