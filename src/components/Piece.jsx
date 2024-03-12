@@ -20,7 +20,8 @@ import Shield from "../assets/attributeIcons/Shield.png";
 import Ward from "../assets/attributeIcons/Ward.png";
 import Virtue from "../assets/attributeIcons/Virtue.png";
 import HP from "../assets/attributeIcons/HP.png";
-import Burn from "../assets/attributeIcons/BurnGif.gif";
+import BurnGif from "../assets/attributeIcons/BurnGif.gif";
+import ParalysisGif from "../assets/attributeIcons/ParalysisGif.gif";
 
 export const Piece = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
@@ -301,7 +302,7 @@ export const Piece = (props) => {
             <>
               {/* <div className="fever" style={{ left: 29 }}></div> */}
 
-              <img src={Burn} className="burn" />
+              <img src={BurnGif} className="burn" />
             </>
           )}
 
@@ -309,7 +310,7 @@ export const Piece = (props) => {
 
           {props.unit.afflictions.frostbite > 0 && (
             <>
-              <img src={Burn} className="burn blue-tint" />
+              <img src={BurnGif} className="burn blue-tint" />
             </>
           )}
 
@@ -317,7 +318,14 @@ export const Piece = (props) => {
 
           {props.unit.afflictions.paralysis > 0 && (
             <>
-              <img src={Burn} className="burn black-tint" />
+              <img
+                src={ParalysisGif}
+                className={`paralyzed ${
+                  props.unit.afflictions.paralysis === 1
+                    ? "fade-in-out-paralyze"
+                    : ""
+                }`}
+              />
             </>
           )}
 

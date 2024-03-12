@@ -74,6 +74,45 @@ opacity: 0.8;
 
 }
 
+.paralyzed {
+    z-index: 498;
+    height: 90px;
+    width: 90px;
+    position: absolute;
+    pointer-events: none;
+    top: -11px;
+    left: -11px;
+    opacity: 0.95;
+    filter: contrast(1.15);
+    animation: rotate 5.3s linear infinite
+}
+
+.fade-in-out-paralyze {
+    animation: rotate 5.3s linear infinite, fadeInOut2 1.425s ease-in-out infinite alternate;
+}
+
+@keyframes fadeInOut2 {
+    0% {
+        opacity: 0.15;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+        /* Start rotation from 0 degrees */
+    }
+
+    to {
+        transform: rotate(360deg);
+        /* End rotation at 360 degrees */
+    }
+}
+
 
 .shieldAndWard {
     /* height: 100px;
