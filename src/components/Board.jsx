@@ -48,6 +48,7 @@ import Purification2 from "./skillModals/Purification2";
 import FrigidBreathResonance1 from "./skillModals/FrigidBreathResonance1";
 import GlacialTorrent1 from "./skillModals/GlacialTorrent1";
 import AerialImpetus1 from "./skillModals/AerialImpetus1";
+import AerialImpetus2E from "./skillModals/AerialImpetus2E";
 
 import ContingencyMotion from "./skillModals/ContingencyMotion";
 import ContingentSurvivalAlly from "./skillModals/ContingentSurvivalAlly";
@@ -133,6 +134,7 @@ const Board = (props) => {
     healingRain1,
     glacialTorrent1,
     aerialImpetus1,
+    aerialImpetus2E,
     symphonicScreech1,
     pitfallTrap1,
     pitfallTrap2,
@@ -977,7 +979,6 @@ const Board = (props) => {
               <AerialImpetus1
                 updateFirebase={updateFirebase}
                 unit={lastResolution.unit}
-                enterMoveMode={enterMoveMode}
                 enterSelectUnitMode={enterSelectUnitMode}
                 hideOrRevealModale={hideOrRevealModale}
               />
@@ -989,7 +990,44 @@ const Board = (props) => {
         return (
           <>
             {self === lastResolution.unit.player && (
-              <>{selectAerialImpetusMove(lastResolution.unit)}</>
+              <>{selectAerialImpetusMove(lastResolution.unit, "Ally")}</>
+            )}
+          </>
+        );
+
+      case "Aerial Impetus Purge":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  aerialImpetus2E(lastResolution.victim)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Aerial Impetus Purge Move":
+        return (
+          <>
+            {self === lastResolution.player && !hideModal && (
+              <AerialImpetus2E
+                updateFirebase={updateFirebase}
+                player={lastResolution.player}
+                victim={lastResolution.victim}
+                enterSelectUnitMode={enterSelectUnitMode}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Aerial Impetus Purge Move2":
+        return (
+          <>
+            {self === lastResolution.player && (
+              <>{selectAerialImpetusMove(lastResolution.victim, "Enemy")}</>
             )}
           </>
         );
@@ -1531,15 +1569,17 @@ const Board = (props) => {
     updateFirebase(newGameState);
   };
 
-  const selectAerialImpetusMove = (unit) => {
+  const selectAerialImpetusMove = (unit, ally) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    //end "Aerial Impetus Prompt"
+    //end "Aerial Impetus Prompt" or "Aerial Impetus Purge Move2"
     newGameState.currentResolution.pop();
 
     enterMoveMode(getVacantAdjacentZones(unit), unit, newGameState, null);
 
-    setMovingSpecial("AerialImpetusAlly");
+    if (ally === "Ally") {
+      setMovingSpecial("AerialImpetusAlly");
+    }
   };
 
   const selectAllies = (unitInfo, range, includeSelf, reason, special) => {
@@ -1723,6 +1763,12 @@ const Board = (props) => {
       newGameState.currentResolution.push({
         resolution: "Aerial Impetus Prompt",
         unit: selectedUnit,
+      });
+    } else if (reason === "aerial impetus purge") {
+      newGameState.currentResolution.push({
+        resolution: "Aerial Impetus Purge",
+        unit: unit,
+        victim: selectedUnit,
       });
     } else if (reason === "symphonic screech") {
       //unit = activator; selectedUnit = Wind Scion

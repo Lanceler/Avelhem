@@ -1648,22 +1648,6 @@ export const useRecurringEffects = () => {
       if (getZonesAerialImpetusAlly(unit).length > 0) {
         return true;
       }
-      // const zones = JSON.parse(localGameState.zones);
-      // const adjacentAllies = getZonesWithAllies(unit, 1, false); // excludes self
-
-      // for (let i of adjacentAllies) {
-      //   const zone = zones[Math.floor(i / 5)][i % 5];
-      //   const ally = localGameState[zone.player].units[zone.unitIndex];
-
-      //   if (canMove(ally) && !isImmobilized(ally)) {
-      //     if (ally.player === "host" && unit.row < ally.row) {
-      //       return true;
-      //     }
-      //     if (ally.player === "guest" && unit.row > ally.row) {
-      //       return true;
-      //     }
-      //   }
-      // }
 
       return false;
     };

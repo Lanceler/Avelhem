@@ -300,8 +300,6 @@ export const Piece = (props) => {
 
           {props.unit.afflictions.burn > 0 && (
             <>
-              {/* <div className="fever" style={{ left: 29 }}></div> */}
-
               <img src={BurnGif} className="burn" />
             </>
           )}

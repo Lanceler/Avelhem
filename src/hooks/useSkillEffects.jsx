@@ -13,6 +13,7 @@ export const useSkillEffects = () => {
 
   const {
     blast,
+    canMove,
     getZonesWithEnemies,
     getZonesWithEnemiesAfflicted,
     isAdjacent,
@@ -484,6 +485,30 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
+  const aerialImpetus2E = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Aerial Impetus Purge" resolution
+    newGameState.currentResolution.pop();
+
+    if (!(unit.unitClass === "Wind Scion" && !isMuted(unit))) {
+      unit.virtue = false;
+      delete unit.enhancements.shield;
+      newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+      if (canMove(unit)) {
+        newGameState.currentResolution.push({
+          resolution: "Aerial Impetus Purge Move",
+          player: self,
+          victim: unit,
+        });
+      }
+    }
+
+    return newGameState;
+  };
+
   const symphonicScreech1 = (unit, victim) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -602,6 +627,7 @@ export const useSkillEffects = () => {
     healingRain1,
     glacialTorrent1,
     aerialImpetus1,
+    aerialImpetus2E,
     symphonicScreech1,
     pitfallTrap1,
     pitfallTrap2,

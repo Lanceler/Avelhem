@@ -47,7 +47,19 @@ const AerialImpetus1 = (props) => {
 
   const handlePurge = () => {
     if (canPurge) {
-      //
+      let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+      //end "Aerial Impetus1"
+      newGameState.currentResolution.pop();
+
+      props.enterSelectUnitMode(
+        getZonesWithEnemies(unit, 1),
+        unit,
+        newGameState,
+        null,
+        "aerial impetus purge",
+        null
+      );
     }
   };
 
