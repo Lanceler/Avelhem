@@ -115,6 +115,7 @@ const Board = (props) => {
     purificationPurge,
     shuffleCards,
     strike,
+    strikeMove,
     virtueBlast,
   } = useRecurringEffects();
 
@@ -440,6 +441,19 @@ const Board = (props) => {
                   lastResolution.victim,
                   lastResolution.duration,
                   lastResolution.special
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Strike Movement":
+        return (
+          <>
+            {self === lastResolution.attacker.player && (
+              <>
+                {resolutionUpdate(
+                  strikeMove(lastResolution.attacker, lastResolution.zone)
                 )}
               </>
             )}
@@ -1832,6 +1846,15 @@ const Board = (props) => {
         newGameState[unit.player].units[
           unit.unitIndex
         ].afflictions.anathema = 2;
+
+        //anathema purges boosts, disruption, overgrowth, & proliferation
+        newGameState[unit.player].units[unit.unitIndex].boosts = {};
+        delete newGameState[unit.player].units[unit.unitIndex].enhancements
+          .disruption;
+        delete newGameState[unit.player].units[unit.unitIndex].enhancements
+          .overgrowth;
+        delete newGameState[unit.player].units[unit.unitIndex].enhancements
+          .proliferation;
       }
     }
 
@@ -1898,8 +1921,9 @@ const Board = (props) => {
 
         //anathema purges boosts, disruption, overgrowth, & proliferation
         newGameState[unit.player].units[unit.unitIndex].boosts = {};
-        delete newGameState[unit.unit].units[unit.unit].enhancements.disruption;
-        delete newGameState[unit.unit].units[unit.unitIndex].enhancements
+        delete newGameState[unit.player].units[unit.unitIndex].enhancements
+          .disruption;
+        delete newGameState[unit.player].units[unit.unitIndex].enhancements
           .overgrowth;
         delete newGameState[unit.player].units[unit.unitIndex].enhancements
           .proliferation;
@@ -1971,8 +1995,9 @@ const Board = (props) => {
 
         //anathema purges boosts, disruption, overgrowth, & proliferation
         newGameState[unit.player].units[unit.unitIndex].boosts = {};
-        delete newGameState[unit.unit].units[unit.unit].enhancements.disruption;
-        delete newGameState[unit.unit].units[unit.unitIndex].enhancements
+        delete newGameState[unit.player].units[unit.unitIndex].enhancements
+          .disruption;
+        delete newGameState[unit.player].units[unit.unitIndex].enhancements
           .overgrowth;
         delete newGameState[unit.player].units[unit.unitIndex].enhancements
           .proliferation;

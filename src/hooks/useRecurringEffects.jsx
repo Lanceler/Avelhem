@@ -1335,114 +1335,134 @@ export const useRecurringEffects = () => {
 
     //checkBypassShield
     let bypassShield = false;
-    if (
-      victim.afflictions.frostbite > 0 &&
-      attacker.unitClass === "Water Scion"
-    ) {
-      bypassShield = true;
-    } else if (attacker.sharpness == 2) {
-      bypassShield = true;
-    } else if (special === "sowAndReapBlast") {
-      bypassShield = true;
+    switch (true) {
+      case victim.afflictions.frostbite > 0 &&
+        attacker.unitClass === "Water Scion":
+        bypassShield = true;
+        break;
+      case attacker.sharpness === 2:
+        bypassShield = true;
+        break;
+      case special === "sowAndReapBlast":
+        bypassShield = true;
+        break;
+      default:
+        break;
     }
 
     //calculate AP
     let aP = 1;
-    if (victim.afflictions.anathema) {
-      aP = 5;
-    } else if (["geomancy", "surge"].includes(special)) {
-      aP = 2;
-    } else if (
-      special === "Fire Scion" &&
-      victim.unitClass === "Fire Scion" &&
-      !isMuted(victim)
-    ) {
-      aP = 0;
-    } else {
-      //check for AP modifiers
-      if (attacker.boosts.galeConjuration) {
+    switch (true) {
+      case victim.afflictions.anathema > 0:
+        aP = 5;
+        break;
+      case ["geomancy", "surge"].includes(special):
         aP = 2;
-        delete newGameState[attacker.player].units[attacker.unitIndex].boosts
-          .galeConjuration;
-      }
-      if (attacker.sharpness && type === "strike") {
-        aP = aP + attacker.sharpness;
-      }
-      if (victim.temporary.adamantArmor) {
-        aP = Math.max(0, aP - 1);
-        delete newGameState[victim.player].units[victim.unitIndex].temporary
-          .adamantArmor;
-      }
-      if (special === "Virtue-blast-blocked") {
-        aP = Math.max(0, aP - 1);
-      }
+        break;
+      case special === "Fire Scion" &&
+        victim.unitClass === "Fire Scion" &&
+        !isMuted(victim):
+        aP = 0;
+        break;
+      default: //apply AP modifiers
+        if (attacker.boosts.galeConjuration === true) {
+          aP = 2;
+        }
+        if (attacker.sharpness > 0 && type === "strike") {
+          aP += attacker.sharpness;
+        }
+        if (victim.temporary.adamantArmor === true) {
+          aP = Math.max(0, aP - 1);
+          delete newGameState[victim.player].units[victim.unitIndex].temporary
+            .adamantArmor;
+        }
+        if (special === "Virtue-blast-blocked") {
+          aP = Math.max(0, aP - 1);
+        }
+        break;
+    }
+
+    //remove attacker's boosts
+    if (attacker.boosts.galeConjuration) {
+      delete newGameState[attacker.player].units[attacker.unitIndex].boosts
+        .galeConjuration;
     }
 
     //reduce HP
-    if (victim.enhancements.ward) {
-      delete newGameState[victim.player].units[victim.unitIndex].enhancements
-        .ward;
-    } else if (bypassShield && victim.enhancements.shield) {
-      delete newGameState[victim.player].units[victim.unitIndex].enhancements
-        .shield;
-      newGameState[victim.player].units[victim.unitIndex].hp = victim.hp - aP;
-    } else if (victim.enhancements.shield) {
-      delete newGameState[victim.player].units[victim.unitIndex].enhancements
-        .shield;
-    } else {
-      newGameState[victim.player].units[victim.unitIndex].hp = victim.hp - aP;
+    switch (true) {
+      case victim.enhancements.ward > 0:
+        delete newGameState[victim.player].units[victim.unitIndex].enhancements
+          .ward;
+        break;
+      case bypassShield && victim.enhancements.shield > 0:
+        delete newGameState[victim.player].units[victim.unitIndex].enhancements
+          .shield;
+        newGameState[victim.player].units[victim.unitIndex].hp = victim.hp - aP;
+        break;
+      case victim.enhancements.shield > 0:
+        delete newGameState[victim.player].units[victim.unitIndex].enhancements
+          .shield;
+        break;
+      default:
+        newGameState[victim.player].units[victim.unitIndex].hp = victim.hp - aP;
+        break;
     }
 
     //survival or elimination
     if (newGameState[victim.player].units[victim.unitIndex].hp > 0) {
+      const pushSurvivalResolution = (resolution, player, victim, attacker) => {
+        newGameState.currentResolution.push({
+          resolution,
+          player,
+          victim,
+          attacker,
+        });
+      };
+
       if (newGameState.turnPlayer === victim.player) {
         if (triggerSurvivalAlly(victim)) {
-          newGameState.currentResolution.push({
-            resolution: "Triggering SurvivalAlly ",
-            player: victim.player,
-            victim: victim,
-            attacker: attacker,
-          });
+          pushSurvivalResolution(
+            "Triggering Survival Ally",
+            victim.player,
+            victim,
+            attacker
+          );
         }
+
         if (triggerSurvivalEnemy(victim)) {
-          newGameState.currentResolution.push({
-            resolution: "Triggering Survival Enemy ",
-            player: victim.player === "host" ? "guest" : "host",
-            victim: victim,
-            attacker: attacker,
-          });
+          pushSurvivalResolution(
+            "Triggering Survival Enemy",
+            victim.player === "host" ? "guest" : "host",
+            victim,
+            attacker
+          );
         }
       } else {
         if (triggerSurvivalEnemy(victim)) {
-          newGameState.currentResolution.push({
-            resolution: "Triggering Survival Enemy",
-            player: victim.player === "host" ? "guest" : "host",
-            victim: victim,
-            attacker: attacker,
-          });
+          pushSurvivalResolution(
+            "Triggering Survival Enemy",
+            victim.player === "host" ? "guest" : "host",
+            victim,
+            attacker
+          );
         }
+
         if (triggerSurvivalAlly(victim)) {
-          newGameState.currentResolution.push({
-            resolution: "Triggering Survival Ally",
-            player: victim.player,
-            victim: victim,
-            attacker: attacker,
-          });
+          pushSurvivalResolution(
+            "Triggering Survival Ally",
+            victim.player,
+            victim,
+            attacker
+          );
         }
       }
     } else {
-      //grant BP
-      if (victim.player === "guest") {
-        newGameState.host.bountyPoints = Math.min(
-          10,
-          newGameState.host.bountyPoints + 1
-        );
-      } else {
-        newGameState.guest.bountyPoints = Math.min(
-          10,
-          newGameState.guest.bountyPoints + 1
-        );
-      }
+      // Grant Bounty Points
+      const playerBP = victim.player === "guest" ? "host" : "guest";
+      newGameState[playerBP].bountyPoints = Math.min(
+        10,
+        newGameState[playerBP].bountyPoints + 1
+      );
 
       //remove eliminated unit
       newGameState[victim.player].units[victim.unitIndex] = null;
@@ -1450,18 +1470,64 @@ export const useRecurringEffects = () => {
       newZoneInfo[victim.row][victim.column].unitIndex = null;
       newGameState.zones = JSON.stringify(newZoneInfo);
 
+      //"If the attack was lethal" effects
+
+      if (special === "Gale Conjuration Strike") {
+        newGameState.currentResolution.push({
+          resolution: "Gale Conjuration Lethal",
+          victimPlayer: victim.Player,
+        });
+      }
+
       //strike movement
       if (type === "strike") {
-        newGameState = move(
-          newGameState,
-          attacker,
-          victim.row * 5 + victim.column,
-          "strike"
-        );
+        newGameState.currentResolution.push({
+          resolution: "Strike Movement",
+          attacker: attacker,
+          zone: victim.row * 5 + victim.column,
+        });
       }
 
       //elimination contingency
-      //to do: trigger elimination contingency
+      const pushEliminationResolution = (resolution, player, unit) => {
+        newGameState.currentResolution.push({
+          resolution,
+          player,
+          unit,
+        });
+      };
+
+      if (newGameState.turnPlayer === victim.player) {
+        if (triggerEliminationAlly(victim)) {
+          pushEliminationResolution(
+            "Triggering Elimination Ally",
+            victim.player,
+            victim
+          );
+        }
+        if (triggerEliminationEnemy(victim)) {
+          pushEliminationResolution(
+            "Triggering Elimination Enemy",
+            victim.player === "host" ? "guest" : "host",
+            victim
+          );
+        }
+      } else {
+        if (triggerEliminationEnemy(victim)) {
+          pushEliminationResolution(
+            "Triggering Elimination Enemy",
+            victim.player === "host" ? "guest" : "host",
+            victim
+          );
+        }
+        if (triggerEliminationAlly(victim)) {
+          pushEliminationResolution(
+            "Triggering Elimination Ally",
+            victim.player,
+            victim
+          );
+        }
+      }
 
       //elimination talents
       //to do: elimination talents
@@ -1477,6 +1543,7 @@ export const useRecurringEffects = () => {
           attacker.unitIndex
         ].temporary.anathemaDelay = true;
     }
+
     return newGameState;
   };
 
@@ -2187,7 +2254,7 @@ export const useRecurringEffects = () => {
   };
 
   const isRooted = (unit) => {
-    let gameState = JSON.parse(JSON.stringify(localGameState));
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
 
     if (
       ["Wind Scion", "Land Scion", "Plant Scion"].includes(unit.unitClass) &&
@@ -2199,8 +2266,8 @@ export const useRecurringEffects = () => {
     const zonesWithAdjacentEnemies = getZonesWithEnemies(unit, 1);
 
     for (let z of zonesWithAdjacentEnemies) {
-      const zone = gameState.zones[Math.floor(z / 5)][z % 5];
-      if (gameState[zone.player].units[zone.unitIndex].overgrowth === true) {
+      const zone = newGameState.zones[Math.floor(z / 5)][z % 5];
+      if (newGameState[zone.player].units[zone.unitIndex].overgrowth === true) {
         return true;
       }
     }
@@ -2208,8 +2275,8 @@ export const useRecurringEffects = () => {
     const zonesWithDistantEnemies = getZonesWithEnemies(unit, 2);
 
     for (let z of zonesWithDistantEnemies) {
-      const zone = gameState.zones[Math.floor(z / 5)][z % 5];
-      if (gameState[zone.player].units[zone.unitIndex].proliferation > 0) {
+      const zone = newGameState.zones[Math.floor(z / 5)][z % 5];
+      if (newGameState[zone.player].units[zone.unitIndex].proliferation > 0) {
         return true;
       }
     }
@@ -2386,6 +2453,17 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const strikeMove = (mover, zone) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Strike Movement"
+    newGameState.currentResolution.pop();
+
+    newGameState = move(newGameState, mover, zone, "strike");
+
+    return newGameState;
+  };
+
   const triggerAegis = (victim) => {
     const zones = JSON.parse(localGameState.zones);
     const adjacentAllies = getZonesWithAllies(victim, 1, true); // includes self
@@ -2402,6 +2480,13 @@ export const useRecurringEffects = () => {
     return false;
   };
 
+  const triggerBlackBusinessCard = (victim) => {
+    if (victim.enhancements.ravager) {
+      return true;
+    }
+    return false;
+  };
+
   const triggerBlazeOfGlory = (victim, method) => {
     if (
       victim.unitClass === "Fire Scion" && //must be Fire Scion
@@ -2413,6 +2498,18 @@ export const useRecurringEffects = () => {
       return true;
     }
     return false;
+  };
+
+  const triggerEliminationAlly = (victim) => {
+    return (
+      triggerViridianGrave(victim, "ally") || triggerVengefulLegacy(victim)
+    );
+  };
+
+  const triggerEliminationEnemy = (victim) => {
+    return (
+      triggerViridianGrave(victim, "enemy") || triggerBlackBusinessCard(victim)
+    );
   };
 
   const triggerFrenzyBlade = (victim) => {
@@ -2546,6 +2643,50 @@ export const useRecurringEffects = () => {
     return false;
   };
 
+  const triggerVengefulLegacy = (victim) => {
+    //return true if there is an unmuted ally pawn within 2 spaces
+    const zones = JSON.parse(localGameState.zones);
+    const allies = getZonesWithAllies(victim, 2, false); // excludes self
+
+    if (victim.unitClass === "Pawn") {
+      return false;
+    }
+
+    for (let i of allies) {
+      const zone = zones[Math.floor(i / 5)][i % 5];
+      const unit = localGameState[zone.player].units[zone.unitIndex];
+
+      if (unit.unitClass === "Pawn" && !isMuted(unit)) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
+  const triggerViridianGrave = (victim, team) => {
+    const zones = JSON.parse(localGameState.zones);
+
+    let adjacentUnits = [];
+
+    if (team === "ally") {
+      adjacentUnits = getZonesWithAllies(victim, 1, false);
+    } else {
+      adjacentUnits = getZonesWithEnemies(victim, 1);
+    }
+
+    for (let i of adjacentUnits) {
+      const zone = zones[Math.floor(i / 5)][i % 5];
+      const unit = localGameState[zone.player].units[zone.unitIndex];
+
+      if (unit.unitClass === "Plant Scion" && !isMuted(unit)) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
   const virtueBlast = (newGameState, attacker, victim) => {
     newGameState.currentResolution.push({
       resolution: "Apply Damage",
@@ -2640,6 +2781,7 @@ export const useRecurringEffects = () => {
     rollTactic,
     shuffleCards,
     strike,
+    strikeMove,
     triggerAegis,
     triggerBlazeOfGlory,
     triggerHealingRain,
