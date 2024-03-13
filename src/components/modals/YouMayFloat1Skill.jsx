@@ -48,6 +48,23 @@ const YouMayFloat1Skill = (props) => {
       });
     }
 
+    switch (props.reason) {
+      case "Frigid Breath3":
+        newGameState.currentResolution.push({
+          resolution: "Frigid Breath4",
+          unit: props.unit,
+        });
+        break;
+
+      case "Gale Conjuration1":
+        newGameState[props.unit.player].units[props.unit.unitIndex].virtue = 1;
+
+        break;
+
+      default:
+        break;
+    }
+
     //send selected skill to repertoire
     //to do: discard Transcendence
     newGameState[self].skillRepertoire.push(

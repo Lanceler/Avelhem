@@ -62,8 +62,8 @@ import Ambidexterity from "../assets/skillcards/Ambidexterity.png";
 import PowerAtTheFinalHour from "../assets/skillcards/PowerAtTheFinalHour.png";
 import FatedRivalry from "../assets/skillcards/FatedRivalry.png";
 import MatchMadeInHeaven from "../assets/skillcards/MatchMadeInHeaven.png";
-// import VengefulLegacy from "../assets/skillcards/VengefulLegacy.png";
-// import BlackBusinessCard from "../assets/skillcards/BlackBusinessCard.png";
+import VengefulLegacy from "../assets/skillcards/VengefulLegacy.png";
+import BlackBusinessCard from "../assets/skillcards/BlackBusinessCard.png";
 import Coalescence from "../assets/skillcards/Coalescence.png";
 
 export const useCardImageSwitch = (cardName) => {
@@ -186,10 +186,10 @@ export const useCardImageSwitch = (cardName) => {
         return FatedRivalry;
       case "Match Made In Heaven":
         return MatchMadeInHeaven;
-      // case "Vengeful Legacy":
-      //   return VengefulLegacy;
-      // case "Black Business Card":
-      //   return BlackBusinessCard;
+      case "Vengeful Legacy":
+        return VengefulLegacy;
+      case "Black Business Card":
+        return BlackBusinessCard;
 
       case "Coalescence":
         return Coalescence;

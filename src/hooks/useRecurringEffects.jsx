@@ -992,6 +992,8 @@ export const useRecurringEffects = () => {
 
       case "03-01":
         return activateAerialImpetus(newGameState, unit);
+      case "03-02":
+        return activateGaleConjuration(newGameState, unit);
 
       default:
         return newGameState;
@@ -2783,11 +2785,14 @@ export const useRecurringEffects = () => {
     strike,
     strikeMove,
     triggerAegis,
+    triggerBlackBusinessCard,
     triggerBlazeOfGlory,
     triggerHealingRain,
     triggerPitfallTrap,
     triggerPowerAtTheFinalHour,
     triggerThunderThaumaturge,
+    triggerVengefulLegacy,
+    triggerViridianGrave,
     virtueBlast,
     virtueBlastNo,
     virtueBlastYes,

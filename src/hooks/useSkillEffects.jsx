@@ -509,6 +509,30 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
+  const galeConjuration1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Gale Conjuration" resolution
+    newGameState.currentResolution.pop();
+
+    unit.boosts.galeConjuration = true;
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    if (newGameState[self].skillHand.length > 0) {
+      newGameState.currentResolution.push({
+        resolution: "Gale Conjuration1",
+        unit: unit,
+        message: "You may float 1 skill to restore your Virtue.",
+        restriction: null,
+        reason: "Gale Conjuration1",
+      });
+    }
+
+    return newGameState;
+  };
+
   const symphonicScreech1 = (unit, victim) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -628,6 +652,7 @@ export const useSkillEffects = () => {
     glacialTorrent1,
     aerialImpetus1,
     aerialImpetus2E,
+    galeConjuration1,
     symphonicScreech1,
     pitfallTrap1,
     pitfallTrap2,

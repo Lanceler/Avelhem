@@ -50,7 +50,8 @@ import GlacialTorrent1 from "./skillModals/GlacialTorrent1";
 import AerialImpetus1 from "./skillModals/AerialImpetus1";
 import AerialImpetus2E from "./skillModals/AerialImpetus2E";
 
-import ContingencyMotion from "./skillModals/ContingencyMotion";
+import ContingentElimination from "./skillModals/ContingentElimination";
+import ContingentMotion from "./skillModals/ContingentMotion";
 import ContingentSurvivalAlly from "./skillModals/ContingentSurvivalAlly";
 import ContingentSymphonicScreech from "./skillModals/ContingentSymphonicScreech";
 import ContingentTarget from "./skillModals/ContingentTarget";
@@ -136,6 +137,7 @@ const Board = (props) => {
     glacialTorrent1,
     aerialImpetus1,
     aerialImpetus2E,
+    galeConjuration1,
     symphonicScreech1,
     pitfallTrap1,
     pitfallTrap2,
@@ -1046,6 +1048,35 @@ const Board = (props) => {
           </>
         );
 
+      case "Activating Gale Conjuration":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  galeConjuration1(lastResolution.unit)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Gale Conjuration1":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <YouMayFloat1Skill
+                unit={lastResolution.unit}
+                restriction={lastResolution.restriction}
+                message={lastResolution.message}
+                reason={lastResolution.reason}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
       case "Activating Symphonic Screech":
         return (
           <>
@@ -1153,11 +1184,45 @@ const Board = (props) => {
           </>
         );
 
+      case "Triggering Elimination Ally":
+        return (
+          <>
+            {self === lastResolution.player && !hideModal && (
+              <ContingentElimination
+                player={lastResolution.player}
+                unit={lastResolution.unit}
+                team="ally"
+                updateFirebase={updateFirebase}
+                enterSelectUnitMode={enterSelectUnitMode}
+                hideOrRevealModale={hideOrRevealModale}
+                setIntrudingPlayer={setIntrudingPlayer}
+              />
+            )}
+          </>
+        );
+
+      case "Triggering Elimination Enemy":
+        return (
+          <>
+            {self === lastResolution.player && !hideModal && (
+              <ContingentElimination
+                player={lastResolution.player}
+                unit={lastResolution.unit}
+                team="enemy"
+                updateFirebase={updateFirebase}
+                enterSelectUnitMode={enterSelectUnitMode}
+                hideOrRevealModale={hideOrRevealModale}
+                setIntrudingPlayer={setIntrudingPlayer}
+              />
+            )}
+          </>
+        );
+
       case "Triggering Motion":
         return (
           <>
             {self === lastResolution.player && !hideModal && (
-              <ContingencyMotion
+              <ContingentMotion
                 mover={lastResolution.mover}
                 updateFirebase={updateFirebase}
                 enterSelectUnitMode={enterSelectUnitMode}

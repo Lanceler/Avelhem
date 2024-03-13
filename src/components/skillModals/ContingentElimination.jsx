@@ -7,20 +7,26 @@ import { updateState } from "../../redux/gameState";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 import Skill from "../hand/Skill";
 
-const ContingencyMotion = (props) => {
+const ContingentElimination = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
   const [selectedSkill, setSelectedSkill] = useState(null);
 
-  const { triggerPitfallTrap } = useRecurringEffects();
+  const {
+    triggerBlackBusinessCard,
+    triggerVengefulLegacy,
+    triggerViridianGrave,
+  } = useRecurringEffects();
 
-  let motionContingentSkills = ["04-03"];
+  let eliminationContingentSkills = ["08-03", "SC-04", "SC-05"];
 
   let usableSkills = [];
   for (let i in localGameState[self].skillHand) {
-    if (motionContingentSkills.includes(localGameState[self].skillHand[i])) {
+    if (
+      eliminationContingentSkills.includes(localGameState[self].skillHand[i])
+    ) {
       usableSkills.push({
         id: localGameState[self].skillHand[i],
         handIndex: i,
@@ -30,8 +36,14 @@ const ContingencyMotion = (props) => {
 
   const canActivateContingency = (skill) => {
     switch (skill) {
-      case "04-03":
-        return triggerPitfallTrap(props.mover);
+      case "08-03":
+        return triggerViridianGrave(props.unit, props.team);
+
+      case "SC-04":
+        return props.team === "ally" && triggerVengefulLegacy(props.unit);
+
+      case "SC-05":
+        return props.team === "enemy" && triggerBlackBusinessCard(props.unit);
 
       default:
         return false;
@@ -41,7 +53,7 @@ const ContingencyMotion = (props) => {
   const handleSkip = () => {
     const newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    //pop "Triggering Motion"
+    //pop "Triggering Elimination Ally/Enemy"
     newGameState.currentResolution.pop();
 
     dispatch(updateState(newGameState));
@@ -52,8 +64,19 @@ const ContingencyMotion = (props) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     const zones = JSON.parse(newGameState.zones);
 
-    //pop "Triggering Motion"
+    //pop "Triggering Elimination Ally/Enemy"
     newGameState.currentResolution.pop();
+
+    if (
+      //prevent enemy from activating their own contingent skill
+      ["Triggering Elimination Ally", "Triggering Elimination Enemy"].includes(
+        newGameState.currentResolution[
+          newGameState.currentResolution.length - 1
+        ].resolution
+      )
+    ) {
+      newGameState.currentResolution.pop();
+    }
 
     //remove activated card from hand but do not send to vestige
     newGameState[self].skillHand.splice(
@@ -61,16 +84,16 @@ const ContingencyMotion = (props) => {
       1
     );
 
-    if (usableSkills[selectedSkill].id === "04-03") {
+    if (usableSkills[selectedSkill].id === "08-03") {
       newGameState.currentResolution.push({
-        resolution: "Select Pitfall Trap Activator",
-        mover: props.mover,
+        resolution: "Select Viridian Grave Activator",
+        victim: props.unit,
         player: self,
       });
     }
 
     dispatch(updateState(newGameState));
-    props.updateFirebase(newGameState);
+    props.updateFirebase(newGameState); // might remove this line of code
   };
 
   const handleViewBoard = () => {
@@ -81,7 +104,7 @@ const ContingencyMotion = (props) => {
     <div className="modal-backdrop">
       <div className="skill-modal">
         <button onClick={() => handleViewBoard()}>View Board</button>
-        <h2>Contigency: Motion Triggered</h2>
+        <h2>Contigency: Elimination Triggered</h2>
 
         <div className="fourColumn scrollable scrollable-y-only">
           {usableSkills.map((usableSkill, i) => (
@@ -105,7 +128,6 @@ const ContingencyMotion = (props) => {
         {selectedSkill === null && (
           <button onClick={() => handleSkip()}>Skip</button>
         )}
-
         {selectedSkill !== null && (
           <button onClick={() => handleActivate()}>Activate</button>
         )}
@@ -114,4 +136,4 @@ const ContingencyMotion = (props) => {
   );
 };
 
-export default ContingencyMotion;
+export default ContingentElimination;

@@ -365,6 +365,17 @@ opacity: 0.8;
     pointer-events: none;
 }
 
+.gale-conjuration{
+        transform: rotate(45deg);
+        background: linear-gradient(22deg, #005222, #00911f, #18ca5d, #39e271, #8dfdb2, #d8ffd8);
+        border: 0.5px solid #000000de;
+        height: 7.5px;
+        width: 7.5px;
+        position: absolute;
+        animation: moveUpDown 0.95s ease-in-out infinite;
+        pointer-events: none;
+    }
+
 .sharpness {
     transform: rotate(45deg);
     background: linear-gradient(22deg, #2b2a2a, #3b3535, #5c4c4c, #ffffff, #cec7c4, #6b6b6b);
