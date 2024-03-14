@@ -44,13 +44,10 @@ import TacticAssault from "./modals/TacticAssault";
 import VirtueBlastBlock from "./modals/VirtueBlastBlock";
 
 import IgnitionPropulsion1 from "./skillModals/IgnitionPropulsion1";
-import ConflagrationResonance1 from "./skillModals/ConflagrationResonance1";
-import BlazeOfGloryDraw from "./skillModals/BlazeOfGloryDraw";
 import Purification2 from "./skillModals/Purification2";
 import FrigidBreathResonance1 from "./skillModals/FrigidBreathResonance1";
 import GlacialTorrent1 from "./skillModals/GlacialTorrent1";
 import AerialImpetus1 from "./skillModals/AerialImpetus1";
-import AerialImpetus2E from "./skillModals/AerialImpetus2E";
 
 import ContingentElimination from "./skillModals/ContingentElimination";
 import ContingentMotion from "./skillModals/ContingentMotion";
@@ -681,20 +678,13 @@ const Board = (props) => {
         return (
           <>
             {self === lastResolution.unit.player && !hideModal && (
-              <ConflagrationResonance1
-                updateFirebase={updateFirebase}
+              <YouMayNoYes
                 unit={lastResolution.unit}
+                details={lastResolution.details}
+                enterSelectUnitMode={enterSelectUnitMode}
+                updateFirebase={updateFirebase}
                 hideOrRevealModale={hideOrRevealModale}
               />
-            )}
-          </>
-        );
-
-      case "ConflagrationR3":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
-              <>{selectEnemies(lastResolution.unit, 1, null, "ignite", null)}</>
             )}
           </>
         );
@@ -733,14 +723,16 @@ const Board = (props) => {
           </>
         );
 
-      case "Blaze of Glory Draw":
+      case "Blaze of Glory3":
         return (
           <>
-            {self === lastResolution.unit.player && (
-              <BlazeOfGloryDraw
+            {self === lastResolution.unit.player && !hideModal && (
+              <YouMayNoYes
+                unit={lastResolution.unit}
+                details={lastResolution.details}
+                enterSelectUnitMode={enterSelectUnitMode}
                 updateFirebase={updateFirebase}
                 hideOrRevealModale={hideOrRevealModale}
-                unit={lastResolution.unit}
               />
             )}
           </>
@@ -1033,11 +1025,12 @@ const Board = (props) => {
         return (
           <>
             {self === lastResolution.player && !hideModal && (
-              <AerialImpetus2E
-                updateFirebase={updateFirebase}
+              <YouMayNoYes
+                unit={lastResolution.unit}
                 player={lastResolution.player}
-                victim={lastResolution.victim}
+                details={lastResolution.details}
                 enterSelectUnitMode={enterSelectUnitMode}
+                updateFirebase={updateFirebase}
                 hideOrRevealModale={hideOrRevealModale}
               />
             )}
@@ -1724,6 +1717,7 @@ const Board = (props) => {
   };
 
   const selectAerialImpetusMove = (unit, ally) => {
+    console.log(unit);
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
     //end "Aerial Impetus Prompt" or "Aerial Impetus Purge Move2"

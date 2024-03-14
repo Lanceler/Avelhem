@@ -11,7 +11,7 @@ const YouMayNoYes = (props) => {
 
   const dispatch = useDispatch();
 
-  const { getZonesWithEnemies } = useRecurringEffects();
+  const { drawSkill, getZonesWithEnemies } = useRecurringEffects();
 
   const handleViewBoard = () => {
     props.hideOrRevealModale();
@@ -28,12 +28,39 @@ const YouMayNoYes = (props) => {
 
   const handleYes = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[props.unit.player].units[props.unit.unitIndex];
 
     //end
     newGameState.currentResolution.pop();
 
     switch (props.details.reason) {
-      case "Gale Conjuration Strike":
+      case "Conflagration Ignite": //"ConflagrationR2"
+        props.enterSelectUnitMode(
+          getZonesWithEnemies(props.unit, 1),
+          props.unit,
+          newGameState,
+          null,
+          "ignite",
+          null
+        );
+        break;
+
+      case "Blaze of Glory Draw": //"Blaze of Glory3"
+        unit.fever = unit.fever - 1;
+        newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+        newGameState = drawSkill(newGameState);
+        break;
+
+      case "Aerial Impetus Purge Move": // Aerial Impetus Purge Move
+        newGameState.currentResolution.push({
+          resolution: "Aerial Impetus Purge Move2",
+          player: props.player,
+          victim: props.unit,
+        });
+
+        break;
+
+      case "Gale Conjuration Strike": // "Gale ConjurationR2"
         newGameState.currentResolution.push({
           resolution: "Gale ConjurationR3",
           unit: props.unit,
@@ -47,7 +74,6 @@ const YouMayNoYes = (props) => {
           "strike",
           "Gale Conjuration Strike"
         );
-
         break;
 
       default:

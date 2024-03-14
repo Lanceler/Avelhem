@@ -2298,6 +2298,7 @@ export const useRecurringEffects = () => {
 
   const isRooted = (unit) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
+    const zones = JSON.parse(localGameState.zones);
 
     if (
       ["Wind Scion", "Land Scion", "Plant Scion"].includes(unit.unitClass) &&
@@ -2309,7 +2310,7 @@ export const useRecurringEffects = () => {
     const zonesWithAdjacentEnemies = getZonesWithEnemies(unit, 1);
 
     for (let z of zonesWithAdjacentEnemies) {
-      const zone = newGameState.zones[Math.floor(z / 5)][z % 5];
+      const zone = zones[Math.floor(z / 5)][z % 5];
       if (newGameState[zone.player].units[zone.unitIndex].overgrowth === true) {
         return true;
       }
@@ -2318,7 +2319,7 @@ export const useRecurringEffects = () => {
     const zonesWithDistantEnemies = getZonesWithEnemies(unit, 2);
 
     for (let z of zonesWithDistantEnemies) {
-      const zone = newGameState.zones[Math.floor(z / 5)][z % 5];
+      const zone = zones[Math.floor(z / 5)][z % 5];
       if (newGameState[zone.player].units[zone.unitIndex].proliferation > 0) {
         return true;
       }

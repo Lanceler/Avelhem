@@ -152,6 +152,13 @@ export const useSkillEffects = () => {
       newGameState.currentResolution.push({
         resolution: "ConflagrationR2",
         unit: unit,
+        details: {
+          reason: "Conflagration Ignite",
+          title: "Conflagration",
+          message: "You may ignite an adjacent enemy.",
+          no: "Skip",
+          yes: "Ignite",
+        },
       });
     }
 
@@ -205,8 +212,15 @@ export const useSkillEffects = () => {
 
     if (unit !== null && !isMuted(unit) && unit.fever > 0) {
       newGameState.currentResolution.push({
-        resolution: "Blaze of Glory Draw",
-        unit: unitInfo,
+        resolution: "Blaze of Glory3",
+        unit: unit,
+        details: {
+          reason: "Blaze of Glory Draw",
+          title: "Blaze of Glory",
+          message: "You may spend 1 fever to draw 1 skill.",
+          no: "Skip",
+          yes: "Draw",
+        },
       });
     }
 
@@ -499,10 +513,23 @@ export const useSkillEffects = () => {
       newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
       if (canMove(unit)) {
+        // newGameState.currentResolution.push({
+        //   resolution: "Aerial Impetus Purge Move",
+        //   player: self,
+        //   victim: unit,
+        // });
+
         newGameState.currentResolution.push({
           resolution: "Aerial Impetus Purge Move",
           player: self,
-          victim: unit,
+          unit: unit,
+          details: {
+            reason: "Aerial Impetus Purge Move",
+            title: "Aerial Impetus",
+            message: "You may force them to move to an adjacent zone.",
+            no: "Skip",
+            yes: "Move",
+          },
         });
       }
     }
@@ -622,13 +649,14 @@ export const useSkillEffects = () => {
       newGameState[enemy].skillHand.length > 0 &&
       unit.temporary.galeConjurationLethal
     ) {
-      delete unit.temporary.galeConjurationLethal;
       newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
       newGameState.currentResolution.push({
         resolution: "Gale ConjurationR4",
         enemy: enemy,
       });
     }
+
+    delete unit.temporary.galeConjurationLethal;
 
     return newGameState;
   };
