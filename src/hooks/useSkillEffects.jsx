@@ -14,6 +14,7 @@ export const useSkillEffects = () => {
   const {
     blast,
     canMove,
+    canStrike,
     getZonesWithEnemies,
     getZonesWithEnemiesAfflicted,
     isAdjacent,
@@ -533,6 +534,105 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
+  const galeConjurationR1 = (unitInfo, resonator) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Resonating Gale Conjuration" resolution
+    newGameState.currentResolution.pop();
+
+    //giveUnit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation = unit.activation + 1)
+      : (unit.temporary.activation = 1);
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    if (resonator !== "SA-02") {
+      newGameState.currentResolution.push({
+        resolution: "May float resonant skill",
+        unit: unit,
+        player: unit.player,
+        skill: "03-02",
+        resonator: resonator,
+      });
+    }
+
+    newGameState.currentResolution.push({
+      resolution: "Gale ConjurationR1",
+      unit: unit,
+    });
+
+    unit.boosts.galeConjuration = true;
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    if (newGameState[self].skillHand.length > 0) {
+      newGameState.currentResolution.push({
+        resolution: "Gale Conjuration1",
+        unit: unit,
+        message: "You may float 1 skill to restore your Virtue.",
+        restriction: null,
+        reason: "Gale Conjuration1",
+      });
+    }
+
+    return newGameState;
+  };
+
+  const galeConjurationR2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    // end "Gale ConjurationR1"
+    newGameState.currentResolution.pop();
+
+    if (canStrike(unit)) {
+      newGameState.currentResolution.push({
+        resolution: "Gale ConjurationR3",
+        unit: unit,
+      });
+
+      newGameState.currentResolution.push({
+        resolution: "Gale ConjurationR2",
+        unit: unit,
+        details: {
+          reason: "Gale Conjuration Strike",
+          title: "Gale Conjuration",
+          message: "You may strike.",
+          no: "Skip",
+          yes: "Strike",
+        },
+      });
+    }
+
+    return newGameState;
+  };
+
+  const galeConjurationR3 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    // end "Gale ConjurationR3"
+    newGameState.currentResolution.pop();
+
+    if (
+      unit !== null &&
+      !isMuted(unit) &&
+      newGameState[enemy].skillHand.length > 0 &&
+      unit.temporary.galeConjurationLethal
+    ) {
+      delete unit.temporary.galeConjurationLethal;
+      newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+      newGameState.currentResolution.push({
+        resolution: "Gale ConjurationR4",
+        enemy: enemy,
+      });
+    }
+
+    return newGameState;
+  };
+
   const symphonicScreech1 = (unit, victim) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -653,6 +753,9 @@ export const useSkillEffects = () => {
     aerialImpetus1,
     aerialImpetus2E,
     galeConjuration1,
+    galeConjurationR1,
+    galeConjurationR2,
+    galeConjurationR3,
     symphonicScreech1,
     pitfallTrap1,
     pitfallTrap2,

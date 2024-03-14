@@ -10,7 +10,7 @@ const VirtueBlastBlock = (props) => {
   const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const { virtueBlastNo, virtueBlastYes } = useRecurringEffects();
+  const { virtueBlastYes } = useRecurringEffects();
 
   const handleViewBoard = () => {
     props.hideOrRevealModale();
@@ -19,7 +19,7 @@ const VirtueBlastBlock = (props) => {
   const handleNo = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    newGameState = virtueBlastNo(newGameState);
+    newGameState.currentResolution.pop();
 
     dispatch(updateState(newGameState));
     props.updateFirebase(newGameState);

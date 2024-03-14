@@ -28,11 +28,13 @@ import ScionSkillSelect from "./modals/ScionSkillSelect";
 import SearchSkill from "./modals/SearchSkill";
 import SelectSkillResonator from "./modals/SelectSkillResonator";
 import SelectSkillDiscard from "./modals/SelectSkillDiscard";
+import SelectSkillFloat from "./modals/SelectSkillFloat";
 import SelectSkillReveal from "./modals/SelectSkillReveal";
 import TacticResults from "./modals/TacticResults";
 import ViewRevealedSkill from "./modals/ViewRevealedSkill";
 import YouMayFloat1Skill from "./modals/YouMayFloat1Skill";
 import YouMaySpend1Skill from "./modals/YouMaySpend1Skill";
+import YouMayNoYes from "./modals/YouMayNoYes";
 
 import ManaRestructure from "./TalentModals/ManaRestructure";
 
@@ -138,6 +140,9 @@ const Board = (props) => {
     aerialImpetus1,
     aerialImpetus2E,
     galeConjuration1,
+    galeConjurationR1,
+    galeConjurationR2,
+    galeConjurationR3,
     symphonicScreech1,
     pitfallTrap1,
     pitfallTrap2,
@@ -1070,6 +1075,76 @@ const Board = (props) => {
                 restriction={lastResolution.restriction}
                 message={lastResolution.message}
                 reason={lastResolution.reason}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Resonating Gale Conjuration":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdate(
+                  galeConjurationR1(
+                    lastResolution.unit,
+                    lastResolution.resonator
+                  )
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Gale ConjurationR1":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  galeConjurationR2(lastResolution.unit)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Gale ConjurationR2":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <YouMayNoYes
+                unit={lastResolution.unit}
+                details={lastResolution.details}
+                enterSelectUnitMode={enterSelectUnitMode}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Gale ConjurationR3":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>{resolutionUpdate(galeConjurationR3(lastResolution.unit))}</>
+            )}
+          </>
+        );
+
+      case "Gale ConjurationR4":
+        return (
+          <>
+            {self === lastResolution.enemy && !hideModal && (
+              <SelectSkillFloat
+                unit={null}
+                reason="Gale Conjuration Lethal"
+                title="Gale Conjuration"
+                message="You are forced to float 1 skill."
+                restriction={null}
                 updateFirebase={updateFirebase}
                 hideOrRevealModale={hideOrRevealModale}
               />

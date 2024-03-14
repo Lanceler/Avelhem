@@ -8,12 +8,12 @@ import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import Skill from "../hand/Skill";
 
-const YouMayFloat1Skill = (props) => {
+const SelectSkillFloat = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const {} = useRecurringEffects();
+  const { getZonesWithAllies, isMuted } = useRecurringEffects();
 
   const [selectedSkill, setSelectedSkill] = useState(null);
 
@@ -41,23 +41,9 @@ const YouMayFloat1Skill = (props) => {
     //end Floating Skill resolution
     newGameState.currentResolution.pop();
 
-    // if (props.reason === "Frigid Breath3") {
-    //   newGameState.currentResolution.push({
-    //     resolution: "Frigid Breath4",
-    //     unit: props.unit,
-    //   });
-    // }
-
     switch (props.reason) {
-      case "Frigid Breath3":
-        newGameState.currentResolution.push({
-          resolution: "Frigid Breath4",
-          unit: props.unit,
-        });
-        break;
-
-      case "Gale Conjuration1":
-        newGameState[props.unit.player].units[props.unit.unitIndex].virtue = 1;
+      case "Gale Conjuration Lethal":
+        // nothing :)
         break;
 
       default:
@@ -80,16 +66,6 @@ const YouMayFloat1Skill = (props) => {
     props.updateFirebase(newGameState);
   };
 
-  const handleSkip = () => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    //end Floating Skill resolution
-    newGameState.currentResolution.pop();
-
-    dispatch(updateState(newGameState));
-    // props.updateFirebase(newGameState); // maybe not needed?
-  };
-
   const handleViewBoard = () => {
     props.hideOrRevealModale();
   };
@@ -98,7 +74,8 @@ const YouMayFloat1Skill = (props) => {
     <div className="modal-backdrop">
       <div className="modal">
         <button onClick={() => handleViewBoard()}>View Board</button>
-        <h2>{props.message}</h2>
+        <h2>{props.title}</h2>
+        <h3>{props.message}</h3>
 
         <div className="fourColumn scrollable scrollable-y-only">
           {usableSkills.map((usableSkill, i) => (
@@ -119,10 +96,6 @@ const YouMayFloat1Skill = (props) => {
           ))}
         </div>
 
-        {selectedSkill === null && (
-          <button onClick={() => handleSkip()}>Skip</button>
-        )}
-
         {selectedSkill !== null && (
           <button onClick={() => handleSelect()}>Select</button>
         )}
@@ -131,4 +104,4 @@ const YouMayFloat1Skill = (props) => {
   );
 };
 
-export default YouMayFloat1Skill;
+export default SelectSkillFloat;

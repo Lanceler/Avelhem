@@ -599,6 +599,45 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const activateGaleConjurationAndResonate = (
+    newGameState,
+    unit,
+    resonator
+  ) => {
+    //end Select Resonator resolution
+    newGameState.currentResolution.pop();
+
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Resonance Conclusion",
+      player: self,
+      unit: unit,
+      skill: "03-02",
+      skillConclusion: "discard",
+      resonator: resonator,
+      resonatorConclusion: "discard",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Resonating Gale Conjuration",
+      unit: unit,
+      resonator: resonator,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Animation Delay",
+      priority: self,
+    });
+
+    newGameState.activatingSkill.push("03-02");
+    newGameState.activatingResonator.push(resonator);
+    newGameState.activatingUnit.push(unit);
+
+    return newGameState;
+  };
+
   const activateGeomancy = (newGameState, unit) => {
     //end Select Skill resolution
     newGameState.currentResolution.pop();
@@ -1006,6 +1045,12 @@ export const useRecurringEffects = () => {
         return activateConflagrationAndResonate(newGameState, unit, resonator);
       case "02-02":
         return activateFrigidBreathAndResonate(newGameState, unit, resonator);
+      case "03-02":
+        return activateGaleConjurationAndResonate(
+          newGameState,
+          unit,
+          resonator
+        );
 
       default:
         return newGameState;
@@ -1475,10 +1520,9 @@ export const useRecurringEffects = () => {
       //"If the attack was lethal" effects
 
       if (special === "Gale Conjuration Strike") {
-        newGameState.currentResolution.push({
-          resolution: "Gale Conjuration Lethal",
-          victimPlayer: victim.Player,
-        });
+        newGameState[attacker.player].units[
+          attacker.unitIndex
+        ].temporary.galeConjurationLethal = true;
       }
 
       //strike movement
@@ -1693,10 +1737,13 @@ export const useRecurringEffects = () => {
       case "01-02":
         return (
           canActivateSkill(unit, skill) &&
-          localGameState[self].skillHand.length > 2
+          localGameState[unit.player].skillHand.length > 2
         );
 
       case "02-02":
+        return canActivateSkill(unit, skill);
+
+      case "03-02":
         return canActivateSkill(unit, skill);
 
       default:
@@ -1845,15 +1892,9 @@ export const useRecurringEffects = () => {
   };
 
   const canStrike = (unit) => {
-    if (
-      getZonesWithEnemies(unit, 1).length &&
-      !isMuted(unit) &&
-      !isRooted(unit)
-    ) {
-      return true;
-    }
-
-    return false;
+    return (
+      getZonesWithEnemies(unit, 1).length && !isMuted(unit) && !isRooted(unit)
+    );
   };
 
   const decrementStatuses = (unit) => {
@@ -2609,14 +2650,14 @@ export const useRecurringEffects = () => {
   };
 
   const triggerSurvivalAlly = (victim) => {
-    if (localGameState[victim.player].skillHand < 1) {
+    if (localGameState[victim.player].skillHand.length < 1) {
       return false;
     }
     return triggerPowerAtTheFinalHour(victim) || triggerHealingRain(victim);
   };
 
   const triggerSurvivalEnemy = (victim) => {
-    if (localGameState[victim.player].skillHand < 1) {
+    if (localGameState[victim.player].skillHand.length < 1) {
       return false;
     }
     return triggerFrenzyBlade(victim);
@@ -2720,12 +2761,6 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
-  const virtueBlastNo = (newGameState) => {
-    newGameState.currentResolution.pop();
-
-    return newGameState;
-  };
-
   const virtueBlastYes = (newGameState, attacker, victim) => {
     newGameState.currentResolution.pop();
     newGameState.currentResolution[
@@ -2794,7 +2829,6 @@ export const useRecurringEffects = () => {
     triggerVengefulLegacy,
     triggerViridianGrave,
     virtueBlast,
-    virtueBlastNo,
     virtueBlastYes,
   };
 };
