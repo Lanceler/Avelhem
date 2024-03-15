@@ -48,6 +48,7 @@ import Purification2 from "./skillModals/Purification2";
 import FrigidBreathResonance1 from "./skillModals/FrigidBreathResonance1";
 import GlacialTorrent1 from "./skillModals/GlacialTorrent1";
 import AerialImpetus1 from "./skillModals/AerialImpetus1";
+import CataclysmicTempestFloat from "./skillModals/CataclysmicTempestFloat";
 
 import ContingentElimination from "./skillModals/ContingentElimination";
 import ContingentMotion from "./skillModals/ContingentMotion";
@@ -141,6 +142,9 @@ const Board = (props) => {
     galeConjurationR2,
     galeConjurationR3,
     symphonicScreech1,
+    cataclysmicTempest1,
+    cataclysmicTempest2,
+    cataclysmicTempest3,
     pitfallTrap1,
     pitfallTrap2,
     pitfallTrap3,
@@ -1187,6 +1191,82 @@ const Board = (props) => {
           </>
         );
 
+      case "Activating Cataclysmic Tempest":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>{resolutionUpdate(cataclysmicTempest1(lastResolution.unit))}</>
+            )}
+          </>
+        );
+
+      case "Cataclysmic Tempest1":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {selectEnemies(
+                  lastResolution.unit,
+                  1,
+                  null,
+                  "paralyze2",
+                  "Cataclysmic Tempest"
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Cataclysmic Tempest2":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  cataclysmicTempest2(lastResolution.unit)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Cataclysmic Tempest3":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <YouMayNoYes
+                unit={lastResolution.unit}
+                details={lastResolution.details}
+                enterSelectUnitMode={enterSelectUnitMode}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Cataclysmic Tempest4":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>{resolutionUpdate(cataclysmicTempest3(lastResolution.unit))}</>
+            )}
+          </>
+        );
+
+      case "Cataclysmic Tempest Float":
+        return (
+          <>
+            {self === lastResolution.player && !hideModal && (
+              <CataclysmicTempestFloat
+                floatCount={lastResolution.floatCount}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
       case "Select Pitfall Trap Activator":
         return (
           <>
@@ -1851,6 +1931,95 @@ const Board = (props) => {
     );
   };
 
+  // const selectUnit = (unit, selectedUnit, reason, special) => {
+  //   let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+  //   if (tacticUsed !== null) {
+  //     newGameState.tactics[tacticUsed].stock--;
+  //   }
+
+  //   //end ""Selecting Unit"
+  //   newGameState.currentResolution.pop();
+
+  //   if (reason === "virtue-blast") {
+  //     newGameState = virtueBlast(
+  //       newGameState,
+  //       newGameState[unit.player].units[unit.unitIndex],
+  //       selectedUnit
+  //     );
+  //   } else if (reason === "blast") {
+  //     newGameState = blast(
+  //       newGameState,
+  //       newGameState[unit.player].units[unit.unitIndex],
+  //       selectedUnit,
+  //       special
+  //     );
+  //   } else if (reason === "strike") {
+  //     newGameState = strike(
+  //       newGameState,
+  //       newGameState[unit.player].units[unit.unitIndex],
+  //       selectedUnit,
+  //       special
+  //     );
+  //   } else if (reason === "ignite") {
+  //     newGameState = ignite(
+  //       newGameState,
+  //       newGameState[unit.player].units[unit.unitIndex],
+  //       selectedUnit,
+  //       special
+  //     );
+  //   } else if (reason === "purification") {
+  //     newGameState = purificationPurge(newGameState, selectedUnit);
+  //   } else if (reason === "freeze1") {
+  //     newGameState = freeze1(
+  //       newGameState,
+  //       newGameState[unit.player].units[unit.unitIndex],
+  //       selectedUnit,
+  //       special
+  //     );
+  //   } else if (reason === "freeze2") {
+  //     newGameState = freeze2(
+  //       newGameState,
+  //       newGameState[unit.player].units[unit.unitIndex],
+  //       selectedUnit,
+  //       special
+  //     );
+  //   } else if (reason === "healing rain") {
+  //     //unit = victim; selectedUnit = Water Scion
+  //     newGameState = activateHealingRain(newGameState, selectedUnit, unit);
+  //   } else if (reason === "aerial impetus prompt") {
+  //     newGameState.currentResolution.push({
+  //       resolution: "Aerial Impetus Prompt",
+  //       unit: selectedUnit,
+  //     });
+  //   } else if (reason === "aerial impetus purge") {
+  //     newGameState.currentResolution.push({
+  //       resolution: "Aerial Impetus Purge",
+  //       unit: unit,
+  //       victim: selectedUnit,
+  //     });
+  //   } else if (reason === "symphonic screech") {
+  //     //unit = activator; selectedUnit = Wind Scion
+  //     newGameState = activateSymphonicScreech(newGameState, selectedUnit, unit);
+  //   } else if (reason === "pitfall trap") {
+  //     //unit = mover; selectedUnit = Land Scion
+  //     newGameState = activatePitfallTrap(newGameState, selectedUnit, unit);
+  //   }
+
+  //   setValidZones([]);
+  //   setTileMode(null);
+  //   setSelectUnitReason(null);
+  //   setSelectUnitSpecial(null);
+  //   setMovingUnit(null);
+  //   setMovingSpecial(null);
+  //   setTacticUsed(null);
+  //   setIntrudingPlayer(null);
+
+  //   dispatch(updateState(newGameState));
+
+  //   updateFirebase(newGameState);
+  // };
+
   const selectUnit = (unit, selectedUnit, reason, special) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -1861,69 +2030,102 @@ const Board = (props) => {
     //end ""Selecting Unit"
     newGameState.currentResolution.pop();
 
-    if (reason === "virtue-blast") {
-      newGameState = virtueBlast(
-        newGameState,
-        newGameState[unit.player].units[unit.unitIndex],
-        selectedUnit
-      );
-    } else if (reason === "blast") {
-      newGameState = blast(
-        newGameState,
-        newGameState[unit.player].units[unit.unitIndex],
-        selectedUnit,
-        special
-      );
-    } else if (reason === "strike") {
-      newGameState = strike(
-        newGameState,
-        newGameState[unit.player].units[unit.unitIndex],
-        selectedUnit,
-        special
-      );
-    } else if (reason === "ignite") {
-      newGameState = ignite(
-        newGameState,
-        newGameState[unit.player].units[unit.unitIndex],
-        selectedUnit,
-        special
-      );
-    } else if (reason === "purification") {
-      newGameState = purificationPurge(newGameState, selectedUnit);
-    } else if (reason === "freeze1") {
-      newGameState = freeze1(
-        newGameState,
-        newGameState[unit.player].units[unit.unitIndex],
-        selectedUnit,
-        special
-      );
-    } else if (reason === "freeze2") {
-      newGameState = freeze2(
-        newGameState,
-        newGameState[unit.player].units[unit.unitIndex],
-        selectedUnit,
-        special
-      );
-    } else if (reason === "healing rain") {
-      //unit = victim; selectedUnit = Water Scion
-      newGameState = activateHealingRain(newGameState, selectedUnit, unit);
-    } else if (reason === "aerial impetus prompt") {
-      newGameState.currentResolution.push({
-        resolution: "Aerial Impetus Prompt",
-        unit: selectedUnit,
-      });
-    } else if (reason === "aerial impetus purge") {
-      newGameState.currentResolution.push({
-        resolution: "Aerial Impetus Purge",
-        unit: unit,
-        victim: selectedUnit,
-      });
-    } else if (reason === "symphonic screech") {
-      //unit = activator; selectedUnit = Wind Scion
-      newGameState = activateSymphonicScreech(newGameState, selectedUnit, unit);
-    } else if (reason === "pitfall trap") {
-      //unit = mover; selectedUnit = Land Scion
-      newGameState = activatePitfallTrap(newGameState, selectedUnit, unit);
+    switch (reason) {
+      case "virtue-blast":
+        newGameState = virtueBlast(
+          newGameState,
+          newGameState[unit.player].units[unit.unitIndex],
+          selectedUnit
+        );
+        break;
+      case "blast":
+        newGameState = blast(
+          newGameState,
+          newGameState[unit.player].units[unit.unitIndex],
+          selectedUnit,
+          special
+        );
+        break;
+      case "strike":
+        newGameState = strike(
+          newGameState,
+          newGameState[unit.player].units[unit.unitIndex],
+          selectedUnit,
+          special
+        );
+        break;
+      case "ignite":
+        newGameState = ignite(
+          newGameState,
+          newGameState[unit.player].units[unit.unitIndex],
+          selectedUnit,
+          special
+        );
+        break;
+      case "paralyze1":
+        newGameState = paralyze1(
+          newGameState,
+          newGameState[unit.player].units[unit.unitIndex],
+          selectedUnit,
+          special
+        );
+        break;
+      case "paralyze2":
+        newGameState = paralyze2(
+          newGameState,
+          newGameState[unit.player].units[unit.unitIndex],
+          selectedUnit,
+          special
+        );
+        break;
+      case "freeze1":
+        newGameState = freeze1(
+          newGameState,
+          newGameState[unit.player].units[unit.unitIndex],
+          selectedUnit,
+          special
+        );
+        break;
+      case "freeze2":
+        newGameState = freeze2(
+          newGameState,
+          newGameState[unit.player].units[unit.unitIndex],
+          selectedUnit,
+          special
+        );
+        break;
+      case "purification":
+        newGameState = purificationPurge(newGameState, selectedUnit);
+        break;
+
+      case "healing rain":
+        newGameState = activateHealingRain(newGameState, selectedUnit, unit);
+        break;
+      case "aerial impetus prompt":
+        newGameState.currentResolution.push({
+          resolution: "Aerial Impetus Prompt",
+          unit: selectedUnit,
+        });
+        break;
+      case "aerial impetus purge":
+        newGameState.currentResolution.push({
+          resolution: "Aerial Impetus Purge",
+          unit: unit,
+          victim: selectedUnit,
+        });
+        break;
+      case "symphonic screech":
+        newGameState = activateSymphonicScreech(
+          newGameState,
+          selectedUnit,
+          unit
+        );
+        break;
+      case "pitfall trap":
+        newGameState = activatePitfallTrap(newGameState, selectedUnit, unit);
+        break;
+      default:
+        break;
     }
 
     setValidZones([]);
@@ -2252,14 +2454,16 @@ const Board = (props) => {
             <div className="right-container">
               {localGameState.activatingSkill.length > 0 && (
                 <>
-                  <DisplayedCard
-                    cardInfo={getSkillById(
-                      localGameState.activatingSkill[
-                        localGameState.activatingSkill.length - 1
-                      ]
-                    )}
-                    inGame={true}
-                  />
+                  <div className="activated-card">
+                    <DisplayedCard
+                      cardInfo={getSkillById(
+                        localGameState.activatingSkill[
+                          localGameState.activatingSkill.length - 1
+                        ]
+                      )}
+                      inGame={true}
+                    />
+                  </div>
 
                   {localGameState.activatingSkill.length === 1 &&
                     localGameState.activatingResonator.length === 1 && (

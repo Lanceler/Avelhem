@@ -12,6 +12,23 @@
     }
 }
 
+.activated-card {
+    transition: top 0.5s ease, left 0.5s ease;
+    animation: activate 0.5s ease-in-out;
+}
+
+@keyframes activate {
+    0% {
+        filter: brightness(300%);
+        scale: 1.2;
+    }
+
+    100% {
+        filter: brightness(100%);
+        scale: 1;
+    }
+}
+
 
 .deck-container {
     position: relative;

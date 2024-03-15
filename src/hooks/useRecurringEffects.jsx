@@ -1033,6 +1033,8 @@ export const useRecurringEffects = () => {
         return activateAerialImpetus(newGameState, unit);
       case "03-02":
         return activateGaleConjuration(newGameState, unit);
+      case "03-04":
+        return activateCataclysmicTempest(newGameState, unit);
 
       default:
         return newGameState;
@@ -1375,7 +1377,7 @@ export const useRecurringEffects = () => {
     let newZoneInfo = JSON.parse(newGameState.zones);
 
     //this can happen with effects like thunder thaumaturge
-    if (isMuted(attacker) || attacker === null) {
+    if (attacker === null || isMuted(attacker)) {
       return newGameState;
       // to do: Maybe push a resolution that displays a message
     }
@@ -1641,6 +1643,69 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  // const applyParalysis = (
+  //   newGameState,
+  //   attackerInfo,
+  //   victimInfo,
+  //   duration,
+  //   special
+  // ) => {
+  //   //Update info
+  //   let attacker =
+  //     newGameState[attackerInfo.player].units[attackerInfo.unitIndex];
+  //   let victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
+
+  //   if (victim.enhancements.ward) {
+  //     delete newGameState[victim.player].units[victim.unitIndex].enhancements
+  //       .ward;
+  //   } else if (
+  //     //Pitfall Trap cannot affect Land and Wind Scions
+  //     !(
+  //       special === "Pitfall Trap" &&
+  //       ["Wind Scion", "Land Scion"].includes(victim.unitClass) &&
+  //       !isMuted(victim)
+  //     )
+  //   ) {
+  //     newGameState[victim.player].units[victim.unitIndex].boosts = {};
+
+  //     //apply duration of paralysis
+  //     if (
+  //       newGameState[victim.player].units[victim.unitIndex].afflictions
+  //         .paralysis > 0
+  //     ) {
+  //       newGameState[victim.player].units[
+  //         victim.unitIndex
+  //       ].afflictions.paralysis = Math.max(
+  //         newGameState[victim.player].units[victim.unitIndex].afflictions
+  //           .paralysis,
+  //         duration
+  //       );
+  //     } else {
+  //       newGameState[victim.player].units[
+  //         victim.unitIndex
+  //       ].afflictions.paralysis = duration;
+  //     }
+
+  //     //paralysis purges boosts, disruption, overgrowth, & proliferation
+  //     newGameState[victim.player].units[victim.unitIndex].boosts = {};
+  //     delete newGameState[victim.player].units[victim.unitIndex].enhancements
+  //       .disruption;
+  //     delete newGameState[victim.player].units[victim.unitIndex].enhancements
+  //       .overgrowth;
+  //     delete newGameState[victim.player].units[victim.unitIndex].enhancements
+  //       .proliferation;
+
+  //     //If PitfallTrap Succeeded
+  //     if (special === "Pitfall Trap") {
+  //       attacker.temporary.pitfallTrapBlast = true;
+  //       newGameState[attackerInfo.player].units[attackerInfo.unitIndex] =
+  //         attacker;
+  //     }
+  //   }
+
+  //   return newGameState;
+  // };
+
   const applyParalysis = (
     newGameState,
     attackerInfo,
@@ -1653,52 +1718,69 @@ export const useRecurringEffects = () => {
       newGameState[attackerInfo.player].units[attackerInfo.unitIndex];
     let victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
 
-    if (victim.enhancements.ward) {
-      delete newGameState[victim.player].units[victim.unitIndex].enhancements
-        .ward;
-    } else if (
-      //Pitfall Trap cannot affect Land and Wind Scions
-      !(
-        special === "Pitfall Trap" &&
+    //this can happen with effects like thunder thaumaturge
+    if (attacker === null || isMuted(attacker)) {
+      return newGameState;
+      // to do: Maybe push a resolution that displays a message
+    }
+
+    if (["Cataclysmic Tempest"].includes(special)) {
+      attacker.temporary.previousTarget = victim.unitIndex;
+    }
+
+    switch (true) {
+      case victim.enhancements.ward > 0:
+        delete victim.enhancements.ward;
+        break;
+      case victim.unitClass === "Land Scion" &&
+        victim.hp > 1 &&
+        !isMuted(victim):
+        break;
+      case victim.unitClass === "Lightning Scion" &&
+        victim.charges > 2 &&
+        !isMuted(victim):
+        break;
+      case special === "Pitfall Trap" &&
         ["Wind Scion", "Land Scion"].includes(victim.unitClass) &&
-        !isMuted(victim)
-      )
-    ) {
-      newGameState[victim.player].units[victim.unitIndex].boosts = {};
+        !isMuted(victim):
+        break;
+      case special === "Cataclysmic Tempest" &&
+        victim.unitClass === "Wind Scion" &&
+        !isMuted(victim):
+        break;
 
-      //apply duration of paralysis
-      if (
-        newGameState[victim.player].units[victim.unitIndex].afflictions
-          .paralysis > 0
-      ) {
-        newGameState[victim.player].units[
-          victim.unitIndex
-        ].afflictions.paralysis = Math.max(
-          newGameState[victim.player].units[victim.unitIndex].afflictions
-            .paralysis,
-          duration
-        );
-      } else {
-        newGameState[victim.player].units[
-          victim.unitIndex
-        ].afflictions.paralysis = duration;
-      }
+      default:
+        victim.boosts = {};
 
-      //paralysis purges boosts, disruption, overgrowth, & proliferation
-      newGameState[victim.player].units[victim.unitIndex].boosts = {};
-      delete newGameState[victim.player].units[victim.unitIndex].enhancements
-        .disruption;
-      delete newGameState[victim.player].units[victim.unitIndex].enhancements
-        .overgrowth;
-      delete newGameState[victim.player].units[victim.unitIndex].enhancements
-        .proliferation;
+        victim.afflictions.paralysis
+          ? (victim.afflictions.paralysis = Math.max(
+              victim.afflictions.paralysis,
+              duration
+            ))
+          : (victim.afflictions.paralysis = duration);
 
-      //If PitfallTrap Succeeded
-      if (special === "Pitfall Trap") {
-        attacker.temporary.pitfallTrapBlast = true;
+        //paralysis purges boosts, disruption, overgrowth, & proliferation
+        victim.boosts = {};
+        delete victim.enhancements.disruption;
+        delete victim.enhancements.overgrowth;
+        delete victim.enhancements.proliferation;
+
+        //If Cataclysmic Tempest
+        if (special === "Cataclysmic Tempest") {
+          attacker.temporary.cataclysmicFloat += 1;
+        }
+
+        //If PitfallTrap Succeeded
+        if (special === "Pitfall Trap") {
+          attacker.temporary.pitfallTrapBlast = true;
+        }
+
         newGameState[attackerInfo.player].units[attackerInfo.unitIndex] =
           attacker;
-      }
+
+        newGameState[victimInfo.player].units[victimInfo.unitIndex] = victim;
+
+        break;
     }
 
     return newGameState;
@@ -2410,7 +2492,7 @@ export const useRecurringEffects = () => {
       victim: victim,
       special: special,
       type: "paralyze1",
-      duration: 1,
+      duration: 2,
     });
 
     //to do in the future: consider bypass Target and Adamant Armor

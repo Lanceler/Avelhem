@@ -57,7 +57,7 @@ import Foreshadow from "../assets/skillcards/Foreshadow.png";
 import Transmute from "../assets/skillcards/Transmute.png";
 import Ambidexterity from "../assets/skillcards/Ambidexterity.png";
 // import Providence from "../assets/skillcards/Providence.png";
-// import FerventPrayer from "../assets/skillcards/FerventPrayer.png";
+import FerventPrayer from "../assets/skillcards/FerventPrayer.png";
 // import PressTheAttack from "../assets/skillcards/PressTheAttack.png";
 import PowerAtTheFinalHour from "../assets/skillcards/PowerAtTheFinalHour.png";
 import FatedRivalry from "../assets/skillcards/FatedRivalry.png";
@@ -176,8 +176,8 @@ export const useCardImageSwitch = (cardName) => {
         return Ambidexterity;
       // case "Providence":
       //   return Providence;
-      // case "Fervent Prayer":
-      //   return FerventPrayer;
+      case "Fervent Prayer":
+        return FerventPrayer;
       // case "Press The Attack":
       //   return PressTheAttack;
       case "Power At The Final Hour":
