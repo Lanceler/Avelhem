@@ -26,10 +26,10 @@ const YouMaySpend1Skill = (props) => {
   }
 
   const canBeDiscarded = (skill) => {
-    if (props.restriction === null) {
+    if (props.details.restriction === null) {
       return true;
     }
-    if (props.restriction.includes(skill)) {
+    if (props.details.restriction.includes(skill)) {
       return true;
     }
     return false;
@@ -41,17 +41,44 @@ const YouMaySpend1Skill = (props) => {
     //end Discarding Skill resolution
     newGameState.currentResolution.pop();
 
-    if (props.reason === "Resplendence1") {
-      newGameState.currentResolution.push({
-        resolution: "Resplendence2",
-        unit: props.unit,
-      });
-    } else if (props.reason === "Pitfall Trap") {
-      newGameState.currentResolution.push({
-        resolution: "Pitfall Trap3",
-        unit: props.unit,
-        victim: props.victim,
-      });
+    // if (props.details.reason === "Resplendence1") {
+    //   newGameState.currentResolution.push({
+    //     resolution: "Resplendence2",
+    //     unit: props.unit,
+    //   });
+    // } else if (props.details.reason === "Pitfall Trap") {
+    //   newGameState.currentResolution.push({
+    //     resolution: "Pitfall Trap3",
+    //     unit: props.unit,
+    //     victim: props.victim,
+    //   });
+    // }
+
+    switch (props.details.reason) {
+      case "Resplendence1":
+        newGameState.currentResolution.push({
+          resolution: "Resplendence2",
+          unit: props.unit,
+        });
+        break;
+
+      case "Cataclysmic Tempest8":
+        newGameState.currentResolution.push({
+          resolution: "Cataclysmic Tempest9",
+          unit: props.unit,
+        });
+        break;
+
+      case "Pitfall Trap":
+        newGameState.currentResolution.push({
+          resolution: "Pitfall Trap3",
+          unit: props.unit,
+          victim: props.victim,
+        });
+        break;
+
+      default:
+        break;
     }
 
     const isAdjacentToManaScion = (unitInfo) => {
@@ -116,7 +143,8 @@ const YouMaySpend1Skill = (props) => {
     <div className="modal-backdrop">
       <div className="modal">
         <button onClick={() => handleViewBoard()}>View Board</button>
-        <h2>{props.message}</h2>
+        <h2>{props.details.title}</h2>
+        <h3>{props.details.message}</h3>
 
         <div className="fourColumn scrollable scrollable-y-only">
           {usableSkills.map((usableSkill, i) => (

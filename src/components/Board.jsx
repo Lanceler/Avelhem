@@ -145,6 +145,8 @@ const Board = (props) => {
     cataclysmicTempest1,
     cataclysmicTempest2,
     cataclysmicTempest3,
+    cataclysmicTempest4,
+    cataclysmicTempest5,
     pitfallTrap1,
     pitfallTrap2,
     pitfallTrap3,
@@ -1267,6 +1269,70 @@ const Board = (props) => {
           </>
         );
 
+      case "Cataclysmic Tempest5":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  cataclysmicTempest4(lastResolution.unit)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Cataclysmic Tempest6":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <YouMayNoYes
+                unit={lastResolution.unit}
+                details={lastResolution.details}
+                enterSelectUnitMode={enterSelectUnitMode}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Cataclysmic Tempest7":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  cataclysmicTempest5(lastResolution.unit)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Cataclysmic Tempest8":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <YouMaySpend1Skill
+                unit={lastResolution.unit}
+                details={lastResolution.details}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Cataclysmic Tempest9":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>{selectEnemies(lastResolution.unit, 1, null, "blast", null)}</>
+            )}
+          </>
+        );
+
       case "Select Pitfall Trap Activator":
         return (
           <>
@@ -1309,9 +1375,7 @@ const Board = (props) => {
               <YouMaySpend1Skill
                 unit={lastResolution.unit}
                 victim={lastResolution.victim}
-                message="The affliction succeeded. You may spend 1 skill to blast them."
-                restriction={null}
-                reason="Pitfall Trap"
+                details={lastResolution.details}
                 updateFirebase={updateFirebase}
                 hideOrRevealModale={hideOrRevealModale}
               />

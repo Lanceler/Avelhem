@@ -254,10 +254,14 @@ export const useSkillEffects = () => {
       newGameState.currentResolution.push({
         resolution: "Resplendence1",
         unit: unit,
-        message:
-          "You may spend 1 skill to ignite an adjacent enemy for 1 turn.",
-        restriction: null,
-        reason: "Resplendence1",
+
+        details: {
+          title: "Resplendence",
+          message:
+            "You may spend 1 skill to ignite an adjacent enemy for 1 turn.",
+          restriction: null,
+          reason: "Resplendence1",
+        },
       });
     }
 
@@ -407,7 +411,7 @@ export const useSkillEffects = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
-    //end "ConflagrationR1"
+    //end "Frigid BreathR1"
     newGameState.currentResolution.pop();
 
     if (
@@ -712,7 +716,7 @@ export const useSkillEffects = () => {
       : (unit.temporary.activation = 1);
 
     delete unit.temporary.previousTarget;
-    delete unit.temporary.cataclysmicFloat;
+    unit.temporary.cataclysmicFloat = 0;
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
@@ -759,7 +763,7 @@ export const useSkillEffects = () => {
           resolution: "Cataclysmic Tempest3",
           unit: unit,
           details: {
-            reason: "Cataclysmic Tempest 2nd Blast",
+            reason: "Cataclysmic Tempest 2nd Paralyze",
             title: "Cataclysmic Tempest",
             message: "You may paralyze another adjacent enemy for 2 turns.",
             no: "Skip",
@@ -790,7 +794,7 @@ export const useSkillEffects = () => {
 
       if (
         unit.temporary.cataclysmicFloat > 0 &&
-        newGameState[enemy.skillHand.length > 0]
+        newGameState[enemy].skillHand.length > 0
       ) {
         //5. Force enemy to float
         newGameState.currentResolution.push({
@@ -799,6 +803,70 @@ export const useSkillEffects = () => {
           player: enemy,
         });
       }
+    }
+
+    return newGameState;
+  };
+
+  const cataclysmicTempest4 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Cataclysmic Tempest5"
+    newGameState.currentResolution.pop();
+
+    if (
+      unit !== null &&
+      !isMuted(unit) &&
+      getZonesWithEnemies(unit, 1).length > 0
+    ) {
+      newGameState.currentResolution.push({
+        resolution: "Cataclysmic Tempest7",
+        unit: unit,
+      });
+
+      if (getZonesWithEnemiesAfflicted(unit, 1, "paralysis").length > 0) {
+        newGameState.currentResolution.push({
+          resolution: "Cataclysmic Tempest6",
+          unit: unit,
+          details: {
+            reason: "Cataclysmic Tempest Blast",
+            title: "Cataclysmic Tempest",
+            message: "You may blast an adjacent paralyzed enemy.",
+            no: "Skip",
+            yes: "Blast",
+            adjacentEnemies: getZonesWithEnemiesAfflicted(unit, 1, "paralysis"),
+          },
+        });
+      }
+    }
+
+    return newGameState;
+  };
+
+  const cataclysmicTempest5 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Cataclysmic Tempest7" resolution
+    newGameState.currentResolution.pop();
+
+    if (
+      unit !== null &&
+      !isMuted(unit) &&
+      getZonesWithEnemies(unit, 1).length > 0
+    ) {
+      newGameState.currentResolution.push({
+        resolution: "Cataclysmic Tempest8",
+        unit: unit,
+        details: {
+          title: "Cataclysmic Tempest",
+          message: "You may spend 1 Wind skill to blast an adjacent enemy.",
+          restriction: ["03-01", "03-02", "03-03"],
+          reason: "Cataclysmic Tempest8",
+        },
+      });
     }
 
     return newGameState;
@@ -848,6 +916,13 @@ export const useSkillEffects = () => {
         resolution: "Pitfall Trap2",
         unit: attacker,
         victim: victim,
+        details: {
+          title: "Pitfall Trap",
+          message:
+            "The affliction succeeded. You may spend 1 skill to blast them.",
+          restriction: null,
+          reason: "Pitfall Trap",
+        },
       });
     }
 
@@ -893,6 +968,8 @@ export const useSkillEffects = () => {
     cataclysmicTempest1,
     cataclysmicTempest2,
     cataclysmicTempest3,
+    cataclysmicTempest4,
+    cataclysmicTempest5,
     pitfallTrap1,
     pitfallTrap2,
     pitfallTrap3,

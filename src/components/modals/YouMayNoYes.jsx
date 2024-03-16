@@ -76,7 +76,7 @@ const YouMayNoYes = (props) => {
         );
         break;
 
-      case "Cataclysmic Tempest 2nd Blast": // "Cataclysmic Tempest3"
+      case "Cataclysmic Tempest 2nd Paralyze": // "Cataclysmic Tempest3"
         props.enterSelectUnitMode(
           props.details.adjacentEnemies,
           props.unit,
@@ -84,6 +84,17 @@ const YouMayNoYes = (props) => {
           null,
           "paralyze2",
           "Cataclysmic Tempest"
+        );
+        break;
+
+      case "Cataclysmic Tempest Blast": // "Cataclysmic Tempest6"
+        props.enterSelectUnitMode(
+          props.details.adjacentEnemies,
+          props.unit,
+          newGameState,
+          null,
+          "blast",
+          null
         );
         break;
 
