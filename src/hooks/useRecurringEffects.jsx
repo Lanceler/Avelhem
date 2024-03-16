@@ -1039,6 +1039,9 @@ export const useRecurringEffects = () => {
       case "04-01":
         return activateCrystallization(newGameState, unit);
 
+      case "05-01":
+        return activateChainLightning(newGameState, unit);
+
       default:
         return newGameState;
     }
@@ -1416,6 +1419,13 @@ export const useRecurringEffects = () => {
         !isMuted(victim):
         aP = 0;
         break;
+
+      case special === "Lightning Scion" &&
+        victim.unitClass === "Lightning Scion" &&
+        !isMuted(victim):
+        aP = 0;
+        break;
+
       default: //apply AP modifiers
         if (attacker.boosts.galeConjuration === true) {
           aP = 2;
@@ -1727,7 +1737,7 @@ export const useRecurringEffects = () => {
       // to do: Maybe push a resolution that displays a message
     }
 
-    if (["Cataclysmic Tempest"].includes(special)) {
+    if (["Cataclysmic Tempest", "ChainLightningParalysis"].includes(special)) {
       attacker.temporary.previousTarget = victim.unitIndex;
     }
 
@@ -1749,6 +1759,10 @@ export const useRecurringEffects = () => {
         break;
       case special === "Cataclysmic Tempest" &&
         victim.unitClass === "Wind Scion" &&
+        !isMuted(victim):
+        break;
+      case special === "ChainLightningParalysis" &&
+        victim.unitClass === "Lightning Scion" &&
         !isMuted(victim):
         break;
 

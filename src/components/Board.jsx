@@ -152,6 +152,9 @@ const Board = (props) => {
     pitfallTrap1,
     pitfallTrap2,
     pitfallTrap3,
+    chainLightning1,
+    chainLightning2,
+    chainLightning3,
   } = useSkillEffects();
 
   const { getSkillById } = useCardDatabase();
@@ -1436,6 +1439,94 @@ const Board = (props) => {
           </>
         );
 
+      case "Activating Chain Lightning":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  chainLightning1(lastResolution.unit, lastResolution.victim)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Chain Lightning1":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {selectEnemies(
+                  lastResolution.unit,
+                  1,
+                  null,
+                  "paralyze1",
+                  "ChainLightningParalysis"
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Chain Lightning2":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  chainLightning2(lastResolution.unit)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Chain Lightning3":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <YouMayNoYes
+                unit={lastResolution.unit}
+                details={lastResolution.details}
+                enterSelectUnitMode={enterSelectUnitMode}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Chain Lightning4":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  chainLightning3(
+                    lastResolution.unit,
+                    lastResolution.adjacentEnemies
+                  )
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Chain Lightning5":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {selectChainLightningBlast(
+                  lastResolution.unit,
+                  lastResolution.adjacentEnemies
+                )}
+              </>
+            )}
+          </>
+        );
+
       case "Triggering Elimination Ally":
         return (
           <>
@@ -1901,7 +1992,6 @@ const Board = (props) => {
   };
 
   const selectAerialImpetusMove = (unit, ally) => {
-    console.log(unit);
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
     //end "Aerial Impetus Prompt" or "Aerial Impetus Purge Move2"
@@ -1930,6 +2020,22 @@ const Board = (props) => {
         special
       );
     }
+  };
+
+  const selectChainLightningBlast = (unit, zones) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Chain Lightning5"
+    newGameState.currentResolution.pop();
+
+    enterSelectUnitMode(
+      zones,
+      unit,
+      newGameState,
+      null,
+      "blast",
+      "Lightning Scion"
+    );
   };
 
   const selectEnemies = (unitInfo, range, tactic, reason, special) => {

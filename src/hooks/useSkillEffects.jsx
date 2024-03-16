@@ -15,6 +15,7 @@ export const useSkillEffects = () => {
     blast,
     canMove,
     canStrike,
+    getZonesWithAllies,
     getZonesWithEnemies,
     getZonesWithEnemiesAfflicted,
     isAdjacent,
@@ -996,6 +997,88 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
+  const chainLightning1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Chain Lightning" resolution
+    newGameState.currentResolution.pop();
+
+    //giveUnit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation = unit.activation + 1)
+      : (unit.temporary.activation = 1);
+
+    delete unit.temporary.previousTarget;
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    newGameState.currentResolution.push({
+      resolution: "Chain Lightning2",
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Chain Lightning1",
+      unit: unit,
+    });
+
+    return newGameState;
+  };
+
+  const chainLightning2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+    let victim = newGameState[enemy].units[unit.temporary.previousTarget];
+
+    //end "Chain Lightning2" resolution
+    newGameState.currentResolution.pop();
+
+    if (unit !== null && !isMuted(unit) && unit.charge > 0) {
+      //allies of victim
+      let adjacentEnemies = getZonesWithAllies(victim, 1);
+
+      if (adjacentEnemies.length > 0) {
+        newGameState.currentResolution.push({
+          resolution: "Chain Lightning3",
+          unit: unit,
+          details: {
+            reason: "Chain Lightning Blast",
+            title: "Chain Lightning",
+            message:
+              "You may spend 1 Charge to blast an enemy adjacent to the previous one.",
+            no: "Skip",
+            yes: "Blast",
+            adjacentEnemies: adjacentEnemies,
+          },
+        });
+      }
+    }
+
+    return newGameState;
+  };
+
+  const chainLightning3 = (unitInfo, adjacentEnemies) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Chain Lightning4" resolution
+    newGameState.currentResolution.pop();
+
+    //consume charge
+    unit.charge -= 1;
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    newGameState.currentResolution.push({
+      resolution: "Chain Lightning5",
+      unit: unit,
+      adjacentEnemies: adjacentEnemies,
+    });
+
+    return newGameState;
+  };
+
   return {
     ignitionPropulsion1,
     conflagration1,
@@ -1028,5 +1111,8 @@ export const useSkillEffects = () => {
     pitfallTrap1,
     pitfallTrap2,
     pitfallTrap3,
+    chainLightning1,
+    chainLightning2,
+    chainLightning3,
   };
 };

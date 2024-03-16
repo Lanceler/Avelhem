@@ -98,6 +98,15 @@ const YouMayNoYes = (props) => {
         );
         break;
 
+      case "Chain Lightning Blast": // "ChainLightning3"
+        newGameState.currentResolution.push({
+          resolution: "Chain Lightning4",
+          unit: props.unit,
+          adjacentEnemies: props.details.adjacentEnemies,
+        });
+        console.log(newGameState.currentResolution);
+        break;
+
       default:
         break;
     }

@@ -152,25 +152,33 @@ export const Piece = (props) => {
               {/* anathema / ravager */}
 
               {isActivatingUnit && <div className="glow animating"></div>}
+
+              <div className="piece-icon-shadow"></div>
+
               <img src={classIcon} className="scionClass" />
 
               {props.unit.afflictions.anathema > 0 && (
-                <div className="anathema-aura">
-                  <div className="cascade-line"></div>
-                  <div className="cascade-line2"></div>
-                  {props.unit.afflictions.anathema > 1 && (
-                    <div className="cascade-line3"></div>
-                  )}
+                <>
+                  <div className="anathema-aura">
+                    <div className="cascade-line"></div>
+                    <div className="cascade-line2"></div>
+                    {props.unit.afflictions.anathema > 1 && (
+                      <div className="cascade-line3"></div>
+                    )}
+                  </div>
                   <img src={classIcon} className="scionClass blink" />
-                </div>
+                </>
               )}
 
               {props.unit.enhancements.ravager && (
-                <div className="anathema-aura">
-                  <div className="ravager-line"></div>
-                  <div className="ravager-line2"></div>
+                <>
+                  <div className="anathema-aura">
+                    <div className="ravager-line"></div>
+                    <div className="ravager-line2"></div>
+                    {/* <img src={classIcon} className="scionClass blink" /> */}
+                  </div>
                   <img src={classIcon} className="scionClass blink" />
-                </div>
+                </>
               )}
             </>
           </div>
