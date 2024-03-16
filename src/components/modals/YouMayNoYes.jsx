@@ -98,6 +98,17 @@ const YouMayNoYes = (props) => {
         );
         break;
 
+      case "Upheaval 2nd Paralyze": // "Upheaval3"
+        props.enterSelectUnitMode(
+          props.details.adjacentEnemies,
+          props.unit,
+          newGameState,
+          null,
+          "paralyze1",
+          "Upheaval"
+        );
+        break;
+
       case "Chain Lightning Blast": // "ChainLightning3"
         newGameState.currentResolution.push({
           resolution: "Chain Lightning4",

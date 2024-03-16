@@ -37,6 +37,8 @@ const CataclysmicTempestFloat = (props) => {
       newGameState[self].skillFloat += 1;
     }
 
+    //to do: discard Transcendence
+
     const sortHandIndexes = [...selectedSkills].sort((a, b) => b - a);
 
     for (let i of sortHandIndexes) {

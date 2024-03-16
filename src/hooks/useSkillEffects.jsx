@@ -926,6 +926,73 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
+  const upheaval1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Upheaval" resolution
+    newGameState.currentResolution.pop();
+
+    //giveUnit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation = unit.activation + 1)
+      : (unit.temporary.activation = 1);
+
+    delete unit.temporary.previousTarget;
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    //2. Continue
+    newGameState.currentResolution.push({
+      resolution: "Upheaval2",
+      unit: unit,
+    });
+
+    //1. Paralyze 1st enemy
+    newGameState.currentResolution.push({
+      resolution: "Upheaval1",
+      unit: unit,
+    });
+
+    return newGameState;
+  };
+
+  const upheaval2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    const zones = JSON.parse(newGameState.zones);
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Upheaval2" resolution
+    newGameState.currentResolution.pop();
+
+    let adjacentEnemies = getZonesWithEnemies(unit, 1);
+    adjacentEnemies = adjacentEnemies.filter(
+      (z) =>
+        zones[Math.floor(z / 5)][z % 5].unitIndex !==
+        unit.temporary.previousTarget
+    );
+
+    if (unit !== null && !isMuted(unit)) {
+      if (adjacentEnemies.length > 0) {
+        //3. Paralyze 2nd enemy
+        newGameState.currentResolution.push({
+          resolution: "Upheaval3",
+          unit: unit,
+          details: {
+            reason: "Upheaval 2nd Paralyze",
+            title: "Upheaval",
+            message: "You may paralyze another adjacent enemy for 1 turn.",
+            no: "Skip",
+            yes: "Paralyze",
+            adjacentEnemies: adjacentEnemies,
+          },
+        });
+      }
+    }
+
+    return newGameState;
+  };
+
   const pitfallTrap1 = (unitInfo, victimInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
@@ -1108,6 +1175,8 @@ export const useSkillEffects = () => {
     cataclysmicTempest5,
     crystallization1,
     crystallization2,
+    upheaval1,
+    upheaval2,
     pitfallTrap1,
     pitfallTrap2,
     pitfallTrap3,

@@ -1038,6 +1038,8 @@ export const useRecurringEffects = () => {
 
       case "04-01":
         return activateCrystallization(newGameState, unit);
+      case "04-02":
+        return activateUpheaval(newGameState, unit);
 
       case "05-01":
         return activateChainLightning(newGameState, unit);
@@ -1656,69 +1658,6 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
-  // const applyParalysis = (
-  //   newGameState,
-  //   attackerInfo,
-  //   victimInfo,
-  //   duration,
-  //   special
-  // ) => {
-  //   //Update info
-  //   let attacker =
-  //     newGameState[attackerInfo.player].units[attackerInfo.unitIndex];
-  //   let victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
-
-  //   if (victim.enhancements.ward) {
-  //     delete newGameState[victim.player].units[victim.unitIndex].enhancements
-  //       .ward;
-  //   } else if (
-  //     //Pitfall Trap cannot affect Land and Wind Scions
-  //     !(
-  //       special === "Pitfall Trap" &&
-  //       ["Wind Scion", "Land Scion"].includes(victim.unitClass) &&
-  //       !isMuted(victim)
-  //     )
-  //   ) {
-  //     newGameState[victim.player].units[victim.unitIndex].boosts = {};
-
-  //     //apply duration of paralysis
-  //     if (
-  //       newGameState[victim.player].units[victim.unitIndex].afflictions
-  //         .paralysis > 0
-  //     ) {
-  //       newGameState[victim.player].units[
-  //         victim.unitIndex
-  //       ].afflictions.paralysis = Math.max(
-  //         newGameState[victim.player].units[victim.unitIndex].afflictions
-  //           .paralysis,
-  //         duration
-  //       );
-  //     } else {
-  //       newGameState[victim.player].units[
-  //         victim.unitIndex
-  //       ].afflictions.paralysis = duration;
-  //     }
-
-  //     //paralysis purges boosts, disruption, overgrowth, & proliferation
-  //     newGameState[victim.player].units[victim.unitIndex].boosts = {};
-  //     delete newGameState[victim.player].units[victim.unitIndex].enhancements
-  //       .disruption;
-  //     delete newGameState[victim.player].units[victim.unitIndex].enhancements
-  //       .overgrowth;
-  //     delete newGameState[victim.player].units[victim.unitIndex].enhancements
-  //       .proliferation;
-
-  //     //If PitfallTrap Succeeded
-  //     if (special === "Pitfall Trap") {
-  //       attacker.temporary.pitfallTrapBlast = true;
-  //       newGameState[attackerInfo.player].units[attackerInfo.unitIndex] =
-  //         attacker;
-  //     }
-  //   }
-
-  //   return newGameState;
-  // };
-
   const applyParalysis = (
     newGameState,
     attackerInfo,
@@ -1737,7 +1676,11 @@ export const useRecurringEffects = () => {
       // to do: Maybe push a resolution that displays a message
     }
 
-    if (["Cataclysmic Tempest", "ChainLightningParalysis"].includes(special)) {
+    if (
+      ["Cataclysmic Tempest", "Upheaval", "ChainLightningParalysis"].includes(
+        special
+      )
+    ) {
       attacker.temporary.previousTarget = victim.unitIndex;
     }
 
@@ -1753,7 +1696,7 @@ export const useRecurringEffects = () => {
         victim.charges > 2 &&
         !isMuted(victim):
         break;
-      case special === "Pitfall Trap" &&
+      case ["Upheaval", "Pitfall Trap"].includes(special) &&
         ["Wind Scion", "Land Scion"].includes(victim.unitClass) &&
         !isMuted(victim):
         break;

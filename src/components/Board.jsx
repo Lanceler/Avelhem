@@ -149,6 +149,8 @@ const Board = (props) => {
     cataclysmicTempest5,
     crystallization1,
     crystallization2,
+    upheaval1,
+    upheaval2,
     pitfallTrap1,
     pitfallTrap2,
     pitfallTrap3,
@@ -1372,6 +1374,62 @@ const Board = (props) => {
                   crystallization2(lastResolution.unit)
                 )}
               </>
+            )}
+          </>
+        );
+
+      case "Activating Upheaval":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  upheaval1(lastResolution.unit, lastResolution.victim)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Upheaval1":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {selectEnemies(
+                  lastResolution.unit,
+                  1,
+                  null,
+                  "paralyze1",
+                  "Upheaval"
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Upheaval2":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(upheaval2(lastResolution.unit))}
+              </>
+            )}
+          </>
+        );
+
+      case "Upheaval3":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <YouMayNoYes
+                unit={lastResolution.unit}
+                details={lastResolution.details}
+                enterSelectUnitMode={enterSelectUnitMode}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
             )}
           </>
         );
