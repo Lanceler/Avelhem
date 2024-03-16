@@ -41,23 +41,17 @@ const YouMaySpend1Skill = (props) => {
     //end Discarding Skill resolution
     newGameState.currentResolution.pop();
 
-    // if (props.details.reason === "Resplendence1") {
-    //   newGameState.currentResolution.push({
-    //     resolution: "Resplendence2",
-    //     unit: props.unit,
-    //   });
-    // } else if (props.details.reason === "Pitfall Trap") {
-    //   newGameState.currentResolution.push({
-    //     resolution: "Pitfall Trap3",
-    //     unit: props.unit,
-    //     victim: props.victim,
-    //   });
-    // }
-
     switch (props.details.reason) {
       case "Resplendence1":
         newGameState.currentResolution.push({
           resolution: "Resplendence2",
+          unit: props.unit,
+        });
+        break;
+
+      case "Crystallization1":
+        newGameState.currentResolution.push({
+          resolution: "Crystallization2",
           unit: props.unit,
         });
         break;

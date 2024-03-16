@@ -254,7 +254,6 @@ export const useSkillEffects = () => {
       newGameState.currentResolution.push({
         resolution: "Resplendence1",
         unit: unit,
-
         details: {
           title: "Resplendence",
           message:
@@ -872,6 +871,60 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
+  const crystallization1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Crystallization" resolution
+    newGameState.currentResolution.pop();
+
+    //raise hp to 2 (consider fact that Land Scion HP can reach 3)
+    if (unit.hp === 1) {
+      unit.hp = 2;
+    }
+
+    //giveUnit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation = unit.activation + 1)
+      : (unit.temporary.activation = 1);
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    if (newGameState[self].skillHand.length > 0) {
+      newGameState.currentResolution.push({
+        resolution: "Crystallization1",
+        unit: unit,
+
+        details: {
+          title: "Crystallization",
+          message: "You may spend 1 skill to gain shield for 2 turns.",
+          restriction: null,
+          reason: "Crystallization1",
+        },
+      });
+    }
+
+    return newGameState;
+  };
+
+  const crystallization2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Crystallization2" resolution
+    newGameState.currentResolution.pop();
+
+    //grant shield
+
+    unit.enhancements.shield
+      ? (unit.enhancements.shield = Math.max(unit.enhancements.shield, 2))
+      : (unit.enhancements.shield = 2);
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    return newGameState;
+  };
+
   const pitfallTrap1 = (unitInfo, victimInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
@@ -970,6 +1023,8 @@ export const useSkillEffects = () => {
     cataclysmicTempest3,
     cataclysmicTempest4,
     cataclysmicTempest5,
+    crystallization1,
+    crystallization2,
     pitfallTrap1,
     pitfallTrap2,
     pitfallTrap3,

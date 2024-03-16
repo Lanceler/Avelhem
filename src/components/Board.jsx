@@ -147,6 +147,8 @@ const Board = (props) => {
     cataclysmicTempest3,
     cataclysmicTempest4,
     cataclysmicTempest5,
+    crystallization1,
+    crystallization2,
     pitfallTrap1,
     pitfallTrap2,
     pitfallTrap3,
@@ -763,9 +765,7 @@ const Board = (props) => {
             {self === lastResolution.unit.player && !hideModal && (
               <YouMaySpend1Skill
                 unit={lastResolution.unit}
-                message={lastResolution.message}
-                restriction={lastResolution.restriction}
-                reason={lastResolution.reason}
+                details={lastResolution.details}
                 updateFirebase={updateFirebase}
                 hideOrRevealModale={hideOrRevealModale}
               />
@@ -1329,6 +1329,46 @@ const Board = (props) => {
           <>
             {self === lastResolution.unit.player && (
               <>{selectEnemies(lastResolution.unit, 1, null, "blast", null)}</>
+            )}
+          </>
+        );
+
+      case "Activating Crystallization":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  crystallization1(lastResolution.unit)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Crystallization1":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <YouMaySpend1Skill
+                unit={lastResolution.unit}
+                details={lastResolution.details}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Crystallization2":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  crystallization2(lastResolution.unit)
+                )}
+              </>
             )}
           </>
         );

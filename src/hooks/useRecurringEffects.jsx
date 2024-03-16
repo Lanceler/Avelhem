@@ -1036,6 +1036,9 @@ export const useRecurringEffects = () => {
       case "03-04":
         return activateCataclysmicTempest(newGameState, unit);
 
+      case "04-01":
+        return activateCrystallization(newGameState, unit);
+
       default:
         return newGameState;
     }
