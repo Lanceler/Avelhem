@@ -71,6 +71,18 @@ const YouMaySpend1Skill = (props) => {
         });
         break;
 
+      case "Thunder Thaumaturge":
+        newGameState.currentResolution.push({
+          resolution: "Recover Skill",
+          player: self,
+          restriction: ["05-01", "05-02", "05-04"],
+          message:
+            "Recover 1 Lightning skill other than “Thunder Thaumaturge”.",
+          outcome: "Add",
+        });
+
+        break;
+
       default:
         break;
     }

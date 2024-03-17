@@ -1330,10 +1330,150 @@ export const useSkillEffects = () => {
         unit: unit,
         details: {
           reason: "Zip and Zap Shield",
-          title: "Geomancy",
+          title: "Zip and Zap",
           message: "You may spend 1 Charge to gain Shield for 2 turns.",
           no: "Skip",
           yes: "Shield",
+        },
+      });
+    }
+
+    return newGameState;
+  };
+
+  const zipAndZapR1 = (unitInfo, resonator) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Resonating Zip and Zap" resolution
+    newGameState.currentResolution.pop();
+
+    //giveUnit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation = unit.activation + 1)
+      : (unit.temporary.activation = 1);
+
+    if (resonator !== "SA-02") {
+      newGameState.currentResolution.push({
+        resolution: "May float resonant skill",
+        unit: unit,
+        player: unit.player,
+        skill: "05-02",
+        resonator: resonator,
+      });
+    }
+
+    //use 1 charge if resonating
+    unit.charge -= 1;
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    //3. Resonance
+    newGameState.currentResolution.push({
+      resolution: "Zip And ZapR1",
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Zip And Zap2",
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Zip And Zap1",
+      unit: unit,
+    });
+
+    return newGameState;
+  };
+
+  const zipAndZapR2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Zip And ZapR1" resolution
+    newGameState.currentResolution.pop();
+
+    if (
+      unit !== null &&
+      !isMuted(unit) &&
+      getZonesWithEnemies(unit, 1).length > 0
+    ) {
+      newGameState.currentResolution.push({
+        resolution: "Zip And ZapR2",
+        unit: unit,
+        details: {
+          reason: "Zip and Zap Blast",
+          title: "Zip and Zap",
+          message: "You may blast an adjacent enemy.",
+          no: "Skip",
+          yes: "Blast",
+        },
+      });
+    }
+
+    return newGameState;
+  };
+
+  const thunderThaumaturge1 = (unitInfo, attackerInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+    let attacker =
+      newGameState[attackerInfo.player].units[attackerInfo.unitIndex];
+
+    //end "Activating Thunder Thaumaturge" resolution
+    newGameState.currentResolution.pop();
+
+    //giveUnit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation = unit.activation + 1)
+      : (unit.temporary.activation = 1);
+
+    //consume charge
+    unit.charge -= 1;
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    newGameState.currentResolution.push({
+      resolution: "Thunder Thaumaturge1",
+      unit: unit,
+    });
+
+    newGameState = paralyze1(
+      newGameState,
+      unit,
+      attacker,
+      "Thunder Thaumaturge"
+    );
+
+    return newGameState;
+  };
+
+  const thunderThaumaturge2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Thunder Thaumaturge1" resolution
+    newGameState.currentResolution.pop();
+
+    if (
+      unit !== null &&
+      !isMuted(unit) &&
+      newGameState[self].skillHand.length > 0 &&
+      ["05-01", "05-02", "05-04"].some((s) =>
+        localGameState[self].skillVestige.includes(s)
+      )
+    ) {
+      newGameState.currentResolution.push({
+        resolution: "Thunder Thaumaturge2",
+        unit: unit,
+
+        details: {
+          title: "Thunder Thaumaturge",
+          message:
+            "You may spend 1 skill to recover 1 Lightning skill other than “Thunder Thaumaturge”.",
+          restriction: null,
+          reason: "Thunder Thaumaturge",
         },
       });
     }
@@ -1384,5 +1524,9 @@ export const useSkillEffects = () => {
     chainLightning3,
     zipAndZap1,
     zipAndZap2,
+    zipAndZapR1,
+    zipAndZapR2,
+    thunderThaumaturge1,
+    thunderThaumaturge2,
   };
 };

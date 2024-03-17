@@ -166,6 +166,10 @@ const Board = (props) => {
     chainLightning3,
     zipAndZap1,
     zipAndZap2,
+    zipAndZapR1,
+    zipAndZapR2,
+    thunderThaumaturge1,
+    thunderThaumaturge2,
   } = useSkillEffects();
 
   const { getSkillById } = useCardDatabase();
@@ -1760,6 +1764,90 @@ const Board = (props) => {
           <>
             {self === lastResolution.unit.player && !hideModal && (
               <YouMayNoYes
+                unit={lastResolution.unit}
+                details={lastResolution.details}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Resonating Zip And Zap":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdate(
+                  zipAndZapR1(lastResolution.unit, lastResolution.resonator)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Zip And ZapR1":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  zipAndZapR2(lastResolution.unit)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Zip And ZapR2":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <YouMayNoYes
+                unit={lastResolution.unit}
+                details={lastResolution.details}
+                enterSelectUnitMode={enterSelectUnitMode}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Activating Thunder Thaumaturge":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdate(
+                  thunderThaumaturge1(
+                    lastResolution.unit,
+                    lastResolution.attacker
+                  )
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Thunder Thaumaturge1":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  thunderThaumaturge2(lastResolution.unit)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Thunder Thaumaturge2":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <YouMaySpend1Skill
                 unit={lastResolution.unit}
                 details={lastResolution.details}
                 updateFirebase={updateFirebase}

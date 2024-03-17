@@ -16,6 +16,7 @@ const ContingentTarget = (props) => {
 
   const {
     activateBlazeOfGlory,
+    activateThunderThaumaturge,
     triggerAegis,
     triggerBlazeOfGlory,
     triggerThunderThaumaturge,
@@ -72,9 +73,26 @@ const ContingentTarget = (props) => {
       1
     );
 
-    if (usableSkills[selectedSkill].id === "01-03") {
-      newGameState = activateBlazeOfGlory(newGameState, props.victim);
+    switch (usableSkills[selectedSkill].id) {
+      case "01-03":
+        newGameState = activateBlazeOfGlory(newGameState, props.victim);
+        break;
+
+      case "05-03":
+        newGameState = activateThunderThaumaturge(
+          newGameState,
+          props.victim,
+          props.attacker
+        );
+        break;
+
+      default:
+        break;
     }
+
+    // if (usableSkills[selectedSkill].id === "01-03") {
+    //   newGameState = activateBlazeOfGlory(newGameState, props.victim);
+    // }
 
     dispatch(updateState(newGameState));
     props.updateFirebase(newGameState);

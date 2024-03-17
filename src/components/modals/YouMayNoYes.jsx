@@ -145,6 +145,18 @@ const YouMayNoYes = (props) => {
           ? (unit.enhancements.shield = Math.max(unit.enhancements.shield, 2))
           : (unit.enhancements.shield = 2);
         newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+        break;
+
+      case "Zip and Zap Blast": //"Zip And ZapR2"
+        props.enterSelectUnitMode(
+          getZonesWithEnemies(props.unit, 1),
+          props.unit,
+          newGameState,
+          null,
+          "blast",
+          "Lightning Scion"
+        );
+        break;
 
       default:
         break;

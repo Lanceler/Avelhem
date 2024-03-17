@@ -26,6 +26,8 @@ const ScionSkillSelect = (props) => {
       } else {
         setCanResonate(false);
       }
+    } else {
+      setCanResonate(false);
     }
   }, [selectedSkill]);
 
@@ -97,7 +99,10 @@ const ScionSkillSelect = (props) => {
               <Skill
                 i={i}
                 usableSkill={usableSkill}
-                canActivateSkill={canActivateSkill(props.unit, usableSkill.id)}
+                canActivateSkill={
+                  canActivateSkill(props.unit, usableSkill.id) ||
+                  canActivateResonance(props.unit, usableSkill.id)
+                }
                 selectedSkill={selectedSkill}
                 setSelectedSkill={setSelectedSkill}
               />
@@ -109,9 +114,15 @@ const ScionSkillSelect = (props) => {
           <button onClick={() => handleReturn()}>Return</button>
         )}
 
-        {selectedSkill !== null && (
+        {/* {selectedSkill !== null && (
           <button onClick={() => handleSelect()}>Select</button>
-        )}
+        )} */}
+
+        {selectedSkill !== null &&
+          canActivateSkill(props.unit, usableSkills[selectedSkill].id) && (
+            <button onClick={() => handleSelect()}>Select</button>
+          )}
+
         {canResonate && (
           <button onClick={() => handleResonate()}>Resonate</button>
         )}

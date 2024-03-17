@@ -1067,6 +1067,8 @@ export const useRecurringEffects = () => {
         );
       case "04-02":
         return activateUpheavalAndResonate(newGameState, unit, resonator);
+      case "05-02":
+        return activateZipAndZapAndResonate(newGameState, unit, resonator);
 
       default:
         return newGameState;
@@ -1169,7 +1171,7 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
-  const activateThunderThaumaturge = (newGameState, unit) => {
+  const activateThunderThaumaturge = (newGameState, unit, attacker) => {
     //end Triggering Target resolution
     // newGameState.currentResolution.pop() <-- NOT needed
 
@@ -1184,6 +1186,7 @@ export const useRecurringEffects = () => {
     newGameState.currentResolution.push({
       resolution: "Activating Thunder Thaumaturge",
       unit: unit,
+      attacker: attacker,
     });
 
     newGameState.activatingSkill.push("05-03");
@@ -1369,6 +1372,41 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.activatingSkill.push("05-02");
+    newGameState.activatingUnit.push(unit);
+
+    return newGameState;
+  };
+
+  const activateZipAndZapAndResonate = (newGameState, unit, resonator) => {
+    //end Select Resonator resolution
+    newGameState.currentResolution.pop();
+
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Resonance Conclusion",
+      player: self,
+      unit: unit,
+      skill: "05-02",
+      skillConclusion: "discard",
+      resonator: resonator,
+      resonatorConclusion: "discard",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Resonating Zip And Zap",
+      unit: unit,
+      resonator: resonator,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Animation Delay",
+      priority: self,
+    });
+
+    newGameState.activatingSkill.push("05-02");
+    newGameState.activatingResonator.push(resonator);
     newGameState.activatingUnit.push(unit);
 
     return newGameState;
@@ -1755,7 +1793,9 @@ export const useRecurringEffects = () => {
         victim.unitClass === "Land Scion" &&
         !isMuted(victim):
         break;
-      case special === "ChainLightningParalysis" &&
+      case ["ChainLightningParalysis", "Thunder Thaumaturge"].includes(
+        special
+      ) &&
         victim.unitClass === "Lightning Scion" &&
         !isMuted(victim):
         break;
@@ -2883,6 +2923,7 @@ export const useRecurringEffects = () => {
     activateSkill,
     activateSkillAndResonate,
     activateSymphonicScreech,
+    activateThunderThaumaturge,
     applyBurn,
     applyDamage,
     applyFrostbite,
