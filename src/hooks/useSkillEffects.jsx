@@ -15,6 +15,7 @@ export const useSkillEffects = () => {
     blast,
     canMove,
     canStrike,
+    drawSkill,
     getZonesWithAllies,
     getZonesWithEnemies,
     getZonesWithEnemiesAfflicted,
@@ -689,9 +690,12 @@ export const useSkillEffects = () => {
       newGameState.currentResolution.push({
         resolution: "Symphonic Screech2",
         unit: unit,
-        player: self,
-        restriction: ["03-01", "03-02", "03-03", "03-04"],
-        message: "You may reveal 1 Wind skill to draw a floating skill.",
+        details: {
+          title: "Symphonic Screech",
+          message: "You may reveal 1 Wind skill to draw a floating skill.",
+          restriction: ["03-01", "03-02", "03-03", "03-04"],
+          reason: "Symphonic Screech",
+        },
       });
     }
 
@@ -1481,6 +1485,45 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
+  const valiantSpark1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Valiant Spark" resolution
+    newGameState.currentResolution.pop();
+
+    //giveUnit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation = unit.activation + 1)
+      : (unit.temporary.activation = 1);
+
+    if (unit.charge === 3) {
+      newGameState = drawSkill(newGameState);
+      newGameState = drawSkill(newGameState);
+      newGameState = drawSkill(newGameState);
+    } else {
+      unit.charge = 3;
+    }
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    if (newGameState[self].skillHand.length > 0) {
+      newGameState.currentResolution.push({
+        resolution: "Valiant Spark1",
+        unit: unit,
+        details: {
+          title: "Valiant Spark",
+          message:
+            "You may reveal 1 Lightning skill to gain a boost: You can activate “Arc Flash” without using a tactic.",
+          restriction: ["05-01", "05-02", "05-03"],
+          reason: "Valiant Spark",
+        },
+      });
+    }
+
+    return newGameState;
+  };
+
   return {
     ignitionPropulsion1,
     conflagration1,
@@ -1528,5 +1571,6 @@ export const useSkillEffects = () => {
     zipAndZapR2,
     thunderThaumaturge1,
     thunderThaumaturge2,
+    valiantSpark1,
   };
 };

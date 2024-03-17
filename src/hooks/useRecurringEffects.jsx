@@ -1047,6 +1047,8 @@ export const useRecurringEffects = () => {
         return activateChainLightning(newGameState, unit);
       case "05-02":
         return activateZipAndZap(newGameState, unit);
+      case "05-04":
+        return activateValiantSpark(newGameState, unit);
 
       default:
         return newGameState;
@@ -2086,22 +2088,29 @@ export const useRecurringEffects = () => {
     newGameState[self].skillHand.push(newGameState[self].skillRepertoire.pop());
 
     //decrease floating count
-    newGameState[self].skillFloat = Math.max(
-      0,
-      newGameState[self].skillFloat - 1
-    );
 
-    //If deck empties, shuffle discard pile into it.
+    if (newGameState[self].skillFloat > 0) {
+      newGameState[self].skillFloat -= 1;
+    }
+
     if (newGameState[self].skillRepertoire.length === 0) {
+      //If deck empties, shuffle discard pile into it.
+
+      //1.Shuffle Vestige
       newGameState[self].skillVestige = shuffleCards(
         newGameState[self].skillVestige
       );
+
+      //2. Copy vestige to repertoire
       newGameState[self].skillRepertoire = [
         ...newGameState[self].skillVestige.splice(
           0,
           newGameState[self].skillVestige.length
         ),
       ];
+
+      //3. Empty vestige
+      newGameState[self].skillVestige = [];
     }
 
     return newGameState;

@@ -1,16 +1,22 @@
 .navbar {
-    background: #281049;
+    /* background: #281049; */
+    background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
     padding: 20px;
     color: #fff;
     position: fixed;
     z-index: 9999;
     width: 100%;
+    height: 40px;
     top: 0;
     margin: 0
 }
 
 .pushDown {
-    margin-bottom: 90px;
+    margin-bottom: 80px;
+}
+
+.avelhem-title{
+    color: #caac28
 }
 
 .navbar nav {
@@ -19,7 +25,7 @@
     /* max-width: 1200px; */
     min-width: 600px;
     margin: 0;
-    padding: 5px 50px 5px 5px;
+    padding: 0px 50px 5px 5px;
     justify-content: space-between;
 
 }
@@ -28,16 +34,16 @@ a {
     text-decoration: none;
     margin-left: 10px;
     margin-right: 10px;
-    color: #8b7308;
+    color: #ffffff;
 }
 
 
 .navbar a:last-child {
-    color: #8b7308;
+    color: #caac28;
     text-decoration: none;
 
     padding: 8px;
-    border: 1px solid #8b7308;
+    border: 1px solid #caac28;
     border-radius: 6px;
 }
 

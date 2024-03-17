@@ -170,6 +170,7 @@ const Board = (props) => {
     zipAndZapR2,
     thunderThaumaturge1,
     thunderThaumaturge2,
+    valiantSpark1,
   } = useSkillEffects();
 
   const { getSkillById } = useCardDatabase();
@@ -1215,11 +1216,9 @@ const Board = (props) => {
           <>
             {self === lastResolution.unit.player && !hideModal && (
               <SelectSkillReveal
-                updateFirebase={updateFirebase}
                 unit={lastResolution.unit}
-                player={lastResolution.player}
-                message={lastResolution.message}
-                restriction={lastResolution.restriction}
+                details={lastResolution.details}
+                updateFirebase={updateFirebase}
                 hideOrRevealModale={hideOrRevealModale}
               />
             )}
@@ -1857,6 +1856,29 @@ const Board = (props) => {
           </>
         );
 
+      case "Activating Valiant Spark":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>{resolutionUpdate(valiantSpark1(lastResolution.unit))}</>
+            )}
+          </>
+        );
+
+      case "Valiant Spark1":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <SelectSkillReveal
+                unit={lastResolution.unit}
+                details={lastResolution.details}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
       case "Triggering Elimination Ally":
         return (
           <>
@@ -2481,95 +2503,6 @@ const Board = (props) => {
       null
     );
   };
-
-  // const selectUnit = (unit, selectedUnit, reason, special) => {
-  //   let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-  //   if (tacticUsed !== null) {
-  //     newGameState.tactics[tacticUsed].stock--;
-  //   }
-
-  //   //end ""Selecting Unit"
-  //   newGameState.currentResolution.pop();
-
-  //   if (reason === "virtue-blast") {
-  //     newGameState = virtueBlast(
-  //       newGameState,
-  //       newGameState[unit.player].units[unit.unitIndex],
-  //       selectedUnit
-  //     );
-  //   } else if (reason === "blast") {
-  //     newGameState = blast(
-  //       newGameState,
-  //       newGameState[unit.player].units[unit.unitIndex],
-  //       selectedUnit,
-  //       special
-  //     );
-  //   } else if (reason === "strike") {
-  //     newGameState = strike(
-  //       newGameState,
-  //       newGameState[unit.player].units[unit.unitIndex],
-  //       selectedUnit,
-  //       special
-  //     );
-  //   } else if (reason === "ignite") {
-  //     newGameState = ignite(
-  //       newGameState,
-  //       newGameState[unit.player].units[unit.unitIndex],
-  //       selectedUnit,
-  //       special
-  //     );
-  //   } else if (reason === "purification") {
-  //     newGameState = purificationPurge(newGameState, selectedUnit);
-  //   } else if (reason === "freeze1") {
-  //     newGameState = freeze1(
-  //       newGameState,
-  //       newGameState[unit.player].units[unit.unitIndex],
-  //       selectedUnit,
-  //       special
-  //     );
-  //   } else if (reason === "freeze2") {
-  //     newGameState = freeze2(
-  //       newGameState,
-  //       newGameState[unit.player].units[unit.unitIndex],
-  //       selectedUnit,
-  //       special
-  //     );
-  //   } else if (reason === "healing rain") {
-  //     //unit = victim; selectedUnit = Water Scion
-  //     newGameState = activateHealingRain(newGameState, selectedUnit, unit);
-  //   } else if (reason === "aerial impetus prompt") {
-  //     newGameState.currentResolution.push({
-  //       resolution: "Aerial Impetus Prompt",
-  //       unit: selectedUnit,
-  //     });
-  //   } else if (reason === "aerial impetus purge") {
-  //     newGameState.currentResolution.push({
-  //       resolution: "Aerial Impetus Purge",
-  //       unit: unit,
-  //       victim: selectedUnit,
-  //     });
-  //   } else if (reason === "symphonic screech") {
-  //     //unit = activator; selectedUnit = Wind Scion
-  //     newGameState = activateSymphonicScreech(newGameState, selectedUnit, unit);
-  //   } else if (reason === "pitfall trap") {
-  //     //unit = mover; selectedUnit = Land Scion
-  //     newGameState = activatePitfallTrap(newGameState, selectedUnit, unit);
-  //   }
-
-  //   setValidZones([]);
-  //   setTileMode(null);
-  //   setSelectUnitReason(null);
-  //   setSelectUnitSpecial(null);
-  //   setMovingUnit(null);
-  //   setMovingSpecial(null);
-  //   setTacticUsed(null);
-  //   setIntrudingPlayer(null);
-
-  //   dispatch(updateState(newGameState));
-
-  //   updateFirebase(newGameState);
-  // };
 
   const selectUnit = (unit, selectedUnit, reason, special) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));

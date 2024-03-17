@@ -63,18 +63,38 @@
     border: 2px solid black;
     margin-right: 10px;
 
-    transition: transform 0.2s ease
+    transition: transform 0.2s ease;
+
+        position: relative;
+            z-index: 1;
+
+            
+    
 }
 
 .player-hand-card:hover {
     cursor: pointer;
     top: -16.8px;
-    transform: scale(1.2);
-    position: relative
+    transform: scale(1.4);
+    position: relative;
+    z-index: 2;
 }
 
 .player-hand-container{
     max-width: 700px;
+    min-height: 300px;
     display: grid;
-    grid-template-columns: repeat(5, 1fr)
+    grid-template-columns: repeat(5, 1fr);
+    
+    transition: top 15s ease;
+
+}
+
+.player-hand-container:hover {
+    position: relative;
+    top: -150px;
+
+    transition: top 15s ease;
+
+
 }

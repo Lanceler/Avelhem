@@ -59,15 +59,21 @@ const SearchSkill = (props) => {
 
       //reset repertoire if empty
       if (newGameState[self].skillRepertoire.length === 0) {
+        //1.Shuffle Vestige
         newGameState[self].skillVestige = shuffleCards(
           newGameState[self].skillVestige
         );
+
+        //2. Copy vestige to repertoire
         newGameState[self].skillRepertoire = [
           ...newGameState[self].skillVestige.splice(
             0,
             newGameState[self].skillVestige.length
           ),
         ];
+
+        //3. Empty vestige
+        newGameState[self].skillVestige = [];
 
         //to do: alert both players (and give opponent BP)
       }

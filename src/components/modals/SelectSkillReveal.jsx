@@ -25,19 +25,32 @@ const SelectSkillReveal = (props) => {
     });
   }
 
-  if (props.restriction !== null) {
+  if (props.details.restriction !== null) {
     usableSkills = usableSkills.filter((skill) =>
-      props.restriction.includes(skill.id)
+      props.details.restriction.includes(skill.id)
     );
   }
 
   const handleSelect = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[props.unit.player].units[props.unit.unitIndex];
 
-    newGameState = drawSkill(newGameState);
-
-    //end Reveal Skill resolution
+    //end
     newGameState.currentResolution.pop();
+
+    switch (props.details.reason) {
+      case "Symphonic Screech":
+        newGameState = drawSkill(newGameState);
+        break;
+
+      case "Valiant Spark":
+        unit.boosts.valiantSpark = true;
+        newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+        break;
+
+      default:
+        break;
+    }
 
     newGameState.currentResolution.push({
       resolution: "Revealing Skill",
@@ -65,8 +78,8 @@ const SelectSkillReveal = (props) => {
     <div className="modal-backdrop">
       <div className="modal">
         <button onClick={() => handleViewBoard()}>View Board</button>
-        <h2>Reveal Skill</h2>
-        <h3>{props.message}</h3>
+        <h2>{props.details.title}</h2>
+        <h3>{props.details.message}</h3>
 
         <div className="fourColumn scrollable scrollable-y-only">
           {usableSkills.map((usableSkill, i) => (

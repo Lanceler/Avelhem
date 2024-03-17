@@ -20,11 +20,13 @@
 @keyframes activate {
     0% {
         filter: brightness(300%);
+        opacity: 0.05;
         scale: 1.2;
     }
 
     100% {
         filter: brightness(100%);
+        opacity: 1;
         scale: 1;
     }
 }
@@ -173,7 +175,9 @@
     width: fit-content;
     position: relative;
     // overflow: hidden;
-    justify-self: start
+    justify-self: start;
+
+    // top: -55px;
 }
 
 //actually right container

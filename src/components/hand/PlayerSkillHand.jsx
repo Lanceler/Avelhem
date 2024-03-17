@@ -24,6 +24,7 @@ const PlayerSkillHand = () => {
               className="player-hand-card"
               style={{
                 backgroundImage: `url(${getImage(getSkillById(card).Name)})`,
+                top: Math.floor(index / 5) * -110,
               }}
             ></div>
           ))}
