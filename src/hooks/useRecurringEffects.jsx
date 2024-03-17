@@ -1061,6 +1061,8 @@ export const useRecurringEffects = () => {
           unit,
           resonator
         );
+      case "04-02":
+        return activateUpheavalAndResonate(newGameState, unit, resonator);
 
       default:
         return newGameState;
@@ -1229,6 +1231,41 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.activatingSkill.push("04-02");
+    newGameState.activatingUnit.push(unit);
+
+    return newGameState;
+  };
+
+  const activateUpheavalAndResonate = (newGameState, unit, resonator) => {
+    //end Select Resonator resolution
+    newGameState.currentResolution.pop();
+
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Resonance Conclusion",
+      player: self,
+      unit: unit,
+      skill: "04-02",
+      skillConclusion: "discard",
+      resonator: resonator,
+      resonatorConclusion: "discard",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Resonating Upheaval",
+      unit: unit,
+      resonator: resonator,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Animation Delay",
+      priority: self,
+    });
+
+    newGameState.activatingSkill.push("04-02");
+    newGameState.activatingResonator.push(resonator);
     newGameState.activatingUnit.push(unit);
 
     return newGameState;
@@ -1786,6 +1823,9 @@ export const useRecurringEffects = () => {
         return canActivateSkill(unit, skill);
 
       case "03-02":
+        return canActivateSkill(unit, skill);
+
+      case "04-02":
         return canActivateSkill(unit, skill);
 
       default:

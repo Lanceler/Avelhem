@@ -49,6 +49,7 @@ import FrigidBreathResonance1 from "./skillModals/FrigidBreathResonance1";
 import GlacialTorrent1 from "./skillModals/GlacialTorrent1";
 import AerialImpetus1 from "./skillModals/AerialImpetus1";
 import CataclysmicTempestFloat from "./skillModals/CataclysmicTempestFloat";
+import Upheaval1 from "./skillModals/Upheaval1";
 
 import ContingentElimination from "./skillModals/ContingentElimination";
 import ContingentMotion from "./skillModals/ContingentMotion";
@@ -151,6 +152,8 @@ const Board = (props) => {
     crystallization2,
     upheaval1,
     upheaval2,
+    upheavalR1,
+    upheavalR2,
     pitfallTrap1,
     pitfallTrap2,
     pitfallTrap3,
@@ -1433,6 +1436,63 @@ const Board = (props) => {
             )}
           </>
         );
+
+      case "Resonating Upheaval":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdate(
+                  upheavalR1(lastResolution.unit, lastResolution.resonator)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "UpheavalR1":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  upheavalR2(lastResolution.unit, lastResolution.resonator)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "UpheavalR2":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <Upheaval1
+                updateFirebase={updateFirebase}
+                unit={lastResolution.unit}
+                enterMoveMode={enterMoveMode}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      // case "Upheaval Traverse":
+      //   return (
+      //     <>
+      //       {self ===
+      //         lastResolution.unit.player(
+      //           <>
+      //             {enterMoveMode(
+      //               getVacantAdjacentZones(lastResolution.unit),
+      //               lastResolution.unit,
+      //               null,
+      //               null
+      //             )}
+      //           </>
+      //         )}
+      //     </>
+      //   );
 
       case "Select Pitfall Trap Activator":
         return (

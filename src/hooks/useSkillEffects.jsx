@@ -993,6 +993,72 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
+  const upheavalR1 = (unitInfo, resonator) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Resonating Upheaval" resolution
+    newGameState.currentResolution.pop();
+
+    //giveUnit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation = unit.activation + 1)
+      : (unit.temporary.activation = 1);
+
+    if (resonator !== "SA-02") {
+      newGameState.currentResolution.push({
+        resolution: "May float resonant skill",
+        unit: unit,
+        player: unit.player,
+        skill: "04-02",
+        resonator: resonator,
+      });
+    }
+
+    delete unit.temporary.previousTarget;
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    //3. Resonance
+    newGameState.currentResolution.push({
+      resolution: "UpheavalR1",
+      unit: unit,
+    });
+
+    //2. Continue
+    newGameState.currentResolution.push({
+      resolution: "Upheaval2",
+      unit: unit,
+    });
+
+    //1. Paralyze 1st enemy
+    newGameState.currentResolution.push({
+      resolution: "Upheaval1",
+      unit: unit,
+    });
+
+    return newGameState;
+  };
+
+  const upheavalR2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "UpheavalR1" resolution
+    newGameState.currentResolution.pop();
+
+    if (unit !== null && !isMuted(unit)) {
+      //6. Continue
+      newGameState.currentResolution.push({
+        resolution: "UpheavalR2",
+        unit: unit,
+      });
+    }
+
+    return newGameState;
+  };
+
   const pitfallTrap1 = (unitInfo, victimInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
@@ -1177,6 +1243,8 @@ export const useSkillEffects = () => {
     crystallization2,
     upheaval1,
     upheaval2,
+    upheavalR1,
+    upheavalR2,
     pitfallTrap1,
     pitfallTrap2,
     pitfallTrap3,
