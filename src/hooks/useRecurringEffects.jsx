@@ -1040,6 +1040,8 @@ export const useRecurringEffects = () => {
         return activateCrystallization(newGameState, unit);
       case "04-02":
         return activateUpheaval(newGameState, unit);
+      case "04-04":
+        return activateGeomancy(newGameState, unit);
 
       case "05-01":
         return activateChainLightning(newGameState, unit);
@@ -1450,7 +1452,7 @@ export const useRecurringEffects = () => {
       case victim.afflictions.anathema > 0:
         aP = 5;
         break;
-      case ["geomancy", "surge"].includes(special):
+      case ["Geomancy", "Surge"].includes(special):
         aP = 2;
         break;
       case special === "Fire Scion" &&
@@ -1577,6 +1579,12 @@ export const useRecurringEffects = () => {
         newGameState[attacker.player].units[
           attacker.unitIndex
         ].temporary.galeConjurationLethal = true;
+      }
+
+      if (special === "Geomancy") {
+        newGameState[attacker.player].units[
+          attacker.unitIndex
+        ].temporary.geomancyLethal = true;
       }
 
       //strike movement
@@ -1739,6 +1747,10 @@ export const useRecurringEffects = () => {
         break;
       case special === "Cataclysmic Tempest" &&
         victim.unitClass === "Wind Scion" &&
+        !isMuted(victim):
+        break;
+      case special === "Geomancy" &&
+        victim.unitClass === "Land Scion" &&
         !isMuted(victim):
         break;
       case special === "ChainLightningParalysis" &&

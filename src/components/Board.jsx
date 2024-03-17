@@ -24,6 +24,7 @@ import CoordinationPhaseSelection from "./modals/CoordinationPhaseSelection";
 import DefiancePhaseSelection from "./modals/DefiancePhaseSelection";
 
 import MessageToEnemy from "./modals/MessageToEnemy";
+import RecoverSkill from "./modals/RecoverSkill";
 import ScionSkillSelect from "./modals/ScionSkillSelect";
 import SearchSkill from "./modals/SearchSkill";
 import SelectSkillResonator from "./modals/SelectSkillResonator";
@@ -50,6 +51,7 @@ import GlacialTorrent1 from "./skillModals/GlacialTorrent1";
 import AerialImpetus1 from "./skillModals/AerialImpetus1";
 import CataclysmicTempestFloat from "./skillModals/CataclysmicTempestFloat";
 import Upheaval1 from "./skillModals/Upheaval1";
+import Geomancy1 from "./skillModals/Geomancy1";
 
 import ContingentElimination from "./skillModals/ContingentElimination";
 import ContingentMotion from "./skillModals/ContingentMotion";
@@ -157,6 +159,8 @@ const Board = (props) => {
     pitfallTrap1,
     pitfallTrap2,
     pitfallTrap3,
+    geomancy1,
+    geomancy2,
     chainLightning1,
     chainLightning2,
     chainLightning3,
@@ -511,6 +515,21 @@ const Board = (props) => {
           <>
             {self === lastResolution.player && !hideModal && (
               <SearchSkill
+                restriction={lastResolution.restriction}
+                outcome={lastResolution.outcome}
+                message={lastResolution.message}
+                hideOrRevealModale={hideOrRevealModale}
+                updateFirebase={updateFirebase}
+              />
+            )}
+          </>
+        );
+
+      case "Recover Skill":
+        return (
+          <>
+            {self === lastResolution.player && !hideModal && (
+              <RecoverSkill
                 restriction={lastResolution.restriction}
                 outcome={lastResolution.outcome}
                 message={lastResolution.message}
@@ -1536,6 +1555,76 @@ const Board = (props) => {
                   pitfallTrap3(lastResolution.unit, lastResolution.victim)
                 )}
               </>
+            )}
+          </>
+        );
+
+      case "Activating Geomancy":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdate(
+                  geomancy1(lastResolution.unit, lastResolution.victim)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Geomancy1":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <Geomancy1
+                updateFirebase={updateFirebase}
+                unit={lastResolution.unit}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Geomancy2":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <YouMayNoYes
+                unit={lastResolution.unit}
+                details={lastResolution.details}
+                enterSelectUnitMode={enterSelectUnitMode}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Geomancy3":
+        return (
+          <>
+            {self ===
+              lastResolution.unit.player(
+                <>
+                  {resolutionUpdate(
+                    geomancy2(lastResolution.unit, lastResolution.victim)
+                  )}
+                </>
+              )}
+          </>
+        );
+
+      case "Geomancy4":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <YouMayNoYes
+                unit={lastResolution.unit}
+                details={lastResolution.details}
+                enterSelectUnitMode={enterSelectUnitMode}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
             )}
           </>
         );

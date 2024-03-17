@@ -109,6 +109,28 @@ const YouMayNoYes = (props) => {
         );
         break;
 
+      case "Geomancy Strike": // "Geomancy2"
+        props.enterSelectUnitMode(
+          getZonesWithEnemies(props.unit, 1),
+          props.unit,
+          newGameState,
+          null,
+          "strike",
+          "Geomancy"
+        );
+        break;
+
+      case "Geomancy Paralyze": // "Geomancy4"
+        props.enterSelectUnitMode(
+          getZonesWithEnemies(props.unit, 1),
+          props.unit,
+          newGameState,
+          null,
+          "paralyze2",
+          "Geomancy"
+        );
+        break;
+
       case "Chain Lightning Blast": // "ChainLightning3"
         newGameState.currentResolution.push({
           resolution: "Chain Lightning4",

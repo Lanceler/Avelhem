@@ -22,10 +22,8 @@ const ScionSkillSelect = (props) => {
   useEffect(() => {
     if (usableSkills[selectedSkill]) {
       if (canActivateResonance(props.unit, usableSkills[selectedSkill].id)) {
-        console.log("can resonate");
         setCanResonate(true);
       } else {
-        console.log("cannot resonate");
         setCanResonate(false);
       }
     }

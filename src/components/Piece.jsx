@@ -185,8 +185,10 @@ export const Piece = (props) => {
 
           {/* HP */}
 
-          {props.unit.hp === 2 && <img src={HP} className="hP" />}
-          {/* to do: hp === 3 */}
+          {props.unit.hp > 1 && <img src={HP} className="hP" />}
+          {props.unit.hp > 1 && (
+            <div className="hP hP-amount">{props.unit.hp}</div>
+          )}
 
           {/* virtue */}
 

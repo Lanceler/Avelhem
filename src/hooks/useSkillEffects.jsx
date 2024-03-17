@@ -661,6 +661,7 @@ export const useSkillEffects = () => {
     }
 
     delete unit.temporary.galeConjurationLethal;
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     return newGameState;
   };
@@ -880,9 +881,7 @@ export const useSkillEffects = () => {
     newGameState.currentResolution.pop();
 
     //raise hp to 2 (consider fact that Land Scion HP can reach 3)
-    if (unit.hp === 1) {
-      unit.hp = 2;
-    }
+    unit.hp = Math.max(2, victim.hp);
 
     //giveUnit activationCounter
     unit.temporary.activation
@@ -1130,6 +1129,82 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
+  const geomancy1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Geomancy" resolution
+    newGameState.currentResolution.pop();
+
+    //giveUnit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation = unit.activation + 1)
+      : (unit.temporary.activation = 1);
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    //Strike
+    if (canStrike(unit)) {
+      //Continue -> Paralyze adjacent if lethal
+      newGameState.currentResolution.push({
+        resolution: "Geomancy3",
+        unit: unit,
+      });
+
+      newGameState.currentResolution.push({
+        resolution: "Geomancy2",
+        unit: unit,
+        details: {
+          reason: "Geomancy Strike",
+          title: "Geomancy",
+          message: "You may strike (2 AP).",
+          no: "Skip",
+          yes: "Strike",
+        },
+      });
+    }
+
+    //Choose: HP or recover
+    newGameState.currentResolution.push({
+      resolution: "Geomancy1",
+      unit: unit,
+    });
+
+    return newGameState;
+  };
+
+  const geomancy2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    // end "Geomancy3"
+    newGameState.currentResolution.pop();
+
+    if (
+      unit !== null &&
+      !isMuted(unit) &&
+      getZonesWithEnemies(unit, 1).length > 0 &&
+      unit.temporary.geomancyLethal
+    ) {
+      newGameState.currentResolution.push({
+        resolution: "Geomancy4",
+        unit: unit,
+        details: {
+          reason: "Geomancy Paralyze",
+          title: "Geomancy",
+          message: "You may paralyze an adjacent enemy for 2 turns.",
+          no: "Skip",
+          yes: "Paralyze",
+        },
+      });
+    }
+
+    delete unit.temporary.geomancyLethal;
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    return newGameState;
+  };
+
   const chainLightning1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
@@ -1248,6 +1323,8 @@ export const useSkillEffects = () => {
     pitfallTrap1,
     pitfallTrap2,
     pitfallTrap3,
+    geomancy1,
+    geomancy2,
     chainLightning1,
     chainLightning2,
     chainLightning3,
