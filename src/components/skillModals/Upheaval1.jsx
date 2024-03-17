@@ -7,6 +7,7 @@ import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 const Upheaval1 = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
+  const { self, enemy } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
   let unit = localGameState[props.unit.player].units[props.unit.unitIndex];
@@ -38,14 +39,21 @@ const Upheaval1 = (props) => {
   };
 
   const handleSearch = () => {
-    if (canPurge) {
-      let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-      //end "UpheavalR2"
-      newGameState.currentResolution.pop();
+    //end "UpheavalR2"
+    newGameState.currentResolution.pop();
 
-      //something
-    }
+    newGameState.currentResolution.push({
+      resolution: "Search Skill",
+      player: self,
+      restriction: ["04-01", "04-02", "04-03"],
+      message: "Search for then float 1 non-burst Land skill.",
+      outcome: "Float",
+    });
+
+    dispatch(updateState(newGameState));
+    props.updateFirebase(newGameState);
   };
 
   const handleViewBoard = () => {

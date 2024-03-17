@@ -1477,23 +1477,6 @@ const Board = (props) => {
           </>
         );
 
-      // case "Upheaval Traverse":
-      //   return (
-      //     <>
-      //       {self ===
-      //         lastResolution.unit.player(
-      //           <>
-      //             {enterMoveMode(
-      //               getVacantAdjacentZones(lastResolution.unit),
-      //               lastResolution.unit,
-      //               null,
-      //               null
-      //             )}
-      //           </>
-      //         )}
-      //     </>
-      //   );
-
       case "Select Pitfall Trap Activator":
         return (
           <>

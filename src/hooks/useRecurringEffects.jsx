@@ -2616,6 +2616,7 @@ export const useRecurringEffects = () => {
   const triggerBlazeOfGlory = (victim, method) => {
     if (
       victim.unitClass === "Fire Scion" && //must be Fire Scion
+      !isMuted(victim) &&
       ["strike", "virtue-blast", "blast"].includes(method) && //only attacks can trigger it
       localGameState[victim.player].skillHand.length > 1 && //needs at least 2 cards: Blaze of Glory itself + 1 card to discard
       victim.fever && //enemy needs fever
@@ -2761,6 +2762,7 @@ export const useRecurringEffects = () => {
   const triggerThunderThaumaturge = (attacker, victim) => {
     if (
       victim.unitClass === "Lightning Scion" && //must be Lightning Scion
+      !isMuted(victim) &&
       victim.charge && //enemy needs chrge
       isAdjacent(attacker, victim) //enemy must be adjacent
     ) {
