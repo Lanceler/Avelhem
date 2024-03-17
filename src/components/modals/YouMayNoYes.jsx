@@ -46,7 +46,7 @@ const YouMayNoYes = (props) => {
         break;
 
       case "Blaze of Glory Draw": //"Blaze of Glory3"
-        unit.fever = unit.fever - 1;
+        unit.fever -= 1;
         newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
         newGameState = drawSkill(newGameState);
         break;
@@ -137,8 +137,14 @@ const YouMayNoYes = (props) => {
           unit: props.unit,
           adjacentEnemies: props.details.adjacentEnemies,
         });
-        console.log(newGameState.currentResolution);
         break;
+
+      case "Zip and Zap Shield": //"Zip And Zap3"
+        unit.charge -= 1;
+        unit.enhancements.shield
+          ? (unit.enhancements.shield = Math.max(unit.enhancements.shield, 2))
+          : (unit.enhancements.shield = 2);
+        newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
 
       default:
         break;

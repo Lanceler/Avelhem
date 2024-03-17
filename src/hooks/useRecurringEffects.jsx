@@ -1045,6 +1045,8 @@ export const useRecurringEffects = () => {
 
       case "05-01":
         return activateChainLightning(newGameState, unit);
+      case "05-02":
+        return activateZipAndZap(newGameState, unit);
 
       default:
         return newGameState;
@@ -1840,6 +1842,9 @@ export const useRecurringEffects = () => {
       case "04-02":
         return canActivateSkill(unit, skill);
 
+      case "05-02":
+        return unit.charge > 0 && canMove(unit); // needs ONE charge
+
       default:
         return false;
     }
@@ -1931,8 +1936,8 @@ export const useRecurringEffects = () => {
 
       case "05-01":
         return getZonesWithEnemies(unit, 1).length > 0 ? true : false;
-      // case "05-02":
-      //   return canZipAndZap(unit);
+      case "05-02":
+        return unit.charge > 1 && canMove(unit); // needs TWO charges
       case "05-03":
         return false;
       case "05-04":

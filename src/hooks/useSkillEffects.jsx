@@ -1287,6 +1287,60 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
+  const zipAndZap1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Zip and Zap" resolution
+    newGameState.currentResolution.pop();
+
+    //giveUnit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation = unit.activation + 1)
+      : (unit.temporary.activation = 1);
+
+    //use 2 charges if not resonating
+    unit.charge -= 2;
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    newGameState.currentResolution.push({
+      resolution: "Zip And Zap2",
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Zip And Zap1",
+      unit: unit,
+    });
+
+    return newGameState;
+  };
+
+  const zipAndZap2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Zip and Zap" resolution
+    newGameState.currentResolution.pop();
+
+    if (unit !== null && !isMuted(unit) && unit.charge > 0) {
+      newGameState.currentResolution.push({
+        resolution: "Zip And Zap3",
+        unit: unit,
+        details: {
+          reason: "Zip and Zap Shield",
+          title: "Geomancy",
+          message: "You may spend 1 Charge to gain Shield for 2 turns.",
+          no: "Skip",
+          yes: "Shield",
+        },
+      });
+    }
+
+    return newGameState;
+  };
+
   return {
     ignitionPropulsion1,
     conflagration1,
@@ -1328,5 +1382,7 @@ export const useSkillEffects = () => {
     chainLightning1,
     chainLightning2,
     chainLightning3,
+    zipAndZap1,
+    zipAndZap2,
   };
 };

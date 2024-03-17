@@ -164,6 +164,8 @@ const Board = (props) => {
     chainLightning1,
     chainLightning2,
     chainLightning3,
+    zipAndZap1,
+    zipAndZap2,
   } = useSkillEffects();
 
   const { getSkillById } = useCardDatabase();
@@ -1717,6 +1719,56 @@ const Board = (props) => {
           </>
         );
 
+      case "Activating Zip and Zap":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(zipAndZap1(lastResolution.unit))}
+              </>
+            )}
+          </>
+        );
+
+      case "Zip And Zap1":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {enterMoveModeViaSkill(
+                  getVacantAdjacentZones(lastResolution.unit),
+                  lastResolution.unit
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Zip And Zap2":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(zipAndZap2(lastResolution.unit))}
+              </>
+            )}
+          </>
+        );
+
+      case "Zip And Zap3":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <YouMayNoYes
+                unit={lastResolution.unit}
+                details={lastResolution.details}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
       case "Triggering Elimination Ally":
         return (
           <>
@@ -1954,6 +2006,17 @@ const Board = (props) => {
       unit: unit,
       tactic: tactic,
     });
+
+    dispatch(updateState(newGameState));
+
+    // updateFirebase(newGameState);
+  };
+
+  const enterMoveModeViaSkill = (zoneIds, unit) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    newGameState.currentResolution.pop();
+
+    enterMoveMode(zoneIds, unit, newGameState, null);
 
     dispatch(updateState(newGameState));
 

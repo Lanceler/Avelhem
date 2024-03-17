@@ -185,8 +185,8 @@ export const Piece = (props) => {
 
           {/* HP */}
 
-          {props.unit.hp > 1 && <img src={HP} className="hP" />}
-          {props.unit.hp > 1 && (
+          {props.unit.hp > 0 && <img src={HP} className="hP" />}
+          {props.unit.hp > 0 && (
             <div className="hP hP-amount">{props.unit.hp}</div>
           )}
 
