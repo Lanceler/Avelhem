@@ -162,6 +162,17 @@ const YouMayNoYes = (props) => {
         );
         break;
 
+      case "Diffusion 2nd Blast": // "Diffusion4"
+        props.enterSelectUnitMode(
+          props.details.adjacentEnemies,
+          props.unit,
+          newGameState,
+          null,
+          "blast",
+          null
+        );
+        break;
+
       default:
         break;
     }

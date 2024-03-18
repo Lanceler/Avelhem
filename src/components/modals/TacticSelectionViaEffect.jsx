@@ -86,6 +86,22 @@ const TacticSelectionViaEffect = (props) => {
           newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
           break;
 
+        case "Diffusion":
+          //2. Continue
+          newGameState.currentResolution.push({
+            resolution: "Diffusion3",
+            unit: unit,
+          });
+
+          //1. Blast 1st enemy
+          newGameState.currentResolution.push({
+            resolution: "Diffusion2",
+            unit: unit,
+          });
+
+          newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+          break;
+
         default:
           break;
       }
@@ -102,7 +118,11 @@ const TacticSelectionViaEffect = (props) => {
     <div className="modal-backdrop">
       <div className="modal">
         <button onClick={() => handleViewBoard()}>View Board</button>
-        <h2>Select Tactic</h2>
+
+        <h2>{props.details.title}</h2>
+        <h3>{props.details.message}</h3>
+        <h3>Select Tactic</h3>
+        <br />
 
         <div className="twoColumn">
           {localGameState.tactics.map((tactic, index) => (

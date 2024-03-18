@@ -251,7 +251,7 @@ export const useSkillEffects = () => {
 
     if (
       getZonesWithEnemies(unit, 1).length &&
-      newGameState[self].skillHand.length > 0
+      newGameState[unit.player].skillHand.length > 0
     ) {
       newGameState.currentResolution.push({
         resolution: "Resplendence1",
@@ -351,7 +351,7 @@ export const useSkillEffects = () => {
       unit !== null &&
       !isMuted(unit) &&
       getZonesWithEnemies(unit, 1).length > 0 &&
-      newGameState[self].skillHand.length > 0
+      newGameState[unit.player].skillHand.length > 0
     ) {
       newGameState.currentResolution.push({
         resolution: "Frigid Breath3",
@@ -553,7 +553,7 @@ export const useSkillEffects = () => {
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
-    if (newGameState[self].skillHand.length > 0) {
+    if (newGameState[unit.player].skillHand.length > 0) {
       newGameState.currentResolution.push({
         resolution: "Gale Conjuration1",
         unit: unit,
@@ -599,7 +599,7 @@ export const useSkillEffects = () => {
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
-    if (newGameState[self].skillHand.length > 0) {
+    if (newGameState[unit.player].skillHand.length > 0) {
       newGameState.currentResolution.push({
         resolution: "Gale Conjuration1",
         unit: unit,
@@ -894,7 +894,7 @@ export const useSkillEffects = () => {
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
-    if (newGameState[self].skillHand.length > 0) {
+    if (newGameState[unit.player].skillHand.length > 0) {
       newGameState.currentResolution.push({
         resolution: "Crystallization1",
         unit: unit,
@@ -1325,7 +1325,7 @@ export const useSkillEffects = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
-    //end "Activating Zip and Zap" resolution
+    //end "Zip And Zap2" resolution
     newGameState.currentResolution.pop();
 
     if (unit !== null && !isMuted(unit) && unit.charge > 0) {
@@ -1463,15 +1463,14 @@ export const useSkillEffects = () => {
     if (
       unit !== null &&
       !isMuted(unit) &&
-      newGameState[self].skillHand.length > 0 &&
+      newGameState[unit.player].skillHand.length > 0 &&
       ["05-01", "05-02", "05-04"].some((s) =>
-        localGameState[self].skillVestige.includes(s)
+        localGameState[unit.player].skillVestige.includes(s)
       )
     ) {
       newGameState.currentResolution.push({
         resolution: "Thunder Thaumaturge2",
         unit: unit,
-
         details: {
           title: "Thunder Thaumaturge",
           message:
@@ -1507,7 +1506,7 @@ export const useSkillEffects = () => {
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
-    if (newGameState[self].skillHand.length > 0) {
+    if (newGameState[unit.player].skillHand.length > 0) {
       newGameState.currentResolution.push({
         resolution: "Valiant Spark1",
         unit: unit,
@@ -1547,12 +1546,174 @@ export const useSkillEffects = () => {
         restriction: ["Assault"],
         stock: 1,
         reason: "Surge",
-        canSkip: true,
+        canSkip: false,
       },
     });
 
     return newGameState;
   };
+
+  const diffusion1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Diffusion" resolution
+    newGameState.currentResolution.pop();
+
+    //giveUnit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation = unit.activation + 1)
+      : (unit.temporary.activation = 1);
+
+    delete unit.temporary.previousTarget;
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    newGameState.currentResolution.push({
+      resolution: "Diffusion1",
+      unit: unit,
+      details: {
+        title: "Diffusion",
+        message:
+          "Use an Assault or Invoke tactic to blast 1 or 2 adjacent enemies.",
+        restriction: ["Assault", "Invoke"],
+        stock: 1,
+        reason: "Diffusion",
+        canSkip: false,
+      },
+    });
+
+    return newGameState;
+  };
+
+  const diffusion2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    const zones = JSON.parse(newGameState.zones);
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Diffusion3" resolution
+    newGameState.currentResolution.pop();
+
+    let adjacentEnemies = getZonesWithEnemies(unit, 1);
+    adjacentEnemies = adjacentEnemies.filter(
+      (z) =>
+        zones[Math.floor(z / 5)][z % 5].unitIndex !==
+        unit.temporary.previousTarget
+    );
+
+    if (unit !== null && !isMuted(unit)) {
+      if (adjacentEnemies.length > 0) {
+        //3. Blast 2nd enemy
+        newGameState.currentResolution.push({
+          resolution: "Diffusion4",
+          unit: unit,
+          details: {
+            reason: "Diffusion 2nd Blast",
+            title: "Diffusion",
+            message: "You may blast another adjacent enemy.",
+            no: "Skip",
+            yes: "Blast",
+            adjacentEnemies: adjacentEnemies,
+          },
+        });
+      }
+    }
+
+    return newGameState;
+  };
+
+  const diffusionR1 = (unitInfo, resonator) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Resonating Diffusion" resolution
+    newGameState.currentResolution.pop();
+
+    //giveUnit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation = unit.activation + 1)
+      : (unit.temporary.activation = 1);
+
+    if (resonator !== "SA-02") {
+      newGameState.currentResolution.push({
+        resolution: "May float resonant skill",
+        unit: unit,
+        player: unit.player,
+        skill: "06-02",
+        resonator: resonator,
+      });
+    }
+
+    delete unit.temporary.previousTarget;
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    //2. Resonance
+    newGameState.currentResolution.push({
+      resolution: "DiffusionR1",
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Diffusion1",
+      unit: unit,
+      details: {
+        title: "Diffusion",
+        message:
+          "Use an Assault, Invoke, or Advance tactic to blast 1 or 2 adjacent enemies.",
+        restriction: ["Assault", "Invoke", "Advance"],
+        stock: 1,
+        reason: "Diffusion",
+        canSkip: false,
+      },
+    });
+    return newGameState;
+  };
+
+  const diffusionR2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "DiffusionR1" resolution
+    newGameState.currentResolution.pop();
+
+    if (
+      unit !== null &&
+      !isMuted(unit) &&
+      newGameState[unit.player].skillHand.length > 0
+    ) {
+      newGameState.currentResolution.push({
+        resolution: "DiffusionR2",
+        unit: unit,
+        details: {
+          title: "Diffusion",
+          message: "You may spend 1 skill to gain Shield for 3 turns.",
+          restriction: null,
+          reason: "Diffusion Shield",
+        },
+      });
+    }
+
+    return newGameState;
+  };
+
+  const diffusionR3 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "DiffusionR3" resolution
+    newGameState.currentResolution.pop();
+
+    unit.enhancements.shield
+      ? Math.max(3, unit.enhancements.shield)
+      : (unit.enhancements.shield = 3);
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    return newGameState;
+  };
+
+  //end of list
 
   return {
     ignitionPropulsion1,
@@ -1603,5 +1764,10 @@ export const useSkillEffects = () => {
     thunderThaumaturge2,
     valiantSpark1,
     surge1,
+    diffusion1,
+    diffusion2,
+    diffusionR1,
+    diffusionR2,
+    diffusionR3,
   };
 };

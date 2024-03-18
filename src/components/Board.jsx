@@ -174,6 +174,11 @@ const Board = (props) => {
     thunderThaumaturge2,
     valiantSpark1,
     surge1,
+    diffusion1,
+    diffusion2,
+    diffusionR1,
+    diffusionR2,
+    diffusionR3,
   } = useSkillEffects();
 
   const { getSkillById } = useCardDatabase();
@@ -1863,7 +1868,11 @@ const Board = (props) => {
         return (
           <>
             {self === lastResolution.unit.player && (
-              <>{resolutionUpdate(valiantSpark1(lastResolution.unit))}</>
+              <>
+                {resolutionUpdateGameStateOnly(
+                  valiantSpark1(lastResolution.unit)
+                )}
+              </>
             )}
           </>
         );
@@ -1886,11 +1895,7 @@ const Board = (props) => {
         return (
           <>
             {self === lastResolution.unit.player && (
-              <>
-                {resolutionUpdateGameStateOnly(
-                  surge1(lastResolution.unit, lastResolution.victim)
-                )}
-              </>
+              <>{resolutionUpdateGameStateOnly(surge1(lastResolution.unit))}</>
             )}
           </>
         );
@@ -1939,6 +1944,127 @@ const Board = (props) => {
                 updateFirebase={updateFirebase}
                 hideOrRevealModale={hideOrRevealModale}
               />
+            )}
+          </>
+        );
+
+      case "Activating Diffusion":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(diffusion1(lastResolution.unit))}
+              </>
+            )}
+          </>
+        );
+
+      case "Diffusion1":
+        return (
+          <>
+            {self === localGameState.turnPlayer && !hideModal && (
+              <TacticSelectionViaEffect
+                unit={lastResolution.unit}
+                details={lastResolution.details}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Diffusion2":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {selectEnemies(
+                  lastResolution.unit,
+                  1,
+                  null,
+                  "blast",
+                  "Diffusion"
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Diffusion3":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(diffusion2(lastResolution.unit))}
+              </>
+            )}
+          </>
+        );
+
+      case "Diffusion4":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <YouMayNoYes
+                unit={lastResolution.unit}
+                details={lastResolution.details}
+                enterSelectUnitMode={enterSelectUnitMode}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Resonating Diffusion":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdate(
+                  diffusionR1(lastResolution.unit, lastResolution.resonator)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "DiffusionR1":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  diffusionR2(lastResolution.unit)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "DiffusionR2":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <YouMaySpend1Skill
+                unit={lastResolution.unit}
+                details={lastResolution.details}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "DiffusionR3":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  diffusionR3(lastResolution.unit)
+                )}
+              </>
             )}
           </>
         );

@@ -409,6 +409,41 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const activateDiffusionAndResonate = (newGameState, unit, resonator) => {
+    //end Select Resonator resolution
+    newGameState.currentResolution.pop();
+
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Resonance Conclusion",
+      player: self,
+      unit: unit,
+      skill: "06-02",
+      skillConclusion: "discard",
+      resonator: resonator,
+      resonatorConclusion: "discard",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Resonating Diffusion",
+      unit: unit,
+      resonator: resonator,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Animation Delay",
+      priority: self,
+    });
+
+    newGameState.activatingSkill.push("06-02");
+    newGameState.activatingResonator.push(resonator);
+    newGameState.activatingUnit.push(unit);
+
+    return newGameState;
+  };
+
   const activateDisruptionField = (newGameState, unit) => {
     //end Select Skill resolution
     newGameState.currentResolution.pop();
@@ -1052,6 +1087,8 @@ export const useRecurringEffects = () => {
 
       case "06-01":
         return activateSurge(newGameState, unit);
+      case "06-02":
+        return activateDiffusion(newGameState, unit);
 
       default:
         return newGameState;
@@ -1074,6 +1111,8 @@ export const useRecurringEffects = () => {
         return activateUpheavalAndResonate(newGameState, unit, resonator);
       case "05-02":
         return activateZipAndZapAndResonate(newGameState, unit, resonator);
+      case "06-02":
+        return activateDiffusionAndResonate(newGameState, unit, resonator);
 
       default:
         return newGameState;
@@ -1474,6 +1513,10 @@ export const useRecurringEffects = () => {
       // to do: Maybe push a resolution that displays a message
     }
 
+    if (["Diffusion"].includes(special)) {
+      attacker.temporary.previousTarget = victim.unitIndex;
+    }
+
     //checkBypassShield
     let bypassShield = false;
     switch (true) {
@@ -1871,6 +1914,34 @@ export const useRecurringEffects = () => {
   };
 
   const canActivateResonance = (unit, skill) => {
+    const canDiffusionR = (unit) => {
+      if (getZonesWithEnemies(unit, 1).length < 1) {
+        return false;
+      }
+
+      if (
+        ["Assault", "Invoke", "Advance"].includes(
+          localGameState.tactics[0].face
+        ) &
+        (localGameState.tactics[0].stock > 0)
+      ) {
+        //to-do: maybe consider unit has used tactic? then again, it normally wont be an issue
+
+        return true;
+      }
+
+      if (
+        ["Assault", "Invoke", "Advance"].includes(
+          localGameState.tactics[1].face
+        ) &
+        (localGameState.tactics[1].stock > 0)
+      ) {
+        return true;
+      }
+
+      return false;
+    };
+
     switch (skill) {
       case "01-02":
         return (
@@ -1889,6 +1960,9 @@ export const useRecurringEffects = () => {
 
       case "05-02":
         return unit.charge > 0 && canMove(unit); // needs ONE charge
+
+      case "06-02":
+        return canDiffusionR(unit);
 
       default:
         return false;
@@ -1924,6 +1998,30 @@ export const useRecurringEffects = () => {
       }
 
       return true;
+    };
+
+    const canDiffusion = (unit) => {
+      if (getZonesWithEnemies(unit, 1).length < 1) {
+        return false;
+      }
+
+      if (
+        ["Assault", "Invoke"].includes(localGameState.tactics[0].face) &
+        (localGameState.tactics[0].stock > 0)
+      ) {
+        //to-do: maybe consider unit has used tactic? then again, it normally wont be an issue
+
+        return true;
+      }
+
+      if (
+        ["Assault", "Invoke"].includes(localGameState.tactics[1].face) &
+        (localGameState.tactics[1].stock > 0)
+      ) {
+        return true;
+      }
+
+      return false;
     };
 
     const canIgnitionPropulsion = (unit) => {
@@ -2010,8 +2108,8 @@ export const useRecurringEffects = () => {
 
       case "06-01":
         return canSurge();
-      // case "06-02":
-      //   return canDiffusion(unit);
+      case "06-02":
+        return canDiffusion(unit);
       case "06-03":
         return false;
       case "06-04":

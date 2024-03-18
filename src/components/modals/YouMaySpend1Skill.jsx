@@ -80,7 +80,13 @@ const YouMaySpend1Skill = (props) => {
             "Recover 1 Lightning skill other than “Thunder Thaumaturge”.",
           outcome: "Add",
         });
+        break;
 
+      case "Diffusion Shield":
+        newGameState.currentResolution.push({
+          resolution: "DiffusionR3",
+          unit: props.unit,
+        });
         break;
 
       default:
