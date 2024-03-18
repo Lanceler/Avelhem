@@ -1050,6 +1050,9 @@ export const useRecurringEffects = () => {
       case "05-04":
         return activateValiantSpark(newGameState, unit);
 
+      case "06-01":
+        return activateSurge(newGameState, unit);
+
       default:
         return newGameState;
     }
@@ -1939,6 +1942,26 @@ export const useRecurringEffects = () => {
       return true;
     };
 
+    const canSurge = () => {
+      //to-do: maybe consider unit has used tactic? then again, it normally wont be an issue
+
+      if (
+        localGameState.tactics[0].face === "Assault" &&
+        localGameState.tactics[0].stock > 0
+      ) {
+        return true;
+      }
+
+      if (
+        localGameState.tactics[1].face === "Assault" &&
+        localGameState.tactics[1].stock > 0
+      ) {
+        return true;
+      }
+
+      return false;
+    };
+
     switch (skill) {
       case "01-01":
         return canIgnitionPropulsion(unit);
@@ -1985,8 +2008,8 @@ export const useRecurringEffects = () => {
       case "05-04":
         return true;
 
-      // case "06-01":
-      //   return canSurge(unit);
+      case "06-01":
+        return canSurge();
       // case "06-02":
       //   return canDiffusion(unit);
       case "06-03":

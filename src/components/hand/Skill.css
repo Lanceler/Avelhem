@@ -85,8 +85,7 @@
     min-height: 300px;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    
-    transition: top 15s ease;
+
 
 }
 
@@ -94,7 +93,6 @@
     position: relative;
     top: -150px;
 
-    transition: top 15s ease;
 
 
 }

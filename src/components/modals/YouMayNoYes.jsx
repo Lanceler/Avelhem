@@ -28,7 +28,11 @@ const YouMayNoYes = (props) => {
 
   const handleYes = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = newGameState[props.unit.player].units[props.unit.unitIndex];
+
+    let unit = null;
+    if (props.unit !== undefined) {
+      unit = newGameState[props.unit.player].units[props.unit.unitIndex];
+    }
 
     //end
     newGameState.currentResolution.pop();

@@ -1524,6 +1524,36 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
+  const surge1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Surge" resolution
+    newGameState.currentResolution.pop();
+
+    //giveUnit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation = unit.activation + 1)
+      : (unit.temporary.activation = 1);
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    newGameState.currentResolution.push({
+      resolution: "Surge1",
+      unit: unit,
+      details: {
+        title: "Surge",
+        message: "Use an Assault tactic to restore your Virtue.",
+        restriction: ["Assault"],
+        stock: 1,
+        reason: "Surge",
+        canSkip: true,
+      },
+    });
+
+    return newGameState;
+  };
+
   return {
     ignitionPropulsion1,
     conflagration1,
@@ -1572,5 +1602,6 @@ export const useSkillEffects = () => {
     thunderThaumaturge1,
     thunderThaumaturge2,
     valiantSpark1,
+    surge1,
   };
 };

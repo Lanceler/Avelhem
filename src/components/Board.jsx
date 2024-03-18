@@ -40,6 +40,7 @@ import YouMayNoYes from "./modals/YouMayNoYes";
 import ManaRestructure from "./TalentModals/ManaRestructure";
 
 import TacticSelection from "./modals/TacticSelection";
+import TacticSelectionViaEffect from "./modals/TacticSelectionViaEffect";
 import TacticAdvance from "./modals/TacticAdvance";
 import TacticAssault from "./modals/TacticAssault";
 import VirtueBlastBlock from "./modals/VirtueBlastBlock";
@@ -52,6 +53,7 @@ import AerialImpetus1 from "./skillModals/AerialImpetus1";
 import CataclysmicTempestFloat from "./skillModals/CataclysmicTempestFloat";
 import Upheaval1 from "./skillModals/Upheaval1";
 import Geomancy1 from "./skillModals/Geomancy1";
+import Surge1 from "./skillModals/Surge1";
 
 import ContingentElimination from "./skillModals/ContingentElimination";
 import ContingentMotion from "./skillModals/ContingentMotion";
@@ -171,6 +173,7 @@ const Board = (props) => {
     thunderThaumaturge1,
     thunderThaumaturge2,
     valiantSpark1,
+    surge1,
   } = useSkillEffects();
 
   const { getSkillById } = useCardDatabase();
@@ -1872,6 +1875,67 @@ const Board = (props) => {
               <SelectSkillReveal
                 unit={lastResolution.unit}
                 details={lastResolution.details}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Activating Surge":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  surge1(lastResolution.unit, lastResolution.victim)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Surge1":
+        return (
+          <>
+            {self === localGameState.turnPlayer && !hideModal && (
+              <TacticSelectionViaEffect
+                unit={lastResolution.unit}
+                details={lastResolution.details}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Surge2":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <Surge1
+                unit={lastResolution.unit}
+                reason={lastResolution.reason}
+                enterMoveMode={enterMoveMode}
+                enterSelectUnitMode={enterSelectUnitMode}
+                setMovingSpecial={setMovingSpecial}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Surge3":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <Surge1
+                unit={lastResolution.unit}
+                reason={lastResolution.reason}
+                enterMoveMode={enterMoveMode}
+                enterSelectUnitMode={enterSelectUnitMode}
+                setMovingSpecial={setMovingSpecial}
                 updateFirebase={updateFirebase}
                 hideOrRevealModale={hideOrRevealModale}
               />
