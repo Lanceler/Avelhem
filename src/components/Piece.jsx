@@ -149,13 +149,18 @@ export const Piece = (props) => {
             onClick={() => handleClick()}
           >
             <>
-              {/* anathema / ravager */}
-
               {isActivatingUnit && <div className="glow animating"></div>}
+
+              {/* Mana Scion: Disruption */}
+              {props.unit.enhancements.disruption > 0 && (
+                <div className="disruption animating"></div>
+              )}
 
               <div className="piece-icon-shadow"></div>
 
               <img src={classIcon} className="scionClass" />
+
+              {/* anathema / ravager */}
 
               {props.unit.afflictions.anathema > 0 && (
                 <>

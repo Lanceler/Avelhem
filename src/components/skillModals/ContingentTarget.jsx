@@ -86,6 +86,15 @@ const ContingentTarget = (props) => {
         );
         break;
 
+      case "06-03":
+        newGameState.currentResolution.push({
+          resolution: "Select Aegis Activator",
+          victim: props.victim,
+          player: self,
+        });
+
+        break;
+
       default:
         break;
     }

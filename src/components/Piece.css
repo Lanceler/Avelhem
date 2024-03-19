@@ -231,8 +231,9 @@ animation: moveUpDownHP 1.0s ease-in-out infinite;
 
     top: 10%;
     left: 10%;
-    
 
+    pointer-events: none;
+    
 }
 
 .glow.animating {
@@ -256,6 +257,54 @@ animation: moveUpDownHP 1.0s ease-in-out infinite;
         transform: scale(2.5);
  
     }
+}
+
+.disruption {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgb(114, 250, 255,0);
+    border-radius: 100%;
+    /* background-color: transparent; */
+    /* background-color: rgba(34, 153, 201, 0.45); */
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.329), rgba(78, 220, 255, 0.932))
+    ;
+    /* transition: all 1.5s ease; */
+    position: absolute;
+    z-index: 600;
+
+    top: 10%;
+    left: 10%;
+pointer-events: none;
+}
+
+.disruption.animating {
+    animation: expand-disruption 3.0s linear infinite;
+
+}
+
+@keyframes expand-disruption {
+    0% {
+        /* width: 50px;
+        height: 50px; */
+        opacity: 0.90;
+        transform: scale(0.8);
+    }
+
+    50% {
+        /* opacity: 0.70; */
+        /* transform: scale(4.5); */
+    }
+
+    80% {
+        opacity: 0.1;
+    }
+
+    85%, 100% {
+        opacity: 0;
+        transform: scale(8.2);
+    }
+
+
 }
 
 .anathema-aura{

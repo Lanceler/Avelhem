@@ -54,6 +54,7 @@ import CataclysmicTempestFloat from "./skillModals/CataclysmicTempestFloat";
 import Upheaval1 from "./skillModals/Upheaval1";
 import Geomancy1 from "./skillModals/Geomancy1";
 import Surge1 from "./skillModals/Surge1";
+import Aegis1 from "./skillModals/Aegis1";
 
 import ContingentElimination from "./skillModals/ContingentElimination";
 import ContingentMotion from "./skillModals/ContingentMotion";
@@ -97,6 +98,7 @@ const Board = (props) => {
   const [intrudingPlayer, setIntrudingPlayer] = useState(false);
 
   const {
+    activateAegis,
     activateHealingRain,
     activatePitfallTrap,
     activateSymphonicScreech,
@@ -114,6 +116,7 @@ const Board = (props) => {
     freeze1,
     freeze2,
     ignite,
+    isDisrupted,
     isMuted,
     move,
     paralyze1,
@@ -179,6 +182,8 @@ const Board = (props) => {
     diffusionR1,
     diffusionR2,
     diffusionR3,
+    aegis1,
+    disruptionField1,
   } = useSkillEffects();
 
   const { getSkillById } = useCardDatabase();
@@ -2069,6 +2074,55 @@ const Board = (props) => {
           </>
         );
 
+      case "Select Aegis Activator":
+        return (
+          <>
+            {self === lastResolution.player && (
+              <>{selectAegisActivator(lastResolution.victim)}</>
+            )}
+          </>
+        );
+
+      case "Activating Aegis":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  aegis1(lastResolution.unit, lastResolution.victim)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Aegis1":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <Aegis1
+                unit={lastResolution.unit}
+                victim={lastResolution.victim}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Activating Disruption Field":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  disruptionField1(lastResolution.unit)
+                )}
+              </>
+            )}
+          </>
+        );
+
       case "Triggering Elimination Ally":
         return (
           <>
@@ -2544,6 +2598,40 @@ const Board = (props) => {
     updateFirebase(newGameState);
   };
 
+  const selectAegisActivator = (victim) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Select Aegis Activator"
+    newGameState.currentResolution.pop();
+
+    const zonesWithAllies = getZonesWithAllies(victim, 1, true);
+    let zonesWithManaScions = [];
+
+    for (let z of zonesWithAllies) {
+      const zone = zones[Math.floor(z / 5)][z % 5];
+      const unit = newGameState[zone.player].units[zone.unitIndex];
+
+      if (
+        unit.unitClass === "Mana Scion" &&
+        !isMuted(unit) &&
+        !isDisrupted(unit, 1)
+      ) {
+        zonesWithManaScions.push(z);
+      }
+    }
+
+    setIntrudingPlayer(self);
+
+    enterSelectUnitMode(
+      zonesWithManaScions,
+      victim,
+      newGameState,
+      null,
+      "aegis",
+      null
+    );
+  };
+
   const selectAerialImpetusMove = (unit, ally) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -2647,7 +2735,11 @@ const Board = (props) => {
       const zone = zones[Math.floor(z / 5)][z % 5];
       const unit = newGameState[zone.player].units[zone.unitIndex];
 
-      if (unit.unitClass === "Water Scion" && !isMuted(unit)) {
+      if (
+        unit.unitClass === "Water Scion" &&
+        !isMuted(unit) &&
+        !isDisrupted(unit, 1)
+      ) {
         zonesWithWaterScions.push(z);
       }
     }
@@ -2677,7 +2769,11 @@ const Board = (props) => {
       const zone = zones[Math.floor(z / 5)][z % 5];
       const unit = newGameState[zone.player].units[zone.unitIndex];
 
-      if (unit.unitClass === "Land Scion" && !isMuted(unit)) {
+      if (
+        unit.unitClass === "Land Scion" &&
+        !isMuted(unit) &&
+        !isDisrupted(unit, 1)
+      ) {
         zonesWithLandScions.push(z);
       }
     }
@@ -2798,6 +2894,11 @@ const Board = (props) => {
       case "pitfall trap":
         newGameState = activatePitfallTrap(newGameState, selectedUnit, unit);
         break;
+
+      case "aegis":
+        newGameState = activateAegis(newGameState, selectedUnit, unit);
+        break;
+
       default:
         break;
     }

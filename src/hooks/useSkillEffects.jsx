@@ -1713,6 +1713,80 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
+  const aegis1 = (unitInfo, victimInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+    let victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
+
+    //end "Activating Aegis" resolution
+    newGameState.currentResolution.pop();
+
+    //give unit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation = unit.activation + 1)
+      : (unit.temporary.activation = 1);
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+    newGameState[victimInfo.player].units[victimInfo.unitIndex] = victim;
+
+    if (unit.unitIndex === victim.unitIndex) {
+      newGameState = drawSkill(newGameState);
+    }
+
+    newGameState.currentResolution.push({
+      resolution: "Aegis1",
+      unit: unit,
+      victim: victim,
+    });
+
+    return newGameState;
+  };
+
+  const disruptionField1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    const zones = JSON.parse(newGameState.zones);
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Disruption Field" resolution
+    newGameState.currentResolution.pop();
+
+    //giveUnit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation = unit.activation + 1)
+      : (unit.temporary.activation = 1);
+
+    unit.enhancements.shield
+      ? Math.max(2, unit.enhancements.shield)
+      : (unit.enhancements.shield = 2);
+
+    unit.enhancements.disruption = 2;
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    let enemyZones = getZonesWithEnemies(unit, 1);
+
+    for (let i of enemyZones) {
+      const zone = zones[Math.floor(i / 5)][i % 5];
+      const enemy = newGameState[zone.player].units[zone.unitIndex];
+
+      delete enemy.enhancements.disruption;
+      delete enemy.enhancements.shield;
+      delete enemy.enhancements.ward;
+
+      newGameState[zone.player].units[zone.unitIndex] = enemy;
+    }
+
+    newGameState.currentResolution.push({
+      resolution: "Discard Skill",
+      unit: unit,
+      player: self,
+      message: "Spend 1 skill.",
+      restriction: null,
+    });
+
+    return newGameState;
+  };
+
   //end of list
 
   return {
@@ -1769,5 +1843,7 @@ export const useSkillEffects = () => {
     diffusionR1,
     diffusionR2,
     diffusionR3,
+    aegis1,
+    disruptionField1,
   };
 };

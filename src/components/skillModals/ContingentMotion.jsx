@@ -31,7 +31,7 @@ const ContingentMotion = (props) => {
   const canActivateContingency = (skill) => {
     switch (skill) {
       case "04-03":
-        return triggerPitfallTrap(props.mover);
+        return triggerPitfallTrap(props.mover, localGameState);
 
       default:
         return false;

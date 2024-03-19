@@ -80,7 +80,7 @@ const Geomancy1 = (props) => {
             onClick={() => handleRecover()}
           >
             <h2>Recover</h2>
-            <h4>Recover then 1 Land skill.</h4>
+            <h4>Recover then float 1 Land skill.</h4>
           </div>
         </div>
       </div>
