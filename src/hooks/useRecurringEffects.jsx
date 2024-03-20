@@ -1093,6 +1093,9 @@ export const useRecurringEffects = () => {
       case "06-04":
         return activateDisruptionField(newGameState, unit);
 
+      case "07-01":
+        return activateMagneticShockwave(newGameState, unit);
+
       default:
         return newGameState;
     }
@@ -1817,9 +1820,12 @@ export const useRecurringEffects = () => {
     }
 
     if (
-      ["Cataclysmic Tempest", "Upheaval", "ChainLightningParalysis"].includes(
-        special
-      )
+      [
+        "Cataclysmic Tempest",
+        "Upheaval",
+        "ChainLightningParalysis",
+        "MagneticShockwave1stParalysis",
+      ].includes(special)
     ) {
       attacker.temporary.previousTarget = victim.unitIndex;
     }
@@ -3084,7 +3090,7 @@ export const useRecurringEffects = () => {
       type: "blast",
     });
 
-    if (victim.virtue && !isMuted(victim)) {
+    if (victim.virtue && !isMuted(victim) && !isDisrupted(victim, 2)) {
       newGameState.currentResolution.push({
         resolution: "Blocking Virtue-Blast",
         attacker: attacker,

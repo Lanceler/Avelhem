@@ -184,6 +184,9 @@ const Board = (props) => {
     diffusionR3,
     aegis1,
     disruptionField1,
+    magneticShockwave1,
+    magneticShockwave2,
+    magneticShockwave3,
   } = useSkillEffects();
 
   const { getSkillById } = useCardDatabase();
@@ -2119,6 +2122,92 @@ const Board = (props) => {
                   disruptionField1(lastResolution.unit)
                 )}
               </>
+            )}
+          </>
+        );
+
+      case "Activating Magnetic Shockwave":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  magneticShockwave1(lastResolution.unit)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Magnetic Shockwave1":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {selectEnemies(
+                  lastResolution.unit,
+                  1,
+                  null,
+                  "paralyze1",
+                  "MagneticShockwave1stParalysis"
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Magnetic Shockwave2":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  magneticShockwave2(lastResolution.unit)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Magnetic Shockwave2.1":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <YouMayNoYes
+                unit={lastResolution.unit}
+                details={lastResolution.details}
+                enterSelectUnitMode={enterSelectUnitMode}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Magnetic Shockwave3":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  magneticShockwave3(lastResolution.unit)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Magnetic Shockwave3.1":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <YouMayNoYes
+                unit={lastResolution.unit}
+                details={lastResolution.details}
+                enterSelectUnitMode={enterSelectUnitMode}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
             )}
           </>
         );

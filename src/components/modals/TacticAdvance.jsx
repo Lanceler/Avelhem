@@ -15,6 +15,7 @@ const TacticAdvance = (props) => {
     canMove,
     getVacantAdjacentZones,
     getZonesWithEnemies,
+    isDisrupted,
     isMuted,
   } = useRecurringEffects();
 
@@ -23,7 +24,6 @@ const TacticAdvance = (props) => {
     canTraverse = true;
   } else {
     console.log(canMove(props.unit));
-    console.log("Cannot Traverse.");
   }
 
   let canVirtueBlast = false;
@@ -32,11 +32,10 @@ const TacticAdvance = (props) => {
     props.unit.unitClass !== "Pawn" &&
     props.unit.virtue &&
     canBlast(props.unit) &&
-    !props.unit.afflictions.root
+    !props.unit.afflictions.root &&
+    !isDisrupted(props.unit, 2)
   ) {
     canVirtueBlast = true;
-  } else {
-    console.log("Cannot VBlast");
   }
 
   const handleReturn = () => {

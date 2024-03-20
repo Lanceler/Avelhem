@@ -549,6 +549,11 @@ export const useSkillEffects = () => {
     //end "Activating Gale Conjuration" resolution
     newGameState.currentResolution.pop();
 
+    //giveUnit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation = unit.activation + 1)
+      : (unit.temporary.activation = 1);
+
     unit.boosts.galeConjuration = true;
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
@@ -1787,6 +1792,107 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
+  const magneticShockwave1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Magnetic Shockwave" resolution
+    newGameState.currentResolution.pop();
+
+    //giveUnit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation = unit.activation + 1)
+      : (unit.temporary.activation = 1);
+
+    delete unit.temporary.previousTarget;
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    if (unit.sharpness > 1) {
+      newGameState.currentResolution.push({
+        resolution: "Magnetic Shockwave3",
+        unit: unit,
+      });
+    }
+
+    if (unit.sharpness > 0) {
+      newGameState.currentResolution.push({
+        resolution: "Magnetic Shockwave2",
+        unit: unit,
+      });
+    }
+
+    newGameState.currentResolution.push({
+      resolution: "Magnetic Shockwave1",
+      unit: unit,
+    });
+
+    return newGameState;
+  };
+
+  const magneticShockwave2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    const zones = JSON.parse(newGameState.zones);
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Magnetic Shockwave2" resolution
+    newGameState.currentResolution.pop();
+
+    let adjacentEnemies = getZonesWithEnemies(unit, 1);
+    adjacentEnemies = adjacentEnemies.filter(
+      (z) =>
+        zones[Math.floor(z / 5)][z % 5].unitIndex !==
+        unit.temporary.previousTarget
+    );
+
+    if (unit !== null && !isMuted(unit)) {
+      if (adjacentEnemies.length > 0) {
+        //Paralyze 2nd enemy
+        newGameState.currentResolution.push({
+          resolution: "Magnetic Shockwave2.1",
+          unit: unit,
+          details: {
+            reason: "Magnetic Shockwave 2nd Paralyze",
+            title: "Magnetic Shockwave",
+            message: "You may paralyze another adjacent enemy for 1 turn.",
+            no: "Skip",
+            yes: "Paralyze",
+            adjacentEnemies: adjacentEnemies,
+          },
+        });
+      }
+    }
+
+    return newGameState;
+  };
+
+  const magneticShockwave3 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Magnetic Shockwave3" resolution
+    newGameState.currentResolution.pop();
+
+    let adjacentEnemies = getZonesWithEnemiesAfflicted(unit, 1, "paralysis");
+
+    if (unit !== null && !isMuted(unit) && adjacentEnemies.length > 0) {
+      newGameState.currentResolution.push({
+        resolution: "Magnetic Shockwave3.1",
+        unit: unit,
+        details: {
+          reason: "Magnetic Shockwave Blast",
+          title: "Magnetic Shockwave",
+          message: "You may blast an adjacent paralyzed enemy.",
+          no: "Skip",
+          yes: "Blast",
+          adjacentEnemies: adjacentEnemies,
+        },
+      });
+    }
+
+    return newGameState;
+  };
+
   //end of list
 
   return {
@@ -1845,5 +1951,8 @@ export const useSkillEffects = () => {
     diffusionR3,
     aegis1,
     disruptionField1,
+    magneticShockwave1,
+    magneticShockwave2,
+    magneticShockwave3,
   };
 };

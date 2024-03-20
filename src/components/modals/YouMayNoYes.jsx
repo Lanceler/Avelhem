@@ -173,6 +173,28 @@ const YouMayNoYes = (props) => {
         );
         break;
 
+      case "Magnetic Shockwave 2nd Paralyze": // "Magnetic Shockwave2.1"
+        props.enterSelectUnitMode(
+          props.details.adjacentEnemies,
+          props.unit,
+          newGameState,
+          null,
+          "paralyze1",
+          null
+        );
+        break;
+
+      case "Magnetic Shockwave Blast": // "Magnetic Shockwave3.1"
+        props.enterSelectUnitMode(
+          props.details.adjacentEnemies,
+          props.unit,
+          newGameState,
+          null,
+          "blast",
+          null
+        );
+        break;
+
       default:
         break;
     }
