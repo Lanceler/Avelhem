@@ -48,6 +48,13 @@ const SelectSkillReveal = (props) => {
         newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
         break;
 
+      case "Arsenal Onslaught Paralyze":
+        newGameState.currentResolution.push({
+          resolution: "Arsenal Onslaught3.5",
+          unit: unit,
+        });
+        break;
+
       default:
         break;
     }

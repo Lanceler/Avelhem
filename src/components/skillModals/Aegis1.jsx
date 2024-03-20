@@ -33,13 +33,6 @@ const Aegis1 = (props) => {
     dispatch(updateState(newGameState));
   };
 
-  const handleSkip = () => {
-    //end "Aegis1"
-    newGameState.currentResolution.pop();
-
-    dispatch(updateState(newGameState));
-  };
-
   const handleWard = () => {
     if (canWard) {
       //end "Aegis1"
@@ -89,7 +82,6 @@ const Aegis1 = (props) => {
             <h4>Spend 1 skill to grant them Ward for 1 turn.</h4>
           </div>
         </div>
-        <button onClick={() => handleSkip()}>Skip</button>
       </div>
     </div>
   );

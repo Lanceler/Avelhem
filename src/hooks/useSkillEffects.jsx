@@ -1953,6 +1953,96 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
+  const arsenalOnslaught1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Arsenal Onslaught" resolution
+    newGameState.currentResolution.pop();
+
+    //giveUnit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation = unit.activation + 1)
+      : (unit.temporary.activation = 1);
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    newGameState.currentResolution.push({
+      resolution: "Arsenal Onslaught2",
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Arsenal Onslaught1",
+      unit: unit,
+    });
+
+    return newGameState;
+  };
+
+  const arsenalOnslaught2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Arsenal Onslaught2" resolution
+    newGameState.currentResolution.pop();
+
+    if (
+      unit !== null &&
+      !isMuted(unit) &&
+      getZonesWithEnemies(unit, 1).length > 0 &&
+      newGameState[unit.player].skillHand.length > 0
+    ) {
+      newGameState.currentResolution.push({
+        resolution: "Arsenal Onslaught4",
+        unit: unit,
+      });
+
+      newGameState.currentResolution.push({
+        resolution: "Arsenal Onslaught3",
+        unit: unit,
+        details: {
+          title: "Arsenal Onslaught",
+          message:
+            "You may reveal 1 Metal skill to paralyze an adjacent enemy for 1 turn.",
+          restriction: ["07-01", "07-02", "07-03"],
+          reason: "Arsenal Onslaught Paralyze",
+        },
+      });
+    }
+
+    return newGameState;
+  };
+
+  const arsenalOnslaught3 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Arsenal Onslaught4" resolution
+    newGameState.currentResolution.pop();
+
+    if (
+      unit !== null &&
+      !isMuted(unit) &&
+      getZonesWithEnemies(unit, 1).length > 0 &&
+      newGameState[unit.player].skillHand.length > 0
+    ) {
+      newGameState.currentResolution.push({
+        resolution: "Arsenal Onslaught5",
+        unit: unit,
+        details: {
+          title: "Arsenal Onslaught",
+          message:
+            "You may spend 1 skill to strike or blast an adjacent enemy.",
+          restriction: null,
+          reason: "Arsenal Onslaught Attack",
+        },
+      });
+    }
+
+    return newGameState;
+  };
+
   //end of list
 
   return {
@@ -2016,5 +2106,8 @@ export const useSkillEffects = () => {
     magneticShockwave3,
     reinforce1,
     reinforceR1,
+    arsenalOnslaught1,
+    arsenalOnslaught2,
+    arsenalOnslaught3,
   };
 };

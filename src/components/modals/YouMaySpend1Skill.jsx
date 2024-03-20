@@ -89,6 +89,13 @@ const YouMaySpend1Skill = (props) => {
         });
         break;
 
+      case "Arsenal Onslaught Attack":
+        newGameState.currentResolution.push({
+          resolution: "Arsenal Onslaught6",
+          unit: props.unit,
+        });
+        break;
+
       default:
         break;
     }

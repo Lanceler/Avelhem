@@ -56,6 +56,7 @@ import Geomancy1 from "./skillModals/Geomancy1";
 import Surge1 from "./skillModals/Surge1";
 import Aegis1 from "./skillModals/Aegis1";
 import Reinforce1 from "./skillModals/Reinforce1";
+import ArsenalOnslaught1 from "./skillModals/ArsenalOnslaught1";
 
 import ContingentElimination from "./skillModals/ContingentElimination";
 import ContingentMotion from "./skillModals/ContingentMotion";
@@ -190,6 +191,9 @@ const Board = (props) => {
     magneticShockwave3,
     reinforce1,
     reinforceR1,
+    arsenalOnslaught1,
+    arsenalOnslaught2,
+    arsenalOnslaught3,
   } = useSkillEffects();
 
   const { getSkillById } = useCardDatabase();
@@ -2248,6 +2252,115 @@ const Board = (props) => {
                   reinforceR1(lastResolution.unit)
                 )}
               </>
+            )}
+          </>
+        );
+
+      case "Activating Arsenal Onslaught":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  arsenalOnslaught1(lastResolution.unit)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Arsenal Onslaught1":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>{selectEnemies(lastResolution.unit, 1, null, "strike", null)}</>
+            )}
+          </>
+        );
+
+      case "Arsenal Onslaught1.1":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>{selectEnemies(lastResolution.unit, 1, null, "blast", null)}</>
+            )}
+          </>
+        );
+
+      case "Arsenal Onslaught2":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  arsenalOnslaught2(lastResolution.unit)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Arsenal Onslaught3":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <SelectSkillReveal
+                unit={lastResolution.unit}
+                details={lastResolution.details}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Arsenal Onslaught3.5":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {selectEnemies(lastResolution.unit, 1, null, "paralyze1", null)}
+              </>
+            )}
+          </>
+        );
+
+      case "Arsenal Onslaught4":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  arsenalOnslaught3(lastResolution.unit)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Arsenal Onslaught5":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <YouMaySpend1Skill
+                unit={lastResolution.unit}
+                details={lastResolution.details}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Arsenal Onslaught6":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <ArsenalOnslaught1
+                unit={lastResolution.unit}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
             )}
           </>
         );
