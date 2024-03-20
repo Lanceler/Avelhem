@@ -1017,6 +1017,41 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const activateReinforceAndResonate = (newGameState, unit, resonator) => {
+    //end Select Resonator resolution
+    newGameState.currentResolution.pop();
+
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Resonance Conclusion",
+      player: self,
+      unit: unit,
+      skill: "07-02",
+      skillConclusion: "discard",
+      resonator: resonator,
+      resonatorConclusion: "discard",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Resonating Reinforce",
+      unit: unit,
+      resonator: resonator,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Animation Delay",
+      priority: self,
+    });
+
+    newGameState.activatingSkill.push("07-02");
+    newGameState.activatingResonator.push(resonator);
+    newGameState.activatingUnit.push(unit);
+
+    return newGameState;
+  };
+
   const activateSymphonicScreech = (newGameState, unit, victim) => {
     //remove symphonic screech from hand but do not discard
     newGameState[self].skillHand.splice(
@@ -1095,6 +1130,10 @@ export const useRecurringEffects = () => {
 
       case "07-01":
         return activateMagneticShockwave(newGameState, unit);
+      case "07-02":
+        return activateReinforce(newGameState, unit);
+      case "07-04":
+        return activateArsenalOnslaught(newGameState, unit);
 
       default:
         return newGameState;
@@ -1119,6 +1158,8 @@ export const useRecurringEffects = () => {
         return activateZipAndZapAndResonate(newGameState, unit, resonator);
       case "06-02":
         return activateDiffusionAndResonate(newGameState, unit, resonator);
+      case "07-02":
+        return activateReinforceAndResonate(newGameState, unit, resonator);
 
       default:
         return newGameState;
@@ -1981,6 +2022,12 @@ export const useRecurringEffects = () => {
 
       case "06-02":
         return canDiffusionR(unit);
+
+      case "07-02":
+        return canActivateSkill(unit, skill);
+
+      case "08-02":
+        return canActivateSkill(unit, skill);
 
       default:
         return false;

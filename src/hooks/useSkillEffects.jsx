@@ -239,7 +239,7 @@ export const useSkillEffects = () => {
     unit.hp = 2;
     unit.fever = 2;
     unit.enhancements.shield
-      ? Math.max(2, unit.enhancements.shield)
+      ? (unit.enhancements.shield = Math.max(2, unit.enhancements.shield))
       : (unit.enhancements.shield = 2);
 
     //giveUnit activationCounter
@@ -467,11 +467,9 @@ export const useSkillEffects = () => {
     //give unit ward and boosts
     unit.boosts.glacialTorrent = 2;
 
-    if (unit.enhancements.ward > 0) {
-      unit.enhancements.ward = Math.max(unit.enhancements.ward, 3);
-    } else {
-      unit.enhancements.ward = 3;
-    }
+    unit.enhancements.ward
+      ? (unit.enhancements.ward = Math.max(3, unit.enhancements.ward))
+      : (unit.enhancements.ward = 3);
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
@@ -583,6 +581,8 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation = unit.activation + 1)
       : (unit.temporary.activation = 1);
 
+    unit.boosts.galeConjuration = true;
+
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     if (resonator !== "SA-02") {
@@ -599,10 +599,6 @@ export const useSkillEffects = () => {
       resolution: "Gale ConjurationR1",
       unit: unit,
     });
-
-    unit.boosts.galeConjuration = true;
-
-    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     if (newGameState[unit.player].skillHand.length > 0) {
       newGameState.currentResolution.push({
@@ -1710,7 +1706,7 @@ export const useSkillEffects = () => {
     newGameState.currentResolution.pop();
 
     unit.enhancements.shield
-      ? Math.max(3, unit.enhancements.shield)
+      ? (unit.enhancements.shield = Math.max(3, unit.enhancements.shield))
       : (unit.enhancements.shield = 3);
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
@@ -1761,7 +1757,7 @@ export const useSkillEffects = () => {
       : (unit.temporary.activation = 1);
 
     unit.enhancements.shield
-      ? Math.max(2, unit.enhancements.shield)
+      ? (unit.enhancements.shield = Math.max(2, unit.enhancements.shield))
       : (unit.enhancements.shield = 2);
 
     unit.enhancements.disruption = 2;
@@ -1893,6 +1889,70 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
+  const reinforce1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Reinforce" resolution
+    newGameState.currentResolution.pop();
+
+    //giveUnit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation = unit.activation + 1)
+      : (unit.temporary.activation = 1);
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    newGameState.currentResolution.push({
+      resolution: "Reinforce1",
+      unit: unit,
+    });
+
+    return newGameState;
+  };
+
+  const reinforceR1 = (unitInfo, resonator) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Resonating Reinforce" resolution
+    newGameState.currentResolution.pop();
+
+    //giveUnit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation = unit.activation + 1)
+      : (unit.temporary.activation = 1);
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    if (resonator !== "SA-02") {
+      newGameState.currentResolution.push({
+        resolution: "Retain resonant skill",
+        unit: unit,
+        player: unit.player,
+        skill: "07-02",
+        resonator: resonator,
+      });
+    }
+
+    newGameState.currentResolution.push({
+      resolution: "Reinforce1",
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Animation Delay",
+      priority: self,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Reinforce1",
+      unit: unit,
+    });
+
+    return newGameState;
+  };
+
   //end of list
 
   return {
@@ -1954,5 +2014,7 @@ export const useSkillEffects = () => {
     magneticShockwave1,
     magneticShockwave2,
     magneticShockwave3,
+    reinforce1,
+    reinforceR1,
   };
 };

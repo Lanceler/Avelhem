@@ -55,6 +55,7 @@ import Upheaval1 from "./skillModals/Upheaval1";
 import Geomancy1 from "./skillModals/Geomancy1";
 import Surge1 from "./skillModals/Surge1";
 import Aegis1 from "./skillModals/Aegis1";
+import Reinforce1 from "./skillModals/Reinforce1";
 
 import ContingentElimination from "./skillModals/ContingentElimination";
 import ContingentMotion from "./skillModals/ContingentMotion";
@@ -187,6 +188,8 @@ const Board = (props) => {
     magneticShockwave1,
     magneticShockwave2,
     magneticShockwave3,
+    reinforce1,
+    reinforceR1,
   } = useSkillEffects();
 
   const { getSkillById } = useCardDatabase();
@@ -2208,6 +2211,43 @@ const Board = (props) => {
                 updateFirebase={updateFirebase}
                 hideOrRevealModale={hideOrRevealModale}
               />
+            )}
+          </>
+        );
+
+      case "Activating Reinforce":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(reinforce1(lastResolution.unit))}
+              </>
+            )}
+          </>
+        );
+
+      case "Reinforce1":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <Reinforce1
+                unit={lastResolution.unit}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Resonating Reinforce":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  reinforceR1(lastResolution.unit)
+                )}
+              </>
             )}
           </>
         );
