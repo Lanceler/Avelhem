@@ -501,6 +501,41 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const activateEfflorescenceAndResonate = (newGameState, unit, resonator) => {
+    //end Select Resonator resolution
+    newGameState.currentResolution.pop();
+
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Resonance Conclusion",
+      player: self,
+      unit: unit,
+      skill: "08-02",
+      skillConclusion: "discard",
+      resonator: resonator,
+      resonatorConclusion: "discard",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Resonating Efflorescence",
+      unit: unit,
+      resonator: resonator,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Animation Delay",
+      priority: self,
+    });
+
+    newGameState.activatingSkill.push("08-02");
+    newGameState.activatingResonator.push(resonator);
+    newGameState.activatingUnit.push(unit);
+
+    return newGameState;
+  };
+
   const activateFrenzyBlade = (newGameState, unit) => {
     //end Triggering Target resolution
     // newGameState.currentResolution.pop() <-- NOT needed
@@ -1135,6 +1170,13 @@ export const useRecurringEffects = () => {
       case "07-04":
         return activateArsenalOnslaught(newGameState, unit);
 
+      case "08-01":
+        return activateSowAndReap(newGameState, unit);
+      case "08-02":
+        return activateEfflorescence(newGameState, unit);
+      case "08-04":
+        return activateCastleOfThorns(newGameState, unit);
+
       default:
         return newGameState;
     }
@@ -1160,6 +1202,8 @@ export const useRecurringEffects = () => {
         return activateDiffusionAndResonate(newGameState, unit, resonator);
       case "07-02":
         return activateReinforceAndResonate(newGameState, unit, resonator);
+      case "08-02":
+        return activateEfflorescenceAndResonate(newGameState, unit, resonator);
 
       default:
         return newGameState;
@@ -2206,8 +2250,8 @@ export const useRecurringEffects = () => {
       case "07-04":
         return canStrike(unit);
 
-      // case "08-01":
-      //   return canSowAndReap(unit);
+      case "08-01":
+        return canSowAndReapBlast(unit) || canSowAndReapStrike(unit);
       case "08-02":
         return true;
       case "08-03":
@@ -2230,6 +2274,38 @@ export const useRecurringEffects = () => {
   const canMove = (unit) => {
     if (getVacantAdjacentZones(unit).length > 0) {
       return true;
+    }
+
+    return false;
+  };
+
+  const canSowAndReapBlast = (unitInfo) => {
+    const adjacentEnemies = getZonesWithEnemies(unitInfo, 1);
+    const zones = JSON.parse(localGameState.zones);
+
+    for (let i of adjacentEnemies) {
+      const zone = zones[Math.floor(i / 5)][i % 5];
+      const enemy = localGameState[zone.player].units[zone.unitIndex];
+
+      if (isRooted(enemy)) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
+  const canSowAndReapStrike = (unitInfo) => {
+    const adjacentAllies = getZonesWithAllies(unitInfo, 1, false); // excludes self
+    const zones = JSON.parse(localGameState.zones);
+
+    for (let i of adjacentAllies) {
+      const zone = zones[Math.floor(i / 5)][i % 5];
+      const ally = localGameState[zone.player].units[zone.unitIndex];
+
+      if (canStrike(ally) && canSowAndReapBlast(ally)) {
+        return true;
+      }
     }
 
     return false;
@@ -3191,6 +3267,8 @@ export const useRecurringEffects = () => {
     canActivateResonance,
     canActivateSkill,
     canBlast,
+    canSowAndReapBlast,
+    canSowAndReapStrike,
     canMove,
     canStrike,
     drawAvelhem,

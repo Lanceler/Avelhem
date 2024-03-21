@@ -156,6 +156,11 @@ export const Piece = (props) => {
                 <div className="disruption animating"></div>
               )}
 
+              {/* Plant Scion: Overgrowth */}
+              {props.unit.enhancements.overgrowth === true && (
+                <div className="overgrowth animating"></div>
+              )}
+
               <div className="piece-icon-shadow"></div>
 
               <img src={classIcon} className="scionClass" />

@@ -35,6 +35,51 @@ const YouMaySpend1Skill = (props) => {
     return false;
   };
 
+  const handleBlossom = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[props.unit.player].units[props.unit.unitIndex];
+    //note: unlike handleSelect, handleBlossom updates unit
+
+    //end Discarding Skill resolution
+    newGameState.currentResolution.pop();
+
+    unit.blossom = unit.blossom - 1;
+
+    newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+
+    switch (props.details.reason) {
+      case "Efflorescence1":
+        newGameState.currentResolution.push({
+          resolution: "Recover Skill",
+          player: self,
+          restriction: ["08-01", "08-03", "08-04"],
+          message:
+            "Recover then float 1 Plant skill other than “Efflorescence”.",
+          outcome: "Float",
+        });
+
+        newGameState.currentResolution.push({
+          resolution: "Discard Skill",
+          unit: unit,
+          player: self,
+          message: "Choose 2nd skill to spend.",
+          restriction: null,
+        });
+
+        newGameState.currentResolution.push({
+          resolution: "Animation Delay",
+          priority: self,
+        });
+        break;
+
+      default:
+        break;
+    }
+
+    dispatch(updateState(newGameState));
+    //props.updateFirebase(newGameState);
+  };
+
   const handleSelect = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -93,6 +138,30 @@ const YouMaySpend1Skill = (props) => {
         newGameState.currentResolution.push({
           resolution: "Arsenal Onslaught6",
           unit: props.unit,
+        });
+        break;
+
+      case "Efflorescence1":
+        newGameState.currentResolution.push({
+          resolution: "Recover Skill",
+          player: self,
+          restriction: ["08-01", "08-03", "08-04"],
+          message:
+            "Recover then float 1 Plant skill other than “Efflorescence”.",
+          outcome: "Float",
+        });
+
+        newGameState.currentResolution.push({
+          resolution: "Discard Skill",
+          unit: props.unit,
+          player: self,
+          message: "Choose 2nd skill to spend.",
+          restriction: null,
+        });
+
+        newGameState.currentResolution.push({
+          resolution: "Animation Delay",
+          priority: self,
         });
         break;
 
@@ -187,6 +256,12 @@ const YouMaySpend1Skill = (props) => {
         {selectedSkill === null && (
           <button onClick={() => handleSkip()}>Skip</button>
         )}
+
+        {selectedSkill === null &&
+          props.unit !== null &&
+          props.unit.blossom > 0 && (
+            <button onClick={() => handleBlossom()}>Spend 1 Blossom</button>
+          )}
 
         {selectedSkill !== null && (
           <button onClick={() => handleSelect()}>Select</button>

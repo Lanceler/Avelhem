@@ -194,6 +194,9 @@ const Board = (props) => {
     arsenalOnslaught1,
     arsenalOnslaught2,
     arsenalOnslaught3,
+    efflorescence1,
+    efflorescenceR1,
+    efflorescenceR2,
   } = useSkillEffects();
 
   const { getSkillById } = useCardDatabase();
@@ -2361,6 +2364,59 @@ const Board = (props) => {
                 updateFirebase={updateFirebase}
                 hideOrRevealModale={hideOrRevealModale}
               />
+            )}
+          </>
+        );
+
+      case "Activating Efflorescence":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  efflorescence1(lastResolution.unit)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Efflorescence1":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <YouMaySpend1Skill
+                unit={lastResolution.unit}
+                details={lastResolution.details}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Resonating Efflorescence":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  efflorescenceR1(lastResolution.unit)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "EfflorescenceR1":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  efflorescenceR2(lastResolution.unit)
+                )}
+              </>
             )}
           </>
         );

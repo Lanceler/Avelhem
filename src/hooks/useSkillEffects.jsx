@@ -2043,6 +2043,125 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
+  const efflorescence1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Efflorescence" resolution
+    newGameState.currentResolution.pop();
+
+    //giveUnit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation = unit.activation + 1)
+      : (unit.temporary.activation = 1);
+
+    if (!unit.afflictions.burn) {
+      //burn would otherwise instantly purge overgrowth
+      unit.enhancements.overgrowth = true;
+    }
+
+    unit.blossom
+      ? (unit.blossom = Math.min(3, unit.blossom + 2))
+      : (unit.blossom = 2);
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    if (
+      ["08-01", "08-03", "08-04"].some((s) =>
+        newGameState[unit.player].skillVestige.includes(s)
+      )
+    ) {
+      newGameState.currentResolution.push({
+        resolution: "Efflorescence1",
+        unit: unit,
+        details: {
+          title: "Efflorescence",
+          message:
+            "You may spend 2 skills to recover then float 1 Plant skill other than “Efflorescence”. Select 1st skill.",
+          restriction: null,
+          reason: "Efflorescence1",
+        },
+      });
+    }
+
+    return newGameState;
+  };
+
+  const efflorescenceR1 = (unitInfo, resonator) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Resonating Efflorescence" resolution
+    newGameState.currentResolution.pop();
+
+    //giveUnit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation = unit.activation + 1)
+      : (unit.temporary.activation = 1);
+
+    if (resonator !== "SA-02") {
+      newGameState.currentResolution.push({
+        resolution: "Retain resonant skill",
+        unit: unit,
+        player: unit.player,
+        skill: "08-02",
+        resonator: resonator,
+      });
+    }
+
+    if (!unit.afflictions.burn) {
+      //burn would otherwise instantly purge overgrowth
+      unit.enhancements.overgrowth = true;
+    }
+
+    unit.blossom
+      ? (unit.blossom = Math.min(3, unit.blossom + 2))
+      : (unit.blossom = 2);
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    newGameState.currentResolution.push({
+      resolution: "EfflorescenceR1",
+      unit: unit,
+    });
+
+    if (
+      ["08-01", "08-03", "08-04"].some((s) =>
+        newGameState[unit.player].skillVestige.includes(s)
+      )
+    ) {
+      newGameState.currentResolution.push({
+        resolution: "Efflorescence1",
+        unit: unit,
+        details: {
+          title: "Efflorescence",
+          message:
+            "You may spend 2 skills to recover then float 1 Plant skill other than “Efflorescence”. Select 1st skill.",
+          restriction: null,
+          reason: "Efflorescence1",
+        },
+      });
+    }
+
+    return newGameState;
+  };
+
+  const efflorescenceR2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "EfflorescenceR1" resolution
+    newGameState.currentResolution.pop();
+
+    if (unit !== null && !isMuted(unit)) {
+      unit.hp = 2;
+    }
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    return newGameState;
+  };
+
   //end of list
 
   return {
@@ -2109,5 +2228,8 @@ export const useSkillEffects = () => {
     arsenalOnslaught1,
     arsenalOnslaught2,
     arsenalOnslaught3,
+    efflorescence1,
+    efflorescenceR1,
+    efflorescenceR2,
   };
 };

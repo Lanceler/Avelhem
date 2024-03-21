@@ -35,6 +35,21 @@ const SelectSkillDiscard = (props) => {
     return false;
   };
 
+  const handleBlossom = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[props.unit.player].units[props.unit.unitIndex];
+
+    //end Discarding Skill resolution
+    newGameState.currentResolution.pop();
+
+    unit.blossom = unit.blossom - 1;
+
+    newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+
+    dispatch(updateState(newGameState));
+    //props.updateFirebase(newGameState);
+  };
+
   const handleSelect = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -113,6 +128,12 @@ const SelectSkillDiscard = (props) => {
             </div>
           ))}
         </div>
+
+        {selectedSkill === null &&
+          props.unit !== null &&
+          props.unit.blossom > 0 && (
+            <button onClick={() => handleBlossom()}>Spend 1 Blossom</button>
+          )}
 
         {selectedSkill !== null && (
           <button onClick={() => handleSelect()}>Select</button>
