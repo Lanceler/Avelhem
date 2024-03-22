@@ -93,7 +93,7 @@ const ContingentElimination = (props) => {
     }
 
     dispatch(updateState(newGameState));
-    props.updateFirebase(newGameState); // might remove this line of code
+    // props.updateFirebase(newGameState); // might remove this line of code
   };
 
   const handleViewBoard = () => {

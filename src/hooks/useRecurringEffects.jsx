@@ -1442,7 +1442,7 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
-  const activateViridianGrave = (newGameState, unit) => {
+  const activateViridianGrave = (newGameState, unit, victim) => {
     //end Triggering Target resolution
     // newGameState.currentResolution.pop() <-- NOT needed
 
@@ -1457,6 +1457,7 @@ export const useRecurringEffects = () => {
     newGameState.currentResolution.push({
       resolution: "Activating Viridian Grave",
       unit: unit,
+      victim: victim,
     });
 
     newGameState.activatingSkill.push("08-03");
@@ -3257,6 +3258,7 @@ export const useRecurringEffects = () => {
     activateSkillAndResonate,
     activateSymphonicScreech,
     activateThunderThaumaturge,
+    activateViridianGrave,
     applyBurn,
     applyDamage,
     applyFrostbite,

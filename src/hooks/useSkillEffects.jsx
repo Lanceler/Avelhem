@@ -21,6 +21,7 @@ export const useSkillEffects = () => {
     getZonesWithEnemiesAfflicted,
     isAdjacent,
     isMuted,
+    isRooted,
     paralyze1,
     paralyze2,
   } = useRecurringEffects();
@@ -2218,6 +2219,44 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
+  const viridianGrave1 = (unitInfo, victimInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //DO NOT UPDATE victim (we are using their information right before they were eliminated
+    //let victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
+
+    //end "Activating Viridian Grave" resolution
+    newGameState.currentResolution.pop();
+
+    //give unit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation = unit.activation + 1)
+      : (unit.temporary.activation = 1);
+
+    unit.blossom = 3;
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    if (isRooted(victimInfo)) {
+      newGameState = drawSkill(newGameState);
+      newGameState = drawSkill(newGameState);
+    }
+
+    newGameState.currentResolution.push({
+      resolution: "Viridian Grave1",
+      unit: unit,
+      details: {
+        title: "Viridian Grave",
+        message: "You may spend 1 skill to gain Shield for 3 turns.",
+        restriction: null,
+        reason: "Viridian Grave",
+      },
+    });
+
+    return newGameState;
+  };
+
   //end of list
 
   return {
@@ -2289,5 +2328,6 @@ export const useSkillEffects = () => {
     efflorescence1,
     efflorescenceR1,
     efflorescenceR2,
+    viridianGrave1,
   };
 };

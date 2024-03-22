@@ -107,6 +107,7 @@ const Board = (props) => {
     activateFrenzyBlade,
     activateHealingRain,
     activatePitfallTrap,
+    activateViridianGrave,
     activateSymphonicScreech,
     applyBurn,
     applyDamage,
@@ -203,6 +204,7 @@ const Board = (props) => {
     efflorescence1,
     efflorescenceR1,
     efflorescenceR2,
+    viridianGrave1,
   } = useSkillEffects();
 
   const { getSkillById } = useCardDatabase();
@@ -2490,6 +2492,42 @@ const Board = (props) => {
           </>
         );
 
+      case "Select Viridian Grave Activator":
+        return (
+          <>
+            {self === lastResolution.player && (
+              <>{selectViridianGraveActivator(lastResolution.victim)}</>
+            )}
+          </>
+        );
+
+      case "Activating Viridian Grave":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  viridianGrave1(lastResolution.unit, lastResolution.victim)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Viridian Grave1":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <YouMaySpend1Skill
+                unit={lastResolution.unit}
+                details={lastResolution.details}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
       case "Triggering Elimination Ally":
         return (
           <>
@@ -3320,6 +3358,10 @@ const Board = (props) => {
         newGameState = activateFrenzyBlade(newGameState, selectedUnit, unit);
         break;
 
+      case "viridian grave":
+        newGameState = activateViridianGrave(newGameState, selectedUnit, unit);
+        break;
+
       default:
         break;
     }
@@ -3336,6 +3378,47 @@ const Board = (props) => {
     dispatch(updateState(newGameState));
 
     updateFirebase(newGameState);
+  };
+
+  const selectViridianGraveActivator = (victim) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Select Viridian Grave Activator"
+    newGameState.currentResolution.pop();
+
+    let adjacentZones = [];
+
+    if (victim.player === self) {
+      adjacentZones = getZonesWithAllies(victim, 1, false);
+    } else {
+      adjacentZones = getZonesWithEnemies(victim, 1);
+    }
+
+    let zonesWithPlantScions = [];
+
+    for (let z of adjacentZones) {
+      const zone = zones[Math.floor(z / 5)][z % 5];
+      const unit = newGameState[zone.player].units[zone.unitIndex];
+
+      if (
+        unit.unitClass === "Plant Scion" &&
+        !isMuted(unit) &&
+        !isDisrupted(unit, 1)
+      ) {
+        zonesWithPlantScions.push(z);
+      }
+    }
+
+    setIntrudingPlayer(self);
+
+    enterSelectUnitMode(
+      zonesWithPlantScions,
+      victim,
+      newGameState,
+      null,
+      "viridian grave",
+      null
+    );
   };
 
   const selectExpandPiece = (id) => {

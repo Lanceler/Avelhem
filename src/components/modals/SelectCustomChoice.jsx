@@ -93,6 +93,7 @@ const SelectCustomChoice = (props) => {
     }
 
     dispatch(updateState(newGameState));
+    props.updateFirebase(newGameState);
   };
 
   const handleSkip = () => {
