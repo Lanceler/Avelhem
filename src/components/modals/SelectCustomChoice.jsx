@@ -14,7 +14,14 @@ const SelectCustomChoice = (props) => {
 
   const [selectedChoice, setSelectedChoice] = useState(null);
 
-  const { blast, canStrike, drawSkill, strike } = useRecurringEffects();
+  const {
+    blast,
+    canSowAndReapBlast,
+    canSowAndReapStrike,
+    canStrike,
+    drawSkill,
+    strike,
+  } = useRecurringEffects();
 
   let newGameState = JSON.parse(JSON.stringify(localGameState));
   let unit = null;
@@ -42,6 +49,13 @@ const SelectCustomChoice = (props) => {
       canSecondChoice = true;
       ChoiceFirstMessage = "Strike.";
       ChoiceSecondMessage = "Blast.";
+      break;
+
+    case "Sow and Reap":
+      canFirstChoice = canSowAndReapBlast(unit);
+      canSecondChoice = canSowAndReapStrike(unit);
+      ChoiceFirstMessage = "Blast (bypass Shield) an adjacent rooted enemy.";
+      ChoiceSecondMessage = "Prompt an adjacent ally to strike a rooted enemy.";
       break;
   }
 

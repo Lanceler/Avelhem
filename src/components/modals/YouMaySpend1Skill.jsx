@@ -13,7 +13,7 @@ const YouMaySpend1Skill = (props) => {
   const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const { getZonesWithAllies, isMuted } = useRecurringEffects();
+  const { drawSkill, getZonesWithAllies, isMuted } = useRecurringEffects();
 
   const [selectedSkill, setSelectedSkill] = useState(null);
 
@@ -70,6 +70,11 @@ const YouMaySpend1Skill = (props) => {
           resolution: "Animation Delay",
           priority: self,
         });
+        break;
+
+      case "Castle of Thorns":
+        newGameState = drawSkill(newGameState);
+        newGameState = drawSkill(newGameState);
         break;
 
       default:
@@ -163,6 +168,11 @@ const YouMaySpend1Skill = (props) => {
           resolution: "Animation Delay",
           priority: self,
         });
+        break;
+
+      case "Castle of Thorns":
+        newGameState = drawSkill(newGameState);
+        newGameState = drawSkill(newGameState);
         break;
 
       default:

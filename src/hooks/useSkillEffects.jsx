@@ -36,7 +36,7 @@ export const useSkillEffects = () => {
     //consume unit's fever
     unit.fever = unit.fever - 1;
 
-    //giveUnit activationCounter
+    //give unit activationCounter
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
@@ -69,7 +69,7 @@ export const useSkillEffects = () => {
     //consume unit's fever
     unit.fever = unit.fever - 1;
 
-    //giveUnit activationCounter
+    //give unit activationCounter
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
@@ -102,7 +102,7 @@ export const useSkillEffects = () => {
     //consume unit's fever
     unit.fever = unit.fever - 1;
 
-    //giveUnit activationCounter
+    //give unit activationCounter
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
@@ -178,7 +178,7 @@ export const useSkillEffects = () => {
     //consume unit's fever
     unit.fever = unit.fever - 1;
 
-    //giveUnit activationCounter
+    //give unit activationCounter
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
@@ -243,7 +243,7 @@ export const useSkillEffects = () => {
       ? (unit.enhancements.shield = Math.max(2, unit.enhancements.shield))
       : (unit.enhancements.shield = 2);
 
-    //giveUnit activationCounter
+    //give unit activationCounter
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
@@ -277,7 +277,7 @@ export const useSkillEffects = () => {
     //end "Activating Purification" resolution
     newGameState.currentResolution.pop();
 
-    //giveUnit activationCounter
+    //give unit activationCounter
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
@@ -321,7 +321,7 @@ export const useSkillEffects = () => {
     //end "Activating Frigid Breath" resolution
     newGameState.currentResolution.pop();
 
-    //giveUnit activationCounter
+    //give unit activationCounter
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
@@ -374,7 +374,7 @@ export const useSkillEffects = () => {
     //end "Frigid Breath" resolution
     newGameState.currentResolution.pop();
 
-    //giveUnit activationCounter
+    //give unit activationCounter
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
@@ -460,7 +460,7 @@ export const useSkillEffects = () => {
     //end "Activating Glacial Torrent" resolution
     newGameState.currentResolution.pop();
 
-    //giveUnit activationCounter
+    //give unit activationCounter
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
@@ -489,7 +489,7 @@ export const useSkillEffects = () => {
     //end "Activating Aerial Impetus" resolution
     newGameState.currentResolution.pop();
 
-    //giveUnit activationCounter
+    //give unit activationCounter
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
@@ -548,7 +548,7 @@ export const useSkillEffects = () => {
     //end "Activating Gale Conjuration" resolution
     newGameState.currentResolution.pop();
 
-    //giveUnit activationCounter
+    //give unit activationCounter
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
@@ -577,7 +577,7 @@ export const useSkillEffects = () => {
     //end "Resonating Gale Conjuration" resolution
     newGameState.currentResolution.pop();
 
-    //giveUnit activationCounter
+    //give unit activationCounter
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
@@ -669,11 +669,19 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
-  const symphonicScreech1 = (unit, victim) => {
+  const symphonicScreech1 = (unitInfo, victim) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
     //end "Activating Symphonic Screech" resolution
     newGameState.currentResolution.pop();
+
+    //give unit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation += 1)
+      : (unit.temporary.activation = 1);
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     //temporarily remove the skill conclusion of Screech
     const symphonicScreechConclusion = newGameState.currentResolution.pop();
@@ -717,7 +725,7 @@ export const useSkillEffects = () => {
     //end "Activating Cataclysmic Tempest" resolution
     newGameState.currentResolution.pop();
 
-    //giveUnit activationCounter
+    //give unit activationCounter
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
@@ -889,7 +897,7 @@ export const useSkillEffects = () => {
     //raise hp to 2 (consider fact that Land Scion HP can reach 3)
     unit.hp = Math.max(2, victim.hp);
 
-    //giveUnit activationCounter
+    //give unit activationCounter
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
@@ -938,7 +946,7 @@ export const useSkillEffects = () => {
     //end "Activating Upheaval" resolution
     newGameState.currentResolution.pop();
 
-    //giveUnit activationCounter
+    //give unit activationCounter
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
@@ -1005,7 +1013,7 @@ export const useSkillEffects = () => {
     //end "Resonating Upheaval" resolution
     newGameState.currentResolution.pop();
 
-    //giveUnit activationCounter
+    //give unit activationCounter
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
@@ -1072,7 +1080,7 @@ export const useSkillEffects = () => {
     //end "Activating Pitfall Trap" resolution
     newGameState.currentResolution.pop();
 
-    //giveUnit activationCounter
+    //give unit activationCounter
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
@@ -1142,7 +1150,7 @@ export const useSkillEffects = () => {
     //end "Activating Geomancy" resolution
     newGameState.currentResolution.pop();
 
-    //giveUnit activationCounter
+    //give unit activationCounter
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
@@ -1218,7 +1226,7 @@ export const useSkillEffects = () => {
     //end "Activating Chain Lightning" resolution
     newGameState.currentResolution.pop();
 
-    //giveUnit activationCounter
+    //give unit activationCounter
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
@@ -1300,7 +1308,7 @@ export const useSkillEffects = () => {
     //end "Activating Zip and Zap" resolution
     newGameState.currentResolution.pop();
 
-    //giveUnit activationCounter
+    //give unit activationCounter
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
@@ -1354,7 +1362,7 @@ export const useSkillEffects = () => {
     //end "Resonating Zip and Zap" resolution
     newGameState.currentResolution.pop();
 
-    //giveUnit activationCounter
+    //give unit activationCounter
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
@@ -1430,7 +1438,7 @@ export const useSkillEffects = () => {
     //end "Activating Thunder Thaumaturge" resolution
     newGameState.currentResolution.pop();
 
-    //giveUnit activationCounter
+    //give unit activationCounter
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
@@ -1493,7 +1501,7 @@ export const useSkillEffects = () => {
     //end "Activating Valiant Spark" resolution
     newGameState.currentResolution.pop();
 
-    //giveUnit activationCounter
+    //give unit activationCounter
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
@@ -1532,7 +1540,7 @@ export const useSkillEffects = () => {
     //end "Activating Surge" resolution
     newGameState.currentResolution.pop();
 
-    //giveUnit activationCounter
+    //give unit activationCounter
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
@@ -1562,7 +1570,7 @@ export const useSkillEffects = () => {
     //end "Activating Diffusion" resolution
     newGameState.currentResolution.pop();
 
-    //giveUnit activationCounter
+    //give unit activationCounter
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
@@ -1631,7 +1639,7 @@ export const useSkillEffects = () => {
     //end "Resonating Diffusion" resolution
     newGameState.currentResolution.pop();
 
-    //giveUnit activationCounter
+    //give unit activationCounter
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
@@ -1752,7 +1760,7 @@ export const useSkillEffects = () => {
     //end "Activating Disruption Field" resolution
     newGameState.currentResolution.pop();
 
-    //giveUnit activationCounter
+    //give unit activationCounter
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
@@ -1796,7 +1804,7 @@ export const useSkillEffects = () => {
     //end "Activating Magnetic Shockwave" resolution
     newGameState.currentResolution.pop();
 
-    //giveUnit activationCounter
+    //give unit activationCounter
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
@@ -1897,7 +1905,7 @@ export const useSkillEffects = () => {
     //end "Activating Reinforce" resolution
     newGameState.currentResolution.pop();
 
-    //giveUnit activationCounter
+    //give unit activationCounter
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
@@ -1919,7 +1927,7 @@ export const useSkillEffects = () => {
     //end "Resonating Reinforce" resolution
     newGameState.currentResolution.pop();
 
-    //giveUnit activationCounter
+    //give unit activationCounter
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
@@ -1961,7 +1969,7 @@ export const useSkillEffects = () => {
     //end "Activating Frenzy Blade" resolution
     newGameState.currentResolution.pop();
 
-    //giveUnit activationCounter
+    //give unit activationCounter
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
@@ -2017,7 +2025,7 @@ export const useSkillEffects = () => {
     //end "Activating Arsenal Onslaught" resolution
     newGameState.currentResolution.pop();
 
-    //giveUnit activationCounter
+    //give unit activationCounter
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
@@ -2100,6 +2108,55 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
+  const sowAndReap1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Sow And Reap" resolution
+    newGameState.currentResolution.pop();
+
+    //give unit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation += 1)
+      : (unit.temporary.activation = 1);
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    newGameState.currentResolution.push({
+      resolution: "Sow and Reap2",
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Sow and Reap1",
+      unit: unit,
+      details: {
+        title: "Sow and Reap",
+        reason: "Sow and Reap",
+      },
+    });
+
+    return newGameState;
+  };
+
+  const sowAndReap2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Sow and Reap2" resolution
+    newGameState.currentResolution.pop();
+
+    if (unit !== null && !isMuted(unit)) {
+      unit.blossom
+        ? (unit.blossom = Math.min(3, unit.blossom + 1))
+        : (unit.blossom = 1);
+    }
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    return newGameState;
+  };
+
   const efflorescence1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
@@ -2107,7 +2164,7 @@ export const useSkillEffects = () => {
     //end "Activating Efflorescence" resolution
     newGameState.currentResolution.pop();
 
-    //giveUnit activationCounter
+    //give unit activationCounter
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
@@ -2151,7 +2208,7 @@ export const useSkillEffects = () => {
     //end "Resonating Efflorescence" resolution
     newGameState.currentResolution.pop();
 
-    //giveUnit activationCounter
+    //give unit activationCounter
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
@@ -2231,7 +2288,7 @@ export const useSkillEffects = () => {
 
     //give unit activationCounter
     unit.temporary.activation
-      ? (unit.temporary.activation = unit.activation + 1)
+      ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
     unit.blossom = 3;
@@ -2251,6 +2308,40 @@ export const useSkillEffects = () => {
         message: "You may spend 1 skill to gain Shield for 3 turns.",
         restriction: null,
         reason: "Viridian Grave",
+      },
+    });
+
+    return newGameState;
+  };
+
+  const castleOfThorns1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Castle of Thorns" resolution
+    newGameState.currentResolution.pop();
+
+    //give unit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation += 1)
+      : (unit.temporary.activation = 1);
+
+    if (!unit.afflictions.burn) {
+      //burn would otherwise instantly purge overgrowth
+      unit.enhancements.overgrowth = true;
+      unit.enhancements.proliferation = 3;
+    }
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    newGameState.currentResolution.push({
+      resolution: "Castle Of Thorns1",
+      unit: unit,
+      details: {
+        title: "Castle of Thorns",
+        message: "You may spend 1 skill to draw 2 skills",
+        restriction: null,
+        reason: "Castle of Thorns",
       },
     });
 
@@ -2325,9 +2416,12 @@ export const useSkillEffects = () => {
     arsenalOnslaught1,
     arsenalOnslaught2,
     arsenalOnslaught3,
+    sowAndReap1,
+    sowAndReap2,
     efflorescence1,
     efflorescenceR1,
     efflorescenceR2,
     viridianGrave1,
+    castleOfThorns1,
   };
 };

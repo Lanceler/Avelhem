@@ -201,10 +201,13 @@ const Board = (props) => {
     arsenalOnslaught1,
     arsenalOnslaught2,
     arsenalOnslaught3,
+    sowAndReap1,
+    sowAndReap2,
     efflorescence1,
     efflorescenceR1,
     efflorescenceR2,
     viridianGrave1,
+    castleOfThorns1,
   } = useSkillEffects();
 
   const { getSkillById } = useCardDatabase();
@@ -2439,6 +2442,46 @@ const Board = (props) => {
           </>
         );
 
+      case "Activating Sow And Reap":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  sowAndReap1(lastResolution.unit)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Sow and Reap1":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <SelectCustomChoice
+                unit={lastResolution.unit}
+                details={lastResolution.details}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Sow and Reap2":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  sowAndReap2(lastResolution.unit)
+                )}
+              </>
+            )}
+          </>
+        );
+
       case "Activating Efflorescence":
         return (
           <>
@@ -2515,6 +2558,33 @@ const Board = (props) => {
         );
 
       case "Viridian Grave1":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <YouMaySpend1Skill
+                unit={lastResolution.unit}
+                details={lastResolution.details}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Activating Castle of Thorns":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  castleOfThorns1(lastResolution.unit)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Castle Of Thorns1":
         return (
           <>
             {self === lastResolution.unit.player && !hideModal && (
