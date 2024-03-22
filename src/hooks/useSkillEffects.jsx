@@ -37,7 +37,7 @@ export const useSkillEffects = () => {
 
     //giveUnit activationCounter
     unit.temporary.activation
-      ? (unit.temporary.activation = unit.activation + 1)
+      ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
@@ -70,7 +70,7 @@ export const useSkillEffects = () => {
 
     //giveUnit activationCounter
     unit.temporary.activation
-      ? (unit.temporary.activation = unit.activation + 1)
+      ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
@@ -103,7 +103,7 @@ export const useSkillEffects = () => {
 
     //giveUnit activationCounter
     unit.temporary.activation
-      ? (unit.temporary.activation = unit.activation + 1)
+      ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
@@ -179,7 +179,7 @@ export const useSkillEffects = () => {
 
     //giveUnit activationCounter
     unit.temporary.activation
-      ? (unit.temporary.activation = unit.activation + 1)
+      ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
@@ -244,7 +244,7 @@ export const useSkillEffects = () => {
 
     //giveUnit activationCounter
     unit.temporary.activation
-      ? (unit.temporary.activation = unit.activation + 1)
+      ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
@@ -278,7 +278,7 @@ export const useSkillEffects = () => {
 
     //giveUnit activationCounter
     unit.temporary.activation
-      ? (unit.temporary.activation = unit.activation + 1)
+      ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
@@ -322,7 +322,7 @@ export const useSkillEffects = () => {
 
     //giveUnit activationCounter
     unit.temporary.activation
-      ? (unit.temporary.activation = unit.activation + 1)
+      ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
@@ -375,7 +375,7 @@ export const useSkillEffects = () => {
 
     //giveUnit activationCounter
     unit.temporary.activation
-      ? (unit.temporary.activation = unit.activation + 1)
+      ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
@@ -439,7 +439,7 @@ export const useSkillEffects = () => {
 
     //give unit activationCounter
     unit.temporary.activation
-      ? (unit.temporary.activation = unit.activation + 1)
+      ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
     //heal victim
@@ -461,7 +461,7 @@ export const useSkillEffects = () => {
 
     //giveUnit activationCounter
     unit.temporary.activation
-      ? (unit.temporary.activation = unit.activation + 1)
+      ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
     //give unit ward and boosts
@@ -490,7 +490,7 @@ export const useSkillEffects = () => {
 
     //giveUnit activationCounter
     unit.temporary.activation
-      ? (unit.temporary.activation = unit.activation + 1)
+      ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
@@ -549,7 +549,7 @@ export const useSkillEffects = () => {
 
     //giveUnit activationCounter
     unit.temporary.activation
-      ? (unit.temporary.activation = unit.activation + 1)
+      ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
     unit.boosts.galeConjuration = true;
@@ -578,7 +578,7 @@ export const useSkillEffects = () => {
 
     //giveUnit activationCounter
     unit.temporary.activation
-      ? (unit.temporary.activation = unit.activation + 1)
+      ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
     unit.boosts.galeConjuration = true;
@@ -718,7 +718,7 @@ export const useSkillEffects = () => {
 
     //giveUnit activationCounter
     unit.temporary.activation
-      ? (unit.temporary.activation = unit.activation + 1)
+      ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
     delete unit.temporary.previousTarget;
@@ -890,7 +890,7 @@ export const useSkillEffects = () => {
 
     //giveUnit activationCounter
     unit.temporary.activation
-      ? (unit.temporary.activation = unit.activation + 1)
+      ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
@@ -939,7 +939,7 @@ export const useSkillEffects = () => {
 
     //giveUnit activationCounter
     unit.temporary.activation
-      ? (unit.temporary.activation = unit.activation + 1)
+      ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
     delete unit.temporary.previousTarget;
@@ -1006,7 +1006,7 @@ export const useSkillEffects = () => {
 
     //giveUnit activationCounter
     unit.temporary.activation
-      ? (unit.temporary.activation = unit.activation + 1)
+      ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
     if (resonator !== "SA-02") {
@@ -1073,7 +1073,7 @@ export const useSkillEffects = () => {
 
     //giveUnit activationCounter
     unit.temporary.activation
-      ? (unit.temporary.activation = unit.activation + 1)
+      ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
@@ -1143,7 +1143,7 @@ export const useSkillEffects = () => {
 
     //giveUnit activationCounter
     unit.temporary.activation
-      ? (unit.temporary.activation = unit.activation + 1)
+      ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
@@ -1219,7 +1219,7 @@ export const useSkillEffects = () => {
 
     //giveUnit activationCounter
     unit.temporary.activation
-      ? (unit.temporary.activation = unit.activation + 1)
+      ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
     delete unit.temporary.previousTarget;
@@ -1301,7 +1301,7 @@ export const useSkillEffects = () => {
 
     //giveUnit activationCounter
     unit.temporary.activation
-      ? (unit.temporary.activation = unit.activation + 1)
+      ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
     //use 2 charges if not resonating
@@ -1355,7 +1355,7 @@ export const useSkillEffects = () => {
 
     //giveUnit activationCounter
     unit.temporary.activation
-      ? (unit.temporary.activation = unit.activation + 1)
+      ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
     if (resonator !== "SA-02") {
@@ -1431,7 +1431,7 @@ export const useSkillEffects = () => {
 
     //giveUnit activationCounter
     unit.temporary.activation
-      ? (unit.temporary.activation = unit.activation + 1)
+      ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
     //consume charge
@@ -1494,7 +1494,7 @@ export const useSkillEffects = () => {
 
     //giveUnit activationCounter
     unit.temporary.activation
-      ? (unit.temporary.activation = unit.activation + 1)
+      ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
     if (unit.charge === 3) {
@@ -1533,7 +1533,7 @@ export const useSkillEffects = () => {
 
     //giveUnit activationCounter
     unit.temporary.activation
-      ? (unit.temporary.activation = unit.activation + 1)
+      ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
@@ -1563,7 +1563,7 @@ export const useSkillEffects = () => {
 
     //giveUnit activationCounter
     unit.temporary.activation
-      ? (unit.temporary.activation = unit.activation + 1)
+      ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
     delete unit.temporary.previousTarget;
@@ -1632,7 +1632,7 @@ export const useSkillEffects = () => {
 
     //giveUnit activationCounter
     unit.temporary.activation
-      ? (unit.temporary.activation = unit.activation + 1)
+      ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
     if (resonator !== "SA-02") {
@@ -1724,7 +1724,7 @@ export const useSkillEffects = () => {
 
     //give unit activationCounter
     unit.temporary.activation
-      ? (unit.temporary.activation = unit.activation + 1)
+      ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
@@ -1753,7 +1753,7 @@ export const useSkillEffects = () => {
 
     //giveUnit activationCounter
     unit.temporary.activation
-      ? (unit.temporary.activation = unit.activation + 1)
+      ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
     unit.enhancements.shield
@@ -1797,7 +1797,7 @@ export const useSkillEffects = () => {
 
     //giveUnit activationCounter
     unit.temporary.activation
-      ? (unit.temporary.activation = unit.activation + 1)
+      ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
     delete unit.temporary.previousTarget;
@@ -1898,7 +1898,7 @@ export const useSkillEffects = () => {
 
     //giveUnit activationCounter
     unit.temporary.activation
-      ? (unit.temporary.activation = unit.activation + 1)
+      ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
@@ -1920,7 +1920,7 @@ export const useSkillEffects = () => {
 
     //giveUnit activationCounter
     unit.temporary.activation
-      ? (unit.temporary.activation = unit.activation + 1)
+      ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
@@ -1953,6 +1953,62 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
+  const frenzyBlade1 = (unitInfo, victimInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Frenzy Blade" resolution
+    newGameState.currentResolution.pop();
+
+    //giveUnit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation += 1)
+      : (unit.temporary.activation = 1);
+
+    unit.sharpness
+      ? (unit.sharpness = Math.min(2, unit.sharpness + 1))
+      : (unit.sharpness = 1);
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    newGameState.currentResolution.push({
+      resolution: "Frenzy Blade2",
+      unit: unit,
+      details: {
+        title: "Frenzy Blade",
+        reason: "Frenzy Blade2",
+        victim: victimInfo,
+      },
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Frenzy Blade1",
+      unit: unit,
+      details: {
+        title: "Frenzy Blade",
+        reason: "Frenzy Blade1",
+      },
+    });
+
+    return newGameState;
+  };
+
+  const frenzyBlade2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Frenzy Blade1.5" resolution
+    newGameState.currentResolution.pop();
+
+    unit.enhancements.shield
+      ? (unit.enhancements.shield = Math.max(2, unit.enhancements.shield))
+      : (unit.enhancements.shield = 2);
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    return newGameState;
+  };
+
   const arsenalOnslaught1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
@@ -1962,7 +2018,7 @@ export const useSkillEffects = () => {
 
     //giveUnit activationCounter
     unit.temporary.activation
-      ? (unit.temporary.activation = unit.activation + 1)
+      ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
@@ -2052,7 +2108,7 @@ export const useSkillEffects = () => {
 
     //giveUnit activationCounter
     unit.temporary.activation
-      ? (unit.temporary.activation = unit.activation + 1)
+      ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
     if (!unit.afflictions.burn) {
@@ -2096,7 +2152,7 @@ export const useSkillEffects = () => {
 
     //giveUnit activationCounter
     unit.temporary.activation
-      ? (unit.temporary.activation = unit.activation + 1)
+      ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
     if (resonator !== "SA-02") {
@@ -2225,6 +2281,8 @@ export const useSkillEffects = () => {
     magneticShockwave3,
     reinforce1,
     reinforceR1,
+    frenzyBlade1,
+    frenzyBlade2,
     arsenalOnslaught1,
     arsenalOnslaught2,
     arsenalOnslaught3,

@@ -45,6 +45,8 @@ import TacticAdvance from "./modals/TacticAdvance";
 import TacticAssault from "./modals/TacticAssault";
 import VirtueBlastBlock from "./modals/VirtueBlastBlock";
 
+import SelectCustomChoice from "./modals/SelectCustomChoice";
+
 import IgnitionPropulsion1 from "./skillModals/IgnitionPropulsion1";
 import Purification2 from "./skillModals/Purification2";
 import FrigidBreathResonance1 from "./skillModals/FrigidBreathResonance1";
@@ -61,6 +63,7 @@ import ArsenalOnslaught1 from "./skillModals/ArsenalOnslaught1";
 import ContingentElimination from "./skillModals/ContingentElimination";
 import ContingentMotion from "./skillModals/ContingentMotion";
 import ContingentSurvivalAlly from "./skillModals/ContingentSurvivalAlly";
+import ContingentSurvivalEnemy from "./skillModals/ContingentSurvivalEnemy";
 import ContingentSymphonicScreech from "./skillModals/ContingentSymphonicScreech";
 import ContingentTarget from "./skillModals/ContingentTarget";
 
@@ -101,6 +104,7 @@ const Board = (props) => {
 
   const {
     activateAegis,
+    activateFrenzyBlade,
     activateHealingRain,
     activatePitfallTrap,
     activateSymphonicScreech,
@@ -191,6 +195,8 @@ const Board = (props) => {
     magneticShockwave3,
     reinforce1,
     reinforceR1,
+    frenzyBlade1,
+    frenzyBlade2,
     arsenalOnslaught1,
     arsenalOnslaught2,
     arsenalOnslaught3,
@@ -2259,6 +2265,69 @@ const Board = (props) => {
           </>
         );
 
+      case "Select Frenzy Blade Activator":
+        return (
+          <>
+            {self === lastResolution.player && (
+              <>{selectFrenzyBladeActivator(lastResolution.victim)}</>
+            )}
+          </>
+        );
+
+      case "Activating Frenzy Blade":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  frenzyBlade1(lastResolution.unit, lastResolution.victim)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Frenzy Blade1":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <SelectCustomChoice
+                unit={lastResolution.unit}
+                details={lastResolution.details}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Frenzy Blade1.5":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  frenzyBlade2(lastResolution.unit)
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Frenzy Blade2":
+        return (
+          <>
+            {self === lastResolution.unit.player && !hideModal && (
+              <SelectCustomChoice
+                unit={lastResolution.unit}
+                details={lastResolution.details}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
       case "Activating Arsenal Onslaught":
         return (
           <>
@@ -2475,6 +2544,22 @@ const Board = (props) => {
           <>
             {self === lastResolution.player && !hideModal && (
               <ContingentSurvivalAlly
+                attacker={lastResolution.attacker}
+                victim={lastResolution.victim}
+                updateFirebase={updateFirebase}
+                enterSelectUnitMode={enterSelectUnitMode}
+                hideOrRevealModale={hideOrRevealModale}
+                setIntrudingPlayer={setIntrudingPlayer}
+              />
+            )}
+          </>
+        );
+
+      case "Triggering Survival Enemy":
+        return (
+          <>
+            {self === lastResolution.player && !hideModal && (
+              <ContingentSurvivalEnemy
                 attacker={lastResolution.attacker}
                 victim={lastResolution.victim}
                 updateFirebase={updateFirebase}
@@ -3020,6 +3105,40 @@ const Board = (props) => {
     }
   };
 
+  const selectFrenzyBladeActivator = (victim) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Select Frenzy Blade Activator"
+    newGameState.currentResolution.pop();
+
+    const zonesWithEnemies = getZonesWithEnemies(victim, 1);
+    let zonesWithMetalScions = [];
+
+    for (let z of zonesWithEnemies) {
+      const zone = zones[Math.floor(z / 5)][z % 5];
+      const unit = newGameState[zone.player].units[zone.unitIndex];
+
+      if (
+        unit.unitClass === "Metal Scion" &&
+        !isMuted(unit) &&
+        !isDisrupted(unit, 1)
+      ) {
+        zonesWithMetalScions.push(z);
+      }
+    }
+
+    setIntrudingPlayer(self);
+
+    enterSelectUnitMode(
+      zonesWithMetalScions,
+      victim,
+      newGameState,
+      null,
+      "frenzy blade",
+      null
+    );
+  };
+
   const selectHealingRainActivator = (victim) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -3197,6 +3316,10 @@ const Board = (props) => {
         newGameState = activateAegis(newGameState, selectedUnit, unit);
         break;
 
+      case "frenzy blade":
+        newGameState = activateFrenzyBlade(newGameState, selectedUnit, unit);
+        break;
+
       default:
         break;
     }
@@ -3219,7 +3342,7 @@ const Board = (props) => {
     setExpandedPiece(id);
   };
 
-  const skillConclusion = (player, unit, skill, conclusion) => {
+  const skillConclusion = (player, unitInfo, skill, conclusion) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
     //end "Skill Conclusion"
@@ -3234,37 +3357,25 @@ const Board = (props) => {
       newGameState[player].skillShattered.push(skill);
     }
 
-    if (newGameState[unit.player].units[unit.unitIndex] !== null) {
+    if (unitInfo !== null) {
+      let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
       //decrease activation counter
-      if (
-        newGameState[unit.player].units[unit.unitIndex].temporary.activation
-      ) {
-        newGameState[unit.player].units[unit.unitIndex].temporary.activation =
-          newGameState[unit.player].units[unit.unitIndex].temporary.activation -
-          1;
-      }
+      unit.temporary.activation -= 1;
 
       //apply anathema
-      if (
-        !newGameState[unit.player].units[unit.unitIndex].temporary.activation &&
-        newGameState[unit.player].units[unit.unitIndex].temporary.anathemaDelay
-      ) {
-        delete newGameState[unit.player].units[unit.unitIndex].temporary
-          .anathemaDelay;
-
-        newGameState[unit.player].units[
-          unit.unitIndex
-        ].afflictions.anathema = 2;
+      if (unit.temporary.activation === 0 && unit.temporary.anathemaDelay) {
+        delete unit.temporary.anathemaDelay;
+        unit.afflictions.anathema = 2;
 
         //anathema purges boosts, disruption, overgrowth, & proliferation
-        newGameState[unit.player].units[unit.unitIndex].boosts = {};
-        delete newGameState[unit.player].units[unit.unitIndex].enhancements
-          .disruption;
-        delete newGameState[unit.player].units[unit.unitIndex].enhancements
-          .overgrowth;
-        delete newGameState[unit.player].units[unit.unitIndex].enhancements
-          .proliferation;
+        unit.boosts = {};
+        delete unit.enhancements.disruption;
+        delete unit.enhancements.overgrowth;
+        delete unit.enhancements.proliferation;
       }
+
+      newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
     }
 
     newGameState.activatingSkill.pop();

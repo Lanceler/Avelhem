@@ -7,15 +7,14 @@ import { updateState } from "../../redux/gameState";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 import Skill from "../hand/Skill";
 
-const ContingentSurvivalAlly = (props) => {
+const ContingentSurvivalEnemy = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
   const [selectedSkill, setSelectedSkill] = useState(null);
 
-  const { triggerHealingRain, triggerPowerAtTheFinalHour } =
-    useRecurringEffects();
+  const { triggerFrenzyBlade } = useRecurringEffects();
 
   let survivalAllyContingentSkills = ["02-03", "07-03", "SC-01"];
 
@@ -34,13 +33,13 @@ const ContingentSurvivalAlly = (props) => {
   const canActivateContingency = (skill) => {
     switch (skill) {
       case "02-03":
-        return triggerHealingRain(props.victim, props.type);
-
-      case "07-03":
         return false;
 
+      case "07-03":
+        return triggerFrenzyBlade(props.victim);
+
       case "SC-01":
-        return triggerPowerAtTheFinalHour(props.attacker, props.victim);
+        return false;
 
       default:
         return false;
@@ -50,7 +49,7 @@ const ContingentSurvivalAlly = (props) => {
   const handleSkip = () => {
     const newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    //pop "Triggering Ally Survival"
+    //pop "Triggering Survival Enemy"
     newGameState.currentResolution.pop();
 
     dispatch(updateState(newGameState));
@@ -61,13 +60,13 @@ const ContingentSurvivalAlly = (props) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     const zones = JSON.parse(newGameState.zones);
 
-    //pop "Triggering Target"
+    //pop "Triggering Survival Enemy"
     newGameState.currentResolution.pop();
 
     if (
       //prevent enemy from activating their own contingent skill
       newGameState.currentResolution[newGameState.currentResolution.length - 1]
-        .resolution === "Triggering Survival Enemy"
+        .resolution === "Triggering Survival Ally"
     ) {
       newGameState.currentResolution.pop();
     }
@@ -78,16 +77,16 @@ const ContingentSurvivalAlly = (props) => {
       1
     );
 
-    if (usableSkills[selectedSkill].id === "02-03") {
+    if (usableSkills[selectedSkill].id === "07-03") {
       newGameState.currentResolution.push({
-        resolution: "Select Healing Rain Activator",
+        resolution: "Select Frenzy Blade Activator",
         victim: props.victim,
         player: self,
       });
     }
 
     dispatch(updateState(newGameState));
-    // props.updateFirebase(newGameState); // might return this line of code
+    // props.updateFirebase(newGameState);
   };
 
   const handleViewBoard = () => {
@@ -130,4 +129,4 @@ const ContingentSurvivalAlly = (props) => {
   );
 };
 
-export default ContingentSurvivalAlly;
+export default ContingentSurvivalEnemy;

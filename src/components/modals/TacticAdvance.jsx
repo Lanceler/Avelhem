@@ -16,6 +16,7 @@ const TacticAdvance = (props) => {
     getVacantAdjacentZones,
     getZonesWithEnemies,
     isDisrupted,
+    isRooted,
     isMuted,
   } = useRecurringEffects();
 
@@ -32,7 +33,7 @@ const TacticAdvance = (props) => {
     props.unit.unitClass !== "Pawn" &&
     props.unit.virtue &&
     canBlast(props.unit) &&
-    !props.unit.afflictions.root &&
+    !isRooted(props.unit) &&
     !isDisrupted(props.unit, 2)
   ) {
     canVirtueBlast = true;

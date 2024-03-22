@@ -536,7 +536,7 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
-  const activateFrenzyBlade = (newGameState, unit) => {
+  const activateFrenzyBlade = (newGameState, unit, victim) => {
     //end Triggering Target resolution
     // newGameState.currentResolution.pop() <-- NOT needed
 
@@ -551,6 +551,7 @@ export const useRecurringEffects = () => {
     newGameState.currentResolution.push({
       resolution: "Activating Frenzy Blade",
       unit: unit,
+      victim: victim,
     });
 
     newGameState.activatingSkill.push("07-03");
@@ -1562,23 +1563,14 @@ export const useRecurringEffects = () => {
     ) {
       newGameState[victim.player].units[victim.unitIndex].afflictions.burn = 1;
 
-      //burn gives frostbite immunity
-      if (
-        newGameState[victim.player].units[victim.unitIndex].afflictions
-          .frostbite > 0
-      ) {
-        delete newGameState[victim.player].units[victim.unitIndex].afflictions
-          .frostbite;
-      }
+      //burn gives frostbite immunity and purges overgrowth
 
-      //burn gives purges overgrowth & proliferation (proliferation would be overgrowth: 2)
-      if (
-        newGameState[victim.player].units[victim.unitIndex].enhancements
-          .overgrowth > 0
-      ) {
-        delete newGameState[victim.player].units[victim.unitIndex].enhancements
-          .overgrowth;
-      }
+      delete newGameState[victim.player].units[victim.unitIndex].afflictions
+        .frostbite;
+      delete newGameState[victim.player].units[victim.unitIndex].enhancements
+        .overgrowth;
+      delete newGameState[victim.player].units[victim.unitIndex].enhancements
+        .proliferation;
     }
 
     return newGameState;
@@ -2760,7 +2752,10 @@ export const useRecurringEffects = () => {
 
     for (let z of zonesWithAdjacentEnemies) {
       const zone = zones[Math.floor(z / 5)][z % 5];
-      if (newGameState[zone.player].units[zone.unitIndex].overgrowth === true) {
+      if (
+        newGameState[zone.player].units[zone.unitIndex].enhancements
+          .overgrowth === true
+      ) {
         return true;
       }
     }
@@ -2769,7 +2764,10 @@ export const useRecurringEffects = () => {
 
     for (let z of zonesWithDistantEnemies) {
       const zone = zones[Math.floor(z / 5)][z % 5];
-      if (newGameState[zone.player].units[zone.unitIndex].proliferation > 0) {
+      if (
+        newGameState[zone.player].units[zone.unitIndex].enhancements
+          .proliferation > 0
+      ) {
         return true;
       }
     }
@@ -3148,7 +3146,7 @@ export const useRecurringEffects = () => {
     if (
       victim.unitClass === "Lightning Scion" && //must be Lightning Scion
       !isMuted(victim) &&
-      !isDisrupted(unit, 1) &&
+      !isDisrupted(victim, 1) &&
       victim.charge && //enemy needs chrge
       isAdjacent(attacker, victim) //enemy must be adjacent
     ) {
@@ -3253,6 +3251,7 @@ export const useRecurringEffects = () => {
     activateAegis,
     activateBlazeOfGlory,
     activateHealingRain,
+    activateFrenzyBlade,
     activatePitfallTrap,
     activateSkill,
     activateSkillAndResonate,
@@ -3302,6 +3301,7 @@ export const useRecurringEffects = () => {
     triggerAegis,
     triggerBlackBusinessCard,
     triggerBlazeOfGlory,
+    triggerFrenzyBlade,
     triggerHealingRain,
     triggerPitfallTrap,
     triggerPowerAtTheFinalHour,
