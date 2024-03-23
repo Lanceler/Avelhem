@@ -10,7 +10,7 @@ import Skill from "../hand/Skill";
 
 const RecoverSkill = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
-  const { self } = useSelector((state) => state.teams);
+  const { self, enemy } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
   const { shuffleCards } = useRecurringEffects();
@@ -36,6 +36,26 @@ const RecoverSkill = (props) => {
   const handleSelect = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     newGameState.currentResolution.pop();
+
+    if (
+      props.message ===
+      "Recover 1 Lightning skill other than “Thunder Thaumaturge”."
+    ) {
+      newGameState.currentResolution.push({
+        resolution: "Revealing Skill",
+        player: enemy,
+        skill:
+          newGameState[self].skillVestige[
+            newGameState[self].skillVestige.length - 1 - selectedSkill
+          ],
+      });
+    }
+
+    // console.log(
+    //   newGameState[self].skillVestige[
+    //     newGameState[self].skillVestige.length - 1 - selectedSkill
+    //   ]
+    // );
 
     if (props.outcome === "Add") {
       //add selected skill from vestige to hand

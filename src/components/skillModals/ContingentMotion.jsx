@@ -80,35 +80,51 @@ const ContingentMotion = (props) => {
 
   return (
     <div className="modal-backdrop">
-      <div className="skill-modal">
-        <button onClick={() => handleViewBoard()}>View Board</button>
-        <h2>Contigency: Motion Triggered</h2>
+      <div className="modal">
+        {/* <button onClick={() => handleViewBoard()}>View Board</button>
+        <h2>Contigency: Motion Triggered</h2> */}
 
-        <div className="fourColumn scrollable scrollable-y-only">
-          {usableSkills.map((usableSkill, i) => (
-            <div
-              key={i}
-              className={`scionSkills ${
-                selectedSkill === i ? "selectedSkill" : ""
-              }`}
-            >
-              <Skill
-                i={i}
-                usableSkill={usableSkill}
-                canActivateSkill={canActivateContingency(usableSkill.id)}
-                selectedSkill={selectedSkill}
-                setSelectedSkill={setSelectedSkill}
-              />
-            </div>
-          ))}
+        <div className="twoColumn3-1">
+          <h2 className="choiceTitle">Contigency: Motion Triggered</h2>
+          <button className="choiceButton" onClick={() => handleViewBoard()}>
+            View Board
+          </button>
+        </div>
+
+        <div className="scrollable scrollable-y-only">
+          <div className="fourColumn ">
+            {usableSkills.map((usableSkill, i) => (
+              <div
+                key={i}
+                className={`scionSkills ${
+                  selectedSkill === i ? "selectedSkill" : ""
+                }`}
+              >
+                <Skill
+                  i={i}
+                  usableSkill={usableSkill}
+                  canActivateSkill={canActivateContingency(usableSkill.id)}
+                  selectedSkill={selectedSkill}
+                  setSelectedSkill={setSelectedSkill}
+                />
+              </div>
+            ))}
+          </div>
         </div>
 
         {selectedSkill === null && (
-          <button onClick={() => handleSkip()}>Skip</button>
+          <button className="choiceButton noYes" onClick={() => handleSkip()}>
+            Skip
+          </button>
         )}
 
         {selectedSkill !== null && (
-          <button onClick={() => handleActivate()}>Activate</button>
+          <button
+            className="choiceButton noYes"
+            onClick={() => handleActivate()}
+          >
+            Activate
+          </button>
         )}
       </div>
     </div>

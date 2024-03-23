@@ -1171,7 +1171,8 @@ export const useSkillEffects = () => {
         attacker;
 
       newGameState.currentResolution.push({
-        resolution: "Pitfall Trap2",
+        resolution: "Land Skill",
+        resolution2: "Pitfall Trap2",
         unit: attacker,
         victim: victim,
         details: {
@@ -1302,12 +1303,14 @@ export const useSkillEffects = () => {
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     newGameState.currentResolution.push({
-      resolution: "Chain Lightning2",
+      resolution: "Lightning Skill",
+      resolution2: "Chain Lightning2",
       unit: unit,
     });
 
     newGameState.currentResolution.push({
-      resolution: "Chain Lightning1",
+      resolution: "Lightning Skill",
+      resolution2: "Chain Lightning1",
       unit: unit,
     });
 
@@ -1328,7 +1331,8 @@ export const useSkillEffects = () => {
 
       if (adjacentEnemies.length > 0) {
         newGameState.currentResolution.push({
-          resolution: "Chain Lightning3",
+          resolution: "Lightning Skill",
+          resolution2: "Chain Lightning3",
           unit: unit,
           details: {
             reason: "Chain Lightning Blast",
@@ -1359,7 +1363,8 @@ export const useSkillEffects = () => {
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     newGameState.currentResolution.push({
-      resolution: "Chain Lightning5",
+      resolution: "Lightning Skill",
+      resolution2: "Chain Lightning5",
       unit: unit,
       adjacentEnemies: adjacentEnemies,
     });
@@ -1385,12 +1390,14 @@ export const useSkillEffects = () => {
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     newGameState.currentResolution.push({
-      resolution: "Zip And Zap2",
+      resolution: "Lightning Skill",
+      resolution2: "Zip And Zap2",
       unit: unit,
     });
 
     newGameState.currentResolution.push({
-      resolution: "Zip And Zap1",
+      resolution: "Lightning Skill",
+      resolution2: "Zip And Zap1",
       unit: unit,
     });
 
@@ -1406,7 +1413,8 @@ export const useSkillEffects = () => {
 
     if (unit !== null && !isMuted(unit) && unit.charge > 0) {
       newGameState.currentResolution.push({
-        resolution: "Zip And Zap3",
+        resolution: "Lightning Skill",
+        resolution2: "Zip And Zap3",
         unit: unit,
         details: {
           reason: "Zip and Zap Shield",
@@ -1450,17 +1458,20 @@ export const useSkillEffects = () => {
 
     //3. Resonance
     newGameState.currentResolution.push({
-      resolution: "Zip And ZapR1",
+      resolution: "Lightning Skill",
+      resolution2: "Zip And ZapR1",
       unit: unit,
     });
 
     newGameState.currentResolution.push({
-      resolution: "Zip And Zap2",
+      resolution: "Lightning Skill",
+      resolution2: "Zip And Zap2",
       unit: unit,
     });
 
     newGameState.currentResolution.push({
-      resolution: "Zip And Zap1",
+      resolution: "Lightning Skill",
+      resolution2: "Zip And Zap1",
       unit: unit,
     });
 
@@ -1480,7 +1491,8 @@ export const useSkillEffects = () => {
       getZonesWithEnemies(unit, 1).length > 0
     ) {
       newGameState.currentResolution.push({
-        resolution: "Zip And ZapR2",
+        resolution: "Lightning Skill",
+        resolution2: "Zip And ZapR2",
         unit: unit,
         details: {
           reason: "Zip and Zap Blast",
@@ -1515,7 +1527,8 @@ export const useSkillEffects = () => {
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     newGameState.currentResolution.push({
-      resolution: "Thunder Thaumaturge1",
+      resolution: "Lightning Skill",
+      resolution2: "Thunder Thaumaturge1",
       unit: unit,
     });
 
@@ -1545,7 +1558,8 @@ export const useSkillEffects = () => {
       )
     ) {
       newGameState.currentResolution.push({
-        resolution: "Thunder Thaumaturge2",
+        resolution: "Lightning Skill",
+        resolution2: "Thunder Thaumaturge2",
         unit: unit,
         details: {
           title: "Thunder Thaumaturge",
@@ -1584,7 +1598,8 @@ export const useSkillEffects = () => {
 
     if (newGameState[unit.player].skillHand.length > 0) {
       newGameState.currentResolution.push({
-        resolution: "Valiant Spark1",
+        resolution: "Lightning Skill",
+        resolution2: "Valiant Spark1",
         unit: unit,
         details: {
           title: "Valiant Spark",

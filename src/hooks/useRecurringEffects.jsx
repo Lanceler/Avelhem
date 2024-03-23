@@ -247,7 +247,8 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Activating Chain Lightning",
+      resolution: "Lightning Skill",
+      resolution2: "Activating Chain Lightning",
       unit: unit,
     });
 
@@ -1338,7 +1339,8 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Activating Thunder Thaumaturge",
+      resolution: "Lightning Skill",
+      resolution2: "Activating Thunder Thaumaturge",
       unit: unit,
       attacker: attacker,
     });
@@ -1447,7 +1449,8 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Activating Valiant Spark",
+      resolution: "Lightning Skill",
+      resolution2: "Activating Valiant Spark",
       unit: unit,
     });
 
@@ -1519,7 +1522,8 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Activating Zip and Zap",
+      resolution: "Lightning Skill",
+      resolution2: "Activating Zip and Zap",
       unit: unit,
     });
 
@@ -1552,7 +1556,8 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Resonating Zip And Zap",
+      resolution: "Lightning Skill",
+      resolution2: "Resonating Zip And Zap",
       unit: unit,
       resonator: resonator,
     });

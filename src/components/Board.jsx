@@ -1440,290 +1440,6 @@ const Board = (props) => {
         }
         break;
 
-      // case "Activating Crystallization":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {resolutionUpdateGameStateOnly(
-      //             crystallization1(lastResolution.unit)
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Crystallization1":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && !hideModal && (
-      //         <YouMaySpend1Skill
-      //           unit={lastResolution.unit}
-      //           details={lastResolution.details}
-      //           updateFirebase={updateFirebase}
-      //           hideOrRevealModale={hideOrRevealModale}
-      //         />
-      //       )}
-      //     </>
-      //   );
-
-      // case "Crystallization2":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {resolutionUpdateGameStateOnly(
-      //             crystallization2(lastResolution.unit)
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Activating Upheaval":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {resolutionUpdateGameStateOnly(
-      //             upheaval1(lastResolution.unit, lastResolution.victim)
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Upheaval1":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {selectEnemies(
-      //             lastResolution.unit,
-      //             1,
-      //             null,
-      //             "paralyze1",
-      //             "Upheaval"
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Upheaval2":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {resolutionUpdateGameStateOnly(upheaval2(lastResolution.unit))}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Upheaval3":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && !hideModal && (
-      //         <YouMayNoYes
-      //           unit={lastResolution.unit}
-      //           details={lastResolution.details}
-      //           enterSelectUnitMode={enterSelectUnitMode}
-      //           updateFirebase={updateFirebase}
-      //           hideOrRevealModale={hideOrRevealModale}
-      //         />
-      //       )}
-      //     </>
-      //   );
-
-      // case "Resonating Upheaval":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {resolutionUpdate(
-      //             upheavalR1(lastResolution.unit, lastResolution.resonator)
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "UpheavalR1":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {resolutionUpdateGameStateOnly(
-      //             upheavalR2(lastResolution.unit, lastResolution.resonator)
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "UpheavalR2":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && !hideModal && (
-      //         <SelectCustomChoice
-      //           unit={lastResolution.unit}
-      //           details={lastResolution.details}
-      //           updateFirebase={updateFirebase}
-      //           hideOrRevealModale={hideOrRevealModale}
-      //         />
-      //       )}
-      //     </>
-      //   );
-
-      // case "UpheavalR3":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {enterMoveModeViaSkill(
-      //             getVacantAdjacentZones(lastResolution.unit),
-      //             lastResolution.unit
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Select Pitfall Trap Activator":
-      //   return (
-      //     <>
-      //       {self === lastResolution.player && (
-      //         <>{selectPitfallTrapActivator(lastResolution.mover)}</>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Activating Pitfall Trap":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {resolutionUpdate(
-      //             pitfallTrap1(lastResolution.unit, lastResolution.victim)
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Pitfall Trap1":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {resolutionUpdate(
-      //             pitfallTrap2(lastResolution.unit, lastResolution.victim)
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Pitfall Trap2":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && !hideModal && (
-      //         <YouMaySpend1Skill
-      //           unit={lastResolution.unit}
-      //           victim={lastResolution.victim}
-      //           details={lastResolution.details}
-      //           updateFirebase={updateFirebase}
-      //           hideOrRevealModale={hideOrRevealModale}
-      //         />
-      //       )}
-      //     </>
-      //   );
-
-      // case "Pitfall Trap3":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {resolutionUpdate(
-      //             pitfallTrap3(lastResolution.unit, lastResolution.victim)
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Activating Geomancy":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {resolutionUpdate(
-      //             geomancy1(lastResolution.unit, lastResolution.victim)
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Geomancy1":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && !hideModal && (
-      //         <SelectCustomChoice
-      //           unit={lastResolution.unit}
-      //           details={lastResolution.details}
-      //           updateFirebase={updateFirebase}
-      //           hideOrRevealModale={hideOrRevealModale}
-      //         />
-      //       )}
-      //     </>
-      //   );
-
-      // case "Geomancy2":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && !hideModal && (
-      //         <YouMayNoYes
-      //           unit={lastResolution.unit}
-      //           details={lastResolution.details}
-      //           enterSelectUnitMode={enterSelectUnitMode}
-      //           updateFirebase={updateFirebase}
-      //           hideOrRevealModale={hideOrRevealModale}
-      //         />
-      //       )}
-      //     </>
-      //   );
-
-      // case "Geomancy3":
-      //   return (
-      //     <>
-      //       {self ===
-      //         lastResolution.unit.player(
-      //           <>
-      //             {resolutionUpdate(
-      //               geomancy2(lastResolution.unit, lastResolution.victim)
-      //             )}
-      //           </>
-      //         )}
-      //     </>
-      //   );
-
-      // case "Geomancy4":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && !hideModal && (
-      //         <YouMayNoYes
-      //           unit={lastResolution.unit}
-      //           details={lastResolution.details}
-      //           enterSelectUnitMode={enterSelectUnitMode}
-      //           updateFirebase={updateFirebase}
-      //           hideOrRevealModale={hideOrRevealModale}
-      //         />
-      //       )}
-      //     </>
-      //   );
-
       case "Land Skill":
         switch (lastResolution.resolution2) {
           case "Activating Crystallization":
@@ -2027,241 +1743,501 @@ const Board = (props) => {
           </>
         );
 
-      case "Chain Lightning1":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+      case "Lightning Skill":
+        switch (lastResolution.resolution2) {
+          case "Activating Chain Lightning":
+            return (
               <>
-                {selectEnemies(
-                  lastResolution.unit,
-                  1,
-                  null,
-                  "paralyze1",
-                  "ChainLightningParalysis"
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      chainLightning1(
+                        lastResolution.unit,
+                        lastResolution.victim
+                      )
+                    )}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Chain Lightning2":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Chain Lightning1":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(
-                  chainLightning2(lastResolution.unit)
+                {self === lastResolution.unit.player && (
+                  <>
+                    {selectEnemies(
+                      lastResolution.unit,
+                      1,
+                      null,
+                      "paralyze1",
+                      "ChainLightningParalysis"
+                    )}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Chain Lightning3":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <YouMayNoYes
-                unit={lastResolution.unit}
-                details={lastResolution.details}
-                enterSelectUnitMode={enterSelectUnitMode}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Chain Lightning4":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Chain Lightning2":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(
-                  chainLightning3(
-                    lastResolution.unit,
-                    lastResolution.adjacentEnemies
-                  )
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      chainLightning2(lastResolution.unit)
+                    )}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Chain Lightning5":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Chain Lightning3":
+            return (
               <>
-                {selectChainLightningBlast(
-                  lastResolution.unit,
-                  lastResolution.adjacentEnemies
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMayNoYes
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    enterSelectUnitMode={enterSelectUnitMode}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Activating Zip and Zap":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Chain Lightning4":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(zipAndZap1(lastResolution.unit))}
-              </>
-            )}
-          </>
-        );
-
-      case "Zip And Zap1":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
-              <>
-                {enterMoveModeViaSkill(
-                  getVacantAdjacentZones(lastResolution.unit),
-                  lastResolution.unit
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      chainLightning3(
+                        lastResolution.unit,
+                        lastResolution.adjacentEnemies
+                      )
+                    )}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Zip And Zap2":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Chain Lightning5":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(zipAndZap2(lastResolution.unit))}
-              </>
-            )}
-          </>
-        );
-
-      case "Zip And Zap3":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <YouMayNoYes
-                unit={lastResolution.unit}
-                details={lastResolution.details}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Resonating Zip And Zap":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
-              <>
-                {resolutionUpdate(
-                  zipAndZapR1(lastResolution.unit, lastResolution.resonator)
+                {self === lastResolution.unit.player && (
+                  <>
+                    {selectChainLightningBlast(
+                      lastResolution.unit,
+                      lastResolution.adjacentEnemies
+                    )}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Zip And ZapR1":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Activating Zip and Zap":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(
-                  zipAndZapR2(lastResolution.unit)
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      zipAndZap1(lastResolution.unit)
+                    )}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Zip And ZapR2":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <YouMayNoYes
-                unit={lastResolution.unit}
-                details={lastResolution.details}
-                enterSelectUnitMode={enterSelectUnitMode}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Activating Thunder Thaumaturge":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Zip And Zap1":
+            return (
               <>
-                {resolutionUpdate(
-                  thunderThaumaturge1(
-                    lastResolution.unit,
-                    lastResolution.attacker
-                  )
+                {self === lastResolution.unit.player && (
+                  <>
+                    {enterMoveModeViaSkill(
+                      getVacantAdjacentZones(lastResolution.unit),
+                      lastResolution.unit
+                    )}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Thunder Thaumaturge1":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Zip And Zap2":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(
-                  thunderThaumaturge2(lastResolution.unit)
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      zipAndZap2(lastResolution.unit)
+                    )}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Thunder Thaumaturge2":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <YouMaySpend1Skill
-                unit={lastResolution.unit}
-                details={lastResolution.details}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Activating Valiant Spark":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Zip And Zap3":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(
-                  valiantSpark1(lastResolution.unit)
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMayNoYes
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Valiant Spark1":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <SelectSkillReveal
-                unit={lastResolution.unit}
-                details={lastResolution.details}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
+          case "Resonating Zip And Zap":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdate(
+                      zipAndZapR1(lastResolution.unit, lastResolution.resonator)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Zip And ZapR1":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      zipAndZapR2(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Zip And ZapR2":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMayNoYes
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    enterSelectUnitMode={enterSelectUnitMode}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Activating Thunder Thaumaturge":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdate(
+                      thunderThaumaturge1(
+                        lastResolution.unit,
+                        lastResolution.attacker
+                      )
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Thunder Thaumaturge1":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      thunderThaumaturge2(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Thunder Thaumaturge2":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMaySpend1Skill
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Activating Valiant Spark":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      valiantSpark1(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Valiant Spark1":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <SelectSkillReveal
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+        }
+        break;
+
+      // case "Chain Lightning1":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {selectEnemies(
+      //             lastResolution.unit,
+      //             1,
+      //             null,
+      //             "paralyze1",
+      //             "ChainLightningParalysis"
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Chain Lightning2":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {resolutionUpdateGameStateOnly(
+      //             chainLightning2(lastResolution.unit)
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Chain Lightning3":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && !hideModal && (
+      //         <YouMayNoYes
+      //           unit={lastResolution.unit}
+      //           details={lastResolution.details}
+      //           enterSelectUnitMode={enterSelectUnitMode}
+      //           updateFirebase={updateFirebase}
+      //           hideOrRevealModale={hideOrRevealModale}
+      //         />
+      //       )}
+      //     </>
+      //   );
+
+      // case "Chain Lightning4":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {resolutionUpdateGameStateOnly(
+      //             chainLightning3(
+      //               lastResolution.unit,
+      //               lastResolution.adjacentEnemies
+      //             )
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Chain Lightning5":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {selectChainLightningBlast(
+      //             lastResolution.unit,
+      //             lastResolution.adjacentEnemies
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Activating Zip and Zap":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {resolutionUpdateGameStateOnly(zipAndZap1(lastResolution.unit))}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Zip And Zap1":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {enterMoveModeViaSkill(
+      //             getVacantAdjacentZones(lastResolution.unit),
+      //             lastResolution.unit
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Zip And Zap2":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {resolutionUpdateGameStateOnly(zipAndZap2(lastResolution.unit))}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Zip And Zap3":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && !hideModal && (
+      //         <YouMayNoYes
+      //           unit={lastResolution.unit}
+      //           details={lastResolution.details}
+      //           updateFirebase={updateFirebase}
+      //           hideOrRevealModale={hideOrRevealModale}
+      //         />
+      //       )}
+      //     </>
+      //   );
+
+      // case "Resonating Zip And Zap":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {resolutionUpdate(
+      //             zipAndZapR1(lastResolution.unit, lastResolution.resonator)
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Zip And ZapR1":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {resolutionUpdateGameStateOnly(
+      //             zipAndZapR2(lastResolution.unit)
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Zip And ZapR2":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && !hideModal && (
+      //         <YouMayNoYes
+      //           unit={lastResolution.unit}
+      //           details={lastResolution.details}
+      //           enterSelectUnitMode={enterSelectUnitMode}
+      //           updateFirebase={updateFirebase}
+      //           hideOrRevealModale={hideOrRevealModale}
+      //         />
+      //       )}
+      //     </>
+      //   );
+
+      // case "Activating Thunder Thaumaturge":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {resolutionUpdate(
+      //             thunderThaumaturge1(
+      //               lastResolution.unit,
+      //               lastResolution.attacker
+      //             )
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Thunder Thaumaturge1":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {resolutionUpdateGameStateOnly(
+      //             thunderThaumaturge2(lastResolution.unit)
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Thunder Thaumaturge2":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && !hideModal && (
+      //         <YouMaySpend1Skill
+      //           unit={lastResolution.unit}
+      //           details={lastResolution.details}
+      //           updateFirebase={updateFirebase}
+      //           hideOrRevealModale={hideOrRevealModale}
+      //         />
+      //       )}
+      //     </>
+      //   );
+
+      // case "Activating Valiant Spark":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {resolutionUpdateGameStateOnly(
+      //             valiantSpark1(lastResolution.unit)
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Valiant Spark1":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && !hideModal && (
+      //         <SelectSkillReveal
+      //           unit={lastResolution.unit}
+      //           details={lastResolution.details}
+      //           updateFirebase={updateFirebase}
+      //           hideOrRevealModale={hideOrRevealModale}
+      //         />
+      //       )}
+      //     </>
+      //   );
 
       case "Activating Surge":
         return (

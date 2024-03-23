@@ -31,8 +31,12 @@ const ViewRevealedSkill = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <button onClick={() => handleViewBoard()}>View Board</button>
-        <h2>Your opponent has revealed a skill.</h2>
+        <div className="twoColumn3-1">
+          <h2 className="choiceTitle">Your opponent has revealed a skill.</h2>
+          <button className="choiceButton" onClick={() => handleViewBoard()}>
+            View Board
+          </button>
+        </div>
 
         <div
           className="revealed-skill"
@@ -41,7 +45,9 @@ const ViewRevealedSkill = (props) => {
           }}
         ></div>
 
-        <button onClick={() => handleProceed()}>Proceed</button>
+        <button className="choiceButton noYes" onClick={() => handleProceed()}>
+          Proceed
+        </button>
       </div>
     </div>
   );

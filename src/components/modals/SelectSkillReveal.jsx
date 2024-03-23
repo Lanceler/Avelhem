@@ -84,35 +84,49 @@ const SelectSkillReveal = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <button onClick={() => handleViewBoard()}>View Board</button>
-        <h2>{props.details.title}</h2>
+        {/* <button onClick={() => handleViewBoard()}>View Board</button>
+        <h2>{props.details.title}</h2> */}
+
+        <div className="twoColumn3-1">
+          <h2 className="choiceTitle">{props.details.title}</h2>
+          <button className="choiceButton" onClick={() => handleViewBoard()}>
+            View Board
+          </button>
+        </div>
+
         <h3>{props.details.message}</h3>
 
-        <div className="fourColumn scrollable scrollable-y-only">
-          {usableSkills.map((usableSkill, i) => (
-            <div
-              key={i}
-              className={`scionSkills ${
-                selectedSkill === i ? "selectedSkill" : ""
-              }`}
-            >
-              <Skill
-                i={i}
-                usableSkill={usableSkill}
-                canActivateSkill={true} // any skill can be revealed
-                selectedSkill={selectedSkill}
-                setSelectedSkill={setSelectedSkill}
-              />
-            </div>
-          ))}
+        <div className="scrollable scrollable-y-only">
+          <div className="fourColumn">
+            {usableSkills.map((usableSkill, i) => (
+              <div
+                key={i}
+                className={`scionSkills ${
+                  selectedSkill === i ? "selectedSkill" : ""
+                }`}
+              >
+                <Skill
+                  i={i}
+                  usableSkill={usableSkill}
+                  canActivateSkill={true} // any skill can be revealed
+                  selectedSkill={selectedSkill}
+                  setSelectedSkill={setSelectedSkill}
+                />
+              </div>
+            ))}
+          </div>
         </div>
 
         {selectedSkill === null && (
-          <button onClick={() => handleSkip()}>Skip</button>
+          <button className="choiceButton noYes" onClick={() => handleSkip()}>
+            Skip
+          </button>
         )}
 
         {selectedSkill !== null && (
-          <button onClick={() => handleSelect()}>Select</button>
+          <button className="choiceButton noYes" onClick={() => handleSelect()}>
+            Select
+          </button>
         )}
       </div>
     </div>

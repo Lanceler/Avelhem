@@ -152,7 +152,8 @@ const YouMayNoYes = (props) => {
 
       case "Chain Lightning Blast": // "ChainLightning3"
         newGameState.currentResolution.push({
-          resolution: "Chain Lightning4",
+          resolution: "Lightning Skill",
+          resolution2: "Chain Lightning4",
           unit: props.unit,
           adjacentEnemies: props.details.adjacentEnemies,
         });
