@@ -109,6 +109,12 @@ background: rgb(117, 13, 13)
 
 }
 
+.twoColumn3-1 {
+    grid-template-columns: 3fr 1fr;
+    display: grid;
+
+}
+
 .threeColumn {
     grid-template-columns: 1fr 1fr 1fr;
     display: grid;
@@ -124,12 +130,14 @@ background: rgb(117, 13, 13)
     max-height: 550px;
     overflow-y: auto;
     width: fit-content;
-    /* border: 2px solid; */
+    max-width: 800px;
     padding: 9px;
 }
 
 .scrollable-y-only{
-    overflow-x:hidden;
+    overflow-x: hidden;
+    padding-right: 25px;
+
 }
 
 .center {
@@ -226,6 +234,10 @@ background: rgb(117, 13, 13)
     font-family: "Times New Roman", Times, serif;
     font-size: 40px;
     line-height: 135%;
+}
+
+.smallerTitle{
+    font-size: 30px;
 }
 
 .choiceButton{

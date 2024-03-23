@@ -63,9 +63,17 @@ const MayFloatResonantSkill = (props) => {
 
   return (
     <div className="modal-backdrop">
-      <div className="skill-modal">
-        <button onClick={() => handleViewBoard()}>View Board</button>
-        <h2>Resonance sub-effect</h2>
+      <div className="modal">
+        {/* <button onClick={() => handleViewBoard()}>View Board</button>
+        <h2>Resonance sub-effect</h2> */}
+
+        <div className="twoColumn3-1">
+          <h2 className="choiceTitle">Resonance sub-effect</h2>
+          <button className="choiceButton" onClick={() => handleViewBoard()}>
+            View Board
+          </button>
+        </div>
+
         <h3>You may float this skill.</h3>
         {props.resonator === "SA-04" && (
           <p>
@@ -81,9 +89,13 @@ const MayFloatResonantSkill = (props) => {
           }}
         ></div>
 
-        <button onClick={() => handleDiscard()}>Discard</button>
+        <button className="choiceButton noYes" onClick={() => handleDiscard()}>
+          Discard
+        </button>
 
-        <button onClick={() => handleFloat()}>Float</button>
+        <button className="choiceButton noYes" onClick={() => handleFloat()}>
+          Float
+        </button>
       </div>
     </div>
   );

@@ -86,7 +86,7 @@ const ScionSkillSelect = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <h2>Select Skill</h2>
+        <h2 className="choiceTitle">Select Skill</h2>
 
         <div className="fourColumn scrollable scrollable-y-only">
           {usableSkills.map((usableSkill, i) => (
@@ -111,7 +111,12 @@ const ScionSkillSelect = (props) => {
         </div>
 
         {selectedSkill === null && (
-          <button onClick={() => handleReturn()}>Return</button>
+          <button
+            className="choiceButton noYes "
+            onClick={() => handleReturn()}
+          >
+            Return
+          </button>
         )}
 
         {/* {selectedSkill !== null && (
@@ -120,11 +125,21 @@ const ScionSkillSelect = (props) => {
 
         {selectedSkill !== null &&
           canActivateSkill(props.unit, usableSkills[selectedSkill].id) && (
-            <button onClick={() => handleSelect()}>Select</button>
+            <button
+              className="choiceButton noYes"
+              onClick={() => handleSelect()}
+            >
+              Select
+            </button>
           )}
 
         {canResonate && (
-          <button onClick={() => handleResonate()}>Resonate</button>
+          <button
+            className="choiceButton noYes"
+            onClick={() => handleResonate()}
+          >
+            Resonate
+          </button>
         )}
       </div>
     </div>

@@ -84,8 +84,15 @@ const SelectSkillResonator = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <button onClick={() => handleViewBoard()}>View Board</button>
-        <h2>Select skill to resonate with.</h2>
+        {/* <button onClick={() => handleViewBoard()}>View Board</button>
+        <h2>Select skill to resonate with.</h2> */}
+
+        <div className="twoColumn3-1">
+          <h2 className="choiceTitle">Select skill to resonate with.</h2>
+          <button className="choiceButton" onClick={() => handleViewBoard()}>
+            View Board
+          </button>
+        </div>
 
         <div className="fourColumn scrollable scrollable-y-only">
           {usableSkills.map((usableSkill, i) => (
@@ -107,11 +114,15 @@ const SelectSkillResonator = (props) => {
         </div>
 
         {selectedSkill === null && (
-          <button onClick={() => handleCancel()}>Cancel</button>
+          <button className="choiceButton noYes" onClick={() => handleCancel()}>
+            Cancel
+          </button>
         )}
 
         {selectedSkill !== null && (
-          <button onClick={() => handleSelect()}>Select</button>
+          <button className="choiceButton noYes" onClick={() => handleSelect()}>
+            Select
+          </button>
         )}
       </div>
     </div>

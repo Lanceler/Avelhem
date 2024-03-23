@@ -140,10 +140,74 @@ const SearchSkill = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <button onClick={() => handleViewBoard()}>View Board</button>
-        <h2>{props.message}</h2>
+        {/* <button onClick={() => handleViewBoard()}>View Board</button>
+        <h2>{props.message}</h2> */}
 
-        {localGameState[self].skillFloat > 0 && (
+        <div className="twoColumn3-1">
+          <h2 className="choiceTitle">{props.message}</h2>
+          <button className="choiceButton" onClick={() => handleViewBoard()}>
+            View Board
+          </button>
+        </div>
+
+        <div className="scrollable scrollable-y-only">
+          {localGameState[self].skillFloat > 0 && (
+            <>
+              <h3>Floating skills</h3>
+              <div
+                // className={`fourColumn ${
+                //   localGameState[self].skillFloat > 0 ? "decreased-height" : ""
+                // } `}
+                className="fourColumn"
+              >
+                {floatingRepertoire.map((usableSkill, i) => (
+                  <div
+                    key={i}
+                    className={`scionSkills ${
+                      selectedSkill === i ? "selectedSkill" : ""
+                    }`}
+                  >
+                    <Skill
+                      i={i}
+                      usableSkill={usableSkill}
+                      canActivateSkill={canSearch(usableSkill.id)}
+                      selectedSkill={selectedSkill}
+                      setSelectedSkill={setSelectedSkill}
+                    />
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+
+          <h3>Non-floating skills</h3>
+          <div
+            className={`fourColumn  ${
+              localGameState[self].skillFloat > 0 ? "decreased-height" : ""
+            } `}
+          >
+            {searchRerpertoire.map((usableSkill, i) => (
+              <div
+                key={i + localGameState[self].skillFloat}
+                className={`scionSkills ${
+                  selectedSkill === i + localGameState[self].skillFloat
+                    ? "selectedSkill"
+                    : ""
+                }`}
+              >
+                <Skill
+                  i={i + localGameState[self].skillFloat}
+                  usableSkill={usableSkill}
+                  canActivateSkill={canSearch(usableSkill.id)}
+                  selectedSkill={selectedSkill}
+                  setSelectedSkill={setSelectedSkill}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* {localGameState[self].skillFloat > 0 && (
           <>
             <h3>Floating skills</h3>
             <div
@@ -195,14 +259,18 @@ const SearchSkill = (props) => {
               />
             </div>
           ))}
-        </div>
+        </div> */}
 
         {selectedSkill === null && (
-          <button onClick={() => handleSkip()}>Skip</button>
+          <button className="choiceButton" onClick={() => handleSkip()}>
+            Skip
+          </button>
         )}
 
         {selectedSkill !== null && (
-          <button onClick={() => handleSelect()}>Select</button>
+          <button className="choiceButton" onClick={() => handleSelect()}>
+            Select
+          </button>
         )}
       </div>
     </div>

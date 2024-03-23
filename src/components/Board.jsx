@@ -50,8 +50,6 @@ import Purification2 from "./skillModals/Purification2";
 import FrigidBreathResonance1 from "./skillModals/FrigidBreathResonance1";
 import GlacialTorrent1 from "./skillModals/GlacialTorrent1";
 import CataclysmicTempestFloat from "./skillModals/CataclysmicTempestFloat";
-import Upheaval1 from "./skillModals/Upheaval1";
-import Geomancy1 from "./skillModals/Geomancy1";
 import Surge1 from "./skillModals/Surge1";
 import Aegis1 from "./skillModals/Aegis1";
 import Reinforce1 from "./skillModals/Reinforce1";
@@ -1077,356 +1075,6 @@ const Board = (props) => {
           </>
         );
 
-      // case "Activating Aerial Impetus":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>{resolutionUpdate(aerialImpetus1(lastResolution.unit))}</>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Aerial Impetus1":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && !hideModal && (
-      //         <SelectCustomChoice
-      //           unit={lastResolution.unit}
-      //           details={lastResolution.details}
-      //           enterSelectUnitMode={enterSelectUnitMode}
-      //           updateFirebase={updateFirebase}
-      //           hideOrRevealModale={hideOrRevealModale}
-      //         />
-      //       )}
-      //     </>
-      //   );
-
-      // case "Aerial Impetus Prompt":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>{selectAerialImpetusMove(lastResolution.unit, "Ally")}</>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Aerial Impetus Purge":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {resolutionUpdateGameStateOnly(
-      //             aerialImpetus2E(lastResolution.victim)
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Aerial Impetus Purge Move":
-      //   return (
-      //     <>
-      //       {self === lastResolution.player && !hideModal && (
-      //         <YouMayNoYes
-      //           unit={lastResolution.unit}
-      //           player={lastResolution.player}
-      //           details={lastResolution.details}
-      //           enterSelectUnitMode={enterSelectUnitMode}
-      //           updateFirebase={updateFirebase}
-      //           hideOrRevealModale={hideOrRevealModale}
-      //         />
-      //       )}
-      //     </>
-      //   );
-
-      // case "Aerial Impetus Purge Move2":
-      //   return (
-      //     <>
-      //       {self === lastResolution.player && (
-      //         <>{selectAerialImpetusMove(lastResolution.victim, "Enemy")}</>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Activating Gale Conjuration":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {resolutionUpdateGameStateOnly(
-      //             galeConjuration1(lastResolution.unit)
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Gale Conjuration1":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && !hideModal && (
-      //         <YouMayFloat1Skill
-      //           unit={lastResolution.unit}
-      //           restriction={lastResolution.restriction}
-      //           message={lastResolution.message}
-      //           reason={lastResolution.reason}
-      //           updateFirebase={updateFirebase}
-      //           hideOrRevealModale={hideOrRevealModale}
-      //         />
-      //       )}
-      //     </>
-      //   );
-
-      // case "Resonating Gale Conjuration":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {resolutionUpdate(
-      //             galeConjurationR1(
-      //               lastResolution.unit,
-      //               lastResolution.resonator
-      //             )
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Gale ConjurationR1":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {resolutionUpdateGameStateOnly(
-      //             galeConjurationR2(lastResolution.unit)
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Gale ConjurationR2":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && !hideModal && (
-      //         <YouMayNoYes
-      //           unit={lastResolution.unit}
-      //           details={lastResolution.details}
-      //           enterSelectUnitMode={enterSelectUnitMode}
-      //           updateFirebase={updateFirebase}
-      //           hideOrRevealModale={hideOrRevealModale}
-      //         />
-      //       )}
-      //     </>
-      //   );
-
-      // case "Gale ConjurationR3":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>{resolutionUpdate(galeConjurationR3(lastResolution.unit))}</>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Gale ConjurationR4":
-      //   return (
-      //     <>
-      //       {self === lastResolution.enemy && !hideModal && (
-      //         <SelectSkillFloat
-      //           unit={null}
-      //           reason="Gale Conjuration Lethal"
-      //           title="Gale Conjuration"
-      //           message="You are forced to float 1 skill."
-      //           restriction={null}
-      //           updateFirebase={updateFirebase}
-      //           hideOrRevealModale={hideOrRevealModale}
-      //         />
-      //       )}
-      //     </>
-      //   );
-
-      // case "Activating Symphonic Screech":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {resolutionUpdate(
-      //             symphonicScreech1(lastResolution.unit, lastResolution.victim)
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Symphonic Screech Negate":
-      //   return (
-      //     <>
-      //       {self === lastResolution.player && !hideModal && (
-      //         <SymphonicScreechFloat
-      //           updateFirebase={updateFirebase}
-      //           hideOrRevealModale={hideOrRevealModale}
-      //           canFloat={lastResolution.canFloat}
-      //         />
-      //       )}
-      //     </>
-      //   );
-
-      // case "Symphonic Screech2":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && !hideModal && (
-      //         <SelectSkillReveal
-      //           unit={lastResolution.unit}
-      //           details={lastResolution.details}
-      //           updateFirebase={updateFirebase}
-      //           hideOrRevealModale={hideOrRevealModale}
-      //         />
-      //       )}
-      //     </>
-      //   );
-
-      // case "Activating Cataclysmic Tempest":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>{resolutionUpdate(cataclysmicTempest1(lastResolution.unit))}</>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Cataclysmic Tempest1":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {selectEnemies(
-      //             lastResolution.unit,
-      //             1,
-      //             null,
-      //             "paralyze2",
-      //             "Cataclysmic Tempest"
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Cataclysmic Tempest2":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {resolutionUpdateGameStateOnly(
-      //             cataclysmicTempest2(lastResolution.unit)
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Cataclysmic Tempest3":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && !hideModal && (
-      //         <YouMayNoYes
-      //           unit={lastResolution.unit}
-      //           details={lastResolution.details}
-      //           enterSelectUnitMode={enterSelectUnitMode}
-      //           updateFirebase={updateFirebase}
-      //           hideOrRevealModale={hideOrRevealModale}
-      //         />
-      //       )}
-      //     </>
-      //   );
-
-      // case "Cataclysmic Tempest4":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>{resolutionUpdate(cataclysmicTempest3(lastResolution.unit))}</>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Cataclysmic Tempest Float":
-      //   return (
-      //     <>
-      //       {self === lastResolution.player && !hideModal && (
-      //         <CataclysmicTempestFloat
-      //           floatCount={lastResolution.floatCount}
-      //           updateFirebase={updateFirebase}
-      //           hideOrRevealModale={hideOrRevealModale}
-      //         />
-      //       )}
-      //     </>
-      //   );
-
-      // case "Cataclysmic Tempest5":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {resolutionUpdateGameStateOnly(
-      //             cataclysmicTempest4(lastResolution.unit)
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Cataclysmic Tempest6":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && !hideModal && (
-      //         <YouMayNoYes
-      //           unit={lastResolution.unit}
-      //           details={lastResolution.details}
-      //           enterSelectUnitMode={enterSelectUnitMode}
-      //           updateFirebase={updateFirebase}
-      //           hideOrRevealModale={hideOrRevealModale}
-      //         />
-      //       )}
-      //     </>
-      //   );
-
-      // case "Cataclysmic Tempest7":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {resolutionUpdateGameStateOnly(
-      //             cataclysmicTempest5(lastResolution.unit)
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Cataclysmic Tempest8":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && !hideModal && (
-      //         <YouMaySpend1Skill
-      //           unit={lastResolution.unit}
-      //           details={lastResolution.details}
-      //           updateFirebase={updateFirebase}
-      //           hideOrRevealModale={hideOrRevealModale}
-      //         />
-      //       )}
-      //     </>
-      //   );
-
-      // case "Cataclysmic Tempest9":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>{selectEnemies(lastResolution.unit, 1, null, "blast", null)}</>
-      //       )}
-      //     </>
-      //   );
-
       case "Wind Skill":
         switch (lastResolution.resolution2) {
           case "Activating Aerial Impetus":
@@ -1792,274 +1440,579 @@ const Board = (props) => {
         }
         break;
 
-      case "Activating Crystallization":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+      // case "Activating Crystallization":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {resolutionUpdateGameStateOnly(
+      //             crystallization1(lastResolution.unit)
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Crystallization1":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && !hideModal && (
+      //         <YouMaySpend1Skill
+      //           unit={lastResolution.unit}
+      //           details={lastResolution.details}
+      //           updateFirebase={updateFirebase}
+      //           hideOrRevealModale={hideOrRevealModale}
+      //         />
+      //       )}
+      //     </>
+      //   );
+
+      // case "Crystallization2":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {resolutionUpdateGameStateOnly(
+      //             crystallization2(lastResolution.unit)
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Activating Upheaval":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {resolutionUpdateGameStateOnly(
+      //             upheaval1(lastResolution.unit, lastResolution.victim)
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Upheaval1":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {selectEnemies(
+      //             lastResolution.unit,
+      //             1,
+      //             null,
+      //             "paralyze1",
+      //             "Upheaval"
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Upheaval2":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {resolutionUpdateGameStateOnly(upheaval2(lastResolution.unit))}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Upheaval3":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && !hideModal && (
+      //         <YouMayNoYes
+      //           unit={lastResolution.unit}
+      //           details={lastResolution.details}
+      //           enterSelectUnitMode={enterSelectUnitMode}
+      //           updateFirebase={updateFirebase}
+      //           hideOrRevealModale={hideOrRevealModale}
+      //         />
+      //       )}
+      //     </>
+      //   );
+
+      // case "Resonating Upheaval":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {resolutionUpdate(
+      //             upheavalR1(lastResolution.unit, lastResolution.resonator)
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "UpheavalR1":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {resolutionUpdateGameStateOnly(
+      //             upheavalR2(lastResolution.unit, lastResolution.resonator)
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "UpheavalR2":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && !hideModal && (
+      //         <SelectCustomChoice
+      //           unit={lastResolution.unit}
+      //           details={lastResolution.details}
+      //           updateFirebase={updateFirebase}
+      //           hideOrRevealModale={hideOrRevealModale}
+      //         />
+      //       )}
+      //     </>
+      //   );
+
+      // case "UpheavalR3":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {enterMoveModeViaSkill(
+      //             getVacantAdjacentZones(lastResolution.unit),
+      //             lastResolution.unit
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Select Pitfall Trap Activator":
+      //   return (
+      //     <>
+      //       {self === lastResolution.player && (
+      //         <>{selectPitfallTrapActivator(lastResolution.mover)}</>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Activating Pitfall Trap":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {resolutionUpdate(
+      //             pitfallTrap1(lastResolution.unit, lastResolution.victim)
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Pitfall Trap1":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {resolutionUpdate(
+      //             pitfallTrap2(lastResolution.unit, lastResolution.victim)
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Pitfall Trap2":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && !hideModal && (
+      //         <YouMaySpend1Skill
+      //           unit={lastResolution.unit}
+      //           victim={lastResolution.victim}
+      //           details={lastResolution.details}
+      //           updateFirebase={updateFirebase}
+      //           hideOrRevealModale={hideOrRevealModale}
+      //         />
+      //       )}
+      //     </>
+      //   );
+
+      // case "Pitfall Trap3":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {resolutionUpdate(
+      //             pitfallTrap3(lastResolution.unit, lastResolution.victim)
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Activating Geomancy":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {resolutionUpdate(
+      //             geomancy1(lastResolution.unit, lastResolution.victim)
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Geomancy1":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && !hideModal && (
+      //         <SelectCustomChoice
+      //           unit={lastResolution.unit}
+      //           details={lastResolution.details}
+      //           updateFirebase={updateFirebase}
+      //           hideOrRevealModale={hideOrRevealModale}
+      //         />
+      //       )}
+      //     </>
+      //   );
+
+      // case "Geomancy2":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && !hideModal && (
+      //         <YouMayNoYes
+      //           unit={lastResolution.unit}
+      //           details={lastResolution.details}
+      //           enterSelectUnitMode={enterSelectUnitMode}
+      //           updateFirebase={updateFirebase}
+      //           hideOrRevealModale={hideOrRevealModale}
+      //         />
+      //       )}
+      //     </>
+      //   );
+
+      // case "Geomancy3":
+      //   return (
+      //     <>
+      //       {self ===
+      //         lastResolution.unit.player(
+      //           <>
+      //             {resolutionUpdate(
+      //               geomancy2(lastResolution.unit, lastResolution.victim)
+      //             )}
+      //           </>
+      //         )}
+      //     </>
+      //   );
+
+      // case "Geomancy4":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && !hideModal && (
+      //         <YouMayNoYes
+      //           unit={lastResolution.unit}
+      //           details={lastResolution.details}
+      //           enterSelectUnitMode={enterSelectUnitMode}
+      //           updateFirebase={updateFirebase}
+      //           hideOrRevealModale={hideOrRevealModale}
+      //         />
+      //       )}
+      //     </>
+      //   );
+
+      case "Land Skill":
+        switch (lastResolution.resolution2) {
+          case "Activating Crystallization":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(
-                  crystallization1(lastResolution.unit)
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      crystallization1(lastResolution.unit)
+                    )}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Crystallization1":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <YouMaySpend1Skill
-                unit={lastResolution.unit}
-                details={lastResolution.details}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Crystallization2":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Crystallization1":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(
-                  crystallization2(lastResolution.unit)
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMaySpend1Skill
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Activating Upheaval":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Crystallization2":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(
-                  upheaval1(lastResolution.unit, lastResolution.victim)
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      crystallization2(lastResolution.unit)
+                    )}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Upheaval1":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Activating Upheaval":
+            return (
               <>
-                {selectEnemies(
-                  lastResolution.unit,
-                  1,
-                  null,
-                  "paralyze1",
-                  "Upheaval"
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      upheaval1(lastResolution.unit, lastResolution.victim)
+                    )}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Upheaval2":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Upheaval1":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(upheaval2(lastResolution.unit))}
-              </>
-            )}
-          </>
-        );
-
-      case "Upheaval3":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <YouMayNoYes
-                unit={lastResolution.unit}
-                details={lastResolution.details}
-                enterSelectUnitMode={enterSelectUnitMode}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Resonating Upheaval":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
-              <>
-                {resolutionUpdate(
-                  upheavalR1(lastResolution.unit, lastResolution.resonator)
+                {self === lastResolution.unit.player && (
+                  <>
+                    {selectEnemies(
+                      lastResolution.unit,
+                      1,
+                      null,
+                      "paralyze1",
+                      "Upheaval"
+                    )}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "UpheavalR1":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Upheaval2":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(
-                  upheavalR2(lastResolution.unit, lastResolution.resonator)
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      upheaval2(lastResolution.unit)
+                    )}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "UpheavalR2":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <Upheaval1
-                updateFirebase={updateFirebase}
-                unit={lastResolution.unit}
-                enterMoveMode={enterMoveMode}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Select Pitfall Trap Activator":
-        return (
-          <>
-            {self === lastResolution.player && (
-              <>{selectPitfallTrapActivator(lastResolution.mover)}</>
-            )}
-          </>
-        );
-
-      case "Activating Pitfall Trap":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Upheaval3":
+            return (
               <>
-                {resolutionUpdate(
-                  pitfallTrap1(lastResolution.unit, lastResolution.victim)
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMayNoYes
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    enterSelectUnitMode={enterSelectUnitMode}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Pitfall Trap1":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Resonating Upheaval":
+            return (
               <>
-                {resolutionUpdate(
-                  pitfallTrap2(lastResolution.unit, lastResolution.victim)
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdate(
+                      upheavalR1(lastResolution.unit, lastResolution.resonator)
+                    )}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Pitfall Trap2":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <YouMaySpend1Skill
-                unit={lastResolution.unit}
-                victim={lastResolution.victim}
-                details={lastResolution.details}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Pitfall Trap3":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "UpheavalR1":
+            return (
               <>
-                {resolutionUpdate(
-                  pitfallTrap3(lastResolution.unit, lastResolution.victim)
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      upheavalR2(lastResolution.unit)
+                    )}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Activating Geomancy":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "UpheavalR2":
+            return (
               <>
-                {resolutionUpdate(
-                  geomancy1(lastResolution.unit, lastResolution.victim)
+                {self === lastResolution.unit.player && !hideModal && (
+                  <SelectCustomChoice
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Geomancy1":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <Geomancy1
-                updateFirebase={updateFirebase}
-                unit={lastResolution.unit}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
+          case "UpheavalR3":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {enterMoveModeViaSkill(
+                      getVacantAdjacentZones(lastResolution.unit),
+                      lastResolution.unit
+                    )}
+                  </>
+                )}
+              </>
+            );
 
-      case "Geomancy2":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <YouMayNoYes
-                unit={lastResolution.unit}
-                details={lastResolution.details}
-                enterSelectUnitMode={enterSelectUnitMode}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
+          case "Select Pitfall Trap Activator":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>{selectPitfallTrapActivator(lastResolution.mover)}</>
+                )}
+              </>
+            );
 
-      case "Geomancy3":
-        return (
-          <>
-            {self ===
-              lastResolution.unit.player(
-                <>
-                  {resolutionUpdate(
-                    geomancy2(lastResolution.unit, lastResolution.victim)
+          case "Activating Pitfall Trap":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdate(
+                      pitfallTrap1(lastResolution.unit, lastResolution.victim)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Pitfall Trap1":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdate(
+                      pitfallTrap2(lastResolution.unit, lastResolution.victim)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Pitfall Trap2":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMaySpend1Skill
+                    unit={lastResolution.unit}
+                    victim={lastResolution.victim}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Pitfall Trap3":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdate(
+                      pitfallTrap3(lastResolution.unit, lastResolution.victim)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Activating Geomancy":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdate(
+                      geomancy1(lastResolution.unit, lastResolution.victim)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Geomancy1":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <SelectCustomChoice
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Geomancy2":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMayNoYes
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    enterSelectUnitMode={enterSelectUnitMode}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Geomancy3":
+            return (
+              <>
+                {self ===
+                  lastResolution.unit.player(
+                    <>
+                      {resolutionUpdate(
+                        geomancy2(lastResolution.unit, lastResolution.victim)
+                      )}
+                    </>
                   )}
-                </>
-              )}
-          </>
-        );
+              </>
+            );
 
-      case "Geomancy4":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <YouMayNoYes
-                unit={lastResolution.unit}
-                details={lastResolution.details}
-                enterSelectUnitMode={enterSelectUnitMode}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
+          case "Geomancy4":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMayNoYes
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    enterSelectUnitMode={enterSelectUnitMode}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+        }
+        break;
 
       case "Activating Chain Lightning":
         return (
@@ -4255,10 +4208,26 @@ const Board = (props) => {
           Phase: {localGameState.turnPhase}
           <br />
           Resolution:{" "}
-          {localGameState.currentResolution.length > 0 &&
-            localGameState.currentResolution[
-              localGameState.currentResolution.length - 1
-            ].resolution}
+          {localGameState.currentResolution.length > 0 && (
+            <>
+              {
+                localGameState.currentResolution[
+                  localGameState.currentResolution.length - 1
+                ].resolution
+              }
+            </>
+          )}
+          <br />
+          Resolution:{" "}
+          {localGameState.currentResolution.length > 0 && (
+            <>
+              {
+                localGameState.currentResolution[
+                  localGameState.currentResolution.length - 1
+                ].resolution2
+              }
+            </>
+          )}
           <br />
           {JSON.stringify(tileMode)} {validZones.length}
           <br />

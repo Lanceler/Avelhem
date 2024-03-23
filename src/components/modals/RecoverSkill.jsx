@@ -76,26 +76,35 @@ const RecoverSkill = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <button onClick={() => handleViewBoard()}>View Board</button>
-        <h2>{props.message}</h2>
+        {/* <button onClick={() => handleViewBoard()}>View Board</button>
+        <h2>{props.message}</h2> */}
 
-        <div className="fourColumn scrollable scrollable-y-only">
-          {recoverVestige.map((usableSkill, i) => (
-            <div
-              key={i}
-              className={`scionSkills ${
-                selectedSkill === i ? "selectedSkill" : ""
-              }`}
-            >
-              <Skill
-                i={i}
-                usableSkill={usableSkill}
-                canActivateSkill={canRecover(usableSkill.id)}
-                selectedSkill={selectedSkill}
-                setSelectedSkill={setSelectedSkill}
-              />
-            </div>
-          ))}
+        <div className="twoColumn3-1">
+          <h2 className="choiceTitle">{props.message}</h2>
+          <button className="choiceButton" onClick={() => handleViewBoard()}>
+            View Board
+          </button>
+        </div>
+
+        <div className="scrollable scrollable-y-only">
+          <div className="fourColumn">
+            {recoverVestige.map((usableSkill, i) => (
+              <div
+                key={i}
+                className={`scionSkills ${
+                  selectedSkill === i ? "selectedSkill" : ""
+                }`}
+              >
+                <Skill
+                  i={i}
+                  usableSkill={usableSkill}
+                  canActivateSkill={canRecover(usableSkill.id)}
+                  selectedSkill={selectedSkill}
+                  setSelectedSkill={setSelectedSkill}
+                />
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* {selectedSkill === null && (
@@ -103,7 +112,9 @@ const RecoverSkill = (props) => {
         )} */}
 
         {selectedSkill !== null && (
-          <button onClick={() => handleSelect()}>Select</button>
+          <button className="choiceButton" onClick={() => handleSelect()}>
+            Select
+          </button>
         )}
       </div>
     </div>

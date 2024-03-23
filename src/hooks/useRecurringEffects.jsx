@@ -362,7 +362,8 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Activating Crystallization",
+      resolution: "Land Skill",
+      resolution2: "Activating Crystallization",
       unit: unit,
     });
 
@@ -733,7 +734,8 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Activating Geomancy",
+      resolution: "Land Skill",
+      resolution2: "Activating Geomancy",
       unit: unit,
     });
 
@@ -931,7 +933,8 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Activating Pitfall Trap",
+      resolution: "Land Skill",
+      resolution2: "Activating Pitfall Trap",
       unit: unit,
       victim: victim,
     });
@@ -1379,7 +1382,8 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Activating Upheaval",
+      resolution: "Land Skill",
+      resolution2: "Activating Upheaval",
       unit: unit,
     });
 
@@ -1412,7 +1416,8 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Resonating Upheaval",
+      resolution: "Land Skill",
+      resolution2: "Resonating Upheaval",
       unit: unit,
       resonator: resonator,
     });

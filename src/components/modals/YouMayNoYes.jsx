@@ -81,7 +81,7 @@ const YouMayNoYes = (props) => {
       case "Gale Conjuration Strike": // "Gale ConjurationR2"
         newGameState.currentResolution.push({
           resolution: "Wind Skill",
-          resolution: "Gale ConjurationR3",
+          resolution2: "Gale ConjurationR3",
           unit: props.unit,
         });
 

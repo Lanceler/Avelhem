@@ -59,6 +59,23 @@ const SelectCustomChoice = (props) => {
       ChoiceSecondMessage = "Purge an adjacent enemy’s Virtue and Shield.";
       break;
 
+    case "Upheaval":
+      canFirstChoice =
+        canMove(unit) && localGameState[props.unit.player].skillHand.length > 0;
+      canSecondChoice = true;
+      ChoiceFirstMessage = "Spend 1 skill to traverse.";
+      ChoiceSecondMessage = "Search for then float 1 non-burst Land skill.";
+      break;
+
+    case "Geomancy":
+      canFirstChoice = true;
+      canSecondChoice = ["04-01", "04-02", "04-03"].some((s) =>
+        localGameState[self].skillVestige.includes(s)
+      );
+      ChoiceFirstMessage = "Gain 1 HP (Max 3).";
+      ChoiceSecondMessage = "Recover then float 1 Land skill.";
+      break;
+
     case "Frenzy Blade1":
       canFirstChoice = true;
       canSecondChoice = newGameState[self].skillHand.length > 0;
@@ -127,6 +144,48 @@ const SelectCustomChoice = (props) => {
             "strike",
             "Fire Scion"
           );
+        }
+        break;
+
+      case "Upheaval":
+        if (selectedChoice === 1) {
+          newGameState.currentResolution.push({
+            resolution: "Land Skill",
+            resolution2: "UpheavalR3",
+            unit: unit,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Discard Skill",
+            unit: unit,
+            player: self,
+            message: "Spend 1 skill.",
+            restriction: null,
+          });
+        } else {
+          updateData = true;
+          newGameState.currentResolution.push({
+            resolution: "Search Skill",
+            player: self,
+            restriction: ["04-01", "04-02", "04-03"],
+            message: "Search for then float 1 non-burst Land skill.",
+            outcome: "Float",
+          });
+        }
+        break;
+
+      case "Geomancy":
+        if (selectedChoice === 1) {
+          unit.hp = Math.min(unit.hp + 1, 3);
+          newGameState[unit.player].units[unit.unitIndex] = unit;
+        } else {
+          newGameState.currentResolution.push({
+            resolution: "Recover Skill",
+            player: self,
+            restriction: ["04-01", "04-02", "04-03"],
+            message: "Recover then float 1 Land skill.",
+            outcome: "Float",
+          });
         }
         break;
 

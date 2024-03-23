@@ -941,7 +941,7 @@ export const useSkillEffects = () => {
     newGameState.currentResolution.pop();
 
     //raise hp to 2 (consider fact that Land Scion HP can reach 3)
-    unit.hp = Math.max(2, victim.hp);
+    unit.hp = Math.max(2, unit.hp);
 
     //give unit activationCounter
     unit.temporary.activation
@@ -952,9 +952,9 @@ export const useSkillEffects = () => {
 
     if (newGameState[unit.player].skillHand.length > 0) {
       newGameState.currentResolution.push({
-        resolution: "Crystallization1",
+        resolution: "Land Skill",
+        resolution2: "Crystallization1",
         unit: unit,
-
         details: {
           title: "Crystallization",
           message: "You may spend 1 skill to gain shield for 2 turns.",
@@ -1003,13 +1003,15 @@ export const useSkillEffects = () => {
 
     //2. Continue
     newGameState.currentResolution.push({
-      resolution: "Upheaval2",
+      resolution: "Land Skill",
+      resolution2: "Upheaval2",
       unit: unit,
     });
 
     //1. Paralyze 1st enemy
     newGameState.currentResolution.push({
-      resolution: "Upheaval1",
+      resolution: "Land Skill",
+      resolution2: "Upheaval1",
       unit: unit,
     });
 
@@ -1035,7 +1037,8 @@ export const useSkillEffects = () => {
       if (adjacentEnemies.length > 0) {
         //3. Paralyze 2nd enemy
         newGameState.currentResolution.push({
-          resolution: "Upheaval3",
+          resolution: "Land Skill",
+          resolution2: "Upheaval3",
           unit: unit,
           details: {
             reason: "Upheaval 2nd Paralyze",
@@ -1080,19 +1083,22 @@ export const useSkillEffects = () => {
 
     //3. Resonance
     newGameState.currentResolution.push({
-      resolution: "UpheavalR1",
+      resolution: "Land Skill",
+      resolution2: "UpheavalR1",
       unit: unit,
     });
 
     //2. Continue
     newGameState.currentResolution.push({
-      resolution: "Upheaval2",
+      resolution: "Land Skill",
+      resolution2: "Upheaval2",
       unit: unit,
     });
 
     //1. Paralyze 1st enemy
     newGameState.currentResolution.push({
-      resolution: "Upheaval1",
+      resolution: "Land Skill",
+      resolution2: "Upheaval1",
       unit: unit,
     });
 
@@ -1110,8 +1116,13 @@ export const useSkillEffects = () => {
     if (unit !== null && !isMuted(unit)) {
       //6. Continue
       newGameState.currentResolution.push({
-        resolution: "UpheavalR2",
+        resolution: "Land Skill",
+        resolution2: "UpheavalR2",
         unit: unit,
+        details: {
+          title: "Upheaval",
+          reason: "Upheaval",
+        },
       });
     }
 
@@ -1134,7 +1145,8 @@ export const useSkillEffects = () => {
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     newGameState.currentResolution.push({
-      resolution: "Pitfall Trap1",
+      resolution: "Land Skill",
+      resolution2: "Pitfall Trap1",
       unit: unit,
       victim: victim,
     });
@@ -1207,12 +1219,14 @@ export const useSkillEffects = () => {
     if (canStrike(unit)) {
       //Continue -> Paralyze adjacent if lethal
       newGameState.currentResolution.push({
-        resolution: "Geomancy3",
+        resolution: "Land Skill",
+        resolution2: "Geomancy3",
         unit: unit,
       });
 
       newGameState.currentResolution.push({
-        resolution: "Geomancy2",
+        resolution: "Land Skill",
+        resolution2: "Geomancy2",
         unit: unit,
         details: {
           reason: "Geomancy Strike",
@@ -1226,8 +1240,13 @@ export const useSkillEffects = () => {
 
     //Choose: HP or recover
     newGameState.currentResolution.push({
-      resolution: "Geomancy1",
+      resolution: "Land Skill",
+      resolution2: "Geomancy1",
       unit: unit,
+      details: {
+        title: "Geomancy",
+        reason: "Geomancy",
+      },
     });
 
     return newGameState;
@@ -1247,7 +1266,8 @@ export const useSkillEffects = () => {
       unit.temporary.geomancyLethal
     ) {
       newGameState.currentResolution.push({
-        resolution: "Geomancy4",
+        resolution: "Land Skill",
+        resolution2: "Geomancy4",
         unit: unit,
         details: {
           reason: "Geomancy Paralyze",

@@ -74,8 +74,10 @@ const CataclysmicTempestFloat = (props) => {
     <div className="modal-backdrop">
       <div className="modal">
         <div className="twoColumn">
-          <h2>Cataclysmic Tempest</h2>
-          <button onClick={() => handleViewBoard()}>View Board</button>
+          <h2 className="choiceTitle">Cataclysmic Tempest</h2>
+          <button className="choiceButton" onClick={() => handleViewBoard()}>
+            View Board
+          </button>
         </div>
 
         {message()}
@@ -105,7 +107,12 @@ const CataclysmicTempestFloat = (props) => {
         </div>
 
         {selectedSkills.length === selectAmount && (
-          <button onClick={() => handleProceed()}>Select</button>
+          <button
+            className="choiceButton noYes"
+            onClick={() => handleProceed()}
+          >
+            Select
+          </button>
         )}
       </div>
     </div>

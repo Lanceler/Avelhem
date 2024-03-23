@@ -101,13 +101,6 @@ const YouMaySpend1Skill = (props) => {
         });
         break;
 
-      case "Crystallization1":
-        newGameState.currentResolution.push({
-          resolution: "Crystallization2",
-          unit: props.unit,
-        });
-        break;
-
       case "Cataclysmic Tempest8":
         newGameState.currentResolution.push({
           resolution: "Wind Skill",
@@ -116,9 +109,18 @@ const YouMaySpend1Skill = (props) => {
         });
         break;
 
+      case "Crystallization1":
+        newGameState.currentResolution.push({
+          resolution: "Land Skill",
+          resolution2: "Crystallization2",
+          unit: props.unit,
+        });
+        break;
+
       case "Pitfall Trap":
         newGameState.currentResolution.push({
-          resolution: "Pitfall Trap3",
+          resolution: "Land Skill",
+          resolution2: "Pitfall Trap3",
           unit: props.unit,
           victim: props.victim,
         });
@@ -243,8 +245,16 @@ const YouMaySpend1Skill = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <button onClick={() => handleViewBoard()}>View Board</button>
-        <h2>{props.details.title}</h2>
+        {/* <button onClick={() => handleViewBoard()}>View Board</button>
+        <h2>{props.details.title}</h2> */}
+
+        <div className="twoColumn">
+          <h2 className="choiceTitle">{props.details.title}</h2>
+          <button className="choiceButton" onClick={() => handleViewBoard()}>
+            View Board
+          </button>
+        </div>
+
         <h3>{props.details.message}</h3>
 
         <div className="fourColumn scrollable scrollable-y-only">
@@ -267,17 +277,26 @@ const YouMaySpend1Skill = (props) => {
         </div>
 
         {selectedSkill === null && (
-          <button onClick={() => handleSkip()}>Skip</button>
+          <button className="choiceButton noYes" onClick={() => handleSkip()}>
+            Skip
+          </button>
         )}
 
         {selectedSkill === null &&
           props.unit !== null &&
           props.unit.blossom > 0 && (
-            <button onClick={() => handleBlossom()}>Spend 1 Blossom</button>
+            <button
+              className="choiceButton noYes"
+              onClick={() => handleBlossom()}
+            >
+              Spend 1 Blossom
+            </button>
           )}
 
         {selectedSkill !== null && (
-          <button onClick={() => handleSelect()}>Select</button>
+          <button className="choiceButton noYes" onClick={() => handleSelect()}>
+            Select
+          </button>
         )}
       </div>
     </div>

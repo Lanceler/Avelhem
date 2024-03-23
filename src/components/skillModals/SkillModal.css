@@ -90,17 +90,16 @@ background: rgb(117, 13, 13)
     display: grid;
 }
 
-.scrollable{
+/* .scrollable{
     max-height: 550px;
     overflow-y: auto;
     width: fit-content;
-    /* border: 2px solid; */
     padding: 9px;
-}
+} */
 
-.scrollable-y-only{
+/* .scrollable-y-only{
     overflow-x:hidden;
-}
+} */
 
 .center {
     display: flex;

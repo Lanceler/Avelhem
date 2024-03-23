@@ -63,7 +63,8 @@ const ContingentMotion = (props) => {
 
     if (usableSkills[selectedSkill].id === "04-03") {
       newGameState.currentResolution.push({
-        resolution: "Select Pitfall Trap Activator",
+        resolution: "Land Skill",
+        resolution2: "Select Pitfall Trap Activator",
         mover: props.mover,
         player: self,
       });
