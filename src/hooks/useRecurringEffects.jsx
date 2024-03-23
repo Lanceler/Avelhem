@@ -2649,6 +2649,29 @@ export const useRecurringEffects = () => {
     return enemyZones;
   };
 
+  const getZonesWithEnemiesRooted = (unit, range) => {
+    const zones = JSON.parse(localGameState.zones);
+
+    let enemyPlayer = "";
+    if (unit.player === "host") {
+      enemyPlayer = "guest";
+    } else if (unit.player === "guest") {
+      enemyPlayer = "host";
+    }
+
+    let enemyZones = getZonesWithEnemies(unit, range);
+
+    enemyZones = enemyZones.filter((z) =>
+      isRooted(
+        localGameState[enemyPlayer].units[
+          zones[Math.floor(z / 5)][z % 5].unitIndex
+        ]
+      )
+    );
+
+    return enemyZones;
+  };
+
   const ignite = (newGameState, attacker, victim, special) => {
     newGameState.currentResolution.push({
       resolution: "Apply Burn",
@@ -3287,6 +3310,7 @@ export const useRecurringEffects = () => {
     getZonesWithAllies,
     getZonesWithEnemies,
     getZonesWithEnemiesAfflicted,
+    getZonesWithEnemiesRooted,
     ignite,
     isAdjacent,
     isDisrupted,

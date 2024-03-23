@@ -114,12 +114,15 @@ const Board = (props) => {
     applyFrostbite,
     applyParalysis,
     blast,
+    canSowAndReapBlast,
+    canStrike,
     drawSkill,
     endFinalPhase,
     getVacantAdjacentZones,
     getZonesWithAllies,
     getZonesWithEnemies,
     getZonesWithEnemiesAfflicted,
+    getZonesWithEnemiesRooted,
     freeze1,
     freeze2,
     ignite,
@@ -2469,6 +2472,49 @@ const Board = (props) => {
           </>
         );
 
+      case "Sow and Reap Blast":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {selectEnemiesRooted(
+                  lastResolution.unit,
+                  1,
+                  null,
+                  "blast",
+                  "sowAndReapBlast"
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "Select Sow and Reap Striker":
+        return (
+          <>
+            {self === lastResolution.player && (
+              <>{selectSowAndReapStriker(lastResolution.unit)}</>
+            )}
+          </>
+        );
+
+      case "Sow and Reap Strike":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {selectEnemiesRooted(
+                  lastResolution.unit,
+                  1,
+                  null,
+                  "strike",
+                  null
+                )}
+              </>
+            )}
+          </>
+        );
+
       case "Sow and Reap2":
         return (
           <>
@@ -3213,6 +3259,24 @@ const Board = (props) => {
     }
   };
 
+  const selectEnemiesRooted = (unitInfo, range, tactic, reason, special) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    newGameState.currentResolution.pop();
+
+    if (unit !== null && !isMuted(unit)) {
+      enterSelectUnitMode(
+        getZonesWithEnemiesRooted(unit, range),
+        unit,
+        newGameState,
+        tactic,
+        reason,
+        special
+      );
+    }
+  };
+
   const selectFrenzyBladeActivator = (victim) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -3311,6 +3375,36 @@ const Board = (props) => {
       newGameState,
       null,
       "pitfall trap",
+      null
+    );
+  };
+
+  const selectSowAndReapStriker = (unit) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Select Sow and Reap Strikerr"
+    newGameState.currentResolution.pop();
+
+    const zonesWithAllies = getZonesWithAllies(unit, 1, false);
+    let adjacentStrikers = [];
+
+    for (let z of zonesWithAllies) {
+      const zone = zones[Math.floor(z / 5)][z % 5];
+      const ally = newGameState[zone.player].units[zone.unitIndex];
+
+      if (canSowAndReapBlast(ally) && canStrike(ally)) {
+        adjacentStrikers.push(z);
+      }
+    }
+
+    setIntrudingPlayer(self);
+
+    enterSelectUnitMode(
+      adjacentStrikers,
+      unit,
+      newGameState,
+      null,
+      "sow and reap striker",
       null
     );
   };
@@ -3428,6 +3522,31 @@ const Board = (props) => {
         newGameState = activateFrenzyBlade(newGameState, selectedUnit, unit);
         break;
 
+      case "sow and reap striker":
+        //give SelectedUnit activationCounter
+        let striker =
+          newGameState[selectedUnit.player].units[selectedUnit.unitIndex];
+        striker.temporary.activation
+          ? (striker.temporary.activation += 1)
+          : (striker.temporary.activation = 1);
+
+        newGameState[selectedUnit.player].units[selectedUnit.unitIndex] =
+          striker;
+
+        newGameState.activatingUnit.push(striker);
+
+        newGameState.currentResolution.push({
+          resolution: "Tactic End",
+          unit: selectedUnit,
+        });
+
+        newGameState.currentResolution.push({
+          resolution: "Sow and Reap Strike",
+          unit: selectedUnit,
+        });
+
+        break;
+
       case "viridian grave":
         newGameState = activateViridianGrave(newGameState, selectedUnit, unit);
         break;
@@ -3541,7 +3660,7 @@ const Board = (props) => {
 
   const skillResonanceConclusion = (
     player,
-    unit,
+    unitInfo,
     skill,
     skillConclusion,
     resonator,
@@ -3570,37 +3689,25 @@ const Board = (props) => {
       newGameState[player].skillHand.push(resonator);
     }
 
-    if (newGameState[unit.player].units[unit.unitIndex] !== null) {
+    if (unitInfo !== null) {
+      let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
       //decrease activation counter
-      if (
-        newGameState[unit.player].units[unit.unitIndex].temporary.activation
-      ) {
-        newGameState[unit.player].units[unit.unitIndex].temporary.activation =
-          newGameState[unit.player].units[unit.unitIndex].temporary.activation -
-          1;
-      }
+      unit.temporary.activation -= 1;
 
       //apply anathema
-      if (
-        !newGameState[unit.player].units[unit.unitIndex].temporary.activation &&
-        newGameState[unit.player].units[unit.unitIndex].temporary.anathemaDelay
-      ) {
-        delete newGameState[unit.player].units[unit.unitIndex].temporary
-          .anathemaDelay;
-
-        newGameState[unit.player].units[
-          unit.unitIndex
-        ].afflictions.anathema = 2;
+      if (unit.temporary.activation === 0 && unit.temporary.anathemaDelay) {
+        delete unit.temporary.anathemaDelay;
+        unit.afflictions.anathema = 2;
 
         //anathema purges boosts, disruption, overgrowth, & proliferation
-        newGameState[unit.player].units[unit.unitIndex].boosts = {};
-        delete newGameState[unit.player].units[unit.unitIndex].enhancements
-          .disruption;
-        delete newGameState[unit.player].units[unit.unitIndex].enhancements
-          .overgrowth;
-        delete newGameState[unit.player].units[unit.unitIndex].enhancements
-          .proliferation;
+        unit.boosts = {};
+        delete unit.enhancements.disruption;
+        delete unit.enhancements.overgrowth;
+        delete unit.enhancements.proliferation;
       }
+
+      newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
     }
 
     //Tea for Two
@@ -3638,43 +3745,31 @@ const Board = (props) => {
     // props.updateFirebase(newGameState);
   };
 
-  const tacticEnd = (unit) => {
+  const tacticEnd = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
     //end "Tactic End"
     newGameState.currentResolution.pop();
 
-    if (newGameState[unit.player].units[unit.unitIndex] !== null) {
+    if (unitInfo !== null) {
+      let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
       //decrease activation counter
-      if (
-        newGameState[unit.player].units[unit.unitIndex].temporary.activation
-      ) {
-        newGameState[unit.player].units[unit.unitIndex].temporary.activation =
-          newGameState[unit.player].units[unit.unitIndex].temporary.activation -
-          1;
-      }
+      unit.temporary.activation -= 1;
 
       //apply anathema
-      if (
-        !newGameState[unit.player].units[unit.unitIndex].temporary.activation &&
-        newGameState[unit.player].units[unit.unitIndex].temporary.anathemaDelay
-      ) {
-        delete newGameState[unit.player].units[unit.unitIndex].temporary
-          .anathemaDelay;
-
-        newGameState[unit.player].units[
-          unit.unitIndex
-        ].afflictions.anathema = 2;
+      if (unit.temporary.activation === 0 && unit.temporary.anathemaDelay) {
+        delete unit.temporary.anathemaDelay;
+        unit.afflictions.anathema = 2;
 
         //anathema purges boosts, disruption, overgrowth, & proliferation
-        newGameState[unit.player].units[unit.unitIndex].boosts = {};
-        delete newGameState[unit.player].units[unit.unitIndex].enhancements
-          .disruption;
-        delete newGameState[unit.player].units[unit.unitIndex].enhancements
-          .overgrowth;
-        delete newGameState[unit.player].units[unit.unitIndex].enhancements
-          .proliferation;
+        unit.boosts = {};
+        delete unit.enhancements.disruption;
+        delete unit.enhancements.overgrowth;
+        delete unit.enhancements.proliferation;
       }
+
+      newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
     }
 
     newGameState.activatingUnit.pop();

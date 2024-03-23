@@ -104,10 +104,25 @@ const SelectCustomChoice = (props) => {
           newGameState = blast(newGameState, unit, props.details.victim, null);
         }
         break;
+
+      case "Sow and Reap":
+        if (selectedChoice === 1) {
+          newGameState.currentResolution.push({
+            resolution: "Sow and Reap Blast",
+            unit: unit,
+          });
+        } else {
+          newGameState.currentResolution.push({
+            resolution: "Select Sow and Reap Striker",
+            unit: unit,
+            player: self,
+          });
+        }
+        break;
     }
 
     dispatch(updateState(newGameState));
-    props.updateFirebase(newGameState);
+    // props.updateFirebase(newGameState);
   };
 
   const handleSkip = () => {

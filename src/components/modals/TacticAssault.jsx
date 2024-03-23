@@ -49,15 +49,14 @@ const TacticAssault = (props) => {
   const handleStrike = () => {
     if (canStrike(props.unit)) {
       let newGameState = JSON.parse(JSON.stringify(localGameState));
+      let unit = newGameState[props.unit.player].units[props.unit.unitIndex];
 
       //end Assault Tactic resolution
       newGameState.currentResolution.pop();
 
-      //giveUnit activationCounter
-      let unit = newGameState[props.unit.player].units[props.unit.unitIndex];
-      console.log(unit);
+      //give unit activationCounter
       unit.temporary.activation
-        ? (unit.temporary.activation = unit.activation + 1)
+        ? (unit.temporary.activation += 1)
         : (unit.temporary.activation = 1);
 
       newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
