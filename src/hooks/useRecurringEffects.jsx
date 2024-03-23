@@ -137,7 +137,9 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Activating Blaze of Glory",
+      resolution: "Fire Skill",
+      resolution2: "Activating Blaze of Glory",
+      // resolution: "Activating Blaze of Glory",
       unit: unit,
     });
 
@@ -284,7 +286,9 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Activating Conflagration",
+      resolution: "Fire Skill",
+      resolution2: "Activating Conflagration",
+      // resolution: "Activating Conflagration",
       unit: unit,
     });
 
@@ -317,7 +321,9 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Resonating Conflagration",
+      resolution: "Fire Skill",
+      resolution2: "Resonating Conflagration",
+      // resolution: "Resonating Conflagration",
       unit: unit,
       resonator: resonator,
     });
@@ -830,7 +836,9 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Activating Ignition Propulsion",
+      resolution: "Fire Skill",
+      resolution2: "Activating Ignition Propulsion",
+      // resolution: "Activating Ignition Propulsion",
       unit: unit,
     });
 
@@ -1010,7 +1018,9 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Activating Resplendence",
+      resolution: "Fire Skill",
+      resolution2: "Activating Resplendence",
+      // resolution: "Activating Resplendence",
       unit: unit,
     });
 

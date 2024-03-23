@@ -94,7 +94,9 @@ const YouMaySpend1Skill = (props) => {
     switch (props.details.reason) {
       case "Resplendence1":
         newGameState.currentResolution.push({
-          resolution: "Resplendence2",
+          resolution: "Fire Skill",
+          resolution2: "Resplendence2",
+          // resolution: "Resplendence2",
           unit: props.unit,
         });
         break;

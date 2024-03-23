@@ -47,7 +47,6 @@ import VirtueBlastBlock from "./modals/VirtueBlastBlock";
 
 import SelectCustomChoice from "./modals/SelectCustomChoice";
 
-import IgnitionPropulsion1 from "./skillModals/IgnitionPropulsion1";
 import Purification2 from "./skillModals/Purification2";
 import FrigidBreathResonance1 from "./skillModals/FrigidBreathResonance1";
 import GlacialTorrent1 from "./skillModals/GlacialTorrent1";
@@ -677,197 +676,390 @@ const Board = (props) => {
           </>
         );
 
-      case "Activating Ignition Propulsion":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
-              <>{resolutionUpdate(ignitionPropulsion1(lastResolution.unit))}</>
-            )}
-          </>
-        );
-
-      case "Ignition Propulsion1":
-        return (
-          // <>
-          //   {self === lastResolution.unit.player && !hideModal && (
-          //     <IgnitionPropulsion1
-          //       updateFirebase={updateFirebase}
-          //       unit={lastResolution.unit}
-          //       enterMoveMode={enterMoveMode}
-          //       enterSelectUnitMode={enterSelectUnitMode}
-          //       hideOrRevealModale={hideOrRevealModale}
-          //     />
-          //   )}
-          // </>
-
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <SelectCustomChoice
-                unit={lastResolution.unit}
-                details={lastResolution.details}
-                enterMoveMode={enterMoveMode}
-                enterSelectUnitMode={enterSelectUnitMode}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Activating Conflagration":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
-              <>{resolutionUpdate(conflagration1(lastResolution.unit))}</>
-            )}
-          </>
-        );
-
-      case "Conflagration1":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+      case "Fire Skill":
+        switch (lastResolution.resolution2) {
+          case "Activating Ignition Propulsion":
+            return (
               <>
-                {
-                  selectEnemies(
-                    lastResolution.unit,
-                    1,
-                    null,
-                    "blast",
-                    "Fire Scion"
-                  )
-                  // selectBlast(lastResolution.unit, null, "Fire Scion")
-                }
-              </>
-            )}
-          </>
-        );
-
-      case "Resonating Conflagration":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
-              <>
-                {resolutionUpdate(
-                  conflagrationR1(lastResolution.unit, lastResolution.resonator)
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdate(ignitionPropulsion1(lastResolution.unit))}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "ConflagrationR1":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Ignition Propulsion1":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(
-                  conflagrationR2(lastResolution.unit)
+                {self === lastResolution.unit.player && !hideModal && (
+                  <SelectCustomChoice
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    enterMoveMode={enterMoveMode}
+                    enterSelectUnitMode={enterSelectUnitMode}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "ConflagrationR2":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <YouMayNoYes
-                unit={lastResolution.unit}
-                details={lastResolution.details}
-                enterSelectUnitMode={enterSelectUnitMode}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Activating Blaze of Glory":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
-              <>{resolutionUpdate(blazeOfGlory1(lastResolution.unit))}</>
-            )}
-          </>
-        );
-
-      case "Blaze of Glory1":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Activating Conflagration":
+            return (
               <>
-                {setIntrudingPlayer(self)}
-                {selectEnemies(lastResolution.unit, 1, null, "ignite", null)}
-              </>
-            )}
-          </>
-        );
-
-      case "Blaze of Glory2":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
-              <>
-                {resolutionUpdateGameStateOnly(
-                  blazeOfGlory2(lastResolution.unit)
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      conflagration1(lastResolution.unit)
+                    )}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Blaze of Glory3":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <YouMayNoYes
-                unit={lastResolution.unit}
-                details={lastResolution.details}
-                enterSelectUnitMode={enterSelectUnitMode}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Activating Resplendence":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Conflagration1":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(
-                  resplendence1(lastResolution.unit)
+                {self === lastResolution.unit.player && (
+                  <>
+                    {selectEnemies(
+                      lastResolution.unit,
+                      1,
+                      null,
+                      "blast",
+                      "Fire Scion"
+                    )}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Resplendence1":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <YouMaySpend1Skill
-                unit={lastResolution.unit}
-                details={lastResolution.details}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
+          case "Resonating Conflagration":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      conflagrationR1(
+                        lastResolution.unit,
+                        lastResolution.resonator
+                      )
+                    )}
+                  </>
+                )}
+              </>
+            );
 
-      case "Resplendence2":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
-              <>{selectEnemies(lastResolution.unit, 1, null, "ignite", null)}</>
-            )}
-          </>
-        );
+          case "ConflagrationR1":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      conflagrationR2(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "ConflagrationR2":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMayNoYes
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    enterSelectUnitMode={enterSelectUnitMode}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Activating Blaze of Glory":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>{resolutionUpdate(blazeOfGlory1(lastResolution.unit))}</>
+                )}
+              </>
+            );
+
+          case "Blaze of Glory1":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {setIntrudingPlayer(self)}
+                    {selectEnemies(
+                      lastResolution.unit,
+                      1,
+                      null,
+                      "ignite",
+                      null
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Blaze of Glory2":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      blazeOfGlory2(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Blaze of Glory3":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMayNoYes
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    enterSelectUnitMode={enterSelectUnitMode}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Activating Resplendence":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      resplendence1(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Resplendence1":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMaySpend1Skill
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Resplendence2":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {selectEnemies(
+                      lastResolution.unit,
+                      1,
+                      null,
+                      "ignite",
+                      null
+                    )}
+                  </>
+                )}
+              </>
+            );
+        }
+        break;
+
+      // case "Activating Ignition Propulsion":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>{resolutionUpdate(ignitionPropulsion1(lastResolution.unit))}</>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Ignition Propulsion1":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && !hideModal && (
+      //         <SelectCustomChoice
+      //           unit={lastResolution.unit}
+      //           details={lastResolution.details}
+      //           enterMoveMode={enterMoveMode}
+      //           enterSelectUnitMode={enterSelectUnitMode}
+      //           updateFirebase={updateFirebase}
+      //           hideOrRevealModale={hideOrRevealModale}
+      //         />
+      //       )}
+      //     </>
+      //   );
+
+      // case "Activating Conflagration":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {resolutionUpdateGameStateOnly(
+      //             conflagration1(lastResolution.unit)
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Conflagration1":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {selectEnemies(
+      //             lastResolution.unit,
+      //             1,
+      //             null,
+      //             "blast",
+      //             "Fire Scion"
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Resonating Conflagration":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {resolutionUpdateGameStateOnly(
+      //             conflagrationR1(lastResolution.unit, lastResolution.resonator)
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "ConflagrationR1":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {resolutionUpdateGameStateOnly(
+      //             conflagrationR2(lastResolution.unit)
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "ConflagrationR2":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && !hideModal && (
+      //         <YouMayNoYes
+      //           unit={lastResolution.unit}
+      //           details={lastResolution.details}
+      //           enterSelectUnitMode={enterSelectUnitMode}
+      //           updateFirebase={updateFirebase}
+      //           hideOrRevealModale={hideOrRevealModale}
+      //         />
+      //       )}
+      //     </>
+      //   );
+
+      // case "Activating Blaze of Glory":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>{resolutionUpdate(blazeOfGlory1(lastResolution.unit))}</>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Blaze of Glory1":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {setIntrudingPlayer(self)}
+      //           {selectEnemies(lastResolution.unit, 1, null, "ignite", null)}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Blaze of Glory2":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {resolutionUpdateGameStateOnly(
+      //             blazeOfGlory2(lastResolution.unit)
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Blaze of Glory3":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && !hideModal && (
+      //         <YouMayNoYes
+      //           unit={lastResolution.unit}
+      //           details={lastResolution.details}
+      //           enterSelectUnitMode={enterSelectUnitMode}
+      //           updateFirebase={updateFirebase}
+      //           hideOrRevealModale={hideOrRevealModale}
+      //         />
+      //       )}
+      //     </>
+      //   );
+
+      // case "Activating Resplendence":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {resolutionUpdateGameStateOnly(
+      //             resplendence1(lastResolution.unit)
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Resplendence1":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && !hideModal && (
+      //         <YouMaySpend1Skill
+      //           unit={lastResolution.unit}
+      //           details={lastResolution.details}
+      //           updateFirebase={updateFirebase}
+      //           hideOrRevealModale={hideOrRevealModale}
+      //         />
+      //       )}
+      //     </>
+      //   );
+
+      // case "Resplendence2":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>{selectEnemies(lastResolution.unit, 1, null, "ignite", null)}</>
+      //       )}
+      //     </>
+      //   );
 
       case "Activating Purification":
         return (

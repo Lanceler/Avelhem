@@ -205,14 +205,26 @@ const YouMayNoYes = (props) => {
 
   return (
     <div className="modal-backdrop">
-      <div className="skill-modal">
-        <button onClick={() => handleViewBoard()}>View Board</button>
-        <h2>{props.details.title}</h2>
-        <h3>{props.details.message}</h3>
+      <div className="modal modalNoYes">
+        {/* <button onClick={() => handleViewBoard()}>View Board</button>
+        <h2>{props.details.title}</h2> */}
 
         <div className="twoColumn">
-          <button onClick={() => handleNo()}>{props.details.no}</button>
-          <button onClick={() => handleYes()}>{props.details.yes}</button>
+          <h2 className="choiceTitle">{props.details.title}</h2>
+          <button className="choiceButton" onClick={() => handleViewBoard()}>
+            View Board
+          </button>
+        </div>
+
+        <h3 className="noYesMessage">{props.details.message}</h3>
+
+        <div className="twoColumn bottomAnchor">
+          <button className="choiceButton noYes" onClick={() => handleNo()}>
+            {props.details.no}
+          </button>
+          <button className="choiceButton noYes" onClick={() => handleYes()}>
+            {props.details.yes}
+          </button>
         </div>
       </div>
     </div>

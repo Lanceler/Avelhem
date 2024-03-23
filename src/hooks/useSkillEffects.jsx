@@ -43,13 +43,10 @@ export const useSkillEffects = () => {
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
-    // newGameState.currentResolution.push({
-    //   resolution: "Ignition Propulsion1",
-    //   unit: unit,
-    // });
-
     newGameState.currentResolution.push({
-      resolution: "Ignition Propulsion1",
+      resolution: "Fire Skill",
+      resolution2: "Ignition Propulsion1",
+      // resolution: "Ignition Propulsion1",
       unit: unit,
       details: {
         title: "Ignition Propulsion",
@@ -86,7 +83,9 @@ export const useSkillEffects = () => {
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     newGameState.currentResolution.push({
-      resolution: "Conflagration1",
+      resolution: "Fire Skill",
+      resolution2: "Conflagration1",
+      // resolution: "Conflagration1",
       unit: unit,
     });
 
@@ -129,12 +128,16 @@ export const useSkillEffects = () => {
     }
 
     newGameState.currentResolution.push({
-      resolution: "ConflagrationR1",
+      resolution: "Fire Skill",
+      resolution2: "ConflagrationR1",
+      // resolution: "ConflagrationR1",
       unit: unit,
     });
 
     newGameState.currentResolution.push({
-      resolution: "Conflagration1",
+      resolution: "Fire Skill",
+      resolution2: "Conflagration1",
+      // resolution: "Conflagration1",
       unit: unit,
     });
 
@@ -162,7 +165,9 @@ export const useSkillEffects = () => {
       getZonesWithEnemies(unit, 1).length > 0
     ) {
       newGameState.currentResolution.push({
-        resolution: "ConflagrationR2",
+        resolution: "Fire Skill",
+        resolution2: "ConflagrationR2",
+        // resolution: "ConflagrationR2",
         unit: unit,
         details: {
           reason: "Conflagration Ignite",
@@ -195,12 +200,16 @@ export const useSkillEffects = () => {
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     newGameState.currentResolution.push({
-      resolution: "Blaze of Glory2",
+      resolution: "Fire Skill",
+      resolution2: "Blaze of Glory2",
+      // resolution: "Blaze of Glory2",
       unit: unit,
     });
 
     newGameState.currentResolution.push({
-      resolution: "Blaze of Glory1",
+      resolution: "Fire Skill",
+      resolution2: "Blaze of Glory1",
+      // resolution: "Blaze of Glory1",
       unit: unit,
     });
 
@@ -224,7 +233,9 @@ export const useSkillEffects = () => {
 
     if (unit !== null && !isMuted(unit) && unit.fever > 0) {
       newGameState.currentResolution.push({
-        resolution: "Blaze of Glory3",
+        resolution: "Fire Skill",
+        resolution2: "Blaze of Glory3",
+        // resolution: "Blaze of Glory3",
         unit: unit,
         details: {
           reason: "Blaze of Glory Draw",
@@ -264,7 +275,9 @@ export const useSkillEffects = () => {
       newGameState[unit.player].skillHand.length > 0
     ) {
       newGameState.currentResolution.push({
-        resolution: "Resplendence1",
+        resolution: "Fire Skill",
+        resolution2: "Resplendence1",
+        // resolution: "Resplendence1",
         unit: unit,
         details: {
           title: "Resplendence",

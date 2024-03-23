@@ -18,6 +18,16 @@
     border-radius: 10px;
 }
 
+.modalNoYes {
+
+    margin: 300px auto;
+    min-height: 200px;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+
+}
+
 .bountyHeader {
     justify-content: space-between;
 }
@@ -214,6 +224,7 @@ background: rgb(117, 13, 13)
     color: rgb(0, 0, 0);
     font-family: "Times New Roman", Times, serif;
     font-size: 40px;
+    line-height: 135%;
 }
 
 .choiceButton{
@@ -226,4 +237,24 @@ background: rgb(117, 13, 13)
     color: white;
     background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
     cursor: pointer;
+}
+
+.noYes{
+    min-width: 100px;
+    justify-self: center;
+        
+}
+
+.noYesMessage {
+margin-bottom: 30px;
+}
+
+.choiceButton:hover{
+    filter: brightness(1.3)
+}
+
+.bottomAnchor{
+    display: flex;
+    justify-content: flex-end;
+    height: 100%;
 }
