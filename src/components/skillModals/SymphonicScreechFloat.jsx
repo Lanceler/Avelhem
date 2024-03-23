@@ -48,22 +48,46 @@ const SymphonicScreechFloat = (props) => {
     if (props.canFloat) {
       return (
         <>
-          <div>Do you want to float it?</div>
-          <button onClick={() => handleProceed()}>No</button>
-          <button onClick={() => handleFloat()}>Yes</button>
+          <h3>Do you want to float it?</h3>
+          <div className="twoColumn bottomAnchor">
+            <button
+              className="choiceButton noYes"
+              onClick={() => handleProceed()}
+            >
+              No
+            </button>
+            <button
+              className="choiceButton noYes"
+              onClick={() => handleFloat()}
+            >
+              Yes
+            </button>
+          </div>
         </>
       );
     } else {
-      return <button onClick={() => handleProceed()}>Proceed</button>;
+      return (
+        <button className="choiceButton noYes" onClick={() => handleProceed()}>
+          Proceed
+        </button>
+      );
     }
   };
 
   return (
     <div className="modal-backdrop">
-      <div className="skill-modal">
-        <button onClick={() => handleViewBoard()}>View Board</button>
-        <h2>Symphonic Screech</h2>
-        <div>The effects of your skill have been negated!</div>
+      <div className="modal modalNoYes">
+        {/* <button onClick={() => handleViewBoard()}>View Board</button>
+        <h2>Symphonic Screech</h2> */}
+
+        <div className="twoColumn">
+          <h2 className="choiceTitle">Symphonic Screech</h2>
+          <button className="choiceButton" onClick={() => handleViewBoard()}>
+            View Board
+          </button>
+        </div>
+
+        <h3>The effects of your skill have been negated!</h3>
         {revealOptions()}
       </div>
     </div>

@@ -12,6 +12,7 @@
     padding: 20px;
     max-height: 1000px;
     width: fit-content;
+    max-width: 850px;
     /* max-width: 850px; */
     margin: 100px auto;
     background: rgba(255, 255, 255, 0.8);
@@ -237,6 +238,7 @@ background: rgb(117, 13, 13)
     color: white;
     background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
     cursor: pointer;
+    height: 47px;
 }
 
 .noYes{

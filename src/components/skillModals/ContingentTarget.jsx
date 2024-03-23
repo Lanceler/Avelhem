@@ -14,6 +14,9 @@ const ContingentTarget = (props) => {
 
   const [selectedSkill, setSelectedSkill] = useState(null);
 
+  let victim =
+    localGameState[props.victim.player].units[props.victim.unitIndex];
+
   const {
     activateBlazeOfGlory,
     activateThunderThaumaturge,
@@ -37,13 +40,13 @@ const ContingentTarget = (props) => {
   const canActivateContingency = (skill) => {
     switch (skill) {
       case "01-03":
-        return triggerBlazeOfGlory(props.victim, props.type);
+        return triggerBlazeOfGlory(victim, props.type);
 
       case "05-03":
-        return triggerThunderThaumaturge(props.attacker, props.victim);
+        return triggerThunderThaumaturge(props.attacker, victim);
 
       case "06-03":
-        return triggerAegis(props.victim);
+        return triggerAegis(victim);
 
       default:
         return false;
@@ -75,13 +78,13 @@ const ContingentTarget = (props) => {
 
     switch (usableSkills[selectedSkill].id) {
       case "01-03":
-        newGameState = activateBlazeOfGlory(newGameState, props.victim);
+        newGameState = activateBlazeOfGlory(newGameState, victim);
         break;
 
       case "05-03":
         newGameState = activateThunderThaumaturge(
           newGameState,
-          props.victim,
+          victim,
           props.attacker
         );
         break;
@@ -89,7 +92,7 @@ const ContingentTarget = (props) => {
       case "06-03":
         newGameState.currentResolution.push({
           resolution: "Select Aegis Activator",
-          victim: props.victim,
+          victim: victim,
           player: self,
         });
 
@@ -99,14 +102,8 @@ const ContingentTarget = (props) => {
         break;
     }
 
-    // if (usableSkills[selectedSkill].id === "01-03") {
-    //   newGameState = activateBlazeOfGlory(newGameState, props.victim);
-    // }
-
     dispatch(updateState(newGameState));
     props.updateFirebase(newGameState);
-
-    // // props.setIntrudingPlayer(self); // <-- need for Aegis
   };
 
   const handleViewBoard = () => {
@@ -115,9 +112,16 @@ const ContingentTarget = (props) => {
 
   return (
     <div className="modal-backdrop">
-      <div className="skill-modal">
-        <button onClick={() => handleViewBoard()}>View Board</button>
-        <h2>Contigency: Target Triggered</h2>
+      <div className="modal">
+        <div className="twoColumn">
+          <h2 className="choiceTitle">Contigency: Target Triggered</h2>
+          <button className="choiceButton" onClick={() => handleViewBoard()}>
+            View Board
+          </button>
+        </div>
+
+        {/* <button onClick={() => handleViewBoard()}>View Board</button>
+        <h2>Contigency: Target Triggered</h2> */}
 
         <div className="fourColumn scrollable scrollable-y-only">
           {usableSkills.map((usableSkill, i) => (
@@ -138,11 +142,25 @@ const ContingentTarget = (props) => {
           ))}
         </div>
 
-        {selectedSkill === null && (
+        {/* {selectedSkill === null && (
           <button onClick={() => handleSkip()}>Skip</button>
         )}
         {selectedSkill !== null && (
           <button onClick={() => handleActivate()}>Activate</button>
+        )} */}
+
+        {selectedSkill === null && (
+          <button className="choiceButton noYes" onClick={() => handleSkip()}>
+            Skip
+          </button>
+        )}
+        {selectedSkill !== null && (
+          <button
+            className="choiceButton noYes"
+            onClick={() => handleActivate()}
+          >
+            Activate
+          </button>
         )}
       </div>
     </div>

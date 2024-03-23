@@ -518,9 +518,20 @@ export const useSkillEffects = () => {
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
+    // newGameState.currentResolution.push({
+    //   resolution: "Aerial Impetus1",
+    //   unit: unit,
+    // });
+
     newGameState.currentResolution.push({
-      resolution: "Aerial Impetus1",
+      resolution: "Wind Skill",
+      resolution2: "Aerial Impetus1",
+      // resolution: "Aerial Impetus1",
       unit: unit,
+      details: {
+        title: "Aerial Impetus",
+        reason: "Aerial Impetus",
+      },
     });
 
     return newGameState;
@@ -534,19 +545,14 @@ export const useSkillEffects = () => {
     newGameState.currentResolution.pop();
 
     if (!(unit.unitClass === "Wind Scion" && !isMuted(unit))) {
-      unit.virtue = false;
+      unit.virtue = 0;
       delete unit.enhancements.shield;
       newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
       if (canMove(unit)) {
-        // newGameState.currentResolution.push({
-        //   resolution: "Aerial Impetus Purge Move",
-        //   player: self,
-        //   victim: unit,
-        // });
-
         newGameState.currentResolution.push({
-          resolution: "Aerial Impetus Purge Move",
+          resolution: "Wind Skill",
+          resolution2: "Aerial Impetus Purge Move",
           player: self,
           unit: unit,
           details: {
@@ -581,7 +587,8 @@ export const useSkillEffects = () => {
 
     if (newGameState[unit.player].skillHand.length > 0) {
       newGameState.currentResolution.push({
-        resolution: "Gale Conjuration1",
+        resolution: "Wind Skill",
+        resolution2: "Gale Conjuration1",
         unit: unit,
         message: "You may float 1 skill to restore your Virtue.",
         restriction: null,
@@ -619,13 +626,15 @@ export const useSkillEffects = () => {
     }
 
     newGameState.currentResolution.push({
-      resolution: "Gale ConjurationR1",
+      resolution: "Wind Skill",
+      resolution2: "Gale ConjurationR1",
       unit: unit,
     });
 
     if (newGameState[unit.player].skillHand.length > 0) {
       newGameState.currentResolution.push({
-        resolution: "Gale Conjuration1",
+        resolution: "Wind Skill",
+        resolution2: "Gale Conjuration1",
         unit: unit,
         message: "You may float 1 skill to restore your Virtue.",
         restriction: null,
@@ -644,13 +653,15 @@ export const useSkillEffects = () => {
     newGameState.currentResolution.pop();
 
     if (canStrike(unit)) {
-      newGameState.currentResolution.push({
-        resolution: "Gale ConjurationR3",
-        unit: unit,
-      });
+      // newGameState.currentResolution.push({
+      //   resolution: "Wind Skill",
+      //   resolution2: "Gale ConjurationR3",
+      //   unit: unit,
+      // });
 
       newGameState.currentResolution.push({
-        resolution: "Gale ConjurationR2",
+        resolution: "Wind Skill",
+        resolution2: "Gale ConjurationR2",
         unit: unit,
         details: {
           reason: "Gale Conjuration Strike",
@@ -680,7 +691,8 @@ export const useSkillEffects = () => {
     ) {
       newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
       newGameState.currentResolution.push({
-        resolution: "Gale ConjurationR4",
+        resolution: "Wind Skill",
+        resolution2: "Gale ConjurationR4",
         enemy: enemy,
       });
     }
@@ -720,7 +732,8 @@ export const useSkillEffects = () => {
       newGameState[self].skillHand.length
     ) {
       newGameState.currentResolution.push({
-        resolution: "Symphonic Screech2",
+        resolution: "Wind Skill",
+        resolution2: "Symphonic Screech2",
         unit: unit,
         details: {
           title: "Symphonic Screech",
@@ -732,7 +745,8 @@ export const useSkillEffects = () => {
     }
 
     newGameState.currentResolution.push({
-      resolution: "Symphonic Screech Negate",
+      resolution: "Wind Skill",
+      resolution2: "Symphonic Screech Negate",
       player: victim.player,
       canFloat: !isAdjacent(unit, victim),
     });
@@ -759,13 +773,15 @@ export const useSkillEffects = () => {
 
     //2. Continue
     newGameState.currentResolution.push({
-      resolution: "Cataclysmic Tempest2",
+      resolution: "Wind Skill",
+      resolution2: "Cataclysmic Tempest2",
       unit: unit,
     });
 
     //1. Paralyze 1st enemy
     newGameState.currentResolution.push({
-      resolution: "Cataclysmic Tempest1",
+      resolution: "Wind Skill",
+      resolution2: "Cataclysmic Tempest1",
       unit: unit,
     });
 
@@ -790,14 +806,16 @@ export const useSkillEffects = () => {
     if (unit !== null && !isMuted(unit)) {
       //4. Continue
       newGameState.currentResolution.push({
-        resolution: "Cataclysmic Tempest4",
+        resolution: "Wind Skill",
+        resolution2: "Cataclysmic Tempest4",
         unit: unit,
       });
 
       if (adjacentEnemies.length > 0) {
         //3. Paralyze 2nd enemy
         newGameState.currentResolution.push({
-          resolution: "Cataclysmic Tempest3",
+          resolution: "Wind Skill",
+          resolution2: "Cataclysmic Tempest3",
           unit: unit,
           details: {
             reason: "Cataclysmic Tempest 2nd Paralyze",
@@ -825,7 +843,8 @@ export const useSkillEffects = () => {
     if (unit !== null && !isMuted(unit)) {
       //6. Continue
       newGameState.currentResolution.push({
-        resolution: "Cataclysmic Tempest5",
+        resolution: "Wind Skill",
+        resolution2: "Cataclysmic Tempest5",
         unit: unit,
       });
 
@@ -835,7 +854,8 @@ export const useSkillEffects = () => {
       ) {
         //5. Force enemy to float
         newGameState.currentResolution.push({
-          resolution: "Cataclysmic Tempest Float",
+          resolution: "Wind Skill",
+          resolution2: "Cataclysmic Tempest Float",
           floatCount: unit.temporary.cataclysmicFloat,
           player: enemy,
         });
@@ -858,13 +878,16 @@ export const useSkillEffects = () => {
       getZonesWithEnemies(unit, 1).length > 0
     ) {
       newGameState.currentResolution.push({
-        resolution: "Cataclysmic Tempest7",
+        resolution: "Wind Skill",
+        resolution2: "Cataclysmic Tempest7",
+
         unit: unit,
       });
 
       if (getZonesWithEnemiesAfflicted(unit, 1, "paralysis").length > 0) {
         newGameState.currentResolution.push({
-          resolution: "Cataclysmic Tempest6",
+          resolution: "Wind Skill",
+          resolution2: "Cataclysmic Tempest6",
           unit: unit,
           details: {
             reason: "Cataclysmic Tempest Blast",
@@ -895,7 +918,8 @@ export const useSkillEffects = () => {
       getZonesWithEnemies(unit, 1).length > 0
     ) {
       newGameState.currentResolution.push({
-        resolution: "Cataclysmic Tempest8",
+        resolution: "Wind Skill",
+        resolution2: "Cataclysmic Tempest8",
         unit: unit,
         details: {
           title: "Cataclysmic Tempest",

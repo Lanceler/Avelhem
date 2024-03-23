@@ -110,7 +110,8 @@ const YouMaySpend1Skill = (props) => {
 
       case "Cataclysmic Tempest8":
         newGameState.currentResolution.push({
-          resolution: "Cataclysmic Tempest9",
+          resolution: "Wind Skill",
+          resolution2: "Cataclysmic Tempest9",
           unit: props.unit,
         });
         break;

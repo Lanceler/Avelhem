@@ -43,14 +43,12 @@ import TacticSelection from "./modals/TacticSelection";
 import TacticSelectionViaEffect from "./modals/TacticSelectionViaEffect";
 import TacticAdvance from "./modals/TacticAdvance";
 import TacticAssault from "./modals/TacticAssault";
-import VirtueBlastBlock from "./modals/VirtueBlastBlock";
 
 import SelectCustomChoice from "./modals/SelectCustomChoice";
 
 import Purification2 from "./skillModals/Purification2";
 import FrigidBreathResonance1 from "./skillModals/FrigidBreathResonance1";
 import GlacialTorrent1 from "./skillModals/GlacialTorrent1";
-import AerialImpetus1 from "./skillModals/AerialImpetus1";
 import CataclysmicTempestFloat from "./skillModals/CataclysmicTempestFloat";
 import Upheaval1 from "./skillModals/Upheaval1";
 import Geomancy1 from "./skillModals/Geomancy1";
@@ -236,8 +234,6 @@ const Board = (props) => {
       updateDoc(gameDoc, { gameState: newGameState });
     } catch (err) {
       console.log(err);
-      // console.log("newGameState");
-      // console.log(newGameState);
     }
   };
 
@@ -436,11 +432,12 @@ const Board = (props) => {
       case "Blocking Virtue-Blast":
         return (
           <>
-            {self === lastResolution.victim.player && !hideModal && (
-              <VirtueBlastBlock
-                updateFirebase={updateFirebase}
+            {self === lastResolution.unit.player && !hideModal && (
+              <YouMayNoYes
+                unit={lastResolution.unit}
                 attacker={lastResolution.attacker}
-                victim={lastResolution.victim}
+                details={lastResolution.details}
+                updateFirebase={updateFirebase}
                 hideOrRevealModale={hideOrRevealModale}
               />
             )}
@@ -880,187 +877,6 @@ const Board = (props) => {
         }
         break;
 
-      // case "Activating Ignition Propulsion":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>{resolutionUpdate(ignitionPropulsion1(lastResolution.unit))}</>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Ignition Propulsion1":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && !hideModal && (
-      //         <SelectCustomChoice
-      //           unit={lastResolution.unit}
-      //           details={lastResolution.details}
-      //           enterMoveMode={enterMoveMode}
-      //           enterSelectUnitMode={enterSelectUnitMode}
-      //           updateFirebase={updateFirebase}
-      //           hideOrRevealModale={hideOrRevealModale}
-      //         />
-      //       )}
-      //     </>
-      //   );
-
-      // case "Activating Conflagration":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {resolutionUpdateGameStateOnly(
-      //             conflagration1(lastResolution.unit)
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Conflagration1":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {selectEnemies(
-      //             lastResolution.unit,
-      //             1,
-      //             null,
-      //             "blast",
-      //             "Fire Scion"
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Resonating Conflagration":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {resolutionUpdateGameStateOnly(
-      //             conflagrationR1(lastResolution.unit, lastResolution.resonator)
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "ConflagrationR1":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {resolutionUpdateGameStateOnly(
-      //             conflagrationR2(lastResolution.unit)
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "ConflagrationR2":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && !hideModal && (
-      //         <YouMayNoYes
-      //           unit={lastResolution.unit}
-      //           details={lastResolution.details}
-      //           enterSelectUnitMode={enterSelectUnitMode}
-      //           updateFirebase={updateFirebase}
-      //           hideOrRevealModale={hideOrRevealModale}
-      //         />
-      //       )}
-      //     </>
-      //   );
-
-      // case "Activating Blaze of Glory":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>{resolutionUpdate(blazeOfGlory1(lastResolution.unit))}</>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Blaze of Glory1":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {setIntrudingPlayer(self)}
-      //           {selectEnemies(lastResolution.unit, 1, null, "ignite", null)}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Blaze of Glory2":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {resolutionUpdateGameStateOnly(
-      //             blazeOfGlory2(lastResolution.unit)
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Blaze of Glory3":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && !hideModal && (
-      //         <YouMayNoYes
-      //           unit={lastResolution.unit}
-      //           details={lastResolution.details}
-      //           enterSelectUnitMode={enterSelectUnitMode}
-      //           updateFirebase={updateFirebase}
-      //           hideOrRevealModale={hideOrRevealModale}
-      //         />
-      //       )}
-      //     </>
-      //   );
-
-      // case "Activating Resplendence":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {resolutionUpdateGameStateOnly(
-      //             resplendence1(lastResolution.unit)
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Resplendence1":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && !hideModal && (
-      //         <YouMaySpend1Skill
-      //           unit={lastResolution.unit}
-      //           details={lastResolution.details}
-      //           updateFirebase={updateFirebase}
-      //           hideOrRevealModale={hideOrRevealModale}
-      //         />
-      //       )}
-      //     </>
-      //   );
-
-      // case "Resplendence2":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>{selectEnemies(lastResolution.unit, 1, null, "ignite", null)}</>
-      //       )}
-      //     </>
-      //   );
-
       case "Activating Purification":
         return (
           <>
@@ -1261,354 +1077,720 @@ const Board = (props) => {
           </>
         );
 
-      case "Activating Aerial Impetus":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
-              <>{resolutionUpdate(aerialImpetus1(lastResolution.unit))}</>
-            )}
-          </>
-        );
+      // case "Activating Aerial Impetus":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>{resolutionUpdate(aerialImpetus1(lastResolution.unit))}</>
+      //       )}
+      //     </>
+      //   );
 
-      case "Aerial Impetus1":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <AerialImpetus1
-                updateFirebase={updateFirebase}
-                unit={lastResolution.unit}
-                enterSelectUnitMode={enterSelectUnitMode}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
+      // case "Aerial Impetus1":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && !hideModal && (
+      //         <SelectCustomChoice
+      //           unit={lastResolution.unit}
+      //           details={lastResolution.details}
+      //           enterSelectUnitMode={enterSelectUnitMode}
+      //           updateFirebase={updateFirebase}
+      //           hideOrRevealModale={hideOrRevealModale}
+      //         />
+      //       )}
+      //     </>
+      //   );
 
-      case "Aerial Impetus Prompt":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
-              <>{selectAerialImpetusMove(lastResolution.unit, "Ally")}</>
-            )}
-          </>
-        );
+      // case "Aerial Impetus Prompt":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>{selectAerialImpetusMove(lastResolution.unit, "Ally")}</>
+      //       )}
+      //     </>
+      //   );
 
-      case "Aerial Impetus Purge":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+      // case "Aerial Impetus Purge":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {resolutionUpdateGameStateOnly(
+      //             aerialImpetus2E(lastResolution.victim)
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Aerial Impetus Purge Move":
+      //   return (
+      //     <>
+      //       {self === lastResolution.player && !hideModal && (
+      //         <YouMayNoYes
+      //           unit={lastResolution.unit}
+      //           player={lastResolution.player}
+      //           details={lastResolution.details}
+      //           enterSelectUnitMode={enterSelectUnitMode}
+      //           updateFirebase={updateFirebase}
+      //           hideOrRevealModale={hideOrRevealModale}
+      //         />
+      //       )}
+      //     </>
+      //   );
+
+      // case "Aerial Impetus Purge Move2":
+      //   return (
+      //     <>
+      //       {self === lastResolution.player && (
+      //         <>{selectAerialImpetusMove(lastResolution.victim, "Enemy")}</>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Activating Gale Conjuration":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {resolutionUpdateGameStateOnly(
+      //             galeConjuration1(lastResolution.unit)
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Gale Conjuration1":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && !hideModal && (
+      //         <YouMayFloat1Skill
+      //           unit={lastResolution.unit}
+      //           restriction={lastResolution.restriction}
+      //           message={lastResolution.message}
+      //           reason={lastResolution.reason}
+      //           updateFirebase={updateFirebase}
+      //           hideOrRevealModale={hideOrRevealModale}
+      //         />
+      //       )}
+      //     </>
+      //   );
+
+      // case "Resonating Gale Conjuration":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {resolutionUpdate(
+      //             galeConjurationR1(
+      //               lastResolution.unit,
+      //               lastResolution.resonator
+      //             )
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Gale ConjurationR1":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {resolutionUpdateGameStateOnly(
+      //             galeConjurationR2(lastResolution.unit)
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Gale ConjurationR2":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && !hideModal && (
+      //         <YouMayNoYes
+      //           unit={lastResolution.unit}
+      //           details={lastResolution.details}
+      //           enterSelectUnitMode={enterSelectUnitMode}
+      //           updateFirebase={updateFirebase}
+      //           hideOrRevealModale={hideOrRevealModale}
+      //         />
+      //       )}
+      //     </>
+      //   );
+
+      // case "Gale ConjurationR3":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>{resolutionUpdate(galeConjurationR3(lastResolution.unit))}</>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Gale ConjurationR4":
+      //   return (
+      //     <>
+      //       {self === lastResolution.enemy && !hideModal && (
+      //         <SelectSkillFloat
+      //           unit={null}
+      //           reason="Gale Conjuration Lethal"
+      //           title="Gale Conjuration"
+      //           message="You are forced to float 1 skill."
+      //           restriction={null}
+      //           updateFirebase={updateFirebase}
+      //           hideOrRevealModale={hideOrRevealModale}
+      //         />
+      //       )}
+      //     </>
+      //   );
+
+      // case "Activating Symphonic Screech":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {resolutionUpdate(
+      //             symphonicScreech1(lastResolution.unit, lastResolution.victim)
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Symphonic Screech Negate":
+      //   return (
+      //     <>
+      //       {self === lastResolution.player && !hideModal && (
+      //         <SymphonicScreechFloat
+      //           updateFirebase={updateFirebase}
+      //           hideOrRevealModale={hideOrRevealModale}
+      //           canFloat={lastResolution.canFloat}
+      //         />
+      //       )}
+      //     </>
+      //   );
+
+      // case "Symphonic Screech2":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && !hideModal && (
+      //         <SelectSkillReveal
+      //           unit={lastResolution.unit}
+      //           details={lastResolution.details}
+      //           updateFirebase={updateFirebase}
+      //           hideOrRevealModale={hideOrRevealModale}
+      //         />
+      //       )}
+      //     </>
+      //   );
+
+      // case "Activating Cataclysmic Tempest":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>{resolutionUpdate(cataclysmicTempest1(lastResolution.unit))}</>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Cataclysmic Tempest1":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {selectEnemies(
+      //             lastResolution.unit,
+      //             1,
+      //             null,
+      //             "paralyze2",
+      //             "Cataclysmic Tempest"
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Cataclysmic Tempest2":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {resolutionUpdateGameStateOnly(
+      //             cataclysmicTempest2(lastResolution.unit)
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Cataclysmic Tempest3":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && !hideModal && (
+      //         <YouMayNoYes
+      //           unit={lastResolution.unit}
+      //           details={lastResolution.details}
+      //           enterSelectUnitMode={enterSelectUnitMode}
+      //           updateFirebase={updateFirebase}
+      //           hideOrRevealModale={hideOrRevealModale}
+      //         />
+      //       )}
+      //     </>
+      //   );
+
+      // case "Cataclysmic Tempest4":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>{resolutionUpdate(cataclysmicTempest3(lastResolution.unit))}</>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Cataclysmic Tempest Float":
+      //   return (
+      //     <>
+      //       {self === lastResolution.player && !hideModal && (
+      //         <CataclysmicTempestFloat
+      //           floatCount={lastResolution.floatCount}
+      //           updateFirebase={updateFirebase}
+      //           hideOrRevealModale={hideOrRevealModale}
+      //         />
+      //       )}
+      //     </>
+      //   );
+
+      // case "Cataclysmic Tempest5":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {resolutionUpdateGameStateOnly(
+      //             cataclysmicTempest4(lastResolution.unit)
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Cataclysmic Tempest6":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && !hideModal && (
+      //         <YouMayNoYes
+      //           unit={lastResolution.unit}
+      //           details={lastResolution.details}
+      //           enterSelectUnitMode={enterSelectUnitMode}
+      //           updateFirebase={updateFirebase}
+      //           hideOrRevealModale={hideOrRevealModale}
+      //         />
+      //       )}
+      //     </>
+      //   );
+
+      // case "Cataclysmic Tempest7":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {resolutionUpdateGameStateOnly(
+      //             cataclysmicTempest5(lastResolution.unit)
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Cataclysmic Tempest8":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && !hideModal && (
+      //         <YouMaySpend1Skill
+      //           unit={lastResolution.unit}
+      //           details={lastResolution.details}
+      //           updateFirebase={updateFirebase}
+      //           hideOrRevealModale={hideOrRevealModale}
+      //         />
+      //       )}
+      //     </>
+      //   );
+
+      // case "Cataclysmic Tempest9":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>{selectEnemies(lastResolution.unit, 1, null, "blast", null)}</>
+      //       )}
+      //     </>
+      //   );
+
+      case "Wind Skill":
+        switch (lastResolution.resolution2) {
+          case "Activating Aerial Impetus":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(
-                  aerialImpetus2E(lastResolution.victim)
+                {self === lastResolution.unit.player && (
+                  <>{resolutionUpdate(aerialImpetus1(lastResolution.unit))}</>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Aerial Impetus Purge Move":
-        return (
-          <>
-            {self === lastResolution.player && !hideModal && (
-              <YouMayNoYes
-                unit={lastResolution.unit}
-                player={lastResolution.player}
-                details={lastResolution.details}
-                enterSelectUnitMode={enterSelectUnitMode}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Aerial Impetus Purge Move2":
-        return (
-          <>
-            {self === lastResolution.player && (
-              <>{selectAerialImpetusMove(lastResolution.victim, "Enemy")}</>
-            )}
-          </>
-        );
-
-      case "Activating Gale Conjuration":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Aerial Impetus1":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(
-                  galeConjuration1(lastResolution.unit)
+                {self === lastResolution.unit.player && !hideModal && (
+                  <SelectCustomChoice
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    enterSelectUnitMode={enterSelectUnitMode}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Gale Conjuration1":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <YouMayFloat1Skill
-                unit={lastResolution.unit}
-                restriction={lastResolution.restriction}
-                message={lastResolution.message}
-                reason={lastResolution.reason}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Resonating Gale Conjuration":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Aerial Impetus Prompt":
+            return (
               <>
-                {resolutionUpdate(
-                  galeConjurationR1(
-                    lastResolution.unit,
-                    lastResolution.resonator
-                  )
+                {self === lastResolution.unit.player && (
+                  <>{selectAerialImpetusMove(lastResolution.unit, "Ally")}</>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Gale ConjurationR1":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Aerial Impetus Purge":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(
-                  galeConjurationR2(lastResolution.unit)
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      aerialImpetus2E(lastResolution.victim)
+                    )}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Gale ConjurationR2":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <YouMayNoYes
-                unit={lastResolution.unit}
-                details={lastResolution.details}
-                enterSelectUnitMode={enterSelectUnitMode}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Gale ConjurationR3":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
-              <>{resolutionUpdate(galeConjurationR3(lastResolution.unit))}</>
-            )}
-          </>
-        );
-
-      case "Gale ConjurationR4":
-        return (
-          <>
-            {self === lastResolution.enemy && !hideModal && (
-              <SelectSkillFloat
-                unit={null}
-                reason="Gale Conjuration Lethal"
-                title="Gale Conjuration"
-                message="You are forced to float 1 skill."
-                restriction={null}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Activating Symphonic Screech":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Aerial Impetus Purge Move":
+            return (
               <>
-                {resolutionUpdate(
-                  symphonicScreech1(lastResolution.unit, lastResolution.victim)
+                {self === lastResolution.player && !hideModal && (
+                  <YouMayNoYes
+                    unit={lastResolution.unit}
+                    player={lastResolution.player}
+                    details={lastResolution.details}
+                    enterSelectUnitMode={enterSelectUnitMode}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Symphonic Screech Negate":
-        return (
-          <>
-            {self === lastResolution.player && !hideModal && (
-              <SymphonicScreechFloat
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-                canFloat={lastResolution.canFloat}
-              />
-            )}
-          </>
-        );
-
-      case "Symphonic Screech2":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <SelectSkillReveal
-                unit={lastResolution.unit}
-                details={lastResolution.details}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Activating Cataclysmic Tempest":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
-              <>{resolutionUpdate(cataclysmicTempest1(lastResolution.unit))}</>
-            )}
-          </>
-        );
-
-      case "Cataclysmic Tempest1":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Aerial Impetus Purge Move2":
+            return (
               <>
-                {selectEnemies(
-                  lastResolution.unit,
-                  1,
-                  null,
-                  "paralyze2",
-                  "Cataclysmic Tempest"
+                {self === lastResolution.player && (
+                  <>{selectAerialImpetusMove(lastResolution.victim, "Enemy")}</>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Cataclysmic Tempest2":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Activating Gale Conjuration":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(
-                  cataclysmicTempest2(lastResolution.unit)
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      galeConjuration1(lastResolution.unit)
+                    )}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Cataclysmic Tempest3":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <YouMayNoYes
-                unit={lastResolution.unit}
-                details={lastResolution.details}
-                enterSelectUnitMode={enterSelectUnitMode}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Cataclysmic Tempest4":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
-              <>{resolutionUpdate(cataclysmicTempest3(lastResolution.unit))}</>
-            )}
-          </>
-        );
-
-      case "Cataclysmic Tempest Float":
-        return (
-          <>
-            {self === lastResolution.player && !hideModal && (
-              <CataclysmicTempestFloat
-                floatCount={lastResolution.floatCount}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Cataclysmic Tempest5":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Gale Conjuration1":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(
-                  cataclysmicTempest4(lastResolution.unit)
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMayFloat1Skill
+                    unit={lastResolution.unit}
+                    restriction={lastResolution.restriction}
+                    message={lastResolution.message}
+                    reason={lastResolution.reason}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Cataclysmic Tempest6":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <YouMayNoYes
-                unit={lastResolution.unit}
-                details={lastResolution.details}
-                enterSelectUnitMode={enterSelectUnitMode}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Cataclysmic Tempest7":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Resonating Gale Conjuration":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(
-                  cataclysmicTempest5(lastResolution.unit)
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdate(
+                      galeConjurationR1(
+                        lastResolution.unit,
+                        lastResolution.resonator
+                      )
+                    )}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Cataclysmic Tempest8":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <YouMaySpend1Skill
-                unit={lastResolution.unit}
-                details={lastResolution.details}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
+          case "Gale ConjurationR1":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      galeConjurationR2(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
 
-      case "Cataclysmic Tempest9":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
-              <>{selectEnemies(lastResolution.unit, 1, null, "blast", null)}</>
-            )}
-          </>
-        );
+          case "Gale ConjurationR2":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMayNoYes
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    enterSelectUnitMode={enterSelectUnitMode}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Gale ConjurationR3":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdate(galeConjurationR3(lastResolution.unit))}
+                  </>
+                )}
+              </>
+            );
+
+          case "Gale ConjurationR4":
+            return (
+              <>
+                {self === lastResolution.enemy && !hideModal && (
+                  <SelectSkillFloat
+                    unit={null}
+                    reason="Gale Conjuration Lethal"
+                    title="Gale Conjuration"
+                    message="You are forced to float 1 skill."
+                    restriction={null}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Activating Symphonic Screech":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdate(
+                      symphonicScreech1(
+                        lastResolution.unit,
+                        lastResolution.victim
+                      )
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Symphonic Screech Negate":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <SymphonicScreechFloat
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                    canFloat={lastResolution.canFloat}
+                  />
+                )}
+              </>
+            );
+
+          case "Symphonic Screech2":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <SelectSkillReveal
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Activating Cataclysmic Tempest":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdate(cataclysmicTempest1(lastResolution.unit))}
+                  </>
+                )}
+              </>
+            );
+
+          case "Cataclysmic Tempest1":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {selectEnemies(
+                      lastResolution.unit,
+                      1,
+                      null,
+                      "paralyze2",
+                      "Cataclysmic Tempest"
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Cataclysmic Tempest2":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      cataclysmicTempest2(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Cataclysmic Tempest3":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMayNoYes
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    enterSelectUnitMode={enterSelectUnitMode}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Cataclysmic Tempest4":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdate(cataclysmicTempest3(lastResolution.unit))}
+                  </>
+                )}
+              </>
+            );
+
+          case "Cataclysmic Tempest Float":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <CataclysmicTempestFloat
+                    floatCount={lastResolution.floatCount}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Cataclysmic Tempest5":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      cataclysmicTempest4(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Cataclysmic Tempest6":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMayNoYes
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    enterSelectUnitMode={enterSelectUnitMode}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Cataclysmic Tempest7":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      cataclysmicTempest5(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Cataclysmic Tempest8":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMaySpend1Skill
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Cataclysmic Tempest9":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {selectEnemies(lastResolution.unit, 1, null, "blast", null)}
+                  </>
+                )}
+              </>
+            );
+        }
+        break;
 
       case "Activating Crystallization":
         return (
@@ -3697,13 +3879,15 @@ const Board = (props) => {
         break;
       case "aerial impetus prompt":
         newGameState.currentResolution.push({
-          resolution: "Aerial Impetus Prompt",
+          resolution: "Wind Skill",
+          resolution2: "Aerial Impetus Prompt",
           unit: selectedUnit,
         });
         break;
       case "aerial impetus purge":
         newGameState.currentResolution.push({
-          resolution: "Aerial Impetus Purge",
+          resolution: "Wind Skill",
+          resolution2: "Aerial Impetus Purge",
           unit: unit,
           victim: selectedUnit,
         });

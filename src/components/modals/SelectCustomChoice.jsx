@@ -22,6 +22,7 @@ const SelectCustomChoice = (props) => {
     canStrike,
     drawSkill,
     getVacantAdjacentZones,
+    getZonesAerialImpetusAlly,
     getZonesWithEnemies,
     strike,
   } = useRecurringEffects();
@@ -48,7 +49,14 @@ const SelectCustomChoice = (props) => {
       canSecondChoice = canStrike(unit);
       ChoiceFirstMessage = "Traverse.";
       ChoiceSecondMessage = "Strike. This cannot affect Fire Scions.";
+      break;
 
+    case "Aerial Impetus":
+      canFirstChoice = getZonesAerialImpetusAlly(unit).length > 0;
+      canSecondChoice = getZonesWithEnemies(unit, 1).length > 0;
+      ChoiceFirstMessage =
+        "Prompt an adjacent ally in the row behind you to traverse.";
+      ChoiceSecondMessage = "Purge an adjacent enemy’s Virtue and Shield.";
       break;
 
     case "Frenzy Blade1":
@@ -118,6 +126,29 @@ const SelectCustomChoice = (props) => {
             null,
             "strike",
             "Fire Scion"
+          );
+        }
+        break;
+
+      case "Aerial Impetus":
+        updateLocal = false;
+        if (selectedChoice === 1) {
+          props.enterSelectUnitMode(
+            getZonesAerialImpetusAlly(unit),
+            unit,
+            newGameState,
+            null,
+            "aerial impetus prompt",
+            null
+          );
+        } else {
+          props.enterSelectUnitMode(
+            getZonesWithEnemies(unit, 1),
+            unit,
+            newGameState,
+            null,
+            "aerial impetus purge",
+            null
           );
         }
         break;

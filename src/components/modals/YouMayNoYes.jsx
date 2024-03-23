@@ -11,11 +11,17 @@ const YouMayNoYes = (props) => {
 
   const dispatch = useDispatch();
 
-  const { drawSkill, getZonesWithEnemies } = useRecurringEffects();
+  const { drawSkill, getZonesWithEnemies, virtueBlastYes } =
+    useRecurringEffects();
 
   const handleViewBoard = () => {
     props.hideOrRevealModale();
   };
+
+  let updateData = false;
+  if (["Block Virtue-Blast"].includes(props.details.reason)) {
+    updateData = true;
+  }
 
   const handleNo = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
@@ -23,7 +29,10 @@ const YouMayNoYes = (props) => {
     newGameState.currentResolution.pop();
 
     dispatch(updateState(newGameState));
-    // props.updateFirebase(newGameState); // not needed as next resolution would update
+
+    if (updateData) {
+      props.updateFirebase(newGameState);
+    }
   };
 
   const handleYes = () => {
@@ -38,6 +47,10 @@ const YouMayNoYes = (props) => {
     newGameState.currentResolution.pop();
 
     switch (props.details.reason) {
+      case "Block Virtue-Blast": //"Blocking Virtue-Blast"
+        newGameState = virtueBlastYes(newGameState, props.attacker, unit);
+        break;
+
       case "Conflagration Ignite": //"ConflagrationR2"
         props.enterSelectUnitMode(
           getZonesWithEnemies(props.unit, 1),
@@ -57,7 +70,8 @@ const YouMayNoYes = (props) => {
 
       case "Aerial Impetus Purge Move": // Aerial Impetus Purge Move
         newGameState.currentResolution.push({
-          resolution: "Aerial Impetus Purge Move2",
+          resolution: "Wind Skill",
+          resolution2: "Aerial Impetus Purge Move2",
           player: props.player,
           victim: props.unit,
         });
@@ -66,6 +80,7 @@ const YouMayNoYes = (props) => {
 
       case "Gale Conjuration Strike": // "Gale ConjurationR2"
         newGameState.currentResolution.push({
+          resolution: "Wind Skill",
           resolution: "Gale ConjurationR3",
           unit: props.unit,
         });
@@ -200,7 +215,10 @@ const YouMayNoYes = (props) => {
     }
 
     dispatch(updateState(newGameState));
-    // props.updateFirebase(newGameState); // not needed as next resolution would update
+
+    if (updateData) {
+      props.updateFirebase(newGameState);
+    }
   };
 
   return (

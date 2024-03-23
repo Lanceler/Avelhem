@@ -81,7 +81,8 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Activating Aerial Impetus",
+      resolution: "Wind Skill",
+      resolution2: "Activating Aerial Impetus",
       unit: unit,
     });
 
@@ -210,7 +211,8 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Activating Cataclysmic Tempest",
+      resolution: "Wind Skill",
+      resolution2: "Activating Cataclysmic Tempest",
       unit: unit,
     });
 
@@ -662,7 +664,8 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Activating Gale Conjuration",
+      resolution: "Wind Skill",
+      resolution2: "Activating Gale Conjuration",
       unit: unit,
     });
 
@@ -699,7 +702,8 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Resonating Gale Conjuration",
+      resolution: "Wind Skill",
+      resolution2: "Resonating Gale Conjuration",
       unit: unit,
       resonator: resonator,
     });
@@ -1114,7 +1118,8 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Activating Symphonic Screech",
+      resolution: "Wind Skill",
+      resolution2: "Activating Symphonic Screech",
       unit: unit,
       victim: victim,
     });
@@ -3022,15 +3027,18 @@ export const useRecurringEffects = () => {
   };
 
   const triggerBlazeOfGlory = (victim, method) => {
+    console.log(method);
+    console.log(victim.fever > 0);
     if (
       victim.unitClass === "Fire Scion" && //must be Fire Scion
       !isMuted(victim) &&
       !isDisrupted(victim, 1) &&
       ["strike", "virtue-blast", "blast"].includes(method) && //only attacks can trigger it
       localGameState[victim.player].skillHand.length > 1 && //needs at least 2 cards: Blaze of Glory itself + 1 card to discard
-      victim.fever && //enemy needs fever
+      victim.fever > 0 && //enemy needs fever
       getZonesWithEnemies(victim, 1).length //must be able to burn an adjacent enemy
     ) {
+      console.log("canBlazeOfGlory");
       return true;
     }
     return false;
@@ -3253,8 +3261,17 @@ export const useRecurringEffects = () => {
     if (victim.virtue && !isMuted(victim) && !isDisrupted(victim, 2)) {
       newGameState.currentResolution.push({
         resolution: "Blocking Virtue-Blast",
+
+        unit: victim,
         attacker: attacker,
-        victim: victim,
+        details: {
+          reason: "Block Virtue-Blast",
+          title: "Block Virtue-Blast",
+          message: `Enemy ${attacker.unitClass} is about to Virtue-blast your ${victim.unitClass}. Do you want to spend your unit’s Virtue to reduce the attack’s AP by
+          1? This will restore the attaking unit’s Virtue.`,
+          no: "No",
+          yes: "Yes",
+        },
       });
     }
 
