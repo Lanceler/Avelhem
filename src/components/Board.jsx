@@ -688,13 +688,26 @@ const Board = (props) => {
 
       case "Ignition Propulsion1":
         return (
+          // <>
+          //   {self === lastResolution.unit.player && !hideModal && (
+          //     <IgnitionPropulsion1
+          //       updateFirebase={updateFirebase}
+          //       unit={lastResolution.unit}
+          //       enterMoveMode={enterMoveMode}
+          //       enterSelectUnitMode={enterSelectUnitMode}
+          //       hideOrRevealModale={hideOrRevealModale}
+          //     />
+          //   )}
+          // </>
+
           <>
             {self === lastResolution.unit.player && !hideModal && (
-              <IgnitionPropulsion1
-                updateFirebase={updateFirebase}
+              <SelectCustomChoice
                 unit={lastResolution.unit}
+                details={lastResolution.details}
                 enterMoveMode={enterMoveMode}
                 enterSelectUnitMode={enterSelectUnitMode}
+                updateFirebase={updateFirebase}
                 hideOrRevealModale={hideOrRevealModale}
               />
             )}

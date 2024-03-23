@@ -65,15 +65,14 @@ const TacticAdvance = (props) => {
   const handleVirtueBlast = () => {
     if (canVirtueBlast) {
       let newGameState = JSON.parse(JSON.stringify(localGameState));
+      let unit = newGameState[props.unit.player].units[props.unit.unitIndex];
 
       //end Advance Tactic resolution
       newGameState.currentResolution.pop();
 
-      //giveUnit activationCounter
-      let unit = newGameState[props.unit.player].units[props.unit.unitIndex];
-      console.log(unit);
+      //give unit activationCounter
       unit.temporary.activation
-        ? (unit.temporary.activation = unit.activation + 1)
+        ? (unit.temporary.activation += 1)
         : (unit.temporary.activation = 1);
 
       newGameState[props.unit.player].units[props.unit.unitIndex] = unit;

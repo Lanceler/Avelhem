@@ -16,10 +16,13 @@ const SelectCustomChoice = (props) => {
 
   const {
     blast,
+    canMove,
     canSowAndReapBlast,
     canSowAndReapStrike,
     canStrike,
     drawSkill,
+    getVacantAdjacentZones,
+    getZonesWithEnemies,
     strike,
   } = useRecurringEffects();
 
@@ -36,7 +39,18 @@ const SelectCustomChoice = (props) => {
   let ChoiceFirstMessage = "";
   let ChoiceSecondMessage = "";
 
+  let updateLocal = true;
+  let updateData = false;
+
   switch (props.details.reason) {
+    case "Ignition Propulsion":
+      canFirstChoice = canMove(unit);
+      canSecondChoice = canStrike(unit);
+      ChoiceFirstMessage = "Traverse.";
+      ChoiceSecondMessage = "Strike. This cannot affect Fire Scions.";
+
+      break;
+
     case "Frenzy Blade1":
       canFirstChoice = true;
       canSecondChoice = newGameState[self].skillHand.length > 0;
@@ -79,6 +93,35 @@ const SelectCustomChoice = (props) => {
     newGameState.currentResolution.pop();
 
     switch (props.details.reason) {
+      case "TEMPLATE":
+        if (selectedChoice === 1) {
+          //1st choice
+        } else {
+          //2nd choice
+        }
+        break;
+
+      case "Ignition Propulsion":
+        updateLocal = false;
+        if (selectedChoice === 1) {
+          props.enterMoveMode(
+            getVacantAdjacentZones(unit),
+            unit,
+            newGameState,
+            null
+          );
+        } else {
+          props.enterSelectUnitMode(
+            getZonesWithEnemies(unit, 1),
+            unit,
+            newGameState,
+            null,
+            "strike",
+            "Fire Scion"
+          );
+        }
+        break;
+
       case "Frenzy Blade1":
         if (selectedChoice === 1) {
           newGameState = drawSkill(newGameState);
@@ -98,6 +141,7 @@ const SelectCustomChoice = (props) => {
         break;
 
       case "Frenzy Blade2":
+        updateData = true;
         if (selectedChoice === 1) {
           newGameState = strike(newGameState, unit, props.details.victim, null);
         } else {
@@ -121,8 +165,13 @@ const SelectCustomChoice = (props) => {
         break;
     }
 
-    dispatch(updateState(newGameState));
-    // props.updateFirebase(newGameState);
+    if (updateLocal) {
+      dispatch(updateState(newGameState));
+    }
+
+    if (updateData) {
+      props.updateFirebase(newGameState);
+    }
   };
 
   const handleSkip = () => {

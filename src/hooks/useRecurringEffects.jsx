@@ -2818,10 +2818,15 @@ export const useRecurringEffects = () => {
     newGameState.zones = JSON.stringify(newZoneInfo);
 
     //update unit itself
-    newGameState[mover.player].units[mover.unitIndex].row = Math.floor(
-      zoneId / 5
-    );
-    newGameState[mover.player].units[mover.unitIndex].column = zoneId % 5;
+    // newGameState[mover.player].units[mover.unitIndex].row = Math.floor(
+    //   zoneId / 5
+    // );
+    // newGameState[mover.player].units[mover.unitIndex].column = zoneId % 5;
+    mover.row = Math.floor(zoneId / 5);
+    mover.column = zoneId % 5;
+    delete mover.enhancements.overgrowth;
+    delete mover.enhancements.proliferation;
+    newGameState[mover.player].units[mover.unitIndex] = mover;
 
     //pop "Moving Unit" resolution
     if (
