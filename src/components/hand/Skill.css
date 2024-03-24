@@ -47,12 +47,12 @@ background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rg
 }
 
 .player-hand-card {
+    /* width: 120px;
+    height: 168px; */
+    width: 140px;
+    height: 196px;
 
-    width: 120px;
-    height: 168px;
-
-    /* display: flex;
-     flex-direction: column; */
+    cursor: pointer;
 
     background-size: cover;
     background-position: center;
@@ -63,36 +63,62 @@ background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rg
     border: 2px solid black;
     margin-right: 10px;
 
-    transition: transform 0.2s ease;
+    /* transition: transform 0.2s ease; */
+    position: relative;
+    z-index: 1;    
+}
 
-        position: relative;
-            z-index: 1;
-
-            
-    
+.player-hand-card:nth-child(4n+1){
+    transform: rotate(-5deg);
+}
+.player-hand-card:nth-child(4n+2) {
+    transform: rotate(-2.5deg);
+}
+.player-hand-card:nth-child(4n+3) {
+    transform: rotate(2.5deg);
+}
+.player-hand-card:nth-child(4n+4) {
+    transform: rotate(5deg);
 }
 
 .player-hand-card:hover {
-    cursor: pointer;
+    
     top: -16.8px;
+    filter: brightness(1.1);
     transform: scale(1.4);
     position: relative;
     z-index: 2;
 }
 
-.player-hand-container{
+.player-skillhand-container{
+    /* max-width: 700px; */
+    width: fit-content;
+    /* min-height: 300px; */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background-color: rgba(255, 0, 0, 0.466);
+    cursor: pointer;
+    padding: 5px;
+    position: relative;
+}
+
+
+.player-skillhand-container:hover {
+    position: relative;
+    /* top: -150px; */
+}
+
+.player-avelhemHand-container {
     max-width: 700px;
-    min-height: 300px;
+    /* height: fit-content; */
+    /* min-height: 300px; */
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-
-
+    background-color: rgba(0, 255, 42, 0.466);
+    cursor: pointer;
 }
 
-.player-hand-container:hover {
+/* .player-avelhemHand-container:hover {
     position: relative;
     top: -150px;
-
-
-
-}
+} */

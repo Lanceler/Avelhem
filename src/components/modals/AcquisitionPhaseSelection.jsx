@@ -99,10 +99,17 @@ const AcquisitionPhaseSelection = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <button onClick={() => handleViewBoard()}>View Board</button>
-        <h2>Acquisition Phase</h2>
+        {/* <button onClick={() => handleViewBoard()}>View Board</button>
+        <h2>Acquisition Phase</h2> */}
 
-        <div className="phaseSelection">
+        <div className="twoColumn3-1">
+          <h2 className="choiceTitle">Acquisition Phase</h2>
+          <button className="choiceButton" onClick={() => handleViewBoard()}>
+            View Board
+          </button>
+        </div>
+
+        <div className="aquisitionSelection">
           <div
             className={`choiceWithDescription ${
               canAppoint ? "" : "disabledOption"

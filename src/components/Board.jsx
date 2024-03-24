@@ -59,6 +59,7 @@ import MayFloatResonantSkill from "./skillModals/MayFloatResonantSkill";
 
 import DisplayedCard from "./displays/DisplayedCard";
 
+import PlayerAvelhemHand from "./hand/PlayerAvelhemHand";
 import PlayerSkillHand from "./hand/PlayerSkillHand";
 
 import Piece from "./Piece";
@@ -4255,20 +4256,21 @@ const Board = (props) => {
                 </div>
               </div>
 
-              <div className="lc-player">
+              {/* <div className="lc-player">
                 <div className="avel-hand">
-                  {localGameState[self] && (
-                    <div className="hand-container">
-                      {localGameState[self].avelhemHand.map((card, index) => (
-                        <div key={index} className="handCard">
-                          {card}
-                        </div>
-                      ))}
-                    </div>
-                  )}
+                  <PlayerAvelhemHand />
                 </div>
                 <div className="skill-hand">
                   <PlayerSkillHand />
+                </div>
+              </div> */}
+
+              <div className="hands-player">
+                <div className="skill-hand">
+                  <PlayerSkillHand />
+                </div>
+                <div className="avel-hand">
+                  <PlayerAvelhemHand />
                 </div>
               </div>
             </div>

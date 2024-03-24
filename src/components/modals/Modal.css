@@ -40,6 +40,13 @@
     margin: 10px;
 }
 
+.aquisitionSelection {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 8px;
+    margin: 10px;
+}
+
 .choiceWithDescription{
     border: 2px solid;
     text-align: center;
