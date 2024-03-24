@@ -80,7 +80,8 @@ const ContingentSurvivalAlly = (props) => {
 
     if (usableSkills[selectedSkill].id === "02-03") {
       newGameState.currentResolution.push({
-        resolution: "Select Healing Rain Activator",
+        resolution: "Water Skill",
+        resolution2: "Select Healing Rain Activator",
         victim: props.victim,
         player: self,
       });

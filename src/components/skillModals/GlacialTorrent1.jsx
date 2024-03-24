@@ -103,74 +103,74 @@ const GlacialTorrent1 = (props) => {
     <div className="modal-backdrop">
       <div className="modal">
         <div className="twoColumn">
-          <h2>Glacial Torrent</h2>
-          <button onClick={() => handleViewBoard()}>View Board</button>
+          <h2 className="choiceTitle">Glacial Torrent</h2>
+          <button className="choiceButton" onClick={() => handleViewBoard()}>
+            View Board
+          </button>
         </div>
 
         <h3>You may add up to 3 Water skills to your hand.</h3>
 
-        {localGameState[self].skillFloat > 0 && (
-          <>
-            <h3>Floating skills</h3>
-            <div
-              className={`fourColumn scrollable scrollable-y-only ${
-                localGameState[self].skillFloat > 0 ? "decreased-height" : ""
-              } `}
-            >
-              {floatingRepertoire.map((usableSkill, i) => (
-                <div
-                  key={i}
-                  className={`scionSkills ${
-                    selectedSkills.includes(i) ? "selectedSkill" : ""
-                  }`}
-                >
-                  <SkillMultiSelect
-                    i={i}
-                    usableSkill={usableSkill}
-                    canAdd={canAdd(usableSkill.id)}
-                    selectedSkills={selectedSkills}
-                    setSelectedSkills={setSelectedSkills}
-                    addLimit={addLimit}
-                  />
-                </div>
-              ))}
-            </div>
-          </>
-        )}
+        <div className="scrollable scrollable-y-only">
+          {localGameState[self].skillFloat > 0 && (
+            <>
+              <h3>Floating skills</h3>
+              <div className="fourColumn">
+                {floatingRepertoire.map((usableSkill, i) => (
+                  <div
+                    key={i}
+                    className={`scionSkills ${
+                      selectedSkills.includes(i) ? "selectedSkill" : ""
+                    }`}
+                  >
+                    <SkillMultiSelect
+                      i={i}
+                      usableSkill={usableSkill}
+                      canAdd={canAdd(usableSkill.id)}
+                      selectedSkills={selectedSkills}
+                      setSelectedSkills={setSelectedSkills}
+                      addLimit={addLimit}
+                    />
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
 
-        <h3>Non-floating skills</h3>
-        <div
-          className={`fourColumn scrollable scrollable-y-only ${
-            localGameState[self].skillFloat > 0 ? "decreased-height" : ""
-          } `}
-        >
-          {inspectRerpertoire.map((usableSkill, i) => (
-            <div
-              key={i + localGameState[self].skillFloat}
-              className={`scionSkills ${
-                selectedSkills.includes(i + localGameState[self].skillFloat)
-                  ? "selectedSkill"
-                  : ""
-              }`}
-            >
-              <SkillMultiSelect
-                i={i + localGameState[self].skillFloat}
-                usableSkill={usableSkill}
-                canAdd={canAdd(usableSkill.id)}
-                selectedSkills={selectedSkills}
-                setSelectedSkills={setSelectedSkills}
-                addLimit={addLimit}
-              />
-            </div>
-          ))}
+          <h3>Non-floating skills</h3>
+          <div className="fourColumn">
+            {inspectRerpertoire.map((usableSkill, i) => (
+              <div
+                key={i + localGameState[self].skillFloat}
+                className={`scionSkills ${
+                  selectedSkills.includes(i + localGameState[self].skillFloat)
+                    ? "selectedSkill"
+                    : ""
+                }`}
+              >
+                <SkillMultiSelect
+                  i={i + localGameState[self].skillFloat}
+                  usableSkill={usableSkill}
+                  canAdd={canAdd(usableSkill.id)}
+                  selectedSkills={selectedSkills}
+                  setSelectedSkills={setSelectedSkills}
+                  addLimit={addLimit}
+                />
+              </div>
+            ))}
+          </div>
         </div>
 
         {selectedSkills.length === 0 && (
-          <button onClick={() => handleSkip()}>Skip</button>
+          <button className="choiceButton noYes" onClick={() => handleSkip()}>
+            Skip
+          </button>
         )}
 
         {selectedSkills.length > 0 && (
-          <button onClick={() => handleSelect()}>Select</button>
+          <button className="choiceButton noYes" onClick={() => handleSelect()}>
+            Select
+          </button>
         )}
       </div>
     </div>

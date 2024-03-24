@@ -262,13 +262,13 @@ const SearchSkill = (props) => {
         </div> */}
 
         {selectedSkill === null && (
-          <button className="choiceButton" onClick={() => handleSkip()}>
+          <button className="choiceButton noYes" onClick={() => handleSkip()}>
             Skip
           </button>
         )}
 
         {selectedSkill !== null && (
-          <button className="choiceButton" onClick={() => handleSelect()}>
+          <button className="choiceButton noYes" onClick={() => handleSelect()}>
             Select
           </button>
         )}

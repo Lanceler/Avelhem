@@ -68,6 +68,14 @@ const YouMayNoYes = (props) => {
         );
         break;
 
+      case "Frigid Breath Blast": //"Frigid BreathR2"
+        newGameState.currentResolution.push({
+          resolution: "Water Skill",
+          resolution2: "Frigid BreathR3",
+          unit: props.unit,
+        });
+        break;
+
       case "Blaze of Glory Draw": //"Blaze of Glory3"
         unit.fever -= 1;
         newGameState[props.unit.player].units[props.unit.unitIndex] = unit;

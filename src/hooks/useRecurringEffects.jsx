@@ -612,7 +612,8 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Activating Frigid Breath",
+      resolution: "Water Skill",
+      resolution2: "Activating Frigid Breath",
       unit: unit,
     });
 
@@ -645,7 +646,8 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Resonating Frigid Breath",
+      resolution: "Water Skill",
+      resolution2: "Resonating Frigid Breath",
       unit: unit,
       resonator: resonator,
     });
@@ -773,7 +775,8 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Activating Glacial Torrent",
+      resolution: "Water Skill",
+      resolution2: "Activating Glacial Torrent",
       unit: unit,
     });
 
@@ -801,7 +804,8 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Activating Healing Rain",
+      resolution: "Water Skill",
+      resolution2: "Activating Healing Rain",
       unit: unit,
       victim: victim,
     });
@@ -996,7 +1000,8 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Activating Purification",
+      resolution: "Water Skill",
+      resolution2: "Activating Purification",
       unit: unit,
     });
 
@@ -3055,8 +3060,6 @@ export const useRecurringEffects = () => {
   };
 
   const triggerBlazeOfGlory = (victim, method) => {
-    console.log(method);
-    console.log(victim.fever > 0);
     if (
       victim.unitClass === "Fire Scion" && //must be Fire Scion
       !isMuted(victim) &&

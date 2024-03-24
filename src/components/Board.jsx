@@ -44,9 +44,8 @@ import TacticAssault from "./modals/TacticAssault";
 
 import SelectCustomChoice from "./modals/SelectCustomChoice";
 
-import Purification2 from "./skillModals/Purification2";
-import FrigidBreathResonance1 from "./skillModals/FrigidBreathResonance1";
 import GlacialTorrent1 from "./skillModals/GlacialTorrent1";
+import SymphonicScreechFloat from "./skillModals/SymphonicScreechFloat";
 import CataclysmicTempestFloat from "./skillModals/CataclysmicTempestFloat";
 
 import ContingentElimination from "./skillModals/ContingentElimination";
@@ -55,8 +54,6 @@ import ContingentSurvivalAlly from "./skillModals/ContingentSurvivalAlly";
 import ContingentSurvivalEnemy from "./skillModals/ContingentSurvivalEnemy";
 import ContingentSymphonicScreech from "./skillModals/ContingentSymphonicScreech";
 import ContingentTarget from "./skillModals/ContingentTarget";
-
-import SymphonicScreechFloat from "./skillModals/SymphonicScreechFloat";
 
 import MayFloatResonantSkill from "./skillModals/MayFloatResonantSkill";
 
@@ -869,205 +866,228 @@ const Board = (props) => {
         }
         break;
 
-      case "Activating Purification":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
-              <>{resolutionUpdate(purification1(lastResolution.unit))}</>
-            )}
-          </>
-        );
-
-      case "Purification1":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+      case "Water Skill":
+        switch (lastResolution.resolution2) {
+          case "Activating Purification":
+            return (
               <>
-                {selectAllies(
-                  lastResolution.unit,
-                  2,
-                  true,
-                  "purification",
-                  null
+                {self === lastResolution.unit.player && (
+                  <>{resolutionUpdate(purification1(lastResolution.unit))}</>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Purification2":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <Purification2
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Activating Frigid Breath":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
-              <>{resolutionUpdate(frigidBreath1(lastResolution.unit))}</>
-            )}
-          </>
-        );
-
-      case "Frigid Breath1":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Purification1":
+            return (
               <>
-                {selectEnemies(lastResolution.unit, 2, null, "freeze1", null)}
-              </>
-            )}
-          </>
-        );
-
-      case "Frigid Breath2":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
-              <>
-                {resolutionUpdateGameStateOnly(
-                  frigidBreath2(lastResolution.unit)
+                {self === lastResolution.unit.player && (
+                  <>
+                    {selectAllies(
+                      lastResolution.unit,
+                      2,
+                      true,
+                      "purification",
+                      null
+                    )}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Frigid Breath3":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <YouMayFloat1Skill
-                unit={lastResolution.unit}
-                restriction={lastResolution.restriction}
-                message={lastResolution.message}
-                reason={lastResolution.reason}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Frigid Breath4":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Purification2":
+            return (
               <>
-                {selectEnemies(lastResolution.unit, 1, null, "freeze2", null)}
-              </>
-            )}
-          </>
-        );
-
-      case "Resonating Frigid Breath":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
-              <>
-                {resolutionUpdate(
-                  frigidBreathR1(lastResolution.unit, lastResolution.resonator)
+                {self === lastResolution.unit.player && !hideModal && (
+                  <SelectCustomChoice
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Frigid BreathR1":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Activating Frigid Breath":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(
-                  frigidBreathR2(lastResolution.unit)
+                {self === lastResolution.unit.player && (
+                  <>{resolutionUpdate(frigidBreath1(lastResolution.unit))}</>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Frigid BreathR2":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <FrigidBreathResonance1
-                updateFirebase={updateFirebase}
-                unit={lastResolution.unit}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Frigid BreathR3":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Frigid Breath1":
+            return (
               <>
-                {selectEnemiesAfflicted(
-                  lastResolution.unit,
-                  1,
-                  null,
-                  "blast",
-                  null,
-                  "frostbite"
+                {self === lastResolution.unit.player && (
+                  <>
+                    {selectEnemies(
+                      lastResolution.unit,
+                      2,
+                      null,
+                      "freeze1",
+                      null
+                    )}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Select Healing Rain Activator":
-        return (
-          <>
-            {self === lastResolution.player && (
-              <>{selectHealingRainActivator(lastResolution.victim)}</>
-            )}
-          </>
-        );
-
-      case "Activating Healing Rain":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Frigid Breath2":
+            return (
               <>
-                {resolutionUpdate(
-                  healingRain1(lastResolution.unit, lastResolution.victim)
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      frigidBreath2(lastResolution.unit)
+                    )}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Activating Glacial Torrent":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
-              <>{resolutionUpdate(glacialTorrent1(lastResolution.unit))}</>
-            )}
-          </>
-        );
+          case "Frigid Breath3":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMayFloat1Skill
+                    unit={lastResolution.unit}
+                    restriction={lastResolution.restriction}
+                    message={lastResolution.message}
+                    reason={lastResolution.reason}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
 
-      case "Glacial Torrent 1":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <GlacialTorrent1
-                unit={lastResolution.unit}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-                setIntrudingPlayer={setIntrudingPlayer}
-              />
-            )}
-          </>
-        );
+          case "Frigid Breath4":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {selectEnemies(
+                      lastResolution.unit,
+                      1,
+                      null,
+                      "freeze2",
+                      null
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Resonating Frigid Breath":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdate(
+                      frigidBreathR1(
+                        lastResolution.unit,
+                        lastResolution.resonator
+                      )
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Frigid BreathR1":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      frigidBreathR2(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Frigid BreathR2":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMayNoYes
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    enterSelectUnitMode={enterSelectUnitMode}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Frigid BreathR3":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {selectEnemiesAfflicted(
+                      lastResolution.unit,
+                      1,
+                      null,
+                      "blast",
+                      null,
+                      "frostbite"
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Select Healing Rain Activator":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>{selectHealingRainActivator(lastResolution.victim)}</>
+                )}
+              </>
+            );
+
+          case "Activating Healing Rain":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdate(
+                      healingRain1(lastResolution.unit, lastResolution.victim)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Activating Glacial Torrent":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>{resolutionUpdate(glacialTorrent1(lastResolution.unit))}</>
+                )}
+              </>
+            );
+
+          case "Glacial Torrent 1":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <GlacialTorrent1
+                    unit={lastResolution.unit}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                    setIntrudingPlayer={setIntrudingPlayer}
+                  />
+                )}
+              </>
+            );
+        }
+        break;
 
       case "Wind Skill":
         switch (lastResolution.resolution2) {

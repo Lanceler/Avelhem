@@ -55,6 +55,13 @@ const SelectCustomChoice = (props) => {
       ChoiceSecondMessage = "Strike. This cannot affect Fire Scions.";
       break;
 
+    case "Purification":
+      canFirstChoice = true;
+      canSecondChoice = true;
+      ChoiceFirstMessage = "Draw 1 skill.";
+      ChoiceSecondMessage = "Search for then float 1 non-burst Water skill.";
+      break;
+
     case "Aerial Impetus":
       canFirstChoice = getZonesAerialImpetusAlly(unit).length > 0;
       canSecondChoice = getZonesWithEnemies(unit, 1).length > 0;
@@ -183,6 +190,21 @@ const SelectCustomChoice = (props) => {
             "strike",
             "Fire Scion"
           );
+        }
+        break;
+
+      case "Purification":
+        if (selectedChoice === 1) {
+          newGameState = drawSkill(newGameState);
+        } else {
+          updateData = true;
+          newGameState.currentResolution.push({
+            resolution: "Search Skill",
+            player: self,
+            restriction: ["02-01", "02-02", "02-03"],
+            message: "Search for then float 1 non-burst Water skill.",
+            outcome: "Float",
+          });
         }
         break;
 

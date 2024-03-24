@@ -41,17 +41,11 @@ const YouMayFloat1Skill = (props) => {
     //end Floating Skill resolution
     newGameState.currentResolution.pop();
 
-    // if (props.reason === "Frigid Breath3") {
-    //   newGameState.currentResolution.push({
-    //     resolution: "Frigid Breath4",
-    //     unit: props.unit,
-    //   });
-    // }
-
     switch (props.reason) {
       case "Frigid Breath3":
         newGameState.currentResolution.push({
-          resolution: "Frigid Breath4",
+          resolution: "Water Skill",
+          resolution2: "Frigid Breath4",
           unit: props.unit,
         });
         break;

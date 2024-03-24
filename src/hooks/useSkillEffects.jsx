@@ -323,13 +323,19 @@ export const useSkillEffects = () => {
 
     if (isAdjacentToFrostbitten()) {
       newGameState.currentResolution.push({
-        resolution: "Purification2",
+        resolution: "Water Skill",
+        resolution2: "Purification2",
         unit: unit,
+        details: {
+          title: "Purification",
+          reason: "Purification",
+        },
       });
     }
 
     newGameState.currentResolution.push({
-      resolution: "Purification1",
+      resolution: "Water Skill",
+      resolution2: "Purification1",
       unit: unit,
     });
 
@@ -351,12 +357,14 @@ export const useSkillEffects = () => {
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     newGameState.currentResolution.push({
-      resolution: "Frigid Breath2",
+      resolution: "Water Skill",
+      resolution2: "Frigid Breath2",
       unit: unit,
     });
 
     newGameState.currentResolution.push({
-      resolution: "Frigid Breath1",
+      resolution: "Water Skill",
+      resolution2: "Frigid Breath1",
       unit: unit,
     });
 
@@ -377,7 +385,8 @@ export const useSkillEffects = () => {
       newGameState[unit.player].skillHand.length > 0
     ) {
       newGameState.currentResolution.push({
-        resolution: "Frigid Breath3",
+        resolution: "Water Skill",
+        resolution2: "Frigid Breath3",
         unit: unit,
         reason: "Frigid Breath3",
         restriction: null,
@@ -414,17 +423,20 @@ export const useSkillEffects = () => {
     }
 
     newGameState.currentResolution.push({
-      resolution: "Frigid BreathR1",
+      resolution: "Water Skill",
+      resolution2: "Frigid BreathR1",
       unit: unit,
     });
 
     newGameState.currentResolution.push({
-      resolution: "Frigid Breath2",
+      resolution: "Water Skill",
+      resolution2: "Frigid Breath2",
       unit: unit,
     });
 
     newGameState.currentResolution.push({
-      resolution: "Frigid Breath1",
+      resolution: "Water Skill",
+      resolution2: "Frigid Breath1",
       unit: unit,
     });
 
@@ -444,8 +456,16 @@ export const useSkillEffects = () => {
       getZonesWithEnemiesAfflicted(unit, 1, "frostbite").length > 0
     ) {
       newGameState.currentResolution.push({
-        resolution: "Frigid BreathR2",
+        resolution: "Water Skill",
+        resolution2: "Frigid BreathR2",
         unit: unit,
+        details: {
+          reason: "Frigid Breath Blast",
+          title: "Frigid Breath",
+          message: "You may blast an adjacent frostbitten enemy.",
+          no: "Skip",
+          yes: "Blast",
+        },
       });
     }
 
@@ -497,7 +517,8 @@ export const useSkillEffects = () => {
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     newGameState.currentResolution.push({
-      resolution: "Glacial Torrent 1",
+      resolution: "Water Skill",
+      resolution2: "Glacial Torrent 1",
       unit: unit,
     });
 
