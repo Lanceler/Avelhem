@@ -76,6 +76,27 @@ const SelectCustomChoice = (props) => {
       ChoiceSecondMessage = "Recover then float 1 Land skill.";
       break;
 
+    case "Surge2":
+      canFirstChoice = canMove(unit);
+      canSecondChoice = canStrike(unit);
+      ChoiceFirstMessage = "Traverse.";
+      ChoiceSecondMessage = "Strike (2 AP).";
+      break;
+
+    case "Surge3":
+      canFirstChoice = canMove(unit);
+      canSecondChoice = canStrike(unit);
+      ChoiceFirstMessage = "Traverse.";
+      ChoiceSecondMessage = "Strike (2 AP).";
+      break;
+
+    case "Aegis":
+      canFirstChoice = true;
+      canSecondChoice = newGameState[unit.player].skillHand.length > 0;
+      ChoiceFirstMessage = "Grant them Shield for 1 turn.";
+      ChoiceSecondMessage = "Spend 1 skill to grant them Ward for 1 turn";
+      break;
+
     case "Frenzy Blade1":
       canFirstChoice = true;
       canSecondChoice = newGameState[self].skillHand.length > 0;
@@ -147,6 +168,29 @@ const SelectCustomChoice = (props) => {
         }
         break;
 
+      case "Aerial Impetus":
+        updateLocal = false;
+        if (selectedChoice === 1) {
+          props.enterSelectUnitMode(
+            getZonesAerialImpetusAlly(unit),
+            unit,
+            newGameState,
+            null,
+            "aerial impetus prompt",
+            null
+          );
+        } else {
+          props.enterSelectUnitMode(
+            getZonesWithEnemies(unit, 1),
+            unit,
+            newGameState,
+            null,
+            "aerial impetus purge",
+            null
+          );
+        }
+        break;
+
       case "Upheaval":
         if (selectedChoice === 1) {
           newGameState.currentResolution.push({
@@ -189,15 +233,25 @@ const SelectCustomChoice = (props) => {
         }
         break;
 
-      case "Aerial Impetus":
+      case "Surge2":
         updateLocal = false;
         if (selectedChoice === 1) {
-          props.enterSelectUnitMode(
-            getZonesAerialImpetusAlly(unit),
+          props.setMovingSpecial("Surge");
+
+          newGameState.currentResolution.push({
+            resolution: "Mana Skill",
+            resolution2: "Surge3",
+            unit: unit,
+            details: {
+              title: "Surge",
+              reason: "Surge3",
+            },
+          });
+
+          props.enterMoveMode(
+            getVacantAdjacentZones(unit),
             unit,
             newGameState,
-            null,
-            "aerial impetus prompt",
             null
           );
         } else {
@@ -206,10 +260,59 @@ const SelectCustomChoice = (props) => {
             unit,
             newGameState,
             null,
-            "aerial impetus purge",
-            null
+            "strike",
+            "Surge"
           );
         }
+        break;
+
+      case "Surge3":
+        updateLocal = false;
+        if (selectedChoice === 1) {
+          props.setMovingSpecial("Surge");
+
+          props.enterMoveMode(
+            getVacantAdjacentZones(unit),
+            unit,
+            newGameState,
+            null
+          );
+        } else {
+          props.enterSelectUnitMode(
+            getZonesWithEnemies(unit, 1),
+            unit,
+            newGameState,
+            null,
+            "strike",
+            "Surge"
+          );
+        }
+        break;
+
+      case "Aegis":
+        let victim =
+          newGameState[props.victim.player].units[props.victim.unitIndex];
+        if (selectedChoice === 1) {
+          victim.enhancements.shield
+            ? Math.max(1, victim.enhancements.shield)
+            : (victim.enhancements.shield = 1);
+        } else {
+          victim.enhancements.ward
+            ? Math.max(1, victim.enhancements.ward)
+            : (victim.enhancements.ward = 1);
+
+          newGameState.currentResolution.push({
+            resolution: "Discard Skill",
+            unit: props.unit,
+            player: self,
+            message: "Spend 1 skill.",
+            restriction: null,
+          });
+        }
+
+        newGameState[props.victim.player].units[props.victim.unitIndex] =
+          victim;
+
         break;
 
       case "Frenzy Blade1":

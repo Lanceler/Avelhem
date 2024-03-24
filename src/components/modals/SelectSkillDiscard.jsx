@@ -82,17 +82,30 @@ const SelectSkillDiscard = (props) => {
       isAdjacentToManaScion(props.unit)
     ) {
       newGameState.currentResolution.push({
-        resolution: "Mana Restructuring",
-        player: self,
-        skill: usableSkills[selectedSkill],
+        resolution: "Mana Restructure",
+        // player: self,
+        unit: props.unit,
+        details: {
+          reason: "Mana Restructure",
+          title: "Mana Restructure",
+          message:
+            "When a Mana Scion or their adjacent ally spends a Mana skill, they may float it instead. Do you want to do so?",
+          no: "Discard",
+          yes: "Float",
+          skill: newGameState[self].skillHand.splice(
+            usableSkills[selectedSkill].handIndex,
+            1
+          )[0],
+        },
+        // skill: usableSkills[selectedSkill],
       });
     } else {
       //send selected skill to vestige
       newGameState[self].skillVestige.push(
-        ...newGameState[self].skillHand.splice(
+        newGameState[self].skillHand.splice(
           usableSkills[selectedSkill].handIndex,
           1
-        )
+        )[0]
       );
     }
 

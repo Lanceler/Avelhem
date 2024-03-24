@@ -18,11 +18,13 @@ const MessageToEnemy = (props) => {
 
   return (
     <div className="modal-backdrop">
-      <div className="modal">
-        <h2>{props.title}</h2>
+      <div className="modal modalNoYes">
+        <h2 className="choiceTitle">{props.title}</h2>
         <h3>{props.message}</h3>
 
-        <button onClick={() => handleProceed()}>Proceed</button>
+        <button className="choiceButton noYes" onClick={() => handleProceed()}>
+          Proceed
+        </button>
       </div>
     </div>
   );

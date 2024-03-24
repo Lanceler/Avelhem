@@ -37,8 +37,6 @@ import YouMayFloat1Skill from "./modals/YouMayFloat1Skill";
 import YouMaySpend1Skill from "./modals/YouMaySpend1Skill";
 import YouMayNoYes from "./modals/YouMayNoYes";
 
-import ManaRestructure from "./TalentModals/ManaRestructure";
-
 import TacticSelection from "./modals/TacticSelection";
 import TacticSelectionViaEffect from "./modals/TacticSelectionViaEffect";
 import TacticAdvance from "./modals/TacticAdvance";
@@ -50,8 +48,6 @@ import Purification2 from "./skillModals/Purification2";
 import FrigidBreathResonance1 from "./skillModals/FrigidBreathResonance1";
 import GlacialTorrent1 from "./skillModals/GlacialTorrent1";
 import CataclysmicTempestFloat from "./skillModals/CataclysmicTempestFloat";
-import Surge1 from "./skillModals/Surge1";
-import Aegis1 from "./skillModals/Aegis1";
 import Reinforce1 from "./skillModals/Reinforce1";
 import ArsenalOnslaught1 from "./skillModals/ArsenalOnslaught1";
 
@@ -2003,7 +1999,89 @@ const Board = (props) => {
         }
         break;
 
-      // case "Chain Lightning1":
+      // case "Activating Surge":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>{resolutionUpdateGameStateOnly(surge1(lastResolution.unit))}</>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Surge1":
+      //   return (
+      //     <>
+      //       {self === localGameState.turnPlayer && !hideModal && (
+      //         <TacticSelectionViaEffect
+      //           unit={lastResolution.unit}
+      //           details={lastResolution.details}
+      //           updateFirebase={updateFirebase}
+      //           hideOrRevealModale={hideOrRevealModale}
+      //         />
+      //       )}
+      //     </>
+      //   );
+
+      // case "Surge2":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && !hideModal && (
+      //         <SelectCustomChoice
+      //           unit={lastResolution.unit}
+      //           details={lastResolution.details}
+      //           enterMoveMode={enterMoveMode}
+      //           enterSelectUnitMode={enterSelectUnitMode}
+      //           setMovingSpecial={setMovingSpecial}
+      //           updateFirebase={updateFirebase}
+      //           hideOrRevealModale={hideOrRevealModale}
+      //         />
+      //       )}
+      //     </>
+      //   );
+
+      // case "Surge3":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && !hideModal && (
+      //         <SelectCustomChoice
+      //           unit={lastResolution.unit}
+      //           details={lastResolution.details}
+      //           enterMoveMode={enterMoveMode}
+      //           enterSelectUnitMode={enterSelectUnitMode}
+      //           setMovingSpecial={setMovingSpecial}
+      //           updateFirebase={updateFirebase}
+      //           hideOrRevealModale={hideOrRevealModale}
+      //         />
+      //       )}
+      //     </>
+      //   );
+
+      // case "Activating Diffusion":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {resolutionUpdateGameStateOnly(diffusion1(lastResolution.unit))}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Diffusion1":
+      //   return (
+      //     <>
+      //       {self === localGameState.turnPlayer && !hideModal && (
+      //         <TacticSelectionViaEffect
+      //           unit={lastResolution.unit}
+      //           details={lastResolution.details}
+      //           updateFirebase={updateFirebase}
+      //           hideOrRevealModale={hideOrRevealModale}
+      //         />
+      //       )}
+      //     </>
+      //   );
+
+      // case "Diffusion2":
       //   return (
       //     <>
       //       {self === lastResolution.unit.player && (
@@ -2012,28 +2090,26 @@ const Board = (props) => {
       //             lastResolution.unit,
       //             1,
       //             null,
-      //             "paralyze1",
-      //             "ChainLightningParalysis"
+      //             "blast",
+      //             "Diffusion"
       //           )}
       //         </>
       //       )}
       //     </>
       //   );
 
-      // case "Chain Lightning2":
+      // case "Diffusion3":
       //   return (
       //     <>
       //       {self === lastResolution.unit.player && (
       //         <>
-      //           {resolutionUpdateGameStateOnly(
-      //             chainLightning2(lastResolution.unit)
-      //           )}
+      //           {resolutionUpdateGameStateOnly(diffusion2(lastResolution.unit))}
       //         </>
       //       )}
       //     </>
       //   );
 
-      // case "Chain Lightning3":
+      // case "Diffusion4":
       //   return (
       //     <>
       //       {self === lastResolution.unit.player && !hideModal && (
@@ -2048,157 +2124,33 @@ const Board = (props) => {
       //     </>
       //   );
 
-      // case "Chain Lightning4":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {resolutionUpdateGameStateOnly(
-      //             chainLightning3(
-      //               lastResolution.unit,
-      //               lastResolution.adjacentEnemies
-      //             )
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Chain Lightning5":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {selectChainLightningBlast(
-      //             lastResolution.unit,
-      //             lastResolution.adjacentEnemies
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Activating Zip and Zap":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {resolutionUpdateGameStateOnly(zipAndZap1(lastResolution.unit))}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Zip And Zap1":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {enterMoveModeViaSkill(
-      //             getVacantAdjacentZones(lastResolution.unit),
-      //             lastResolution.unit
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Zip And Zap2":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {resolutionUpdateGameStateOnly(zipAndZap2(lastResolution.unit))}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Zip And Zap3":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && !hideModal && (
-      //         <YouMayNoYes
-      //           unit={lastResolution.unit}
-      //           details={lastResolution.details}
-      //           updateFirebase={updateFirebase}
-      //           hideOrRevealModale={hideOrRevealModale}
-      //         />
-      //       )}
-      //     </>
-      //   );
-
-      // case "Resonating Zip And Zap":
+      // case "Resonating Diffusion":
       //   return (
       //     <>
       //       {self === lastResolution.unit.player && (
       //         <>
       //           {resolutionUpdate(
-      //             zipAndZapR1(lastResolution.unit, lastResolution.resonator)
+      //             diffusionR1(lastResolution.unit, lastResolution.resonator)
       //           )}
       //         </>
       //       )}
       //     </>
       //   );
 
-      // case "Zip And ZapR1":
+      // case "DiffusionR1":
       //   return (
       //     <>
       //       {self === lastResolution.unit.player && (
       //         <>
       //           {resolutionUpdateGameStateOnly(
-      //             zipAndZapR2(lastResolution.unit)
+      //             diffusionR2(lastResolution.unit)
       //           )}
       //         </>
       //       )}
       //     </>
       //   );
 
-      // case "Zip And ZapR2":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && !hideModal && (
-      //         <YouMayNoYes
-      //           unit={lastResolution.unit}
-      //           details={lastResolution.details}
-      //           enterSelectUnitMode={enterSelectUnitMode}
-      //           updateFirebase={updateFirebase}
-      //           hideOrRevealModale={hideOrRevealModale}
-      //         />
-      //       )}
-      //     </>
-      //   );
-
-      // case "Activating Thunder Thaumaturge":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {resolutionUpdate(
-      //             thunderThaumaturge1(
-      //               lastResolution.unit,
-      //               lastResolution.attacker
-      //             )
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Thunder Thaumaturge1":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {resolutionUpdateGameStateOnly(
-      //             thunderThaumaturge2(lastResolution.unit)
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Thunder Thaumaturge2":
+      // case "DiffusionR2":
       //   return (
       //     <>
       //       {self === lastResolution.unit.player && !hideModal && (
@@ -2212,25 +2164,48 @@ const Board = (props) => {
       //     </>
       //   );
 
-      // case "Activating Valiant Spark":
+      // case "DiffusionR3":
       //   return (
       //     <>
       //       {self === lastResolution.unit.player && (
       //         <>
       //           {resolutionUpdateGameStateOnly(
-      //             valiantSpark1(lastResolution.unit)
+      //             diffusionR3(lastResolution.unit)
       //           )}
       //         </>
       //       )}
       //     </>
       //   );
 
-      // case "Valiant Spark1":
+      // case "Select Aegis Activator":
+      //   return (
+      //     <>
+      //       {self === lastResolution.player && (
+      //         <>{selectAegisActivator(lastResolution.victim)}</>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Activating Aegis":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {resolutionUpdateGameStateOnly(
+      //             aegis1(lastResolution.unit, lastResolution.victim)
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
+
+      // case "Aegis1":
       //   return (
       //     <>
       //       {self === lastResolution.unit.player && !hideModal && (
-      //         <SelectSkillReveal
+      //         <SelectCustomChoice
       //           unit={lastResolution.unit}
+      //           victim={lastResolution.victim}
       //           details={lastResolution.details}
       //           updateFirebase={updateFirebase}
       //           hideOrRevealModale={hideOrRevealModale}
@@ -2239,232 +2214,256 @@ const Board = (props) => {
       //     </>
       //   );
 
-      case "Activating Surge":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
-              <>{resolutionUpdateGameStateOnly(surge1(lastResolution.unit))}</>
-            )}
-          </>
-        );
+      // case "Activating Disruption Field":
+      //   return (
+      //     <>
+      //       {self === lastResolution.unit.player && (
+      //         <>
+      //           {resolutionUpdateGameStateOnly(
+      //             disruptionField1(lastResolution.unit)
+      //           )}
+      //         </>
+      //       )}
+      //     </>
+      //   );
 
-      case "Surge1":
-        return (
-          <>
-            {self === localGameState.turnPlayer && !hideModal && (
-              <TacticSelectionViaEffect
-                unit={lastResolution.unit}
-                details={lastResolution.details}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Surge2":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <Surge1
-                unit={lastResolution.unit}
-                reason={lastResolution.reason}
-                enterMoveMode={enterMoveMode}
-                enterSelectUnitMode={enterSelectUnitMode}
-                setMovingSpecial={setMovingSpecial}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Surge3":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <Surge1
-                unit={lastResolution.unit}
-                reason={lastResolution.reason}
-                enterMoveMode={enterMoveMode}
-                enterSelectUnitMode={enterSelectUnitMode}
-                setMovingSpecial={setMovingSpecial}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Activating Diffusion":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+      case "Mana Skill":
+        switch (lastResolution.resolution2) {
+          case "Activating Surge":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(diffusion1(lastResolution.unit))}
-              </>
-            )}
-          </>
-        );
-
-      case "Diffusion1":
-        return (
-          <>
-            {self === localGameState.turnPlayer && !hideModal && (
-              <TacticSelectionViaEffect
-                unit={lastResolution.unit}
-                details={lastResolution.details}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Diffusion2":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
-              <>
-                {selectEnemies(
-                  lastResolution.unit,
-                  1,
-                  null,
-                  "blast",
-                  "Diffusion"
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(surge1(lastResolution.unit))}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Diffusion3":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Surge1":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(diffusion2(lastResolution.unit))}
-              </>
-            )}
-          </>
-        );
-
-      case "Diffusion4":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <YouMayNoYes
-                unit={lastResolution.unit}
-                details={lastResolution.details}
-                enterSelectUnitMode={enterSelectUnitMode}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Resonating Diffusion":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
-              <>
-                {resolutionUpdate(
-                  diffusionR1(lastResolution.unit, lastResolution.resonator)
+                {self === localGameState.turnPlayer && !hideModal && (
+                  <TacticSelectionViaEffect
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "DiffusionR1":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Surge2":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(
-                  diffusionR2(lastResolution.unit)
+                {self === lastResolution.unit.player && !hideModal && (
+                  <SelectCustomChoice
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    enterMoveMode={enterMoveMode}
+                    enterSelectUnitMode={enterSelectUnitMode}
+                    setMovingSpecial={setMovingSpecial}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "DiffusionR2":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <YouMaySpend1Skill
-                unit={lastResolution.unit}
-                details={lastResolution.details}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "DiffusionR3":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Surge3":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(
-                  diffusionR3(lastResolution.unit)
+                {self === lastResolution.unit.player && !hideModal && (
+                  <SelectCustomChoice
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    enterMoveMode={enterMoveMode}
+                    enterSelectUnitMode={enterSelectUnitMode}
+                    setMovingSpecial={setMovingSpecial}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Select Aegis Activator":
-        return (
-          <>
-            {self === lastResolution.player && (
-              <>{selectAegisActivator(lastResolution.victim)}</>
-            )}
-          </>
-        );
-
-      case "Activating Aegis":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Activating Diffusion":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(
-                  aegis1(lastResolution.unit, lastResolution.victim)
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      diffusion1(lastResolution.unit)
+                    )}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Aegis1":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <Aegis1
-                unit={lastResolution.unit}
-                victim={lastResolution.victim}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Activating Disruption Field":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Diffusion1":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(
-                  disruptionField1(lastResolution.unit)
+                {self === localGameState.turnPlayer && !hideModal && (
+                  <TacticSelectionViaEffect
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
                 )}
               </>
-            )}
-          </>
-        );
+            );
+
+          case "Diffusion2":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {selectEnemies(
+                      lastResolution.unit,
+                      1,
+                      null,
+                      "blast",
+                      "Diffusion"
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Diffusion3":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      diffusion2(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Diffusion4":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMayNoYes
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    enterSelectUnitMode={enterSelectUnitMode}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Resonating Diffusion":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdate(
+                      diffusionR1(lastResolution.unit, lastResolution.resonator)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "DiffusionR1":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      diffusionR2(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "DiffusionR2":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMaySpend1Skill
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "DiffusionR3":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      diffusionR3(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Select Aegis Activator":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>{selectAegisActivator(lastResolution.victim)}</>
+                )}
+              </>
+            );
+
+          case "Activating Aegis":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      aegis1(lastResolution.unit, lastResolution.victim)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Aegis1":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <SelectCustomChoice
+                    unit={lastResolution.unit}
+                    victim={lastResolution.victim}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Activating Disruption Field":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      disruptionField1(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+        }
+        break;
 
       case "Activating Magnetic Shockwave":
         return (
@@ -3073,13 +3072,13 @@ const Board = (props) => {
           </>
         );
 
-      case "Mana Restructuring":
+      case "Mana Restructure":
         return (
           <>
-            {self === lastResolution.player && !hideModal && (
-              <ManaRestructure
-                player={lastResolution.player}
-                skillInfo={lastResolution.skill}
+            {self === lastResolution.unit.player && !hideModal && (
+              <YouMayNoYes
+                unit={lastResolution.unit}
+                details={lastResolution.details}
                 updateFirebase={updateFirebase}
                 hideOrRevealModale={hideOrRevealModale}
               />
@@ -3087,7 +3086,7 @@ const Board = (props) => {
           </>
         );
 
-      case "Mana Restructuring Announcement":
+      case "Mana Restructure Announcement":
         return (
           <>
             {self === lastResolution.player && (

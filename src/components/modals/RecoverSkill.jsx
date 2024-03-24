@@ -38,8 +38,10 @@ const RecoverSkill = (props) => {
     newGameState.currentResolution.pop();
 
     if (
-      props.message ===
-      "Recover 1 Lightning skill other than “Thunder Thaumaturge”."
+      [
+        "Recover then float 1 Plant skill other than “Efflorescence”.",
+        "Recover 1 Lightning skill other than “Thunder Thaumaturge”.",
+      ].includes(props.message)
     ) {
       newGameState.currentResolution.push({
         resolution: "Revealing Skill",
@@ -50,6 +52,20 @@ const RecoverSkill = (props) => {
           ],
       });
     }
+
+    // if (
+    //   props.message ===
+    //   "Recover 1 Lightning skill other than “Thunder Thaumaturge”."
+    // ) {
+    //   newGameState.currentResolution.push({
+    //     resolution: "Revealing Skill",
+    //     player: enemy,
+    //     skill:
+    //       newGameState[self].skillVestige[
+    //         newGameState[self].skillVestige.length - 1 - selectedSkill
+    //       ],
+    //   });
+    // }
 
     // console.log(
     //   newGameState[self].skillVestige[

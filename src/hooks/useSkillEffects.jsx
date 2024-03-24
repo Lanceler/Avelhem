@@ -1629,7 +1629,8 @@ export const useSkillEffects = () => {
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     newGameState.currentResolution.push({
-      resolution: "Surge1",
+      resolution: "Mana Skill",
+      resolution2: "Surge1",
       unit: unit,
       details: {
         title: "Surge",
@@ -1661,7 +1662,8 @@ export const useSkillEffects = () => {
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     newGameState.currentResolution.push({
-      resolution: "Diffusion1",
+      resolution: "Mana Skill",
+      resolution2: "Diffusion1",
       unit: unit,
       details: {
         title: "Diffusion",
@@ -1696,7 +1698,8 @@ export const useSkillEffects = () => {
       if (adjacentEnemies.length > 0) {
         //3. Blast 2nd enemy
         newGameState.currentResolution.push({
-          resolution: "Diffusion4",
+          resolution: "Mana Skill",
+          resolution2: "Diffusion4",
           unit: unit,
           details: {
             reason: "Diffusion 2nd Blast",
@@ -1741,12 +1744,14 @@ export const useSkillEffects = () => {
 
     //2. Resonance
     newGameState.currentResolution.push({
-      resolution: "DiffusionR1",
+      resolution: "Mana Skill",
+      resolution2: "DiffusionR1",
       unit: unit,
     });
 
     newGameState.currentResolution.push({
-      resolution: "Diffusion1",
+      resolution: "Mana Skill",
+      resolution2: "Diffusion1",
       unit: unit,
       details: {
         title: "Diffusion",
@@ -1774,7 +1779,8 @@ export const useSkillEffects = () => {
       newGameState[unit.player].skillHand.length > 0
     ) {
       newGameState.currentResolution.push({
-        resolution: "DiffusionR2",
+        resolution: "Mana Skill",
+        resolution2: "DiffusionR2",
         unit: unit,
         details: {
           title: "Diffusion",
@@ -1825,9 +1831,14 @@ export const useSkillEffects = () => {
     }
 
     newGameState.currentResolution.push({
-      resolution: "Aegis1",
+      resolution: "Mana Skill",
+      resolution2: "Aegis1",
       unit: unit,
       victim: victim,
+      details: {
+        title: "Aegis",
+        reason: "Aegis",
+      },
     });
 
     return newGameState;

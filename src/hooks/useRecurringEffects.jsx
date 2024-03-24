@@ -30,7 +30,8 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Activating Aegis",
+      resolution: "Mana Skill",
+      resolution2: "Activating Aegis",
       unit: unit,
       victim: victim,
     });
@@ -405,7 +406,8 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Activating Diffusion",
+      resolution: "Mana Skill",
+      resolution2: "Activating Diffusion",
       unit: unit,
     });
 
@@ -438,7 +440,8 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Resonating Diffusion",
+      resolution: "Mana Skill",
+      resolution2: "Resonating Diffusion",
       unit: unit,
       resonator: resonator,
     });
@@ -468,7 +471,8 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Activating Disruption Field",
+      resolution: "Mana Skill",
+      resolution2: "Activating Disruption Field",
       unit: unit,
     });
 
@@ -1298,7 +1302,8 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Activating Surge",
+      resolution: "Mana Skill",
+      resolution2: "Activating Surge",
       unit: unit,
     });
 
@@ -2463,7 +2468,7 @@ export const useRecurringEffects = () => {
       newGameState[self].skillHand.splice(skillHandIndex, 1)[0]
     );
 
-    newGameState[self].skillFloat = newGameState[self].skillFloat + 1;
+    newGameState[self].skillFloat += 1;
 
     return newGameState;
   };

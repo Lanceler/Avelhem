@@ -77,9 +77,13 @@ const TacticSelectionViaEffect = (props) => {
 
           if (canMove(unit) || canStrike(unit)) {
             newGameState.currentResolution.push({
-              resolution: "Surge2",
+              resolution: "Mana Skill",
+              resolution2: "Surge2",
               unit: unit,
-              reason: "Surge2",
+              details: {
+                title: "Surge",
+                reason: "Surge2",
+              },
             });
           }
 
@@ -89,13 +93,15 @@ const TacticSelectionViaEffect = (props) => {
         case "Diffusion":
           //2. Continue
           newGameState.currentResolution.push({
-            resolution: "Diffusion3",
+            resolution: "Mana Skill",
+            resolution2: "Diffusion3",
             unit: unit,
           });
 
           //1. Blast 1st enemy
           newGameState.currentResolution.push({
-            resolution: "Diffusion2",
+            resolution: "Mana Skill",
+            resolution2: "Diffusion2",
             unit: unit,
           });
 
@@ -117,11 +123,17 @@ const TacticSelectionViaEffect = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <button onClick={() => handleViewBoard()}>View Board</button>
+        {/* <button onClick={() => handleViewBoard()}>View Board</button>
+        <h2>{props.details.title}</h2> */}
 
-        <h2>{props.details.title}</h2>
+        <div className="twoColumn">
+          <h2 className="choiceTitle">{props.details.title}</h2>
+          <button className="choiceButton" onClick={() => handleViewBoard()}>
+            View Board
+          </button>
+        </div>
+
         <h3>{props.details.message}</h3>
-        <h3>Select Tactic</h3>
         <br />
 
         <div className="twoColumn">

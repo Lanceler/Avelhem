@@ -85,7 +85,8 @@ const ScionSkillSelect = (props) => {
 
   return (
     <div className="modal-backdrop">
-      <div className="modal">
+      {/* <div className="modal modalNoYes"> */}
+      <div className={`modal ${usableSkills.length === 0 ? "modalNoYes" : ""}`}>
         <h2 className="choiceTitle">Select Skill</h2>
 
         <div className="fourColumn scrollable scrollable-y-only">

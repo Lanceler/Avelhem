@@ -19,7 +19,9 @@ const YouMayNoYes = (props) => {
   };
 
   let updateData = false;
-  if (["Block Virtue-Blast"].includes(props.details.reason)) {
+  if (
+    ["Block Virtue-Blast", "Mana Restructure"].includes(props.details.reason)
+  ) {
     updateData = true;
   }
 
@@ -27,6 +29,10 @@ const YouMayNoYes = (props) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
     newGameState.currentResolution.pop();
+
+    if (props.details.reason === "Mana Restructure") {
+      newGameState[self].skillVestige.push(props.details.skill);
+    }
 
     dispatch(updateState(newGameState));
 
@@ -209,6 +215,18 @@ const YouMayNoYes = (props) => {
           "blast",
           null
         );
+        break;
+
+      case "Mana Restructure":
+        newGameState[self].skillRepertoire.push(props.details.skill);
+        newGameState[self].skillFloat += 1;
+
+        newGameState.currentResolution.push({
+          resolution: "Mana Restructure Announcement",
+          player: enemy,
+          title: "Mana Restructure",
+          message: "Your opponent has floated 1 Mana skill from their hand.",
+        });
         break;
 
       default:
