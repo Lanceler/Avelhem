@@ -111,7 +111,8 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Activating Arsenal Onslaught",
+      resolution: "Metal Skill",
+      resolution2: "Activating Arsenal Onslaught",
       unit: unit,
     });
 
@@ -563,7 +564,8 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Activating Frenzy Blade",
+      resolution: "Metal Skill",
+      resolution2: "Activating Frenzy Blade",
       unit: unit,
       victim: victim,
     });
@@ -897,7 +899,8 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Activating Magnetic Shockwave",
+      resolution: "Metal Skill",
+      resolution2: "Activating Magnetic Shockwave",
       unit: unit,
     });
 
@@ -1060,7 +1063,8 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Activating Reinforce",
+      resolution: "Metal Skill",
+      resolution2: "Activating Reinforce",
       unit: unit,
     });
 
@@ -1093,7 +1097,8 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Resonating Reinforce",
+      resolution: "Metal Skill",
+      resolution2: "Resonating Reinforce",
       unit: unit,
       resonator: resonator,
     });
@@ -1638,7 +1643,7 @@ export const useRecurringEffects = () => {
         attacker.unitClass === "Water Scion":
         bypassShield = true;
         break;
-      case attacker.sharpness === 2:
+      case attacker.sharpness === 2 && type === "strike":
         bypassShield = true;
         break;
       case special === "sowAndReapBlast":
@@ -1673,7 +1678,7 @@ export const useRecurringEffects = () => {
         if (attacker.boosts.galeConjuration === true) {
           aP = 2;
         }
-        if (attacker.sharpness > 0 && type === "strike") {
+        if (attacker.sharpness > 0) {
           aP += attacker.sharpness;
         }
         if (victim.temporary.adamantArmor === true) {

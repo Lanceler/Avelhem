@@ -48,8 +48,6 @@ import Purification2 from "./skillModals/Purification2";
 import FrigidBreathResonance1 from "./skillModals/FrigidBreathResonance1";
 import GlacialTorrent1 from "./skillModals/GlacialTorrent1";
 import CataclysmicTempestFloat from "./skillModals/CataclysmicTempestFloat";
-import Reinforce1 from "./skillModals/Reinforce1";
-import ArsenalOnslaught1 from "./skillModals/ArsenalOnslaught1";
 
 import ContingentElimination from "./skillModals/ContingentElimination";
 import ContingentMotion from "./skillModals/ContingentMotion";
@@ -1726,19 +1724,6 @@ const Board = (props) => {
         }
         break;
 
-      case "Activating Chain Lightning":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
-              <>
-                {resolutionUpdateGameStateOnly(
-                  chainLightning1(lastResolution.unit, lastResolution.victim)
-                )}
-              </>
-            )}
-          </>
-        );
-
       case "Lightning Skill":
         switch (lastResolution.resolution2) {
           case "Activating Chain Lightning":
@@ -1999,234 +1984,6 @@ const Board = (props) => {
         }
         break;
 
-      // case "Activating Surge":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>{resolutionUpdateGameStateOnly(surge1(lastResolution.unit))}</>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Surge1":
-      //   return (
-      //     <>
-      //       {self === localGameState.turnPlayer && !hideModal && (
-      //         <TacticSelectionViaEffect
-      //           unit={lastResolution.unit}
-      //           details={lastResolution.details}
-      //           updateFirebase={updateFirebase}
-      //           hideOrRevealModale={hideOrRevealModale}
-      //         />
-      //       )}
-      //     </>
-      //   );
-
-      // case "Surge2":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && !hideModal && (
-      //         <SelectCustomChoice
-      //           unit={lastResolution.unit}
-      //           details={lastResolution.details}
-      //           enterMoveMode={enterMoveMode}
-      //           enterSelectUnitMode={enterSelectUnitMode}
-      //           setMovingSpecial={setMovingSpecial}
-      //           updateFirebase={updateFirebase}
-      //           hideOrRevealModale={hideOrRevealModale}
-      //         />
-      //       )}
-      //     </>
-      //   );
-
-      // case "Surge3":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && !hideModal && (
-      //         <SelectCustomChoice
-      //           unit={lastResolution.unit}
-      //           details={lastResolution.details}
-      //           enterMoveMode={enterMoveMode}
-      //           enterSelectUnitMode={enterSelectUnitMode}
-      //           setMovingSpecial={setMovingSpecial}
-      //           updateFirebase={updateFirebase}
-      //           hideOrRevealModale={hideOrRevealModale}
-      //         />
-      //       )}
-      //     </>
-      //   );
-
-      // case "Activating Diffusion":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {resolutionUpdateGameStateOnly(diffusion1(lastResolution.unit))}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Diffusion1":
-      //   return (
-      //     <>
-      //       {self === localGameState.turnPlayer && !hideModal && (
-      //         <TacticSelectionViaEffect
-      //           unit={lastResolution.unit}
-      //           details={lastResolution.details}
-      //           updateFirebase={updateFirebase}
-      //           hideOrRevealModale={hideOrRevealModale}
-      //         />
-      //       )}
-      //     </>
-      //   );
-
-      // case "Diffusion2":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {selectEnemies(
-      //             lastResolution.unit,
-      //             1,
-      //             null,
-      //             "blast",
-      //             "Diffusion"
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Diffusion3":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {resolutionUpdateGameStateOnly(diffusion2(lastResolution.unit))}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Diffusion4":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && !hideModal && (
-      //         <YouMayNoYes
-      //           unit={lastResolution.unit}
-      //           details={lastResolution.details}
-      //           enterSelectUnitMode={enterSelectUnitMode}
-      //           updateFirebase={updateFirebase}
-      //           hideOrRevealModale={hideOrRevealModale}
-      //         />
-      //       )}
-      //     </>
-      //   );
-
-      // case "Resonating Diffusion":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {resolutionUpdate(
-      //             diffusionR1(lastResolution.unit, lastResolution.resonator)
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "DiffusionR1":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {resolutionUpdateGameStateOnly(
-      //             diffusionR2(lastResolution.unit)
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "DiffusionR2":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && !hideModal && (
-      //         <YouMaySpend1Skill
-      //           unit={lastResolution.unit}
-      //           details={lastResolution.details}
-      //           updateFirebase={updateFirebase}
-      //           hideOrRevealModale={hideOrRevealModale}
-      //         />
-      //       )}
-      //     </>
-      //   );
-
-      // case "DiffusionR3":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {resolutionUpdateGameStateOnly(
-      //             diffusionR3(lastResolution.unit)
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Select Aegis Activator":
-      //   return (
-      //     <>
-      //       {self === lastResolution.player && (
-      //         <>{selectAegisActivator(lastResolution.victim)}</>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Activating Aegis":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {resolutionUpdateGameStateOnly(
-      //             aegis1(lastResolution.unit, lastResolution.victim)
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
-      // case "Aegis1":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && !hideModal && (
-      //         <SelectCustomChoice
-      //           unit={lastResolution.unit}
-      //           victim={lastResolution.victim}
-      //           details={lastResolution.details}
-      //           updateFirebase={updateFirebase}
-      //           hideOrRevealModale={hideOrRevealModale}
-      //         />
-      //       )}
-      //     </>
-      //   );
-
-      // case "Activating Disruption Field":
-      //   return (
-      //     <>
-      //       {self === lastResolution.unit.player && (
-      //         <>
-      //           {resolutionUpdateGameStateOnly(
-      //             disruptionField1(lastResolution.unit)
-      //           )}
-      //         </>
-      //       )}
-      //     </>
-      //   );
-
       case "Mana Skill":
         switch (lastResolution.resolution2) {
           case "Activating Surge":
@@ -2465,300 +2222,324 @@ const Board = (props) => {
         }
         break;
 
-      case "Activating Magnetic Shockwave":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+      case "Metal Skill":
+        switch (lastResolution.resolution2) {
+          case "Activating Magnetic Shockwave":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(
-                  magneticShockwave1(lastResolution.unit)
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      magneticShockwave1(lastResolution.unit)
+                    )}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Magnetic Shockwave1":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Magnetic Shockwave1":
+            return (
               <>
-                {selectEnemies(
-                  lastResolution.unit,
-                  1,
-                  null,
-                  "paralyze1",
-                  "MagneticShockwave1stParalysis"
+                {self === lastResolution.unit.player && (
+                  <>
+                    {selectEnemies(
+                      lastResolution.unit,
+                      1,
+                      null,
+                      "paralyze1",
+                      "MagneticShockwave1stParalysis"
+                    )}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Magnetic Shockwave2":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Magnetic Shockwave2":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(
-                  magneticShockwave2(lastResolution.unit)
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      magneticShockwave2(lastResolution.unit)
+                    )}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Magnetic Shockwave2.1":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <YouMayNoYes
-                unit={lastResolution.unit}
-                details={lastResolution.details}
-                enterSelectUnitMode={enterSelectUnitMode}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Magnetic Shockwave3":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Magnetic Shockwave2.1":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(
-                  magneticShockwave3(lastResolution.unit)
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMayNoYes
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    enterSelectUnitMode={enterSelectUnitMode}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Magnetic Shockwave3.1":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <YouMayNoYes
-                unit={lastResolution.unit}
-                details={lastResolution.details}
-                enterSelectUnitMode={enterSelectUnitMode}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Activating Reinforce":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Magnetic Shockwave3":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(reinforce1(lastResolution.unit))}
-              </>
-            )}
-          </>
-        );
-
-      case "Reinforce1":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <Reinforce1
-                unit={lastResolution.unit}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Resonating Reinforce":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
-              <>
-                {resolutionUpdateGameStateOnly(
-                  reinforceR1(lastResolution.unit)
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      magneticShockwave3(lastResolution.unit)
+                    )}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Select Frenzy Blade Activator":
-        return (
-          <>
-            {self === lastResolution.player && (
-              <>{selectFrenzyBladeActivator(lastResolution.victim)}</>
-            )}
-          </>
-        );
-
-      case "Activating Frenzy Blade":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Magnetic Shockwave3.1":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(
-                  frenzyBlade1(lastResolution.unit, lastResolution.victim)
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMayNoYes
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    enterSelectUnitMode={enterSelectUnitMode}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Frenzy Blade1":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <SelectCustomChoice
-                unit={lastResolution.unit}
-                details={lastResolution.details}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Frenzy Blade1.5":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Activating Reinforce":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(
-                  frenzyBlade2(lastResolution.unit)
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      reinforce1(lastResolution.unit)
+                    )}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Frenzy Blade2":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <SelectCustomChoice
-                unit={lastResolution.unit}
-                details={lastResolution.details}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Activating Arsenal Onslaught":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Reinforce1":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(
-                  arsenalOnslaught1(lastResolution.unit)
+                {self === lastResolution.unit.player && !hideModal && (
+                  <SelectCustomChoice
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Arsenal Onslaught1":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
-              <>{selectEnemies(lastResolution.unit, 1, null, "strike", null)}</>
-            )}
-          </>
-        );
-
-      case "Arsenal Onslaught1.1":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
-              <>{selectEnemies(lastResolution.unit, 1, null, "blast", null)}</>
-            )}
-          </>
-        );
-
-      case "Arsenal Onslaught2":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Resonating Reinforce":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(
-                  arsenalOnslaught2(lastResolution.unit)
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      reinforceR1(lastResolution.unit, lastResolution.resonator)
+                    )}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Arsenal Onslaught3":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <SelectSkillReveal
-                unit={lastResolution.unit}
-                details={lastResolution.details}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Arsenal Onslaught3.5":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Select Frenzy Blade Activator":
+            return (
               <>
-                {selectEnemies(lastResolution.unit, 1, null, "paralyze1", null)}
-              </>
-            )}
-          </>
-        );
-
-      case "Arsenal Onslaught4":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
-              <>
-                {resolutionUpdateGameStateOnly(
-                  arsenalOnslaught3(lastResolution.unit)
+                {self === lastResolution.player && (
+                  <>{selectFrenzyBladeActivator(lastResolution.victim)}</>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Arsenal Onslaught5":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <YouMaySpend1Skill
-                unit={lastResolution.unit}
-                details={lastResolution.details}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
+          case "Activating Frenzy Blade":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      frenzyBlade1(lastResolution.unit, lastResolution.victim)
+                    )}
+                  </>
+                )}
+              </>
+            );
 
-      case "Arsenal Onslaught6":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <ArsenalOnslaught1
-                unit={lastResolution.unit}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
+          case "Frenzy Blade1":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <SelectCustomChoice
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Frenzy Blade1.5":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      frenzyBlade2(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Frenzy Blade2":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <SelectCustomChoice
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Activating Arsenal Onslaught":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      arsenalOnslaught1(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Arsenal Onslaught1":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {selectEnemies(
+                      lastResolution.unit,
+                      1,
+                      null,
+                      "strike",
+                      null
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Arsenal Onslaught1.1":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {selectEnemies(lastResolution.unit, 1, null, "blast", null)}
+                  </>
+                )}
+              </>
+            );
+
+          case "Arsenal Onslaught2":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      arsenalOnslaught2(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Arsenal Onslaught3":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <SelectSkillReveal
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Arsenal Onslaught3.5":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {selectEnemies(
+                      lastResolution.unit,
+                      1,
+                      null,
+                      "paralyze1",
+                      null
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Arsenal Onslaught4":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      arsenalOnslaught3(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Arsenal Onslaught5":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMaySpend1Skill
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Arsenal Onslaught6":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <SelectCustomChoice
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+        }
+        break;
 
       case "Activating Sow And Reap":
         return (
@@ -2876,7 +2657,7 @@ const Board = (props) => {
             {self === lastResolution.unit.player && (
               <>
                 {resolutionUpdateGameStateOnly(
-                  efflorescenceR1(lastResolution.unit)
+                  efflorescenceR1(lastResolution.unit, lastResolution.resonator)
                 )}
               </>
             )}

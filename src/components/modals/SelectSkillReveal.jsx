@@ -50,7 +50,8 @@ const SelectSkillReveal = (props) => {
 
       case "Arsenal Onslaught Paralyze":
         newGameState.currentResolution.push({
-          resolution: "Arsenal Onslaught3.5",
+          resolution: "Metal Skill",
+          resolution2: "Arsenal Onslaught3.5",
           unit: unit,
         });
         break;

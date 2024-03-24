@@ -14,6 +14,10 @@ const SelectCustomChoice = (props) => {
 
   const [selectedChoice, setSelectedChoice] = useState(null);
 
+  useEffect(() => {
+    setSelectedChoice(null);
+  }, [props.details.reason]);
+
   const {
     blast,
     canMove,
@@ -94,7 +98,14 @@ const SelectCustomChoice = (props) => {
       canFirstChoice = true;
       canSecondChoice = newGameState[unit.player].skillHand.length > 0;
       ChoiceFirstMessage = "Grant them Shield for 1 turn.";
-      ChoiceSecondMessage = "Spend 1 skill to grant them Ward for 1 turn";
+      ChoiceSecondMessage = "Spend 1 skill to grant them Ward for 1 turn.";
+      break;
+
+    case "Reinforce":
+      canFirstChoice = true;
+      canSecondChoice = newGameState[unit.player].skillHand.length > 0;
+      ChoiceFirstMessage = "Gain 1 Sharpness (Max. 2).";
+      ChoiceSecondMessage = "Spend 1 skill to gain 1 HP (Max. 2).";
       break;
 
     case "Frenzy Blade1":
@@ -105,6 +116,13 @@ const SelectCustomChoice = (props) => {
       break;
 
     case "Frenzy Blade2":
+      canFirstChoice = canStrike(unit);
+      canSecondChoice = true;
+      ChoiceFirstMessage = "Strike.";
+      ChoiceSecondMessage = "Blast.";
+      break;
+
+    case "Arsenal Onslaught":
       canFirstChoice = canStrike(unit);
       canSecondChoice = true;
       ChoiceFirstMessage = "Strike.";
@@ -315,12 +333,32 @@ const SelectCustomChoice = (props) => {
 
         break;
 
+      case "Reinforce":
+        if (selectedChoice === 1) {
+          unit.sharpness
+            ? (unit.sharpness = Math.min(2, unit.sharpness + 1))
+            : (unit.sharpness = 1);
+          newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+        } else {
+          unit.hp = Math.max(2, unit.hp);
+          newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+          newGameState.currentResolution.push({
+            resolution: "Discard Skill",
+            unit: unit,
+            player: unit.player,
+            message: "Spend 1 skill.",
+            restriction: null,
+          });
+        }
+        break;
+
       case "Frenzy Blade1":
         if (selectedChoice === 1) {
           newGameState = drawSkill(newGameState);
         } else {
           newGameState.currentResolution.push({
-            resolution: "Frenzy Blade1.5",
+            resolution: "Metal Skill",
+            resolution2: "Frenzy Blade1.5",
             unit: unit,
           });
           newGameState.currentResolution.push({
@@ -339,6 +377,22 @@ const SelectCustomChoice = (props) => {
           newGameState = strike(newGameState, unit, props.details.victim, null);
         } else {
           newGameState = blast(newGameState, unit, props.details.victim, null);
+        }
+        break;
+
+      case "Arsenal Onslaught":
+        if (selectedChoice === 1) {
+          newGameState.currentResolution.push({
+            resolution: "Metal Skill",
+            resolution2: "Arsenal Onslaught1",
+            unit: unit,
+          });
+        } else {
+          newGameState.currentResolution.push({
+            resolution: "Metal Skill",
+            resolution2: "Arsenal Onslaught1.1",
+            unit: unit,
+          });
         }
         break;
 

@@ -1907,20 +1907,23 @@ export const useSkillEffects = () => {
 
     if (unit.sharpness > 1) {
       newGameState.currentResolution.push({
-        resolution: "Magnetic Shockwave3",
+        resolution: "Metal Skill",
+        resolution2: "Magnetic Shockwave3",
         unit: unit,
       });
     }
 
     if (unit.sharpness > 0) {
       newGameState.currentResolution.push({
-        resolution: "Magnetic Shockwave2",
+        resolution: "Metal Skill",
+        resolution2: "Magnetic Shockwave2",
         unit: unit,
       });
     }
 
     newGameState.currentResolution.push({
-      resolution: "Magnetic Shockwave1",
+      resolution: "Metal Skill",
+      resolution2: "Magnetic Shockwave1",
       unit: unit,
     });
 
@@ -1946,7 +1949,8 @@ export const useSkillEffects = () => {
       if (adjacentEnemies.length > 0) {
         //Paralyze 2nd enemy
         newGameState.currentResolution.push({
-          resolution: "Magnetic Shockwave2.1",
+          resolution: "Metal Skill",
+          resolution2: "Magnetic Shockwave2.1",
           unit: unit,
           details: {
             reason: "Magnetic Shockwave 2nd Paralyze",
@@ -1974,7 +1978,8 @@ export const useSkillEffects = () => {
 
     if (unit !== null && !isMuted(unit) && adjacentEnemies.length > 0) {
       newGameState.currentResolution.push({
-        resolution: "Magnetic Shockwave3.1",
+        resolution: "Metal Skill",
+        resolution2: "Magnetic Shockwave3.1",
         unit: unit,
         details: {
           reason: "Magnetic Shockwave Blast",
@@ -2005,8 +2010,13 @@ export const useSkillEffects = () => {
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     newGameState.currentResolution.push({
-      resolution: "Reinforce1",
+      resolution: "Metal Skill",
+      resolution2: "Reinforce1",
       unit: unit,
+      details: {
+        title: "Reinforce",
+        reason: "Reinforce",
+      },
     });
 
     return newGameState;
@@ -2037,8 +2047,13 @@ export const useSkillEffects = () => {
     }
 
     newGameState.currentResolution.push({
-      resolution: "Reinforce1",
+      resolution: "Metal Skill",
+      resolution2: "Reinforce1",
       unit: unit,
+      details: {
+        title: "Reinforce",
+        reason: "Reinforce",
+      },
     });
 
     newGameState.currentResolution.push({
@@ -2047,8 +2062,13 @@ export const useSkillEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Reinforce1",
+      resolution: "Metal Skill",
+      resolution2: "Reinforce1",
       unit: unit,
+      details: {
+        title: "Reinforce",
+        reason: "Reinforce",
+      },
     });
 
     return newGameState;
@@ -2073,7 +2093,8 @@ export const useSkillEffects = () => {
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     newGameState.currentResolution.push({
-      resolution: "Frenzy Blade2",
+      resolution: "Metal Skill",
+      resolution2: "Frenzy Blade2",
       unit: unit,
       details: {
         title: "Frenzy Blade",
@@ -2083,7 +2104,8 @@ export const useSkillEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Frenzy Blade1",
+      resolution: "Metal Skill",
+      resolution2: "Frenzy Blade1",
       unit: unit,
       details: {
         title: "Frenzy Blade",
@@ -2125,12 +2147,14 @@ export const useSkillEffects = () => {
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     newGameState.currentResolution.push({
-      resolution: "Arsenal Onslaught2",
+      resolution: "Metal Skill",
+      resolution2: "Arsenal Onslaught2",
       unit: unit,
     });
 
     newGameState.currentResolution.push({
-      resolution: "Arsenal Onslaught1",
+      resolution: "Metal Skill",
+      resolution2: "Arsenal Onslaught1",
       unit: unit,
     });
 
@@ -2151,12 +2175,14 @@ export const useSkillEffects = () => {
       newGameState[unit.player].skillHand.length > 0
     ) {
       newGameState.currentResolution.push({
-        resolution: "Arsenal Onslaught4",
+        resolution: "Metal Skill",
+        resolution2: "Arsenal Onslaught4",
         unit: unit,
       });
 
       newGameState.currentResolution.push({
-        resolution: "Arsenal Onslaught3",
+        resolution: "Metal Skill",
+        resolution2: "Arsenal Onslaught3",
         unit: unit,
         details: {
           title: "Arsenal Onslaught",
@@ -2185,7 +2211,8 @@ export const useSkillEffects = () => {
       newGameState[unit.player].skillHand.length > 0
     ) {
       newGameState.currentResolution.push({
-        resolution: "Arsenal Onslaught5",
+        resolution: "Metal Skill",
+        resolution2: "Arsenal Onslaught5",
         unit: unit,
         details: {
           title: "Arsenal Onslaught",

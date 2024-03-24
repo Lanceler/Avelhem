@@ -147,8 +147,13 @@ const YouMaySpend1Skill = (props) => {
 
       case "Arsenal Onslaught Attack":
         newGameState.currentResolution.push({
-          resolution: "Arsenal Onslaught6",
+          resolution: "Metal Skill",
+          resolution2: "Arsenal Onslaught6",
           unit: props.unit,
+          details: {
+            title: "Arsenal Onslaught",
+            reason: "Arsenal Onslaught",
+          },
         });
         break;
 
@@ -271,23 +276,25 @@ const YouMaySpend1Skill = (props) => {
 
         <h3>{props.details.message}</h3>
 
-        <div className="fourColumn scrollable scrollable-y-only">
-          {usableSkills.map((usableSkill, i) => (
-            <div
-              key={i}
-              className={`scionSkills ${
-                selectedSkill === i ? "selectedSkill" : ""
-              }`}
-            >
-              <Skill
-                i={i}
-                usableSkill={usableSkill}
-                canActivateSkill={canBeDiscarded(usableSkill.id)}
-                selectedSkill={selectedSkill}
-                setSelectedSkill={setSelectedSkill}
-              />
-            </div>
-          ))}
+        <div className="scrollable scrollable-y-only">
+          <div className="fourColumn">
+            {usableSkills.map((usableSkill, i) => (
+              <div
+                key={i}
+                className={`scionSkills ${
+                  selectedSkill === i ? "selectedSkill" : ""
+                }`}
+              >
+                <Skill
+                  i={i}
+                  usableSkill={usableSkill}
+                  canActivateSkill={canBeDiscarded(usableSkill.id)}
+                  selectedSkill={selectedSkill}
+                  setSelectedSkill={setSelectedSkill}
+                />
+              </div>
+            ))}
+          </div>
         </div>
 
         {selectedSkill === null && (
