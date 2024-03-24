@@ -399,12 +399,14 @@ const SelectCustomChoice = (props) => {
       case "Sow and Reap":
         if (selectedChoice === 1) {
           newGameState.currentResolution.push({
-            resolution: "Sow and Reap Blast",
+            resolution: "Plant Skill",
+            resolution2: "Sow and Reap Blast",
             unit: unit,
           });
         } else {
           newGameState.currentResolution.push({
-            resolution: "Select Sow and Reap Striker",
+            resolution: "Plant Skill",
+            resolution2: "Select Sow and Reap Striker",
             unit: unit,
             player: self,
           });

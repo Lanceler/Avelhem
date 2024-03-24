@@ -185,7 +185,8 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Activating Castle of Thorns",
+      resolution: "Plant Skill",
+      resolution2: "Activating Castle of Thorns",
       unit: unit,
     });
 
@@ -501,7 +502,8 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Activating Efflorescence",
+      resolution: "Plant Skill",
+      resolution2: "Activating Efflorescence",
       unit: unit,
     });
 
@@ -534,7 +536,8 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Resonating Efflorescence",
+      resolution: "Plant Skill",
+      resolution2: "Resonating Efflorescence",
       unit: unit,
       resonator: resonator,
     });
@@ -1259,7 +1262,8 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Activating Sow And Reap",
+      resolution: "Plant Skill",
+      resolution2: "Activating Sow And Reap",
       unit: unit,
     });
 
@@ -1488,7 +1492,8 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Activating Viridian Grave",
+      resolution: "Plant Skill",
+      resolution2: "Activating Viridian Grave",
       unit: unit,
       victim: victim,
     });
@@ -1853,14 +1858,17 @@ export const useRecurringEffects = () => {
 
       //Anathema-delay for non-pawns & non-ravagers
       if (
-        newGameState[attacker.player].units[attacker.unitIndex].class !==
-          "Pawn" &&
-        !newGameState[attacker.player].units[attacker.unitIndex].enhancements
-          .ravager
-      )
+        !(
+          newGameState[attacker.player].units[attacker.unitIndex].unitClass ===
+            "Pawn" ||
+          newGameState[attacker.player].units[attacker.unitIndex].enhancements
+            .ravager
+        )
+      ) {
         newGameState[attacker.player].units[
           attacker.unitIndex
         ].temporary.anathemaDelay = true;
+      }
     }
 
     return newGameState;

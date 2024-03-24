@@ -2541,204 +2541,211 @@ const Board = (props) => {
         }
         break;
 
-      case "Activating Sow And Reap":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+      case "Plant Skill":
+        switch (lastResolution.resolution2) {
+          case "Activating Sow And Reap":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(
-                  sowAndReap1(lastResolution.unit)
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      sowAndReap1(lastResolution.unit)
+                    )}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Sow and Reap1":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <SelectCustomChoice
-                unit={lastResolution.unit}
-                details={lastResolution.details}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Sow and Reap Blast":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Sow and Reap1":
+            return (
               <>
-                {selectEnemiesRooted(
-                  lastResolution.unit,
-                  1,
-                  null,
-                  "blast",
-                  "sowAndReapBlast"
+                {self === lastResolution.unit.player && !hideModal && (
+                  <SelectCustomChoice
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Select Sow and Reap Striker":
-        return (
-          <>
-            {self === lastResolution.player && (
-              <>{selectSowAndReapStriker(lastResolution.unit)}</>
-            )}
-          </>
-        );
-
-      case "Sow and Reap Strike":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Sow and Reap Blast":
+            return (
               <>
-                {selectEnemiesRooted(
-                  lastResolution.unit,
-                  1,
-                  null,
-                  "strike",
-                  null
+                {self === lastResolution.unit.player && (
+                  <>
+                    {selectEnemiesRooted(
+                      lastResolution.unit,
+                      1,
+                      null,
+                      "blast",
+                      "sowAndReapBlast"
+                    )}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Sow and Reap2":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Select Sow and Reap Striker":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(
-                  sowAndReap2(lastResolution.unit)
+                {self === lastResolution.player && (
+                  <>{selectSowAndReapStriker(lastResolution.unit)}</>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Activating Efflorescence":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Sow and Reap Strike":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(
-                  efflorescence1(lastResolution.unit)
+                {self === lastResolution.unit.player && (
+                  <>
+                    {selectEnemiesRooted(
+                      lastResolution.unit,
+                      1,
+                      null,
+                      "strike",
+                      null
+                    )}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Efflorescence1":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <YouMaySpend1Skill
-                unit={lastResolution.unit}
-                details={lastResolution.details}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Resonating Efflorescence":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Sow and Reap2":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(
-                  efflorescenceR1(lastResolution.unit, lastResolution.resonator)
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      sowAndReap2(lastResolution.unit)
+                    )}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "EfflorescenceR1":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Activating Efflorescence":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(
-                  efflorescenceR2(lastResolution.unit)
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      efflorescence1(lastResolution.unit)
+                    )}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Select Viridian Grave Activator":
-        return (
-          <>
-            {self === lastResolution.player && (
-              <>{selectViridianGraveActivator(lastResolution.victim)}</>
-            )}
-          </>
-        );
-
-      case "Activating Viridian Grave":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Efflorescence1":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(
-                  viridianGrave1(lastResolution.unit, lastResolution.victim)
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMaySpend1Skill
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Viridian Grave1":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <YouMaySpend1Skill
-                unit={lastResolution.unit}
-                details={lastResolution.details}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Activating Castle of Thorns":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
+          case "Resonating Efflorescence":
+            return (
               <>
-                {resolutionUpdateGameStateOnly(
-                  castleOfThorns1(lastResolution.unit)
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      efflorescenceR1(
+                        lastResolution.unit,
+                        lastResolution.resonator
+                      )
+                    )}
+                  </>
                 )}
               </>
-            )}
-          </>
-        );
+            );
 
-      case "Castle Of Thorns1":
-        return (
-          <>
-            {self === lastResolution.unit.player && !hideModal && (
-              <YouMaySpend1Skill
-                unit={lastResolution.unit}
-                details={lastResolution.details}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
+          case "EfflorescenceR1":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      efflorescenceR2(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Select Viridian Grave Activator":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>{selectViridianGraveActivator(lastResolution.victim)}</>
+                )}
+              </>
+            );
+
+          case "Activating Viridian Grave":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      viridianGrave1(lastResolution.unit, lastResolution.victim)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Viridian Grave1":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMaySpend1Skill
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Activating Castle of Thorns":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      castleOfThorns1(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Castle Of Thorns1":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMaySpend1Skill
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+        }
+        break;
 
       case "Triggering Elimination Ally":
         return (
@@ -3639,7 +3646,8 @@ const Board = (props) => {
         });
 
         newGameState.currentResolution.push({
-          resolution: "Sow and Reap Strike",
+          resolution: "Plant Skill",
+          resolution2: "Sow and Reap Strike",
           unit: selectedUnit,
         });
 
@@ -3734,7 +3742,10 @@ const Board = (props) => {
       unit.temporary.activation -= 1;
 
       //apply anathema
-      if (unit.temporary.activation === 0 && unit.temporary.anathemaDelay) {
+      if (
+        unit.temporary.activation === 0 &&
+        unit.temporary.anathemaDelay === true
+      ) {
         delete unit.temporary.anathemaDelay;
         unit.afflictions.anathema = 2;
 
@@ -3794,7 +3805,10 @@ const Board = (props) => {
       unit.temporary.activation -= 1;
 
       //apply anathema
-      if (unit.temporary.activation === 0 && unit.temporary.anathemaDelay) {
+      if (
+        unit.temporary.activation === 0 &&
+        unit.temporary.anathemaDelay === true
+      ) {
         delete unit.temporary.anathemaDelay;
         unit.afflictions.anathema = 2;
 
@@ -3856,7 +3870,10 @@ const Board = (props) => {
       unit.temporary.activation -= 1;
 
       //apply anathema
-      if (unit.temporary.activation === 0 && unit.temporary.anathemaDelay) {
+      if (
+        unit.temporary.activation === 0 &&
+        unit.temporary.anathemaDelay === true
+      ) {
         delete unit.temporary.anathemaDelay;
         unit.afflictions.anathema = 2;
 
@@ -4236,8 +4253,8 @@ const Board = (props) => {
               </div>
             </div>
           </div>
-          <br />
-          <br />
+          {/* <br />
+          <br /> */}
           {currentResolutionPrompt()}
         </div>
       )}

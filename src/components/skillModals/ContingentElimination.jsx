@@ -86,7 +86,8 @@ const ContingentElimination = (props) => {
 
     if (usableSkills[selectedSkill].id === "08-03") {
       newGameState.currentResolution.push({
-        resolution: "Select Viridian Grave Activator",
+        resolution: "Plant Skill",
+        resolution2: "Select Viridian Grave Activator",
         victim: props.unit,
         player: self,
       });

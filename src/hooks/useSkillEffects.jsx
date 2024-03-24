@@ -2242,12 +2242,14 @@ export const useSkillEffects = () => {
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     newGameState.currentResolution.push({
-      resolution: "Sow and Reap2",
+      resolution: "Plant Skill",
+      resolution2: "Sow and Reap2",
       unit: unit,
     });
 
     newGameState.currentResolution.push({
-      resolution: "Sow and Reap1",
+      resolution: "Plant Skill",
+      resolution2: "Sow and Reap1",
       unit: unit,
       details: {
         title: "Sow and Reap",
@@ -2305,7 +2307,8 @@ export const useSkillEffects = () => {
       )
     ) {
       newGameState.currentResolution.push({
-        resolution: "Efflorescence1",
+        resolution: "Plant Skill",
+        resolution2: "Efflorescence1",
         unit: unit,
         details: {
           title: "Efflorescence",
@@ -2354,7 +2357,8 @@ export const useSkillEffects = () => {
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     newGameState.currentResolution.push({
-      resolution: "EfflorescenceR1",
+      resolution: "Plant Skill",
+      resolution2: "EfflorescenceR1",
       unit: unit,
     });
 
@@ -2364,7 +2368,8 @@ export const useSkillEffects = () => {
       )
     ) {
       newGameState.currentResolution.push({
-        resolution: "Efflorescence1",
+        resolution: "Plant Skill",
+        resolution2: "Efflorescence1",
         unit: unit,
         details: {
           title: "Efflorescence",
@@ -2420,7 +2425,8 @@ export const useSkillEffects = () => {
     }
 
     newGameState.currentResolution.push({
-      resolution: "Viridian Grave1",
+      resolution: "Plant Skill",
+      resolution2: "Viridian Grave1",
       unit: unit,
       details: {
         title: "Viridian Grave",
@@ -2454,7 +2460,8 @@ export const useSkillEffects = () => {
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     newGameState.currentResolution.push({
-      resolution: "Castle Of Thorns1",
+      resolution: "Plant Skill",
+      resolution2: "Castle Of Thorns1",
       unit: unit,
       details: {
         title: "Castle of Thorns",

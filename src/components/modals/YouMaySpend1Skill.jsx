@@ -72,6 +72,13 @@ const YouMaySpend1Skill = (props) => {
         });
         break;
 
+      case "Viridian Grave":
+        unit.enhancements.shield
+          ? (unit.enhancements.shield = Math.max(3, unit.enhancements.shield))
+          : (unit.enhancements.shield = 3);
+        newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+        break;
+
       case "Castle of Thorns":
         newGameState = drawSkill(newGameState);
         newGameState = drawSkill(newGameState);
@@ -179,6 +186,14 @@ const YouMaySpend1Skill = (props) => {
           resolution: "Animation Delay",
           priority: self,
         });
+        break;
+
+      case "Viridian Grave":
+        let unit = newGameState[props.unit.player].units[props.unit.unitIndex];
+        unit.enhancements.shield
+          ? (unit.enhancements.shield = Math.max(3, unit.enhancements.shield))
+          : (unit.enhancements.shield = 3);
+        newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
         break;
 
       case "Castle of Thorns":
