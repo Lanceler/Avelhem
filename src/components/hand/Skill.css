@@ -51,74 +51,209 @@ background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rg
     height: 168px; */
     width: 140px;
     height: 196px;
-
     cursor: pointer;
-
     background-size: cover;
     background-position: center;
-
     border-radius: 5px;
-
     background-color: green;
-    border: 2px solid black;
+    /* border: 2px solid black; */
     margin-right: 10px;
-
-    /* transition: transform 0.2s ease; */
+    transition: transform 0.4s ease;
     position: relative;
     z-index: 1;    
 }
 
-.player-hand-card:nth-child(4n+1){
-    transform: rotate(-5deg);
-}
-.player-hand-card:nth-child(4n+2) {
-    transform: rotate(-2.5deg);
-}
-.player-hand-card:nth-child(4n+3) {
-    transform: rotate(2.5deg);
-}
-.player-hand-card:nth-child(4n+4) {
-    transform: rotate(5deg);
+.player-hand-card:hover {
+    filter: brightness(1.2);
+    position: relative;
+
 }
 
-.player-hand-card:hover {
-    
+.indivSkill:nth-child(4n+1){
+    transform: rotate(-5deg);
+}
+.indivSkill:nth-child(4n+2) {
+    transform: rotate(-2.5deg);
+}
+.indivSkill-card:nth-child(4n+3) {
+    transform: rotate(2.5deg);
+}
+.indivSkill:nth-child(4n+4) {
+    transform: rotate(5deg);
+}
+.indivAvelhem:nth-child(2n+1) {
+    transform: rotate(-2.5deg);
+}
+.indivAvelhem:nth-child(2n+2) {
+    transform: rotate(2.5deg);
+}
+
+
+
+
+.enlargable:hover {
     top: -16.8px;
-    filter: brightness(1.1);
+    /* filter: brightness(1.1); */
     transform: scale(1.4);
-    position: relative;
+    /* position: relative; */
     z-index: 2;
 }
 
 .player-skillhand-container{
     /* max-width: 700px; */
-    width: fit-content;
+    width: 420px;
+    height: 400px;
     /* min-height: 300px; */
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    background-color: rgba(255, 0, 0, 0.466);
+    background-color: rgba(69, 119, 185, 0.589);
+    cursor: pointer;
+    padding: 5px 15px 5px 5px;
+    position: relative;
+}
+
+.player-avelhemhand-container {
+    /* max-width: 700px; */
+    width: 225px;
+    height: 400px;
+    /* min-height: 300px; */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    background-color: rgba(69, 119, 185, 0.589);
+    cursor: pointer;
+    padding: 5px 15px 5px 5px;
+    position: relative;
+}
+
+
+.player-avelhemhand-container2 {
+    /* max-width: 700px; */
+    width: 450px;
+        height: 400px;
+    /* min-height: 300px; */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    background-color: rgba(95, 233, 226, 0.589);
     cursor: pointer;
     padding: 5px;
     position: relative;
 }
 
-
-.player-skillhand-container:hover {
+.player-avelhemhand-container:hover {
     position: relative;
     /* top: -150px; */
 }
 
-.player-avelhemHand-container {
-    max-width: 700px;
-    /* height: fit-content; */
-    /* min-height: 300px; */
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    background-color: rgba(0, 255, 42, 0.466);
+.collapse{
+    background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
+    border-radius: 100%;
+    height: 40px;
+    width: 40px;
     cursor: pointer;
+    /* margin-left: auto; */
+    position: relative;
+    z-index: 3;
 }
 
-/* .player-avelhemHand-container:hover {
+.collapseIcon{
+    object-fit: cover;
+    height: 25px;
+}
+
+.collapse:hover{
+    filter: brightness(1.2)
+}
+
+.mainSkillHand{
+    display: grid;
+    height: 0px;
+    
+}
+
+
+/* ................... */
+
+.handModal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 501
+}
+
+
+.handModal {
+    padding: 30px;
+        height: 650px;
+        width: 740px;
+        /* max-width: 850px; */
+        margin: 100px auto;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 10px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+.selectedCardModal{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* display: flex; */
+
+}
+
+.collapseSelected {
+    background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
+    border-radius: 100%;
+    height: 60px;
+    width: 60px;
+    cursor: pointer;
+    position: absolute;
+    z-index: 3;
+    color: white;
+    font-size: 45px;
+    /* margin-left: auto; */
+
+
+}
+
+.collapseSelected:hover {
+    filter: brightness(1.2)
+}
+
+.displayedAvelhem{
+    background-size: cover;
+    width: 450px;
+    height: 630px;
+    border-radius: 20px;
+}
+
+.displayedCardOptions{
+    /* background-color: rgba(0, 0, 0, 0.205); */
+    display: flex;
+    flex-direction: column;
     position: relative;
-    top: -150px;
-} */
+    justify-content: flex-end;  /* vertically */
+    align-items: center;    /* horizontally */
+    
+}
+
+.activateButton{
+    width: fit-content;
+    margin: 0px 0px 20px;
+    padding: 10px;
+    /* justify-self: end; */
+    font-family: Arial, sans-serif;
+    font-size: 30px;
+    color: white;
+    background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
+    cursor: pointer;
+    height: fit-content;
+}
+
+.activateButton:hover{
+    filter:brightness(1.2)
+}
+
