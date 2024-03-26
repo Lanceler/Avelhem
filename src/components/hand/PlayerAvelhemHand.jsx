@@ -12,7 +12,7 @@ import Collapse from "../../assets/others/Collapse.png";
 
 import SelectedAvelhem from "./SelectedAvelhem";
 
-const PlayerAvelhemHand = () => {
+const PlayerAvelhemHand = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const { getImage } = useCardImageSwitch();
@@ -24,7 +24,7 @@ const PlayerAvelhemHand = () => {
 
   useEffect(() => {
     setRaiseHeight(
-      -20 + Math.floor(localGameState[self].avelhemHand.length / 2) * 96
+      -45 + Math.ceil(localGameState[self].avelhemHand.length / 2) * 86
     );
     setRaise(false);
     setSelectedAvelhem(null);
@@ -56,6 +56,7 @@ const PlayerAvelhemHand = () => {
         <SelectedAvelhem
           selectedAvelhem={selectedAvelhem}
           setSelectedAvelhem={setSelectedAvelhem}
+          updateFirebase={props.updateFirebase}
         />
       )}
       {raise === true && (

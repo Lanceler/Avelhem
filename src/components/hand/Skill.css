@@ -82,10 +82,10 @@ background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rg
     transform: rotate(5deg);
 }
 .indivAvelhem:nth-child(2n+1) {
-    transform: rotate(-2.5deg);
+    transform: rotate(-5deg);
 }
 .indivAvelhem:nth-child(2n+2) {
-    transform: rotate(2.5deg);
+    transform: rotate(5deg);
 }
 
 
@@ -108,7 +108,7 @@ background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rg
     grid-template-columns: repeat(4, 1fr);
     background-color: rgba(69, 119, 185, 0.589);
     cursor: pointer;
-    padding: 5px 15px 5px 5px;
+    padding: 0px 15px 0px 5px;
     position: relative;
 }
 
@@ -121,7 +121,7 @@ background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rg
     grid-template-columns: repeat(2, 1fr);
     background-color: rgba(69, 119, 185, 0.589);
     cursor: pointer;
-    padding: 5px 15px 5px 5px;
+    padding: 0px 15px 0px 5px;
     position: relative;
 }
 

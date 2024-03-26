@@ -100,12 +100,15 @@ const Board = (props) => {
     applyDamage,
     applyFrostbite,
     applyParalysis,
+    ascendPawn,
+    avelhemToScion,
     blast,
     canSowAndReapBlast,
     canStrike,
     drawSkill,
     endFinalPhase,
     getVacantAdjacentZones,
+    getZonesForPromotion,
     getZonesWithAllies,
     getZonesWithEnemies,
     getZonesWithEnemiesAfflicted,
@@ -531,6 +534,15 @@ const Board = (props) => {
           </>
         );
 
+      case "Avelhem Select Pawn":
+        return (
+          <>
+            {self === lastResolution.player && (
+              <>{selectAvelhemPawn(lastResolution.avelhem)}</>
+            )}
+          </>
+        );
+
       case "Selecting Scion Skill":
         return (
           <>
@@ -602,6 +614,20 @@ const Board = (props) => {
           </>
         );
 
+      case "Avelhem Conclusion":
+        return (
+          <>
+            {self === lastResolution.player && (
+              <>
+                {avelhemConclusion(
+                  lastResolution.avelhem,
+                  lastResolution.conclusion
+                )}
+              </>
+            )}
+          </>
+        );
+
       case "Skill Conclusion":
         return (
           <>
@@ -662,6 +688,36 @@ const Board = (props) => {
             )}
           </>
         );
+
+      case "Unit Talent":
+        switch (lastResolution.resolution2) {
+          case "Activating Flash Fire":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <SelectCustomChoice
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    enterMoveMode={enterMoveMode}
+                    enterSelectUnitMode={enterSelectUnitMode}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Talent Conclusion":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>{talentConclusion()}</>
+                )}
+              </>
+            );
+        }
+
+        break;
 
       case "Fire Skill":
         switch (lastResolution.resolution2) {
@@ -2955,6 +3011,25 @@ const Board = (props) => {
     }, 1750);
   };
 
+  const avelhemConclusion = (avelhem, conclusion) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Avelhem Conclusion"
+    newGameState.currentResolution.pop();
+
+    if (conclusion === "discard") {
+      newGameState[self].avelhemVestige.push(avelhem);
+    } else if (conclusion === "shuffle") {
+      //
+    }
+
+    //newGameState.activatingSkill.pop();
+
+    dispatch(updateState(newGameState));
+
+    updateFirebase(newGameState);
+  };
+
   const deployPawn = (r, c) => {
     console.log("deploy pawn on row" + r + " column" + c);
 
@@ -3324,6 +3399,26 @@ const Board = (props) => {
     }
   };
 
+  const selectAvelhemPawn = (avelhem) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Avelhem Select Pawn"
+    newGameState.currentResolution.pop();
+
+    const zonesWithPawns = getZonesForPromotion();
+
+    //setIntrudingPlayer(self);
+
+    enterSelectUnitMode(
+      zonesWithPawns,
+      null,
+      newGameState,
+      null,
+      "activate avelhem",
+      avelhem
+    );
+  };
+
   const selectChainLightningBlast = (unit, zones) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -3544,6 +3639,15 @@ const Board = (props) => {
     newGameState.currentResolution.pop();
 
     switch (reason) {
+      case "activate avelhem":
+        newGameState = ascendPawn(
+          newGameState,
+          selectedUnit,
+          avelhemToScion(special),
+          "Avelhem"
+        );
+        break;
+
       case "virtue-blast":
         newGameState = virtueBlast(
           newGameState,
@@ -3915,6 +4019,20 @@ const Board = (props) => {
     updateFirebase(newGameState);
   };
 
+  const talentConclusion = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Talent Conclusion"
+    newGameState.currentResolution.pop();
+
+    newGameState.activatingSkill.pop();
+    newGameState.activatingUnit.pop();
+
+    dispatch(updateState(newGameState));
+
+    updateFirebase(newGameState);
+  };
+
   //=========================
   //=========================
   const onSetFirstPlayer = async (choice) => {
@@ -4270,7 +4388,7 @@ const Board = (props) => {
                   <PlayerSkillHand />
                 </div>
                 <div className="avel-hand">
-                  <PlayerAvelhemHand />
+                  <PlayerAvelhemHand updateFirebase={updateFirebase} />
                 </div>
               </div>
             </div>

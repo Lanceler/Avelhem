@@ -15,39 +15,10 @@ const SelectedAvelhem = (props) => {
   const { getImage } = useCardImageSwitch();
   const { getAvelhemById } = useCardDatabase();
 
-  const { isMuted } = useRecurringEffects();
+  const { activateAvelhem, avelhemToScion, getZonesForPromotion, isMuted } =
+    useRecurringEffects();
 
-  const handleCollapse = () => {
-    props.setSelectedAvelhem(null);
-  };
-
-  let scionClass = "";
-  switch (props.selectedAvelhem.avelhem) {
-    case 1:
-      scionClass = "Fire Scion";
-      break;
-    case 2:
-      scionClass = "Water Scion";
-      break;
-    case 3:
-      scionClass = "Wind Scion";
-      break;
-    case 4:
-      scionClass = "Land Scion";
-      break;
-    case 5:
-      scionClass = "Lightning Scion";
-      break;
-    case 6:
-      scionClass = "Mana Scion";
-      break;
-    case 7:
-      scionClass = "Metal Scion";
-      break;
-    case 8:
-      scionClass = "Plant Scion";
-      break;
-  }
+  const scionClass = avelhemToScion(props.selectedAvelhem.avelhem);
 
   let canActivateAvelhem = false;
 
@@ -74,7 +45,23 @@ const SelectedAvelhem = (props) => {
     canActivateAvelhem = unmutedPawns > 0 && scionCount < 2;
   }
 
-  console.log(canActivateAvelhem);
+  //console.log(canActivateAvelhem);
+
+  const handleActivate = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    newGameState[self].avelhemHand.splice(props.selectedAvelhem.handIndex, 1);
+
+    newGameState = activateAvelhem(newGameState, props.selectedAvelhem.avelhem);
+
+    dispatch(updateState(newGameState));
+    props.updateFirebase(newGameState);
+
+    props.setSelectedAvelhem(null);
+  };
+
+  const handleCollapse = () => {
+    props.setSelectedAvelhem(null);
+  };
 
   return (
     <div className="handModal-backdrop">
@@ -91,7 +78,12 @@ const SelectedAvelhem = (props) => {
           <div className="displayedCardOptions">
             {canActivateAvelhem && (
               <>
-                <button className="activateButton">Activate</button>
+                <button
+                  className="activateButton"
+                  onClick={() => handleActivate()}
+                >
+                  Activate
+                </button>
                 <button className="activateButton">Resonate</button>
               </>
             )}

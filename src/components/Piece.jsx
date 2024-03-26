@@ -165,6 +165,15 @@ export const Piece = (props) => {
 
               <img src={classIcon} className="scionClass" />
 
+              {/* {props.unit.unitClass === "Pawn" && (
+                <img src={classIcon} className="scionClass" />
+              )} */}
+
+              {props.unit.unitClass !== "Pawn" && (
+                // <img src={classIcon} className="scionClass ascension" />
+                <div className="ascension"></div>
+              )}
+
               {/* anathema / ravager */}
 
               {props.unit.afflictions.anathema > 0 && (
@@ -185,7 +194,6 @@ export const Piece = (props) => {
                   <div className="anathema-aura">
                     <div className="ravager-line"></div>
                     <div className="ravager-line2"></div>
-                    {/* <img src={classIcon} className="scionClass blink" /> */}
                   </div>
                   <img src={classIcon} className="scionClass blink" />
                 </>

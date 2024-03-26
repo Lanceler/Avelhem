@@ -62,6 +62,33 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const activateAvelhem = (newGameState, avelhem) => {
+    //newGameState.currentResolution.pop() <--not needed
+
+    newGameState.currentResolution.push({
+      resolution: "Avelhem Conclusion",
+      player: self,
+      avelhem: avelhem,
+      conclusion: "discard",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Avelhem Select Pawn",
+      player: self,
+      avelhem: avelhem,
+    });
+
+    //newGameState.activatingSkill.push(avelhem);
+    //newGameState.activatingUnit.push(null);
+
+    newGameState.currentResolution.push({
+      resolution: "Animation Delay",
+      priority: self,
+    });
+
+    return newGameState;
+  };
+
   const activateAerialImpetus = (newGameState, unit) => {
     //end Select Skill resolution
     newGameState.currentResolution.pop();
@@ -2024,10 +2051,132 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const ascendPawn = (newGameState, pawn, scionClass, method) => {
+    // let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[pawn.player].units[pawn.unitIndex];
+
+    unit.unitClass = scionClass;
+
+    //to-do: ascension contingencies
+
+    switch (scionClass) {
+      case "Fire Scion":
+        delete unit.afflictions.burn;
+
+        newGameState.activatingUnit.push(unit);
+        // newGameState.activatingSkill.push(???)
+        newGameState.currentResolution.push({
+          resolution: "Unit Talent",
+          resolution2: "Talent Conclusion",
+          unit: unit,
+        });
+
+        newGameState.currentResolution.push({
+          resolution: "Unit Talent",
+          resolution2: "Activating Flash Fire",
+          unit: unit,
+          details: {
+            title: "Flash Fire",
+            reason: "Flash Fire",
+          },
+        });
+        break;
+      case "Water Scion":
+        delete unit.afflictions.burn;
+
+        newGameState.activatingUnit.push(unit);
+        // newGameState.activatingSkill.push(???)
+        newGameState.currentResolution.push({
+          resolution: "Unit Talent",
+          resolution2: "Talent Conclusion",
+          unit: unit,
+        });
+
+        newGameState.currentResolution.push({
+          resolution: "Unit Talent",
+          resolution2: "Activating Kleptothermy",
+          unit: unit,
+        });
+        break;
+      case "Land Scion":
+        newGameState.activatingUnit.push(unit);
+        // newGameState.activatingSkill.push(???)
+        newGameState.currentResolution.push({
+          resolution: "Unit Talent",
+          resolution2: "Talent Conclusion",
+          unit: unit,
+        });
+
+        newGameState.currentResolution.push({
+          resolution: "Unit Talent",
+          resolution2: "Activating Mountain Stance",
+          unit: unit,
+        });
+        break;
+      case "Lightning Scion":
+        newGameState.activatingUnit.push(unit);
+        // newGameState.activatingSkill.push(???)
+        newGameState.currentResolution.push({
+          resolution: "Unit Talent",
+          resolution2: "Talent Conclusion",
+          unit: unit,
+        });
+
+        newGameState.currentResolution.push({
+          resolution: "Unit Talent",
+          resolution2: "Activating Lightning Rod",
+          unit: unit,
+        });
+        break;
+      case "Metal Scion":
+        newGameState.activatingUnit.push(unit);
+        // newGameState.activatingSkill.push(???)
+        newGameState.currentResolution.push({
+          resolution: "Unit Talent",
+          resolution2: "Talent Conclusion",
+          unit: unit,
+        });
+
+        newGameState.currentResolution.push({
+          resolution: "Unit Talent",
+          resolution2: "Activating Concentration",
+          unit: unit,
+        });
+        break;
+    }
+
+    newGameState[pawn.player].units[pawn.unitIndex] = unit;
+
+    return newGameState;
+  };
+
   const assignTactics = (newGameState, first, second) => {
     newGameState.tactics = [first, second];
 
     return newGameState;
+  };
+
+  const avelhemToScion = (avelhem) => {
+    switch (avelhem) {
+      case 1:
+        return "Fire Scion";
+      case 2:
+        return "Water Scion";
+      case 3:
+        return "Wind Scion";
+      case 4:
+        return "Land Scion";
+      case 5:
+        return "Lightning Scion";
+      case 6:
+        return "Mana Scion";
+      case 7:
+        return "Metal Scion";
+      case 8:
+        return "Plant Scion";
+      default:
+        return null;
+    }
   };
 
   const blast = (newGameState, attacker, victim, special) => {
@@ -2610,6 +2759,18 @@ export const useRecurringEffects = () => {
     }
 
     return AerialImpetusAllyZones;
+  };
+
+  const getZonesForPromotion = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    let zones = [];
+    for (let u of newGameState[self].units) {
+      if (u !== null && u.unitClass === "Pawn" && !isMuted(u)) {
+        zones.push(u.row * 5 + u.column);
+      }
+    }
+    return zones;
   };
 
   const getZonesInRange = (cRow, cColumn, range, includeSelf) => {
@@ -3336,6 +3497,7 @@ export const useRecurringEffects = () => {
 
   return {
     activateAegis,
+    activateAvelhem,
     activateBlazeOfGlory,
     activateHealingRain,
     activateFrenzyBlade,
@@ -3349,7 +3511,9 @@ export const useRecurringEffects = () => {
     applyDamage,
     applyFrostbite,
     applyParalysis,
+    ascendPawn,
     assignTactics,
+    avelhemToScion,
     blast,
     canActivateResonance,
     canActivateSkill,
@@ -3369,6 +3533,7 @@ export const useRecurringEffects = () => {
     getTacticImage,
     getVacantAdjacentZones,
     getZonesAerialImpetusAlly,
+    getZonesForPromotion,
     getZonesInRange,
     getZonesWithAllies,
     getZonesWithEnemies,

@@ -22,7 +22,7 @@ const PlayerSkillHand = () => {
 
   useEffect(() => {
     setRaiseHeight(
-      86 + Math.floor(localGameState[self].skillHand.length / 4) * 96
+      -45 + Math.ceil(localGameState[self].skillHand.length / 4) * 86
     );
     setRaise(false);
   }, [localGameState[self].skillHand.length]);
