@@ -2096,6 +2096,10 @@ export const useRecurringEffects = () => {
           resolution: "Unit Talent",
           resolution2: "Activating Kleptothermy",
           unit: unit,
+          details: {
+            title: "Kleptothermy",
+            reason: "Kleptothermy",
+          },
         });
         break;
       case "Land Scion":

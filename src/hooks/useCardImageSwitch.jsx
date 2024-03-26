@@ -50,7 +50,7 @@ import CastleOfThorns from "../assets/skillcards/CastleOfThorns.png";
 
 import HeirsEndeavor from "../assets/skillcards/HeirsEndeavor.png";
 import TeaForTwo from "../assets/skillcards/TeaForTwo.png";
-// import UnbridledPower from "../assets/skillcards/UnbridledPower.png";
+import CouplesCoffee from "../assets/skillcards/CouplesCoffee.png";
 import DarkHalo from "../assets/skillcards/DarkHalo.png";
 import Reminiscence from "../assets/skillcards/Reminiscence.png";
 import Foreshadow from "../assets/skillcards/Foreshadow.png";
@@ -66,7 +66,138 @@ import VengefulLegacy from "../assets/skillcards/VengefulLegacy.png";
 import BlackBusinessCard from "../assets/skillcards/BlackBusinessCard.png";
 import Coalescence from "../assets/skillcards/Coalescence.png";
 
-export const useCardImageSwitch = (cardName) => {
+export const useCardImageSwitch = () => {
+  const getImage2 = (id) => {
+    switch (id) {
+      case 1:
+        return FireAvelhem;
+      case "01-01":
+        return IgnitionPropulsion;
+      case "01-02":
+        return Conflagration;
+      case "01-03":
+        return BlazeOfGlory;
+      case "01-04":
+        return Resplendence;
+
+      case 2:
+        return WaterAvelhem;
+      case "02-01":
+        return Purification;
+      case "02-02":
+        return FrigidBreath;
+      case "02-03":
+        return HealingRain;
+      case "02-04":
+        return GlacialTorrent;
+
+      case 3:
+        return WindAvelhem;
+      case "03-01":
+        return AerialImpetus;
+      case "03-02":
+        return GaleConjuration;
+      case "03-03":
+        return SymphonicScreech;
+      case "03-04":
+        return CataclysmicTempest;
+
+      case 4:
+        return LandAvelhem;
+      case "04-01":
+        return Crystallization;
+      case "04-02":
+        return Upheaval;
+      case "04-03":
+        return PitfallTrap;
+      case "04-04":
+        return Geomancy;
+
+      case 5:
+        return LightningAvelhem;
+      case "05-01":
+        return ChainLightning;
+      case "05-02":
+        return ZipAndZap;
+      case "05-03":
+        return ThunderThaumaturge;
+      case "05-04":
+        return ValiantSpark;
+
+      case 6:
+        return ManaAvelhem;
+      case "06-01":
+        return Surge;
+      case "06-02":
+        return Diffusion;
+      case "06-03":
+        return Aegis;
+      case "06-04":
+        return DisruptionField;
+
+      case 7:
+        return MetalAvelhem;
+      case "07-01":
+        return MagneticShockwave;
+      case "07-02":
+        return Reinforce;
+      case "07-03":
+        return FrenzyBlade;
+      case "07-04":
+        return ArsenalOnslaught;
+
+      case 8:
+        return PlantAvelhem;
+      case "08-01":
+        return SowAndReap;
+      case "08-02":
+        return Efflorescence;
+      case "08-03":
+        return ViridianGrave;
+      case "08-04":
+        return CastleOfThorns;
+
+      case "SA-01":
+        return HeirsEndeavor;
+      case "SA-02":
+        return TeaForTwo;
+      case "SA-03":
+        return DarkHalo;
+      case "SA-04":
+        return Reminiscence;
+      case "SA-05":
+        return Foreshadow;
+
+      case "SB-01":
+        return Transmute;
+      case "SB-02":
+        return Ambidexterity;
+      case "SB-03":
+        return Providence;
+      case "SB-04":
+        return FerventPrayer;
+      // case "SB-05":
+      //   return PressTheAttack;
+
+      case "SC-01":
+        return PowerAtTheFinalHour;
+      case "SC-02":
+        return FatedRivalry;
+      case "SC-03":
+        return MatchMadeInHeaven;
+      case "SC-04":
+        return VengefulLegacy;
+      case "SC-05":
+        return BlackBusinessCard;
+
+      case "SD-01":
+        return Coalescence;
+
+      default:
+        return "";
+    }
+  };
+
   const getImage = (cardName) => {
     switch (cardName) {
       case "Fire Avelhem":
@@ -199,5 +330,5 @@ export const useCardImageSwitch = (cardName) => {
     }
   };
 
-  return { getImage };
+  return { getImage, getImage2 };
 };

@@ -27,6 +27,7 @@ const SelectCustomChoice = (props) => {
     drawSkill,
     getVacantAdjacentZones,
     getZonesAerialImpetusAlly,
+    getZonesWithAllies,
     getZonesWithEnemies,
     strike,
   } = useRecurringEffects();
@@ -72,6 +73,14 @@ const SelectCustomChoice = (props) => {
       canSecondChoice = true;
       ChoiceFirstMessage = "Draw 1 skill.";
       ChoiceSecondMessage = "Search for then float 1 non-burst Water skill.";
+      break;
+
+    case "Kleptothermy":
+      canFirstChoice = true;
+      canSecondChoice = getZonesWithEnemies(unit, 1).length > 0;
+      ChoiceFirstMessage = "Restore your or an adjacent ally’s Virtue.";
+      ChoiceSecondMessage =
+        "Purge an adjacent enemy’s Virtue. This cannot affect Water Scions.";
       break;
 
     case "Aerial Impetus":
@@ -242,6 +251,29 @@ const SelectCustomChoice = (props) => {
             message: "Search for then float 1 non-burst Water skill.",
             outcome: "Float",
           });
+        }
+        break;
+
+      case "Kleptothermy":
+        updateLocal = false;
+        if (selectedChoice === 1) {
+          props.enterSelectUnitMode(
+            getZonesWithAllies(unit, 1, true),
+            null,
+            newGameState,
+            null,
+            "kleptothermy ally",
+            null
+          );
+        } else {
+          props.enterSelectUnitMode(
+            getZonesWithEnemies(unit, 1),
+            null,
+            newGameState,
+            null,
+            "kleptothermy enemy",
+            null
+          );
         }
         break;
 

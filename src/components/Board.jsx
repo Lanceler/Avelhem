@@ -707,6 +707,22 @@ const Board = (props) => {
               </>
             );
 
+          case "Activating Kleptothermy":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <SelectCustomChoice
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    enterMoveMode={enterMoveMode}
+                    enterSelectUnitMode={enterSelectUnitMode}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
           case "Talent Conclusion":
             return (
               <>
@@ -3711,13 +3727,32 @@ const Board = (props) => {
           special
         );
         break;
+
       case "purification":
         newGameState = purificationPurge(newGameState, selectedUnit);
         break;
-
       case "healing rain":
         newGameState = activateHealingRain(newGameState, selectedUnit, unit);
         break;
+
+      case "kleptothermy ally":
+        newGameState[selectedUnit.player].units[
+          selectedUnit.unitIndex
+        ].virtue = 1;
+        break;
+
+      case "kleptothermy enemy":
+        let kleptoVictim =
+          newGameState[selectedUnit.player].units[selectedUnit.unitIndex];
+
+        if (kleptoVictim.unitClass !== "Water Scion" || isMuted(kleptoVictim)) {
+          newGameState[selectedUnit.player].units[
+            selectedUnit.unitIndex
+          ].virtue = 0;
+        }
+
+        break;
+
       case "aerial impetus prompt":
         newGameState.currentResolution.push({
           resolution: "Wind Skill",
@@ -3968,7 +4003,7 @@ const Board = (props) => {
     newGameState.currentResolution.pop();
 
     //Dark Halo Overides
-    if (resonator !== "SA-04") {
+    if (resonator !== "SA-03") {
       newGameState.currentResolution[
         newGameState.currentResolution.length - 1
       ].skillConclusion = "retain";
@@ -4158,11 +4193,11 @@ const Board = (props) => {
                 <>
                   <div className="activated-card">
                     <DisplayedCard
-                      cardInfo={getSkillById(
+                      cardInfo={
                         localGameState.activatingSkill[
                           localGameState.activatingSkill.length - 1
                         ]
-                      )}
+                      }
                       inGame={true}
                     />
                   </div>
@@ -4170,9 +4205,7 @@ const Board = (props) => {
                   {localGameState.activatingSkill.length === 1 &&
                     localGameState.activatingResonator.length === 1 && (
                       <DisplayedCard
-                        cardInfo={getSkillById(
-                          localGameState.activatingResonator[0]
-                        )}
+                        cardInfo={localGameState.activatingResonator[0]}
                         inGame={true}
                       />
                     )}

@@ -12,7 +12,7 @@ const SelectedAvelhem = (props) => {
   const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const { getImage } = useCardImageSwitch();
+  const { getImage2 } = useCardImageSwitch();
   const { getAvelhemById } = useCardDatabase();
 
   const { activateAvelhem, avelhemToScion, getZonesForPromotion, isMuted } =
@@ -70,8 +70,8 @@ const SelectedAvelhem = (props) => {
           <div
             className="displayedAvelhem"
             style={{
-              backgroundImage: `url(${getImage(
-                getAvelhemById(props.selectedAvelhem.avelhem).Name
+              backgroundImage: `url(${getImage2(
+                props.selectedAvelhem.avelhem
               )})`,
             }}
           ></div>

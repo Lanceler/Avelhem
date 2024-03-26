@@ -34,7 +34,7 @@ const MayFloatResonantSkill = (props) => {
     newGameState.currentResolution.pop();
 
     //Dark Halo Overides
-    if (props.resonator !== "SA-04") {
+    if (props.resonator !== "SA-03") {
       newGameState.currentResolution[
         newGameState.currentResolution.length - 1
       ].skillConclusion = "float";
@@ -55,7 +55,7 @@ const MayFloatResonantSkill = (props) => {
   let revealedCard = null;
 
   //Dark Halo Overides
-  if (props.resonator === "SA-04") {
+  if (props.resonator === "SA-03") {
     revealedCard = getSkillById(props.resonator);
   } else {
     revealedCard = getSkillById(props.skill);
@@ -75,7 +75,7 @@ const MayFloatResonantSkill = (props) => {
         </div>
 
         <h3>You may float this skill.</h3>
-        {props.resonator === "SA-04" && (
+        {props.resonator === "SA-03" && (
           <p>
             When a skill resonates with Dark Halo, the sub-effect that would
             retain or float it applies to the latter instead.

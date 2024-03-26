@@ -25,13 +25,13 @@ const SelectSkillResonator = (props) => {
     });
   }
 
-  const validResonators = [props.skill.id, "SA-01", "SA-02", "SA-04"];
+  const validResonators = [props.skill.id, "SA-01", "SA-02", "SA-03"];
 
   const canUseResonator = (resonator) => {
     switch (resonator) {
       case "SA-01":
         return props.unit === null; // only Sovereign Skills can resonate with Heir’s Endeavor
-      case "SA-04":
+      case "SA-03":
         return props.unit !== null && props.unit.enhancements.ravager; // only Ravagers can resonate with Dark Halo
       default:
         return true;

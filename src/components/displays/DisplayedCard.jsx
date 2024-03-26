@@ -4,9 +4,8 @@ import "./DisplayedCard.css";
 import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 
 const DisplayedCard = (props) => {
-  const { getImage } = useCardImageSwitch();
-  let image = "";
-  image = getImage(props.cardInfo.Name);
+  const { getImage2 } = useCardImageSwitch();
+  let image = getImage2(props.cardInfo);
 
   return (
     <div
@@ -14,9 +13,7 @@ const DisplayedCard = (props) => {
       style={{
         backgroundImage: `url(${image})`,
       }}
-    >
-      {!image && <div> {props.cardInfo.Name}</div>}
-    </div>
+    ></div>
   );
 };
 

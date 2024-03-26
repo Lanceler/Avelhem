@@ -63,7 +63,7 @@ const PlayerSkillHand = () => {
         <div
           className="player-skillhand-container"
           style={{
-            top: `${raise ? -raiseHeight : 0}px`,
+            top: `${raise ? -raiseHeight : 55}px`,
           }}
           onClick={(e) => handleRaise(e)}
         >

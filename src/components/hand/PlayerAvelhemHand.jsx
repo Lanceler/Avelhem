@@ -74,7 +74,7 @@ const PlayerAvelhemHand = (props) => {
         <div
           className="player-avelhemhand-container"
           style={{
-            top: `${raise ? -raiseHeight : 0}px`,
+            top: `${raise ? -raiseHeight : 55}px`,
           }}
           onClick={(e) => handleRaise(e)}
         >
