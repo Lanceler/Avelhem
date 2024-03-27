@@ -692,6 +692,8 @@ const Board = (props) => {
       case "Unit Talent":
         switch (lastResolution.resolution2) {
           case "Activating Flash Fire":
+          case "Activating Kleptothermy":
+          case "Activating Mountain Stance":
             return (
               <>
                 {self === lastResolution.unit.player && !hideModal && (
@@ -707,15 +709,27 @@ const Board = (props) => {
               </>
             );
 
-          case "Activating Kleptothermy":
+          case "Activating Lightning Rod":
             return (
               <>
                 {self === lastResolution.unit.player && !hideModal && (
-                  <SelectCustomChoice
+                  <YouMaySpend1Skill
                     unit={lastResolution.unit}
                     details={lastResolution.details}
-                    enterMoveMode={enterMoveMode}
-                    enterSelectUnitMode={enterSelectUnitMode}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Activating Conduction":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMayNoYes
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3039,7 +3053,7 @@ const Board = (props) => {
       //
     }
 
-    //newGameState.activatingSkill.pop();
+    newGameState.activatingSkill.pop();
 
     dispatch(updateState(newGameState));
 

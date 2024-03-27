@@ -13,7 +13,7 @@ import Collapse from "../../assets/others/Collapse.png";
 const PlayerSkillHand = () => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
-  const { getImage } = useCardImageSwitch();
+  const { getImage2 } = useCardImageSwitch();
   const { getSkillById } = useCardDatabase();
 
   const [raise, setRaise] = useState(false);
@@ -75,8 +75,11 @@ const PlayerSkillHand = () => {
                 raise ? "enlargable" : ""
               }`}
               style={{
-                backgroundImage: `url(${getImage(getSkillById(card).Name)})`,
-                top: Math.floor(index / 4) * -110,
+                backgroundImage: `url(${getImage2(card)})`,
+                // top: Math.floor(index / 4) * -110,
+                top:
+                  Math.floor(index / 4) * -110 -
+                  Math.floor(((index + 1) % 4) / 2) * 10,
                 left: (index % 4) * -60,
               }}
             ></div>

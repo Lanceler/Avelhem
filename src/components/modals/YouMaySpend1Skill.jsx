@@ -95,6 +95,11 @@ const YouMaySpend1Skill = (props) => {
   const handleSelect = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
+    let unit = null;
+    if (props.unit !== null) {
+      unit = newGameState[props.unit.player].units[props.unit.unitIndex];
+    }
+
     //end Discarding Skill resolution
     newGameState.currentResolution.pop();
 
@@ -104,7 +109,7 @@ const YouMaySpend1Skill = (props) => {
           resolution: "Fire Skill",
           resolution2: "Resplendence2",
           // resolution: "Resplendence2",
-          unit: props.unit,
+          unit: unit,
         });
         break;
 
@@ -112,7 +117,7 @@ const YouMaySpend1Skill = (props) => {
         newGameState.currentResolution.push({
           resolution: "Wind Skill",
           resolution2: "Cataclysmic Tempest9",
-          unit: props.unit,
+          unit: unit,
         });
         break;
 
@@ -120,7 +125,7 @@ const YouMaySpend1Skill = (props) => {
         newGameState.currentResolution.push({
           resolution: "Land Skill",
           resolution2: "Crystallization2",
-          unit: props.unit,
+          unit: unit,
         });
         break;
 
@@ -128,7 +133,7 @@ const YouMaySpend1Skill = (props) => {
         newGameState.currentResolution.push({
           resolution: "Land Skill",
           resolution2: "Pitfall Trap3",
-          unit: props.unit,
+          unit: unit,
           victim: props.victim,
         });
         break;
@@ -144,11 +149,18 @@ const YouMaySpend1Skill = (props) => {
         });
         break;
 
+      case "Lightning Rod":
+        unit.charge
+          ? (unit.charge = Math.min(3, unit.charge + 1))
+          : (unit.charge = 1);
+        newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+        break;
+
       case "Diffusion Shield":
         newGameState.currentResolution.push({
           resolution: "Mana Skill",
           resolution2: "DiffusionR3",
-          unit: props.unit,
+          unit: unit,
         });
         break;
 
@@ -156,7 +168,7 @@ const YouMaySpend1Skill = (props) => {
         newGameState.currentResolution.push({
           resolution: "Metal Skill",
           resolution2: "Arsenal Onslaught6",
-          unit: props.unit,
+          unit: unit,
           details: {
             title: "Arsenal Onslaught",
             reason: "Arsenal Onslaught",
@@ -176,7 +188,7 @@ const YouMaySpend1Skill = (props) => {
 
         newGameState.currentResolution.push({
           resolution: "Discard Skill",
-          unit: props.unit,
+          unit: unit,
           player: self,
           message: "Choose 2nd skill to spend.",
           restriction: null,
@@ -189,7 +201,6 @@ const YouMaySpend1Skill = (props) => {
         break;
 
       case "Viridian Grave":
-        let unit = newGameState[props.unit.player].units[props.unit.unitIndex];
         unit.enhancements.shield
           ? (unit.enhancements.shield = Math.max(3, unit.enhancements.shield))
           : (unit.enhancements.shield = 3);

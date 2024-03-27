@@ -108,6 +108,14 @@ const SelectCustomChoice = (props) => {
       ChoiceSecondMessage = "Recover then float 1 Land skill.";
       break;
 
+    case "Mountain Stance":
+      canFirstChoice = true;
+      canSecondChoice = newGameState[unit.player].skillHand.length > 0;
+      ChoiceFirstMessage =
+        "Gain a boost: you can use <invoke> to activate “Boulder Crush”.";
+      ChoiceSecondMessage = "Spend 1 skill to search for 1 “Crystallization”.";
+      break;
+
     case "Surge2":
       canFirstChoice = canMove(unit);
       canSecondChoice = canStrike(unit);
@@ -338,6 +346,28 @@ const SelectCustomChoice = (props) => {
             restriction: ["04-01", "04-02", "04-03"],
             message: "Recover then float 1 Land skill.",
             outcome: "Float",
+          });
+        }
+        break;
+
+      case "Mountain Stance":
+        if (selectedChoice === 1) {
+          unit.boosts.mountainStance = true;
+        } else {
+          newGameState.currentResolution.push({
+            resolution: "Search Skill",
+            player: self,
+            restriction: ["04-01"],
+            message: "Search for 1 “Crystallization”.",
+            outcome: "Add",
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Discard Skill",
+            unit: unit,
+            player: unit.player,
+            message: "Spend 1 skill.",
+            restriction: null,
           });
         }
         break;

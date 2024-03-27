@@ -78,7 +78,7 @@ export const useRecurringEffects = () => {
       avelhem: avelhem,
     });
 
-    //newGameState.activatingSkill.push(avelhem);
+    newGameState.activatingSkill.push(avelhem);
     //newGameState.activatingUnit.push(null);
 
     newGameState.currentResolution.push({
@@ -2115,6 +2115,10 @@ export const useRecurringEffects = () => {
           resolution: "Unit Talent",
           resolution2: "Activating Mountain Stance",
           unit: unit,
+          details: {
+            title: "Mountain Stance",
+            reason: "Mountain Stance",
+          },
         });
         break;
       case "Lightning Scion":
@@ -2130,6 +2134,12 @@ export const useRecurringEffects = () => {
           resolution: "Unit Talent",
           resolution2: "Activating Lightning Rod",
           unit: unit,
+          details: {
+            title: "Lightning Rod",
+            message: "You may spend 1 skill to gain 1 Charge (Max.3).",
+            restriction: null,
+            reason: "Lightning Rod",
+          },
         });
         break;
       case "Metal Scion":
@@ -2143,8 +2153,16 @@ export const useRecurringEffects = () => {
 
         newGameState.currentResolution.push({
           resolution: "Unit Talent",
-          resolution2: "Activating Concentration",
+          resolution2: "Activating Conduction",
+          player: self,
           unit: unit,
+          details: {
+            reason: "Conduction",
+            title: "Conduction",
+            message: "You may search for then float 1 “Magnetic Shockwave”.",
+            no: "Skip",
+            yes: "Search",
+          },
         });
         break;
     }

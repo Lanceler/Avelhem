@@ -220,7 +220,7 @@ export default function CreateRepertoire() {
         <div className="division">
           Selected Card
           <div className="sub-divisionC">
-            {displayCard && <DisplayedCard cardInfo={displayCard} />}
+            {displayCard && <DisplayedCard cardInfo={displayCard.CardId} />}
           </div>
         </div>
 

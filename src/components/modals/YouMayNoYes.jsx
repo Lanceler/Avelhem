@@ -225,6 +225,17 @@ const YouMayNoYes = (props) => {
         );
         break;
 
+      case "Conduction":
+        updateData = true;
+        newGameState.currentResolution.push({
+          resolution: "Search Skill",
+          player: self,
+          restriction: ["07-01"],
+          message: "Search for then float 1 “Magnetic Shockwave”.",
+          outcome: "Float",
+        });
+        break;
+
       case "Mana Restructure":
         newGameState[self].skillRepertoire.push(props.details.skill);
         newGameState[self].skillFloat += 1;

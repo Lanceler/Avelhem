@@ -65,10 +65,14 @@ import MatchMadeInHeaven from "../assets/skillcards/MatchMadeInHeaven.png";
 import VengefulLegacy from "../assets/skillcards/VengefulLegacy.png";
 import BlackBusinessCard from "../assets/skillcards/BlackBusinessCard.png";
 import Coalescence from "../assets/skillcards/Coalescence.png";
+import Transcendence from "../assets/skillcards/Transcendence.png";
 
 export const useCardImageSwitch = () => {
   const getImage2 = (id) => {
     switch (id) {
+      case "SX-01":
+        return Transcendence;
+
       case 1:
         return FireAvelhem;
       case "01-01":
