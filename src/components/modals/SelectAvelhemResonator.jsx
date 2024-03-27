@@ -8,14 +8,22 @@ import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import Skill from "../hand/Skill";
 
-const SelectSkillResonator = (props) => {
+const SelectAvelhemResonator = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
   const [selectedSkill, setSelectedSkill] = useState(null);
 
-  const { activateSkillAndResonate } = useRecurringEffects();
+  const { activateAvelhem } = useRecurringEffects();
+
+  let usableAvelhems = [];
+  for (let i in localGameState[self].avelhemHand) {
+    usableAvelhems.push({
+      id: localGameState[self].avelhemHand[i],
+      handIndex: i,
+    });
+  }
 
   let usableSkills = [];
   for (let i in localGameState[self].skillHand) {
@@ -25,50 +33,48 @@ const SelectSkillResonator = (props) => {
     });
   }
 
-  const validResonators = [props.skill.id, "SA-01", "SA-02", "SA-03"];
+  const validResonators = ["SA-02"];
 
-  const canUseResonator = (resonator) => {
-    switch (resonator) {
-      case "SA-01":
-        return props.unit === null; // only Sovereign Skills can resonate with Heir’s Endeavor
-      case "SA-03":
-        return props.unit !== null && props.unit.enhancements.ravager; // only Ravagers can resonate with Dark Halo
-      default:
-        return true;
-    }
-  };
+  usableSkills = usableSkills.filter((skill) =>
+    validResonators.includes(skill.id)
+  );
 
-  console.log(props.skill.handIndex);
+  //   console.log(props.avelhem.handIndex);
+  //   console.log(usableAvelhems);
 
-  console.log(usableSkills);
-
-  usableSkills = usableSkills.filter(
-    (skill) =>
-      validResonators.includes(skill.id) &&
-      skill.handIndex !== props.skill.handIndex
+  usableAvelhems = usableAvelhems.filter(
+    (a) =>
+      a.handIndex * 1 !== props.avelhem.handIndex && // *1 is to convert it to int
+      a.id === props.avelhem.avelhem
   );
 
   const handleSelect = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    newGameState = activateSkillAndResonate(
-      newGameState,
-      props.unit,
-      props.skill.id,
-      usableSkills[selectedSkill].id
-    );
+    newGameState.currentResolution.pop();
 
-    const skillHandIndexes = [
-      props.skill.handIndex,
-      usableSkills[selectedSkill].handIndex,
-    ];
+    if (selectedSkill < usableAvelhems.length) {
+      console.log("It's an Avelhem");
 
-    //get index in descending order
-    skillHandIndexes.sort((a, b) => b - a);
+      newGameState = activateAvelhem(
+        newGameState,
+        props.avelhem.avelhem,
+        usableAvelhems[selectedSkill].id
+      );
 
-    //remove resonating cards from hand but do not send to vestige
-    newGameState[self].skillHand.splice(skillHandIndexes[0], 1);
-    newGameState[self].skillHand.splice(skillHandIndexes[1], 1);
+      const avelhemHandIndexes = [
+        props.avelhem.handIndex,
+        usableAvelhems[selectedSkill].handIndex,
+      ];
+      //get index in descending order
+      avelhemHandIndexes.sort((a, b) => b - a);
+      //remove resonating cards from hand but do not send to vestige
+      newGameState[self].avelhemHand.splice(avelhemHandIndexes[0], 1);
+      newGameState[self].avelhemHand.splice(avelhemHandIndexes[1], 1);
+    } else {
+      console.log("It's a Skill");
+      //to do >_>
+    }
 
     dispatch(updateState(newGameState));
     props.updateFirebase(newGameState);
@@ -99,7 +105,7 @@ const SelectSkillResonator = (props) => {
         </div>
 
         <div className="fourColumn scrollable scrollable-y-only">
-          {usableSkills.map((usableSkill, i) => (
+          {usableAvelhems.map((usableAvelhem, i) => (
             <div
               key={i}
               className={`scionSkills ${
@@ -108,8 +114,27 @@ const SelectSkillResonator = (props) => {
             >
               <Skill
                 i={i}
+                usableSkill={usableAvelhem}
+                canActivateSkill={true}
+                selectedSkill={selectedSkill}
+                setSelectedSkill={setSelectedSkill}
+              />
+            </div>
+          ))}
+
+          {usableSkills.map((usableSkill, i) => (
+            <div
+              key={i + usableAvelhems.length}
+              className={`scionSkills ${
+                selectedSkill === i + usableAvelhems.length
+                  ? "selectedSkill"
+                  : ""
+              }`}
+            >
+              <Skill
+                i={i + usableAvelhems.length}
                 usableSkill={usableSkill}
-                canActivateSkill={canUseResonator(usableSkill.id)}
+                canActivateSkill={true}
                 selectedSkill={selectedSkill}
                 setSelectedSkill={setSelectedSkill}
               />
@@ -133,4 +158,4 @@ const SelectSkillResonator = (props) => {
   );
 };
 
-export default SelectSkillResonator;
+export default SelectAvelhemResonator;

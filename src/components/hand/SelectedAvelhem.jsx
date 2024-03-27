@@ -51,7 +51,11 @@ const SelectedAvelhem = (props) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     newGameState[self].avelhemHand.splice(props.selectedAvelhem.handIndex, 1);
 
-    newGameState = activateAvelhem(newGameState, props.selectedAvelhem.avelhem);
+    newGameState = activateAvelhem(
+      newGameState,
+      props.selectedAvelhem.avelhem,
+      null
+    );
 
     dispatch(updateState(newGameState));
     props.updateFirebase(newGameState);
@@ -61,6 +65,20 @@ const SelectedAvelhem = (props) => {
 
   const handleCollapse = () => {
     props.setSelectedAvelhem(null);
+  };
+
+  const handleResonate = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    newGameState.currentResolution.push({
+      resolution: "Choose Resonator Avelhem",
+      player: self,
+      avelhem: props.selectedAvelhem,
+    });
+
+    props.setSelectedAvelhem(null);
+
+    dispatch(updateState(newGameState));
   };
 
   return (
@@ -84,7 +102,12 @@ const SelectedAvelhem = (props) => {
                 >
                   Activate
                 </button>
-                <button className="activateButton">Resonate</button>
+                <button
+                  className="activateButton"
+                  onClick={() => handleResonate()}
+                >
+                  Resonate
+                </button>
               </>
             )}
           </div>

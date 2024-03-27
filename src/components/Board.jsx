@@ -28,6 +28,7 @@ import RecoverSkill from "./modals/RecoverSkill";
 import ScionSkillSelect from "./modals/ScionSkillSelect";
 import SearchSkill from "./modals/SearchSkill";
 import SelectSkillResonator from "./modals/SelectSkillResonator";
+import SelectAvelhemResonator from "./modals/SelectAvelhemResonator";
 import SelectSkillDiscard from "./modals/SelectSkillDiscard";
 import SelectSkillFloat from "./modals/SelectSkillFloat";
 import SelectSkillReveal from "./modals/SelectSkillReveal";
@@ -534,11 +535,29 @@ const Board = (props) => {
           </>
         );
 
+      case "Choose Resonator Avelhem":
+        return (
+          <>
+            {self === lastResolution.player && (
+              <SelectAvelhemResonator
+                avelhem={lastResolution.avelhem}
+                hideOrRevealModale={hideOrRevealModale}
+                updateFirebase={updateFirebase}
+              />
+            )}
+          </>
+        );
+
       case "Avelhem Select Pawn":
         return (
           <>
             {self === lastResolution.player && (
-              <>{selectAvelhemPawn(lastResolution.avelhem)}</>
+              <>
+                {selectAvelhemPawn(
+                  lastResolution.avelhem,
+                  lastResolution.resonator
+                )}
+              </>
             )}
           </>
         );
@@ -3429,7 +3448,7 @@ const Board = (props) => {
     }
   };
 
-  const selectAvelhemPawn = (avelhem) => {
+  const selectAvelhemPawn = (avelhem, resonator) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
     //end "Avelhem Select Pawn"
@@ -3441,7 +3460,7 @@ const Board = (props) => {
 
     enterSelectUnitMode(
       zonesWithPawns,
-      null,
+      resonator,
       newGameState,
       null,
       "activate avelhem",
@@ -3674,7 +3693,8 @@ const Board = (props) => {
           newGameState,
           selectedUnit,
           avelhemToScion(special),
-          "Avelhem"
+          "Avelhem",
+          unit // repurposed to use as parameter for resonator
         );
         break;
 

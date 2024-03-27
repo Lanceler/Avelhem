@@ -62,7 +62,7 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
-  const activateAvelhem = (newGameState, avelhem) => {
+  const activateAvelhem = (newGameState, avelhem, resonator) => {
     //newGameState.currentResolution.pop() <--not needed
 
     newGameState.currentResolution.push({
@@ -76,9 +76,15 @@ export const useRecurringEffects = () => {
       resolution: "Avelhem Select Pawn",
       player: self,
       avelhem: avelhem,
+      resonator: resonator,
     });
 
     newGameState.activatingSkill.push(avelhem);
+
+    if (resonator !== null) {
+      newGameState.activatingResonator.push(resonator);
+    }
+
     //newGameState.activatingUnit.push(null);
 
     newGameState.currentResolution.push({
@@ -2051,13 +2057,21 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
-  const ascendPawn = (newGameState, pawn, scionClass, method) => {
+  const ascendPawn = (newGameState, pawn, scionClass, method, resonator) => {
     // let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[pawn.player].units[pawn.unitIndex];
 
     unit.unitClass = scionClass;
 
-    //to-do: ascension contingencies
+    if (resonator !== null) {
+      newGameState.currentResolution.push({
+        resolution: "Avelhem Resonance",
+        unit: unit,
+        resonator: resonator,
+      });
+    }
+
+    //to-do: ascension contingencies using method
 
     switch (scionClass) {
       case "Fire Scion":

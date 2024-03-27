@@ -7,13 +7,12 @@ import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 import { useCardDatabase } from "../../hooks/useCardDatabase";
 
 const Skill = (props) => {
-  const { getImage } = useCardImageSwitch();
+  const { getImage2 } = useCardImageSwitch();
   const { getSkillById } = useCardDatabase();
 
   const cardInfo = getSkillById(props.usableSkill.id);
 
-  let image = "";
-  image = getImage(cardInfo.Name);
+  const image = getImage2(props.usableSkill.id);
 
   const handleClick = () => {
     if (props.canActivateSkill) {
@@ -35,7 +34,7 @@ const Skill = (props) => {
       }}
       onClick={() => handleClick()}
     >
-      {!image && <div> {cardInfo.Name}</div>}
+      {/* {!image && <div> {cardInfo.Name}</div>} */}
     </div>
   );
 };

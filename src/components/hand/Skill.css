@@ -60,7 +60,8 @@ background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rg
     margin-right: 10px;
     transition: transform 0.4s ease;
     position: relative;
-    z-index: 1;    
+    z-index: 1;
+    box-shadow: -5px 6px 10px 2px rgba(6, 21, 61, 0.7);
 }
 
 .player-hand-card:hover {
