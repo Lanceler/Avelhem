@@ -102,6 +102,7 @@ const Board = (props) => {
     applyFrostbite,
     applyParalysis,
     ascendPawn,
+    avelhemResonance,
     avelhemToScion,
     blast,
     canSowAndReapBlast,
@@ -548,6 +549,35 @@ const Board = (props) => {
           </>
         );
 
+      case "Avelhem Resonance":
+        return (
+          <>
+            {self === lastResolution.unit.player && (
+              <>
+                {resolutionUpdateGameStateOnly(
+                  avelhemResonance(
+                    lastResolution.unit,
+                    lastResolution.resonator
+                  )
+                )}
+              </>
+            )}
+          </>
+        );
+
+      case "You May Shuffle Avelhem":
+        return (
+          <>
+            {self === lastResolution.player && !hideModal && (
+              <YouMayNoYes
+                details={lastResolution.details}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
       case "Avelhem Select Pawn":
         return (
           <>
@@ -640,7 +670,9 @@ const Board = (props) => {
               <>
                 {avelhemConclusion(
                   lastResolution.avelhem,
-                  lastResolution.conclusion
+                  lastResolution.conclusion,
+                  lastResolution.resonator,
+                  lastResolution.resonatorConclusion
                 )}
               </>
             )}
@@ -775,7 +807,9 @@ const Board = (props) => {
               <>
                 {self === lastResolution.unit.player && (
                   <>
-                    {resolutionUpdate(ignitionPropulsion1(lastResolution.unit))}
+                    {resolutionUpdateGameStateOnly(
+                      ignitionPropulsion1(lastResolution.unit)
+                    )}
                   </>
                 )}
               </>
@@ -3060,7 +3094,12 @@ const Board = (props) => {
     }, 1750);
   };
 
-  const avelhemConclusion = (avelhem, conclusion) => {
+  const avelhemConclusion = (
+    avelhem,
+    conclusion,
+    resonator,
+    resonatorConclusion
+  ) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
     //end "Avelhem Conclusion"
@@ -3069,10 +3108,32 @@ const Board = (props) => {
     if (conclusion === "discard") {
       newGameState[self].avelhemVestige.push(avelhem);
     } else if (conclusion === "shuffle") {
-      //
+      //insert avelhem into repertoire
+      newGameState[self].avelhemRepertoire.unshift(avelhem);
+
+      //shuffle repertoire, but retain floating order
+      const floaters = newGameState[self].avelhemRepertoire.splice(
+        newGameState[self].avelhemRepertoire.length -
+          newGameState[self].avelhemFloat,
+        newGameState[self].avelhemFloat
+      );
+
+      newGameState[self].avelhemRepertoire = shuffleCards(
+        newGameState[self].avelhemRepertoire
+      );
+
+      newGameState[self].avelhemRepertoire = [
+        ...newGameState[self].avelhemRepertoire,
+        ...floaters,
+      ];
+    }
+
+    if (resonator !== null && resonatorConclusion === "discard") {
+      newGameState[self].avelhemVestige.push(resonator);
     }
 
     newGameState.activatingSkill.pop();
+    newGameState.activatingResonator.pop();
 
     dispatch(updateState(newGameState));
 

@@ -248,6 +248,13 @@ const YouMayNoYes = (props) => {
         });
         break;
 
+      case "Avelhem Resonance Shuffle":
+        newGameState.currentResolution[
+          newGameState.currentResolution.length - 1
+        ].conclusion = "shuffle";
+
+        break;
+
       default:
         break;
     }

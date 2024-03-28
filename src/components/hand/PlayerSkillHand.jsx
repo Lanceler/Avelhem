@@ -63,7 +63,8 @@ const PlayerSkillHand = () => {
         <div
           className="player-skillhand-container"
           style={{
-            top: `${raise ? -raiseHeight : 55}px`,
+            // top: `${raise ? -raiseHeight : 55}px`,
+            transform: `translateY(${raise ? -raiseHeight : 55}px)`,
           }}
           onClick={(e) => handleRaise(e)}
         >

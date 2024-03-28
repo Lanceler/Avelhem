@@ -70,6 +70,8 @@ export const useRecurringEffects = () => {
       player: self,
       avelhem: avelhem,
       conclusion: "discard",
+      resonator: resonator,
+      resonatorConclusion: "discard",
     });
 
     newGameState.currentResolution.push({
@@ -2192,6 +2194,34 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const avelhemResonance = (unitInfo, resonator) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    newGameState.currentResolution.pop();
+
+    unit.enhancements.ravager = true;
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    if (resonator === "SA-02") {
+      newGameState = drawSkill(newGameState);
+    } else {
+      newGameState.currentResolution.push({
+        resolution: "You May Shuffle Avelhem",
+        player: self,
+        details: {
+          reason: "Avelhem Resonance Shuffle",
+          title: "Avelhem Resonance",
+          message: "You may shuffle this Avelhem into your repertoire.",
+          no: "Discard",
+          yes: "Shuffle",
+        },
+      });
+    }
+
+    return newGameState;
+  };
+
   const avelhemToScion = (avelhem) => {
     switch (avelhem) {
       case 1:
@@ -3549,6 +3579,7 @@ export const useRecurringEffects = () => {
     applyParalysis,
     ascendPawn,
     assignTactics,
+    avelhemResonance,
     avelhemToScion,
     blast,
     canActivateResonance,
