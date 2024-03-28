@@ -54,7 +54,7 @@ const SelectAvelhemResonator = (props) => {
     newGameState.currentResolution.pop();
 
     if (selectedSkill < usableAvelhems.length) {
-      console.log("It's an Avelhem");
+      // console.log("It's an Avelhem");
 
       newGameState = activateAvelhem(
         newGameState,
@@ -72,8 +72,22 @@ const SelectAvelhemResonator = (props) => {
       newGameState[self].avelhemHand.splice(avelhemHandIndexes[0], 1);
       newGameState[self].avelhemHand.splice(avelhemHandIndexes[1], 1);
     } else {
-      console.log("It's a Skill");
-      //to do >_>
+      // console.log("It's a Skill");
+
+      newGameState = activateAvelhem(
+        newGameState,
+        props.avelhem.avelhem,
+        usableSkills[selectedSkill - usableAvelhems.length].id
+      );
+
+      //discard selected Avelhem
+      newGameState[self].avelhemHand.splice(props.avelhem.handIndex, 1);
+
+      //discard Skill used to resonate
+      newGameState[self].skillHand.splice(
+        usableSkills[selectedSkill - usableAvelhems.length].handIndex,
+        1
+      );
     }
 
     dispatch(updateState(newGameState));

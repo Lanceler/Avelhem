@@ -3129,7 +3129,11 @@ const Board = (props) => {
     }
 
     if (resonator !== null && resonatorConclusion === "discard") {
-      newGameState[self].avelhemVestige.push(resonator);
+      if (["SA-02"].includes(resonator)) {
+        newGameState[self].skillVestige.push(resonator);
+      } else {
+        newGameState[self].avelhemVestige.push(resonator);
+      }
     }
 
     newGameState.activatingSkill.pop();
