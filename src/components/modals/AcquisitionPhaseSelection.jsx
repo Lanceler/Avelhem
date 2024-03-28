@@ -1,162 +1,251 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Modal.css";
+
+import GoldFrame from "../../assets/others/GoldFrame.png";
+
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 const AcquisitionPhaseSelection = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
-  const { self } = useSelector((state) => state.teams);
+  const { self, enemy } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const { drawSkill, drawAvelhem, findNullUnitIndex } = useRecurringEffects();
+  const [selectedChoice, setSelectedChoice] = useState(null);
 
-  let canAppoint = true;
+  const { drawSkill, drawAvelhem } = useRecurringEffects();
 
-  let newIndex = localGameState[self].units.indexOf(null);
+  let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+  let newIndex = newGameState[self].units.indexOf(null);
   if (newIndex === -1) {
-    newIndex = localGameState[self].units.length;
+    newIndex = newGameState[self].units.length;
   }
+  const canAppoint = !(newIndex >= 8 || props.getVacantFrontier().length === 0);
 
-  if (newIndex >= 8 || props.getVacantFrontier().length === 0) {
-    console.log("Cannot Appoint");
-    canAppoint = false;
-  } else {
-    console.log("Can Appoint");
-  }
+  const canDivine = newGameState[self].bountyUpgrades.acquisition > 0;
 
-  let canDivine = false;
+  const canExpedite = newGameState[self].bountyUpgrades.acquisition > 2;
 
-  if (localGameState[self].bountyUpgrades.acquisition > 0) {
-    console.log("Can Divine");
-    canDivine = true;
-  } else {
-    console.log("Cannot Divine");
-  }
-
-  let canExpedite = false;
-
-  if (localGameState[self].bountyUpgrades.acquisition > 2) {
-    console.log("Can Expedite");
-    canExpedite = true;
-  } else {
-    console.log("Cannot Expedite");
-  }
-
-  const nextPhase = (gameState) => {
-    gameState.turnPhase = "Bounty";
-    gameState.currentResolution.pop();
-    gameState.currentResolution.push({
-      resolution: "Bounty Phase Selection",
-    });
-
-    return gameState;
-  };
-
-  const onAppoint = () => {
-    if (canAppoint) {
-      props.enterDeployMode(props.getVacantFrontier());
+  const handleAppoint = () => {
+    if (selectedChoice === 1) {
+      setSelectedChoice(null);
+    } else if (canAppoint) {
+      setSelectedChoice(1);
     }
   };
 
-  const onBequeth = () => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    newGameState = drawAvelhem(newGameState);
-    newGameState = drawAvelhem(newGameState);
-    newGameState = nextPhase(newGameState);
-
-    dispatch(updateState(newGameState));
-    props.updateFirebase(newGameState);
+  const handleBequeath = () => {
+    if (selectedChoice === 2) {
+      setSelectedChoice(null);
+    } else {
+      setSelectedChoice(2);
+    }
   };
 
-  const onCultivate = () => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    newGameState = drawSkill(newGameState);
-    newGameState = nextPhase(newGameState);
-
-    dispatch(updateState(newGameState));
-    props.updateFirebase(newGameState);
+  const handleCultivate = () => {
+    if (selectedChoice === 3) {
+      setSelectedChoice(null);
+    } else {
+      setSelectedChoice(3);
+    }
   };
 
-  const onDivine = () => {
-    //To-do
+  const handleDivine = () => {
+    if (selectedChoice === 4) {
+      setSelectedChoice(null);
+    } else if (canDivine) {
+      setSelectedChoice(4);
+    }
   };
 
-  const onExpedite = () => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    newGameState = drawSkill(newGameState);
-    newGameState = drawSkill(newGameState);
-    newGameState = nextPhase(newGameState);
+  const handleExpedite = () => {
+    if (selectedChoice === 5) {
+      setSelectedChoice(null);
+    } else if (canExpedite) {
+      setSelectedChoice(5);
+    }
+  };
 
-    dispatch(updateState(newGameState));
-    props.updateFirebase(newGameState);
+  const handleSelect = () => {
+    // newGameState.currentResolution.pop();
+
+    switch (selectedChoice) {
+      case 1:
+        props.enterDeployMode(props.getVacantFrontier());
+        break;
+      case 2:
+        newGameState = drawAvelhem(newGameState);
+        newGameState = drawAvelhem(newGameState);
+        newGameState = nextPhase(newGameState);
+        dispatch(updateState(newGameState));
+        props.updateFirebase(newGameState);
+        break;
+      case 3:
+        newGameState = drawSkill(newGameState);
+        newGameState = nextPhase(newGameState);
+        dispatch(updateState(newGameState));
+        props.updateFirebase(newGameState);
+
+        break;
+      case 4:
+        break;
+      case 5:
+        newGameState = drawSkill(newGameState);
+        newGameState = drawSkill(newGameState);
+        newGameState = nextPhase(newGameState);
+        dispatch(updateState(newGameState));
+        props.updateFirebase(newGameState);
+        break;
+    }
   };
 
   const handleViewBoard = () => {
     props.hideOrRevealModale();
   };
 
+  const nextPhase = (newGameState) => {
+    newGameState.turnPhase = "Bounty";
+    newGameState.currentResolution.pop();
+    newGameState.currentResolution.push({
+      resolution: "Bounty Phase Selection",
+    });
+
+    return newGameState;
+  };
+
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        {/* <button onClick={() => handleViewBoard()}>View Board</button>
-        <h2>Acquisition Phase</h2> */}
-
-        <div className="twoColumn3-1">
-          <h2 className="choiceTitle">Acquisition Phase</h2>
+        <div className="twoColumn">
+          <h2 className="choiceTitle">Aquisition Phase</h2>
           <button className="choiceButton" onClick={() => handleViewBoard()}>
             View Board
           </button>
         </div>
 
-        <div className="aquisitionSelection">
+        <div className="threeColumn">
           <div
-            className={`choiceWithDescription ${
-              canAppoint ? "" : "disabledOption"
-            }`}
-            onClick={() => onAppoint()}
+            className={`customChoice customChoiceSmall ${
+              selectedChoice === 1 ? "selectedChoice" : ""
+            } `}
+            style={{ backgroundImage: `url(${GoldFrame})` }}
+            onClick={() => handleAppoint()}
           >
-            <h3>Appoint</h3>
-            <h4>Deploy a pawn in your frontier.</h4>
+            <div
+              className={`customChoiceFrame ${
+                canAppoint ? "" : "disabledChoice"
+              } `}
+            >
+              <h3 className="choiceText customChoiceFrameHeader">Appoint</h3>
+              <h4 className="customChoiceDescription">
+                Deploy a pawn in your frontier.
+              </h4>
+            </div>
           </div>
-          <div className="choiceWithDescription" onClick={() => onBequeth()}>
-            <h3>Bequeath</h3>
-            <h4>Draw 2 Avelhems.</h4>
-          </div>
-          <div className="choiceWithDescription" onClick={() => onCultivate()}>
-            <h3>Cultivate</h3>
-            <h4>Draw 1 skill.</h4>
-            <h5>
-              Upgrade:
-              <br />
-              If your hand has 4 or less skills, you may draw 1 more.
-            </h5>
-          </div>
+
           <div
-            className={`choiceWithDescription ${
-              canDivine ? "" : "disabledOption"
-            }`}
-            onClick={() => onDivine()}
+            className={`customChoice customChoiceSmall ${
+              selectedChoice === 2 ? "selectedChoice" : ""
+            } `}
+            style={{ backgroundImage: `url(${GoldFrame})` }}
+            onClick={() => handleBequeath()}
           >
-            <h3>Divine</h3>
-            <h4>Must be unlocked.</h4>
-            <h5>
-              Gain 1 FD.
-              <br />
-              You may recover 1 “Transcendence” or draw 1 Avelhem.
-            </h5>
+            <div className="customChoiceFrame">
+              <h3 className="choiceText customChoiceFrameHeader">Bequeath</h3>
+              <h4 className="customChoiceDescription">Draw 2 Avelhems.</h4>
+            </div>
           </div>
           <div
-            className={`choiceWithDescription ${
-              canExpedite ? "" : "disabledOption"
-            }`}
-            onClick={() => onExpedite()}
+            className={`customChoice customChoiceSmall ${
+              selectedChoice === 3 ? "selectedChoice" : ""
+            } `}
+            style={{ backgroundImage: `url(${GoldFrame})` }}
+            onClick={() => handleCultivate()}
           >
-            <h3>Expedite</h3>
-            <h4>Must be unlocked.</h4>
-            <h5>Draw 2 skills.</h5>
+            <div className="customChoiceFrame">
+              <h3 className="choiceText customChoiceFrameHeader">Cultivate</h3>
+              <h4 className="customChoiceDescription">Draw 1 skill.</h4>
+              {/* <div className="customChoiceDescription">
+                <h4>Draw 1 skill.</h4>
+              </div> */}
+            </div>
+          </div>
+
+          {/* <div
+            className={`customChoice customChoiceSmall ${
+              selectedChoice === 4 ? "selectedChoice" : ""
+            } `}
+            style={{ backgroundImage: `url(${GoldFrame})` }}
+            onClick={() => handleDivine()}
+          >
+            <div
+              className={`customChoiceFrame ${
+                canDivine ? "" : "disabledChoice"
+              } `}
+            >
+              <h3 className="choiceText customChoiceFrameHeader">Divine</h3>
+              <div className="customChoiceDescription">
+                <h4>Gain 1 FD.</h4>
+                <h4>Draw 1 Avelhem or recover 1 “Transcendence”.</h4>
+              </div>
+            </div>
+          </div> */}
+
+          {/* fdfd */}
+        </div>
+
+        <div
+          className="twoColumn "
+          style={{
+            justifyContent: "center",
+            placeItems: "center",
+          }}
+        >
+          <div
+            className={`customChoice customChoiceSmall  ${
+              selectedChoice === 4 ? "selectedChoice" : ""
+            } `}
+            style={{ backgroundImage: `url(${GoldFrame})` }}
+            onClick={() => handleDivine()}
+          >
+            <div
+              className={`customChoiceFrame ${
+                canDivine ? "" : "disabledChoice"
+              } `}
+            >
+              <h3 className="choiceText customChoiceFrameHeader">Divine</h3>
+              <div className="customChoiceDescription">
+                <h4>Gain 1 FD.</h4>
+                <h4>Draw 1 Avelhem or recover 1 “Transcendence”.</h4>
+              </div>
+            </div>
+          </div>
+
+          <div
+            className={`customChoice customChoiceSmall ${
+              selectedChoice === 5 ? "selectedChoice" : ""
+            } `}
+            style={{ backgroundImage: `url(${GoldFrame})` }}
+            onClick={() => handleExpedite()}
+          >
+            <div
+              className={`customChoiceFrame ${
+                canExpedite ? "" : "disabledChoice"
+              } `}
+            >
+              <h3 className="choiceText customChoiceFrameHeader">Expedite </h3>
+              <h4 className="customChoiceDescription">Draw 2 skills.</h4>
+            </div>
           </div>
         </div>
+
+        {selectedChoice !== null && (
+          <button className="choiceButton" onClick={() => handleSelect()}>
+            Select
+          </button>
+        )}
       </div>
     </div>
   );
