@@ -15,7 +15,7 @@ const SelectedAvelhem = (props) => {
   const { getImage2 } = useCardImageSwitch();
   const { getAvelhemById } = useCardDatabase();
 
-  const { activateAvelhem, avelhemToScion, getZonesForPromotion, isMuted } =
+  const { activateAvelhem, avelhemToScion, canAscend, isMuted } =
     useRecurringEffects();
 
   const scionClass = avelhemToScion(props.selectedAvelhem.avelhem);
@@ -28,21 +28,24 @@ const SelectedAvelhem = (props) => {
       localGameState.currentResolution.length - 1
     ].resolution === "Execution Phase"
   ) {
-    let scionCount = 0;
-    let unmutedPawns = 0;
-    for (let unit of localGameState[self].units) {
-      if (unit !== null) {
-        if (unit.unitClass === scionClass) {
-          scionCount += 1;
-          if (scionCount > 1) {
-            break;
-          }
-        } else if (!isMuted(unit) && unit.unitClass === "Pawn") {
-          unmutedPawns += 1;
-        }
-      }
-    }
-    canActivateAvelhem = unmutedPawns > 0 && scionCount < 2;
+    // let scionCount = 0;
+    // let unmutedPawns = 0;
+    // for (let unit of localGameState[self].units) {
+    //   if (unit !== null) {
+    //     if (unit.unitClass === scionClass) {
+    //       scionCount += 1;
+    //       if (scionCount > 1) {
+    //         break;
+    //       }
+    //     } else if (!isMuted(unit) && unit.unitClass === "Pawn") {
+    //       unmutedPawns += 1;
+    //     }
+    //   }
+    // }
+
+    // canActivateAvelhem = unmutedPawns > 0 && scionCount < 2;
+
+    canActivateAvelhem = canAscend(localGameState, self, scionClass);
   }
 
   //console.log(canActivateAvelhem);

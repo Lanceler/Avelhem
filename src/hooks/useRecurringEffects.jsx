@@ -2065,6 +2065,8 @@ export const useRecurringEffects = () => {
 
     unit.unitClass = scionClass;
 
+    newGameState[pawn.player].units[pawn.unitIndex] = unit; // will do this twice
+
     if (resonator !== null) {
       newGameState.currentResolution.push({
         resolution: "Avelhem Resonance",
@@ -2073,7 +2075,69 @@ export const useRecurringEffects = () => {
       });
     }
 
-    //to-do: ascension contingencies using method
+    //ascension contingency trigger
+    const pushAscensionResolution = (
+      resolution,
+      player,
+      unit,
+      scionClass,
+      method
+    ) => {
+      newGameState.currentResolution.push({
+        resolution,
+        player,
+        unit,
+        scionClass,
+        method,
+      });
+    };
+    if (newGameState.turnPlayer === unit.player) {
+      if (triggerAscensionAlly(newGameState, unit, scionClass, method)) {
+        pushAscensionResolution(
+          "Triggering Ascension Ally",
+          unit.player,
+          unit,
+          scionClass,
+          method
+        );
+      }
+
+      if (
+        newGameState[enemy].skillHand.length > 0 &&
+        triggerAscensionEnemy(newGameState, unit, scionClass, method)
+      ) {
+        pushAscensionResolution(
+          "Triggering Ascension Enemy",
+          unit.player,
+          unit,
+          scionClass,
+          method
+        );
+      }
+    } else {
+      if (
+        newGameState[enemy].skillHand.length > 0 &&
+        triggerAscensionEnemy(newGameState, unit, scionClass, method)
+      ) {
+        pushAscensionResolution(
+          "Triggering Ascension Enemy",
+          unit.player,
+          unit,
+          scionClass,
+          method
+        );
+      }
+
+      if (triggerAscensionAlly(newGameState, unit, scionClass, method)) {
+        pushAscensionResolution(
+          "Triggering Ascension Ally",
+          unit.player,
+          unit,
+          scionClass,
+          method
+        );
+      }
+    }
 
     switch (scionClass) {
       case "Fire Scion":
@@ -2183,7 +2247,7 @@ export const useRecurringEffects = () => {
         break;
     }
 
-    newGameState[pawn.player].units[pawn.unitIndex] = unit;
+    newGameState[pawn.player].units[pawn.unitIndex] = unit; // doing this a second time
 
     return newGameState;
   };
@@ -2518,6 +2582,25 @@ export const useRecurringEffects = () => {
       default:
         return false;
     }
+  };
+
+  const canAscend = (newGameState, team, scionClass) => {
+    let scionCount = 0;
+    let unmutedPawns = 0;
+    for (let unit of newGameState[team].units) {
+      if (unit !== null) {
+        if (unit.unitClass === scionClass) {
+          scionCount += 1;
+          if (scionCount > 1) {
+            break;
+          }
+        } else if (!isMuted(unit) && unit.unitClass === "Pawn") {
+          unmutedPawns += 1;
+        }
+      }
+    }
+
+    return unmutedPawns > 0 && scionCount < 2;
   };
 
   const canBlast = (unit) => {
@@ -3259,6 +3342,14 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const triggerAscensionAlly = (newGameState, unit, scionClass, method) => {
+    return triggerMatchMadeInHeaven(newGameState, unit, scionClass, method);
+  };
+
+  const triggerAscensionEnemy = (newGameState, unit, scionClass, method) => {
+    return triggerFatedRivalry(newGameState, unit, scionClass, method);
+  };
+
   const triggerAegis = (victim) => {
     const zones = JSON.parse(localGameState.zones);
     const adjacentAllies = getZonesWithAllies(victim, 1, true); // includes self
@@ -3314,6 +3405,16 @@ export const useRecurringEffects = () => {
     );
   };
 
+  const triggerFatedRivalry = (newGameState, unit, scionClass, method) => {
+    if (method === "Fated Rilvary") {
+      return false;
+    }
+
+    const enemyTeam = unit.player === "host" ? "guest" : "host";
+
+    return canAscend(newGameState, enemyTeam, scionClass);
+  };
+
   const triggerFrenzyBlade = (victim) => {
     const zones = JSON.parse(localGameState.zones);
     const adjacentEnemies = getZonesWithEnemies(victim, 1);
@@ -3352,6 +3453,31 @@ export const useRecurringEffects = () => {
     }
 
     return false;
+  };
+
+  const triggerMatchMadeInHeaven = (newGameState, unit, scionClass, method) => {
+    if (method !== "Avelhem") {
+      return false;
+    }
+
+    const zones = JSON.parse(localGameState.zones);
+    const adjacentAllies = getZonesWithAllies(unit, 2, false); // exclude self
+
+    let allyPawnsInRange = 0;
+
+    for (let i of adjacentAllies) {
+      const zone = zones[Math.floor(i / 5)][i % 5];
+      const ally = localGameState[zone.player].units[zone.unitIndex];
+
+      if (ally.unitClass === "Pawn" && !isMuted(ally)) {
+        allyPawnsInRange += 1;
+        break;
+      }
+    }
+
+    return (
+      allyPawnsInRange > 0 && canAscend(newGameState, unit.player, scionClass)
+    );
   };
 
   const triggerMotion = (mover) => {
@@ -3584,6 +3710,7 @@ export const useRecurringEffects = () => {
     blast,
     canActivateResonance,
     canActivateSkill,
+    canAscend,
     canBlast,
     canSowAndReapBlast,
     canSowAndReapStrike,
@@ -3622,8 +3749,10 @@ export const useRecurringEffects = () => {
     triggerAegis,
     triggerBlackBusinessCard,
     triggerBlazeOfGlory,
+    triggerFatedRivalry,
     triggerFrenzyBlade,
     triggerHealingRain,
+    triggerMatchMadeInHeaven,
     triggerPitfallTrap,
     triggerPowerAtTheFinalHour,
     triggerThunderThaumaturge,

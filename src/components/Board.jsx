@@ -49,6 +49,7 @@ import GlacialTorrent1 from "./skillModals/GlacialTorrent1";
 import SymphonicScreechFloat from "./skillModals/SymphonicScreechFloat";
 import CataclysmicTempestFloat from "./skillModals/CataclysmicTempestFloat";
 
+import ContingentAscension from "./skillModals/ContingentAscension";
 import ContingentElimination from "./skillModals/ContingentElimination";
 import ContingentMotion from "./skillModals/ContingentMotion";
 import ContingentSurvivalAlly from "./skillModals/ContingentSurvivalAlly";
@@ -2907,6 +2908,20 @@ const Board = (props) => {
         }
         break;
 
+      case "Sovereign Skill":
+        switch (lastResolution.resolution2) {
+          case "Select Match Made in Heaven Pawn":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>{selectMatchMadeInHeavenPawn(lastResolution.unit)}</>
+                )}
+              </>
+            );
+        }
+
+        break;
+
       case "Triggering Elimination Ally":
         return (
           <>
@@ -2919,6 +2934,25 @@ const Board = (props) => {
                 enterSelectUnitMode={enterSelectUnitMode}
                 hideOrRevealModale={hideOrRevealModale}
                 setIntrudingPlayer={setIntrudingPlayer}
+              />
+            )}
+          </>
+        );
+
+      case "Triggering Ascension Ally":
+        return (
+          <>
+            {self === lastResolution.player && !hideModal && (
+              <ContingentAscension
+                player={lastResolution.player}
+                unit={lastResolution.unit}
+                team="ally"
+                scionClass={lastResolution.scionClass}
+                method={lastResolution.method}
+                // enterSelectUnitMode={enterSelectUnitMode}
+                // setIntrudingPlayer={setIntrudingPlayer}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
               />
             )}
           </>
@@ -3678,6 +3712,36 @@ const Board = (props) => {
     );
   };
 
+  const selectMatchMadeInHeavenPawn = (unit) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Select Match Made in Heaven Pawn"
+    newGameState.currentResolution.pop();
+
+    const zonesWithAllies = getZonesWithAllies(unit, 2, false);
+    let zonesWithPawns = [];
+
+    for (let z of zonesWithAllies) {
+      const zone = zones[Math.floor(z / 5)][z % 5];
+      const unit = newGameState[zone.player].units[zone.unitIndex];
+
+      if (unit.unitClass === "Pawn" && !isMuted(unit)) {
+        zonesWithPawns.push(z);
+      }
+    }
+
+    setIntrudingPlayer(self);
+
+    enterSelectUnitMode(
+      zonesWithPawns,
+      unit,
+      newGameState,
+      null,
+      "match made in heaven",
+      "Match Made in Heaven"
+    );
+  };
+
   const selectPitfallTrapActivator = (mover) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -3760,6 +3824,16 @@ const Board = (props) => {
           avelhemToScion(special),
           "Avelhem",
           unit // repurposed to use as parameter for resonator
+        );
+        break;
+
+      case "match made in heaven":
+        newGameState = ascendPawn(
+          newGameState,
+          selectedUnit,
+          unit.unitClass,
+          "Match Made in Heaven",
+          null
         );
         break;
 
