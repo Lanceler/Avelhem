@@ -51,27 +51,7 @@
 }
 
 
-.tactic{
-    padding: 10px;
-    height: 300px;
-    width: 300px;
-    margin: 10px;
 
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-
-    filter: brightness(0.51) contrast(5.4) hue-rotate(20deg);
-    /* hue-rotate(180deg) */
-    background-color: #39426400;
-    cursor: pointer;
-}
-
-
-
-.disabledOption:hover {
-background: rgb(117, 13, 13)
-}
 
 .twoColumn{
     grid-template-columns: 1fr 1fr;

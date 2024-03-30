@@ -69,18 +69,18 @@
 
 .tactic{
     padding: 10px;
-    height: 300px;
-    width: 300px;
+    height: 280px;
+    width: 280px;
     margin: 10px;
 
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
 
-    filter: brightness(0.51) contrast(5.4) hue-rotate(20deg);
+    /* filter: brightness(0.51) contrast(5.4) hue-rotate(20deg); */
     /* hue-rotate(180deg) */
-    background-color: #39426400;
-    cursor: pointer;
+    /* background-color: #39426400; */
+    /* cursor: pointer; */
 }
 
 
@@ -95,8 +95,10 @@
     margin: 0 5px 0 5px;
     height: fit-content;
     border: 2px solid;
-    /* background-color: rgb(72, 64, 92); */
-    background-image: linear-gradient(to right, rgb(112, 112, 112), rgb(255, 255, 255), rgb(112, 112, 112));
+    /* background-image: linear-gradient(to right, rgb(112, 112, 112), rgb(255, 255, 255), rgb(112, 112, 112)); */
+
+    background-image: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
+
 
 }
 

@@ -33,10 +33,18 @@ const TacticResults = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <button onClick={() => handleViewBoard()}>View Board</button>
-        <h2>Assent Results</h2>
-        {message()}
+        {/* <button onClick={() => handleViewBoard()}>View Board</button>
+        <h2>Assent Results</h2> */}
 
+        <div className="twoColumn">
+          <h2 className="choiceTitle">Assent Results</h2>
+          <button className="choiceButton" onClick={() => handleViewBoard()}>
+            View Board
+          </button>
+        </div>
+
+        {message()}
+        <br />
         <div className="twoColumn">
           {localGameState.tactics.map((tactic, index) => (
             <div className="center" key={index}>
@@ -49,13 +57,15 @@ const TacticResults = (props) => {
                   }}
                 ></div>
               </div>
-              {tactic.face}
+              <h2>{tactic.face}</h2>
             </div>
           ))}
         </div>
 
         {self === localGameState.turnPlayer && (
-          <button onClick={() => handleProceed()}>Proceed</button>
+          <button className="choiceButton" onClick={() => handleProceed()}>
+            Proceed
+          </button>
         )}
       </div>
     </div>

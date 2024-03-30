@@ -121,6 +121,7 @@ const Board = (props) => {
     ignite,
     isDisrupted,
     isMuted,
+    matchMadeInHeaven2,
     move,
     paralyze1,
     paralyze2,
@@ -2918,6 +2919,29 @@ const Board = (props) => {
                 )}
               </>
             );
+
+          case "Match Made in Heaven1":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>{resolutionUpdateGameStateOnly(matchMadeInHeaven2())}</>
+                )}
+              </>
+            );
+
+          case "Match Made in Heaven2":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <YouMaySpend1Skill
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
         }
 
         break;
@@ -2947,6 +2971,23 @@ const Board = (props) => {
                 player={lastResolution.player}
                 unit={lastResolution.unit}
                 team="ally"
+                scionClass={lastResolution.scionClass}
+                method={lastResolution.method}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Triggering Ascension Enemy":
+        return (
+          <>
+            {self === lastResolution.player && !hideModal && (
+              <ContingentAscension
+                player={lastResolution.player}
+                unit={lastResolution.unit}
+                team="enemy"
                 scionClass={lastResolution.scionClass}
                 method={lastResolution.method}
                 // enterSelectUnitMode={enterSelectUnitMode}
@@ -3723,9 +3764,9 @@ const Board = (props) => {
 
     for (let z of zonesWithAllies) {
       const zone = zones[Math.floor(z / 5)][z % 5];
-      const unit = newGameState[zone.player].units[zone.unitIndex];
+      const ally = newGameState[zone.player].units[zone.unitIndex];
 
-      if (unit.unitClass === "Pawn" && !isMuted(unit)) {
+      if (ally.unitClass === "Pawn" && !isMuted(ally)) {
         zonesWithPawns.push(z);
       }
     }
@@ -3833,8 +3874,10 @@ const Board = (props) => {
           selectedUnit,
           unit.unitClass,
           "Match Made in Heaven",
-          null
+          null,
+          unit
         );
+
         break;
 
       case "virtue-blast":

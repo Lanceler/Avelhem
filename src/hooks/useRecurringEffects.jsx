@@ -2059,7 +2059,14 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
-  const ascendPawn = (newGameState, pawn, scionClass, method, resonator) => {
+  const ascendPawn = (
+    newGameState,
+    pawn,
+    scionClass,
+    method,
+    resonator,
+    unit2
+  ) => {
     // let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[pawn.player].units[pawn.unitIndex];
 
@@ -2073,6 +2080,10 @@ export const useRecurringEffects = () => {
         unit: unit,
         resonator: resonator,
       });
+    }
+
+    if (method === "Match Made in Heaven") {
+      newGameState = matchMadeInHeaven1(newGameState, unit, unit2);
     }
 
     //ascension contingency trigger
@@ -2108,7 +2119,7 @@ export const useRecurringEffects = () => {
       ) {
         pushAscensionResolution(
           "Triggering Ascension Enemy",
-          unit.player,
+          unit.player === "host" ? "guest" : "host",
           unit,
           scionClass,
           method
@@ -2121,7 +2132,7 @@ export const useRecurringEffects = () => {
       ) {
         pushAscensionResolution(
           "Triggering Ascension Enemy",
-          unit.player,
+          unit.player === "host" ? "guest" : "host",
           unit,
           scionClass,
           method
@@ -3157,6 +3168,46 @@ export const useRecurringEffects = () => {
     return false;
   };
 
+  const matchMadeInHeaven1 = (newGameState, unit1, unit2) => {
+    if (newGameState[self].skillHand.length > 0) {
+      newGameState.currentResolution.push({
+        resolution: "Sovereign Skill",
+        resolution2: "Match Made in Heaven2",
+        player: self,
+        unit: null,
+        details: {
+          title: "Match Made in Heaven",
+          message:
+            "You may spend 1 skill to grant both of them Ward for 2 turns.",
+          restriction: null,
+          reason: "Match Made in Heaven",
+          unit1: unit1,
+          unit2: unit2,
+        },
+      });
+    }
+
+    if (isAdjacent(unit1, unit2)) {
+      newGameState.currentResolution.push({
+        resolution: "Sovereign Skill",
+        resolution2: "Match Made in Heaven1",
+        player: self,
+      });
+    }
+
+    return newGameState;
+  };
+
+  const matchMadeInHeaven2 = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    newGameState.currentResolution.pop();
+
+    newGameState = drawSkill(newGameState);
+
+    return newGameState;
+  };
+
   const move = (newGameState, unit, zoneId, special) => {
     let mover = newGameState[unit.player].units[unit.unitIndex];
     const moverEnemy = mover.player === "host" ? "guest" : "host";
@@ -3738,6 +3789,7 @@ export const useRecurringEffects = () => {
     isDisrupted,
     isMuted,
     isRooted,
+    matchMadeInHeaven2,
     move,
     paralyze1,
     paralyze2,

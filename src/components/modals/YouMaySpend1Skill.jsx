@@ -212,6 +212,33 @@ const YouMaySpend1Skill = (props) => {
         newGameState = drawSkill(newGameState);
         break;
 
+      case "Match Made in Heaven":
+        let unit1 =
+          newGameState[props.details.unit1.player].units[
+            props.details.unit1.unitIndex
+          ];
+
+        let unit2 =
+          newGameState[props.details.unit2.player].units[
+            props.details.unit2.unitIndex
+          ];
+
+        unit1.enhancements.ward
+          ? (unit1.enhancements.ward = Math.max(2, unit1.enhancements.ward))
+          : (unit1.enhancements.ward = 2);
+
+        newGameState[props.details.unit1.player].units[
+          props.details.unit1.unitIndex
+        ] = unit1;
+
+        unit2.enhancements.ward
+          ? (unit2.enhancements.ward = Math.max(2, unit2.enhancements.ward))
+          : (unit2.enhancements.ward = 2);
+
+        newGameState[props.details.unit2.player].units[
+          props.details.unit2.unitIndex
+        ] = unit2;
+
       default:
         break;
     }
