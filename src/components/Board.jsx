@@ -15,6 +15,7 @@ import { updateDoc, doc } from "firebase/firestore";
 
 import { useRecurringEffects } from "../hooks/useRecurringEffects";
 import { useSkillEffects } from "../hooks/useSkillEffects";
+import { useSovereignSkillEffects } from "../hooks/useSovereignSkillEffects";
 import { useCardDatabase } from "../hooks/useCardDatabase";
 import { useCardImageSwitch } from "../hooks/useCardImageSwitch";
 
@@ -121,7 +122,6 @@ const Board = (props) => {
     ignite,
     isDisrupted,
     isMuted,
-    matchMadeInHeaven2,
     move,
     paralyze1,
     paralyze2,
@@ -206,6 +206,9 @@ const Board = (props) => {
     viridianGrave1,
     castleOfThorns1,
   } = useSkillEffects();
+
+  const { matchMadeInHeaven1, matchMadeInHeaven2, matchMadeInHeaven3 } =
+    useSovereignSkillEffects();
 
   const { getSkillById } = useCardDatabase();
   const { getImage } = useCardImageSwitch();
@@ -2911,25 +2914,54 @@ const Board = (props) => {
 
       case "Sovereign Skill":
         switch (lastResolution.resolution2) {
-          case "Select Match Made in Heaven Pawn":
+          case "Activating Match Made In Heaven":
             return (
               <>
                 {self === lastResolution.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      matchMadeInHeaven1(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Select Match Made in Heaven Pawn":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
                   <>{selectMatchMadeInHeavenPawn(lastResolution.unit)}</>
                 )}
               </>
             );
 
-          case "Match Made in Heaven1":
+          case "Match Made in Heaven2":
             return (
               <>
-                {self === lastResolution.player && (
-                  <>{resolutionUpdateGameStateOnly(matchMadeInHeaven2())}</>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      matchMadeInHeaven2(
+                        lastResolution.unit,
+                        lastResolution.unit2
+                      )
+                    )}
+                  </>
                 )}
               </>
             );
 
-          case "Match Made in Heaven2":
+          case "Match Made in Heaven3":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>{resolutionUpdateGameStateOnly(matchMadeInHeaven3())}</>
+                )}
+              </>
+            );
+
+          case "Match Made in Heaven4":
             return (
               <>
                 {self === lastResolution.player && !hideModal && (
@@ -4276,7 +4308,7 @@ const Board = (props) => {
     //end "Talent Conclusion"
     newGameState.currentResolution.pop();
 
-    newGameState.activatingSkill.pop();
+    // newGameState.activatingSkill.pop();
     newGameState.activatingUnit.pop();
 
     dispatch(updateState(newGameState));

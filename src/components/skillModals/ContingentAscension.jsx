@@ -14,8 +14,11 @@ const ContingentAscension = (props) => {
 
   const [selectedSkill, setSelectedSkill] = useState(null);
 
-  const { triggerFatedRivalry, triggerMatchMadeInHeaven } =
-    useRecurringEffects();
+  const {
+    activateMatchMadeInHeaven,
+    triggerFatedRivalry,
+    triggerMatchMadeInHeaven,
+  } = useRecurringEffects();
 
   let ascensionContingentSkills = ["SC-02", "SC-03"];
 
@@ -94,12 +97,15 @@ const ContingentAscension = (props) => {
 
     switch (usableSkills[selectedSkill].id) {
       case "SC-03":
-        newGameState.currentResolution.push({
-          resolution: "Sovereign Skill",
-          resolution2: "Select Match Made in Heaven Pawn",
-          unit: props.unit,
-          player: self,
-        });
+        // newGameState.currentResolution.push({
+        //   resolution: "Sovereign Skill",
+        //   resolution2: "Select Match Made in Heaven Pawn",
+        //   unit: props.unit,
+        //   player: self,
+        // });
+
+        newGameState = activateMatchMadeInHeaven(newGameState, props.unit);
+
         break;
 
       default:
