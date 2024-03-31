@@ -15,6 +15,7 @@ const ContingentAscension = (props) => {
   const [selectedSkill, setSelectedSkill] = useState(null);
 
   const {
+    activateFatedRivalry,
     activateMatchMadeInHeaven,
     triggerFatedRivalry,
     triggerMatchMadeInHeaven,
@@ -96,16 +97,12 @@ const ContingentAscension = (props) => {
     );
 
     switch (usableSkills[selectedSkill].id) {
+      case "SC-02":
+        newGameState = activateFatedRivalry(newGameState, props.unit);
+        break;
+
       case "SC-03":
-        // newGameState.currentResolution.push({
-        //   resolution: "Sovereign Skill",
-        //   resolution2: "Select Match Made in Heaven Pawn",
-        //   unit: props.unit,
-        //   player: self,
-        // });
-
         newGameState = activateMatchMadeInHeaven(newGameState, props.unit);
-
         break;
 
       default:

@@ -26,6 +26,41 @@ export const useSovereignSkillEffects = () => {
     paralyze2,
   } = useRecurringEffects();
 
+  const fatedRivalry1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Match Made in Heaven" resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Sovereign Contingent Skill",
+      resolution2: "Select Fated Rivalry",
+      player: self,
+      unit: unit,
+    });
+
+    return newGameState;
+  };
+
+  const fatedRivalry2 = (unit1Info, unit2Info) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit1 = newGameState[unit1Info.player].units[unit1Info.unitIndex];
+    let unit2 = newGameState[unit2Info.player].units[unit2Info.unitIndex];
+
+    // end "Fated Rivalry2"
+    newGameState.currentResolution.pop();
+
+    if (
+      Math.abs(unit1.row - unit2.row) <= 2 &&
+      Math.abs(unit1.column - unit2.column) <= 2
+    ) {
+      newGameState = drawSkill(newGameState);
+      newGameState = drawSkill(newGameState);
+    }
+    return newGameState;
+  };
+
   const matchMadeInHeaven1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
@@ -34,7 +69,7 @@ export const useSovereignSkillEffects = () => {
     newGameState.currentResolution.pop();
 
     newGameState.currentResolution.push({
-      resolution: "Sovereign Skill",
+      resolution: "Sovereign Contingent Skill",
       resolution2: "Select Match Made in Heaven Pawn",
       unit: unit,
     });
@@ -52,7 +87,7 @@ export const useSovereignSkillEffects = () => {
 
     if (newGameState[self].skillHand.length > 0 || isAdjacent(unit1, unit2)) {
       newGameState.currentResolution.push({
-        resolution: "Sovereign Skill",
+        resolution: "Sovereign Contingent Skill",
         resolution2: "Match Made in Heaven4",
         player: self,
         unit: null,
@@ -70,7 +105,7 @@ export const useSovereignSkillEffects = () => {
 
     if (isAdjacent(unit1, unit2)) {
       newGameState.currentResolution.push({
-        resolution: "Sovereign Skill",
+        resolution: "Sovereign Contingent Skill",
         resolution2: "Match Made in Heaven3",
         player: self,
       });
@@ -92,5 +127,11 @@ export const useSovereignSkillEffects = () => {
 
   //end of list
 
-  return { matchMadeInHeaven1, matchMadeInHeaven2, matchMadeInHeaven3 };
+  return {
+    fatedRivalry1,
+    fatedRivalry2,
+    matchMadeInHeaven1,
+    matchMadeInHeaven2,
+    matchMadeInHeaven3,
+  };
 };

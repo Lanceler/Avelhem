@@ -25,8 +25,8 @@
     /* width: 400px;
     height: 560px; */
 
-        width: 250px;
-            height: 350px;
+    width: 250px;
+    height: 350px;
 
 
     background-color: rgb(83, 157, 218);
@@ -45,4 +45,66 @@
     margin: 5px 5px 5px 5px;
     background-size: cover;
     /* background-position: center; */
+}
+
+.activatedSkill{
+    /* width: 250px;
+    height: 350px; */
+    width: 220px;
+    height: 308px;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    border-radius: 10px;
+    padding: 5px;
+    margin: 5px 5px 5px 10px;
+    background-size: cover;
+
+    transition: transform 0.9s;
+
+    animation: activation 0.65s ease-in-out;
+}
+
+.displayedSkills{
+    position: absolute;
+}
+
+@keyframes activation {
+    0% {
+        filter: brightness(300%);
+        opacity: 0.35;
+        scale: 1.2;
+    }
+
+    100% {
+        filter: brightness(100%);
+        opacity: 1;
+        scale: 1;
+    }
+}
+
+.activatedCardDisplay{
+    /* display: flex;
+    flex-direction: column; */
+    display: grid;
+    grid-column: 1fr;
+    position: relative;
+}
+
+.resonatorChain{
+    position: relative;
+    background-color: rgb(43, 226, 58);
+}
+
+.skillChain{
+    height: 350px;
+    position: relative;
+    background-color: blueviolet;
+}
+
+.topmostDisplay:hover{
+    scale: 1.25;
+    z-index: 2;
 }

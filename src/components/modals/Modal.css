@@ -72,15 +72,14 @@
     height: 280px;
     width: 280px;
     margin: 10px;
-
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+    cursor: pointer;
 
     /* filter: brightness(0.51) contrast(5.4) hue-rotate(20deg); */
     /* hue-rotate(180deg) */
     /* background-color: #39426400; */
-    /* cursor: pointer; */
 }
 
 

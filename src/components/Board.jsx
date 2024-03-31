@@ -60,7 +60,7 @@ import ContingentTarget from "./skillModals/ContingentTarget";
 
 import MayFloatResonantSkill from "./skillModals/MayFloatResonantSkill";
 
-import DisplayedCard from "./displays/DisplayedCard";
+import ActivatedSkills from "./displays/ActivatedSkills";
 
 import PlayerAvelhemHand from "./hand/PlayerAvelhemHand";
 import PlayerSkillHand from "./hand/PlayerSkillHand";
@@ -207,8 +207,13 @@ const Board = (props) => {
     castleOfThorns1,
   } = useSkillEffects();
 
-  const { matchMadeInHeaven1, matchMadeInHeaven2, matchMadeInHeaven3 } =
-    useSovereignSkillEffects();
+  const {
+    fatedRivalry1,
+    fatedRivalry2,
+    matchMadeInHeaven1,
+    matchMadeInHeaven2,
+    matchMadeInHeaven3,
+  } = useSovereignSkillEffects();
 
   const { getSkillById } = useCardDatabase();
   const { getImage } = useCardImageSwitch();
@@ -391,7 +396,6 @@ const Board = (props) => {
                 updateFirebase={updateFirebase}
                 unit={lastResolution.unit}
                 enterMoveMode={enterMoveMode}
-                hideOrRevealModale={hideOrRevealModale}
               />
             )}
           </>
@@ -760,6 +764,7 @@ const Board = (props) => {
                     enterSelectUnitMode={enterSelectUnitMode}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
+                    setIntrudingPlayer={setIntrudingPlayer}
                   />
                 )}
               </>
@@ -2912,8 +2917,43 @@ const Board = (props) => {
         }
         break;
 
-      case "Sovereign Skill":
+      case "Sovereign Contingent Skill":
         switch (lastResolution.resolution2) {
+          case "Activating Fated Rivalry":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      fatedRivalry1(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Select Fated Rivalry":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>{selectFatedRivalry(lastResolution.unit)}</>
+                )}
+              </>
+            );
+
+          case "Fated Rivalry2":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      fatedRivalry2(lastResolution.unit, lastResolution.enemy)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
           case "Activating Match Made In Heaven":
             return (
               <>
@@ -3717,6 +3757,26 @@ const Board = (props) => {
     }
   };
 
+  const selectFatedRivalry = (enemyUnit) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Selected Fated Rivalry"
+    newGameState.currentResolution.pop();
+
+    const zonesWithPawns = getZonesForPromotion();
+
+    setIntrudingPlayer(self);
+
+    enterSelectUnitMode(
+      zonesWithPawns,
+      enemyUnit,
+      newGameState,
+      null,
+      "fated rivalry",
+      null
+    );
+  };
+
   const selectFrenzyBladeActivator = (victim) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -3898,6 +3958,18 @@ const Board = (props) => {
           "Avelhem",
           unit // repurposed to use as parameter for resonator
         );
+        break;
+
+      case "fated rivalry":
+        newGameState = ascendPawn(
+          newGameState,
+          selectedUnit,
+          unit.unitClass,
+          "Fated Rivalry",
+          null,
+          unit
+        );
+
         break;
 
       case "match made in heaven":
@@ -4437,28 +4509,7 @@ const Board = (props) => {
           )}
           <div className="section">
             <div className="right-container">
-              {localGameState.activatingSkill.length > 0 && (
-                <>
-                  <div className="activated-card">
-                    <DisplayedCard
-                      cardInfo={
-                        localGameState.activatingSkill[
-                          localGameState.activatingSkill.length - 1
-                        ]
-                      }
-                      inGame={true}
-                    />
-                  </div>
-
-                  {localGameState.activatingSkill.length === 1 &&
-                    localGameState.activatingResonator.length === 1 && (
-                      <DisplayedCard
-                        cardInfo={localGameState.activatingResonator[0]}
-                        inGame={true}
-                      />
-                    )}
-                </>
-              )}
+              <ActivatedSkills />
             </div>
             <div className="middle-container">
               {localGameState.host.units.map((unit, i) => (

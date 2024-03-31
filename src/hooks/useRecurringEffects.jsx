@@ -589,6 +589,31 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const activateFatedRivalry = (newGameState, unit) => {
+    //end Triggering Target resolution
+    // newGameState.currentResolution.pop() <-- NOT needed
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      unit: null,
+      skill: "SC-02",
+      conclusion: "discard",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Sovereign Contingent Skill",
+      resolution2: "Activating Fated Rivalry",
+      player: self,
+      unit: unit,
+    });
+
+    newGameState.activatingSkill.push("SC-02");
+    // newGameState.activatingUnit.push(unit);
+
+    return newGameState;
+  };
+
   const activateFrenzyBlade = (newGameState, unit, victim) => {
     //end Triggering Target resolution
     // newGameState.currentResolution.pop() <-- NOT needed
@@ -983,7 +1008,7 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Sovereign Skill",
+      resolution: "Sovereign Contingent Skill",
       resolution2: "Activating Match Made In Heaven",
       player: self,
       unit: unit,
@@ -2107,16 +2132,36 @@ export const useRecurringEffects = () => {
       });
     }
 
-    if (method === "Match Made in Heaven") {
-      newGameState.currentResolution.push({
-        resolution: "Sovereign Skill",
-        resolution2: "Match Made in Heaven2",
-        unit: unit,
-        unit2: unit2,
-      });
+    switch (method) {
+      case "Fated Rivalry":
+        newGameState.currentResolution.push({
+          resolution: "Sovereign Contingent Skill",
+          resolution2: "Fated Rivalry2",
+          unit: unit,
+          enemy: unit2,
+        });
 
-      // newGameState = matchMadeInHeaven1(newGameState, unit, unit2);
+        break;
+
+      case "Match Made in Heaven":
+        newGameState.currentResolution.push({
+          resolution: "Sovereign Contingent Skill",
+          resolution2: "Match Made in Heaven2",
+          unit: unit,
+          unit2: unit2,
+        });
+
+        break;
     }
+
+    // if (method === "Match Made in Heaven") {
+    //   newGameState.currentResolution.push({
+    //     resolution: "Sovereign Contingent Skill",
+    //     resolution2: "Match Made in Heaven2",
+    //     unit: unit,
+    //     unit2: unit2,
+    //   });
+    // }
 
     //ascension contingency trigger
     const pushAscensionResolution = (
@@ -3735,6 +3780,7 @@ export const useRecurringEffects = () => {
     activateAvelhem,
     activateBlazeOfGlory,
     activateHealingRain,
+    activateFatedRivalry,
     activateFrenzyBlade,
     activateMatchMadeInHeaven,
     activatePitfallTrap,

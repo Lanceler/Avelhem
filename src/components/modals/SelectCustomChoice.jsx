@@ -264,6 +264,7 @@ const SelectCustomChoice = (props) => {
 
       case "Kleptothermy":
         updateLocal = false;
+        props.setIntrudingPlayer(self);
         if (selectedChoice === 1) {
           props.enterSelectUnitMode(
             getZonesWithAllies(unit, 1, true),

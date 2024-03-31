@@ -83,15 +83,12 @@ const TacticSelection = (props) => {
     }
   };
 
-  const handleViewBoard = () => {
-    props.hideOrRevealModale();
-  };
-
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <button onClick={() => handleViewBoard()}>View Board</button>
-        <h2>Select Tactic</h2>
+        <div className="twoColumn3-1">
+          <h2 className="choiceTitle">Select Tactic</h2>
+        </div>
 
         <div className="twoColumn">
           {localGameState.tactics.map((tactic, index) => (
@@ -120,14 +117,16 @@ const TacticSelection = (props) => {
                   }}
                 ></div>
               </div>
-              {tactic.face}
-              <br />
-              Instances: {tactic.stock}
+              <h3>
+                {tactic.face} ({tactic.stock})
+              </h3>
             </div>
           ))}
         </div>
 
-        <button onClick={() => handleReturn()}>Return</button>
+        <button className="choiceButton noYes" onClick={() => handleReturn()}>
+          Return
+        </button>
       </div>
     </div>
   );
