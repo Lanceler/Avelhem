@@ -32,7 +32,7 @@ const PlayerSkillHand = () => {
   };
 
   const handleRaise = (e) => {
-    if (!raise) {
+    if (!raise && localGameState[self].skillHand.length) {
       setRaise(true);
     }
     // else if (e.target === e.currentTarget) {

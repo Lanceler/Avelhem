@@ -167,33 +167,8 @@ const AcquisitionPhaseSelection = (props) => {
             <div className="customChoiceFrame">
               <h3 className="choiceText customChoiceFrameHeader">Cultivate</h3>
               <h4 className="customChoiceDescription">Draw 1 skill.</h4>
-              {/* <div className="customChoiceDescription">
-                <h4>Draw 1 skill.</h4>
-              </div> */}
             </div>
           </div>
-
-          {/* <div
-            className={`customChoice customChoiceSmall ${
-              selectedChoice === 4 ? "selectedChoice" : ""
-            } `}
-            style={{ backgroundImage: `url(${GoldFrame})` }}
-            onClick={() => handleDivine()}
-          >
-            <div
-              className={`customChoiceFrame ${
-                canDivine ? "" : "disabledChoice"
-              } `}
-            >
-              <h3 className="choiceText customChoiceFrameHeader">Divine</h3>
-              <div className="customChoiceDescription">
-                <h4>Gain 1 FD.</h4>
-                <h4>Draw 1 Avelhem or recover 1 “Transcendence”.</h4>
-              </div>
-            </div>
-          </div> */}
-
-          {/* fdfd */}
         </div>
 
         <div
@@ -218,7 +193,7 @@ const AcquisitionPhaseSelection = (props) => {
               <h3 className="choiceText customChoiceFrameHeader">Divine</h3>
               <div className="customChoiceDescription">
                 <h4>Gain 1 FD.</h4>
-                <h4>Draw 1 Avelhem or recover 1 “Transcendence”.</h4>
+                <h4>You may spend 1 “Transcendence” to draw 2 skills.</h4>
               </div>
             </div>
           </div>

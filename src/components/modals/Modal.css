@@ -220,8 +220,16 @@ background: rgb(117, 13, 13)
 .customChoiceSmall {
     height: 280px;
     width: 200px;
-       
 }
+
+.customChoiceSmaller {
+    height: 180px;
+    width: 180px;
+    padding: 4px;
+    margin: 5px 5px 5px 5px;
+}
+
+
 
 .customChoiceFrameHeader{
     flex: 20
@@ -235,6 +243,29 @@ background: rgb(117, 13, 13)
     font-size: 22px;
 }
 
+.bountyText {
+    display: flex;
+    flex-direction: column;
+    height: 225px
+}
+
+.bountyDescription{
+    color: white;
+    padding: 0px 10px;
+    font-family: Arial, sans-serif;
+    font-size: 22px;
+
+    /* justify-items: end; */
+
+    height: 82px
+
+}
+
+.bpCost {
+    color: white;
+    font-family: 'Times New Roman', Times, serif;
+    height: 25px
+}
 
 
 .customChoiceFrame:not(.disabledChoice):hover {
