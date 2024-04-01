@@ -9,11 +9,11 @@
 }
 
 .modal{
-    padding: 20px;
+    padding: 20px ;
     max-height: 1000px;
     width: fit-content;
+    /* width: 1050px; */
     max-width: 850px;
-    /* max-width: 850px; */
     margin: 100px auto;
     background: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
@@ -142,7 +142,7 @@ background: rgb(117, 13, 13)
     max-height: 550px;
     overflow-y: auto;
     width: fit-content;
-    max-width: 800px;
+    /* max-width: 1000px; */
     padding: 9px;
 }
 
@@ -224,9 +224,14 @@ background: rgb(117, 13, 13)
 
 .customChoiceSmaller {
     height: 180px;
-    width: 180px;
+
+    width: 95%;
+    /* max-width: 383px;  */
+
+    /* width: 180px; */
+    /* width: 90%; */
     padding: 4px;
-    margin: 5px 5px 5px 5px;
+    margin: 5px 5px 15px 5px;
 }
 
 
@@ -244,27 +249,34 @@ background: rgb(117, 13, 13)
 }
 
 .bountyText {
-    display: flex;
-    flex-direction: column;
-    height: 225px
+    /* display: flex;
+    flex-direction: column; */
+    height: 225px;
+
+    display: grid;
+    /* grid-row: 3fr 1fr; */
+
 }
 
 .bountyDescription{
     color: white;
-    padding: 0px 10px;
+    padding: 5px 8px 0px;
     font-family: Arial, sans-serif;
     font-size: 22px;
 
-    /* justify-items: end; */
 
-    height: 82px
+    height: 80px;
+    /* height: 75%; */
+    /* max-height: 80px */
 
 }
 
 .bpCost {
     color: white;
     font-family: 'Times New Roman', Times, serif;
-    height: 25px
+    /* height: 25px; */
+    height: 25%;
+    padding: 0px 5px
 }
 
 
