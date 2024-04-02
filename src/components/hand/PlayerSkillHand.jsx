@@ -10,15 +10,17 @@ import { useCardDatabase } from "../../hooks/useCardDatabase";
 
 import Collapse from "../../assets/others/Collapse.png";
 
-const PlayerSkillHand = () => {
+import SelectedSkill from "./SelectedSkill";
+
+const PlayerSkillHand = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const { getImage2 } = useCardImageSwitch();
   const { getSkillById } = useCardDatabase();
 
   const [raise, setRaise] = useState(false);
-
   const [raiseHeight, setRaiseHeight] = useState(0);
+  const [selectedSkill, setSelectedSkill] = useState(null);
 
   useEffect(() => {
     setRaiseHeight(
@@ -31,23 +33,35 @@ const PlayerSkillHand = () => {
     setRaise(false);
   };
 
-  const handleRaise = (e) => {
+  const handleRaise = () => {
     if (!raise && localGameState[self].skillHand.length) {
       setRaise(true);
     }
-    // else if (e.target === e.currentTarget) {
-    //   setRaise(false);
-    // }
   };
 
-  const handleCard = () => {
+  // const handleCard = () => {
+  //   if (raise) {
+  //     console.log("Card");
+  //   }
+  // };
+
+  const handleCard = (card, index) => {
     if (raise) {
-      console.log("Card");
+      setSelectedSkill({ id: card, handIndex: index });
+      setRaise(false);
     }
   };
 
   return (
     <div className="mainSkillHand">
+      {selectedSkill && (
+        <SelectedSkill
+          selectedSkill={selectedSkill}
+          setSelectedSkill={setSelectedSkill}
+          updateFirebase={props.updateFirebase}
+        />
+      )}
+
       {raise === true && (
         <button
           className="collapse"
@@ -70,7 +84,7 @@ const PlayerSkillHand = () => {
         >
           {localGameState[self].skillHand.map((card, index) => (
             <div
-              onClick={() => handleCard()}
+              onClick={() => handleCard(card, index)}
               key={index}
               className={`player-hand-card indivSkill ${
                 raise ? "enlargable" : ""

@@ -56,23 +56,11 @@ const CoordinationPhaseSelection = (props) => {
 
   const handleSelect = () => {
     // newGameState.currentResolution.pop();
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
 
     switch (selectedChoice) {
       case 1:
-        let newGameState = JSON.parse(JSON.stringify(localGameState));
-        // let extraMobilize = 0;
-        // if (newGameState[self].bountyUpgrades.tactics >= 3) {
-        //   extraMobilize = 1;
-        // }
-
-        const extraMobilize =
-          newGameState[self].bountyUpgrades.tactics > 2 ? 1 : 0;
-
-        newGameState = assignTactics(
-          newGameState,
-          rollTactic(extraMobilize),
-          rollTactic(extraMobilize)
-        );
+        newGameState = assignTactics(newGameState, rollTactic(), rollTactic());
         newGameState = nextPhase(newGameState);
         newGameState.currentResolution.push({
           resolution: "Tactic Results",
@@ -95,14 +83,14 @@ const CoordinationPhaseSelection = (props) => {
     props.hideOrRevealModale();
   };
 
-  const nextPhase = (gameState) => {
-    gameState.turnPhase = "Defiance";
-    gameState.currentResolution.pop();
-    gameState.currentResolution.push({
+  const nextPhase = (newGameState) => {
+    newGameState.turnPhase = "Defiance";
+    newGameState.currentResolution.pop();
+    newGameState.currentResolution.push({
       resolution: "Defiance Phase Selection",
     });
 
-    return gameState;
+    return newGameState;
   };
 
   return (

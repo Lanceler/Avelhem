@@ -2672,6 +2672,90 @@ export const useRecurringEffects = () => {
     }
   };
 
+  const canActivateSovereignSkill = (skill) => {
+    const canHeirsEndeavor = () => {
+      const vestige = localGameState[self].skillVestige;
+
+      for (let skill of vestige) {
+        if (skill[0] === "S" && skill !== "SA-01") {
+          return true;
+        }
+      }
+      return false;
+    };
+
+    const canPressTheAttack = () => {
+      if (
+        localGameState.tactics[0].face !== "Advance" ||
+        localGameState.tactics[0].stock < 1
+      ) {
+        return false;
+      }
+
+      if (
+        localGameState.tactics[1].face !== "Advance" ||
+        localGameState.tactics[1].stock < 1
+      ) {
+        return false;
+      }
+
+      return true;
+    };
+
+    const canPowerAtTheFinalHourProaction = () => {
+      const skillHand = localGameState[self].skillHand;
+
+      for (let skill of skillHand) {
+        const skillCode = skill.substring(0, 2);
+
+        if (isNaN(parseInt(skillCode))) {
+          break;
+        } else {
+          if ((localGameState, self, avelhemToScion(parseInt(skillCode)))) {
+            return true;
+          }
+        }
+      }
+      return false;
+    };
+
+    switch (skill) {
+      case "SA-01": //Heir's Endeavor
+        return canHeirsEndeavor();
+      case "SA-02": // Tea for Two
+        return true;
+      case "SA-03": // Dark Halo
+        return hasScion(self);
+
+      case "SA-04": // Reminiscence
+        return (
+          localGameState[self].skillVestige.length > 0 ||
+          localGameState[self].avelhemVestige.length
+        );
+
+      case "SA-05": // Foreshadow
+        return true;
+
+      case "SB-01": // Transmute
+        return hasScionSkill();
+
+      case "SB-02": // Ambidexterity
+        return hasScion(self);
+
+      case "SB-03": // Providence
+        return hasTactic(["Invoke"]);
+
+      case "SB-04": // Fervent Prayer
+        return true;
+
+      case "SB-05": // Press the Attack
+        return canPressTheAttack();
+
+      default:
+        return false;
+    }
+  };
+
   const canAscend = (newGameState, team, scionClass) => {
     let scionCount = 0;
     let unmutedPawns = 0;
@@ -3118,6 +3202,46 @@ export const useRecurringEffects = () => {
     return enemyZones;
   };
 
+  const hasScion = (player) => {
+    const units = localGameState[player].units;
+
+    for (let unit of units) {
+      if (unit && unit.unitClass !== "Pawn") {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const hasScionSkill = () => {
+    const skillHand = localGameState[self].skillHand;
+
+    for (let skill of skillHand) {
+      if (skill[0] !== "S") {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const hasTactic = (tactics) => {
+    if (
+      tactics.includes(localGameState.tactics[0].face) &&
+      localGameState.tactics[0].stock > 0
+    ) {
+      return true;
+    }
+
+    if (
+      tactics.includes(localGameState.tactics[1].face) &&
+      localGameState.tactics[1].stock > 0
+    ) {
+      return true;
+    }
+
+    return false;
+  };
+
   const ignite = (newGameState, attacker, victim, special) => {
     newGameState.currentResolution.push({
       resolution: "Apply Burn",
@@ -3373,8 +3497,10 @@ export const useRecurringEffects = () => {
     return unit;
   };
 
-  const rollTactic = (extraMobilize) => {
-    const mobilizeLimit = 3 + extraMobilize;
+  const rollTactic = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    const mobilizeLimit =
+      3 + newGameState[self].bountyUpgrades.tactics > 2 ? 1 : 0;
 
     const dieFaces = [
       { face: "Advance", stock: 1 },
@@ -3800,6 +3926,7 @@ export const useRecurringEffects = () => {
     blast,
     canActivateResonance,
     canActivateSkill,
+    canActivateSovereignSkill,
     canAscend,
     canBlast,
     canSowAndReapBlast,

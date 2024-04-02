@@ -34,13 +34,10 @@ const PlayerAvelhemHand = (props) => {
     setRaise(false);
   };
 
-  const handleRaise = (e) => {
+  const handleRaise = () => {
     if (!raise && localGameState[self].avelhemHand.length) {
       setRaise(true);
     }
-    // else if (e.target === e.currentTarget) {
-    //   setRaise(false);
-    // }
   };
 
   const handleCard = (card, index) => {
