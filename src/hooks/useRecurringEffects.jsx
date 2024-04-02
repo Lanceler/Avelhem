@@ -609,7 +609,7 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.activatingSkill.push("SC-02");
-    // newGameState.activatingUnit.push(unit);
+    newGameState.activatingUnit.push(null);
 
     return newGameState;
   };
@@ -1015,7 +1015,7 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.activatingSkill.push("SC-03");
-    // newGameState.activatingUnit.push(unit);
+    newGameState.activatingUnit.push(null);
 
     return newGameState;
   };
@@ -1379,6 +1379,48 @@ export const useRecurringEffects = () => {
     }
 
     return newGameState;
+  };
+
+  const activateSovereignSkill = (newGameState, skill) => {
+    const activateTemplate = (newGameState, skill, resolution, resolution2) => {
+      newGameState.currentResolution.push({
+        resolution: "Skill Conclusion",
+        player: self,
+        unit: null,
+        skill: skill,
+        conclusion: "discard",
+      });
+
+      newGameState.currentResolution.push({
+        resolution: resolution,
+        resolution2: resolution2,
+        player: self,
+      });
+
+      newGameState.activatingSkill.push(skill);
+      newGameState.activatingUnit.push(null);
+
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: self,
+      });
+
+      return newGameState;
+    };
+
+    switch (skill) {
+      case "SB-02":
+        // return activateAmbidexterity(newGameState);
+        return activateTemplate(
+          newGameState,
+          skill,
+          "Sovereign Resonant Skill",
+          "Activating Ambidexterity"
+        );
+
+      default:
+        return newGameState;
+    }
   };
 
   const activateSurge = (newGameState, unit) => {
@@ -3202,6 +3244,21 @@ export const useRecurringEffects = () => {
     return enemyZones;
   };
 
+  const getZonesWithScions = (team) => {
+    const newGameState = JSON.parse(JSON.stringify(localGameState));
+    const units = newGameState[team].units;
+
+    let zonesWithScions = [];
+
+    for (let unit of units) {
+      if (unit && unit.unitClass !== "Pawn") {
+        zonesWithScions.push(unit.row * 5 + unit.column);
+      }
+    }
+
+    return zonesWithScions;
+  };
+
   const hasScion = (player) => {
     const units = localGameState[player].units;
 
@@ -3912,6 +3969,7 @@ export const useRecurringEffects = () => {
     activatePitfallTrap,
     activateSkill,
     activateSkillAndResonate,
+    activateSovereignSkill,
     activateSymphonicScreech,
     activateThunderThaumaturge,
     activateViridianGrave,
@@ -3950,6 +4008,7 @@ export const useRecurringEffects = () => {
     getZonesWithEnemies,
     getZonesWithEnemiesAfflicted,
     getZonesWithEnemiesRooted,
+    getZonesWithScions,
     ignite,
     isAdjacent,
     isDisrupted,

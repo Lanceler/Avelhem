@@ -22,7 +22,7 @@ const TacticSelectionViaEffect = (props) => {
 
   if (
     localGameState.tactics[0] !== null &&
-    !props.unit.temporary.used0thTactic &&
+    (!props.unit || !props.unit.temporary.used0thTactic) &&
     props.details.restriction.includes(localGameState.tactics[0].face) &&
     localGameState.tactics[0].stock >= props.details.stock
   ) {
@@ -31,7 +31,7 @@ const TacticSelectionViaEffect = (props) => {
 
   if (
     localGameState.tactics[1] !== null &&
-    !props.unit.temporary.used1stTactic &&
+    (!props.unit || !props.unit.temporary.used1stTactic) &&
     props.details.restriction.includes(localGameState.tactics[1].face) &&
     localGameState.tactics[1].stock >= props.details.stock
   ) {
@@ -58,7 +58,7 @@ const TacticSelectionViaEffect = (props) => {
       newGameState.tactics[i].stock -= props.details.stock;
 
       let unit = null;
-      if (props.unit !== undefined) {
+      if (props.unit) {
         unit = newGameState[props.unit.player].units[props.unit.unitIndex];
 
         //prevent unit from using tactic again
@@ -106,6 +106,12 @@ const TacticSelectionViaEffect = (props) => {
           });
 
           newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+          break;
+
+        case "Ambidexterity":
+          newGameState.tactics[i].stock += 1;
+          newGameState.tactics[i].face = "Invoke";
+
           break;
 
         default:

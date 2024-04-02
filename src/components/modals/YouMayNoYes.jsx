@@ -45,7 +45,7 @@ const YouMayNoYes = (props) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
     let unit = null;
-    if (props.unit !== undefined) {
+    if (props.unit) {
       unit = newGameState[props.unit.player].units[props.unit.unitIndex];
     }
 
@@ -255,6 +255,20 @@ const YouMayNoYes = (props) => {
 
         break;
 
+      case "Ambidexterity Conversion":
+        newGameState.currentResolution.push({
+          resolution: "Sovereign Resonant Skill",
+          resolution2: "Ambidexterity Conversion",
+          details: {
+            title: "Ambidexterity",
+            message: "Convert an Advance tactic into Invoke.",
+            restriction: ["Advance"],
+            stock: 1,
+            reason: "Ambidexterity",
+            canSkip: false,
+          },
+        });
+
       default:
         break;
     }
@@ -269,9 +283,6 @@ const YouMayNoYes = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal modalNoYes">
-        {/* <button onClick={() => handleViewBoard()}>View Board</button>
-        <h2>{props.details.title}</h2> */}
-
         <div className="twoColumn">
           <h2 className="choiceTitle">{props.details.title}</h2>
           <button className="choiceButton" onClick={() => handleViewBoard()}>

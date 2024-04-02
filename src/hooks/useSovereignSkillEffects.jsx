@@ -11,20 +11,42 @@ export const useSovereignSkillEffects = () => {
   const { self, enemy } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const {
-    blast,
-    canMove,
-    canStrike,
-    drawSkill,
-    getZonesWithAllies,
-    getZonesWithEnemies,
-    getZonesWithEnemiesAfflicted,
-    isAdjacent,
-    isMuted,
-    isRooted,
-    paralyze1,
-    paralyze2,
-  } = useRecurringEffects();
+  const { drawSkill, isAdjacent } = useRecurringEffects();
+
+  const ambidexterity1 = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Activating Ambidexterity" resolution
+    newGameState.currentResolution.pop();
+
+    if (
+      (localGameState.tactics[0].face === "Advance" &&
+        localGameState.tactics[0].stock > 0) ||
+      (localGameState.tactics[1].face === "Advance" &&
+        localGameState.tactics[1].stock > 0)
+    ) {
+      newGameState.currentResolution.push({
+        resolution: "Sovereign Resonant Skill",
+        resolution2: "Ambidexterity2",
+        player: self,
+        details: {
+          reason: "Ambidexterity Conversion",
+          title: "Ambidexterity",
+          message: "You may convert 1 Advance tactic into Invoke.",
+          no: "Skip",
+          yes: "Convert",
+        },
+      });
+    }
+
+    newGameState.currentResolution.push({
+      resolution: "Sovereign Resonant Skill",
+      resolution2: "Select Ambidexterity",
+      player: self,
+    });
+
+    return newGameState;
+  };
 
   const fatedRivalry1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
@@ -128,6 +150,7 @@ export const useSovereignSkillEffects = () => {
   //end of list
 
   return {
+    ambidexterity1,
     fatedRivalry1,
     fatedRivalry2,
     matchMadeInHeaven1,

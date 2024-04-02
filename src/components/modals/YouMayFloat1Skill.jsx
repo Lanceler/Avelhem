@@ -91,8 +91,14 @@ const YouMayFloat1Skill = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <button onClick={() => handleViewBoard()}>View Board</button>
-        <h2>{props.message}</h2>
+        <div className="twoColumn">
+          <h2 className="choiceTitle">{props.title}</h2>
+          <button className="choiceButton" onClick={() => handleViewBoard()}>
+            View Board
+          </button>
+        </div>
+
+        <h3>{props.message}</h3>
 
         <div className="fourColumn scrollable scrollable-y-only">
           {usableSkills.map((usableSkill, i) => (
@@ -114,11 +120,15 @@ const YouMayFloat1Skill = (props) => {
         </div>
 
         {selectedSkill === null && (
-          <button onClick={() => handleSkip()}>Skip</button>
+          <button className="choiceButton noYes" onClick={() => handleSkip()}>
+            Skip
+          </button>
         )}
 
         {selectedSkill !== null && (
-          <button onClick={() => handleSelect()}>Select</button>
+          <button className="choiceButton noYes" onClick={() => handleSelect()}>
+            Select
+          </button>
         )}
       </div>
     </div>

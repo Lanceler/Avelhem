@@ -611,6 +611,7 @@ export const useSkillEffects = () => {
         resolution: "Wind Skill",
         resolution2: "Gale Conjuration1",
         unit: unit,
+        title: "Gale Conjuration",
         message: "You may float 1 skill to restore your Virtue.",
         restriction: null,
         reason: "Gale Conjuration1",

@@ -14,14 +14,16 @@ import LightningScion from "../assets/scionIcons/LightningScion.png";
 import ManaScion from "../assets/scionIcons/ManaScion.png";
 import PlantScion from "../assets/scionIcons/PlantScion.png";
 
-import { useRecurringEffects } from "../hooks/useRecurringEffects";
-
 import Shield from "../assets/attributeIcons/Shield.png";
 import Ward from "../assets/attributeIcons/Ward.png";
 import Virtue from "../assets/attributeIcons/Virtue.png";
 import HP from "../assets/attributeIcons/HP.png";
 import BurnGif from "../assets/attributeIcons/BurnGif.gif";
 import ParalysisGif from "../assets/attributeIcons/ParalysisGif.gif";
+
+import Ambidexterity from "../assets/others/Ambidexterity.png";
+
+import { useRecurringEffects } from "../hooks/useRecurringEffects";
 
 export const Piece = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
@@ -84,6 +86,7 @@ export const Piece = (props) => {
       localGameState.activatingUnit[localGameState.activatingUnit.length - 1];
 
     if (
+      activatingUnit &&
       props.unit.player === activatingUnit.player &&
       props.unit.unitIndex === activatingUnit.unitIndex
     ) {
@@ -360,6 +363,12 @@ export const Piece = (props) => {
                     : ""
                 }`}
               />
+            </>
+          )}
+
+          {props.unit.boosts.ambidexterity === true && (
+            <>
+              <img src={Ambidexterity} className="ambidexterity" />
             </>
           )}
 

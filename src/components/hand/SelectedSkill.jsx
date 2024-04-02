@@ -14,7 +14,8 @@ const SelectedSkill = (props) => {
 
   const { getImage2 } = useCardImageSwitch();
 
-  const { canActivateSovereignSkill } = useRecurringEffects();
+  const { activateSovereignSkill, canActivateSovereignSkill } =
+    useRecurringEffects();
 
   let canActivateSkill = false;
   let canResonateSkill = false;
@@ -34,15 +35,12 @@ const SelectedSkill = (props) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     newGameState[self].skillHand.splice(props.selectedSkill.handIndex, 1);
 
-    // newGameState = activateSovereignSkill(
-    //   newGameState,
-    //   props.selectedSkill.id,
-    // );
+    newGameState = activateSovereignSkill(newGameState, props.selectedSkill.id);
 
     dispatch(updateState(newGameState));
     props.updateFirebase(newGameState);
 
-    props.setSelectedAvelhem(null);
+    props.setSelectedSkill(null);
   };
 
   const handleCollapse = () => {

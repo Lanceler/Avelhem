@@ -22,6 +22,7 @@ const ActivatedSkills = () => {
         <div className="skillChain">
           {localGameState.activatingSkill.map((card, i) => (
             <div
+              key={i}
               className={`activatedSkill displayedSkills ${
                 localGameState.activatingSkill.length - 1 === i
                   ? "topmostDisplay"

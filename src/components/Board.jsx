@@ -117,6 +117,7 @@ const Board = (props) => {
     getZonesWithEnemies,
     getZonesWithEnemiesAfflicted,
     getZonesWithEnemiesRooted,
+    getZonesWithScions,
     freeze1,
     freeze2,
     ignite,
@@ -208,6 +209,7 @@ const Board = (props) => {
   } = useSkillEffects();
 
   const {
+    ambidexterity1,
     fatedRivalry1,
     fatedRivalry2,
     matchMadeInHeaven1,
@@ -1332,6 +1334,7 @@ const Board = (props) => {
                   <YouMayFloat1Skill
                     unit={lastResolution.unit}
                     restriction={lastResolution.restriction}
+                    title={lastResolution.title}
                     message={lastResolution.message}
                     reason={lastResolution.reason}
                     updateFirebase={updateFirebase}
@@ -2917,6 +2920,53 @@ const Board = (props) => {
         }
         break;
 
+      case "Sovereign Resonant Skill":
+        switch (lastResolution.resolution2) {
+          case "Activating Ambidexterity":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>{resolutionUpdateGameStateOnly(ambidexterity1())}</>
+                )}
+              </>
+            );
+
+          case "Select Ambidexterity":
+            return (
+              <>
+                {self === lastResolution.player && <>{selectAmbidexterity()}</>}
+              </>
+            );
+
+          case "Ambidexterity2":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <YouMayNoYes
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Ambidexterity Conversion":
+            return (
+              <>
+                {self === localGameState.turnPlayer && !hideModal && (
+                  <TacticSelectionViaEffect
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+        }
+
+        break;
+
       case "Sovereign Contingent Skill":
         switch (lastResolution.resolution2) {
           case "Activating Fated Rivalry":
@@ -3660,6 +3710,26 @@ const Board = (props) => {
     }
   };
 
+  const selectAmbidexterity = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Select Ambidexterity"
+    newGameState.currentResolution.pop();
+
+    const zonesWithScions = getZonesWithScions(self);
+
+    setIntrudingPlayer(self);
+
+    enterSelectUnitMode(
+      zonesWithScions,
+      null,
+      newGameState,
+      null,
+      "ambidexterity",
+      null
+    );
+  };
+
   const selectAvelhemPawn = (avelhem, resonator) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -3960,30 +4030,6 @@ const Board = (props) => {
         );
         break;
 
-      case "fated rivalry":
-        newGameState = ascendPawn(
-          newGameState,
-          selectedUnit,
-          unit.unitClass,
-          "Fated Rivalry",
-          null,
-          unit
-        );
-
-        break;
-
-      case "match made in heaven":
-        newGameState = ascendPawn(
-          newGameState,
-          selectedUnit,
-          unit.unitClass,
-          "Match Made in Heaven",
-          null,
-          unit
-        );
-
-        break;
-
       case "virtue-blast":
         newGameState = virtueBlast(
           newGameState,
@@ -4137,6 +4183,36 @@ const Board = (props) => {
         newGameState = activateViridianGrave(newGameState, selectedUnit, unit);
         break;
 
+      case "ambidexterity":
+        if (!isMuted(selectedUnit)) {
+          newGameState[selectedUnit.player].units[
+            selectedUnit.unitIndex
+          ].boosts.ambidexterity = true;
+        }
+        break;
+
+      case "fated rivalry":
+        newGameState = ascendPawn(
+          newGameState,
+          selectedUnit,
+          unit.unitClass,
+          "Fated Rivalry",
+          null,
+          unit
+        );
+        break;
+
+      case "match made in heaven":
+        newGameState = ascendPawn(
+          newGameState,
+          selectedUnit,
+          unit.unitClass,
+          "Match Made in Heaven",
+          null,
+          unit
+        );
+        break;
+
       default:
         break;
     }
@@ -4215,7 +4291,7 @@ const Board = (props) => {
       newGameState[player].skillShattered.push(skill);
     }
 
-    if (unitInfo !== null) {
+    if (unitInfo) {
       let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
       //decrease activation counter
@@ -4717,7 +4793,7 @@ const Board = (props) => {
 
               <div className="hands-player">
                 <div className="skill-hand">
-                  <PlayerSkillHand />
+                  <PlayerSkillHand updateFirebase={updateFirebase} />
                 </div>
                 <div className="avel-hand">
                   <PlayerAvelhemHand updateFirebase={updateFirebase} />
