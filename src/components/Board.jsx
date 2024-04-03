@@ -210,6 +210,7 @@ const Board = (props) => {
   } = useSkillEffects();
 
   const {
+    heirsEndeavor1,
     heirsEndeavorResonance,
     darkHalo1,
     ambidexterity1,
@@ -2954,6 +2955,15 @@ const Board = (props) => {
 
       case "Sovereign Standard Skill":
         switch (lastResolution.resolution2) {
+          case "Activating Heir's Endeavor":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>{resolutionUpdateGameStateOnly(heirsEndeavor1())}</>
+                )}
+              </>
+            );
+
           case "Activating Dark Halo":
             return (
               <>

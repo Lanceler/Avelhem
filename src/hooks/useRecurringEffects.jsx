@@ -1409,6 +1409,14 @@ export const useRecurringEffects = () => {
     };
 
     switch (skill) {
+      case "SA-01":
+        return activateTemplate(
+          newGameState,
+          skill,
+          "Sovereign Standard Skill",
+          "Activating Heir's Endeavor"
+        );
+
       case "SA-03":
         return activateTemplate(
           newGameState,

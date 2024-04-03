@@ -13,6 +13,42 @@ export const useSovereignSkillEffects = () => {
 
   const { drawSkill, isAdjacent } = useRecurringEffects();
 
+  const heirsEndeavor1 = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Activating Heir's Endeavor" resolution
+    newGameState.currentResolution.pop();
+
+    newGameState[self].fateDefiances -= 1;
+
+    newGameState.currentResolution.push({
+      resolution: "Recover Skill",
+      player: self,
+      restriction: [
+        "SX-01", // SA-01 (Heir's Endeavor) is excluded
+        "SA-02",
+        "SA-03",
+        "SA-04",
+        "SA-05",
+        "SB-01",
+        "SB-02",
+        "SB-03",
+        "SB-04",
+        "SB-05",
+        "SC-01",
+        "SC-02",
+        "SC-03",
+        "SC-04",
+        "SC-05",
+        "SD-01",
+      ],
+      message: "Recover 1 Sovereign skill other than “Heir's Endeavor”.",
+      outcome: "Add",
+    });
+
+    return newGameState;
+  };
+
   const heirsEndeavorResonance = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     //end "Heirs Endeavor Resonance"
@@ -235,6 +271,7 @@ export const useSovereignSkillEffects = () => {
   //end of list
 
   return {
+    heirsEndeavor1,
     heirsEndeavorResonance,
     darkHalo1,
     ambidexterity1,
