@@ -553,7 +553,6 @@ const Board = (props) => {
             {self === lastResolution.player && (
               <SelectAvelhemResonator
                 avelhem={lastResolution.avelhem}
-                hideOrRevealModale={hideOrRevealModale}
                 updateFirebase={updateFirebase}
               />
             )}

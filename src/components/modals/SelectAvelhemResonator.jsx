@@ -113,9 +113,9 @@ const SelectAvelhemResonator = (props) => {
 
         <div className="twoColumn3-1">
           <h2 className="choiceTitle">Select resonator.</h2>
-          <button className="choiceButton" onClick={() => handleViewBoard()}>
+          {/* <button className="choiceButton" onClick={() => handleViewBoard()}>
             View Board
-          </button>
+          </button> */}
         </div>
 
         <div className="fourColumn scrollable scrollable-y-only">

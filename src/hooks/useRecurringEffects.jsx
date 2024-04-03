@@ -2716,6 +2716,10 @@ export const useRecurringEffects = () => {
 
   const canActivateSovereignSkill = (skill) => {
     const canHeirsEndeavor = () => {
+      if (localGameState[self].fateDefiances < 1) {
+        return false;
+      }
+
       const vestige = localGameState[self].skillVestige;
 
       for (let skill of vestige) {
@@ -2792,6 +2796,28 @@ export const useRecurringEffects = () => {
 
       case "SB-05": // Press the Attack
         return canPressTheAttack();
+
+      default:
+        return false;
+    }
+  };
+
+  const canActivateSovereignResonance = (skill) => {
+    switch (skill) {
+      case "SB-01": // Transmute
+        return canActivateSovereignSkill("SB-01");
+
+      case "SB-02": // Ambidexterity
+        return canActivateSovereignSkill("SB-02");
+
+      case "SB-03": // Providence
+        return canActivateSovereignSkill("SB-03");
+
+      case "SB-04": // Fervent Prayer
+        return canActivateSovereignSkill("SB-04");
+
+      case "SB-05": // Press the Attack
+        return canActivateSovereignSkill("SB-05");
 
       default:
         return false;
@@ -3985,6 +4011,7 @@ export const useRecurringEffects = () => {
     canActivateResonance,
     canActivateSkill,
     canActivateSovereignSkill,
+    canActivateSovereignResonance,
     canAscend,
     canBlast,
     canSowAndReapBlast,
