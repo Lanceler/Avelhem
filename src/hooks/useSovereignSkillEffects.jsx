@@ -53,6 +53,21 @@ export const useSovereignSkillEffects = () => {
     return newGameState;
   };
 
+  const darkHalo1 = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Activating Dark Halo" resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Sovereign Standard Skill",
+      resolution2: "Select Dark Halo",
+      player: self,
+    });
+
+    return newGameState;
+  };
+
   const ambidexterity1 = (resonator) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -221,6 +236,7 @@ export const useSovereignSkillEffects = () => {
 
   return {
     heirsEndeavorResonance,
+    darkHalo1,
     ambidexterity1,
     ambidexterityR1,
     fatedRivalry1,

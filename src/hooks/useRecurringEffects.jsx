@@ -1409,8 +1409,15 @@ export const useRecurringEffects = () => {
     };
 
     switch (skill) {
+      case "SA-03":
+        return activateTemplate(
+          newGameState,
+          skill,
+          "Sovereign Standard Skill",
+          "Activating Dark Halo"
+        );
+
       case "SB-02":
-        // return activateAmbidexterity(newGameState);
         return activateTemplate(
           newGameState,
           skill,

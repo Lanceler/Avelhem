@@ -50,9 +50,9 @@ const ScionSkillSelect = (props) => {
 
     newGameState.currentResolution.push({
       resolution: "Choose Resonator",
-      skill: usableSkills[selectedSkill],
-      unit: props.unit,
       player: props.unit.player,
+      unit: props.unit,
+      skill: usableSkills[selectedSkill],
     });
 
     dispatch(updateState(newGameState));

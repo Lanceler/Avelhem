@@ -211,6 +211,7 @@ const Board = (props) => {
 
   const {
     heirsEndeavorResonance,
+    darkHalo1,
     ambidexterity1,
     ambidexterityR1,
     fatedRivalry1,
@@ -2951,6 +2952,28 @@ const Board = (props) => {
         }
         break;
 
+      case "Sovereign Standard Skill":
+        switch (lastResolution.resolution2) {
+          case "Activating Dark Halo":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      darkHalo1(lastResolution.resonator)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Select Dark Halo":
+            return (
+              <>{self === lastResolution.player && <>{selectDarkHalo()}</>}</>
+            );
+        }
+        break;
+
       case "Sovereign Resonant Skill":
         switch (lastResolution.resolution2) {
           case "Activating Ambidexterity":
@@ -3815,6 +3838,26 @@ const Board = (props) => {
     );
   };
 
+  const selectDarkHalo = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Select Dark Halo"
+    newGameState.currentResolution.pop();
+
+    const zonesWithScions = getZonesWithScions(self);
+
+    setIntrudingPlayer(self);
+
+    enterSelectUnitMode(
+      zonesWithScions,
+      null,
+      newGameState,
+      null,
+      "dark halo",
+      null
+    );
+  };
+
   const selectEnemies = (unitInfo, range, tactic, reason, special) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
@@ -4267,6 +4310,15 @@ const Board = (props) => {
             },
           });
         }
+        break;
+
+      case "dark halo":
+        newGameState[selectedUnit.player].units[
+          selectedUnit.unitIndex
+        ].enhancements.ravager = true;
+
+        delete newGameState[selectedUnit.player].units[selectedUnit.unitIndex]
+          .afflictions.anathema;
 
         break;
 

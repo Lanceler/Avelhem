@@ -49,7 +49,6 @@ const SelectedSkill = (props) => {
   };
 
   const handleCollapse = () => {
-    props.setRaise(false);
     props.setSelectedSkill(null);
   };
 

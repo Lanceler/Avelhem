@@ -39,12 +39,6 @@ const PlayerSkillHand = (props) => {
     }
   };
 
-  // const handleCard = () => {
-  //   if (raise) {
-  //     console.log("Card");
-  //   }
-  // };
-
   const handleCard = (card, index) => {
     if (raise) {
       setSelectedSkill({ id: card, handIndex: index });
