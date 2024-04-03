@@ -1423,6 +1423,90 @@ export const useRecurringEffects = () => {
     }
   };
 
+  const activateSovereignSkillAndResonate = (
+    newGameState,
+    skill,
+    resonator
+  ) => {
+    //end Select Resonator resolution
+    newGameState.currentResolution.pop();
+
+    const activateResonanceTemplate = (
+      newGameState,
+      skill,
+      resolution,
+      resolution2,
+      resonator,
+      defaultConclusion
+    ) => {
+      if (resonator === "SA-01") {
+        newGameState.currentResolution.push({
+          resolution: "Sovereign Resonant Skill",
+          resolution2: "Heirs Endeavor Resonance",
+          player: self,
+        });
+      }
+
+      let skillConclusion = "discard";
+
+      if (defaultConclusion === "retain" && resonator !== "SA-02") {
+        skillConclusion = defaultConclusion;
+      }
+
+      newGameState.currentResolution.push({
+        resolution: "Resonance Conclusion",
+        player: self,
+        unit: null,
+        skill: skill,
+        skillConclusion: skillConclusion, // either retain or discard
+        resonator: resonator,
+        resonatorConclusion: "discard",
+      });
+
+      if (defaultConclusion === "float" && resonator !== "SA-02") {
+        newGameState.currentResolution.push({
+          resolution: "May float resonant skill",
+          player: self,
+          skill: skill,
+          resonator: resonator,
+        });
+      }
+
+      newGameState.currentResolution.push({
+        resolution: resolution,
+        resolution2: resolution2,
+        player: self,
+        resonator: resonator,
+      });
+
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: self,
+      });
+
+      newGameState.activatingSkill.push(skill);
+      newGameState.activatingResonator.push(resonator);
+      newGameState.activatingUnit.push(null);
+
+      return newGameState;
+    };
+
+    switch (skill) {
+      case "SB-02":
+        return activateResonanceTemplate(
+          newGameState,
+          skill,
+          "Sovereign Resonant Skill",
+          "Activating Ambidexterity",
+          resonator,
+          "float"
+        );
+
+      default:
+        return newGameState;
+    }
+  };
+
   const activateSurge = (newGameState, unit) => {
     //end Select Skill resolution
     newGameState.currentResolution.pop();
@@ -3996,6 +4080,7 @@ export const useRecurringEffects = () => {
     activateSkill,
     activateSkillAndResonate,
     activateSovereignSkill,
+    activateSovereignSkillAndResonate,
     activateSymphonicScreech,
     activateThunderThaumaturge,
     activateViridianGrave,

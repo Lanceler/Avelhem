@@ -43,7 +43,7 @@ const PlayerAvelhemHand = (props) => {
   const handleCard = (card, index) => {
     if (raise) {
       setSelectedAvelhem({ avelhem: card, handIndex: index });
-      setRaise(false);
+      //setRaise(false);
     }
   };
 
@@ -54,6 +54,7 @@ const PlayerAvelhemHand = (props) => {
           selectedAvelhem={selectedAvelhem}
           setSelectedAvelhem={setSelectedAvelhem}
           updateFirebase={props.updateFirebase}
+          setRaise={setRaise}
         />
       )}
       {raise === true && (

@@ -48,7 +48,7 @@ const PlayerSkillHand = (props) => {
   const handleCard = (card, index) => {
     if (raise) {
       setSelectedSkill({ id: card, handIndex: index });
-      setRaise(false);
+      //setRaise(false);
     }
   };
 
@@ -59,6 +59,7 @@ const PlayerSkillHand = (props) => {
           selectedSkill={selectedSkill}
           setSelectedSkill={setSelectedSkill}
           updateFirebase={props.updateFirebase}
+          setRaise={setRaise}
         />
       )}
 

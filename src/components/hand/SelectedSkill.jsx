@@ -14,8 +14,11 @@ const SelectedSkill = (props) => {
 
   const { getImage2 } = useCardImageSwitch();
 
-  const { activateSovereignSkill, canActivateSovereignSkill } =
-    useRecurringEffects();
+  const {
+    activateSovereignSkill,
+    canActivateSovereignSkill,
+    canActivateSovereignResonance,
+  } = useRecurringEffects();
 
   let canActivateSkill = false;
   let canResonateSkill = false;
@@ -27,6 +30,7 @@ const SelectedSkill = (props) => {
     ].resolution === "Execution Phase"
   ) {
     canActivateSkill = canActivateSovereignSkill(props.selectedSkill.id);
+    canResonateSkill = canActivateSovereignResonance(props.selectedSkill.id);
   }
 
   console.log(props.selectedSkill);
@@ -40,27 +44,29 @@ const SelectedSkill = (props) => {
     dispatch(updateState(newGameState));
     props.updateFirebase(newGameState);
 
+    props.setRaise(false);
     props.setSelectedSkill(null);
   };
 
   const handleCollapse = () => {
+    props.setRaise(false);
     props.setSelectedSkill(null);
   };
 
-  //   const handleResonate = () => {
-  //     let newGameState = JSON.parse(JSON.stringify(localGameState));
+  const handleResonate = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-  //     newGameState.currentResolution.push({
-  //       resolution: "Choose Resonator",
-  //       player: self,
-  //       unit: null,
-  //       skill: props.selectedSkill,
-  //     });
+    newGameState.currentResolution.push({
+      resolution: "Choose Resonator",
+      player: self,
+      unit: null,
+      skill: props.selectedSkill,
+    });
 
-  //     props.setSelectedSkill(null);
-
-  //     dispatch(updateState(newGameState));
-  //   };
+    props.setRaise(false);
+    props.setSelectedSkill(null);
+    dispatch(updateState(newGameState));
+  };
 
   return (
     <div className="handModal-backdrop">

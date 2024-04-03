@@ -15,7 +15,8 @@ const SelectSkillResonator = (props) => {
 
   const [selectedSkill, setSelectedSkill] = useState(null);
 
-  const { activateSkillAndResonate } = useRecurringEffects();
+  const { activateSkillAndResonate, activateSovereignSkillAndResonate } =
+    useRecurringEffects();
 
   let usableSkills = [];
   for (let i in localGameState[self].skillHand) {
@@ -38,10 +39,6 @@ const SelectSkillResonator = (props) => {
     }
   };
 
-  console.log(props.skill.handIndex);
-
-  console.log(usableSkills);
-
   usableSkills = usableSkills.filter(
     (skill) =>
       validResonators.includes(skill.id) &&
@@ -51,12 +48,20 @@ const SelectSkillResonator = (props) => {
   const handleSelect = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    newGameState = activateSkillAndResonate(
-      newGameState,
-      props.unit,
-      props.skill.id,
-      usableSkills[selectedSkill].id
-    );
+    if (props.unit) {
+      newGameState = activateSkillAndResonate(
+        newGameState,
+        props.unit,
+        props.skill.id,
+        usableSkills[selectedSkill].id
+      );
+    } else {
+      newGameState = activateSovereignSkillAndResonate(
+        newGameState,
+        props.skill.id,
+        usableSkills[selectedSkill].id
+      );
+    }
 
     const skillHandIndexes = [
       props.skill.handIndex,

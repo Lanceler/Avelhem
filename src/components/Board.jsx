@@ -210,6 +210,7 @@ const Board = (props) => {
 
   const {
     ambidexterity1,
+    ambidexterityR1,
     fatedRivalry1,
     fatedRivalry2,
     matchMadeInHeaven1,
@@ -536,7 +537,7 @@ const Board = (props) => {
       case "Choose Resonator":
         return (
           <>
-            {self === lastResolution.unit.player && (
+            {self === lastResolution.player && (
               <SelectSkillResonator
                 unit={lastResolution.unit}
                 skill={lastResolution.skill}
@@ -738,7 +739,7 @@ const Board = (props) => {
             {self === lastResolution.player && !hideModal && (
               <>
                 <MayFloatResonantSkill
-                  unit={lastResolution.unit}
+                  // unit={lastResolution.unit}
                   player={lastResolution.player}
                   skill={lastResolution.skill}
                   resonator={lastResolution.resonator}
@@ -2925,7 +2926,11 @@ const Board = (props) => {
             return (
               <>
                 {self === lastResolution.player && (
-                  <>{resolutionUpdateGameStateOnly(ambidexterity1())}</>
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      ambidexterity1(lastResolution.resonator)
+                    )}
+                  </>
                 )}
               </>
             );
@@ -2933,7 +2938,9 @@ const Board = (props) => {
           case "Select Ambidexterity":
             return (
               <>
-                {self === lastResolution.player && <>{selectAmbidexterity()}</>}
+                {self === lastResolution.player && (
+                  <>{selectAmbidexterity(lastResolution.resonated)}</>
+                )}
               </>
             );
 
@@ -2959,6 +2966,19 @@ const Board = (props) => {
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
+                )}
+              </>
+            );
+
+          case "AmbidexterityR1":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      ambidexterityR1(lastResolution.unit)
+                    )}
+                  </>
                 )}
               </>
             );
@@ -3709,7 +3729,7 @@ const Board = (props) => {
     }
   };
 
-  const selectAmbidexterity = () => {
+  const selectAmbidexterity = (resonated) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
     //end "Select Ambidexterity"
@@ -3725,7 +3745,7 @@ const Board = (props) => {
       newGameState,
       null,
       "ambidexterity",
-      null
+      resonated
     );
   };
 
@@ -4188,6 +4208,36 @@ const Board = (props) => {
             selectedUnit.unitIndex
           ].boosts.ambidexterity = true;
         }
+
+        if (special === "resonated") {
+          newGameState.currentResolution.push({
+            resolution: "Sovereign Resonant Skill",
+            resolution2: "AmbidexterityR1",
+            player: self,
+            unit: selectedUnit,
+          });
+        }
+
+        if (
+          (localGameState.tactics[0].face === "Advance" &&
+            localGameState.tactics[0].stock > 0) ||
+          (localGameState.tactics[1].face === "Advance" &&
+            localGameState.tactics[1].stock > 0)
+        ) {
+          newGameState.currentResolution.push({
+            resolution: "Sovereign Resonant Skill",
+            resolution2: "Ambidexterity2",
+            player: self,
+            details: {
+              reason: "Ambidexterity Conversion",
+              title: "Ambidexterity",
+              message: "You may convert 1 Advance tactic into Invoke.",
+              no: "Skip",
+              yes: "Convert",
+            },
+          });
+        }
+
         break;
 
       case "fated rivalry":

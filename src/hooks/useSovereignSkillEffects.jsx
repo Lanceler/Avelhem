@@ -13,40 +13,105 @@ export const useSovereignSkillEffects = () => {
 
   const { drawSkill, isAdjacent } = useRecurringEffects();
 
-  const ambidexterity1 = () => {
+  const ambidexterity1 = (resonator) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
     //end "Activating Ambidexterity" resolution
     newGameState.currentResolution.pop();
 
-    if (
-      (localGameState.tactics[0].face === "Advance" &&
-        localGameState.tactics[0].stock > 0) ||
-      (localGameState.tactics[1].face === "Advance" &&
-        localGameState.tactics[1].stock > 0)
-    ) {
-      newGameState.currentResolution.push({
-        resolution: "Sovereign Resonant Skill",
-        resolution2: "Ambidexterity2",
-        player: self,
-        details: {
-          reason: "Ambidexterity Conversion",
-          title: "Ambidexterity",
-          message: "You may convert 1 Advance tactic into Invoke.",
-          no: "Skip",
-          yes: "Convert",
-        },
-      });
-    }
-
     newGameState.currentResolution.push({
       resolution: "Sovereign Resonant Skill",
       resolution2: "Select Ambidexterity",
       player: self,
+      resonated: resonator ? "resonated" : null,
     });
 
     return newGameState;
   };
+
+  const ambidexterityR1 = (unit) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "AmbidexterityR1" resolution
+    newGameState.currentResolution.pop();
+
+    let standardSkill = null;
+
+    switch (unit.unitClass) {
+      case "Fire Scion":
+        standardSkill = "01-01";
+        break;
+      case "Water Scion":
+        standardSkill = "02-01";
+        break;
+      case "Wind Scion":
+        standardSkill = "03-01";
+        break;
+      case "Land Scion":
+        standardSkill = "04-01";
+        break;
+      case "Lightning Scion":
+        standardSkill = "05-01";
+        break;
+      case "Mana Scion":
+        standardSkill = "06-01";
+        break;
+      case "Metal Scion":
+        standardSkill = "07-01";
+        break;
+      case "Plant Scion":
+        standardSkill = "08-01";
+        break;
+
+      default:
+        break;
+    }
+
+    newGameState.currentResolution.push({
+      resolution: "Search Skill",
+      player: self,
+      restriction: [standardSkill],
+      message: "Search for 1 standard skill of their class.",
+      outcome: "Add",
+    });
+
+    return newGameState;
+  };
+
+  // const ambidexterity1 = () => {
+  //   let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+  //   //end "Activating Ambidexterity" resolution
+  //   newGameState.currentResolution.pop();
+
+  //   if (
+  //     (localGameState.tactics[0].face === "Advance" &&
+  //       localGameState.tactics[0].stock > 0) ||
+  //     (localGameState.tactics[1].face === "Advance" &&
+  //       localGameState.tactics[1].stock > 0)
+  //   ) {
+  //     newGameState.currentResolution.push({
+  //       resolution: "Sovereign Resonant Skill",
+  //       resolution2: "Ambidexterity2",
+  //       player: self,
+  //       details: {
+  //         reason: "Ambidexterity Conversion",
+  //         title: "Ambidexterity",
+  //         message: "You may convert 1 Advance tactic into Invoke.",
+  //         no: "Skip",
+  //         yes: "Convert",
+  //       },
+  //     });
+  //   }
+
+  //   newGameState.currentResolution.push({
+  //     resolution: "Sovereign Resonant Skill",
+  //     resolution2: "Select Ambidexterity",
+  //     player: self,
+  //   });
+
+  //   return newGameState;
+  // };
 
   const fatedRivalry1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
@@ -151,6 +216,7 @@ export const useSovereignSkillEffects = () => {
 
   return {
     ambidexterity1,
+    ambidexterityR1,
     fatedRivalry1,
     fatedRivalry2,
     matchMadeInHeaven1,

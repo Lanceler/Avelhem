@@ -46,6 +46,7 @@ const SelectedAvelhem = (props) => {
     dispatch(updateState(newGameState));
     props.updateFirebase(newGameState);
 
+    props.setRaise(false);
     props.setSelectedAvelhem(null);
   };
 
@@ -62,6 +63,7 @@ const SelectedAvelhem = (props) => {
       avelhem: props.selectedAvelhem,
     });
 
+    props.setRaise(false);
     props.setSelectedAvelhem(null);
 
     dispatch(updateState(newGameState));
