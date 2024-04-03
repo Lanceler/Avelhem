@@ -13,6 +13,46 @@ export const useSovereignSkillEffects = () => {
 
   const { drawSkill, isAdjacent } = useRecurringEffects();
 
+  const heirsEndeavorResonance = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    //end "Heirs Endeavor Resonance"
+    newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Misc.",
+      resolution2: "Inspect Skill",
+      player: self,
+
+      details: {
+        restriction: [
+          "SA-01",
+          "SA-02",
+          "SA-03",
+          "SA-04",
+          "SA-05",
+          "SB-01",
+          "SB-02",
+          "SB-03",
+          "SB-04",
+          "SB-05",
+          "SC-01",
+          "SC-02",
+          "SC-03",
+          "SC-04",
+          "SC-05",
+          "SD-01",
+        ],
+        outcome: "Float",
+        title: "Heir's Endeavor",
+        message:
+          "Inspect 5 skills. You may float 1 Sovereign skill among them.",
+        inspectionCount: 5,
+      },
+    });
+
+    return newGameState;
+  };
+
   const ambidexterity1 = (resonator) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -77,41 +117,6 @@ export const useSovereignSkillEffects = () => {
 
     return newGameState;
   };
-
-  // const ambidexterity1 = () => {
-  //   let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-  //   //end "Activating Ambidexterity" resolution
-  //   newGameState.currentResolution.pop();
-
-  //   if (
-  //     (localGameState.tactics[0].face === "Advance" &&
-  //       localGameState.tactics[0].stock > 0) ||
-  //     (localGameState.tactics[1].face === "Advance" &&
-  //       localGameState.tactics[1].stock > 0)
-  //   ) {
-  //     newGameState.currentResolution.push({
-  //       resolution: "Sovereign Resonant Skill",
-  //       resolution2: "Ambidexterity2",
-  //       player: self,
-  //       details: {
-  //         reason: "Ambidexterity Conversion",
-  //         title: "Ambidexterity",
-  //         message: "You may convert 1 Advance tactic into Invoke.",
-  //         no: "Skip",
-  //         yes: "Convert",
-  //       },
-  //     });
-  //   }
-
-  //   newGameState.currentResolution.push({
-  //     resolution: "Sovereign Resonant Skill",
-  //     resolution2: "Select Ambidexterity",
-  //     player: self,
-  //   });
-
-  //   return newGameState;
-  // };
 
   const fatedRivalry1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
@@ -215,6 +220,7 @@ export const useSovereignSkillEffects = () => {
   //end of list
 
   return {
+    heirsEndeavorResonance,
     ambidexterity1,
     ambidexterityR1,
     fatedRivalry1,

@@ -39,11 +39,17 @@ const SelectSkillResonator = (props) => {
     }
   };
 
+  console.log("usableSkills");
+  console.log(usableSkills);
+
   usableSkills = usableSkills.filter(
     (skill) =>
       validResonators.includes(skill.id) &&
-      skill.handIndex !== props.skill.handIndex
+      skill.handIndex * 1 !== props.skill.handIndex * 1
   );
+
+  console.log("props.skill.handIndex");
+  console.log(props.skill.handIndex);
 
   const handleSelect = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));

@@ -24,6 +24,7 @@ import BountyStore from "./modals/BountyStore";
 import CoordinationPhaseSelection from "./modals/CoordinationPhaseSelection";
 import DefiancePhaseSelection from "./modals/DefiancePhaseSelection";
 
+import InspectSkill from "./modals/InspectSkill";
 import MessageToEnemy from "./modals/MessageToEnemy";
 import RecoverSkill from "./modals/RecoverSkill";
 import ScionSkillSelect from "./modals/ScionSkillSelect";
@@ -209,6 +210,7 @@ const Board = (props) => {
   } = useSkillEffects();
 
   const {
+    heirsEndeavorResonance,
     ambidexterity1,
     ambidexterityR1,
     fatedRivalry1,
@@ -751,6 +753,36 @@ const Board = (props) => {
           </>
         );
 
+      case "Misc.":
+        switch (lastResolution.resolution2) {
+          case "Inspect Skill":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <InspectSkill
+                    details={lastResolution.details}
+                    hideOrRevealModale={hideOrRevealModale}
+                    updateFirebase={updateFirebase}
+                  />
+                )}
+              </>
+            );
+
+          case "Message To Enemy":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <MessageToEnemy
+                    title={lastResolution.title}
+                    message={lastResolution.message}
+                    updateFirebase={updateFirebase}
+                  />
+                )}
+              </>
+            );
+        }
+        break;
+
       case "Unit Talent":
         switch (lastResolution.resolution2) {
           case "Activating Flash Fire":
@@ -809,7 +841,6 @@ const Board = (props) => {
               </>
             );
         }
-
         break;
 
       case "Fire Skill":
@@ -2982,8 +3013,16 @@ const Board = (props) => {
                 )}
               </>
             );
-        }
 
+          case "Heirs Endeavor Resonance":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>{resolutionUpdateGameStateOnly(heirsEndeavorResonance())}</>
+                )}
+              </>
+            );
+        }
         break;
 
       case "Sovereign Contingent Skill":
@@ -3087,122 +3126,143 @@ const Board = (props) => {
 
         break;
 
-      case "Triggering Elimination Ally":
-        return (
-          <>
-            {self === lastResolution.player && !hideModal && (
-              <ContingentElimination
-                player={lastResolution.player}
-                unit={lastResolution.unit}
-                team="ally"
-                updateFirebase={updateFirebase}
-                enterSelectUnitMode={enterSelectUnitMode}
-                hideOrRevealModale={hideOrRevealModale}
-                setIntrudingPlayer={setIntrudingPlayer}
-              />
-            )}
-          </>
-        );
+      case "Triggering Contingent Skill":
+        switch (lastResolution.resolution2) {
+          case "Triggering Elimination Ally":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <ContingentElimination
+                    player={lastResolution.player}
+                    unit={lastResolution.unit}
+                    team="ally"
+                    updateFirebase={updateFirebase}
+                    enterSelectUnitMode={enterSelectUnitMode}
+                    hideOrRevealModale={hideOrRevealModale}
+                    setIntrudingPlayer={setIntrudingPlayer}
+                  />
+                )}
+              </>
+            );
 
-      case "Triggering Ascension Ally":
-        return (
-          <>
-            {self === lastResolution.player && !hideModal && (
-              <ContingentAscension
-                player={lastResolution.player}
-                unit={lastResolution.unit}
-                team="ally"
-                scionClass={lastResolution.scionClass}
-                method={lastResolution.method}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
+          case "Triggering Ascension Ally":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <ContingentAscension
+                    player={lastResolution.player}
+                    unit={lastResolution.unit}
+                    team="ally"
+                    scionClass={lastResolution.scionClass}
+                    method={lastResolution.method}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
 
-      case "Triggering Ascension Enemy":
-        return (
-          <>
-            {self === lastResolution.player && !hideModal && (
-              <ContingentAscension
-                player={lastResolution.player}
-                unit={lastResolution.unit}
-                team="enemy"
-                scionClass={lastResolution.scionClass}
-                method={lastResolution.method}
-                // enterSelectUnitMode={enterSelectUnitMode}
-                // setIntrudingPlayer={setIntrudingPlayer}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
+          case "Triggering Ascension Enemy":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <ContingentAscension
+                    player={lastResolution.player}
+                    unit={lastResolution.unit}
+                    team="enemy"
+                    scionClass={lastResolution.scionClass}
+                    method={lastResolution.method}
+                    // enterSelectUnitMode={enterSelectUnitMode}
+                    // setIntrudingPlayer={setIntrudingPlayer}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
 
-      case "Triggering Elimination Enemy":
-        return (
-          <>
-            {self === lastResolution.player && !hideModal && (
-              <ContingentElimination
-                player={lastResolution.player}
-                unit={lastResolution.unit}
-                team="enemy"
-                updateFirebase={updateFirebase}
-                enterSelectUnitMode={enterSelectUnitMode}
-                hideOrRevealModale={hideOrRevealModale}
-                setIntrudingPlayer={setIntrudingPlayer}
-              />
-            )}
-          </>
-        );
+          case "Triggering Elimination Enemy":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <ContingentElimination
+                    player={lastResolution.player}
+                    unit={lastResolution.unit}
+                    team="enemy"
+                    updateFirebase={updateFirebase}
+                    enterSelectUnitMode={enterSelectUnitMode}
+                    hideOrRevealModale={hideOrRevealModale}
+                    setIntrudingPlayer={setIntrudingPlayer}
+                  />
+                )}
+              </>
+            );
 
-      case "Triggering Motion":
-        return (
-          <>
-            {self === lastResolution.player && !hideModal && (
-              <ContingentMotion
-                mover={lastResolution.mover}
-                updateFirebase={updateFirebase}
-                enterSelectUnitMode={enterSelectUnitMode}
-                hideOrRevealModale={hideOrRevealModale}
-                setIntrudingPlayer={setIntrudingPlayer}
-              />
-            )}
-          </>
-        );
+          case "Triggering Motion":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <ContingentMotion
+                    mover={lastResolution.mover}
+                    updateFirebase={updateFirebase}
+                    enterSelectUnitMode={enterSelectUnitMode}
+                    hideOrRevealModale={hideOrRevealModale}
+                    setIntrudingPlayer={setIntrudingPlayer}
+                  />
+                )}
+              </>
+            );
 
-      case "Triggering Survival Ally":
-        return (
-          <>
-            {self === lastResolution.player && !hideModal && (
-              <ContingentSurvivalAlly
-                attacker={lastResolution.attacker}
-                victim={lastResolution.victim}
-                updateFirebase={updateFirebase}
-                enterSelectUnitMode={enterSelectUnitMode}
-                hideOrRevealModale={hideOrRevealModale}
-                setIntrudingPlayer={setIntrudingPlayer}
-              />
-            )}
-          </>
-        );
+          case "Triggering Survival Ally":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <ContingentSurvivalAlly
+                    attacker={lastResolution.attacker}
+                    victim={lastResolution.victim}
+                    updateFirebase={updateFirebase}
+                    enterSelectUnitMode={enterSelectUnitMode}
+                    hideOrRevealModale={hideOrRevealModale}
+                    setIntrudingPlayer={setIntrudingPlayer}
+                  />
+                )}
+              </>
+            );
 
-      case "Triggering Survival Enemy":
-        return (
-          <>
-            {self === lastResolution.player && !hideModal && (
-              <ContingentSurvivalEnemy
-                attacker={lastResolution.attacker}
-                victim={lastResolution.victim}
-                updateFirebase={updateFirebase}
-                enterSelectUnitMode={enterSelectUnitMode}
-                hideOrRevealModale={hideOrRevealModale}
-                setIntrudingPlayer={setIntrudingPlayer}
-              />
-            )}
-          </>
-        );
+          case "Triggering Survival Enemy":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <ContingentSurvivalEnemy
+                    attacker={lastResolution.attacker}
+                    victim={lastResolution.victim}
+                    updateFirebase={updateFirebase}
+                    enterSelectUnitMode={enterSelectUnitMode}
+                    hideOrRevealModale={hideOrRevealModale}
+                    setIntrudingPlayer={setIntrudingPlayer}
+                  />
+                )}
+              </>
+            );
+
+          case "Triggering Target":
+            return (
+              <>
+                {self === lastResolution.victim.player && !hideModal && (
+                  <ContingentTarget
+                    updateFirebase={updateFirebase}
+                    attacker={lastResolution.attacker}
+                    victim={lastResolution.victim}
+                    type={lastResolution.type}
+                    enterSelectUnitMode={enterSelectUnitMode}
+                    hideOrRevealModale={hideOrRevealModale}
+                    setIntrudingPlayer={setIntrudingPlayer}
+                  />
+                )}
+              </>
+            );
+        }
+        break;
 
       case "Triggering Screech":
         return (
@@ -3211,23 +3271,6 @@ const Board = (props) => {
               <ContingentSymphonicScreech
                 updateFirebase={updateFirebase}
                 activator={lastResolution.activator}
-                enterSelectUnitMode={enterSelectUnitMode}
-                hideOrRevealModale={hideOrRevealModale}
-                setIntrudingPlayer={setIntrudingPlayer}
-              />
-            )}
-          </>
-        );
-
-      case "Triggering Target":
-        return (
-          <>
-            {self === lastResolution.victim.player && !hideModal && (
-              <ContingentTarget
-                updateFirebase={updateFirebase}
-                attacker={lastResolution.attacker}
-                victim={lastResolution.victim}
-                type={lastResolution.type}
                 enterSelectUnitMode={enterSelectUnitMode}
                 hideOrRevealModale={hideOrRevealModale}
                 setIntrudingPlayer={setIntrudingPlayer}
@@ -3245,19 +3288,6 @@ const Board = (props) => {
                 details={lastResolution.details}
                 updateFirebase={updateFirebase}
                 hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Mana Restructure Announcement":
-        return (
-          <>
-            {self === lastResolution.player && (
-              <MessageToEnemy
-                title={lastResolution.title}
-                message={lastResolution.message}
-                updateFirebase={updateFirebase}
               />
             )}
           </>

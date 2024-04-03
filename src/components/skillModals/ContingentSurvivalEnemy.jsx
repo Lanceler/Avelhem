@@ -66,7 +66,7 @@ const ContingentSurvivalEnemy = (props) => {
     if (
       //prevent enemy from activating their own contingent skill
       newGameState.currentResolution[newGameState.currentResolution.length - 1]
-        .resolution === "Triggering Survival Ally"
+        .resolution2 === "Triggering Survival Ally"
     ) {
       newGameState.currentResolution.pop();
     }

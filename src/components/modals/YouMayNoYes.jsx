@@ -241,11 +241,13 @@ const YouMayNoYes = (props) => {
         newGameState[self].skillFloat += 1;
 
         newGameState.currentResolution.push({
-          resolution: "Mana Restructure Announcement",
+          resolution: "Misc.",
+          resolution2: "Message To Enemy",
           player: enemy,
           title: "Mana Restructure",
           message: "Your opponent has floated 1 Mana skill from their hand.",
         });
+
         break;
 
       case "Avelhem Resonance Shuffle":

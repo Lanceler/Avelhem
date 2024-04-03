@@ -84,7 +84,7 @@ const ContingentAscension = (props) => {
       ["Triggering Ascension Ally", "Triggering Ascension Enemy"].includes(
         newGameState.currentResolution[
           newGameState.currentResolution.length - 1
-        ].resolution
+        ].resolution2
       )
     ) {
       newGameState.currentResolution.pop();

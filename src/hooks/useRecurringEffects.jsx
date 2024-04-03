@@ -1945,9 +1945,15 @@ export const useRecurringEffects = () => {
 
     //survival or elimination
     if (newGameState[victim.player].units[victim.unitIndex].hp > 0) {
-      const pushSurvivalResolution = (resolution, player, victim, attacker) => {
+      const pushSurvivalResolution = (
+        resolution2,
+        player,
+        victim,
+        attacker
+      ) => {
         newGameState.currentResolution.push({
-          resolution,
+          resolution: "Triggering Contingent Skill",
+          resolution2,
           player,
           victim,
           attacker,
@@ -2029,9 +2035,10 @@ export const useRecurringEffects = () => {
       }
 
       //elimination contingency
-      const pushEliminationResolution = (resolution, player, unit) => {
+      const pushEliminationResolution = (resolution2, player, unit) => {
         newGameState.currentResolution.push({
-          resolution,
+          resolution: "Triggering Contingent Skill",
+          resolution2,
           player,
           unit,
         });
@@ -2291,14 +2298,15 @@ export const useRecurringEffects = () => {
 
     //ascension contingency trigger
     const pushAscensionResolution = (
-      resolution,
+      resolution2,
       player,
       unit,
       scionClass,
       method
     ) => {
       newGameState.currentResolution.push({
-        resolution,
+        resolution: "Triggering Contingent Skill",
+        resolution2,
         player,
         unit,
         scionClass,
@@ -2535,7 +2543,8 @@ export const useRecurringEffects = () => {
     //to do in the future: consider bypass Target and Adamant Armor
     if (triggerTarget(attacker, victim, "blast")) {
       newGameState.currentResolution.push({
-        resolution: "Triggering Target",
+        resolution: "Triggering Contingent Skill",
+        resolution2: "Triggering Target",
         attacker: attacker,
         victim: victim,
         type: "virtue-blast",
@@ -3126,7 +3135,8 @@ export const useRecurringEffects = () => {
     //to do in the future: consider bypass Target
     if (triggerTarget(attacker, victim, "freeze1")) {
       newGameState.currentResolution.push({
-        resolution: "Triggering Target",
+        resolution: "Triggering Contingent Skill",
+        resolution2: "Triggering Target",
         attacker: attacker,
         victim: victim,
         type: "freeze1",
@@ -3149,7 +3159,8 @@ export const useRecurringEffects = () => {
     //to do in the future: consider bypass Target and Adamant Armor
     if (triggerTarget(attacker, victim, "freeze2")) {
       newGameState.currentResolution.push({
-        resolution: "Triggering Target",
+        resolution: "Triggering Contingent Skill",
+        resolution2: "Triggering Target",
         attacker: attacker,
         victim: victim,
         type: "freeze2",
@@ -3421,7 +3432,8 @@ export const useRecurringEffects = () => {
     //to do in the future: consider bypass Target
     if (triggerTarget(attacker, victim, "ignite")) {
       newGameState.currentResolution.push({
-        resolution: "Triggering Target",
+        resolution: "Triggering Contingent Skill",
+        resolution2: "Triggering Target",
         attacker: attacker,
         victim: victim,
         type: "ignite",
@@ -3581,7 +3593,8 @@ export const useRecurringEffects = () => {
       triggerMotion(mover)
     ) {
       newGameState.currentResolution.push({
-        resolution: "Triggering Motion",
+        resolution: "Triggering Contingent Skill",
+        resolution2: "Triggering Motion",
         mover: mover,
         player: moverEnemy,
       });
@@ -3606,7 +3619,8 @@ export const useRecurringEffects = () => {
     //to do in the future: consider bypass Target and Adamant Armor
     if (triggerTarget(attacker, victim, "paralyze1")) {
       newGameState.currentResolution.push({
-        resolution: "Triggering Target",
+        resolution: "Triggering Contingent Skill",
+        resolution2: "Triggering Target",
         attacker: attacker,
         victim: victim,
         type: "paralyze1",
@@ -3629,7 +3643,8 @@ export const useRecurringEffects = () => {
     //to do in the future: consider bypass Target and Adamant Armor
     if (triggerTarget(attacker, victim, "paralyze1")) {
       newGameState.currentResolution.push({
-        resolution: "Triggering Target",
+        resolution: "Triggering Contingent Skill",
+        resolution2: "Triggering Target",
         attacker: attacker,
         victim: victim,
         type: "paralyze1",
@@ -3702,7 +3717,8 @@ export const useRecurringEffects = () => {
 
     if (triggerTarget(attacker, victim, "strike")) {
       newGameState.currentResolution.push({
-        resolution: "Triggering Target",
+        resolution: "Triggering Contingent Skill",
+        resolution2: "Triggering Target",
         attacker: attacker,
         victim: victim,
         type: "strike",
@@ -4043,7 +4059,8 @@ export const useRecurringEffects = () => {
     //to do in the future: consider bypass Target and Adamant Armor
     if (triggerTarget(attacker, victim, "virtue-blast")) {
       newGameState.currentResolution.push({
-        resolution: "Triggering Target",
+        resolution: "Triggering Contingent Skill",
+        resolution2: "Triggering Target",
         attacker: attacker,
         victim: victim,
         type: "virtue-blast",
@@ -4056,7 +4073,7 @@ export const useRecurringEffects = () => {
   };
 
   const virtueBlastYes = (newGameState, attacker, victim) => {
-    newGameState.currentResolution.pop();
+    // newGameState.currentResolution.pop();
     newGameState.currentResolution[
       newGameState.currentResolution.length - 1
     ].special = "Virtue-blast-blocked";
