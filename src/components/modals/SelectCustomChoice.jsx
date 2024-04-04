@@ -6,6 +6,7 @@ import GoldFrame from "../../assets/others/GoldFrame.png";
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
+import { useCardDatabase } from "../../hooks/useCardDatabase";
 
 const SelectCustomChoice = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
@@ -13,6 +14,7 @@ const SelectCustomChoice = (props) => {
   const dispatch = useDispatch();
 
   const [selectedChoice, setSelectedChoice] = useState(null);
+  const { allBurstSkills } = useCardDatabase();
 
   useEffect(() => {
     setSelectedChoice(null);
@@ -177,6 +179,17 @@ const SelectCustomChoice = (props) => {
       canSecondChoice = newGameState[self].skillVestige.length > 0;
       ChoiceFirstMessage = "Recover then float 1 Avelhem.";
       ChoiceSecondMessage = "Recover then float 1 skill.";
+      break;
+
+    case "Foreshadow":
+      canFirstChoice = allBurstSkills().some((s) =>
+        newGameState[self].skillVestige.includes(s)
+      );
+
+      canSecondChoice = true;
+      ChoiceFirstMessage = "Recover then reveal 1 burst skill.";
+      ChoiceSecondMessage =
+        "Search for any skill; if successful, reveal and discard it.";
       break;
   }
 
@@ -558,6 +571,27 @@ const SelectCustomChoice = (props) => {
             restriction: null,
             message: "Recover then float 1 skill.",
             outcome: "Float",
+          });
+        }
+        break;
+
+      case "Foreshadow":
+        if (selectedChoice === 1) {
+          newGameState.currentResolution.push({
+            resolution: "Recover Skill",
+            player: self,
+            restriction: allBurstSkills(),
+            message: "Recover then reveal 1 burst skill.",
+            outcome: "Add",
+          });
+        } else {
+          newGameState.currentResolution.push({
+            resolution: "Search Skill",
+            player: self,
+            restriction: null,
+            message:
+              "Search for any skill; if successful, reveal and discard it.",
+            outcome: "Foreshadow",
           });
         }
         break;

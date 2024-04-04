@@ -26,6 +26,7 @@ import DefiancePhaseSelection from "./modals/DefiancePhaseSelection";
 
 import InspectSkill from "./modals/InspectSkill";
 import MessageToEnemy from "./modals/MessageToEnemy";
+import RecoverAvelhem from "./modals/RecoverAvelhem";
 import RecoverSkill from "./modals/RecoverSkill";
 import ScionSkillSelect from "./modals/ScionSkillSelect";
 import SearchSkill from "./modals/SearchSkill";
@@ -214,6 +215,8 @@ const Board = (props) => {
     heirsEndeavor1,
     heirsEndeavorResonance,
     reminiscence1,
+    foreshadow1,
+    foreshadow2,
     darkHalo1,
     ambidexterity1,
     ambidexterityR1,
@@ -626,6 +629,21 @@ const Board = (props) => {
           <>
             {self === lastResolution.player && !hideModal && (
               <SearchSkill
+                restriction={lastResolution.restriction}
+                outcome={lastResolution.outcome}
+                message={lastResolution.message}
+                hideOrRevealModale={hideOrRevealModale}
+                updateFirebase={updateFirebase}
+              />
+            )}
+          </>
+        );
+
+      case "Recover Avelhem":
+        return (
+          <>
+            {self === lastResolution.player && !hideModal && (
+              <RecoverAvelhem
                 restriction={lastResolution.restriction}
                 outcome={lastResolution.outcome}
                 message={lastResolution.message}
@@ -2995,7 +3013,68 @@ const Board = (props) => {
               <>
                 {self === lastResolution.player && !hideModal && (
                   <SelectCustomChoice
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Reminiscence2":
+            return (
+              <>
+                {self === localGameState.turnPlayer && !hideModal && (
+                  <TacticSelectionViaEffect
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Activating Foreshadow":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>{resolutionUpdateGameStateOnly(foreshadow1())}</>
+                )}
+              </>
+            );
+
+          case "Foreshadow1":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <SelectCustomChoice
                     // unit={null}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Foreshadow2":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      foreshadow2(lastResolution.discardedBurst)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Foreshadow Draw":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <YouMayNoYes
                     details={lastResolution.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}

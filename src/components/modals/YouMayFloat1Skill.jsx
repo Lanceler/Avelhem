@@ -59,16 +59,25 @@ const YouMayFloat1Skill = (props) => {
     }
 
     //send selected skill to repertoire
-    //to do: discard Transcendence
-    newGameState[self].skillRepertoire.push(
-      ...newGameState[self].skillHand.splice(
-        usableSkills[selectedSkill].handIndex,
-        1
-      )
-    );
+    //Transcendence is discarded rather than floated
+    if (usableSkills[selectedSkill].id === "SX-01") {
+      newGameState[self].skillVestige.push(
+        ...newGameState[self].skillHand.splice(
+          usableSkills[selectedSkill].handIndex,
+          1
+        )
+      );
+    } else {
+      newGameState[self].skillRepertoire.push(
+        ...newGameState[self].skillHand.splice(
+          usableSkills[selectedSkill].handIndex,
+          1
+        )
+      );
 
-    //Increase floating count
-    newGameState[self].skillFloat = newGameState[self].skillFloat + 1;
+      //Increase floating count
+      newGameState[self].skillFloat = newGameState[self].skillFloat + 1;
+    }
 
     dispatch(updateState(newGameState));
     props.updateFirebase(newGameState);

@@ -257,6 +257,10 @@ const YouMayNoYes = (props) => {
 
         break;
 
+      case "Foreshadow Draw": //"Foreshadow Draw"
+        newGameState = drawSkill(newGameState);
+        break;
+
       case "Ambidexterity Conversion":
         newGameState.currentResolution.push({
           resolution: "Sovereign Resonant Skill",

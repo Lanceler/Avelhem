@@ -116,19 +116,6 @@ export const useSovereignSkillEffects = () => {
       (localGameState.tactics[1].face === "Invoke" &&
         localGameState.tactics[1].stock > 0)
     ) {
-      // newGameState.currentResolution.push({
-      //   resolution: "Sovereign Standard Skill",
-      //   resolution2: "Reminiscence2",
-      //   player: self,
-      //   details: {
-      //     reason: "Reminiscence Invoke",
-      //     title: "Reminiscence",
-      //     message: "You may use Invoke to draw 3 skills.",
-      //     no: "Skip",
-      //     yes: "Draw",
-      //   },
-      // });
-
       newGameState.currentResolution.push({
         resolution: "Sovereign Standard Skill",
         resolution2: "Reminiscence2",
@@ -155,6 +142,74 @@ export const useSovereignSkillEffects = () => {
         reason: "Reminiscence",
       },
     });
+
+    return newGameState;
+  };
+
+  const foreshadow1 = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Activating Foreshadow" resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Sovereign Standard Skill",
+      resolution2: "Foreshadow2",
+      player: self,
+      discardedBurst: false,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Sovereign Standard Skill",
+      resolution2: "Foreshadow1",
+      player: self,
+      unit: null,
+      details: {
+        title: "Foreshadow",
+        reason: "Foreshadow",
+      },
+    });
+
+    return newGameState;
+  };
+
+  const foreshadow2 = (discardedBurst) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Foreshadow2" resolution
+    newGameState.currentResolution.pop();
+
+    if (discardedBurst) {
+      newGameState.currentResolution.push({
+        resolution: "Sovereign Standard Skill",
+        resolution2: "Foreshadow Draw",
+        player: self,
+        // unit: null,
+        details: {
+          reason: "Foreshadow Draw",
+          title: "Foreshadow",
+          message: "You may draw 1 skill.",
+          no: "Skip",
+          yes: "Draw",
+        },
+      });
+    }
+
+    if (newGameState[self].skillFloat > 0) {
+      newGameState.currentResolution.push({
+        resolution: "Sovereign Standard Skill",
+        resolution2: "Foreshadow Draw",
+        player: self,
+        // unit: null,
+        details: {
+          reason: "Foreshadow Draw",
+          title: "Foreshadow",
+          message: "You may draw 1 floating skill.",
+          no: "Skip",
+          yes: "Draw",
+        },
+      });
+    }
 
     return newGameState;
   };
@@ -330,6 +385,8 @@ export const useSovereignSkillEffects = () => {
     heirsEndeavorResonance,
     darkHalo1,
     reminiscence1,
+    foreshadow1,
+    foreshadow2,
     ambidexterity1,
     ambidexterityR1,
     fatedRivalry1,

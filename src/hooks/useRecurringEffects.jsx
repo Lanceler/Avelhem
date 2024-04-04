@@ -1433,6 +1433,14 @@ export const useRecurringEffects = () => {
           "Activating Reminiscence"
         );
 
+      case "SA-05":
+        return activateTemplate(
+          newGameState,
+          skill,
+          "Sovereign Standard Skill",
+          "Activating Foreshadow"
+        );
+
       case "SB-02":
         return activateTemplate(
           newGameState,
@@ -3075,16 +3083,34 @@ export const useRecurringEffects = () => {
         newGameState[self].skillVestige
       );
 
+      //1.5 remove Transcendence (SX-01)
+      const newSkillDeck = newGameState[self].skillVestige.filter(
+        (s) => s !== "SX-01"
+      );
+      const transcendenceCount =
+        newGameState[self].skillVestige.length - newSkillDeck.length;
+
       //2. Copy vestige to repertoire
-      newGameState[self].skillRepertoire = [
-        ...newGameState[self].skillVestige.splice(
-          0,
-          newGameState[self].skillVestige.length
-        ),
-      ];
+      newGameState[self].skillRepertoire = [...newSkillDeck];
 
       //3. Empty vestige
       newGameState[self].skillVestige = [];
+
+      //3.5 Retain Transcendence in vestige
+      for (let i = 0; i < transcendenceCount; i++) {
+        newGameState[self].skillVestige.push("SX-01");
+      }
+
+      //4. Apply Penalty
+      //If one’s skill repertoire is depleted, their opponent gains 6 FD and 3 BP.
+      newGameState[enemy].bountyPoints = Math.min(
+        10,
+        newGameState[enemy].bountyPoints + 3
+      );
+      newGameState[enemy].fateDefiances = Math.min(
+        6,
+        newGameState[enemy].fateDefiances + 6
+      );
     }
 
     return newGameState;

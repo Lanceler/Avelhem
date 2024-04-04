@@ -13,6 +13,7 @@ const TacticSelectionViaEffect = (props) => {
   const {
     canMove,
     canStrike,
+    drawSkill,
     getTacticImage,
     getVacantAdjacentZones,
     getZonesInRange,
@@ -108,6 +109,13 @@ const TacticSelectionViaEffect = (props) => {
           newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
           break;
 
+        case "Reminiscence":
+          newGameState = drawSkill(newGameState);
+          newGameState = drawSkill(newGameState);
+          newGameState = drawSkill(newGameState);
+
+          break;
+
         case "Ambidexterity":
           newGameState.tactics[i].stock += 1;
           newGameState.tactics[i].face = "Invoke";
@@ -169,7 +177,9 @@ const TacticSelectionViaEffect = (props) => {
         </div>
 
         {props.details.canSkip && (
-          <button onClick={() => handleSkip()}>Skip</button>
+          <button button className="choiceButton" onClick={() => handleSkip()}>
+            Skip
+          </button>
         )}
       </div>
     </div>

@@ -409,5 +409,25 @@ export const useCardDatabase = () => {
     return skillCardList.find((card) => card.CardId === id);
   };
 
-  return { avelhemCardList, skillCardList, getAvelhemById, getSkillById };
+  const allBurstSkills = () => {
+    return [
+      "01-04",
+      "02-04",
+      "03-04",
+      "04-04",
+      "05-04",
+      "06-04",
+      "07-04",
+      "08-04",
+      "SD-01",
+    ];
+  };
+
+  return {
+    allBurstSkills,
+    avelhemCardList,
+    skillCardList,
+    getAvelhemById,
+    getSkillById,
+  };
 };
