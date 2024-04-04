@@ -171,6 +171,13 @@ const SelectCustomChoice = (props) => {
       ChoiceFirstMessage = "Blast (bypass Shield) an adjacent rooted enemy.";
       ChoiceSecondMessage = "Prompt an adjacent ally to strike a rooted enemy.";
       break;
+
+    case "Reminiscence":
+      canFirstChoice = newGameState[self].avelhemVestige.length > 0;
+      canSecondChoice = newGameState[self].skillVestige.length > 0;
+      ChoiceFirstMessage = "Recover then float 1 Avelhem.";
+      ChoiceSecondMessage = "Recover then float 1 skill.";
+      break;
   }
 
   const handleFirstChoice = () => {
@@ -534,6 +541,28 @@ const SelectCustomChoice = (props) => {
           });
         }
         break;
+
+      case "Reminiscence":
+        if (selectedChoice === 1) {
+          newGameState.currentResolution.push({
+            resolution: "Recover Avelhem",
+            player: self,
+            restriction: null,
+            message: "Recover then float 1 Avelhem.",
+            outcome: "Float",
+          });
+        } else {
+          newGameState.currentResolution.push({
+            resolution: "Recover Skill",
+            player: self,
+            restriction: null,
+            message: "Recover then float 1 skill.",
+            outcome: "Float",
+          });
+        }
+        break;
+
+      //
     }
 
     if (updateLocal) {

@@ -119,6 +119,7 @@ const Board = (props) => {
     getZonesWithEnemiesAfflicted,
     getZonesWithEnemiesRooted,
     getZonesWithScions,
+    grantRavager,
     freeze1,
     freeze2,
     ignite,
@@ -212,6 +213,7 @@ const Board = (props) => {
   const {
     heirsEndeavor1,
     heirsEndeavorResonance,
+    reminiscence1,
     darkHalo1,
     ambidexterity1,
     ambidexterityR1,
@@ -670,8 +672,9 @@ const Board = (props) => {
           <>
             {self === lastResolution.player && !hideModal && (
               <ViewRevealedSkill
-                updateFirebase={updateFirebase}
                 skill={lastResolution.skill}
+                message={lastResolution.message}
+                updateFirebase={updateFirebase}
                 hideOrRevealModale={hideOrRevealModale}
               />
             )}
@@ -2968,11 +2971,7 @@ const Board = (props) => {
             return (
               <>
                 {self === lastResolution.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      darkHalo1(lastResolution.resonator)
-                    )}
-                  </>
+                  <>{resolutionUpdateGameStateOnly(darkHalo1())}</>
                 )}
               </>
             );
@@ -2980,6 +2979,29 @@ const Board = (props) => {
           case "Select Dark Halo":
             return (
               <>{self === lastResolution.player && <>{selectDarkHalo()}</>}</>
+            );
+
+          case "Activating Reminiscence":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>{resolutionUpdateGameStateOnly(reminiscence1())}</>
+                )}
+              </>
+            );
+
+          case "Reminiscence1":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <SelectCustomChoice
+                    // unit={null}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
             );
         }
         break;
@@ -4323,12 +4345,10 @@ const Board = (props) => {
         break;
 
       case "dark halo":
-        newGameState[selectedUnit.player].units[
-          selectedUnit.unitIndex
-        ].enhancements.ravager = true;
-
-        delete newGameState[selectedUnit.player].units[selectedUnit.unitIndex]
-          .afflictions.anathema;
+        newGameState[selectedUnit.player].units[selectedUnit.unitIndex] =
+          grantRavager(
+            newGameState[selectedUnit.player].units[selectedUnit.unitIndex]
+          );
 
         break;
 
@@ -4608,8 +4628,6 @@ const Board = (props) => {
   //=========================
   //=========================
   const onSetFirstPlayer = async (choice) => {
-    console.log("Set First Player");
-
     const newGameState = JSON.parse(JSON.stringify(localGameState));
 
     newGameState.turnPlayer = choice;
@@ -4639,6 +4657,17 @@ const Board = (props) => {
 
     let guestAvelhemRepertoire = [...newGameState.guest.avelhemRepertoire];
     newGameState.guest.avelhemRepertoire = shuffleCards(guestAvelhemRepertoire);
+
+    newGameState.guest.skillHand.push("SX-01");
+    newGameState.host.skillHand.push("SX-01");
+
+    if (choice === "host") {
+      newGameState.guest.skillHand.push("SX-01");
+      newGameState.host.skillVestige.push("SX-01");
+    } else {
+      newGameState.host.skillHand.push("SX-01");
+      newGameState.guest.skillVestige.push("SX-01");
+    }
 
     newGameState.host.units = [
       newPawnStats("host", 0, 6, 0),
@@ -4923,15 +4952,6 @@ const Board = (props) => {
                 </div>
               </div>
 
-              {/* <div className="lc-player">
-                <div className="avel-hand">
-                  <PlayerAvelhemHand />
-                </div>
-                <div className="skill-hand">
-                  <PlayerSkillHand />
-                </div>
-              </div> */}
-
               <div className="hands-player">
                 <div className="skill-hand">
                   <PlayerSkillHand updateFirebase={updateFirebase} />
@@ -4942,8 +4962,6 @@ const Board = (props) => {
               </div>
             </div>
           </div>
-          {/* <br />
-          <br /> */}
           {currentResolutionPrompt()}
         </div>
       )}

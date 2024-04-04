@@ -1425,6 +1425,14 @@ export const useRecurringEffects = () => {
           "Activating Dark Halo"
         );
 
+      case "SA-04":
+        return activateTemplate(
+          newGameState,
+          skill,
+          "Sovereign Standard Skill",
+          "Activating Reminiscence"
+        );
+
       case "SB-02":
         return activateTemplate(
           newGameState,
@@ -3395,6 +3403,22 @@ export const useRecurringEffects = () => {
     return zonesWithScions;
   };
 
+  const grantRavager = (unitInfo) => {
+    let unit = unitInfo;
+
+    unit.enhancements.ravager = true;
+    delete unit.afflictions.anathema;
+
+    if (
+      ["Fire Scion", "Water Scion"].includes(unit.unitClass) &&
+      !isMuted(unit)
+    ) {
+      delete unit.afflictions.burn;
+    }
+
+    return unit;
+  };
+
   const hasScion = (player) => {
     const units = localGameState[player].units;
 
@@ -4153,6 +4177,7 @@ export const useRecurringEffects = () => {
     getZonesWithEnemiesAfflicted,
     getZonesWithEnemiesRooted,
     getZonesWithScions,
+    grantRavager,
     ignite,
     isAdjacent,
     isDisrupted,

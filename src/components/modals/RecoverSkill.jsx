@@ -41,8 +41,11 @@ const RecoverSkill = (props) => {
       [
         "Recover then float 1 Plant skill other than “Efflorescence”.",
         "Recover 1 Lightning skill other than “Thunder Thaumaturge”.",
+        "Recover then reveal 1 Burst skill.",
       ].includes(props.message)
     ) {
+      let message = "Your opponent has recovered and revealed a skill.";
+
       newGameState.currentResolution.push({
         resolution: "Revealing Skill",
         player: enemy,
@@ -50,28 +53,9 @@ const RecoverSkill = (props) => {
           newGameState[self].skillVestige[
             newGameState[self].skillVestige.length - 1 - selectedSkill
           ],
+        message: message,
       });
     }
-
-    // if (
-    //   props.message ===
-    //   "Recover 1 Lightning skill other than “Thunder Thaumaturge”."
-    // ) {
-    //   newGameState.currentResolution.push({
-    //     resolution: "Revealing Skill",
-    //     player: enemy,
-    //     skill:
-    //       newGameState[self].skillVestige[
-    //         newGameState[self].skillVestige.length - 1 - selectedSkill
-    //       ],
-    //   });
-    // }
-
-    // console.log(
-    //   newGameState[self].skillVestige[
-    //     newGameState[self].skillVestige.length - 1 - selectedSkill
-    //   ]
-    // );
 
     if (props.outcome === "Add") {
       //add selected skill from vestige to hand

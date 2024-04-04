@@ -61,7 +61,7 @@ export const useSovereignSkillEffects = () => {
 
       details: {
         restriction: [
-          "SA-01",
+          "SA-01", // SX-01 (Transcedence) is excluded
           "SA-02",
           "SA-03",
           "SA-04",
@@ -99,6 +99,61 @@ export const useSovereignSkillEffects = () => {
       resolution: "Sovereign Standard Skill",
       resolution2: "Select Dark Halo",
       player: self,
+    });
+
+    return newGameState;
+  };
+
+  const reminiscence1 = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Activating Reminiscence" resolution
+    newGameState.currentResolution.pop();
+
+    if (
+      (localGameState.tactics[0].face === "Invoke" &&
+        localGameState.tactics[0].stock > 0) ||
+      (localGameState.tactics[1].face === "Invoke" &&
+        localGameState.tactics[1].stock > 0)
+    ) {
+      // newGameState.currentResolution.push({
+      //   resolution: "Sovereign Standard Skill",
+      //   resolution2: "Reminiscence2",
+      //   player: self,
+      //   details: {
+      //     reason: "Reminiscence Invoke",
+      //     title: "Reminiscence",
+      //     message: "You may use Invoke to draw 3 skills.",
+      //     no: "Skip",
+      //     yes: "Draw",
+      //   },
+      // });
+
+      newGameState.currentResolution.push({
+        resolution: "Sovereign Standard Skill",
+        resolution2: "Reminiscence2",
+        // unit: null,
+        player: self,
+        details: {
+          title: "Reminiscence",
+          message: "You may use an Invoke tactic to draw 3 skills.",
+          restriction: ["Invoke"],
+          stock: 1,
+          reason: "Reminiscence",
+          canSkip: true,
+        },
+      });
+    }
+
+    newGameState.currentResolution.push({
+      resolution: "Sovereign Standard Skill",
+      resolution2: "Reminiscence1",
+      player: self,
+      unit: null,
+      details: {
+        title: "Reminiscence",
+        reason: "Reminiscence",
+      },
     });
 
     return newGameState;
@@ -274,6 +329,7 @@ export const useSovereignSkillEffects = () => {
     heirsEndeavor1,
     heirsEndeavorResonance,
     darkHalo1,
+    reminiscence1,
     ambidexterity1,
     ambidexterityR1,
     fatedRivalry1,
