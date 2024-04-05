@@ -12,6 +12,7 @@ const GlacialTorrent1 = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
+  const { refillRepertoireSkill } = useRecurringEffects();
 
   const [selectedSkills, setSelectedSkills] = useState([]);
 
@@ -75,6 +76,11 @@ const GlacialTorrent1 = (props) => {
 
       //remove card from repertoire
       newGameState[self].skillRepertoire.splice(i, 1);
+    }
+
+    //reset repertoire if empty
+    if (newGameState[self].skillRepertoire.length === 0) {
+      newGameState = refillRepertoireSkill(newGameState);
     }
 
     //INSPECTION DOES NOT SHUFFLE

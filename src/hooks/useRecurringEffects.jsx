@@ -3076,41 +3076,7 @@ export const useRecurringEffects = () => {
     }
 
     if (newGameState[self].skillRepertoire.length === 0) {
-      //If deck empties, shuffle discard pile into it.
-
-      //1.Shuffle Vestige
-      newGameState[self].skillVestige = shuffleCards(
-        newGameState[self].skillVestige
-      );
-
-      //1.5 remove Transcendence (SX-01)
-      const newSkillDeck = newGameState[self].skillVestige.filter(
-        (s) => s !== "SX-01"
-      );
-      const transcendenceCount =
-        newGameState[self].skillVestige.length - newSkillDeck.length;
-
-      //2. Copy vestige to repertoire
-      newGameState[self].skillRepertoire = [...newSkillDeck];
-
-      //3. Empty vestige
-      newGameState[self].skillVestige = [];
-
-      //3.5 Retain Transcendence in vestige
-      for (let i = 0; i < transcendenceCount; i++) {
-        newGameState[self].skillVestige.push("SX-01");
-      }
-
-      //4. Apply Penalty
-      //If one’s skill repertoire is depleted, their opponent gains 6 FD and 3 BP.
-      newGameState[enemy].bountyPoints = Math.min(
-        10,
-        newGameState[enemy].bountyPoints + 3
-      );
-      newGameState[enemy].fateDefiances = Math.min(
-        6,
-        newGameState[enemy].fateDefiances + 6
-      );
+      newGameState = refillRepertoireSkill(newGameState);
     }
 
     return newGameState;
@@ -3738,6 +3704,46 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const refillRepertoireSkill = (newGameState) => {
+    //If deck empties, shuffle discard pile into it.
+
+    //1.Shuffle Vestige
+    newGameState[self].skillVestige = shuffleCards(
+      newGameState[self].skillVestige
+    );
+
+    //1.5 remove Transcendence (SX-01)
+    const newSkillDeck = newGameState[self].skillVestige.filter(
+      (s) => s !== "SX-01"
+    );
+    const transcendenceCount =
+      newGameState[self].skillVestige.length - newSkillDeck.length;
+
+    //2. Copy vestige to repertoire
+    newGameState[self].skillRepertoire = [...newSkillDeck];
+
+    //3. Empty vestige
+    newGameState[self].skillVestige = [];
+
+    //3.5 Retain Transcendence in vestige
+    for (let i = 0; i < transcendenceCount; i++) {
+      newGameState[self].skillVestige.push("SX-01");
+    }
+
+    //4. Apply Penalty
+    //If one’s skill repertoire is depleted, their opponent gains 6 FD and 3 BP.
+    newGameState[enemy].bountyPoints = Math.min(
+      10,
+      newGameState[enemy].bountyPoints + 3
+    );
+    newGameState[enemy].fateDefiances = Math.min(
+      6,
+      newGameState[enemy].fateDefiances + 6
+    );
+
+    return newGameState;
+  };
+
   const resetAdamantArmor = (unit) => {
     delete unit.temporary.usedAdamantArmor;
 
@@ -4213,6 +4219,7 @@ export const useRecurringEffects = () => {
     paralyze1,
     paralyze2,
     purificationPurge,
+    refillRepertoireSkill,
     rollTactic,
     shuffleCards,
     strike,
