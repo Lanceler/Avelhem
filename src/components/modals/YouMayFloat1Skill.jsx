@@ -13,7 +13,7 @@ const YouMayFloat1Skill = (props) => {
   const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const {} = useRecurringEffects();
+  const { grantRavager } = useRecurringEffects();
 
   const [selectedSkill, setSelectedSkill] = useState(null);
 
@@ -37,6 +37,10 @@ const YouMayFloat1Skill = (props) => {
 
   const handleSelect = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = null;
+    if (props.unit) {
+      unit = newGameState[props.unit.player].units[props.unit.unitIndex];
+    }
 
     //end Floating Skill resolution
     newGameState.currentResolution.pop();
@@ -46,12 +50,18 @@ const YouMayFloat1Skill = (props) => {
         newGameState.currentResolution.push({
           resolution: "Water Skill",
           resolution2: "Frigid Breath4",
-          unit: props.unit,
+          unit: unit,
         });
         break;
 
       case "Gale Conjuration1":
-        newGameState[props.unit.player].units[props.unit.unitIndex].virtue = 1;
+        unit.virtue = 1;
+        newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+        break;
+
+      case "Vengeful Legacy Ravager":
+        unit = grantRavager(unit);
+        newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
         break;
 
       default:

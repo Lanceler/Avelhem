@@ -162,6 +162,34 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const activateBlackBusinessCard = (newGameState) => {
+    //end Triggering Target resolution
+    // newGameState.currentResolution.pop() <-- NOT needed
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      skill: "SC-05",
+      conclusion: "discard",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Sovereign Contingent Skill",
+      resolution2: "Activating Black Business Card",
+      player: self,
+    });
+
+    newGameState.activatingSkill.push("SC-05");
+    newGameState.activatingUnit.push(null);
+
+    newGameState.currentResolution.push({
+      resolution: "Animation Delay",
+      priority: self,
+    });
+
+    return newGameState;
+  };
+
   const activateBlazeOfGlory = (newGameState, unit) => {
     //end Triggering Target resolution
     // newGameState.currentResolution.pop() <-- NOT needed
@@ -1722,6 +1750,35 @@ export const useRecurringEffects = () => {
 
     newGameState.activatingSkill.push("05-04");
     newGameState.activatingUnit.push(unit);
+
+    return newGameState;
+  };
+
+  const activateVengefulLegacy = (newGameState, victim) => {
+    //end Triggering Elimination resolution
+    // newGameState.currentResolution.pop() <-- NOT needed
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      skill: "SC-04",
+      conclusion: "discard",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Sovereign Contingent Skill",
+      resolution2: "Activating Vengeful Legacy",
+      player: self,
+      victim: victim,
+    });
+
+    newGameState.activatingSkill.push("SC-04");
+    newGameState.activatingUnit.push(null);
+
+    newGameState.currentResolution.push({
+      resolution: "Animation Delay",
+      priority: self,
+    });
 
     return newGameState;
   };
@@ -3752,8 +3809,8 @@ export const useRecurringEffects = () => {
 
   const rollTactic = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
-    const mobilizeLimit =
-      3 + newGameState[self].bountyUpgrades.tactics > 2 ? 1 : 0;
+
+    const mobilizeLimit = newGameState[self].bountyUpgrades.tactics > 2 ? 4 : 3;
 
     const dieFaces = [
       { face: "Advance", stock: 1 },
@@ -4159,6 +4216,7 @@ export const useRecurringEffects = () => {
   return {
     activateAegis,
     activateAvelhem,
+    activateBlackBusinessCard,
     activateBlazeOfGlory,
     activateHealingRain,
     activateFatedRivalry,
@@ -4171,6 +4229,7 @@ export const useRecurringEffects = () => {
     activateSovereignSkillAndResonate,
     activateSymphonicScreech,
     activateThunderThaumaturge,
+    activateVengefulLegacy,
     activateViridianGrave,
     applyBurn,
     applyDamage,

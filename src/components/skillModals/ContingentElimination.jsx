@@ -15,6 +15,8 @@ const ContingentElimination = (props) => {
   const [selectedSkill, setSelectedSkill] = useState(null);
 
   const {
+    activateBlackBusinessCard,
+    activateVengefulLegacy,
     triggerBlackBusinessCard,
     triggerVengefulLegacy,
     triggerViridianGrave,
@@ -84,17 +86,36 @@ const ContingentElimination = (props) => {
       1
     );
 
-    if (usableSkills[selectedSkill].id === "08-03") {
-      newGameState.currentResolution.push({
-        resolution: "Plant Skill",
-        resolution2: "Select Viridian Grave Activator",
-        victim: props.unit,
-        player: self,
-      });
+    switch (usableSkills[selectedSkill].id) {
+      case "08-03":
+        newGameState.currentResolution.push({
+          resolution: "Plant Skill",
+          resolution2: "Select Viridian Grave Activator",
+          victim: props.unit,
+          player: self,
+        });
+        break;
+
+      case "SC-04":
+        newGameState = activateVengefulLegacy(newGameState, props.unit);
+        break;
+
+      case "SC-05":
+        newGameState = activateBlackBusinessCard(newGameState);
+        break;
     }
 
+    // if (usableSkills[selectedSkill].id === "08-03") {
+    //   newGameState.currentResolution.push({
+    //     resolution: "Plant Skill",
+    //     resolution2: "Select Viridian Grave Activator",
+    //     victim: props.unit,
+    //     player: self,
+    //   });
+    // }
+
     dispatch(updateState(newGameState));
-    // props.updateFirebase(newGameState); // might remove this line of code
+    props.updateFirebase(newGameState);
   };
 
   const handleViewBoard = () => {

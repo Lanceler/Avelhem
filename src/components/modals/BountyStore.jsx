@@ -756,7 +756,7 @@ const BountyStore = (props) => {
         <div>
           {selectedChoice === null && (
             <button className="choiceButton noYes" onClick={() => handleSkip()}>
-              Skip
+              Proceed
             </button>
           )}
 

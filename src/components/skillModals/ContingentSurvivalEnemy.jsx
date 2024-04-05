@@ -87,7 +87,7 @@ const ContingentSurvivalEnemy = (props) => {
     }
 
     dispatch(updateState(newGameState));
-    // props.updateFirebase(newGameState);
+    props.updateFirebase(newGameState);
   };
 
   const handleViewBoard = () => {

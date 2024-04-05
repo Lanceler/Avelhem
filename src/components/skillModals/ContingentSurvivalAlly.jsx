@@ -88,7 +88,7 @@ const ContingentSurvivalAlly = (props) => {
     }
 
     dispatch(updateState(newGameState));
-    // props.updateFirebase(newGameState); // might return this line of code
+    props.updateFirebase(newGameState); // might return this line of code
   };
 
   const handleViewBoard = () => {

@@ -378,6 +378,57 @@ export const useSovereignSkillEffects = () => {
     return newGameState;
   };
 
+  const vengefulLegacy1 = (victim) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Activating Vengeful Legacy" resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Sovereign Contingent Skill",
+      resolution2: "Select Vengeful Legacy",
+      player: self,
+      victim: victim,
+    });
+
+    return newGameState;
+  };
+
+  const vengefulLegacy2 = (unit) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Vengeful Legacy2" resolution
+    newGameState.currentResolution.pop();
+
+    if (newGameState[self].skillHand.length > 0) {
+      newGameState.currentResolution.push({
+        resolution: "Sovereign Contingent Skill",
+        resolution2: "Vengeful Legacy Ravager",
+        title: "Vengeful Legacy",
+        unit: unit,
+        reason: "Vengeful Legacy Ravager",
+        restriction: null,
+        message: "You may float 1 skill to grant them Ravager.",
+      });
+    }
+
+    return newGameState;
+  };
+
+  const blackBusinessCard1 = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Activating Black Business Card" resolution
+    newGameState.currentResolution.pop();
+
+    newGameState[self].bountyPoints = Math.min(
+      10,
+      newGameState[self].bountyPoints + 2
+    );
+
+    return newGameState;
+  };
+
   //end of list
 
   return {
@@ -394,5 +445,8 @@ export const useSovereignSkillEffects = () => {
     matchMadeInHeaven1,
     matchMadeInHeaven2,
     matchMadeInHeaven3,
+    vengefulLegacy1,
+    vengefulLegacy2,
+    blackBusinessCard1,
   };
 };

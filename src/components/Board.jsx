@@ -225,6 +225,9 @@ const Board = (props) => {
     matchMadeInHeaven1,
     matchMadeInHeaven2,
     matchMadeInHeaven3,
+    vengefulLegacy1,
+    vengefulLegacy2,
+    blackBusinessCard1,
   } = useSovereignSkillEffects();
 
   const { getSkillById } = useCardDatabase();
@@ -1160,6 +1163,7 @@ const Board = (props) => {
                   <YouMayFloat1Skill
                     unit={lastResolution.unit}
                     restriction={lastResolution.restriction}
+                    title={lastResolution.title}
                     message={lastResolution.message}
                     reason={lastResolution.reason}
                     updateFirebase={updateFirebase}
@@ -3256,6 +3260,67 @@ const Board = (props) => {
                 )}
               </>
             );
+
+          case "Activating Vengeful Legacy":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      vengefulLegacy1(lastResolution.victim)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Select Vengeful Legacy":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>{selectVengefulLegacy(lastResolution.victim)}</>
+                )}
+              </>
+            );
+
+          case "Vengeful Legacy2":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      vengefulLegacy2(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Vengeful Legacy Ravager":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMayFloat1Skill
+                    unit={lastResolution.unit}
+                    restriction={lastResolution.restriction}
+                    title={lastResolution.title}
+                    message={lastResolution.message}
+                    reason={lastResolution.reason}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Activating Black Business Card":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>{resolutionUpdateGameStateOnly(blackBusinessCard1())}</>
+                )}
+              </>
+            );
         }
 
         break;
@@ -4453,6 +4518,25 @@ const Board = (props) => {
         );
         break;
 
+      case "vengeful legacy":
+        newGameState.currentResolution.push({
+          resolution: "Sovereign Contingent Skill",
+          resolution2: "Vengeful Legacy2",
+          player: self,
+          unit: selectedUnit,
+        });
+
+        newGameState = ascendPawn(
+          newGameState,
+          selectedUnit,
+          unit.unitClass,
+          "Vengeful Legacy",
+          null,
+          unit
+        );
+
+        break;
+
       default:
         break;
     }
@@ -4469,6 +4553,36 @@ const Board = (props) => {
     dispatch(updateState(newGameState));
 
     updateFirebase(newGameState);
+  };
+
+  const selectVengefulLegacy = (victim) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Select Vengeful Legacy"
+    newGameState.currentResolution.pop();
+
+    const allies = getZonesWithAllies(victim, 2, false);
+
+    const zonesWithPawns = [];
+    for (let i of allies) {
+      const zone = zones[Math.floor(i / 5)][i % 5];
+      const unit = localGameState[zone.player].units[zone.unitIndex];
+
+      if (unit.unitClass === "Pawn" && !isMuted(unit)) {
+        zonesWithPawns.push(i);
+      }
+    }
+
+    setIntrudingPlayer(self);
+
+    enterSelectUnitMode(
+      zonesWithPawns,
+      victim,
+      newGameState,
+      null,
+      "vengeful legacy",
+      null
+    );
   };
 
   const selectViridianGraveActivator = (victim) => {
