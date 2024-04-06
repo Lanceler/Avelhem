@@ -14,7 +14,7 @@ const AcquisitionPhaseSelection = (props) => {
 
   const [selectedChoice, setSelectedChoice] = useState(null);
 
-  const { drawSkill, drawAvelhem } = useRecurringEffects();
+  const { drawSkill, drawAvelhem, getVacantFrontier } = useRecurringEffects();
 
   let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -22,7 +22,7 @@ const AcquisitionPhaseSelection = (props) => {
   if (newIndex === -1) {
     newIndex = newGameState[self].units.length;
   }
-  const canAppoint = !(newIndex >= 8 || props.getVacantFrontier().length === 0);
+  const canAppoint = !(newIndex >= 8 || getVacantFrontier().length === 0);
 
   const canDivine = newGameState[self].bountyUpgrades.acquisition > 0;
 
@@ -73,7 +73,7 @@ const AcquisitionPhaseSelection = (props) => {
 
     switch (selectedChoice) {
       case 1:
-        props.enterDeployMode(props.getVacantFrontier());
+        props.enterDeployMode(getVacantFrontier());
         break;
       case 2:
         newGameState = drawAvelhem(newGameState);

@@ -1493,6 +1493,14 @@ export const useRecurringEffects = () => {
           "Activating Providence"
         );
 
+      case "SB-05":
+        return activateTemplate(
+          newGameState,
+          skill,
+          "Sovereign Resonant Skill",
+          "Activating Press the Attack"
+        );
+
       default:
         return newGameState;
     }
@@ -1583,6 +1591,16 @@ export const useRecurringEffects = () => {
           skill,
           "Sovereign Resonant Skill",
           "Activating Providence",
+          resonator,
+          "retain"
+        );
+
+      case "SB-05":
+        return activateResonanceTemplate(
+          newGameState,
+          skill,
+          "Sovereign Resonant Skill",
+          "Activating Press the Attack",
           resonator,
           "retain"
         );
@@ -3321,6 +3339,39 @@ export const useRecurringEffects = () => {
     return adjacentZones;
   };
 
+  const getVacantFrontier = () => {
+    let frontierLength = 1 + localGameState[self].bountyUpgrades.frontier;
+
+    let zones = JSON.parse(localGameState.zones);
+
+    let validZones = [];
+
+    if (self === "host") {
+      for (let r = 9; r >= 9 - frontierLength; r--) {
+        for (let c = 0; c <= 4; c++) {
+          validZones.push(zones[r][c]);
+        }
+      }
+    } else {
+      for (let r = 0; r <= 0 + frontierLength; r++) {
+        for (let c = 0; c <= 4; c++) {
+          validZones.push(zones[r][c]);
+        }
+      }
+    }
+
+    //get zones that are empty
+    validZones = validZones.filter((zone) => !zone.player);
+
+    let validZonesIds = [];
+
+    for (let i = 0; i < validZones.length; i++) {
+      validZonesIds.push(validZones[i].id);
+    }
+
+    return validZonesIds;
+  };
+
   const getZonesAerialImpetusAlly = (unit) => {
     const zones = JSON.parse(localGameState.zones);
     const adjacentAllies = getZonesWithAllies(unit, 1, false); // excludes self
@@ -4286,6 +4337,7 @@ export const useRecurringEffects = () => {
     getScionSet,
     getTacticImage,
     getVacantAdjacentZones,
+    getVacantFrontier,
     getZonesAerialImpetusAlly,
     getZonesForPromotion,
     getZonesInRange,

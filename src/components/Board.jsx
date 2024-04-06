@@ -114,6 +114,7 @@ const Board = (props) => {
     drawSkill,
     endFinalPhase,
     getVacantAdjacentZones,
+    getVacantFrontier,
     getZonesForPromotion,
     getZonesWithAllies,
     getZonesWithEnemies,
@@ -224,6 +225,7 @@ const Board = (props) => {
     providence1,
     providence2,
     providenceR1,
+    pressTheAttack1,
     fatedRivalry1,
     fatedRivalry2,
     matchMadeInHeaven1,
@@ -311,7 +313,6 @@ const Board = (props) => {
           <>
             {self === localGameState.turnPlayer && !hideModal && (
               <AcquisitionPhaseSelection
-                getVacantFrontier={getVacantFrontier}
                 enterDeployMode={enterDeployMode}
                 updateFirebase={updateFirebase}
                 hideOrRevealModale={hideOrRevealModale}
@@ -3261,6 +3262,46 @@ const Board = (props) => {
               </>
             );
 
+          case "Activating Press the Attack":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      pressTheAttack1(lastResolution.resonator)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Press the Attack1":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <YouMayNoYes
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Press the Attack2":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <YouMayNoYes
+                    details={lastResolution.details}
+                    enterDeployMode={enterDeployMode}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
           case "Heirs Endeavor Resonance":
             return (
               <>
@@ -3699,8 +3740,6 @@ const Board = (props) => {
   };
 
   const deployPawn = (r, c) => {
-    console.log("deploy pawn on row" + r + " column" + c);
-
     const newGameState = JSON.parse(JSON.stringify(localGameState));
     let newIndex = newGameState[self].units.indexOf(null);
     if (newIndex === -1) {
@@ -3716,7 +3755,9 @@ const Board = (props) => {
     newZoneInfo[r][c].unitIndex = newIndex;
     newGameState.zones = JSON.stringify(newZoneInfo);
 
+    //end "Deploying Pawn"
     newGameState.currentResolution.pop();
+
     if (localGameState.turnPhase === "Acquisition") {
       newGameState.turnPhase = "Bounty";
       newGameState.currentResolution.pop();
@@ -3808,37 +3849,6 @@ const Board = (props) => {
     dispatch(updateState(newGameState));
 
     // updateFirebase(newGameState);
-  };
-
-  const getVacantFrontier = () => {
-    let frontierLength = 1 + localGameState[self].bountyUpgrades.frontier;
-
-    let validZones = [];
-
-    if (self === "host") {
-      for (let r = 9; r >= 9 - frontierLength; r--) {
-        for (let c = 0; c <= 4; c++) {
-          validZones.push(zones[r][c]);
-        }
-      }
-    } else {
-      for (let r = 0; r <= 0 + frontierLength; r++) {
-        for (let c = 0; c <= 4; c++) {
-          validZones.push(zones[r][c]);
-        }
-      }
-    }
-
-    //get zones that are empty
-    validZones = validZones.filter((zone) => !zone.player);
-
-    let validZonesIds = [];
-
-    for (let i = 0; i < validZones.length; i++) {
-      validZonesIds.push(validZones[i].id);
-    }
-
-    return validZonesIds;
   };
 
   const hideOrRevealModale = () => {

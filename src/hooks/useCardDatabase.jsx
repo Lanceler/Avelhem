@@ -423,11 +423,29 @@ export const useCardDatabase = () => {
     ];
   };
 
+  const pressTheAttackList = () => {
+    return [
+      "01-01", //Ignition Propulsion
+      "01-02", //Conflagration
+      "02-02", //Frigid Breath
+      "03-02", //Gale Conjuration
+      "04-03", //Pitfall Trap
+      "05-01", //Chain Lightning
+      "05-02", //Zip and Zap
+      "06-01", //Surge
+      "06-02", //Diffusion
+      "07-01", //Magnetic Shockwave
+      "07-03", //Frenzy Blade
+      "08-01", //Sow and Reap
+    ];
+  };
+
   return {
-    allBurstSkills,
     avelhemCardList,
     skillCardList,
     getAvelhemById,
     getSkillById,
+    allBurstSkills,
+    pressTheAttackList,
   };
 };

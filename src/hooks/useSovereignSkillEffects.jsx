@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../redux/gameState";
 import gameState from "../redux/gameState";
 
+import { useCardDatabase } from "./useCardDatabase";
+
 import { useRecurringEffects } from "./useRecurringEffects";
 
 export const useSovereignSkillEffects = () => {
@@ -11,7 +13,9 @@ export const useSovereignSkillEffects = () => {
   const { self, enemy } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const { drawSkill, isAdjacent } = useRecurringEffects();
+  const { drawSkill, isAdjacent, getVacantFrontier } = useRecurringEffects();
+
+  const { pressTheAttackList } = useCardDatabase();
 
   const heirsEndeavor1 = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
@@ -379,6 +383,68 @@ export const useSovereignSkillEffects = () => {
     return newGameState;
   };
 
+  const pressTheAttack1 = (resonator) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Activating Press the Attack" resolution
+    newGameState.currentResolution.pop();
+
+    if (resonator) {
+      // newGameState.currentResolution.push({
+      //   resolution: "Sovereign Resonant Skill",
+      //   resolution2: "Press the AttackR1",
+      //   player: self,
+      // });
+
+      newGameState.currentResolution.push({
+        resolution: "Search Skill",
+        player: self,
+        restriction: pressTheAttackList(),
+        message:
+          "Search for 1 non-burst Scion skill that enables the activator to strike or blast.",
+        outcome: "Add",
+      });
+    }
+
+    let newIndex = newGameState[self].units.indexOf(null);
+    if (newIndex === -1) {
+      newIndex = newGameState[self].units.length;
+    }
+
+    if (!(newIndex >= 8 || getVacantFrontier().length === 0)) {
+      newGameState.currentResolution.push({
+        resolution: "Sovereign Resonant Skill",
+        resolution2: "Press the Attack2",
+        player: self,
+        details: {
+          reason: "Press the Attack Pawn",
+          title: "Press the Attack",
+          message: "You may deploy a pawn in your frontier.",
+          no: "Skip",
+          yes: "Deploy",
+        },
+      });
+    }
+
+    newGameState.currentResolution.push({
+      resolution: "Sovereign Resonant Skill",
+      resolution2: "Press the Attack1",
+      player: self,
+      details: {
+        reason: "Press the Attack Avelhem",
+        title: "Press the Attack",
+        message: "You may draw 3 Avelhems.",
+        no: "Skip",
+        yes: "Draw",
+      },
+    });
+
+    newGameState.tactics[0].face = "Assault";
+    newGameState.tactics[1].face = "Assault";
+
+    return newGameState;
+  };
+
   const fatedRivalry1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
@@ -544,6 +610,7 @@ export const useSovereignSkillEffects = () => {
     providence1,
     providence2,
     providenceR1,
+    pressTheAttack1,
     fatedRivalry1,
     fatedRivalry2,
     matchMadeInHeaven1,

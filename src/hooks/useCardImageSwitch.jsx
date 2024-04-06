@@ -58,7 +58,7 @@ import Transmute from "../assets/skillcards/Transmute.png";
 import Ambidexterity from "../assets/skillcards/Ambidexterity.png";
 import Providence from "../assets/skillcards/Providence.png";
 import FerventPrayer from "../assets/skillcards/FerventPrayer.png";
-// import PressTheAttack from "../assets/skillcards/PressTheAttack.png";
+import PressTheAttack from "../assets/skillcards/PressTheAttack.png";
 import PowerAtTheFinalHour from "../assets/skillcards/PowerAtTheFinalHour.png";
 import FatedRivalry from "../assets/skillcards/FatedRivalry.png";
 import MatchMadeInHeaven from "../assets/skillcards/MatchMadeInHeaven.png";
@@ -180,8 +180,8 @@ export const useCardImageSwitch = () => {
         return Providence;
       case "SB-04":
         return FerventPrayer;
-      // case "SB-05":
-      //   return PressTheAttack;
+      case "SB-05":
+        return PressTheAttack;
 
       case "SC-01":
         return PowerAtTheFinalHour;
@@ -313,8 +313,8 @@ export const useCardImageSwitch = () => {
         return Providence;
       case "Fervent Prayer":
         return FerventPrayer;
-      // case "Press The Attack":
-      //   return PressTheAttack;
+      case "Press The Attack":
+        return PressTheAttack;
       case "Power At The Final Hour":
         return PowerAtTheFinalHour;
       case "Fated Rivalry":

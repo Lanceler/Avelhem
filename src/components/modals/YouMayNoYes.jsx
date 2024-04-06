@@ -11,12 +11,19 @@ const YouMayNoYes = (props) => {
 
   const dispatch = useDispatch();
 
-  const { drawSkill, getZonesWithEnemies, virtueBlastYes } =
-    useRecurringEffects();
+  const {
+    drawAvelhem,
+    drawSkill,
+    getVacantFrontier,
+    getZonesWithEnemies,
+    virtueBlastYes,
+  } = useRecurringEffects();
 
   const handleViewBoard = () => {
     props.hideOrRevealModale();
   };
+
+  let updateLocal = true;
 
   let updateData = false;
   if (
@@ -282,6 +289,20 @@ const YouMayNoYes = (props) => {
           restriction: ["SX-01"],
           message: "Recover 1 “Transcendence”",
           outcome: "Add",
+        });
+
+      case "Press the Attack Avelhem":
+        newGameState = drawAvelhem(newGameState);
+        newGameState = drawAvelhem(newGameState);
+        newGameState = drawAvelhem(newGameState);
+        break;
+
+      case "Press the Attack Pawn":
+        // props.enterDeployMode(getVacantFrontier());
+
+        newGameState.currentResolution.push({
+          resolution: "Deploying Pawn",
+          zoneIds: getVacantFrontier(),
         });
 
         break;
