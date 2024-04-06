@@ -1445,6 +1445,14 @@ export const useRecurringEffects = () => {
           "Activating Heir's Endeavor"
         );
 
+      case "SA-02":
+        return activateTemplate(
+          newGameState,
+          skill,
+          "Sovereign Standard Skill",
+          "Activating Tea for Two"
+        );
+
       case "SA-03":
         return activateTemplate(
           newGameState,

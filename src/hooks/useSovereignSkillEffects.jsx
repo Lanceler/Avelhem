@@ -89,6 +89,28 @@ export const useSovereignSkillEffects = () => {
     return newGameState;
   };
 
+  const teaForTwo1 = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Activating Tea for Two" resolution
+    newGameState.currentResolution.pop();
+
+    newGameState = drawSkill(newGameState);
+    newGameState = drawSkill(newGameState);
+
+    newGameState.currentResolution.push({
+      resolution: "Sovereign Standard Skill",
+      resolution2: "Tea for Two1",
+      player: self,
+      details: {
+        title: "Tea for Two",
+        reason: "Tea for Two",
+      },
+    });
+
+    return newGameState;
+  };
+
   const darkHalo1 = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -328,7 +350,6 @@ export const useSovereignSkillEffects = () => {
         resolution: "Sovereign Resonant Skill",
         resolution2: "Providence Recovery",
         player: self,
-        // unit: null,
         details: {
           reason: "Providence Recovery",
           title: "Providence",
@@ -513,6 +534,7 @@ export const useSovereignSkillEffects = () => {
   return {
     heirsEndeavor1,
     heirsEndeavorResonance,
+    teaForTwo1,
     darkHalo1,
     reminiscence1,
     foreshadow1,

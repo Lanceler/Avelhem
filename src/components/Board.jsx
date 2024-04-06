@@ -214,6 +214,7 @@ const Board = (props) => {
   const {
     heirsEndeavor1,
     heirsEndeavorResonance,
+    teaForTwo1,
     reminiscence1,
     foreshadow1,
     foreshadow2,
@@ -678,7 +679,7 @@ const Board = (props) => {
       case "Discard Skill":
         return (
           <>
-            {self === lastResolution.unit.player && !hideModal && (
+            {self === lastResolution.player && !hideModal && (
               <SelectSkillDiscard
                 updateFirebase={updateFirebase}
                 unit={lastResolution.unit}
@@ -1463,7 +1464,7 @@ const Board = (props) => {
           case "Gale ConjurationR4":
             return (
               <>
-                {self === lastResolution.enemy && !hideModal && (
+                {self === lastResolution.player && !hideModal && (
                   <SelectSkillFloat
                     unit={null}
                     reason="Gale Conjuration Lethal"
@@ -2988,6 +2989,46 @@ const Board = (props) => {
               <>
                 {self === lastResolution.player && (
                   <>{resolutionUpdateGameStateOnly(heirsEndeavor1())}</>
+                )}
+              </>
+            );
+
+          case "Activating Tea for Two":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      teaForTwo1(lastResolution.resonator)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Tea for Two1":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <SelectCustomChoice
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Tea for Two2":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <SelectSkillFloat
+                    title="Tea for Two"
+                    message={lastResolution.message}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
                 )}
               </>
             );

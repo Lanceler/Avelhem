@@ -26,7 +26,7 @@ const SelectSkillFloat = (props) => {
   }
 
   const canBeFloated = (skill) => {
-    if (props.restriction === null) {
+    if (!props.restriction) {
       return true;
     }
     if (props.restriction.includes(skill)) {
@@ -41,26 +41,14 @@ const SelectSkillFloat = (props) => {
     //end Floating Skill resolution
     newGameState.currentResolution.pop();
 
-    switch (props.reason) {
-      case "Gale Conjuration Lethal":
-        // nothing :)
-        break;
+    // switch (props.reason) {
+    //   case "Gale Conjuration Lethal":
+    //     // nothing :)
+    //     break;
 
-      default:
-        break;
-    }
-
-    // //send selected skill to repertoire
-    // //to do: discard Transcendence
-    // newGameState[self].skillRepertoire.push(
-    //   ...newGameState[self].skillHand.splice(
-    //     usableSkills[selectedSkill].handIndex,
-    //     1
-    //   )
-    // );
-
-    // //Increase floating count
-    // newGameState[self].skillFloat = newGameState[self].skillFloat + 1;
+    //   default:
+    //     break;
+    // }
 
     //send selected skill to repertoire
     //Transcendence is discarded rather than floated
@@ -94,8 +82,12 @@ const SelectSkillFloat = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <button onClick={() => handleViewBoard()}>View Board</button>
-        <h2>{props.title}</h2>
+        <div className="twoColumn">
+          <h2 className="choiceTitle">{props.title}</h2>
+          <button className="choiceButton" onClick={() => handleViewBoard()}>
+            View Board
+          </button>
+        </div>
         <h3>{props.message}</h3>
 
         <div className="fourColumn scrollable scrollable-y-only">
@@ -118,7 +110,9 @@ const SelectSkillFloat = (props) => {
         </div>
 
         {selectedSkill !== null && (
-          <button onClick={() => handleSelect()}>Select</button>
+          <button className="choiceButton" onClick={() => handleSelect()}>
+            Select
+          </button>
         )}
       </div>
     </div>

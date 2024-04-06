@@ -174,6 +174,13 @@ const SelectCustomChoice = (props) => {
       ChoiceSecondMessage = "Prompt an adjacent ally to strike a rooted enemy.";
       break;
 
+    case "Tea for Two":
+      canFirstChoice = true;
+      canSecondChoice = true;
+      ChoiceFirstMessage = "Float 1 skill.";
+      ChoiceSecondMessage = "Discard 1 skill.";
+      break;
+
     case "Reminiscence":
       canFirstChoice = newGameState[self].avelhemVestige.length > 0;
       canSecondChoice = newGameState[self].skillVestige.length > 0;
@@ -551,6 +558,24 @@ const SelectCustomChoice = (props) => {
             resolution2: "Select Sow and Reap Striker",
             unit: unit,
             player: self,
+          });
+        }
+        break;
+
+      case "Tea for Two":
+        if (selectedChoice === 1) {
+          newGameState.currentResolution.push({
+            resolution: "Sovereign Standard Skill",
+            resolution2: "Tea for Two2",
+            player: self,
+            message: "Float 1 skill.",
+          });
+        } else {
+          newGameState.currentResolution.push({
+            resolution: "Discard Skill",
+            player: self,
+            message: "Spend 1 skill.",
+            restriction: null,
           });
         }
         break;

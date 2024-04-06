@@ -26,7 +26,7 @@ const SelectSkillDiscard = (props) => {
   }
 
   const canBeDiscarded = (skill) => {
-    if (props.restriction === null) {
+    if (!props.restriction) {
       return true;
     }
     if (props.restriction.includes(skill)) {
@@ -75,7 +75,7 @@ const SelectSkillDiscard = (props) => {
     // Mana Scion talent: Mana Scions and their adjacent allies
     // may float Mana skills when spending them
     if (
-      (props.unit !== null) &
+      props.unit &
         ["06-01", "06-02", "06-03", "06-04"].includes(
           usableSkills[selectedSkill].id
         ) &&
@@ -151,16 +151,14 @@ const SelectSkillDiscard = (props) => {
           </div>
         </div>
 
-        {selectedSkill === null &&
-          props.unit !== null &&
-          props.unit.blossom > 0 && (
-            <button
-              className="choiceButton noYes"
-              onClick={() => handleBlossom()}
-            >
-              Spend 1 Blossom
-            </button>
-          )}
+        {selectedSkill === null && props.unit && props.unit.blossom > 0 && (
+          <button
+            className="choiceButton noYes"
+            onClick={() => handleBlossom()}
+          >
+            Spend 1 Blossom
+          </button>
+        )}
 
         {selectedSkill !== null && (
           <button className="choiceButton noYes" onClick={() => handleSelect()}>

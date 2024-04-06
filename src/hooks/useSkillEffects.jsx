@@ -717,7 +717,7 @@ export const useSkillEffects = () => {
       newGameState.currentResolution.push({
         resolution: "Wind Skill",
         resolution2: "Gale ConjurationR4",
-        enemy: enemy,
+        player: enemy,
       });
     }
 
