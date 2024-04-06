@@ -1477,6 +1477,14 @@ export const useRecurringEffects = () => {
           "Activating Ambidexterity"
         );
 
+      case "SB-03":
+        return activateTemplate(
+          newGameState,
+          skill,
+          "Sovereign Resonant Skill",
+          "Activating Providence"
+        );
+
       default:
         return newGameState;
     }
@@ -1559,6 +1567,16 @@ export const useRecurringEffects = () => {
           "Activating Ambidexterity",
           resonator,
           "float"
+        );
+
+      case "SB-03":
+        return activateResonanceTemplate(
+          newGameState,
+          skill,
+          "Sovereign Resonant Skill",
+          "Activating Providence",
+          resonator,
+          "retain"
         );
 
       default:

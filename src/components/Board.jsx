@@ -220,6 +220,9 @@ const Board = (props) => {
     darkHalo1,
     ambidexterity1,
     ambidexterityR1,
+    providence1,
+    providence2,
+    providenceR1,
     fatedRivalry1,
     fatedRivalry2,
     matchMadeInHeaven1,
@@ -3146,6 +3149,71 @@ const Board = (props) => {
                   <>
                     {resolutionUpdateGameStateOnly(
                       ambidexterityR1(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Activating Providence":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      providence1(lastResolution.resonator)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Providence1":
+            return (
+              <>
+                {self === localGameState.turnPlayer && !hideModal && (
+                  <TacticSelectionViaEffect
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Providence2":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      providence2(lastResolution.resonator)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Providence Recovery":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <YouMayNoYes
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "ProvidenceR1":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      providenceR1(lastResolution.resonator)
                     )}
                   </>
                 )}

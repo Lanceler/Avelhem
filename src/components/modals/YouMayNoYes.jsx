@@ -275,6 +275,17 @@ const YouMayNoYes = (props) => {
           },
         });
 
+      case "Providence Recovery":
+        newGameState.currentResolution.push({
+          resolution: "Recover Skill",
+          player: self,
+          restriction: ["SX-01"],
+          message: "Recover 1 “Transcendence”",
+          outcome: "Add",
+        });
+
+        break;
+
       default:
         break;
     }

@@ -279,6 +279,85 @@ export const useSovereignSkillEffects = () => {
     return newGameState;
   };
 
+  const providence1 = (resonator) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Activating Providence" resolution
+    newGameState.currentResolution.pop();
+
+    if (resonator) {
+      newGameState.currentResolution.push({
+        resolution: "Sovereign Resonant Skill",
+        resolution2: "ProvidenceR1",
+        player: self,
+      });
+    }
+
+    newGameState.currentResolution.push({
+      resolution: "Sovereign Resonant Skill",
+      resolution2: "Providence2",
+      player: self,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Sovereign Resonant Skill",
+      resolution2: "Providence1",
+      //unit: null,
+      details: {
+        title: "Providence",
+        message: "Use an Invoke tactic to draw 3 Avelhems and 3 skills.",
+        restriction: ["Invoke"],
+        stock: 1,
+        reason: "Providence",
+        canSkip: false,
+        resonated: resonator ? "resonated" : null,
+      },
+    });
+
+    return newGameState;
+  };
+
+  const providence2 = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Providence2" resolution
+    newGameState.currentResolution.pop();
+
+    if (newGameState[self].skillVestige.includes("SX-01")) {
+      newGameState.currentResolution.push({
+        resolution: "Sovereign Resonant Skill",
+        resolution2: "Providence Recovery",
+        player: self,
+        // unit: null,
+        details: {
+          reason: "Providence Recovery",
+          title: "Providence",
+          message: "You may recover 1 “Transcendence”.",
+          no: "Skip",
+          yes: "Recover",
+        },
+      });
+    }
+
+    return newGameState;
+  };
+
+  const providenceR1 = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "ProvidenceR1" resolution
+    newGameState.currentResolution.pop();
+
+    newGameState[self].fateDefiances = Math.min(
+      6,
+      newGameState[self].fateDefiances + 3
+    );
+
+    //Resonance also grants an advance tactic, but that will be handled via spending the invoke
+
+    return newGameState;
+  };
+
   const fatedRivalry1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
@@ -440,6 +519,9 @@ export const useSovereignSkillEffects = () => {
     foreshadow2,
     ambidexterity1,
     ambidexterityR1,
+    providence1,
+    providence2,
+    providenceR1,
     fatedRivalry1,
     fatedRivalry2,
     matchMadeInHeaven1,

@@ -10,14 +10,8 @@ const TacticSelectionViaEffect = (props) => {
   const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const {
-    canMove,
-    canStrike,
-    drawSkill,
-    getTacticImage,
-    getVacantAdjacentZones,
-    getZonesInRange,
-  } = useRecurringEffects();
+  const { canMove, canStrike, drawAvelhem, drawSkill, getTacticImage } =
+    useRecurringEffects();
 
   let canUseTactic = [false, false];
 
@@ -105,7 +99,6 @@ const TacticSelectionViaEffect = (props) => {
             resolution2: "Diffusion2",
             unit: unit,
           });
-
           newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
           break;
 
@@ -113,12 +106,25 @@ const TacticSelectionViaEffect = (props) => {
           newGameState = drawSkill(newGameState);
           newGameState = drawSkill(newGameState);
           newGameState = drawSkill(newGameState);
-
           break;
 
         case "Ambidexterity":
           newGameState.tactics[i].stock += 1;
           newGameState.tactics[i].face = "Invoke";
+          break;
+
+        case "Providence":
+          newGameState = drawSkill(newGameState);
+          newGameState = drawSkill(newGameState);
+          newGameState = drawSkill(newGameState);
+          newGameState = drawAvelhem(newGameState);
+          newGameState = drawAvelhem(newGameState);
+          newGameState = drawAvelhem(newGameState);
+
+          if (props.details.resonated === "resonated") {
+            newGameState.tactics[i].stock += 1;
+            newGameState.tactics[i].face = "Advance";
+          }
 
           break;
 
