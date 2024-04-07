@@ -23,11 +23,11 @@ const YouMayNoYes = (props) => {
     props.hideOrRevealModale();
   };
 
-  let updateLocal = true;
-
   let updateData = false;
   if (
-    ["Block Virtue-Blast", "Mana Restructure"].includes(props.details.reason)
+    ["Block Virtue-Blast", "Mana Restructure", "Fervent Prayer"].includes(
+      props.details.reason
+    )
   ) {
     updateData = true;
   }
@@ -290,6 +290,37 @@ const YouMayNoYes = (props) => {
           message: "Recover 1 “Transcendence”",
           outcome: "Add",
         });
+
+      case "Fervent Prayer":
+        newGameState = drawAvelhem(newGameState);
+
+        const ferventPrayerLimit = props.details.limit;
+
+        let ferventPrayerMessage = `You may draw 1 Avelhem up to ${
+          ferventPrayerLimit - 1
+        } more times.`;
+
+        if (props.details.limit - 1 === 1) {
+          ferventPrayerMessage = "You may draw 1 Avelhem 1 more time.";
+        }
+
+        if (ferventPrayerLimit - 1 > 0) {
+          newGameState.currentResolution.push({
+            resolution: "Sovereign Resonant Skill",
+            resolution2: "Fervent Prayer1",
+            player: self,
+            details: {
+              reason: "Fervent Prayer",
+              title: "Fervent Prayer",
+              message: ferventPrayerMessage,
+              no: "Stop",
+              yes: "Draw",
+              limit: ferventPrayerLimit - 1,
+            },
+          });
+        }
+
+        break;
 
       case "Press the Attack Avelhem":
         newGameState = drawAvelhem(newGameState);

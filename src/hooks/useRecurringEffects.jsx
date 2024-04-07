@@ -1493,6 +1493,14 @@ export const useRecurringEffects = () => {
           "Activating Providence"
         );
 
+      case "SB-04":
+        return activateTemplate(
+          newGameState,
+          skill,
+          "Sovereign Resonant Skill",
+          "Activating Fervent Prayer"
+        );
+
       case "SB-05":
         return activateTemplate(
           newGameState,
@@ -1593,6 +1601,16 @@ export const useRecurringEffects = () => {
           "Activating Providence",
           resonator,
           "retain"
+        );
+
+      case "SB-04":
+        return activateResonanceTemplate(
+          newGameState,
+          skill,
+          "Sovereign Resonant Skill",
+          "Activating Fervent Prayer",
+          resonator,
+          "float"
         );
 
       case "SB-05":
@@ -3075,6 +3093,17 @@ export const useRecurringEffects = () => {
     return false;
   };
 
+  const canDeploy = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    let newIndex = newGameState[self].units.indexOf(null);
+    if (newIndex === -1) {
+      newIndex = newGameState[self].units.length;
+    }
+
+    return !(newIndex >= 8 || getVacantFrontier().length === 0);
+  };
+
   const canMove = (unit) => {
     if (getVacantAdjacentZones(unit).length > 0) {
       return true;
@@ -4323,6 +4352,7 @@ export const useRecurringEffects = () => {
     canActivateSovereignResonance,
     canAscend,
     canBlast,
+    canDeploy,
     canSowAndReapBlast,
     canSowAndReapStrike,
     canMove,

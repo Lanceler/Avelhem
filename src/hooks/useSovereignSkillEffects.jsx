@@ -13,7 +13,8 @@ export const useSovereignSkillEffects = () => {
   const { self, enemy } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const { drawSkill, isAdjacent, getVacantFrontier } = useRecurringEffects();
+  const { canDeploy, drawAvelhem, drawSkill, isAdjacent } =
+    useRecurringEffects();
 
   const { pressTheAttackList } = useCardDatabase();
 
@@ -305,6 +306,71 @@ export const useSovereignSkillEffects = () => {
     return newGameState;
   };
 
+  const ferventPrayer1 = (resonator) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Activating Fervent Prayer" resolution
+    newGameState.currentResolution.pop();
+
+    let count = 2;
+    if (resonator) {
+      count = 3;
+      newGameState.currentResolution.push({
+        resolution: "Sovereign Resonant Skill",
+        resolution2: "Fervent PrayerR1",
+        player: self,
+      });
+    }
+
+    newGameState.currentResolution.push({
+      resolution: "Sovereign Resonant Skill",
+      resolution2: "Fervent Prayer2",
+      player: self,
+      details: {
+        reason: "Fervent Prayer",
+        title: "Fervent Prayer",
+        message: `Select up to ${count} Avelhems to retain; discard the rest.`,
+        count: count,
+      },
+    });
+
+    let limit = 6;
+    newGameState.currentResolution.push({
+      resolution: "Sovereign Resonant Skill",
+      resolution2: "Fervent Prayer1",
+      player: self,
+      details: {
+        reason: "Fervent Prayer",
+        title: "Fervent Prayer",
+        message: `You may draw 1 Avelhem up to ${limit} more times.`,
+        no: "Stop",
+        yes: "Draw",
+        limit: limit,
+      },
+    });
+
+    newGameState = drawAvelhem(newGameState);
+
+    return newGameState;
+  };
+
+  const ferventPrayerR1 = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Fervent PrayerR1" resolution
+    newGameState.currentResolution.pop();
+
+    if (newGameState[self].avelhemVestige.length > 0) {
+      newGameState.currentResolution.push({
+        resolution: "Sovereign Resonant Skill",
+        resolution2: "Fervent PrayerR2",
+        player: self,
+      });
+    }
+
+    return newGameState;
+  };
+
   const providence1 = (resonator) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -406,12 +472,7 @@ export const useSovereignSkillEffects = () => {
       });
     }
 
-    let newIndex = newGameState[self].units.indexOf(null);
-    if (newIndex === -1) {
-      newIndex = newGameState[self].units.length;
-    }
-
-    if (!(newIndex >= 8 || getVacantFrontier().length === 0)) {
+    if (canDeploy()) {
       newGameState.currentResolution.push({
         resolution: "Sovereign Resonant Skill",
         resolution2: "Press the Attack2",
@@ -610,6 +671,8 @@ export const useSovereignSkillEffects = () => {
     providence1,
     providence2,
     providenceR1,
+    ferventPrayer1,
+    ferventPrayerR1,
     pressTheAttack1,
     fatedRivalry1,
     fatedRivalry2,

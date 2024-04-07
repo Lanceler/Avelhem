@@ -7,13 +7,12 @@ import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 import { useCardDatabase } from "../../hooks/useCardDatabase";
 
 const SkillMultiSelect = (props) => {
-  const { getImage } = useCardImageSwitch();
+  const { getImage2 } = useCardImageSwitch();
   const { getSkillById } = useCardDatabase();
 
-  const cardInfo = getSkillById(props.usableSkill.id);
+  // const cardInfo = getSkillById(props.usableSkill.id);
 
-  let image = "";
-  image = getImage(cardInfo.Name);
+  const image = getImage2(props.usableSkill);
 
   const handleClick = () => {
     if (props.canAdd) {
@@ -41,8 +40,6 @@ const SkillMultiSelect = (props) => {
           </div>
         </div>
       )}
-
-      {!image && <div> {cardInfo.Name}</div>}
     </div>
   );
 };

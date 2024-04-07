@@ -26,7 +26,7 @@ const PlayerSkillHand = (props) => {
     setRaiseHeight(
       -45 + Math.ceil(localGameState[self].skillHand.length / 4) * 86
     );
-    setRaise(false);
+    // setRaise(false);
   }, [localGameState[self].skillHand.length]);
 
   const handleCollapse = () => {

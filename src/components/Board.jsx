@@ -31,6 +31,7 @@ import RecoverSkill from "./modals/RecoverSkill";
 import ScionSkillSelect from "./modals/ScionSkillSelect";
 import SearchSkill from "./modals/SearchSkill";
 import SelectSkillResonator from "./modals/SelectSkillResonator";
+import SelectAvelhemHandMulti from "./modals/SelectAvelhemHandMulti";
 import SelectAvelhemResonator from "./modals/SelectAvelhemResonator";
 import SelectSkillDiscard from "./modals/SelectSkillDiscard";
 import SelectSkillFloat from "./modals/SelectSkillFloat";
@@ -51,6 +52,7 @@ import SelectCustomChoice from "./modals/SelectCustomChoice";
 import GlacialTorrent1 from "./skillModals/GlacialTorrent1";
 import SymphonicScreechFloat from "./skillModals/SymphonicScreechFloat";
 import CataclysmicTempestFloat from "./skillModals/CataclysmicTempestFloat";
+import FerventPrayerResonance from "./skillModals/FerventPrayerResonance";
 
 import ContingentAscension from "./skillModals/ContingentAscension";
 import ContingentElimination from "./skillModals/ContingentElimination";
@@ -114,7 +116,6 @@ const Board = (props) => {
     drawSkill,
     endFinalPhase,
     getVacantAdjacentZones,
-    getVacantFrontier,
     getZonesForPromotion,
     getZonesWithAllies,
     getZonesWithEnemies,
@@ -225,6 +226,8 @@ const Board = (props) => {
     providence1,
     providence2,
     providenceR1,
+    ferventPrayer1,
+    ferventPrayerR1,
     pressTheAttack1,
     fatedRivalry1,
     fatedRivalry2,
@@ -3258,6 +3261,66 @@ const Board = (props) => {
                       providenceR1(lastResolution.resonator)
                     )}
                   </>
+                )}
+              </>
+            );
+
+          case "Activating Fervent Prayer":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      ferventPrayer1(lastResolution.resonator)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Fervent Prayer1":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <YouMayNoYes
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Fervent Prayer2":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <SelectAvelhemHandMulti
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Fervent PrayerR1":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>{resolutionUpdateGameStateOnly(ferventPrayerR1())}</>
+                )}
+              </>
+            );
+
+          case "Fervent PrayerR2":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <FerventPrayerResonance
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
                 )}
               </>
             );
