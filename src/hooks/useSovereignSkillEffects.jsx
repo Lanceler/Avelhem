@@ -241,6 +241,29 @@ export const useSovereignSkillEffects = () => {
     return newGameState;
   };
 
+  const transmute1 = (resonator) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Activating Transmute" resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Sovereign Resonant Skill",
+      resolution2: "Transmute1",
+      player: self,
+      resonated: resonator ? "resonated" : null,
+      details: {
+        reason: "Transmute",
+        title: "Transmute",
+        message:
+          "Reveal the aspects of 1 or 2 Scions skills and shuffle them into your repertoire. For each revealed aspect, search for 1 matching skill.",
+        count: 2,
+      },
+    });
+
+    return newGameState;
+  };
+
   const ambidexterity1 = (resonator) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -681,6 +704,7 @@ export const useSovereignSkillEffects = () => {
     reminiscence1,
     foreshadow1,
     foreshadow2,
+    transmute1,
     ambidexterity1,
     ambidexterityR1,
     providence1,

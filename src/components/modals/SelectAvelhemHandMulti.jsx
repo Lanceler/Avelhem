@@ -18,7 +18,7 @@ const SelectAvelhemHandMulti = (props) => {
   //selectedAvelhems refers to their index in the hand
   const [selectedAvelhems, setSelectedAvelhems] = useState([]);
 
-  const avelhemHand = localGameState[self].avelhemHand;
+  const avelhemHand = [...localGameState[self].avelhemHand];
   const selectLimit = props.details.count;
 
   let skipMessage = "Skip";

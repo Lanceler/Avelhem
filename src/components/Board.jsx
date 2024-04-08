@@ -34,6 +34,7 @@ import SelectSkillResonator from "./modals/SelectSkillResonator";
 import SelectAvelhemHandMulti from "./modals/SelectAvelhemHandMulti";
 import SelectAvelhemResonator from "./modals/SelectAvelhemResonator";
 import SelectSkillDiscard from "./modals/SelectSkillDiscard";
+import SelectSkillHandMulti from "./modals/SelectSkillHandMulti";
 import SelectSkillFloat from "./modals/SelectSkillFloat";
 import SelectSkillReveal from "./modals/SelectSkillReveal";
 import TacticResults from "./modals/TacticResults";
@@ -222,6 +223,7 @@ const Board = (props) => {
     foreshadow1,
     foreshadow2,
     darkHalo1,
+    transmute1,
     ambidexterity1,
     ambidexterityR1,
     providence1,
@@ -3141,6 +3143,33 @@ const Board = (props) => {
 
       case "Sovereign Resonant Skill":
         switch (lastResolution.resolution2) {
+          case "Activating Transmute":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      transmute1(lastResolution.resonator)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Transmute1":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <SelectSkillHandMulti
+                    resonated={lastResolution.resonated}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
           case "Activating Ambidexterity":
             return (
               <>

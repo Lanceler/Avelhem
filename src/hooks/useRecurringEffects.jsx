@@ -1477,6 +1477,14 @@ export const useRecurringEffects = () => {
           "Activating Foreshadow"
         );
 
+      case "SB-01":
+        return activateTemplate(
+          newGameState,
+          skill,
+          "Sovereign Resonant Skill",
+          "Activating Transmute"
+        );
+
       case "SB-02":
         return activateTemplate(
           newGameState,
@@ -1591,6 +1599,16 @@ export const useRecurringEffects = () => {
     };
 
     switch (skill) {
+      case "SB-01":
+        return activateResonanceTemplate(
+          newGameState,
+          skill,
+          "Sovereign Resonant Skill",
+          "Activating Transmute",
+          resonator,
+          "retain"
+        );
+
       case "SB-02":
         return activateResonanceTemplate(
           newGameState,
