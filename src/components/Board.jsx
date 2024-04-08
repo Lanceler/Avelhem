@@ -3325,6 +3325,21 @@ const Board = (props) => {
               </>
             );
 
+          case "Fervent Prayer Reveal":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <ViewRevealedSkill
+                    avelhems={lastResolution.avelhems}
+                    multi={true}
+                    message={lastResolution.message}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
           case "Activating Press the Attack":
             return (
               <>

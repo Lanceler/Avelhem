@@ -11,8 +11,8 @@ const ViewRevealedSkill = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const dispatch = useDispatch();
 
-  const { getSkillById } = useCardDatabase();
-  const { getImage } = useCardImageSwitch();
+  // const { getSkillById } = useCardDatabase();
+  const { getImage2 } = useCardImageSwitch();
 
   const handleProceed = () => {
     const newGameState = JSON.parse(JSON.stringify(localGameState));
@@ -26,7 +26,7 @@ const ViewRevealedSkill = (props) => {
     props.hideOrRevealModale();
   };
 
-  const revealedCard = getSkillById(props.skill);
+  // const revealedCard = getSkillById(props.skill);
 
   return (
     <div className="modal-backdrop">
@@ -38,12 +38,28 @@ const ViewRevealedSkill = (props) => {
           </button>
         </div>
 
-        <div
-          className="revealed-skill"
-          style={{
-            backgroundImage: `url(${getImage(revealedCard.Name)})`,
-          }}
-        ></div>
+        {props.skill && (
+          <div
+            className="revealed-skill"
+            style={{
+              backgroundImage: `url(${getImage2(props.skill)})`,
+            }}
+          ></div>
+        )}
+
+        {props.avelhems && (
+          <div className="fourColumn scrollable scrollable-y-only">
+            {props.avelhems.map((avelhem, i) => (
+              <div
+                key={i}
+                className="revealed-skill"
+                style={{
+                  backgroundImage: `url(${getImage2(avelhem)})`,
+                }}
+              ></div>
+            ))}
+          </div>
+        )}
 
         <button className="choiceButton noYes" onClick={() => handleProceed()}>
           Proceed

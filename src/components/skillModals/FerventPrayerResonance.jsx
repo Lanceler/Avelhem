@@ -10,7 +10,7 @@ import SkillMultiSelect from "../hand/SkillMultiSelect";
 
 const FerventPrayerResonance = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
-  const { self } = useSelector((state) => state.teams);
+  const { self, enemy } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
   const {} = useRecurringEffects();
@@ -35,24 +35,54 @@ const FerventPrayerResonance = (props) => {
     setSelectedAvelhemIds(selectedIds);
   }, [selectedAvelhems.length]);
 
-  //   const canAdd = (i) => {
-  //     const selectedAvelhemIds = [];
-  //     for (i of selectedAvelhems) {
-  //       selectedAvelhemIds.push(avelhemVestige[i]);
-  //     }
-
-  //     return (
-  //       selectedAvelhems.includes(i) ||
-  //       !selectedAvelhemIds.includes(avelhemVestige[i])
-  //     );
-  //   };
-
   const handleSelect = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
-    // newGameState.currentResolution.pop();
+    newGameState.currentResolution.pop();
 
-    // dispatch(updateState(newGameState));
-    // props.updateFirebase(newGameState);
+    //1. get avelhem IDs in selected order, then reverse
+    let avelhemsToFloat = [];
+    for (let i of selectedAvelhems) {
+      avelhemsToFloat.push(avelhemVestige[i]);
+    }
+
+    avelhemsToFloat.reverse();
+
+    // console.log("avelhemsToFloat");
+    // console.log(avelhemsToFloat);
+
+    //2. sort selected avelhems in descending order so they can be spliced smoothly
+    let sortedSelectedAvelhems = [...selectedAvelhems].sort((a, b) => b - a);
+
+    //3. remove selected avelhems from vestige
+    for (let i of sortedSelectedAvelhems) {
+      newGameState[self].avelhemVestige.splice(i, 1);
+    }
+
+    //4. float selected avelhems and increase floating count
+    newGameState[self].avelhemRepertoire = [
+      ...newGameState[self].avelhemRepertoire,
+      ...avelhemsToFloat,
+    ];
+
+    newGameState[self].avelhemFloat += avelhemsToFloat.length;
+
+    // console.log("newGameState[self].avelhemRepertoire");
+    // console.log(newGameState[self].avelhemRepertoire);
+    // console.log("newGameState[self].avelhemVestige");
+    // console.log(newGameState[self].avelhemVestige);
+    // console.log("newGameState[self].avelhemFloat");
+    // console.log(newGameState[self].avelhemFloat);
+
+    newGameState.currentResolution.push({
+      resolution: "Sovereign Resonant Skill",
+      resolution2: "Fervent Prayer Reveal",
+      player: enemy,
+      avelhems: [...avelhemsToFloat].reverse(),
+      message: "Your opponent has floated the following:",
+    });
+
+    dispatch(updateState(newGameState));
+    props.updateFirebase(newGameState);
   };
 
   const handleSkip = () => {
@@ -77,9 +107,12 @@ const FerventPrayerResonance = (props) => {
           </button>
         </div>
 
-        <h3>Recover up to 3 different Avelhems, then reveal and float them.</h3>
+        <h3>
+          Recover up to 3 different Avelhems, then reveal and float them. Cards
+          selected earlier will float above subsequent ones.
+        </h3>
 
-        <div className="fourColumn  scrollable scrollable-y-only">
+        <div className="fourColumn scrollable scrollable-y-only">
           {avelhemVestige.map((usableSkill, i) => (
             <div
               key={i}
