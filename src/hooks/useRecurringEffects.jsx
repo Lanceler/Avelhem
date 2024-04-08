@@ -1509,6 +1509,14 @@ export const useRecurringEffects = () => {
           "Activating Press the Attack"
         );
 
+      case "SC-01":
+        return activateTemplate(
+          newGameState,
+          skill,
+          "Sovereign Contingent Skill",
+          "Activating Power at the Final Hour: Proaction"
+        );
+
       default:
         return newGameState;
     }
@@ -2992,19 +3000,41 @@ export const useRecurringEffects = () => {
     };
 
     const canPowerAtTheFinalHourProaction = () => {
+      let pawn = null;
+      const units = localGameState[self].units;
+
+      //1. get any (the first) pawn that can promote
+      for (let unit of units) {
+        if (unit && unit.unitClass === "Pawn" && !isMuted(unit)) {
+          pawn = unit;
+          break;
+        }
+      }
+
+      //2. if no pawns were found in step 1, return false
+      if (pawn === null) {
+        return false;
+      }
+
+      //3. try to see if pawn can promote to aspect of any card in hand
+
       const skillHand = localGameState[self].skillHand;
 
       for (let skill of skillHand) {
+        //3.1 get aspect of skill
         const skillCode = skill.substring(0, 2);
 
-        if (isNaN(parseInt(skillCode))) {
-          break;
-        } else {
-          if ((localGameState, self, avelhemToScion(parseInt(skillCode)))) {
+        //3.2 if aspect is non-sovereign, check if can ascend
+        if (!isNaN(parseInt(skillCode))) {
+          if (
+            canAscend(localGameState, self, avelhemToScion(parseInt(skillCode)))
+          ) {
             return true;
           }
         }
       }
+
+      //4. return false if failed to return true
       return false;
     };
 
@@ -3039,6 +3069,9 @@ export const useRecurringEffects = () => {
 
       case "SB-05": // Press the Attack
         return canPressTheAttack();
+
+      case "SC-01": // Power the the Final Hour: Proaction
+        return canPowerAtTheFinalHourProaction();
 
       default:
         return false;
@@ -4037,7 +4070,7 @@ export const useRecurringEffects = () => {
   };
 
   const triggerFatedRivalry = (newGameState, unit, scionClass, method) => {
-    if (method === "Fated Rilvary") {
+    if (method === "Fated Rivalry") {
       return false;
     }
 

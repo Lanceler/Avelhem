@@ -14,7 +14,8 @@ const AcquisitionPhaseSelection = (props) => {
 
   const [selectedChoice, setSelectedChoice] = useState(null);
 
-  const { canDeploy, drawSkill, drawAvelhem } = useRecurringEffects();
+  const { canDeploy, drawSkill, drawAvelhem, getVacantFrontier } =
+    useRecurringEffects();
 
   let newGameState = JSON.parse(JSON.stringify(localGameState));
 

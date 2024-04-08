@@ -114,7 +114,7 @@ const SelectCustomChoice = (props) => {
       canFirstChoice = true;
       canSecondChoice = newGameState[unit.player].skillHand.length > 0;
       ChoiceFirstMessage =
-        "Gain a boost: you can use <invoke> to activate “Boulder Crush”.";
+        "Gain a boost: you can use an Invoke tactic to activate “Boulder Crush”.";
       ChoiceSecondMessage = "Spend 1 skill to search for 1 “Crystallization”.";
       break;
 

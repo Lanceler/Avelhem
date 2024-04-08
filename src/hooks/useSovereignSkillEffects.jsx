@@ -506,6 +506,21 @@ export const useSovereignSkillEffects = () => {
     return newGameState;
   };
 
+  const powerAtTheFinalHourProaction = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Activating Power at the Final Hour: Proaction" resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Sovereign Contingent Skill",
+      resolution2: "Power at the Final Hour: Proaction",
+      player: self,
+    });
+
+    return newGameState;
+  };
+
   const fatedRivalry1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
@@ -674,6 +689,7 @@ export const useSovereignSkillEffects = () => {
     ferventPrayer1,
     ferventPrayerR1,
     pressTheAttack1,
+    powerAtTheFinalHourProaction,
     fatedRivalry1,
     fatedRivalry2,
     matchMadeInHeaven1,

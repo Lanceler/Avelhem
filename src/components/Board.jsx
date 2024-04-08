@@ -53,6 +53,7 @@ import GlacialTorrent1 from "./skillModals/GlacialTorrent1";
 import SymphonicScreechFloat from "./skillModals/SymphonicScreechFloat";
 import CataclysmicTempestFloat from "./skillModals/CataclysmicTempestFloat";
 import FerventPrayerResonance from "./skillModals/FerventPrayerResonance";
+import PowerAtTheFinalHourProaction from "./skillModals/PowerAtTheFinalHourProaction";
 
 import ContingentAscension from "./skillModals/ContingentAscension";
 import ContingentElimination from "./skillModals/ContingentElimination";
@@ -229,6 +230,7 @@ const Board = (props) => {
     ferventPrayer1,
     ferventPrayerR1,
     pressTheAttack1,
+    powerAtTheFinalHourProaction,
     fatedRivalry1,
     fatedRivalry2,
     matchMadeInHeaven1,
@@ -3393,6 +3395,40 @@ const Board = (props) => {
 
       case "Sovereign Contingent Skill":
         switch (lastResolution.resolution2) {
+          case "Activating Power at the Final Hour: Proaction":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      powerAtTheFinalHourProaction()
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Power at the Final Hour: Proaction":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <PowerAtTheFinalHourProaction
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Select Power at the Final Hour Pawn":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>{selectPowerAtTheFinalHour(lastResolution.scionClass)}</>
+                )}
+              </>
+            );
+
           case "Activating Fated Rivalry":
             return (
               <>
@@ -4410,6 +4446,26 @@ const Board = (props) => {
     );
   };
 
+  const selectPowerAtTheFinalHour = (scionClass) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "ASelect Power at the Final Hour Pawn"
+    newGameState.currentResolution.pop();
+
+    const zonesWithPawns = getZonesForPromotion();
+
+    //setIntrudingPlayer(self);
+
+    enterSelectUnitMode(
+      zonesWithPawns,
+      null,
+      newGameState,
+      null,
+      "power at the final hour",
+      scionClass
+    );
+  };
+
   const selectPitfallTrapActivator = (mover) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -4690,6 +4746,16 @@ const Board = (props) => {
           grantRavager(
             newGameState[selectedUnit.player].units[selectedUnit.unitIndex]
           );
+        break;
+
+      case "power at the final hour":
+        newGameState = ascendPawn(
+          newGameState,
+          selectedUnit,
+          special,
+          "Power at the Final hour",
+          null
+        );
 
         break;
 
