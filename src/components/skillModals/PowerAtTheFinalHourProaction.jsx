@@ -60,9 +60,9 @@ const PowerAtTheFinalHourProaction = (props) => {
       resolution2: "Message To Enemy",
       player: enemy,
       title: "Power at the Final Hour",
-      message: `Your opponent has revealed as the aspect of a ${scionClass.replace(
-        "Scion",
-        "Skill"
+      message: `Your opponent has a skill with the following aspect: ${scionClass.replace(
+        " Scion",
+        ""
       )}.`,
     });
 

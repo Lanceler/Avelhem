@@ -647,6 +647,7 @@ const Board = (props) => {
                 restriction={lastResolution.restriction}
                 outcome={lastResolution.outcome}
                 message={lastResolution.message}
+                reveal={lastResolution.reveal}
                 hideOrRevealModale={hideOrRevealModale}
                 updateFirebase={updateFirebase}
               />

@@ -14,7 +14,8 @@ const SearchSkill = (props) => {
   const { self, enemy } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const { refillRepertoireSkill, shuffleCards } = useRecurringEffects();
+  const { avelhemToScion, refillRepertoireSkill, shuffleCards } =
+    useRecurringEffects();
 
   const [selectedSkill, setSelectedSkill] = useState(null);
 
@@ -47,6 +48,25 @@ const SearchSkill = (props) => {
     newGameState.currentResolution.pop();
 
     if (props.outcome === "Add") {
+      //inform enemy if search done via transmute
+      if (props.reveal === "Transmute") {
+        let chosenSkill =
+          newGameState[self].skillRepertoire[
+            newGameState[self].skillRepertoire.length - 1 - selectedSkill
+          ];
+        const skillCode = chosenSkill.substring(0, 2);
+
+        newGameState.currentResolution.push({
+          resolution: "Misc.",
+          resolution2: "Message To Enemy",
+          player: enemy,
+          title: "Transmute",
+          message: `Your oppnent has search for 1 ${avelhemToScion(
+            parseInt(skillCode)
+          ).replace("Scion", "Skill")} and added it to their hand.`,
+        });
+      }
+
       //add selected skill from repertoire to hand
       newGameState[self].skillHand.push(
         newGameState[self].skillRepertoire.splice(

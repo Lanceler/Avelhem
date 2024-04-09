@@ -5,15 +5,17 @@ import "./Modal.css";
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
+import { useCardDatabase } from "../../hooks/useCardDatabase";
 
 import SkillMultiSelect from "../hand/SkillMultiSelect";
 
 const SelectSkillHandMulti = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
-  const { self } = useSelector((state) => state.teams);
+  const { self, enemy } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const { avelhemToScion, getScionSet } = useRecurringEffects();
+  const { avelhemToScion } = useRecurringEffects();
+  const { getScionSet } = useCardDatabase();
 
   //selectedAvelhems refers to their index in the hand
   const [selectedSkills, setSelectedSkills] = useState([]);
@@ -56,7 +58,7 @@ const SelectSkillHandMulti = (props) => {
 
     switch (props.details.reason) {
       case "Transmute":
-        console.log(selectedSkills);
+        // console.log(selectedSkills);
 
         //1. get list of cards to be shuffled
         let skillsToShuffle = [];
@@ -64,22 +66,22 @@ const SelectSkillHandMulti = (props) => {
           skillsToShuffle.push(skillHand[i]);
         }
 
-        console.log(skillsToShuffle);
+        // console.log(skillsToShuffle);
 
         //2. sort selected skills in descending order so they can be spliced smoothly
         let sortedSelectedSkills = [...selectedSkills].sort((a, b) => b - a);
 
-        console.log("sortedSelectedSkills");
-        console.log(sortedSelectedSkills);
+        // console.log("sortedSelectedSkills");
+        // console.log(sortedSelectedSkills);
 
         //3. remove selected skills from hand
         for (let i of sortedSelectedSkills) {
-          console.log(i);
+          // console.log(i);
           skillHand.splice(i, 1);
         }
 
-        console.log("skillHand");
-        console.log(skillHand);
+        // console.log("skillHand");
+        // console.log(skillHand);
 
         //4. place selected skills at bottom of repertoire (start of array)
         newGameState[self].skillRepertoire = [
@@ -87,8 +89,8 @@ const SelectSkillHandMulti = (props) => {
           ...newGameState[self].skillRepertoire,
         ];
 
-        console.log("newGameState[self].skillRepertoire");
-        console.log(newGameState[self].skillRepertoire);
+        // console.log("newGameState[self].skillRepertoire");
+        // console.log(newGameState[self].skillRepertoire);
 
         //5. if resonated, do a search for Avelhems
         if (props.resonated === "resonated") {
@@ -113,18 +115,48 @@ const SelectSkillHandMulti = (props) => {
               parseInt(skillCode)
             ).replace("Scion", "Skill")}.`,
             outcome: "Add",
+            reveal: "Transmute",
           });
 
-          console.log("restriction");
-          console.log(getScionSet(avelhemToScion(parseInt(skillCode))));
-          console.log("message");
-          console.log(
-            `Search for 1 ${avelhemToScion(parseInt(skillCode)).replace(
-              "Scion",
-              "Skill"
-            )}.`
-          );
+          // console.log("restriction");
+          // console.log(getScionSet(avelhemToScion(parseInt(skillCode))));
+          // console.log("message");
+          // console.log(
+          //   `Search for 1 ${avelhemToScion(parseInt(skillCode)).replace(
+          //     "Scion",
+          //     "Skill"
+          //   )}.`
+          // );
         }
+
+        //7. inform enemy of aspects
+
+        let transmuteMessage = "";
+
+        switch (skillsToShuffle.length) {
+          case 1:
+            transmuteMessage = `Your opponent has a skill with the following aspect: ${avelhemToScion(
+              parseInt(skillsToShuffle[0])
+            ).replace(" Scion", "")}.`;
+            break;
+          case 2:
+            transmuteMessage = `Your opponent has skills with the following aspects: ${avelhemToScion(
+              parseInt(skillsToShuffle[0])
+            ).replace(" Scion", "")} and ${avelhemToScion(
+              parseInt(skillsToShuffle[1])
+            ).replace(" Scion", "")}.`;
+            break;
+        }
+
+        //console.log(transmuteMessage);
+
+        newGameState.currentResolution.push({
+          resolution: "Misc.",
+          resolution2: "Message To Enemy",
+          player: enemy,
+          title: "Transmute",
+          message: transmuteMessage,
+        });
 
         break;
 
@@ -132,8 +164,8 @@ const SelectSkillHandMulti = (props) => {
         break;
     }
 
-    // dispatch(updateState(newGameState));
-    // props.updateFirebase(newGameState);
+    dispatch(updateState(newGameState));
+    props.updateFirebase(newGameState);
   };
 
   const handleSkip = () => {
