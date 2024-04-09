@@ -798,33 +798,6 @@ const Board = (props) => {
           </>
         );
 
-      case "Retain resonant skill":
-        return (
-          <>
-            {self === lastResolution.player && (
-              <>{skillResonanceRetain(lastResolution.resonator)}</>
-            )}
-          </>
-        );
-
-      case "May float resonant skill":
-        return (
-          <>
-            {self === lastResolution.player && !hideModal && (
-              <>
-                <MayFloatResonantSkill
-                  // unit={lastResolution.unit}
-                  player={lastResolution.player}
-                  skill={lastResolution.skill}
-                  resonator={lastResolution.resonator}
-                  updateFirebase={updateFirebase}
-                  hideOrRevealModale={hideOrRevealModale}
-                />
-              </>
-            )}
-          </>
-        );
-
       case "Misc.":
         switch (lastResolution.resolution2) {
           case "May float resonant skill unit":
@@ -846,6 +819,23 @@ const Board = (props) => {
               </>
             );
 
+          case "May float resonant skill":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <>
+                    <MayFloatResonantSkill
+                      player={lastResolution.player}
+                      skill={lastResolution.skill}
+                      resonator={lastResolution.resonator}
+                      updateFirebase={updateFirebase}
+                      hideOrRevealModale={hideOrRevealModale}
+                    />
+                  </>
+                )}
+              </>
+            );
+
           case "Retain resonant skill unit":
             return (
               <>
@@ -861,6 +851,15 @@ const Board = (props) => {
                       )}
                     </>
                   </>
+                )}
+              </>
+            );
+
+          case "Retain resonant skill":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>{skillResonanceRetain(lastResolution.resonator)}</>
                 )}
               </>
             );

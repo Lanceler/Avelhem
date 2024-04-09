@@ -1580,7 +1580,8 @@ export const useRecurringEffects = () => {
 
       if (defaultConclusion === "float" && resonator !== "SA-02") {
         newGameState.currentResolution.push({
-          resolution: "May float resonant skill",
+          resolution: "Misc.",
+          resolution2: "May float resonant skill",
           player: self,
           skill: skill,
           resonator: resonator,
@@ -4821,7 +4822,8 @@ export const useRecurringEffects = () => {
     if (unit && !isMuted(unit)) {
       if (resonator !== "SA-02") {
         newGameState.currentResolution.push({
-          resolution: "May float resonant skill",
+          resolution: "Misc.",
+          resolution2: "May float resonant skill",
           unit: unit,
           player: unit.player,
           skill: skill,
@@ -4842,7 +4844,8 @@ export const useRecurringEffects = () => {
 
     if (unit && !isMuted(unit)) {
       newGameState.currentResolution.push({
-        resolution: "Retain resonant skill",
+        resolution: "Misc.",
+        resolution2: "Retain resonant skill",
         unit: unit,
         player: unit.player,
         skill: skill,

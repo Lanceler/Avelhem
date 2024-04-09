@@ -80,6 +80,8 @@ const SelectSkillHandMulti = (props) => {
           skillHand.splice(i, 1);
         }
 
+        newGameState[self].skillHand = [...skillHand];
+
         // console.log("skillHand");
         // console.log(skillHand);
 
@@ -117,16 +119,6 @@ const SelectSkillHandMulti = (props) => {
             outcome: "Add",
             reveal: "Transmute",
           });
-
-          // console.log("restriction");
-          // console.log(getScionSet(avelhemToScion(parseInt(skillCode))));
-          // console.log("message");
-          // console.log(
-          //   `Search for 1 ${avelhemToScion(parseInt(skillCode)).replace(
-          //     "Scion",
-          //     "Skill"
-          //   )}.`
-          // );
         }
 
         //7. inform enemy of aspects
@@ -135,12 +127,12 @@ const SelectSkillHandMulti = (props) => {
 
         switch (skillsToShuffle.length) {
           case 1:
-            transmuteMessage = `Your opponent has a skill with the following aspect: ${avelhemToScion(
+            transmuteMessage = `Your opponent has revealed a skill with the following aspect: ${avelhemToScion(
               parseInt(skillsToShuffle[0])
             ).replace(" Scion", "")}.`;
             break;
           case 2:
-            transmuteMessage = `Your opponent has skills with the following aspects: ${avelhemToScion(
+            transmuteMessage = `Your opponent has revealed skills with the following aspects: ${avelhemToScion(
               parseInt(skillsToShuffle[0])
             ).replace(" Scion", "")} and ${avelhemToScion(
               parseInt(skillsToShuffle[1])

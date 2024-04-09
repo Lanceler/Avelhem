@@ -61,7 +61,7 @@ const SearchSkill = (props) => {
           resolution2: "Message To Enemy",
           player: enemy,
           title: "Transmute",
-          message: `Your oppnent has search for 1 ${avelhemToScion(
+          message: `Your oppnent has searched for 1 ${avelhemToScion(
             parseInt(skillCode)
           ).replace("Scion", "Skill")} and added it to their hand.`,
         });
