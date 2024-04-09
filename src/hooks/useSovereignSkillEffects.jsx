@@ -13,7 +13,7 @@ export const useSovereignSkillEffects = () => {
   const { self, enemy } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const { canDeploy, drawAvelhem, drawSkill, isAdjacent } =
+  const { avelhemToScion, canDeploy, drawAvelhem, drawSkill, isAdjacent } =
     useRecurringEffects();
 
   const { pressTheAttackList } = useCardDatabase();
@@ -260,6 +260,31 @@ export const useSovereignSkillEffects = () => {
         count: 2,
       },
     });
+
+    return newGameState;
+  };
+
+  const transmuteR1 = (skills) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Activating TransmuteR1" resolution
+    newGameState.currentResolution.pop();
+
+    for (let skill of skills) {
+      const skillCode = skill.substring(0, 2);
+
+      newGameState.currentResolution.push({
+        resolution: "Search Avelhem",
+        player: self,
+        restriction: [parseInt(skillCode)],
+        message: `Search for 1 ${avelhemToScion(parseInt(skillCode)).replace(
+          "Scion",
+          "Avelhem"
+        )}.`,
+        outcome: "Add",
+        reveal: "Transmute",
+      });
+    }
 
     return newGameState;
   };
@@ -705,6 +730,7 @@ export const useSovereignSkillEffects = () => {
     foreshadow1,
     foreshadow2,
     transmute1,
+    transmuteR1,
     ambidexterity1,
     ambidexterityR1,
     providence1,

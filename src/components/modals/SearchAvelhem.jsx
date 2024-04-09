@@ -1,0 +1,223 @@
+import React from "react";
+import { useState, useEffect } from "react";
+import "./Modal.css";
+
+import { useSelector, useDispatch } from "react-redux";
+import { updateState } from "../../redux/gameState";
+import { useRecurringEffects } from "../../hooks/useRecurringEffects";
+
+import Skill from "../hand/Skill";
+
+const SearchAvelhem = (props) => {
+  const { localGameState } = useSelector((state) => state.gameState);
+  const { self, enemy } = useSelector((state) => state.teams);
+  const dispatch = useDispatch();
+
+  const { avelhemToScion, refillRepertoireAvelhem, shuffleCards } =
+    useRecurringEffects();
+
+  const [selectedAvelhem, setSelectedAvelhem] = useState(null);
+
+  let repertoire = [...localGameState[self].avelhemRepertoire];
+
+  //reverse display, since last card is top of deck
+  let searchRerpertoire = [];
+  for (let c in repertoire) {
+    console.log();
+    searchRerpertoire.unshift({ id: repertoire[c], repertoireIndex: c });
+  }
+
+  const floatingRepertoire = searchRerpertoire.splice(
+    0,
+    localGameState[self].avelhemFloat
+  );
+
+  const canSearch = (avelhem) => {
+    if (!props.restriction) {
+      return true;
+    } else {
+      return props.restriction.includes(avelhem);
+    }
+  };
+
+  const handleSelect = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    newGameState.currentResolution.pop();
+
+    if (props.outcome === "Add") {
+      //inform enemy if search done via transmute
+      if (props.reveal === "Transmute") {
+        let chosenAvelhem =
+          newGameState[self].avelhemRepertoire[
+            newGameState[self].avelhemRepertoire.length - 1 - selectedAvelhem
+          ];
+
+        newGameState.currentResolution.push({
+          resolution: "Misc.",
+          resolution2: "Message To Enemy",
+          player: enemy,
+          title: "Transmute",
+          message: `Your oppnent has search for 1 ${avelhemToScion(
+            parseInt(chosenAvelhem)
+          ).replace("Scion", "Avelhem")} and added it to their hand.`,
+        });
+      }
+
+      //add selected avelhem from repertoire to hand
+      newGameState[self].avelhemHand.push(
+        newGameState[self].avelhemRepertoire.splice(
+          newGameState[self].avelhemRepertoire.length - 1 - selectedAvelhem,
+          1
+        )[0]
+      );
+
+      // if the selected Avelhem was floating, decrease floating count
+      if (selectedAvelhem <= newGameState[self].avelhemFloat - 1) {
+        newGameState[self].avelhemFloat -= 1;
+      }
+
+      //reset repertoire if empty
+      if (newGameState[self].avelhemRepertoire.length === 0) {
+        newGameState = refillRepertoireAvelhem(newGameState);
+      }
+    } else if (props.outcome === "Float") {
+      //take selected card then put it at the top of deck (end of array)
+      newGameState[self].avelhemRepertoire.push(
+        newGameState[self].avelhemRepertoire.splice(
+          newGameState[self].avelhemRepertoire.length - 1 - selectedAvelhem,
+          1
+        )[0]
+      );
+
+      // if the selected Avelhem was NOT floating, increase floating count
+      if (selectedAvelhem > newGameState[self].avelhemFloat - 1) {
+        newGameState[self].avelhemFloat += 1;
+      }
+    }
+
+    //shuffle repertoire, but retain floating order
+    const floaters = newGameState[self].avelhemRepertoire.splice(
+      newGameState[self].avelhemRepertoire.length -
+        newGameState[self].avelhemFloat,
+      newGameState[self].avelhemFloat
+    );
+
+    newGameState[self].avelhemRepertoire = shuffleCards(
+      newGameState[self].avelhemRepertoire
+    );
+
+    newGameState[self].avelhemRepertoire = [
+      ...newGameState[self].avelhemRepertoire,
+      ...floaters,
+    ];
+
+    dispatch(updateState(newGameState));
+    props.updateFirebase(newGameState);
+  };
+
+  const handleSkip = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    newGameState.currentResolution.pop();
+
+    //shuffle repertoire, but retain floating order
+    const floaters = newGameState[self].avelhemRepertoire.splice(
+      newGameState[self].avelhemRepertoire.length -
+        newGameState[self].avelhemFloat,
+      newGameState[self].avelhemFloat
+    );
+
+    newGameState[self].avelhemRepertoire = shuffleCards(
+      newGameState[self].avelhemRepertoire
+    );
+
+    newGameState[self].avelhemRepertoire = [
+      ...newGameState[self].avelhemRepertoire,
+      ...floaters,
+    ];
+
+    dispatch(updateState(newGameState));
+  };
+
+  const handleViewBoard = () => {
+    props.hideOrRevealModale();
+  };
+
+  return (
+    <div className="modal-backdrop">
+      <div className="modal">
+        <div className="twoColumn3-1">
+          <h2 className="choiceTitle">{props.message}</h2>
+          <button className="choiceButton" onClick={() => handleViewBoard()}>
+            View Board
+          </button>
+        </div>
+
+        <div className="scrollable scrollable-y-only">
+          {localGameState[self].avelhemFloat > 0 && (
+            <>
+              <h3>Floating Avelhems</h3>
+              <div className="fourColumn">
+                {floatingRepertoire.map((usableAvelhem, i) => (
+                  <div
+                    key={i}
+                    className={`scionSkills ${
+                      selectedAvelhem === i ? "selectedSkill" : ""
+                    }`}
+                  >
+                    <Skill
+                      i={i}
+                      usableSkill={usableAvelhem}
+                      canActivateSkill={canSearch(usableAvelhem.id)}
+                      selectedSkill={selectedAvelhem}
+                      setSelectedSkill={setSelectedAvelhem}
+                    />
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+
+          <h3>Non-floating Avelhems</h3>
+          <div
+            className={`fourColumn  ${
+              localGameState[self].usableAvelhem > 0 ? "decreased-height" : ""
+            } `}
+          >
+            {searchRerpertoire.map((usableAvelhem, i) => (
+              <div
+                key={i + localGameState[self].avelhemFloat}
+                className={`scionSkills ${
+                  selectedAvelhem === i + localGameState[self].avelhemFloat
+                    ? "selectedSkill"
+                    : ""
+                }`}
+              >
+                <Skill
+                  i={i + localGameState[self].avelhemFloat}
+                  usableSkill={usableAvelhem}
+                  canActivateSkill={canSearch(usableAvelhem.id)}
+                  selectedSkill={selectedAvelhem}
+                  setSelectedSkill={setSelectedAvelhem}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {selectedAvelhem === null && (
+          <button className="choiceButton noYes" onClick={() => handleSkip()}>
+            Skip
+          </button>
+        )}
+
+        {selectedAvelhem !== null && (
+          <button className="choiceButton noYes" onClick={() => handleSelect()}>
+            Select
+          </button>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default SearchAvelhem;

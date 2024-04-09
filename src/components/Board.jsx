@@ -29,6 +29,7 @@ import MessageToEnemy from "./modals/MessageToEnemy";
 import RecoverAvelhem from "./modals/RecoverAvelhem";
 import RecoverSkill from "./modals/RecoverSkill";
 import ScionSkillSelect from "./modals/ScionSkillSelect";
+import SearchAvelhem from "./modals/SearchAvelhem";
 import SearchSkill from "./modals/SearchSkill";
 import SelectSkillResonator from "./modals/SelectSkillResonator";
 import SelectAvelhemHandMulti from "./modals/SelectAvelhemHandMulti";
@@ -224,6 +225,7 @@ const Board = (props) => {
     foreshadow2,
     darkHalo1,
     transmute1,
+    transmuteR1,
     ambidexterity1,
     ambidexterityR1,
     providence1,
@@ -634,6 +636,22 @@ const Board = (props) => {
               <ScionSkillSelect
                 updateFirebase={updateFirebase}
                 unit={lastResolution.unit}
+              />
+            )}
+          </>
+        );
+
+      case "Search Avelhem":
+        return (
+          <>
+            {self === lastResolution.player && !hideModal && (
+              <SearchAvelhem
+                restriction={lastResolution.restriction}
+                outcome={lastResolution.outcome}
+                message={lastResolution.message}
+                reveal={lastResolution.reveal}
+                hideOrRevealModale={hideOrRevealModale}
+                updateFirebase={updateFirebase}
               />
             )}
           </>
@@ -3167,6 +3185,19 @@ const Board = (props) => {
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
+                )}
+              </>
+            );
+
+          case "TransmuteR1":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      transmuteR1(lastResolution.skillsToShuffle)
+                    )}
+                  </>
                 )}
               </>
             );

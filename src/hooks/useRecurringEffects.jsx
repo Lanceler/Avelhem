@@ -3232,15 +3232,17 @@ export const useRecurringEffects = () => {
 
     //If deck empties, shuffle discard pile into it.
     if (newGameState[self].avelhemRepertoire.length === 0) {
-      newGameState[self].avelhemVestige = shuffleCards(
-        newGameState[self].avelhemVestige
-      );
-      newGameState[self].avelhemRepertoire = [
-        ...newGameState[self].avelhemVestige.splice(
-          0,
-          newGameState[self].avelhemVestige.length
-        ),
-      ];
+      newGameState = refillRepertoireAvelhem(newGameState);
+
+      // newGameState[self].avelhemVestige = shuffleCards(
+      //   newGameState[self].avelhemVestige
+      // );
+      // newGameState[self].avelhemRepertoire = [
+      //   ...newGameState[self].avelhemVestige.splice(
+      //     0,
+      //     newGameState[self].avelhemVestige.length
+      //   ),
+      // ];
     }
 
     return newGameState;
@@ -3918,6 +3920,25 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const refillRepertoireAvelhem = (newGameState) => {
+    //If deck empties, shuffle discard pile into it.
+
+    //1.Shuffle Vestige
+    newGameState[self].avelhemVestige = shuffleCards(
+      newGameState[self].avelhemVestige
+    );
+
+    //2. Copy vestige to repertoire
+    newGameState[self].avelhemRepertoire = [
+      ...newGameState[self].avelhemVestige,
+    ];
+
+    //3. Empty vestige
+    newGameState[self].avelhemVestige = [];
+
+    return newGameState;
+  };
+
   const refillRepertoireSkill = (newGameState) => {
     //If deck empties, shuffle discard pile into it.
 
@@ -4437,6 +4458,7 @@ export const useRecurringEffects = () => {
     paralyze1,
     paralyze2,
     purificationPurge,
+    refillRepertoireAvelhem,
     refillRepertoireSkill,
     rollTactic,
     shuffleCards,
