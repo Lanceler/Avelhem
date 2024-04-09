@@ -121,6 +121,8 @@ const ContingentTarget = (props) => {
           </button>
         </div>
 
+        <h3>Target via {props.type}.</h3>
+
         <div className="scrollable scrollable-y-only">
           <div className="fourColumn">
             {usableSkills.map((usableSkill, i) => (

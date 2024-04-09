@@ -114,30 +114,45 @@ const Board = (props) => {
     avelhemResonance,
     avelhemToScion,
     blast,
-    canSowAndReapBlast,
-    canStrike,
+
     drawSkill,
+    enterSelectUnitMode,
     endFinalPhase,
     getVacantAdjacentZones,
-    getZonesForPromotion,
-    getZonesWithAllies,
-    getZonesWithEnemies,
-    getZonesWithEnemiesAfflicted,
-    getZonesWithEnemiesRooted,
-    getZonesWithScions,
+
     grantRavager,
     freeze1,
     freeze2,
     ignite,
-    isDisrupted,
+
     isMuted,
     move,
     paralyze1,
     paralyze2,
     purificationPurge,
+    selectAegisActivator,
+    selectAllies,
+    selectAmbidexterity,
+    selectAvelhemPawn,
+    selectChainLightningBlast,
+    selectDarkHalo,
+    selectEnemies,
+    selectEnemiesAfflicted,
+    selectEnemiesRooted,
+    selectFatedRivalry,
+    selectFrenzyBladeActivator,
+    selectHealingRainActivator,
+    selectMatchMadeInHeavenPawn,
+    selectPowerAtTheFinalHour,
+    selectPitfallTrapActivator,
+    selectSowAndReapStriker,
+    selectVengefulLegacy,
+    selectViridianGraveActivator,
     shuffleCards,
     strike,
     strikeMove,
+    unitFloatSkill,
+    unitRetainSkill,
     virtueBlast,
   } = useRecurringEffects();
 
@@ -403,17 +418,17 @@ const Board = (props) => {
       case "Selecting Unit":
         return (
           <>
-            {(self === localGameState.turnPlayer || self === intrudingPlayer) &&
-              tileMode !== "selectUnit" && (
-                <>
-                  {setTileMode("selectUnit")}
-                  {setValidZones(lastResolution.zoneIds)}
-                  {setMovingUnit(lastResolution.unit)}
-                  {setTacticUsed(lastResolution.tactic)}
-                  {setSelectUnitReason(lastResolution.reason)}
-                  {setSelectUnitSpecial(lastResolution.special)}
-                </>
-              )}
+            {self === lastResolution.player && tileMode !== "selectUnit" && (
+              <>
+                {setIntrudingPlayer(self)}
+                {setTileMode("selectUnit")}
+                {setValidZones(lastResolution.zoneIds)}
+                {setMovingUnit(lastResolution.unit)}
+                {setTacticUsed(lastResolution.tactic)}
+                {setSelectUnitReason(lastResolution.reason)}
+                {setSelectUnitSpecial(lastResolution.special)}
+              </>
+            )}
           </>
         );
 
@@ -812,6 +827,44 @@ const Board = (props) => {
 
       case "Misc.":
         switch (lastResolution.resolution2) {
+          case "May float resonant skill unit":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <>
+                    <>
+                      {resolutionUpdateGameStateOnly(
+                        unitFloatSkill(
+                          lastResolution.unit,
+                          lastResolution.skill,
+                          lastResolution.resonator
+                        )
+                      )}
+                    </>
+                  </>
+                )}
+              </>
+            );
+
+          case "Retain resonant skill unit":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <>
+                    <>
+                      {resolutionUpdateGameStateOnly(
+                        unitRetainSkill(
+                          lastResolution.unit,
+                          lastResolution.skill,
+                          lastResolution.resonator
+                        )
+                      )}
+                    </>
+                  </>
+                )}
+              </>
+            );
+
           case "Inspect Skill":
             return (
               <>
@@ -3997,34 +4050,34 @@ const Board = (props) => {
     // updateFirebase(newGameState);
   };
 
-  const enterSelectUnitMode = (
-    zoneIds,
-    unit,
-    gameState,
-    tactic,
-    reason,
-    special
-  ) => {
-    let newGameState = null;
-    if (gameState) {
-      newGameState = gameState;
-    } else {
-      newGameState = JSON.parse(JSON.stringify(localGameState));
-    }
+  // const enterSelectUnitMode = (
+  //   zoneIds,
+  //   unit,
+  //   gameState,
+  //   tactic,
+  //   reason,
+  //   special
+  // ) => {
+  //   let newGameState = null;
+  //   if (gameState) {
+  //     newGameState = gameState;
+  //   } else {
+  //     newGameState = JSON.parse(JSON.stringify(localGameState));
+  //   }
 
-    newGameState.currentResolution.push({
-      resolution: "Selecting Unit",
-      zoneIds: zoneIds,
-      unit: unit,
-      tactic: tactic,
-      reason: reason,
-      special: special,
-    });
+  //   newGameState.currentResolution.push({
+  //     resolution: "Selecting Unit",
+  //     zoneIds: zoneIds,
+  //     unit: unit,
+  //     tactic: tactic,
+  //     reason: reason,
+  //     special: special,
+  //   });
 
-    dispatch(updateState(newGameState));
+  //   dispatch(updateState(newGameState));
 
-    // updateFirebase(newGameState);
-  };
+  //   // updateFirebase(newGameState);
+  // };
 
   const hideOrRevealModale = () => {
     setHideModal(!hideModal);
@@ -4187,40 +4240,6 @@ const Board = (props) => {
     updateFirebase(newGameState);
   };
 
-  const selectAegisActivator = (victim) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    //end "Select Aegis Activator"
-    newGameState.currentResolution.pop();
-
-    const zonesWithAllies = getZonesWithAllies(victim, 1, true);
-    let zonesWithManaScions = [];
-
-    for (let z of zonesWithAllies) {
-      const zone = zones[Math.floor(z / 5)][z % 5];
-      const unit = newGameState[zone.player].units[zone.unitIndex];
-
-      if (
-        unit.unitClass === "Mana Scion" &&
-        !isMuted(unit) &&
-        !isDisrupted(unit, 1)
-      ) {
-        zonesWithManaScions.push(z);
-      }
-    }
-
-    setIntrudingPlayer(self);
-
-    enterSelectUnitMode(
-      zonesWithManaScions,
-      victim,
-      newGameState,
-      null,
-      "aegis",
-      null
-    );
-  };
-
   const selectAerialImpetusMove = (unit, ally) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -4232,363 +4251,6 @@ const Board = (props) => {
     if (ally === "Ally") {
       setMovingSpecial("AerialImpetusAlly");
     }
-  };
-
-  const selectAllies = (unitInfo, range, includeSelf, reason, special) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    newGameState.currentResolution.pop();
-
-    if (unit !== null && !isMuted(unit)) {
-      enterSelectUnitMode(
-        getZonesWithAllies(unit, range, includeSelf),
-        unit,
-        newGameState,
-        null,
-        reason,
-        special
-      );
-    }
-  };
-
-  const selectAmbidexterity = (resonated) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    //end "Select Ambidexterity"
-    newGameState.currentResolution.pop();
-
-    const zonesWithScions = getZonesWithScions(self);
-
-    setIntrudingPlayer(self);
-
-    enterSelectUnitMode(
-      zonesWithScions,
-      null,
-      newGameState,
-      null,
-      "ambidexterity",
-      resonated
-    );
-  };
-
-  const selectAvelhemPawn = (avelhem, resonator) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    //end "Avelhem Select Pawn"
-    newGameState.currentResolution.pop();
-
-    const zonesWithPawns = getZonesForPromotion();
-
-    //setIntrudingPlayer(self);
-
-    enterSelectUnitMode(
-      zonesWithPawns,
-      resonator,
-      newGameState,
-      null,
-      "activate avelhem",
-      avelhem
-    );
-  };
-
-  const selectChainLightningBlast = (unit, zones) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    //end "Chain Lightning5"
-    newGameState.currentResolution.pop();
-
-    enterSelectUnitMode(
-      zones,
-      unit,
-      newGameState,
-      null,
-      "blast",
-      "Lightning Scion"
-    );
-  };
-
-  const selectDarkHalo = () => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    //end "Select Dark Halo"
-    newGameState.currentResolution.pop();
-
-    const zonesWithScions = getZonesWithScions(self);
-
-    setIntrudingPlayer(self);
-
-    enterSelectUnitMode(
-      zonesWithScions,
-      null,
-      newGameState,
-      null,
-      "dark halo",
-      null
-    );
-  };
-
-  const selectEnemies = (unitInfo, range, tactic, reason, special) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    newGameState.currentResolution.pop();
-
-    if (unit !== null && !isMuted(unit)) {
-      enterSelectUnitMode(
-        getZonesWithEnemies(unit, range),
-        unit,
-        newGameState,
-        tactic,
-        reason,
-        special
-      );
-    }
-  };
-
-  const selectEnemiesAfflicted = (
-    unitInfo,
-    range,
-    tactic,
-    reason,
-    special,
-    affliction
-  ) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    newGameState.currentResolution.pop();
-
-    if (unit !== null && !isMuted(unit)) {
-      enterSelectUnitMode(
-        getZonesWithEnemiesAfflicted(unit, range, affliction),
-        unit,
-        newGameState,
-        tactic,
-        reason,
-        special
-      );
-    }
-  };
-
-  const selectEnemiesRooted = (unitInfo, range, tactic, reason, special) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    newGameState.currentResolution.pop();
-
-    if (unit !== null && !isMuted(unit)) {
-      enterSelectUnitMode(
-        getZonesWithEnemiesRooted(unit, range),
-        unit,
-        newGameState,
-        tactic,
-        reason,
-        special
-      );
-    }
-  };
-
-  const selectFatedRivalry = (enemyUnit) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    //end "Selected Fated Rivalry"
-    newGameState.currentResolution.pop();
-
-    const zonesWithPawns = getZonesForPromotion();
-
-    setIntrudingPlayer(self);
-
-    enterSelectUnitMode(
-      zonesWithPawns,
-      enemyUnit,
-      newGameState,
-      null,
-      "fated rivalry",
-      null
-    );
-  };
-
-  const selectFrenzyBladeActivator = (victim) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    //end "Select Frenzy Blade Activator"
-    newGameState.currentResolution.pop();
-
-    const zonesWithEnemies = getZonesWithEnemies(victim, 1);
-    let zonesWithMetalScions = [];
-
-    for (let z of zonesWithEnemies) {
-      const zone = zones[Math.floor(z / 5)][z % 5];
-      const unit = newGameState[zone.player].units[zone.unitIndex];
-
-      if (
-        unit.unitClass === "Metal Scion" &&
-        !isMuted(unit) &&
-        !isDisrupted(unit, 1)
-      ) {
-        zonesWithMetalScions.push(z);
-      }
-    }
-
-    setIntrudingPlayer(self);
-
-    enterSelectUnitMode(
-      zonesWithMetalScions,
-      victim,
-      newGameState,
-      null,
-      "frenzy blade",
-      null
-    );
-  };
-
-  const selectHealingRainActivator = (victim) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    //end "Select Healing Rain Activator"
-    newGameState.currentResolution.pop();
-
-    const zonesWithAllies = getZonesWithAllies(victim, 1, true);
-    let zonesWithWaterScions = [];
-
-    for (let z of zonesWithAllies) {
-      const zone = zones[Math.floor(z / 5)][z % 5];
-      const unit = newGameState[zone.player].units[zone.unitIndex];
-
-      if (
-        unit.unitClass === "Water Scion" &&
-        !isMuted(unit) &&
-        !isDisrupted(unit, 1)
-      ) {
-        zonesWithWaterScions.push(z);
-      }
-    }
-
-    setIntrudingPlayer(self);
-
-    enterSelectUnitMode(
-      zonesWithWaterScions,
-      victim,
-      newGameState,
-      null,
-      "healing rain",
-      null
-    );
-  };
-
-  const selectMatchMadeInHeavenPawn = (unit) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    //end "Select Match Made in Heaven Pawn"
-    newGameState.currentResolution.pop();
-
-    const zonesWithAllies = getZonesWithAllies(unit, 2, false);
-    let zonesWithPawns = [];
-
-    for (let z of zonesWithAllies) {
-      const zone = zones[Math.floor(z / 5)][z % 5];
-      const ally = newGameState[zone.player].units[zone.unitIndex];
-
-      if (ally.unitClass === "Pawn" && !isMuted(ally)) {
-        zonesWithPawns.push(z);
-      }
-    }
-
-    setIntrudingPlayer(self);
-
-    enterSelectUnitMode(
-      zonesWithPawns,
-      unit,
-      newGameState,
-      null,
-      "match made in heaven",
-      "Match Made in Heaven"
-    );
-  };
-
-  const selectPowerAtTheFinalHour = (scionClass) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    //end "ASelect Power at the Final Hour Pawn"
-    newGameState.currentResolution.pop();
-
-    const zonesWithPawns = getZonesForPromotion();
-
-    //setIntrudingPlayer(self);
-
-    enterSelectUnitMode(
-      zonesWithPawns,
-      null,
-      newGameState,
-      null,
-      "power at the final hour",
-      scionClass
-    );
-  };
-
-  const selectPitfallTrapActivator = (mover) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    //end "Select Pitfall Trap Activator"
-    newGameState.currentResolution.pop();
-
-    const zonesWithEnemies = getZonesWithEnemies(mover, 1);
-    let zonesWithLandScions = [];
-
-    for (let z of zonesWithEnemies) {
-      const zone = zones[Math.floor(z / 5)][z % 5];
-      const unit = newGameState[zone.player].units[zone.unitIndex];
-
-      if (
-        unit.unitClass === "Land Scion" &&
-        !isMuted(unit) &&
-        !isDisrupted(unit, 1)
-      ) {
-        zonesWithLandScions.push(z);
-      }
-    }
-
-    setIntrudingPlayer(self);
-
-    enterSelectUnitMode(
-      zonesWithLandScions,
-      mover,
-      newGameState,
-      null,
-      "pitfall trap",
-      null
-    );
-  };
-
-  const selectSowAndReapStriker = (unit) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    //end "Select Sow and Reap Strikerr"
-    newGameState.currentResolution.pop();
-
-    const zonesWithAllies = getZonesWithAllies(unit, 1, false);
-    let adjacentStrikers = [];
-
-    for (let z of zonesWithAllies) {
-      const zone = zones[Math.floor(z / 5)][z % 5];
-      const ally = newGameState[zone.player].units[zone.unitIndex];
-
-      if (canSowAndReapBlast(ally) && canStrike(ally)) {
-        adjacentStrikers.push(z);
-      }
-    }
-
-    setIntrudingPlayer(self);
-
-    enterSelectUnitMode(
-      adjacentStrikers,
-      unit,
-      newGameState,
-      null,
-      "sow and reap striker",
-      null
-    );
   };
 
   const selectUnit = (unit, selectedUnit, reason, special) => {
@@ -4879,77 +4541,6 @@ const Board = (props) => {
     updateFirebase(newGameState);
   };
 
-  const selectVengefulLegacy = (victim) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    //end "Select Vengeful Legacy"
-    newGameState.currentResolution.pop();
-
-    const allies = getZonesWithAllies(victim, 2, false);
-
-    const zonesWithPawns = [];
-    for (let i of allies) {
-      const zone = zones[Math.floor(i / 5)][i % 5];
-      const unit = localGameState[zone.player].units[zone.unitIndex];
-
-      if (unit.unitClass === "Pawn" && !isMuted(unit)) {
-        zonesWithPawns.push(i);
-      }
-    }
-
-    setIntrudingPlayer(self);
-
-    enterSelectUnitMode(
-      zonesWithPawns,
-      victim,
-      newGameState,
-      null,
-      "vengeful legacy",
-      null
-    );
-  };
-
-  const selectViridianGraveActivator = (victim) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    //end "Select Viridian Grave Activator"
-    newGameState.currentResolution.pop();
-
-    let adjacentZones = [];
-
-    if (victim.player === self) {
-      adjacentZones = getZonesWithAllies(victim, 1, false);
-    } else {
-      adjacentZones = getZonesWithEnemies(victim, 1);
-    }
-
-    let zonesWithPlantScions = [];
-
-    for (let z of adjacentZones) {
-      const zone = zones[Math.floor(z / 5)][z % 5];
-      const unit = newGameState[zone.player].units[zone.unitIndex];
-
-      if (
-        unit.unitClass === "Plant Scion" &&
-        !isMuted(unit) &&
-        !isDisrupted(unit, 1)
-      ) {
-        zonesWithPlantScions.push(z);
-      }
-    }
-
-    setIntrudingPlayer(self);
-
-    enterSelectUnitMode(
-      zonesWithPlantScions,
-      victim,
-      newGameState,
-      null,
-      "viridian grave",
-      null
-    );
-  };
-
   const selectExpandPiece = (id) => {
     setExpandedPiece(id);
   };
@@ -4969,28 +4560,30 @@ const Board = (props) => {
       newGameState[player].skillShattered.push(skill);
     }
 
-    if (unitInfo) {
+    if (unitInfo !== null) {
       let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
-      //decrease activation counter
-      unit.temporary.activation -= 1;
+      if (unit) {
+        //decrease activation counter
+        unit.temporary.activation -= 1;
 
-      //apply anathema
-      if (
-        unit.temporary.activation === 0 &&
-        unit.temporary.anathemaDelay === true
-      ) {
-        delete unit.temporary.anathemaDelay;
-        unit.afflictions.anathema = 2;
+        //apply anathema
+        if (
+          unit.temporary.activation === 0 &&
+          unit.temporary.anathemaDelay === true
+        ) {
+          delete unit.temporary.anathemaDelay;
+          unit.afflictions.anathema = 2;
 
-        //anathema purges boosts, disruption, overgrowth, & proliferation
-        unit.boosts = {};
-        delete unit.enhancements.disruption;
-        delete unit.enhancements.overgrowth;
-        delete unit.enhancements.proliferation;
+          //anathema purges boosts, disruption, overgrowth, & proliferation
+          unit.boosts = {};
+          delete unit.enhancements.disruption;
+          delete unit.enhancements.overgrowth;
+          delete unit.enhancements.proliferation;
+        }
+
+        newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
       }
-
-      newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
     }
 
     newGameState.activatingSkill.pop();
@@ -5035,25 +4628,27 @@ const Board = (props) => {
     if (unitInfo !== null) {
       let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
-      //decrease activation counter
-      unit.temporary.activation -= 1;
+      if (unit) {
+        //decrease activation counter
+        unit.temporary.activation -= 1;
 
-      //apply anathema
-      if (
-        unit.temporary.activation === 0 &&
-        unit.temporary.anathemaDelay === true
-      ) {
-        delete unit.temporary.anathemaDelay;
-        unit.afflictions.anathema = 2;
+        //apply anathema
+        if (
+          unit.temporary.activation === 0 &&
+          unit.temporary.anathemaDelay === true
+        ) {
+          delete unit.temporary.anathemaDelay;
+          unit.afflictions.anathema = 2;
 
-        //anathema purges boosts, disruption, overgrowth, & proliferation
-        unit.boosts = {};
-        delete unit.enhancements.disruption;
-        delete unit.enhancements.overgrowth;
-        delete unit.enhancements.proliferation;
+          //anathema purges boosts, disruption, overgrowth, & proliferation
+          unit.boosts = {};
+          delete unit.enhancements.disruption;
+          delete unit.enhancements.overgrowth;
+          delete unit.enhancements.proliferation;
+        }
+
+        newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
       }
-
-      newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
     }
 
     //Tea for Two
@@ -5100,25 +4695,27 @@ const Board = (props) => {
     if (unitInfo !== null) {
       let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
-      //decrease activation counter
-      unit.temporary.activation -= 1;
+      if (unit) {
+        //decrease activation counter
+        unit.temporary.activation -= 1;
 
-      //apply anathema
-      if (
-        unit.temporary.activation === 0 &&
-        unit.temporary.anathemaDelay === true
-      ) {
-        delete unit.temporary.anathemaDelay;
-        unit.afflictions.anathema = 2;
+        //apply anathema
+        if (
+          unit.temporary.activation === 0 &&
+          unit.temporary.anathemaDelay === true
+        ) {
+          delete unit.temporary.anathemaDelay;
+          unit.afflictions.anathema = 2;
 
-        //anathema purges boosts, disruption, overgrowth, & proliferation
-        unit.boosts = {};
-        delete unit.enhancements.disruption;
-        delete unit.enhancements.overgrowth;
-        delete unit.enhancements.proliferation;
+          //anathema purges boosts, disruption, overgrowth, & proliferation
+          unit.boosts = {};
+          delete unit.enhancements.disruption;
+          delete unit.enhancements.overgrowth;
+          delete unit.enhancements.proliferation;
+        }
+
+        newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
       }
-
-      newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
     }
 
     newGameState.activatingUnit.pop();

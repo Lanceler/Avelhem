@@ -119,7 +119,8 @@ export const useSkillEffects = () => {
 
     if (resonator !== "SA-02") {
       newGameState.currentResolution.push({
-        resolution: "May float resonant skill",
+        resolution: "Misc.",
+        resolution2: "May float resonant skill unit",
         unit: unit,
         player: unit.player,
         skill: "01-02",
@@ -415,7 +416,8 @@ export const useSkillEffects = () => {
 
     if (resonator !== "SA-02") {
       newGameState.currentResolution.push({
-        resolution: "Retain resonant skill",
+        resolution: "Misc.",
+        resolution2: "Retain resonant skill unit",
         unit: unit,
         player: unit.player,
         skill: "02-02",
@@ -640,7 +642,8 @@ export const useSkillEffects = () => {
 
     if (resonator !== "SA-02") {
       newGameState.currentResolution.push({
-        resolution: "May float resonant skill",
+        resolution: "Misc.",
+        resolution2: "May float resonant skill unit",
         unit: unit,
         player: unit.player,
         skill: "03-02",
@@ -1093,7 +1096,8 @@ export const useSkillEffects = () => {
 
     if (resonator !== "SA-02") {
       newGameState.currentResolution.push({
-        resolution: "May float resonant skill",
+        resolution: "Misc.",
+        resolution2: "May float resonant skill unit",
         unit: unit,
         player: unit.player,
         skill: "04-02",
@@ -1467,7 +1471,8 @@ export const useSkillEffects = () => {
 
     if (resonator !== "SA-02") {
       newGameState.currentResolution.push({
-        resolution: "May float resonant skill",
+        resolution: "Misc.",
+        resolution2: "May float resonant skill unit",
         unit: unit,
         player: unit.player,
         skill: "05-02",
@@ -1754,7 +1759,8 @@ export const useSkillEffects = () => {
 
     if (resonator !== "SA-02") {
       newGameState.currentResolution.push({
-        resolution: "May float resonant skill",
+        resolution: "Misc.",
+        resolution2: "May float resonant skill unit",
         unit: unit,
         player: unit.player,
         skill: "06-02",
@@ -2062,7 +2068,8 @@ export const useSkillEffects = () => {
 
     if (resonator !== "SA-02") {
       newGameState.currentResolution.push({
-        resolution: "Retain resonant skill",
+        resolution: "Misc.",
+        resolution2: "Retain resonant skill unit",
         unit: unit,
         player: unit.player,
         skill: "07-02",
@@ -2361,7 +2368,8 @@ export const useSkillEffects = () => {
 
     if (resonator !== "SA-02") {
       newGameState.currentResolution.push({
-        resolution: "Retain resonant skill",
+        resolution: "Misc.",
+        resolution2: "Retain resonant skill unit",
         unit: unit,
         player: unit.player,
         skill: "08-02",

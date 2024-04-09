@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../redux/gameState";
@@ -13,6 +13,14 @@ export const useRecurringEffects = () => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
+
+  const [zones, setZones] = useState(null);
+
+  useEffect(() => {
+    if (localGameState && localGameState.zones) {
+      setZones(JSON.parse(localGameState.zones));
+    }
+  }, [localGameState]);
 
   //=========================================
   //Exported functions below
@@ -3300,6 +3308,36 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const enterSelectUnitMode = (
+    zoneIds,
+    unit,
+    gameState,
+    tactic,
+    reason,
+    special
+  ) => {
+    let newGameState = null;
+    if (gameState) {
+      newGameState = gameState;
+    } else {
+      newGameState = JSON.parse(JSON.stringify(localGameState));
+    }
+
+    newGameState.currentResolution.push({
+      resolution: "Selecting Unit",
+      player: self,
+      zoneIds: zoneIds,
+      unit: unit,
+      tactic: tactic,
+      reason: reason,
+      special: special,
+    });
+
+    dispatch(updateState(newGameState));
+
+    // updateFirebase(newGameState);
+  };
+
   const floatAvelhem = (newGameState, avelhemHandIndex) => {
     newGameState[self].avelhemRepertoire.push(
       newGameState[self].avelhemHand.splice(avelhemHandIndex, 1)[0]
@@ -4002,6 +4040,442 @@ export const useRecurringEffects = () => {
     return dieFaces[Math.floor(Math.random() * dieFaces.length)];
   };
 
+  const selectAegisActivator = (victim) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Select Aegis Activator"
+    newGameState.currentResolution.pop();
+
+    const zonesWithAllies = getZonesWithAllies(victim, 1, true);
+    let zonesWithManaScions = [];
+
+    for (let z of zonesWithAllies) {
+      const zone = zones[Math.floor(z / 5)][z % 5];
+      const unit = newGameState[zone.player].units[zone.unitIndex];
+
+      if (
+        unit.unitClass === "Mana Scion" &&
+        !isMuted(unit) &&
+        !isDisrupted(unit, 1)
+      ) {
+        zonesWithManaScions.push(z);
+      }
+    }
+
+    enterSelectUnitMode(
+      zonesWithManaScions,
+      victim,
+      newGameState,
+      null,
+      "aegis",
+      null
+    );
+  };
+
+  const selectAllies = (unitInfo, range, includeSelf, reason, special) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    newGameState.currentResolution.pop();
+
+    if (unit && !isMuted(unit)) {
+      enterSelectUnitMode(
+        getZonesWithAllies(unit, range, includeSelf),
+        unit,
+        newGameState,
+        null,
+        reason,
+        special
+      );
+    }
+  };
+
+  const selectAmbidexterity = (resonated) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Select Ambidexterity"
+    newGameState.currentResolution.pop();
+
+    const zonesWithScions = getZonesWithScions(self);
+
+    enterSelectUnitMode(
+      zonesWithScions,
+      null,
+      newGameState,
+      null,
+      "ambidexterity",
+      resonated
+    );
+  };
+
+  const selectAvelhemPawn = (avelhem, resonator) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Avelhem Select Pawn"
+    newGameState.currentResolution.pop();
+
+    const zonesWithPawns = getZonesForPromotion();
+
+    enterSelectUnitMode(
+      zonesWithPawns,
+      resonator,
+      newGameState,
+      null,
+      "activate avelhem",
+      avelhem
+    );
+  };
+
+  const selectChainLightningBlast = (unit, zones) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Chain Lightning5"
+    newGameState.currentResolution.pop();
+
+    enterSelectUnitMode(
+      zones,
+      unit,
+      newGameState,
+      null,
+      "blast",
+      "Lightning Scion"
+    );
+  };
+
+  const selectDarkHalo = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Select Dark Halo"
+    newGameState.currentResolution.pop();
+
+    const zonesWithScions = getZonesWithScions(self);
+
+    enterSelectUnitMode(
+      zonesWithScions,
+      null,
+      newGameState,
+      null,
+      "dark halo",
+      null
+    );
+  };
+
+  const selectEnemies = (unitInfo, range, tactic, reason, special) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    newGameState.currentResolution.pop();
+
+    if (unit !== null && !isMuted(unit)) {
+      enterSelectUnitMode(
+        getZonesWithEnemies(unit, range),
+        unit,
+        newGameState,
+        tactic,
+        reason,
+        special
+      );
+    }
+  };
+
+  const selectEnemiesAfflicted = (
+    unitInfo,
+    range,
+    tactic,
+    reason,
+    special,
+    affliction
+  ) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    newGameState.currentResolution.pop();
+
+    if (unit !== null && !isMuted(unit)) {
+      enterSelectUnitMode(
+        getZonesWithEnemiesAfflicted(unit, range, affliction),
+        unit,
+        newGameState,
+        tactic,
+        reason,
+        special
+      );
+    }
+  };
+
+  const selectEnemiesRooted = (unitInfo, range, tactic, reason, special) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    newGameState.currentResolution.pop();
+
+    if (unit !== null && !isMuted(unit)) {
+      enterSelectUnitMode(
+        getZonesWithEnemiesRooted(unit, range),
+        unit,
+        newGameState,
+        tactic,
+        reason,
+        special
+      );
+    }
+  };
+
+  const selectFatedRivalry = (enemyUnit) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Selected Fated Rivalry"
+    newGameState.currentResolution.pop();
+
+    const zonesWithPawns = getZonesForPromotion();
+
+    enterSelectUnitMode(
+      zonesWithPawns,
+      enemyUnit,
+      newGameState,
+      null,
+      "fated rivalry",
+      null
+    );
+  };
+
+  const selectFrenzyBladeActivator = (victim) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Select Frenzy Blade Activator"
+    newGameState.currentResolution.pop();
+
+    const zonesWithEnemies = getZonesWithEnemies(victim, 1);
+    let zonesWithMetalScions = [];
+
+    for (let z of zonesWithEnemies) {
+      const zone = zones[Math.floor(z / 5)][z % 5];
+      const unit = newGameState[zone.player].units[zone.unitIndex];
+
+      if (
+        unit.unitClass === "Metal Scion" &&
+        !isMuted(unit) &&
+        !isDisrupted(unit, 1)
+      ) {
+        zonesWithMetalScions.push(z);
+      }
+    }
+
+    enterSelectUnitMode(
+      zonesWithMetalScions,
+      victim,
+      newGameState,
+      null,
+      "frenzy blade",
+      null
+    );
+  };
+
+  const selectHealingRainActivator = (victim) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Select Healing Rain Activator"
+    newGameState.currentResolution.pop();
+
+    const zonesWithAllies = getZonesWithAllies(victim, 1, true);
+    let zonesWithWaterScions = [];
+
+    for (let z of zonesWithAllies) {
+      const zone = zones[Math.floor(z / 5)][z % 5];
+      const unit = newGameState[zone.player].units[zone.unitIndex];
+
+      if (
+        unit.unitClass === "Water Scion" &&
+        !isMuted(unit) &&
+        !isDisrupted(unit, 1)
+      ) {
+        zonesWithWaterScions.push(z);
+      }
+    }
+
+    enterSelectUnitMode(
+      zonesWithWaterScions,
+      victim,
+      newGameState,
+      null,
+      "healing rain",
+      null
+    );
+  };
+
+  const selectMatchMadeInHeavenPawn = (unit) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Select Match Made in Heaven Pawn"
+    newGameState.currentResolution.pop();
+
+    const zonesWithAllies = getZonesWithAllies(unit, 2, false);
+    let zonesWithPawns = [];
+
+    for (let z of zonesWithAllies) {
+      const zone = zones[Math.floor(z / 5)][z % 5];
+      const ally = newGameState[zone.player].units[zone.unitIndex];
+
+      if (ally.unitClass === "Pawn" && !isMuted(ally)) {
+        zonesWithPawns.push(z);
+      }
+    }
+
+    enterSelectUnitMode(
+      zonesWithPawns,
+      unit,
+      newGameState,
+      null,
+      "match made in heaven",
+      "Match Made in Heaven"
+    );
+  };
+
+  const selectPowerAtTheFinalHour = (scionClass) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "ASelect Power at the Final Hour Pawn"
+    newGameState.currentResolution.pop();
+
+    const zonesWithPawns = getZonesForPromotion();
+
+    enterSelectUnitMode(
+      zonesWithPawns,
+      null,
+      newGameState,
+      null,
+      "power at the final hour",
+      scionClass
+    );
+  };
+
+  const selectPitfallTrapActivator = (mover) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Select Pitfall Trap Activator"
+    newGameState.currentResolution.pop();
+
+    const zonesWithEnemies = getZonesWithEnemies(mover, 1);
+    let zonesWithLandScions = [];
+
+    for (let z of zonesWithEnemies) {
+      const zone = zones[Math.floor(z / 5)][z % 5];
+      const unit = newGameState[zone.player].units[zone.unitIndex];
+
+      if (
+        unit.unitClass === "Land Scion" &&
+        !isMuted(unit) &&
+        !isDisrupted(unit, 1)
+      ) {
+        zonesWithLandScions.push(z);
+      }
+    }
+
+    enterSelectUnitMode(
+      zonesWithLandScions,
+      mover,
+      newGameState,
+      null,
+      "pitfall trap",
+      null
+    );
+  };
+
+  const selectSowAndReapStriker = (unit) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Select Sow and Reap Strikerr"
+    newGameState.currentResolution.pop();
+
+    const zonesWithAllies = getZonesWithAllies(unit, 1, false);
+    let adjacentStrikers = [];
+
+    for (let z of zonesWithAllies) {
+      const zone = zones[Math.floor(z / 5)][z % 5];
+      const ally = newGameState[zone.player].units[zone.unitIndex];
+
+      if (canSowAndReapBlast(ally) && canStrike(ally)) {
+        adjacentStrikers.push(z);
+      }
+    }
+
+    enterSelectUnitMode(
+      adjacentStrikers,
+      unit,
+      newGameState,
+      null,
+      "sow and reap striker",
+      null
+    );
+  };
+
+  const selectVengefulLegacy = (victim) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Select Vengeful Legacy"
+    newGameState.currentResolution.pop();
+
+    const allies = getZonesWithAllies(victim, 2, false);
+
+    const zonesWithPawns = [];
+    for (let i of allies) {
+      const zone = zones[Math.floor(i / 5)][i % 5];
+      const unit = localGameState[zone.player].units[zone.unitIndex];
+
+      if (unit.unitClass === "Pawn" && !isMuted(unit)) {
+        zonesWithPawns.push(i);
+      }
+    }
+
+    enterSelectUnitMode(
+      zonesWithPawns,
+      victim,
+      newGameState,
+      null,
+      "vengeful legacy",
+      null
+    );
+  };
+
+  const selectViridianGraveActivator = (victim) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Select Viridian Grave Activator"
+    newGameState.currentResolution.pop();
+
+    let adjacentZones = [];
+
+    if (victim.player === self) {
+      adjacentZones = getZonesWithAllies(victim, 1, false);
+    } else {
+      adjacentZones = getZonesWithEnemies(victim, 1);
+    }
+
+    let zonesWithPlantScions = [];
+
+    for (let z of adjacentZones) {
+      const zone = zones[Math.floor(z / 5)][z % 5];
+      const unit = newGameState[zone.player].units[zone.unitIndex];
+
+      if (
+        unit.unitClass === "Plant Scion" &&
+        !isMuted(unit) &&
+        !isDisrupted(unit, 1)
+      ) {
+        zonesWithPlantScions.push(z);
+      }
+    }
+
+    enterSelectUnitMode(
+      zonesWithPlantScions,
+      victim,
+      newGameState,
+      null,
+      "viridian grave",
+      null
+    );
+  };
+
   const shuffleCards = (repertoire) => {
     for (let i = repertoire.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -4337,6 +4811,48 @@ export const useRecurringEffects = () => {
     return false;
   };
 
+  const unitFloatSkill = (unitInfo, skill, resonator) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    newGameState.currentResolution.pop();
+
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    if (unit && !isMuted(unit)) {
+      if (resonator !== "SA-02") {
+        newGameState.currentResolution.push({
+          resolution: "May float resonant skill",
+          unit: unit,
+          player: unit.player,
+          skill: skill,
+          resonator: resonator,
+        });
+      }
+    }
+
+    return newGameState;
+  };
+
+  const unitRetainSkill = (unitInfo, skill, resonator) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    newGameState.currentResolution.pop();
+
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    if (unit && !isMuted(unit)) {
+      newGameState.currentResolution.push({
+        resolution: "Retain resonant skill",
+        unit: unit,
+        player: unit.player,
+        skill: skill,
+        resonator: resonator,
+      });
+    }
+
+    return newGameState;
+  };
+
   const virtueBlast = (newGameState, attacker, victim) => {
     newGameState.currentResolution.push({
       resolution: "Apply Damage",
@@ -4432,6 +4948,7 @@ export const useRecurringEffects = () => {
     drawAvelhem,
     drawSkill,
     endFinalPhase,
+    enterSelectUnitMode,
     floatAvelhem,
     floatSkill,
     freeze1,
@@ -4461,6 +4978,24 @@ export const useRecurringEffects = () => {
     refillRepertoireAvelhem,
     refillRepertoireSkill,
     rollTactic,
+    selectAegisActivator,
+    selectAllies,
+    selectAmbidexterity,
+    selectAvelhemPawn,
+    selectChainLightningBlast,
+    selectDarkHalo,
+    selectEnemies,
+    selectEnemiesAfflicted,
+    selectEnemiesRooted,
+    selectFatedRivalry,
+    selectFrenzyBladeActivator,
+    selectHealingRainActivator,
+    selectMatchMadeInHeavenPawn,
+    selectPowerAtTheFinalHour,
+    selectPitfallTrapActivator,
+    selectSowAndReapStriker,
+    selectVengefulLegacy,
+    selectViridianGraveActivator,
     shuffleCards,
     strike,
     strikeMove,
@@ -4476,6 +5011,8 @@ export const useRecurringEffects = () => {
     triggerThunderThaumaturge,
     triggerVengefulLegacy,
     triggerViridianGrave,
+    unitFloatSkill,
+    unitRetainSkill,
     virtueBlast,
     virtueBlastYes,
   };

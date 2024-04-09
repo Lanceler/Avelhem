@@ -19,6 +19,7 @@ import Ward from "../assets/attributeIcons/Ward.png";
 import Virtue from "../assets/attributeIcons/Virtue.png";
 import HP from "../assets/attributeIcons/HP.png";
 import BurnGif from "../assets/attributeIcons/BurnGif.gif";
+import FrostbiteGif from "../assets/attributeIcons/FrostbiteGif.gif";
 import ParalysisGif from "../assets/attributeIcons/ParalysisGif.gif";
 
 import Ambidexterity from "../assets/others/Ambidexterity.png";
@@ -347,7 +348,14 @@ export const Piece = (props) => {
 
           {props.unit.afflictions.frostbite > 0 && (
             <>
-              <img src={BurnGif} className="burn blue-tint" />
+              <img
+                src={FrostbiteGif}
+                className={`frostbite ${
+                  props.unit.afflictions.frostbite == 1
+                    ? "frostbite-1"
+                    : "frostbite-2"
+                }`}
+              />
             </>
           )}
 

@@ -5,6 +5,7 @@ import "./Modal.css";
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
+import { useCardDatabase } from "../../hooks/useCardDatabase";
 
 import Skill from "../hand/Skill";
 
@@ -13,8 +14,10 @@ const ScionSkillSelect = (props) => {
   const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const { activateSkill, canActivateResonance, canActivateSkill, getScionSet } =
+  const { activateSkill, canActivateResonance, canActivateSkill } =
     useRecurringEffects();
+
+  const { getScionSet } = useCardDatabase();
 
   const [selectedSkill, setSelectedSkill] = useState(null);
   const [canResonate, setCanResonate] = useState(null);
