@@ -130,12 +130,14 @@ const RecoverSkill = (props) => {
           </div>
         </div>
 
-        {/* {selectedSkill === null && (
-          <button onClick={() => handleSkip()}>Skip</button>
-        )} */}
+        {props.canSkip && selectedSkill === null && (
+          <button className="choiceButton noYes" onClick={() => handleSkip()}>
+            Skip
+          </button>
+        )}
 
         {selectedSkill !== null && (
-          <button className="choiceButton" onClick={() => handleSelect()}>
+          <button className="choiceButton noYes" onClick={() => handleSelect()}>
             Select
           </button>
         )}

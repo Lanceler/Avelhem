@@ -14,8 +14,11 @@ const ContingentSurvivalAlly = (props) => {
 
   const [selectedSkill, setSelectedSkill] = useState(null);
 
-  const { triggerHealingRain, triggerPowerAtTheFinalHour } =
-    useRecurringEffects();
+  const {
+    activatePowerAtTheFinalHour,
+    triggerHealingRain,
+    triggerPowerAtTheFinalHour,
+  } = useRecurringEffects();
 
   let survivalAllyContingentSkills = ["02-03", "07-03", "SC-01"];
 
@@ -40,7 +43,7 @@ const ContingentSurvivalAlly = (props) => {
         return false;
 
       case "SC-01":
-        return triggerPowerAtTheFinalHour(props.attacker, props.victim);
+        return triggerPowerAtTheFinalHour(props.victim);
 
       default:
         return false;
@@ -78,13 +81,22 @@ const ContingentSurvivalAlly = (props) => {
       1
     );
 
-    if (usableSkills[selectedSkill].id === "02-03") {
-      newGameState.currentResolution.push({
-        resolution: "Water Skill",
-        resolution2: "Select Healing Rain Activator",
-        victim: props.victim,
-        player: self,
-      });
+    switch (usableSkills[selectedSkill].id) {
+      case "02-03":
+        newGameState.currentResolution.push({
+          resolution: "Water Skill",
+          resolution2: "Select Healing Rain Activator",
+          victim: props.victim,
+          player: self,
+        });
+        break;
+
+      case "SC-01":
+        newGameState = activatePowerAtTheFinalHour(newGameState, props.victim);
+        break;
+
+      default:
+        break;
     }
 
     dispatch(updateState(newGameState));

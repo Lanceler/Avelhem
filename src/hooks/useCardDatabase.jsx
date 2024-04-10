@@ -392,13 +392,13 @@ export const useCardDatabase = () => {
       Method: "Contingent",
       CardId: "SC-05",
     },
-    {
-      Name: "Coalescence",
-      Stock: 1,
-      Aspect: "Sovereign",
-      Method: "Burst",
-      CardId: "SD-01",
-    },
+    // {
+    //   Name: "Coalescence",
+    //   Stock: 1,
+    //   Aspect: "Sovereign",
+    //   Method: "Burst",
+    //   CardId: "SD-01",
+    // },
   ];
 
   const getScionSet = (unitClass) => {

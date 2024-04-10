@@ -67,7 +67,51 @@ import BlackBusinessCard from "../assets/skillcards/BlackBusinessCard.png";
 import Coalescence from "../assets/skillcards/Coalescence.png";
 import Transcendence from "../assets/skillcards/Transcendence.png";
 
+import Pawn from "../assets/scionIcons/Pawn.png";
+import FireScion from "../assets/scionIcons/FireScion.png";
+import WaterScion from "../assets/scionIcons/WaterScion.png";
+import WindScion from "../assets/scionIcons/WindScion.png";
+import LandScion from "../assets/scionIcons/LandScion.png";
+import LightningScion from "../assets/scionIcons/LightningScion.png";
+import ManaScion from "../assets/scionIcons/ManaScion.png";
+import MetalScion from "../assets/scionIcons/MetalScion.png";
+import PlantScion from "../assets/scionIcons/PlantScion.png";
+
 export const useCardImageSwitch = () => {
+  const getElementImage = (scionClass) => {
+    switch (scionClass) {
+      case "Pawn":
+        return Pawn;
+
+      case "Fire Scion":
+        return FireScion;
+
+      case "Water Scion":
+        return WaterScion;
+
+      case "Wind Scion":
+        return WindScion;
+
+      case "Land Scion":
+        return LandScion;
+
+      case "Lightning Scion":
+        return LightningScion;
+
+      case "Mana Scion":
+        return ManaScion;
+
+      case "Metal Scion":
+        return MetalScion;
+
+      case "Plant Scion":
+        return PlantScion;
+
+      default:
+        return null;
+    }
+  };
+
   const getImage2 = (id) => {
     switch (id) {
       case "SX-01":
@@ -334,5 +378,5 @@ export const useCardImageSwitch = () => {
     }
   };
 
-  return { getImage, getImage2 };
+  return { getElementImage, getImage, getImage2 };
 };

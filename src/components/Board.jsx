@@ -31,6 +31,7 @@ import RecoverSkill from "./modals/RecoverSkill";
 import ScionSkillSelect from "./modals/ScionSkillSelect";
 import SearchAvelhem from "./modals/SearchAvelhem";
 import SearchSkill from "./modals/SearchSkill";
+import SelectElement from "./modals/SelectElement";
 import SelectSkillResonator from "./modals/SelectSkillResonator";
 import SelectAvelhemHandMulti from "./modals/SelectAvelhemHandMulti";
 import SelectAvelhemResonator from "./modals/SelectAvelhemResonator";
@@ -114,17 +115,14 @@ const Board = (props) => {
     avelhemResonance,
     avelhemToScion,
     blast,
-
     drawSkill,
     enterSelectUnitMode,
     endFinalPhase,
     getVacantAdjacentZones,
-
     grantRavager,
     freeze1,
     freeze2,
     ignite,
-
     isMuted,
     move,
     paralyze1,
@@ -249,6 +247,8 @@ const Board = (props) => {
     ferventPrayer1,
     ferventPrayerR1,
     pressTheAttack1,
+    powerAtTheFinalHour1,
+    powerAtTheFinalHour2,
     powerAtTheFinalHourProaction,
     fatedRivalry1,
     fatedRivalry2,
@@ -711,6 +711,7 @@ const Board = (props) => {
                 restriction={lastResolution.restriction}
                 outcome={lastResolution.outcome}
                 message={lastResolution.message}
+                canSkip={lastResolution.canSkip}
                 hideOrRevealModale={hideOrRevealModale}
                 updateFirebase={updateFirebase}
               />
@@ -3508,6 +3509,46 @@ const Board = (props) => {
 
       case "Sovereign Contingent Skill":
         switch (lastResolution.resolution2) {
+          case "Activating Power at the Final Hour":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      powerAtTheFinalHour1(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Power at the Final Hour":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <SelectElement
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Power at the Final Hour2":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      powerAtTheFinalHour2(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
           case "Activating Power at the Final Hour: Proaction":
             return (
               <>
@@ -4475,7 +4516,7 @@ const Board = (props) => {
           newGameState,
           selectedUnit,
           special,
-          "Power at the Final hour",
+          "Power at the Final Hour",
           null
         );
 

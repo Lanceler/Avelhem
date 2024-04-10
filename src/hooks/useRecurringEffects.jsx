@@ -1032,7 +1032,7 @@ export const useRecurringEffects = () => {
   };
 
   const activateMatchMadeInHeaven = (newGameState, unit) => {
-    //end Triggering Target resolution
+    //end Triggering Ascension resolution
     // newGameState.currentResolution.pop() <-- NOT needed
 
     newGameState.currentResolution.push({
@@ -1051,6 +1051,31 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.activatingSkill.push("SC-03");
+    newGameState.activatingUnit.push(null);
+
+    return newGameState;
+  };
+
+  const activatePowerAtTheFinalHour = (newGameState, unit) => {
+    //end Triggering Survival resolution
+    // newGameState.currentResolution.pop() <-- NOT needed
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      unit: null,
+      skill: "SC-01",
+      conclusion: "discard",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Sovereign Contingent Skill",
+      resolution2: "Activating Power at the Final Hour",
+      player: self,
+      unit: unit,
+    });
+
+    newGameState.activatingSkill.push("SC-01");
     newGameState.activatingUnit.push(null);
 
     return newGameState;
@@ -4919,6 +4944,7 @@ export const useRecurringEffects = () => {
     activateFatedRivalry,
     activateFrenzyBlade,
     activateMatchMadeInHeaven,
+    activatePowerAtTheFinalHour,
     activatePitfallTrap,
     activateSkill,
     activateSkillAndResonate,

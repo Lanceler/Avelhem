@@ -16,7 +16,7 @@ export const useSovereignSkillEffects = () => {
   const { avelhemToScion, canDeploy, drawAvelhem, drawSkill, isAdjacent } =
     useRecurringEffects();
 
-  const { pressTheAttackList } = useCardDatabase();
+  const { getScionSet, pressTheAttackList } = useCardDatabase();
 
   const heirsEndeavor1 = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
@@ -554,6 +554,65 @@ export const useSovereignSkillEffects = () => {
     return newGameState;
   };
 
+  const powerAtTheFinalHour1 = (unit) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Activating Power at the Final Hour" resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Sovereign Contingent Skill",
+      resolution2: "Power at the Final Hour",
+      player: self,
+      unit: unit,
+      details: {
+        reason: "Power at the Final Hour",
+        title: "Power at the Final Hour",
+        message: "Ascend the pawn to any class. (Game rules still apply)",
+      },
+    });
+
+    return newGameState;
+  };
+
+  const powerAtTheFinalHour2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Power at the Final Hour2" resolution
+    newGameState.currentResolution.pop();
+
+    if (
+      getScionSet(unit.unitClass).some((s) =>
+        newGameState[unit.player].skillVestige.includes(s)
+      )
+    ) {
+      newGameState.currentResolution.push({
+        resolution: "Recover Skill",
+        player: self,
+        restriction: getScionSet(unit.unitClass),
+        message: `You may recover 1 ${unit.unitClass.replace(
+          "Scion",
+          "skill"
+        )}.`,
+        outcome: "Add",
+        canSkip: true,
+      });
+    } else {
+      //using "Message to Enemy to send message to self"
+      newGameState.currentResolution.push({
+        resolution: "Misc.",
+        resolution2: "Message To Enemy",
+        player: self,
+        title: "Power at the Final Hour",
+        message: "There are no valid skills to recover.",
+      });
+    }
+
+    return newGameState;
+  };
+
   const powerAtTheFinalHourProaction = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -739,6 +798,8 @@ export const useSovereignSkillEffects = () => {
     ferventPrayer1,
     ferventPrayerR1,
     pressTheAttack1,
+    powerAtTheFinalHour1,
+    powerAtTheFinalHour2,
     powerAtTheFinalHourProaction,
     fatedRivalry1,
     fatedRivalry2,
