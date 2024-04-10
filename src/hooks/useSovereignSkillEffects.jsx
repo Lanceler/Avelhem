@@ -632,7 +632,7 @@ export const useSovereignSkillEffects = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
-    //end "Activating Match Made in Heaven" resolution
+    //end "Activating Fated Rivalry" resolution
     newGameState.currentResolution.pop();
 
     newGameState.currentResolution.push({
@@ -660,6 +660,21 @@ export const useSovereignSkillEffects = () => {
       newGameState = drawSkill(newGameState);
       newGameState = drawSkill(newGameState);
     }
+    return newGameState;
+  };
+
+  const fatedRivalryProaction = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Activating Match Made in Heaven" resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.currentResolution.push({
+      resolution: "Sovereign Contingent Skill",
+      resolution2: "Select Fated Rivalry Proaction",
+      player: self,
+    });
+
     return newGameState;
   };
 
@@ -803,6 +818,7 @@ export const useSovereignSkillEffects = () => {
     powerAtTheFinalHourProaction,
     fatedRivalry1,
     fatedRivalry2,
+    fatedRivalryProaction,
     matchMadeInHeaven1,
     matchMadeInHeaven2,
     matchMadeInHeaven3,

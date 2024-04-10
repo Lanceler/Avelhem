@@ -138,6 +138,7 @@ const Board = (props) => {
     selectEnemiesAfflicted,
     selectEnemiesRooted,
     selectFatedRivalry,
+    selectFatedRivalryProaction,
     selectFrenzyBladeActivator,
     selectHealingRainActivator,
     selectMatchMadeInHeavenPawn,
@@ -252,6 +253,7 @@ const Board = (props) => {
     powerAtTheFinalHourProaction,
     fatedRivalry1,
     fatedRivalry2,
+    fatedRivalryProaction,
     matchMadeInHeaven1,
     matchMadeInHeaven2,
     matchMadeInHeaven3,
@@ -259,9 +261,6 @@ const Board = (props) => {
     vengefulLegacy2,
     blackBusinessCard1,
   } = useSovereignSkillEffects();
-
-  const { getSkillById } = useCardDatabase();
-  const { getImage } = useCardImageSwitch();
 
   const newPawnStats = (player, index, row, column) => {
     return {
@@ -3605,6 +3604,20 @@ const Board = (props) => {
               </>
             );
 
+          case "Fated Rivalry Proaction2":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <SelectElement
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
           case "Fated Rivalry2":
             return (
               <>
@@ -3614,6 +3627,24 @@ const Board = (props) => {
                       fatedRivalry2(lastResolution.unit, lastResolution.enemy)
                     )}
                   </>
+                )}
+              </>
+            );
+
+          case "Activating Fated Rivalry: Proaction":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>{resolutionUpdateGameStateOnly(fatedRivalryProaction())}</>
+                )}
+              </>
+            );
+
+          case "Select Fated Rivalry Proaction":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>{selectFatedRivalryProaction()}</>
                 )}
               </>
             );
@@ -4531,6 +4562,22 @@ const Board = (props) => {
           null,
           unit
         );
+        break;
+
+      case "fated rivalry proaction":
+        newGameState.currentResolution.push({
+          resolution: "Sovereign Contingent Skill",
+          resolution2: "Fated Rivalry Proaction2",
+          player: self,
+          unit: selectedUnit,
+          details: {
+            reason: "Fated Rivalry",
+            title: "Fated Rivalry",
+            message:
+              "Ascend the pawn to the class of an enemy Scion within 2 spaces.",
+          },
+        });
+
         break;
 
       case "match made in heaven":

@@ -14,7 +14,7 @@ const SelectElement = (props) => {
   const dispatch = useDispatch();
 
   const [selectedChoice, setSelectedChoice] = useState(null);
-  const { ascendPawn, canAscend } = useRecurringEffects();
+  const { ascendPawn, canAscend, getZonesWithEnemies } = useRecurringEffects();
   const { getElementImage } = useCardImageSwitch();
 
   //const aspects = ["Fire Scion", "Water Scion", "Wind Scion", "Land Scion", "Lightning Scion", "Mana Scion", "Metal Scion", "Plant Scion"]
@@ -30,10 +30,31 @@ const SelectElement = (props) => {
     "Plant",
   ];
 
+  const fatedRivalryEnemies = [];
+  if (props.details.reason === "Fated Rivalry") {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let zones = JSON.parse(newGameState.zones);
+
+    const enemies = getZonesWithEnemies(props.unit, 2);
+
+    for (let z of enemies) {
+      const zone = zones[Math.floor(z / 5)][z % 5];
+      const enemyUnit = newGameState[zone.player].units[zone.unitIndex];
+
+      fatedRivalryEnemies.push(enemyUnit.unitClass);
+    }
+  }
+
   const canSelect = (choice) => {
     switch (props.details.reason) {
       case "Power at the Final Hour":
         return canAscend(localGameState, props.unit.player, choice + " Scion");
+
+      case "Fated Rivalry":
+        return (
+          canAscend(localGameState, props.unit.player, choice + " Scion") &&
+          fatedRivalryEnemies.includes(choice + " Scion")
+        );
 
       default:
         return false;
@@ -45,7 +66,7 @@ const SelectElement = (props) => {
 
     newGameState.currentResolution.pop();
 
-    console.log(selectedChoice);
+    // console.log(selectedChoice);
 
     switch (props.details.reason) {
       case "Power at the Final Hour":
@@ -60,7 +81,18 @@ const SelectElement = (props) => {
           newGameState,
           props.unit,
           selectedChoice + " Scion",
-          "Power at the Final Hour",
+          "Power at the Final Hour Proaction",
+          null
+        );
+
+        break;
+
+      case "Fated Rivalry":
+        newGameState = ascendPawn(
+          newGameState,
+          props.unit,
+          selectedChoice + " Scion",
+          "Fated Rivalry Proaction",
           null
         );
 

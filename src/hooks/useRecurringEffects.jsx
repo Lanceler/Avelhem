@@ -1558,6 +1558,14 @@ export const useRecurringEffects = () => {
           "Activating Power at the Final Hour: Proaction"
         );
 
+      case "SC-02":
+        return activateTemplate(
+          newGameState,
+          skill,
+          "Sovereign Contingent Skill",
+          "Activating Fated Rivalry: Proaction"
+        );
+
       default:
         return newGameState;
     }
@@ -3090,6 +3098,38 @@ export const useRecurringEffects = () => {
       return false;
     };
 
+    const canFatedRivalryProaction = () => {
+      const zones = JSON.parse(localGameState.zones);
+
+      //1. get pawns
+      const pawnZones = getZonesForPromotion();
+
+      for (let i of pawnZones) {
+        const zone = zones[Math.floor(i / 5)][i % 5];
+        const pawn = localGameState[zone.player].units[zone.unitIndex];
+
+        //2. gets enemies within 2 spaces from pawn
+        const enemyZones = getZonesWithEnemies(pawn, 2);
+
+        for (let j of enemyZones) {
+          const zone2 = zones[Math.floor(j / 5)][j % 5];
+          const scionClass =
+            localGameState[zone2.player].units[zone2.unitIndex].unitClass;
+
+          //3. check if pawn can promote to class of enemy
+          if (
+            !["Pawn"].includes(scionClass) &&
+            canAscend(localGameState, pawn.player, scionClass)
+          ) {
+            return true;
+          }
+          //4. if false, try next enemy
+        }
+        //5. if still false, try next pawn
+      }
+      return false;
+    };
+
     switch (skill) {
       case "SA-01": //Heir's Endeavor
         return canHeirsEndeavor();
@@ -3124,6 +3164,9 @@ export const useRecurringEffects = () => {
 
       case "SC-01": // Power the the Final Hour: Proaction
         return canPowerAtTheFinalHourProaction();
+
+      case "SC-02": // Fated Rivalry: Proaction
+        return canFatedRivalryProaction();
 
       default:
         return false;
@@ -4265,6 +4308,56 @@ export const useRecurringEffects = () => {
     );
   };
 
+  const selectFatedRivalryProaction = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Selected Fated Rivalry Proaction"
+    newGameState.currentResolution.pop();
+
+    const zones = JSON.parse(localGameState.zones);
+
+    //1. get pawns
+    const zonesWithPawns = getZonesForPromotion();
+
+    const eligiblePawns = [];
+
+    for (let i of zonesWithPawns) {
+      const zone = zones[Math.floor(i / 5)][i % 5];
+      const pawn = localGameState[zone.player].units[zone.unitIndex];
+
+      //2. gets enemies within 2 spaces from pawn
+      const enemyZones = getZonesWithEnemies(pawn, 2);
+
+      for (let j of enemyZones) {
+        const zone2 = zones[Math.floor(j / 5)][j % 5];
+        const scionClass =
+          localGameState[zone2.player].units[zone2.unitIndex].unitClass;
+
+        //3. check if pawn can promote to class of enemy
+        if (
+          !["Pawn"].includes(scionClass) &&
+          canAscend(localGameState, pawn.player, scionClass)
+        ) {
+          eligiblePawns.push(i);
+          break; //to save time, move to next pawn
+        }
+
+        //4. if false, try next enemy
+      }
+
+      //5. if still false, try next pawn
+    }
+
+    enterSelectUnitMode(
+      eligiblePawns,
+      null,
+      newGameState,
+      null,
+      "fated rivalry proaction",
+      null
+    );
+  };
+
   const selectFrenzyBladeActivator = (victim) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -4609,7 +4702,7 @@ export const useRecurringEffects = () => {
   };
 
   const triggerFatedRivalry = (newGameState, unit, scionClass, method) => {
-    if (method === "Fated Rivalry") {
+    if (["Fated Rivalry", "Fated Rivalry Proaction"].includes(method)) {
       return false;
     }
 
@@ -5017,6 +5110,7 @@ export const useRecurringEffects = () => {
     selectEnemiesAfflicted,
     selectEnemiesRooted,
     selectFatedRivalry,
+    selectFatedRivalryProaction,
     selectFrenzyBladeActivator,
     selectHealingRainActivator,
     selectMatchMadeInHeavenPawn,
