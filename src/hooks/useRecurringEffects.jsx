@@ -3393,7 +3393,8 @@ export const useRecurringEffects = () => {
     }
 
     newGameState.currentResolution.push({
-      resolution: "Selecting Unit",
+      resolution: "Selecting",
+      resolution2: "Selecting Unit",
       player: self,
       zoneIds: zoneIds,
       unit: unit,

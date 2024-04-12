@@ -43,6 +43,7 @@
     height: 50px;
     position: absolute;
     opacity: 0%;
+    z-index: 4;
 }
     
 @keyframes ascend {
@@ -543,6 +544,7 @@ animation: moveUpDownHP 1.0s ease-in-out infinite;
     position: absolute;
     animation: moveUpDown 0.95s ease-in-out infinite;
     pointer-events: none;
+    z-index: 5;
 }
 
 .glacial-torrent {
@@ -554,6 +556,7 @@ animation: moveUpDownHP 1.0s ease-in-out infinite;
     position: absolute;
     animation: moveUpDown 0.95s ease-in-out infinite;
     pointer-events: none;
+        z-index: 5;
 }
 
 .gale-conjuration{
@@ -565,6 +568,7 @@ animation: moveUpDownHP 1.0s ease-in-out infinite;
         position: absolute;
         animation: moveUpDown 0.95s ease-in-out infinite;
         pointer-events: none;
+            z-index: 5;
     }
 
 .sharpness {
@@ -576,6 +580,7 @@ animation: moveUpDownHP 1.0s ease-in-out infinite;
     position: absolute;
     animation: moveUpDown 0.95s ease-in-out infinite;
     pointer-events: none;
+        z-index: 5;
 }
 
 .blossom {
@@ -587,6 +592,7 @@ animation: moveUpDownHP 1.0s ease-in-out infinite;
     position: absolute;
     animation: moveUpDown 0.95s ease-in-out infinite;
     pointer-events: none;
+        z-index: 5;
 }
 
 .charge {
@@ -598,6 +604,7 @@ animation: moveUpDownHP 1.0s ease-in-out infinite;
     position: absolute;
     animation: moveUpDown 0.95s ease-in-out infinite;
     pointer-events: none;
+        z-index: 5;
 }
 
 @keyframes moveUpDown {

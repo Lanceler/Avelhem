@@ -39,6 +39,7 @@ import SelectSkillDiscard from "./modals/SelectSkillDiscard";
 import SelectSkillHandMulti from "./modals/SelectSkillHandMulti";
 import SelectSkillFloat from "./modals/SelectSkillFloat";
 import SelectSkillReveal from "./modals/SelectSkillReveal";
+import SelectUnitAbility from "./modals/SelectUnitAbility";
 import TacticResults from "./modals/TacticResults";
 import ViewRevealedSkill from "./modals/ViewRevealedSkill";
 import YouMayFloat1Skill from "./modals/YouMayFloat1Skill";
@@ -414,23 +415,6 @@ const Board = (props) => {
           </>
         );
 
-      case "Selecting Unit":
-        return (
-          <>
-            {self === lastResolution.player && tileMode !== "selectUnit" && (
-              <>
-                {setIntrudingPlayer(self)}
-                {setTileMode("selectUnit")}
-                {setValidZones(lastResolution.zoneIds)}
-                {setMovingUnit(lastResolution.unit)}
-                {setTacticUsed(lastResolution.tactic)}
-                {setSelectUnitReason(lastResolution.reason)}
-                {setSelectUnitSpecial(lastResolution.special)}
-              </>
-            )}
-          </>
-        );
-
       case "Activating Tactic":
         return (
           <>
@@ -643,18 +627,6 @@ const Board = (props) => {
           </>
         );
 
-      case "Selecting Scion Skill":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
-              <ScionSkillSelect
-                updateFirebase={updateFirebase}
-                unit={lastResolution.unit}
-              />
-            )}
-          </>
-        );
-
       case "Search Avelhem":
         return (
           <>
@@ -797,6 +769,52 @@ const Board = (props) => {
             )}
           </>
         );
+
+      case "Selecting":
+        switch (lastResolution.resolution2) {
+          case "Selecting Unit":
+            return (
+              <>
+                {self === lastResolution.player &&
+                  tileMode !== "selectUnit" && (
+                    <>
+                      {setIntrudingPlayer(self)}
+                      {setTileMode("selectUnit")}
+                      {setValidZones(lastResolution.zoneIds)}
+                      {setMovingUnit(lastResolution.unit)}
+                      {setTacticUsed(lastResolution.tactic)}
+                      {setSelectUnitReason(lastResolution.reason)}
+                      {setSelectUnitSpecial(lastResolution.special)}
+                    </>
+                  )}
+              </>
+            );
+
+          case "Selecting Scion Skill":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <ScionSkillSelect
+                    updateFirebase={updateFirebase}
+                    unit={lastResolution.unit}
+                  />
+                )}
+              </>
+            );
+
+          case "Selecting Unit Ability":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <SelectUnitAbility
+                    updateFirebase={updateFirebase}
+                    unit={lastResolution.unit}
+                  />
+                )}
+              </>
+            );
+        }
+        break;
 
       case "Misc.":
         switch (lastResolution.resolution2) {
@@ -4120,35 +4138,6 @@ const Board = (props) => {
 
     // updateFirebase(newGameState);
   };
-
-  // const enterSelectUnitMode = (
-  //   zoneIds,
-  //   unit,
-  //   gameState,
-  //   tactic,
-  //   reason,
-  //   special
-  // ) => {
-  //   let newGameState = null;
-  //   if (gameState) {
-  //     newGameState = gameState;
-  //   } else {
-  //     newGameState = JSON.parse(JSON.stringify(localGameState));
-  //   }
-
-  //   newGameState.currentResolution.push({
-  //     resolution: "Selecting Unit",
-  //     zoneIds: zoneIds,
-  //     unit: unit,
-  //     tactic: tactic,
-  //     reason: reason,
-  //     special: special,
-  //   });
-
-  //   dispatch(updateState(newGameState));
-
-  //   // updateFirebase(newGameState);
-  // };
 
   const hideOrRevealModale = () => {
     setHideModal(!hideModal);

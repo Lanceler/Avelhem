@@ -95,9 +95,19 @@ export const Piece = (props) => {
     }
   }
 
-  const handleClick = () => {
-    // canAegis(props.unit);
+  const handleAbility = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
 
+    newGameState.currentResolution.push({
+      resolution: "Selecting",
+      resolution2: "Selecting Unit Ability",
+      unit: props.unit,
+    });
+
+    dispatch(updateState(newGameState));
+  };
+
+  const handleClick = () => {
     if (props.tileMode === "selectUnit") {
       if (pieceSelectable) {
         props.selectUnit(
@@ -133,7 +143,8 @@ export const Piece = (props) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
     newGameState.currentResolution.push({
-      resolution: "Selecting Scion Skill",
+      resolution: "Selecting",
+      resolution2: "Selecting Scion Skill",
       unit: props.unit,
     });
 
@@ -409,6 +420,7 @@ export const Piece = (props) => {
                         <div
                           className="pieceOption"
                           style={{ top: 54, left: 54 }}
+                          onClick={() => handleAbility()}
                         >
                           <div className="optionIcon">Abi</div>
                         </div>

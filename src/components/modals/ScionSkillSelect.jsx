@@ -49,7 +49,7 @@ const ScionSkillSelect = (props) => {
   }
 
   const handleResonate = () => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    const newGameState = JSON.parse(JSON.stringify(localGameState));
 
     newGameState.currentResolution.push({
       resolution: "Choose Resonator",
