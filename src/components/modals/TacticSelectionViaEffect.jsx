@@ -15,6 +15,12 @@ const TacticSelectionViaEffect = (props) => {
 
   let canUseTactic = [false, false];
 
+  let skipMessage = "Skip";
+
+  if (props.details.canSkip === "Return") {
+    skipMessage = "Return";
+  }
+
   if (
     localGameState.tactics[0] !== null &&
     (!props.unit || !props.unit.temporary.used0thTactic) &&
@@ -67,6 +73,29 @@ const TacticSelectionViaEffect = (props) => {
       }
 
       switch (props.details.reason) {
+        case "Afterburner":
+          newGameState.activatingSkill.push("Afterburner");
+          newGameState.activatingUnit.push(unit);
+
+          newGameState.currentResolution.push({
+            resolution: "Tactic End",
+            unit: unit,
+            effect: true,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Unit Ability",
+            resolution2: "Activating Afterburner",
+            unit: unit,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Animation Delay",
+            priority: self,
+          });
+
+          break;
+
         case "Surge":
           unit.virtue = 1;
 
@@ -183,8 +212,12 @@ const TacticSelectionViaEffect = (props) => {
         </div>
 
         {props.details.canSkip && (
-          <button button className="choiceButton" onClick={() => handleSkip()}>
-            Skip
+          <button
+            button
+            className="choiceButton noYes"
+            onClick={() => handleSkip()}
+          >
+            {skipMessage}
           </button>
         )}
       </div>

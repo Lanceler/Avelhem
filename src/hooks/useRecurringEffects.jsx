@@ -4504,7 +4504,7 @@ export const useRecurringEffects = () => {
   const selectSowAndReapStriker = (unit) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    //end "Select Sow and Reap Strikerr"
+    //end "Select Sow and Reap Striker"
     newGameState.currentResolution.pop();
 
     const zonesWithAllies = getZonesWithAllies(unit, 1, false);
@@ -5076,7 +5076,6 @@ export const useRecurringEffects = () => {
     floatSkill,
     freeze1,
     freeze2,
-    // getScionSet,
     getTacticImage,
     getVacantAdjacentZones,
     getVacantFrontier,

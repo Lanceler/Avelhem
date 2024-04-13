@@ -27,6 +27,7 @@ const SelectCustomChoice = (props) => {
     canSowAndReapStrike,
     canStrike,
     drawSkill,
+    enterSelectUnitMode,
     getVacantAdjacentZones,
     getZonesAerialImpetusAlly,
     getZonesWithAllies,
@@ -220,13 +221,13 @@ const SelectCustomChoice = (props) => {
     newGameState.currentResolution.pop();
 
     switch (props.details.reason) {
-      case "TEMPLATE":
-        if (selectedChoice === 1) {
-          //1st choice
-        } else {
-          //2nd choice
-        }
-        break;
+      // case "TEMPLATE":
+      //   if (selectedChoice === 1) {
+      //     //1st choice
+      //   } else {
+      //     //2nd choice
+      //   }
+      //   break;
 
       case "Ignition Propulsion":
         updateLocal = false;
@@ -238,7 +239,7 @@ const SelectCustomChoice = (props) => {
             null
           );
         } else {
-          props.enterSelectUnitMode(
+          enterSelectUnitMode(
             getZonesWithEnemies(unit, 1),
             unit,
             newGameState,
@@ -293,7 +294,7 @@ const SelectCustomChoice = (props) => {
         updateLocal = false;
         props.setIntrudingPlayer(self);
         if (selectedChoice === 1) {
-          props.enterSelectUnitMode(
+          enterSelectUnitMode(
             getZonesWithAllies(unit, 1, true),
             null,
             newGameState,
@@ -302,7 +303,7 @@ const SelectCustomChoice = (props) => {
             null
           );
         } else {
-          props.enterSelectUnitMode(
+          enterSelectUnitMode(
             getZonesWithEnemies(unit, 1),
             null,
             newGameState,
@@ -316,7 +317,7 @@ const SelectCustomChoice = (props) => {
       case "Aerial Impetus":
         updateLocal = false;
         if (selectedChoice === 1) {
-          props.enterSelectUnitMode(
+          enterSelectUnitMode(
             getZonesAerialImpetusAlly(unit),
             unit,
             newGameState,
@@ -325,7 +326,7 @@ const SelectCustomChoice = (props) => {
             null
           );
         } else {
-          props.enterSelectUnitMode(
+          enterSelectUnitMode(
             getZonesWithEnemies(unit, 1),
             unit,
             newGameState,
@@ -422,7 +423,7 @@ const SelectCustomChoice = (props) => {
             null
           );
         } else {
-          props.enterSelectUnitMode(
+          enterSelectUnitMode(
             getZonesWithEnemies(unit, 1),
             unit,
             newGameState,
@@ -445,7 +446,7 @@ const SelectCustomChoice = (props) => {
             null
           );
         } else {
-          props.enterSelectUnitMode(
+          enterSelectUnitMode(
             getZonesWithEnemies(unit, 1),
             unit,
             newGameState,

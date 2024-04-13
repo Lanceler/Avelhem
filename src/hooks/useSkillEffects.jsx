@@ -46,7 +46,6 @@ export const useSkillEffects = () => {
     newGameState.currentResolution.push({
       resolution: "Fire Skill",
       resolution2: "Ignition Propulsion1",
-      // resolution: "Ignition Propulsion1",
       unit: unit,
       details: {
         title: "Ignition Propulsion",

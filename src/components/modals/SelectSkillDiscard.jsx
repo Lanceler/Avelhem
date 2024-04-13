@@ -42,7 +42,22 @@ const SelectSkillDiscard = (props) => {
     //end Discarding Skill resolution
     newGameState.currentResolution.pop();
 
-    unit.blossom = unit.blossom - 1;
+    unit.blossom -= 1;
+
+    newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+
+    dispatch(updateState(newGameState));
+    //props.updateFirebase(newGameState);
+  };
+
+  const handleFever = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[props.unit.player].units[props.unit.unitIndex];
+
+    //end Discarding Skill resolution
+    newGameState.currentResolution.pop();
+
+    unit.fever -= props.fever;
 
     newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
 
@@ -75,10 +90,10 @@ const SelectSkillDiscard = (props) => {
     // Mana Scion talent: Mana Scions and their adjacent allies
     // may float Mana skills when spending them
     if (
-      props.unit &
-        ["06-01", "06-02", "06-03", "06-04"].includes(
-          usableSkills[selectedSkill].id
-        ) &&
+      props.unit &&
+      ["06-01", "06-02", "06-03", "06-04"].includes(
+        usableSkills[selectedSkill].id
+      ) &&
       isAdjacentToManaScion(props.unit)
     ) {
       newGameState.currentResolution.push({
@@ -97,7 +112,6 @@ const SelectSkillDiscard = (props) => {
             1
           )[0],
         },
-        // skill: usableSkills[selectedSkill],
       });
     } else {
       //send selected skill to vestige
@@ -159,6 +173,17 @@ const SelectSkillDiscard = (props) => {
             Spend 1 Blossom
           </button>
         )}
+
+        {selectedSkill === null &&
+          props.fever &&
+          props.unit.fever >= props.fever && (
+            <button
+              className="choiceButton noYes"
+              onClick={() => handleFever()}
+            >
+              {`Spend ${props.fever === 1 ? "1 Fever" : "2 Fevers"}`}
+            </button>
+          )}
 
         {selectedSkill !== null && (
           <button className="choiceButton noYes" onClick={() => handleSelect()}>

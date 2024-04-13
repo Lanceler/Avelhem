@@ -16,8 +16,7 @@ import { updateDoc, doc } from "firebase/firestore";
 import { useRecurringEffects } from "../hooks/useRecurringEffects";
 import { useSkillEffects } from "../hooks/useSkillEffects";
 import { useSovereignSkillEffects } from "../hooks/useSovereignSkillEffects";
-import { useCardDatabase } from "../hooks/useCardDatabase";
-import { useCardImageSwitch } from "../hooks/useCardImageSwitch";
+import { useUnitAbilityEffects } from "../hooks/useUnitAbilityEffects";
 
 import AcquisitionPhaseSelection from "./modals/AcquisitionPhaseSelection";
 import BountyStore from "./modals/BountyStore";
@@ -263,6 +262,8 @@ const Board = (props) => {
     blackBusinessCard1,
   } = useSovereignSkillEffects();
 
+  const { afterburner1, afterburner2 } = useUnitAbilityEffects();
+
   const newPawnStats = (player, index, row, column) => {
     return {
       player: player,
@@ -479,7 +480,7 @@ const Board = (props) => {
         return (
           <>
             {self === lastResolution.unit.player && (
-              <>{tacticEnd(lastResolution.unit)}</>
+              <>{tacticEnd(lastResolution.unit, lastResolution.effect)}</>
             )}
           </>
         );
@@ -699,6 +700,7 @@ const Board = (props) => {
                 unit={lastResolution.unit}
                 player={lastResolution.player}
                 message={lastResolution.message}
+                fever={lastResolution.fever}
                 restriction={lastResolution.restriction}
                 hideOrRevealModale={hideOrRevealModale}
               />
@@ -910,6 +912,52 @@ const Board = (props) => {
         }
         break;
 
+      case "Unit Ability":
+        switch (lastResolution.resolution2) {
+          case "Fire: Afterburner - select tactic":
+          case "Water: Hydrotherapy - select tactic":
+          case "Wind: Air Dash - select tactic":
+            return (
+              <>
+                {self === localGameState.turnPlayer && !hideModal && (
+                  <TacticSelectionViaEffect
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Activating Afterburner":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      afterburner1(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Afterburner1":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      afterburner2(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+        }
+        break;
+
       case "Unit Talent":
         switch (lastResolution.resolution2) {
           case "Activating Flash Fire":
@@ -922,7 +970,6 @@ const Board = (props) => {
                     unit={lastResolution.unit}
                     details={lastResolution.details}
                     enterMoveMode={enterMoveMode}
-                    enterSelectUnitMode={enterSelectUnitMode}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                     setIntrudingPlayer={setIntrudingPlayer}
@@ -993,7 +1040,6 @@ const Board = (props) => {
                     unit={lastResolution.unit}
                     details={lastResolution.details}
                     enterMoveMode={enterMoveMode}
-                    enterSelectUnitMode={enterSelectUnitMode}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1418,7 +1464,6 @@ const Board = (props) => {
                   <SelectCustomChoice
                     unit={lastResolution.unit}
                     details={lastResolution.details}
-                    enterSelectUnitMode={enterSelectUnitMode}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2351,7 +2396,6 @@ const Board = (props) => {
                     unit={lastResolution.unit}
                     details={lastResolution.details}
                     enterMoveMode={enterMoveMode}
-                    enterSelectUnitMode={enterSelectUnitMode}
                     setMovingSpecial={setMovingSpecial}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
@@ -2368,7 +2412,6 @@ const Board = (props) => {
                     unit={lastResolution.unit}
                     details={lastResolution.details}
                     enterMoveMode={enterMoveMode}
-                    enterSelectUnitMode={enterSelectUnitMode}
                     setMovingSpecial={setMovingSpecial}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
@@ -3193,7 +3236,6 @@ const Board = (props) => {
               <>
                 {self === lastResolution.player && !hideModal && (
                   <SelectCustomChoice
-                    // unit={null}
                     details={lastResolution.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
@@ -4762,39 +4804,40 @@ const Board = (props) => {
     // props.updateFirebase(newGameState);
   };
 
-  const tacticEnd = (unitInfo) => {
+  const tacticEnd = (unitInfo, effect) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
     //end "Tactic End"
     newGameState.currentResolution.pop();
 
-    if (unitInfo !== null) {
-      let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+    if (unit) {
+      //decrease activation counter
+      unit.temporary.activation -= 1;
 
-      if (unit) {
-        //decrease activation counter
-        unit.temporary.activation -= 1;
+      //apply anathema
+      if (
+        unit.temporary.activation === 0 &&
+        unit.temporary.anathemaDelay === true
+      ) {
+        delete unit.temporary.anathemaDelay;
+        unit.afflictions.anathema = 2;
 
-        //apply anathema
-        if (
-          unit.temporary.activation === 0 &&
-          unit.temporary.anathemaDelay === true
-        ) {
-          delete unit.temporary.anathemaDelay;
-          unit.afflictions.anathema = 2;
-
-          //anathema purges boosts, disruption, overgrowth, & proliferation
-          unit.boosts = {};
-          delete unit.enhancements.disruption;
-          delete unit.enhancements.overgrowth;
-          delete unit.enhancements.proliferation;
-        }
-
-        newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+        //anathema purges boosts, disruption, overgrowth, & proliferation
+        unit.boosts = {};
+        delete unit.enhancements.disruption;
+        delete unit.enhancements.overgrowth;
+        delete unit.enhancements.proliferation;
       }
+
+      newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
     }
 
     newGameState.activatingUnit.pop();
+
+    if (effect) {
+      newGameState.activatingSkill.pop();
+    }
 
     dispatch(updateState(newGameState));
 

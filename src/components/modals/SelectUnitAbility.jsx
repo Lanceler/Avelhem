@@ -29,6 +29,8 @@ const SelectUnitAbility = (props) => {
   let updateLocal = true;
   let updateData = false;
 
+  let message = null;
+
   let abilityDetails = [];
   switch (unit.unitClass) {
     case "Fire Scion":
@@ -381,10 +383,164 @@ const SelectUnitAbility = (props) => {
     newGameState.currentResolution.pop();
 
     switch (unit.unitClass) {
-      case "TEMPLATE":
-        if (selectedChoice === 1) {
+      // case "TEMPLATE":
+      //   if (selectedChoice === 1) {
+      //     //1st choice
+      //   } else {
+      //     //2nd choice
+      //   }
+      //   break;
+
+      case "Fire Scion":
+        if (selectedChoice === 0) {
+          newGameState.currentResolution.push({
+            resolution: "Unit Ability",
+            resolution2: "Fire: Afterburner - select tactic",
+            unit: unit,
+            details: {
+              title: "Afterburner",
+              message: "Use an Invoke tactic.",
+              restriction: ["Invoke"],
+              stock: 1,
+              reason: "Afterburner",
+              canSkip: "Return",
+            },
+          });
+        } else if (selectedChoice === 1) {
+          //2nd choice
+        }
+        break;
+
+      case "Water Scion":
+        if (selectedChoice === 0) {
+          newGameState.currentResolution.push({
+            resolution: "Unit Ability",
+            resolution2: "Water: Hydrotherapy - select tactic",
+            unit: unit,
+            details: {
+              title: "Hydrotherapy",
+              message: "Use an Advance, Assault, or Invoke tactic.",
+              restriction: ["Advance", "Assault", "Invoke"],
+              stock: 1,
+              reason: "Hydrotherapy",
+              canSkip: "Return",
+            },
+          });
+        } else if (selectedChoice === 1) {
+          newGameState.currentResolution.push({
+            resolution: "Unit Ability",
+            resolution2: "Water: Cold Embrace - select tactic",
+            unit: unit,
+            details: {
+              title: "Cold Embrace",
+              message: "Use an Assault, or Invoke tactic.",
+              restriction: ["Assault", "Invoke"],
+              stock: 1,
+              reason: "Cold Embrace",
+              canSkip: "Return",
+            },
+          });
+        }
+        break;
+
+      case "Wind Scion":
+        if (selectedChoice === 0) {
+          newGameState.currentResolution.push({
+            resolution: "Unit Ability",
+            resolution2: "Wind: Air Dash - select tactic",
+            unit: unit,
+            details: {
+              title: "Air Dash",
+              message: "Use 2 instances of 1 mobilize tactic.",
+              restriction: ["Mobilize"],
+              stock: 2,
+              reason: "Air Dash",
+              canSkip: "Return",
+            },
+          });
+        } else if (selectedChoice === 1) {
+          newGameState.currentResolution.push({
+            resolution: "Unit Ability",
+            resolution2: "Wind: Reap the Whirlwind - select tactic",
+            unit: unit,
+            details: {
+              title: "Reap the Whirlwind",
+              message: "Use an Assault tactic.",
+              restriction: ["Assault"],
+              stock: 1,
+              reason: "Reap the Whirlwind",
+              canSkip: "Return",
+            },
+          });
+        }
+        break;
+
+      case "Land Scion":
+        if (selectedChoice === 0) {
+          //
+        }
+        break;
+
+      case "Lightning Scion":
+        if (selectedChoice === 0) {
+          newGameState.currentResolution.push({
+            resolution: "Unit Ability",
+            resolution2: "Lightning: Galvanize - select tactic",
+            unit: unit,
+            details: {
+              title: "Galvanize",
+              message: "Use 2 instances of 1 mobilize tactic.",
+              restriction: ["Mobilize"],
+              stock: 2,
+              reason: "Galvanize",
+              canSkip: "Return",
+            },
+          });
+        } else if (selectedChoice === 1) {
+          //2nd choice
+        }
+        break;
+
+      case "Mana Scion":
+        if (selectedChoice === 0) {
+          newGameState.currentResolution.push({
+            resolution: "Unit Ability",
+            resolution2: "Mana: Particle Beam - select tactic",
+            unit: unit,
+            details: {
+              title: "Particle Beam",
+              message: "Use an Assault tactic.",
+              restriction: ["Assault"],
+              stock: 1,
+              reason: "Particle Beam",
+              canSkip: "Return",
+            },
+          });
+        }
+        break;
+
+      case "Metal Scion":
+        if (selectedChoice === 0) {
+          newGameState.currentResolution.push({
+            resolution: "Unit Ability",
+            resolution2: "Metal: Brandish - select tactic",
+            unit: unit,
+            details: {
+              title: "Brandish",
+              message: "Use an Invoke tactic.",
+              restriction: ["Invoke"],
+              stock: 1,
+              reason: "Brandish",
+              canSkip: "Return",
+            },
+          });
+        }
+        break;
+
+      case "Plant Scion":
+        if (selectedChoice === 0) {
           //1st choice
-        } else {
+        } else if (selectedChoice === 1) {
           //2nd choice
         }
         break;
@@ -431,8 +587,6 @@ const SelectUnitAbility = (props) => {
               style={{ backgroundImage: `url(${GoldFrame})` }}
               onClick={() => handleChoice(i)}
             >
-              {console.log("canChoice(i)")}
-              {console.log(canChoice(i))}
               <div
                 // className="abilityFrame"
                 className={`abilityFrame ${

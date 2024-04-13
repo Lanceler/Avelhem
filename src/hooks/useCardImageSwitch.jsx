@@ -77,6 +77,8 @@ import ManaScion from "../assets/scionIcons/ManaScion.png";
 import MetalScion from "../assets/scionIcons/MetalScion.png";
 import PlantScion from "../assets/scionIcons/PlantScion.png";
 
+import Afterburner from "../assets/abilities/Afterburner.png";
+
 export const useCardImageSwitch = () => {
   const getElementImage = (scionClass) => {
     switch (scionClass) {
@@ -127,6 +129,8 @@ export const useCardImageSwitch = () => {
         return BlazeOfGlory;
       case "01-04":
         return Resplendence;
+      case "Afterburner":
+        return Afterburner;
 
       case 2:
         return WaterAvelhem;
