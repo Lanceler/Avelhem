@@ -262,10 +262,10 @@ const YouMaySpend1Skill = (props) => {
     // Mana Scion talent: Mana Scions and their adjacent allies
     // may float Mana skills when spending them
     if (
-      (props.unit !== null) &
-        ["06-01", "06-02", "06-03", "06-04"].includes(
-          usableSkills[selectedSkill].id
-        ) &&
+      props.unit !== null &&
+      ["06-01", "06-02", "06-03", "06-04"].includes(
+        usableSkills[selectedSkill].id
+      ) &&
       isAdjacentToManaScion(props.unit)
     ) {
       newGameState.currentResolution.push({

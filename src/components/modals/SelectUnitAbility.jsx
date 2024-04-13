@@ -61,8 +61,8 @@ const SelectUnitAbility = (props) => {
           abilityText: (
             <>
               <div className="abilityText ">
-                ⬩Spend 1 Fever or 1 skill to purge all adjacent allies’
-                Frostbite and Burn.
+                ⬩Spend 1 Fever or 1 skill to purge an adjacent ally’s Frostbite
+                and Burn.
               </div>
             </>
           ),
@@ -310,7 +310,8 @@ const SelectUnitAbility = (props) => {
             return (
               !unit.temporary.usedFieryHeart &&
               (unit.fever >= 1 ||
-                newGameState[unit.player].skillHand.length > 0)
+                newGameState[unit.player].skillHand.length > 0) &&
+              getZonesWithAllies(unit, 1, false).length > 0
             );
         }
 
@@ -407,7 +408,28 @@ const SelectUnitAbility = (props) => {
             },
           });
         } else if (selectedChoice === 1) {
-          //2nd choice
+          updateData = true;
+          newGameState.activatingSkill.push("FieryHeart");
+          newGameState.activatingUnit.push(unit);
+
+          newGameState.currentResolution.push({
+            resolution: "Tactic End",
+            unit: unit,
+            effect: true,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Unit Ability",
+            resolution2: "Activating Fiery Heart",
+            unit: unit,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Animation Delay",
+            priority: self,
+          });
+
+          break;
         }
         break;
 

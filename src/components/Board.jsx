@@ -262,7 +262,8 @@ const Board = (props) => {
     blackBusinessCard1,
   } = useSovereignSkillEffects();
 
-  const { afterburner1, afterburner2 } = useUnitAbilityEffects();
+  const { afterburner1, afterburner2, fieryHeart1, fieryHeart2 } =
+    useUnitAbilityEffects();
 
   const newPawnStats = (player, index, row, column) => {
     return {
@@ -950,6 +951,32 @@ const Board = (props) => {
                   <>
                     {resolutionUpdateGameStateOnly(
                       afterburner2(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Activating Fiery Heart":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      fieryHeart1(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Fiery Heart1":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      fieryHeart2(lastResolution.unit)
                     )}
                   </>
                 )}
@@ -4383,6 +4410,7 @@ const Board = (props) => {
           selectedUnit
         );
         break;
+
       case "blast":
         newGameState = blast(
           newGameState,
@@ -4391,6 +4419,7 @@ const Board = (props) => {
           special
         );
         break;
+
       case "strike":
         newGameState = strike(
           newGameState,
@@ -4399,6 +4428,7 @@ const Board = (props) => {
           special
         );
         break;
+
       case "ignite":
         newGameState = ignite(
           newGameState,
@@ -4407,6 +4437,7 @@ const Board = (props) => {
           special
         );
         break;
+
       case "paralyze1":
         newGameState = paralyze1(
           newGameState,
@@ -4415,6 +4446,7 @@ const Board = (props) => {
           special
         );
         break;
+
       case "paralyze2":
         newGameState = paralyze2(
           newGameState,
@@ -4423,6 +4455,7 @@ const Board = (props) => {
           special
         );
         break;
+
       case "freeze1":
         newGameState = freeze1(
           newGameState,
@@ -4431,6 +4464,7 @@ const Board = (props) => {
           special
         );
         break;
+
       case "freeze2":
         newGameState = freeze2(
           newGameState,
@@ -4440,9 +4474,22 @@ const Board = (props) => {
         );
         break;
 
+      case "fiery heart":
+        let fieryHeartAlly =
+          newGameState[selectedUnit.player].units[selectedUnit.unitIndex];
+
+        delete fieryHeartAlly.afflictions.burn;
+        delete fieryHeartAlly.afflictions.frostbite;
+
+        newGameState[selectedUnit.player].units[selectedUnit.unitIndex] =
+          fieryHeartAlly;
+
+        break;
+
       case "purification":
         newGameState = purificationPurge(newGameState, selectedUnit);
         break;
+
       case "healing rain":
         newGameState = activateHealingRain(newGameState, selectedUnit, unit);
         break;
