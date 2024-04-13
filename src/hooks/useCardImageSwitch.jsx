@@ -78,6 +78,18 @@ import MetalScion from "../assets/scionIcons/MetalScion.png";
 import PlantScion from "../assets/scionIcons/PlantScion.png";
 
 import Afterburner from "../assets/abilities/Afterburner.png";
+import FieryHeart from "../assets/abilities/FieryHeart.png";
+import Hydrotherapy from "../assets/abilities/Hydrotherapy.png";
+import ColdEmbrace from "../assets/abilities/ColdEmbrace.png";
+import AirDash from "../assets/abilities/AirDash.png";
+import ReapTheWhirlwind from "../assets/abilities/ReapTheWhirlwind.png";
+import Fortify from "../assets/abilities/Fortify.png";
+import Galvanize from "../assets/abilities/Galvanize.png";
+import ArcFlash from "../assets/abilities/ArcFlash.png";
+import ParticleBeam from "../assets/abilities/ParticleBeam.png";
+import Brandish from "../assets/abilities/Brandish.png";
+import Flourish from "../assets/abilities/Flourish.png";
+import Ambrosia from "../assets/abilities/Ambrosia.png";
 
 export const useCardImageSwitch = () => {
   const getElementImage = (scionClass) => {
@@ -131,6 +143,8 @@ export const useCardImageSwitch = () => {
         return Resplendence;
       case "Afterburner":
         return Afterburner;
+      case "FieryHeart":
+        return FieryHeart;
 
       case 2:
         return WaterAvelhem;
@@ -142,6 +156,10 @@ export const useCardImageSwitch = () => {
         return HealingRain;
       case "02-04":
         return GlacialTorrent;
+      case "Hydrotherapy":
+        return Hydrotherapy;
+      case "ColdEmbrace":
+        return ColdEmbrace;
 
       case 3:
         return WindAvelhem;
@@ -153,6 +171,10 @@ export const useCardImageSwitch = () => {
         return SymphonicScreech;
       case "03-04":
         return CataclysmicTempest;
+      case "AirDash":
+        return AirDash;
+      case "ReapTheWhirlwind":
+        return ReapTheWhirlwind;
 
       case 4:
         return LandAvelhem;
@@ -164,6 +186,8 @@ export const useCardImageSwitch = () => {
         return PitfallTrap;
       case "04-04":
         return Geomancy;
+      case "Fortify":
+        return Fortify;
 
       case 5:
         return LightningAvelhem;
@@ -175,6 +199,10 @@ export const useCardImageSwitch = () => {
         return ThunderThaumaturge;
       case "05-04":
         return ValiantSpark;
+      case "Galvanize":
+        return Galvanize;
+      case "ArcFlash":
+        return ArcFlash;
 
       case 6:
         return ManaAvelhem;
@@ -186,6 +214,8 @@ export const useCardImageSwitch = () => {
         return Aegis;
       case "06-04":
         return DisruptionField;
+      case "ParticleBeam":
+        return ParticleBeam;
 
       case 7:
         return MetalAvelhem;
@@ -197,6 +227,8 @@ export const useCardImageSwitch = () => {
         return FrenzyBlade;
       case "07-04":
         return ArsenalOnslaught;
+      case "Brandish":
+        return Brandish;
 
       case 8:
         return PlantAvelhem;
@@ -208,6 +240,10 @@ export const useCardImageSwitch = () => {
         return ViridianGrave;
       case "08-04":
         return CastleOfThorns;
+      case "Flourish":
+        return Flourish;
+      case "Ambrosia":
+        return Ambrosia;
 
       case "SA-01":
         return HeirsEndeavor;

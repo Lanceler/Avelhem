@@ -271,7 +271,7 @@ const SelectUnitAbility = (props) => {
           ),
         },
         {
-          abilityName: "Aromatherapy",
+          abilityName: "Ambrosia",
           abilityQualifier: <div className="abilityQualifier"></div>,
           abilityText: (
             <>
