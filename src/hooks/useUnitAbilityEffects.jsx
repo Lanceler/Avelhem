@@ -175,14 +175,15 @@ export const useUnitAbilityEffects = () => {
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
-    enterSelectUnitMode(
-      getZonesWithEnemies(unit, 1),
-      unit,
-      newGameState,
-      null,
-      "freeze2",
-      null
-    );
+    newGameState.currentResolution.push({
+      resolution: "Unit Ability",
+      resolution2: "Cold Embrace1",
+      unit: unit,
+      details: {
+        title: "Cold Embrace",
+        reason: "Cold Embrace",
+      },
+    });
 
     return newGameState;
   };
@@ -352,6 +353,41 @@ export const useUnitAbilityEffects = () => {
     return newGameState;
   };
 
+  const brandish1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Brandish"
+    newGameState.currentResolution.pop();
+
+    //give unit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation += 1)
+      : (unit.temporary.activation = 1);
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    newGameState.currentResolution.push({
+      resolution: "Unit Ability",
+      resolution2: "Brandish1",
+      unit: unit,
+      details: {
+        title: "Brandish",
+        reason: "Brandish",
+      },
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Search Skill",
+      player: self,
+      restriction: ["07-03"],
+      message: "Search for 1 Frenzy Blade.",
+      outcome: "Add",
+    });
+
+    return newGameState;
+  };
+
   //end of list
 
   return {
@@ -366,5 +402,6 @@ export const useUnitAbilityEffects = () => {
     galvanize1,
     particleBeam1,
     particleBeam2,
+    brandish1,
   };
 };

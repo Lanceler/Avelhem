@@ -246,6 +246,29 @@ const TacticSelectionViaEffect = (props) => {
           });
           break;
 
+        case "Brandish":
+          updateData = true;
+          newGameState.activatingSkill.push("Brandish");
+          newGameState.activatingUnit.push(unit);
+
+          newGameState.currentResolution.push({
+            resolution: "Tactic End",
+            unit: unit,
+            effect: true,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Unit Ability",
+            resolution2: "Activating Brandish",
+            unit: unit,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Animation Delay",
+            priority: self,
+          });
+          break;
+
         //Skills
 
         case "Surge":

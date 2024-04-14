@@ -33,6 +33,7 @@ const SelectCustomChoice = (props) => {
     getZonesAerialImpetusAlly,
     getZonesWithAllies,
     getZonesWithEnemies,
+    getZonesWithEnemiesAfflicted,
     strike,
   } = useRecurringEffects();
 
@@ -85,6 +86,14 @@ const SelectCustomChoice = (props) => {
       ChoiceFirstMessage = "Restore your or an adjacent ally’s Virtue.";
       ChoiceSecondMessage =
         "Purge an adjacent enemy’s Virtue. This cannot affect Water Scions.";
+      break;
+
+    case "Cold Embrace":
+      canFirstChoice =
+        getZonesWithEnemiesAfflicted(unit, 1, "frostbite").length > 0;
+      canSecondChoice = getZonesWithEnemies(unit, 1).length > 0;
+      ChoiceFirstMessage = "Strike a frostbitten enemy.";
+      ChoiceSecondMessage = "Freeze an adjacent enemy for 2 turns.";
       break;
 
     case "Aerial Impetus":
@@ -183,6 +192,13 @@ const SelectCustomChoice = (props) => {
       ChoiceSecondMessage = "Blast.";
       break;
 
+    case "Brandish":
+      canFirstChoice = true;
+      canSecondChoice = true;
+      ChoiceFirstMessage = "Draw 1 skill.";
+      ChoiceSecondMessage = "Restore your Virtue.";
+      break;
+
     case "Sow and Reap":
       canFirstChoice = canSowAndReapBlast(unit);
       canSecondChoice = canSowAndReapStrike(unit);
@@ -245,7 +261,6 @@ const SelectCustomChoice = (props) => {
       //   break;
 
       case "Ignition Propulsion":
-        updateLocal = false;
         if (selectedChoice === 1) {
           props.enterMoveMode(
             getVacantAdjacentZones(unit),
@@ -270,7 +285,7 @@ const SelectCustomChoice = (props) => {
           unit.fever
             ? (unit.fever = Math.min(2, unit.fever + 2))
             : (unit.fever = 2);
-          newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+          newGameState[unit.player].units[unit.unitIndex] = unit;
         } else {
           newGameState.currentResolution.push({
             resolution: "Recover Skill",
@@ -306,8 +321,6 @@ const SelectCustomChoice = (props) => {
         break;
 
       case "Kleptothermy":
-        updateLocal = false;
-        props.setIntrudingPlayer(self);
         if (selectedChoice === 1) {
           enterSelectUnitMode(
             getZonesWithAllies(unit, 1, true),
@@ -324,6 +337,28 @@ const SelectCustomChoice = (props) => {
             newGameState,
             null,
             "kleptothermy enemy",
+            null
+          );
+        }
+        break;
+
+      case "Cold Embrace":
+        if (selectedChoice === 1) {
+          enterSelectUnitMode(
+            getZonesWithEnemiesAfflicted(unit, 1, "frostbite"),
+            unit,
+            newGameState,
+            null,
+            "strike",
+            null
+          );
+        } else {
+          enterSelectUnitMode(
+            getZonesWithEnemies(unit, 1),
+            unit,
+            newGameState,
+            null,
+            "freeze2",
             null
           );
         }
@@ -353,7 +388,6 @@ const SelectCustomChoice = (props) => {
         break;
 
       case "Reap the Whirlwind":
-        updateLocal = false;
         if (selectedChoice === 1) {
           props.enterMoveMode(
             getVacantAdjacentZones(unit),
@@ -438,7 +472,6 @@ const SelectCustomChoice = (props) => {
         break;
 
       case "Fortify":
-        updateLocal = false;
         if (selectedChoice === 1) {
           props.enterMoveMode(
             getVacantAdjacentZones(unit),
@@ -459,7 +492,7 @@ const SelectCustomChoice = (props) => {
         break;
 
       case "Surge2":
-        updateLocal = false;
+        updateLocal = false; // needed because of setMovingSpecial
         if (selectedChoice === 1) {
           props.setMovingSpecial("Surge");
 
@@ -492,7 +525,7 @@ const SelectCustomChoice = (props) => {
         break;
 
       case "Surge3":
-        updateLocal = false;
+        updateLocal = false; // needed because of setMovingSpecial
         if (selectedChoice === 1) {
           props.setMovingSpecial("Surge");
 
@@ -545,10 +578,10 @@ const SelectCustomChoice = (props) => {
           unit.sharpness
             ? (unit.sharpness = Math.min(2, unit.sharpness + 1))
             : (unit.sharpness = 1);
-          newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+          newGameState[unit.player].units[unit.unitIndex] = unit;
         } else {
           unit.hp = Math.max(2, unit.hp);
-          newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+          newGameState[unit.player].units[unit.unitIndex] = unit;
           newGameState.currentResolution.push({
             resolution: "Discard Skill",
             unit: unit,
@@ -600,6 +633,15 @@ const SelectCustomChoice = (props) => {
             resolution2: "Arsenal Onslaught1.1",
             unit: unit,
           });
+        }
+        break;
+
+      case "Brandish":
+        if (selectedChoice === 1) {
+          newGameState = drawSkill(newGameState);
+        } else {
+          unit.virtue = 1;
+          newGameState[unit.player].units[unit.unitIndex] = unit;
         }
         break;
 

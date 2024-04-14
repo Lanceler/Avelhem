@@ -274,6 +274,7 @@ const Board = (props) => {
     galvanize1,
     particleBeam1,
     particleBeam2,
+    brandish1,
   } = useUnitAbilityEffects();
 
   const newPawnStats = (player, index, row, column) => {
@@ -1027,6 +1028,20 @@ const Board = (props) => {
               </>
             );
 
+          case "Cold Embrace1":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <SelectCustomChoice
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
           case "Activating Reap the Whirlwind":
             return (
               <>
@@ -1168,6 +1183,32 @@ const Board = (props) => {
               </>
             );
 
+          case "Activating Brandish":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      brandish1(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Brandish1":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <SelectCustomChoice
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
           //end of abilities
         }
         break;
