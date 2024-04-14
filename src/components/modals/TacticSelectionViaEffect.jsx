@@ -120,7 +120,29 @@ const TacticSelectionViaEffect = (props) => {
             resolution: "Animation Delay",
             priority: self,
           });
+          break;
 
+        case "Cold Embrace":
+          updateData = true;
+          newGameState.activatingSkill.push("ColdEmbrace");
+          newGameState.activatingUnit.push(unit);
+
+          newGameState.currentResolution.push({
+            resolution: "Tactic End",
+            unit: unit,
+            effect: true,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Unit Ability",
+            resolution2: "Activating Cold Embrace",
+            unit: unit,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Animation Delay",
+            priority: self,
+          });
           break;
 
         case "Surge":

@@ -268,6 +268,7 @@ const Board = (props) => {
     fieryHeart1,
     fieryHeart2,
     hydrotherapy1,
+    coldEmbrace1,
   } = useUnitAbilityEffects();
 
   const newPawnStats = (player, index, row, column) => {
@@ -922,6 +923,7 @@ const Board = (props) => {
         switch (lastResolution.resolution2) {
           case "Fire: Afterburner - select tactic":
           case "Water: Hydrotherapy - select tactic":
+          case "Water: Cold Embrace - select tactic":
           case "Wind: Air Dash - select tactic":
             return (
               <>
@@ -995,6 +997,19 @@ const Board = (props) => {
                   <>
                     {resolutionUpdateGameStateOnly(
                       hydrotherapy1(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Activating Cold Embrace":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      coldEmbrace1(lastResolution.unit)
                     )}
                   </>
                 )}

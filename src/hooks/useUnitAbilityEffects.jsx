@@ -154,6 +154,32 @@ export const useUnitAbilityEffects = () => {
     return newGameState;
   };
 
+  const coldEmbrace1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Cold Embrace"
+    newGameState.currentResolution.pop();
+
+    //give unit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation += 1)
+      : (unit.temporary.activation = 1);
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    enterSelectUnitMode(
+      getZonesWithEnemies(unit, 1),
+      unit,
+      newGameState,
+      null,
+      "freeze2",
+      null
+    );
+
+    return newGameState;
+  };
+
   //end of list
 
   return {
@@ -162,5 +188,6 @@ export const useUnitAbilityEffects = () => {
     fieryHeart1,
     fieryHeart2,
     hydrotherapy1,
+    coldEmbrace1,
   };
 };
