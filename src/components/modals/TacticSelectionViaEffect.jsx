@@ -146,6 +146,32 @@ const TacticSelectionViaEffect = (props) => {
           });
           break;
 
+        case "Air Dash":
+          updateData = true;
+          newGameState.activatingSkill.push("AirDash");
+          newGameState.activatingUnit.push(unit);
+
+          unit.temporary.usedAirDash = true;
+          newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+
+          newGameState.currentResolution.push({
+            resolution: "Tactic End",
+            unit: unit,
+            effect: true,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Unit Ability",
+            resolution2: "Activating Air Dash",
+            unit: unit,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Animation Delay",
+            priority: self,
+          });
+          break;
+
         case "Reap the Whirlwind":
           updateData = true;
           newGameState.activatingSkill.push("ReapTheWhirlwind");

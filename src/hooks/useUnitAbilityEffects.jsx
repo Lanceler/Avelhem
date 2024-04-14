@@ -16,9 +16,9 @@ export const useUnitAbilityEffects = () => {
   const {
     canBlast,
     canMove,
-
     canStrike,
     enterSelectUnitMode,
+    getVacant2SpaceZones,
     getZonesWithAllies,
     getZonesWithEnemies,
   } = useRecurringEffects();
@@ -183,6 +183,29 @@ export const useUnitAbilityEffects = () => {
         title: "Cold Embrace",
         reason: "Cold Embrace",
       },
+    });
+
+    return newGameState;
+  };
+
+  const airDash1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Air Dash"
+    newGameState.currentResolution.pop();
+
+    //give unit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation += 1)
+      : (unit.temporary.activation = 1);
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    newGameState.currentResolution.push({
+      resolution: "Unit Ability",
+      resolution2: "Air Dash1",
+      unit: unit,
     });
 
     return newGameState;
@@ -488,6 +511,7 @@ export const useUnitAbilityEffects = () => {
     fieryHeart1,
     fieryHeart2,
     hydrotherapy1,
+    airDash1,
     coldEmbrace1,
     reapTheWhirlwind1,
     fortify1,

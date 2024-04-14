@@ -3467,30 +3467,6 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
-  // const getScionSet = (unitClass) => {
-  //   switch (unitClass) {
-  //     case "Fire Scion":
-  //       return ["01-01", "01-02", "01-03", "01-04"];
-  //     case "Water Scion":
-  //       return ["02-01", "02-02", "02-03", "02-04"];
-  //     case "Wind Scion":
-  //       return ["03-01", "03-02", "03-03", "03-04"];
-  //     case "Land Scion":
-  //       return ["04-01", "04-02", "04-03", "04-04"];
-  //     case "Lightning Scion":
-  //       return ["05-01", "05-02", "05-03", "05-04"];
-  //     case "Mana Scion":
-  //       return ["06-01", "06-02", "06-03", "06-04"];
-  //     case "Metal Scion":
-  //       return ["07-01", "07-02", "07-03", "07-04"];
-  //     case "Plant Scion":
-  //       return ["08-01", "08-02", "08-03", "08-04"];
-
-  //     default:
-  //       return;
-  //   }
-  // };
-
   const getTacticImage = (i) => {
     if (localGameState && localGameState.tactics[i]) {
       switch (localGameState.tactics[i].face) {
@@ -3506,6 +3482,20 @@ export const useRecurringEffects = () => {
           return;
       }
     }
+  };
+
+  const getVacant2SpaceZones = (unit) => {
+    const zones = JSON.parse(localGameState.zones);
+
+    let twoSpaceZones = getZonesInRange(unit.row, unit.column, 2, false);
+
+    twoSpaceZones = twoSpaceZones.filter(
+      (z) =>
+        !zones[Math.floor(z / 5)][z % 5].player &&
+        !getZonesInRange(unit.row, unit.column, 1, false).includes(z)
+    );
+
+    return twoSpaceZones;
   };
 
   const getVacantAdjacentZones = (unit) => {
@@ -5068,6 +5058,7 @@ export const useRecurringEffects = () => {
     freeze1,
     freeze2,
     getTacticImage,
+    getVacant2SpaceZones,
     getVacantAdjacentZones,
     getVacantFrontier,
     getZonesAerialImpetusAlly,

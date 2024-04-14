@@ -22,6 +22,7 @@ const SelectUnitAbility = (props) => {
 
   const {
     canStrike,
+    getVacant2SpaceZones,
     getZonesWithAllies,
     getZonesWithEnemies,
     isDisrupted,
@@ -341,7 +342,10 @@ const SelectUnitAbility = (props) => {
       case "Wind Scion":
         switch (i) {
           case 0:
-            return false; // to do
+            return (
+              getVacant2SpaceZones(unit).length > 0 &&
+              !unit.temporary.usedAirDash
+            );
           case 1:
             return true;
         }

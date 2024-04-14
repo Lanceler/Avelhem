@@ -118,6 +118,7 @@ const Board = (props) => {
     drawSkill,
     enterSelectUnitMode,
     endFinalPhase,
+    getVacant2SpaceZones,
     getVacantAdjacentZones,
     grantRavager,
     freeze1,
@@ -269,6 +270,7 @@ const Board = (props) => {
     fieryHeart2,
     hydrotherapy1,
     coldEmbrace1,
+    airDash1,
     reapTheWhirlwind1,
     fortify1,
     galvanize1,
@@ -1052,6 +1054,33 @@ const Board = (props) => {
                   <>
                     {resolutionUpdateGameStateOnly(
                       reapTheWhirlwind1(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Activating Air Dash":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      airDash1(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Air Dash1":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {enterMoveModeViaSkill(
+                      getVacant2SpaceZones(lastResolution.unit),
+                      lastResolution.unit
                     )}
                   </>
                 )}
