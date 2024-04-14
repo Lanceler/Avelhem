@@ -271,6 +271,7 @@ const Board = (props) => {
     coldEmbrace1,
     reapTheWhirlwind1,
     fortify1,
+    galvanize1,
   } = useUnitAbilityEffects();
 
   const newPawnStats = (player, index, row, column) => {
@@ -1106,6 +1107,34 @@ const Board = (props) => {
                     enterMoveMode={enterMoveMode}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Activating Galvanize":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      galvanize1(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Galvanize1":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMayNoYes
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                    enterMoveMode={enterMoveMode}
                   />
                 )}
               </>

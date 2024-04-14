@@ -196,6 +196,32 @@ const TacticSelectionViaEffect = (props) => {
           });
           break;
 
+        case "Galvanize":
+          updateData = true;
+          newGameState.activatingSkill.push("Galvanize");
+          newGameState.activatingUnit.push(unit);
+
+          unit.temporary.usedGalvanize = true;
+          newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+
+          newGameState.currentResolution.push({
+            resolution: "Tactic End",
+            unit: unit,
+            effect: true,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Unit Ability",
+            resolution2: "Activating Galvanize",
+            unit: unit,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Animation Delay",
+            priority: self,
+          });
+          break;
+
         case "Surge":
           unit.virtue = 1;
 

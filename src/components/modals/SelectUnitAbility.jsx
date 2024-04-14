@@ -350,7 +350,7 @@ const SelectUnitAbility = (props) => {
       case "Lightning Scion":
         switch (i) {
           case 0:
-            return true; // to do
+            return !unit.temporary.usedGalvanize;
           case 1:
             return unit.charge >= 3;
         }

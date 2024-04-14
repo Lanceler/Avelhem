@@ -14,6 +14,7 @@ const YouMayNoYes = (props) => {
   const {
     drawAvelhem,
     drawSkill,
+    getVacantAdjacentZones,
     getVacantFrontier,
     getZonesWithEnemies,
     virtueBlastYes,
@@ -192,7 +193,7 @@ const YouMayNoYes = (props) => {
         });
         break;
 
-      case "Zip and Zap Shield": //"Zip And Zap3"
+      case "Zip and Zap Shield": // "Zip And Zap3"
         unit.charge -= 1;
         unit.enhancements.shield
           ? (unit.enhancements.shield = Math.max(unit.enhancements.shield, 2))
@@ -200,7 +201,7 @@ const YouMayNoYes = (props) => {
         newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
         break;
 
-      case "Zip and Zap Blast": //"Zip And ZapR2"
+      case "Zip and Zap Blast": // "Zip And ZapR2"
         props.enterSelectUnitMode(
           getZonesWithEnemies(props.unit, 1),
           props.unit,
@@ -208,6 +209,15 @@ const YouMayNoYes = (props) => {
           null,
           "blast",
           "Lightning Scion"
+        );
+        break;
+
+      case "Galvanize": // "Galvanize1"
+        props.enterMoveMode(
+          getVacantAdjacentZones(unit),
+          unit,
+          newGameState,
+          null
         );
         break;
 

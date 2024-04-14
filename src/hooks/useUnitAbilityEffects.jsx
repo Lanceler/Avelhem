@@ -262,6 +262,44 @@ export const useUnitAbilityEffects = () => {
     return newGameState;
   };
 
+  const galvanize1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Galvanize"
+    newGameState.currentResolution.pop();
+
+    //give unit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation += 1)
+      : (unit.temporary.activation = 1);
+
+    //Gain 1 charge
+    unit.charge
+      ? (unit.charge = Math.min(3, unit.charge + 1))
+      : (unit.charge = 1);
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    if (canMove(unit)) {
+      newGameState.currentResolution.push({
+        resolution: "Unit Ability",
+        resolution2: "Galvanize1",
+        player: self,
+        unit: unit,
+        details: {
+          reason: "Galvanize",
+          title: "Galvanize",
+          message: "You may traverse.",
+          no: "Skip",
+          yes: "Traverse",
+        },
+      });
+    }
+
+    return newGameState;
+  };
+
   //end of list
 
   return {
@@ -273,5 +311,6 @@ export const useUnitAbilityEffects = () => {
     coldEmbrace1,
     reapTheWhirlwind1,
     fortify1,
+    galvanize1,
   };
 };
