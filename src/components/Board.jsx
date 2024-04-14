@@ -262,8 +262,13 @@ const Board = (props) => {
     blackBusinessCard1,
   } = useSovereignSkillEffects();
 
-  const { afterburner1, afterburner2, fieryHeart1, fieryHeart2 } =
-    useUnitAbilityEffects();
+  const {
+    afterburner1,
+    afterburner2,
+    fieryHeart1,
+    fieryHeart2,
+    hydrotherapy1,
+  } = useUnitAbilityEffects();
 
   const newPawnStats = (player, index, row, column) => {
     return {
@@ -977,6 +982,19 @@ const Board = (props) => {
                   <>
                     {resolutionUpdateGameStateOnly(
                       fieryHeart2(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Activating Hydrotherapy":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      hydrotherapy1(lastResolution.unit)
                     )}
                   </>
                 )}
@@ -4509,6 +4527,18 @@ const Board = (props) => {
             selectedUnit.unitIndex
           ].virtue = 0;
         }
+        break;
+
+      case "hydrotherapy":
+        let hydrotherapyAlly =
+          newGameState[selectedUnit.player].units[selectedUnit.unitIndex];
+
+        delete hydrotherapyAlly.afflictions.burn;
+        delete hydrotherapyAlly.afflictions.frostbite;
+        delete hydrotherapyAlly.afflictions.paralysis;
+
+        newGameState[selectedUnit.player].units[selectedUnit.unitIndex] =
+          hydrotherapyAlly;
 
         break;
 

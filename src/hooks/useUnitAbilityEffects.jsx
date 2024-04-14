@@ -122,7 +122,45 @@ export const useUnitAbilityEffects = () => {
     return newGameState;
   };
 
+  const hydrotherapy1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Hydrotherapy"
+    newGameState.currentResolution.pop();
+
+    //give unit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation += 1)
+      : (unit.temporary.activation = 1);
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    // newGameState.currentResolution.push({
+    //   resolution: "Unit Ability",
+    //   resolution2: "Hydrotherapy1",
+    //   unit: unit,
+    // });
+
+    enterSelectUnitMode(
+      getZonesWithAllies(unit, 1, false),
+      unit,
+      newGameState,
+      null,
+      "hydrotherapy",
+      null
+    );
+
+    return newGameState;
+  };
+
   //end of list
 
-  return { afterburner1, afterburner2, fieryHeart1, fieryHeart2 };
+  return {
+    afterburner1,
+    afterburner2,
+    fieryHeart1,
+    fieryHeart2,
+    hydrotherapy1,
+  };
 };

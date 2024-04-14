@@ -21,6 +21,8 @@ const TacticSelectionViaEffect = (props) => {
     skipMessage = "Return";
   }
 
+  let updateData = false;
+
   if (
     localGameState.tactics[0] !== null &&
     (!props.unit || !props.unit.temporary.used0thTactic) &&
@@ -74,6 +76,7 @@ const TacticSelectionViaEffect = (props) => {
 
       switch (props.details.reason) {
         case "Afterburner":
+          updateData = true;
           newGameState.activatingSkill.push("Afterburner");
           newGameState.activatingUnit.push(unit);
 
@@ -86,6 +89,30 @@ const TacticSelectionViaEffect = (props) => {
           newGameState.currentResolution.push({
             resolution: "Unit Ability",
             resolution2: "Activating Afterburner",
+            unit: unit,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Animation Delay",
+            priority: self,
+          });
+
+          break;
+
+        case "Hydrotherapy":
+          updateData = true;
+          newGameState.activatingSkill.push("Hydrotherapy");
+          newGameState.activatingUnit.push(unit);
+
+          newGameState.currentResolution.push({
+            resolution: "Tactic End",
+            unit: unit,
+            effect: true,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Unit Ability",
+            resolution2: "Activating Hydrotherapy",
             unit: unit,
           });
 
@@ -162,6 +189,9 @@ const TacticSelectionViaEffect = (props) => {
       }
 
       dispatch(updateState(newGameState));
+      if (updateData === true) {
+        props.updateFirebase(newGameState);
+      }
     }
   };
 
