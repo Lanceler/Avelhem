@@ -13,8 +13,13 @@ export const useUnitAbilityEffects = () => {
   const { self, enemy } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const { enterSelectUnitMode, getZonesWithAllies, getZonesWithEnemies } =
-    useRecurringEffects();
+  const {
+    canMove,
+    canBlast,
+    enterSelectUnitMode,
+    getZonesWithAllies,
+    getZonesWithEnemies,
+  } = useRecurringEffects();
 
   const {} = useCardDatabase();
 
@@ -180,6 +185,47 @@ export const useUnitAbilityEffects = () => {
     return newGameState;
   };
 
+  const reapTheWhirlwind1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Reap the Whirlwind"
+    newGameState.currentResolution.pop();
+
+    //give unit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation += 1)
+      : (unit.temporary.activation = 1);
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    if (canMove(unit) || canBlast(unit)) {
+      newGameState.currentResolution.push({
+        resolution: "Unit Ability",
+        resolution2: "Reap the Whirlwind1",
+        player: self,
+        unit: unit,
+        details: {
+          reason: "Reap the Whirlwind",
+          title: "Reap the Whirlwind",
+          message: "You may traverse or blast an adjacent enemy.",
+          no: "Skip",
+          yes: "Proceed",
+        },
+      });
+    }
+
+    newGameState.currentResolution.push({
+      resolution: "Search Skill",
+      player: self,
+      restriction: ["03-02"],
+      message: "Search for 1 “Gale Conjuration”.",
+      outcome: "Add",
+    });
+
+    return newGameState;
+  };
+
   //end of list
 
   return {
@@ -189,5 +235,6 @@ export const useUnitAbilityEffects = () => {
     fieryHeart2,
     hydrotherapy1,
     coldEmbrace1,
+    reapTheWhirlwind1,
   };
 };

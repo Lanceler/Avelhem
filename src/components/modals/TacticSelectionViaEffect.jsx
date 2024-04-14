@@ -145,6 +145,29 @@ const TacticSelectionViaEffect = (props) => {
           });
           break;
 
+        case "Reap the Whirlwind":
+          updateData = true;
+          newGameState.activatingSkill.push("ReapTheWhirlwind");
+          newGameState.activatingUnit.push(unit);
+
+          newGameState.currentResolution.push({
+            resolution: "Tactic End",
+            unit: unit,
+            effect: true,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Unit Ability",
+            resolution2: "Activating Reap the Whirlwind",
+            unit: unit,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Animation Delay",
+            priority: self,
+          });
+          break;
+
         case "Surge":
           unit.virtue = 1;
 

@@ -269,6 +269,7 @@ const Board = (props) => {
     fieryHeart2,
     hydrotherapy1,
     coldEmbrace1,
+    reapTheWhirlwind1,
   } = useUnitAbilityEffects();
 
   const newPawnStats = (player, index, row, column) => {
@@ -925,6 +926,11 @@ const Board = (props) => {
           case "Water: Hydrotherapy - select tactic":
           case "Water: Cold Embrace - select tactic":
           case "Wind: Air Dash - select tactic":
+          case "Wind: Reap the Whirlwind - select tactic":
+          case "Lightning: Galvanize - select tactic":
+          // case "Lightning: ArcFlash - select tactic":
+          case "Mana: Particle Beam - select tactic":
+          case "Metal: Brandish - select tactic":
             return (
               <>
                 {self === localGameState.turnPlayer && !hideModal && (
@@ -1015,6 +1021,50 @@ const Board = (props) => {
                 )}
               </>
             );
+
+          case "Activating Reap the Whirlwind":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      reapTheWhirlwind1(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Reap the Whirlwind1":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMayNoYes
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Reap the Whirlwind2":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <SelectCustomChoice
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    enterMoveMode={enterMoveMode}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          //end of abilities
         }
         break;
 

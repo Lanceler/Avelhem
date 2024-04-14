@@ -326,10 +326,9 @@ const SelectUnitAbility = (props) => {
       case "Wind Scion":
         switch (i) {
           case 0:
-            // return to do
-            break;
+            return false; // to do
           case 1:
-            return true; // to do
+            return true;
         }
 
       case "Land Scion":

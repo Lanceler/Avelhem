@@ -138,6 +138,18 @@ const YouMayNoYes = (props) => {
         );
         break;
 
+      case "Reap the Whirlwind": //Reap the Whirlwind1
+        newGameState.currentResolution.push({
+          resolution: "Unit Ability",
+          resolution2: "Reap the Whirlwind2",
+          unit: unit,
+          details: {
+            title: "Reap the Whirlwind",
+            reason: "Reap the Whirlwind",
+          },
+        });
+        break;
+
       case "Upheaval 2nd Paralyze": // "Upheaval3"
         props.enterSelectUnitMode(
           props.details.adjacentEnemies,
