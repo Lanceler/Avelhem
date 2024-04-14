@@ -20,8 +20,13 @@ const SelectUnitAbility = (props) => {
   const [selectedChoice, setSelectedChoice] = useState(null);
   const {} = useCardDatabase();
 
-  const { canStrike, getZonesWithAllies, getZonesWithEnemies, isDisrupted } =
-    useRecurringEffects();
+  const {
+    canStrike,
+    getZonesWithAllies,
+    getZonesWithEnemies,
+    isDisrupted,
+    isMuted,
+  } = useRecurringEffects();
 
   let newGameState = JSON.parse(JSON.stringify(localGameState));
   let unit = props.unit;
@@ -297,7 +302,7 @@ const SelectUnitAbility = (props) => {
   }
 
   const canChoice = (i) => {
-    if (isDisrupted(unit, 2)) {
+    if (isMuted(unit) || isDisrupted(unit, 2)) {
       return false;
     }
 
@@ -373,9 +378,9 @@ const SelectUnitAbility = (props) => {
       case "Plant Scion":
         switch (i) {
           case 0:
-            return (
-              unit.blossom + newGameState[unit.player].skillHand.length >= 2
-            );
+            return unit.blossom
+              ? unit.blossom + newGameState[unit.player].skillHand.length >= 2
+              : newGameState[unit.player].skillHand.length >= 2;
           case 1:
             return unit.blossom >= 1;
         }
@@ -595,7 +600,26 @@ const SelectUnitAbility = (props) => {
         if (selectedChoice === 0) {
           //1st choice
         } else if (selectedChoice === 1) {
-          //2nd choice
+          updateData = true;
+          newGameState.activatingSkill.push("Ambrosia");
+          newGameState.activatingUnit.push(unit);
+
+          newGameState.currentResolution.push({
+            resolution: "Tactic End",
+            unit: unit,
+            effect: true,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Unit Ability",
+            resolution2: "Activating Ambrosia",
+            unit: unit,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Animation Delay",
+            priority: self,
+          });
         }
         break;
 

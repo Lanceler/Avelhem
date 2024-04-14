@@ -388,6 +388,35 @@ export const useUnitAbilityEffects = () => {
     return newGameState;
   };
 
+  const ambrosia1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Ambrosia"
+    newGameState.currentResolution.pop();
+
+    //give unit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation += 1)
+      : (unit.temporary.activation = 1);
+
+    //Spend 1 Blossom
+    unit.blossom -= 1;
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    enterSelectUnitMode(
+      getZonesWithAllies(unit, 1, true),
+      unit,
+      newGameState,
+      null,
+      "ambrosia",
+      null
+    );
+
+    return newGameState;
+  };
+
   //end of list
 
   return {
@@ -403,5 +432,6 @@ export const useUnitAbilityEffects = () => {
     particleBeam1,
     particleBeam2,
     brandish1,
+    ambrosia1,
   };
 };

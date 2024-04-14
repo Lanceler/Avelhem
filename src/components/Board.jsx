@@ -275,6 +275,7 @@ const Board = (props) => {
     particleBeam1,
     particleBeam2,
     brandish1,
+    ambrosia1,
   } = useUnitAbilityEffects();
 
   const newPawnStats = (player, index, row, column) => {
@@ -1209,6 +1210,20 @@ const Board = (props) => {
                 )}
               </>
             );
+
+          case "Activating Ambrosia":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      ambrosia1(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
           //end of abilities
         }
         break;
@@ -4814,6 +4829,19 @@ const Board = (props) => {
 
       case "viridian grave":
         newGameState = activateViridianGrave(newGameState, selectedUnit, unit);
+        break;
+
+      case "ambrosia":
+        let ambrosiaAlly =
+          newGameState[selectedUnit.player].units[selectedUnit.unitIndex];
+
+        delete ambrosiaAlly.afflictions.burn;
+        delete ambrosiaAlly.afflictions.frostbite;
+        delete ambrosiaAlly.afflictions.paralysis;
+
+        newGameState[selectedUnit.player].units[selectedUnit.unitIndex] =
+          ambrosiaAlly;
+
         break;
 
       case "ambidexterity":
