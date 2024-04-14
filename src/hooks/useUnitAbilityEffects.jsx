@@ -300,6 +300,58 @@ export const useUnitAbilityEffects = () => {
     return newGameState;
   };
 
+  const particleBeam1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Particle Beam"
+    newGameState.currentResolution.pop();
+
+    //give unit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation += 1)
+      : (unit.temporary.activation = 1);
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    newGameState.currentResolution.push({
+      resolution: "Unit Ability",
+      resolution2: "Particle Beam1",
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Discard Skill",
+      unit: unit,
+      player: self,
+      message: "Spend 1 skill.",
+      restriction: null,
+    });
+
+    return newGameState;
+  };
+
+  const particleBeam2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Particle Beam1"
+    newGameState.currentResolution.pop();
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    enterSelectUnitMode(
+      getZonesWithEnemies(unit, 2),
+      unit,
+      newGameState,
+      null,
+      "blast",
+      "Particle Beam"
+    );
+
+    return newGameState;
+  };
+
   //end of list
 
   return {
@@ -312,5 +364,7 @@ export const useUnitAbilityEffects = () => {
     reapTheWhirlwind1,
     fortify1,
     galvanize1,
+    particleBeam1,
+    particleBeam2,
   };
 };

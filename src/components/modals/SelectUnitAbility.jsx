@@ -358,7 +358,10 @@ const SelectUnitAbility = (props) => {
       case "Mana Scion":
         switch (i) {
           case 0:
-            return getZonesWithEnemies(unit, 2).length > 0;
+            return (
+              getZonesWithEnemies(unit, 2).length > 0 &&
+              newGameState[unit.player].skillHand.length > 0
+            );
         }
 
       case "Metal Scion":

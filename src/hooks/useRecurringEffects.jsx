@@ -2098,7 +2098,7 @@ export const useRecurringEffects = () => {
       case victim.afflictions.anathema > 0:
         aP = 5;
         break;
-      case ["Geomancy", "Surge"].includes(special):
+      case ["Geomancy", "Surge", "Particle Beam"].includes(special):
         aP = 2;
         break;
       case special === "Fire Scion" &&

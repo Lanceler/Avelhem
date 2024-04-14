@@ -272,6 +272,8 @@ const Board = (props) => {
     reapTheWhirlwind1,
     fortify1,
     galvanize1,
+    particleBeam1,
+    particleBeam2,
   } = useUnitAbilityEffects();
 
   const newPawnStats = (player, index, row, column) => {
@@ -1136,6 +1138,32 @@ const Board = (props) => {
                     hideOrRevealModale={hideOrRevealModale}
                     enterMoveMode={enterMoveMode}
                   />
+                )}
+              </>
+            );
+
+          case "Activating Particle Beam":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      particleBeam1(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Particle Beam1":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      particleBeam2(lastResolution.unit)
+                    )}
+                  </>
                 )}
               </>
             );

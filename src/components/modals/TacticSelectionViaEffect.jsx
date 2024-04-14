@@ -75,6 +75,7 @@ const TacticSelectionViaEffect = (props) => {
       }
 
       switch (props.details.reason) {
+        //Abilities
         case "Afterburner":
           updateData = true;
           newGameState.activatingSkill.push("Afterburner");
@@ -221,6 +222,31 @@ const TacticSelectionViaEffect = (props) => {
             priority: self,
           });
           break;
+
+        case "Particle Beam":
+          updateData = true;
+          newGameState.activatingSkill.push("ParticleBeam");
+          newGameState.activatingUnit.push(unit);
+
+          newGameState.currentResolution.push({
+            resolution: "Tactic End",
+            unit: unit,
+            effect: true,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Unit Ability",
+            resolution2: "Activating Particle Beam",
+            unit: unit,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Animation Delay",
+            priority: self,
+          });
+          break;
+
+        //Skills
 
         case "Surge":
           unit.virtue = 1;
