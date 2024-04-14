@@ -127,6 +127,13 @@ const SelectCustomChoice = (props) => {
       ChoiceSecondMessage = "Spend 1 skill to search for 1 “Crystallization”.";
       break;
 
+    case "Fortify":
+      canFirstChoice = canMove(unit);
+      canSecondChoice = canStrike(unit);
+      ChoiceFirstMessage = "Traverse.";
+      ChoiceSecondMessage = "Strike.";
+      break;
+
     case "Surge2":
       canFirstChoice = canMove(unit);
       canSecondChoice = canStrike(unit);
@@ -427,6 +434,27 @@ const SelectCustomChoice = (props) => {
             message: "Spend 1 skill.",
             restriction: null,
           });
+        }
+        break;
+
+      case "Fortify":
+        updateLocal = false;
+        if (selectedChoice === 1) {
+          props.enterMoveMode(
+            getVacantAdjacentZones(unit),
+            unit,
+            newGameState,
+            null
+          );
+        } else {
+          enterSelectUnitMode(
+            getZonesWithEnemies(unit, 1),
+            unit,
+            newGameState,
+            null,
+            "strike",
+            null
+          );
         }
         break;
 

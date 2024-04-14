@@ -168,6 +168,34 @@ const TacticSelectionViaEffect = (props) => {
           });
           break;
 
+        case "Fortify":
+          if (newGameState.tactics[i].face === "Invoke") {
+            delete unit.boosts.mountainStance;
+            newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+          }
+
+          updateData = true;
+          newGameState.activatingSkill.push("Fortify");
+          newGameState.activatingUnit.push(unit);
+
+          newGameState.currentResolution.push({
+            resolution: "Tactic End",
+            unit: unit,
+            effect: true,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Unit Ability",
+            resolution2: "Activating Fortify",
+            unit: unit,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Animation Delay",
+            priority: self,
+          });
+          break;
+
         case "Surge":
           unit.virtue = 1;
 

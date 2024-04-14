@@ -14,8 +14,10 @@ export const useUnitAbilityEffects = () => {
   const dispatch = useDispatch();
 
   const {
-    canMove,
     canBlast,
+    canMove,
+
+    canStrike,
     enterSelectUnitMode,
     getZonesWithAllies,
     getZonesWithEnemies,
@@ -226,6 +228,40 @@ export const useUnitAbilityEffects = () => {
     return newGameState;
   };
 
+  const fortify1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Fortify"
+    newGameState.currentResolution.pop();
+
+    //give unit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation += 1)
+      : (unit.temporary.activation = 1);
+
+    //Gain Shield for 2 turns
+    unit.enhancements.shield
+      ? (unit.enhancements.shield = Math.max(2, unit.enhancements.shield))
+      : (unit.enhancements.shield = 2);
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    if (canMove(unit) || canStrike(unit)) {
+      newGameState.currentResolution.push({
+        resolution: "Unit Ability",
+        resolution2: "Fortify1",
+        unit: unit,
+        reason: "Fortify",
+        restriction: null,
+        title: "Fortify",
+        message: "You may float 1 skill to traverse or strike.",
+      });
+    }
+
+    return newGameState;
+  };
+
   //end of list
 
   return {
@@ -236,5 +272,6 @@ export const useUnitAbilityEffects = () => {
     hydrotherapy1,
     coldEmbrace1,
     reapTheWhirlwind1,
+    fortify1,
   };
 };

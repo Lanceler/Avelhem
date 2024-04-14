@@ -151,12 +151,22 @@ const SelectUnitAbility = (props) => {
       break;
 
     case "Land Scion":
+      if (unit.boosts.mountainStance) {
+        message = `Mountain Stance boost: You may use an Invoke tactic to activate Fortify. `;
+      }
+
       abilityDetails = [
         {
           abilityName: "Fortify",
           abilityQualifier: (
             <div className="abilityQualifier">
-              <img src={AssaultSmall} style={{ height: 35 }} />
+              <img src={AssaultSmall} style={{ height: 35 }} />{" "}
+              {unit.boosts.mountainStance && (
+                <span>
+                  {"\u00A0\u00A0or\u00A0\u00A0"}
+                  <img src={InvokeSmall} style={{ height: 35 }} />
+                </span>
+              )}
             </div>
           ),
           abilityText: (
@@ -334,7 +344,7 @@ const SelectUnitAbility = (props) => {
       case "Land Scion":
         switch (i) {
           case 0:
-            return true; // to do
+            return true;
         }
 
       case "Lightning Scion":
@@ -498,7 +508,27 @@ const SelectUnitAbility = (props) => {
 
       case "Land Scion":
         if (selectedChoice === 0) {
-          //
+          let fortifyMessage = "Use an Assault tactic.";
+          let fortifyRestriction = ["Assault"];
+
+          if (unit.boosts.mountainStance) {
+            fortifyMessage = "Use an Assault or Invoke tactic.";
+            fortifyRestriction = ["Assault", "Invoke"];
+          }
+
+          newGameState.currentResolution.push({
+            resolution: "Unit Ability",
+            resolution2: "Land: Fortify - select tactic",
+            unit: unit,
+            details: {
+              title: "Fortify",
+              message: fortifyMessage,
+              restriction: fortifyRestriction,
+              stock: 1,
+              reason: "Fortify",
+              canSkip: "Return",
+            },
+          });
         }
         break;
 
@@ -589,10 +619,16 @@ const SelectUnitAbility = (props) => {
 
   return (
     <div className="modal-backdrop">
-      <div className="modal">
+      <div
+        className={`modal ${
+          abilityDetails.length === 1 ? "singleAbilityModal" : ""
+        }`}
+      >
         <div className="">
           <h2 className="choiceTitle">{unit.unitClass} Abilities</h2>
         </div>
+
+        {message && <h4>{message}</h4>}
 
         <div
           className={`${

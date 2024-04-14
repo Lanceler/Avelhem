@@ -437,6 +437,11 @@ margin-bottom: 30px;
 .oneAbility{
     display: flex;
     justify-content: center;
+
+}
+
+.singleAbilityModal{
+    max-width: 395.6px ;
 }
 
 /* width

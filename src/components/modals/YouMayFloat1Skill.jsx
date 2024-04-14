@@ -59,6 +59,19 @@ const YouMayFloat1Skill = (props) => {
         newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
         break;
 
+      case "Fortify":
+        newGameState.currentResolution.push({
+          resolution: "Unit Ability",
+          resolution2: "Fortify2",
+          unit: unit,
+          details: {
+            title: "Fortify",
+            reason: "Fortify",
+          },
+        });
+        break;
+        break;
+
       case "Vengeful Legacy Ravager":
         unit = grantRavager(unit);
         newGameState[props.unit.player].units[props.unit.unitIndex] = unit;

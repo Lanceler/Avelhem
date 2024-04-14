@@ -2505,15 +2505,6 @@ export const useRecurringEffects = () => {
         break;
     }
 
-    // if (method === "Match Made in Heaven") {
-    //   newGameState.currentResolution.push({
-    //     resolution: "Sovereign Contingent Skill",
-    //     resolution2: "Match Made in Heaven2",
-    //     unit: unit,
-    //     unit2: unit2,
-    //   });
-    // }
-
     //ascension contingency trigger
     const pushAscensionResolution = (
       resolution2,

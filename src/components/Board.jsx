@@ -270,6 +270,7 @@ const Board = (props) => {
     hydrotherapy1,
     coldEmbrace1,
     reapTheWhirlwind1,
+    fortify1,
   } = useUnitAbilityEffects();
 
   const newPawnStats = (player, index, row, column) => {
@@ -927,6 +928,7 @@ const Board = (props) => {
           case "Water: Cold Embrace - select tactic":
           case "Wind: Air Dash - select tactic":
           case "Wind: Reap the Whirlwind - select tactic":
+          case "Land: Fortify - select tactic":
           case "Lightning: Galvanize - select tactic":
           // case "Lightning: ArcFlash - select tactic":
           case "Mana: Particle Beam - select tactic":
@@ -1050,6 +1052,51 @@ const Board = (props) => {
             );
 
           case "Reap the Whirlwind2":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <SelectCustomChoice
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    enterMoveMode={enterMoveMode}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Activating Fortify":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      fortify1(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Fortify1":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMayFloat1Skill
+                    unit={lastResolution.unit}
+                    restriction={lastResolution.restriction}
+                    title={lastResolution.title}
+                    message={lastResolution.message}
+                    reason={lastResolution.reason}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Fortify2":
             return (
               <>
                 {self === lastResolution.unit.player && !hideModal && (
