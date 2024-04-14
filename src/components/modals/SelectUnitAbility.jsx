@@ -598,7 +598,26 @@ const SelectUnitAbility = (props) => {
 
       case "Plant Scion":
         if (selectedChoice === 0) {
-          //1st choice
+          updateData = true;
+          newGameState.activatingSkill.push("Flourish");
+          newGameState.activatingUnit.push(unit);
+
+          newGameState.currentResolution.push({
+            resolution: "Tactic End",
+            unit: unit,
+            effect: true,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Unit Ability",
+            resolution2: "Activating Flourish",
+            unit: unit,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Animation Delay",
+            priority: self,
+          });
         } else if (selectedChoice === 1) {
           updateData = true;
           newGameState.activatingSkill.push("Ambrosia");

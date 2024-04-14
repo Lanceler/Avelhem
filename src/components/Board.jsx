@@ -275,6 +275,8 @@ const Board = (props) => {
     particleBeam1,
     particleBeam2,
     brandish1,
+    flourish1,
+    flourish2,
     ambrosia1,
   } = useUnitAbilityEffects();
 
@@ -1207,6 +1209,32 @@ const Board = (props) => {
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
+                )}
+              </>
+            );
+
+          case "Activating Flourish":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      flourish1(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Flourish1":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      flourish2(lastResolution.unit)
+                    )}
+                  </>
                 )}
               </>
             );

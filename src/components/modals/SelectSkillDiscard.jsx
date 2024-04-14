@@ -17,12 +17,19 @@ const SelectSkillDiscard = (props) => {
 
   const [selectedSkill, setSelectedSkill] = useState(null);
 
+  let newGameState = JSON.parse(JSON.stringify(localGameState));
+
   let usableSkills = [];
   for (let i in localGameState[self].skillHand) {
     usableSkills.push({
       id: localGameState[self].skillHand[i],
       handIndex: i,
     });
+  }
+
+  let unit = null;
+  if (props.unit) {
+    unit = newGameState[props.unit.player].units[props.unit.unitIndex];
   }
 
   const canBeDiscarded = (skill) => {
@@ -36,9 +43,6 @@ const SelectSkillDiscard = (props) => {
   };
 
   const handleBlossom = () => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = newGameState[props.unit.player].units[props.unit.unitIndex];
-
     //end Discarding Skill resolution
     newGameState.currentResolution.pop();
 
@@ -51,9 +55,6 @@ const SelectSkillDiscard = (props) => {
   };
 
   const handleFever = () => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = newGameState[props.unit.player].units[props.unit.unitIndex];
-
     //end Discarding Skill resolution
     newGameState.currentResolution.pop();
 
@@ -66,8 +67,6 @@ const SelectSkillDiscard = (props) => {
   };
 
   const handleSelect = () => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
     //end Discarding Skill resolution
     newGameState.currentResolution.pop();
 
@@ -90,7 +89,7 @@ const SelectSkillDiscard = (props) => {
     // Mana Scion talent: Mana Scions and their adjacent allies
     // may float Mana skills when spending them
     if (
-      props.unit &&
+      unit &&
       ["06-01", "06-02", "06-03", "06-04"].includes(
         usableSkills[selectedSkill].id
       ) &&
@@ -99,7 +98,7 @@ const SelectSkillDiscard = (props) => {
       newGameState.currentResolution.push({
         resolution: "Mana Restructure",
         // player: self,
-        unit: props.unit,
+        unit: unit,
         details: {
           reason: "Mana Restructure",
           title: "Mana Restructure",
@@ -165,7 +164,7 @@ const SelectSkillDiscard = (props) => {
           </div>
         </div>
 
-        {selectedSkill === null && props.unit && props.unit.blossom > 0 && (
+        {selectedSkill === null && unit && unit.blossom > 0 && (
           <button
             className="choiceButton noYes"
             onClick={() => handleBlossom()}
@@ -174,16 +173,11 @@ const SelectSkillDiscard = (props) => {
           </button>
         )}
 
-        {selectedSkill === null &&
-          props.fever &&
-          props.unit.fever >= props.fever && (
-            <button
-              className="choiceButton noYes"
-              onClick={() => handleFever()}
-            >
-              {`Spend ${props.fever === 1 ? "1 Fever" : "2 Fevers"}`}
-            </button>
-          )}
+        {selectedSkill === null && props.fever && unit.fever >= props.fever && (
+          <button className="choiceButton noYes" onClick={() => handleFever()}>
+            {`Spend ${props.fever === 1 ? "1 Fever" : "2 Fevers"}`}
+          </button>
+        )}
 
         {selectedSkill !== null && (
           <button className="choiceButton noYes" onClick={() => handleSelect()}>

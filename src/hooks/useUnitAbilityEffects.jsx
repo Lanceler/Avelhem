@@ -388,6 +388,69 @@ export const useUnitAbilityEffects = () => {
     return newGameState;
   };
 
+  const flourish1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Flourish"
+    newGameState.currentResolution.pop();
+
+    //give unit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation += 1)
+      : (unit.temporary.activation = 1);
+
+    unit.temporary.usedFieryHeart = true;
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    newGameState.currentResolution.push({
+      resolution: "Unit Ability",
+      resolution2: "Flourish1",
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Discard Skill",
+      unit: unit,
+      player: self,
+      message: "Spend 2nd skill.",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Animation Delay",
+      priority: self,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Discard Skill",
+      unit: unit,
+      player: self,
+      message: "Spend 1 skill.",
+    });
+
+    return newGameState;
+  };
+
+  const flourish2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Flourish1"
+    newGameState.currentResolution.pop();
+
+    unit.virtue = 1;
+
+    if (!unit.afflictions.burn) {
+      //burn would otherwise instantly purge overgrowth
+      unit.enhancements.overgrowth = true;
+    }
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    return newGameState;
+  };
+
   const ambrosia1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
@@ -432,6 +495,8 @@ export const useUnitAbilityEffects = () => {
     particleBeam1,
     particleBeam2,
     brandish1,
+    flourish1,
+    flourish2,
     ambrosia1,
   };
 };
