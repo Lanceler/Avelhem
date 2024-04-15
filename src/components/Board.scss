@@ -185,7 +185,8 @@
 //actually right container
 .left-container {
     // background-color: rgb(212, 183, 104);
-    width: 45%;
+    // width: 45%;
+    width: 700px;
     height: 80%;
     display: flex;
     flex-direction: column;
@@ -209,6 +210,7 @@
         // width: 100%;
         height: fit-content;
         width: fit-content;
+
         padding: 5px
     }
 
@@ -285,7 +287,8 @@
         .skill-hand {
             background-color: #0000007a;
             height: 60%;
-            width: 100%;
+            // width: 100%;
+            width: 440px;
             display: grid;
         }
     }

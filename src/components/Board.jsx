@@ -1476,7 +1476,6 @@ const Board = (props) => {
                   <YouMayNoYes
                     unit={lastResolution.unit}
                     details={lastResolution.details}
-                    enterSelectUnitMode={enterSelectUnitMode}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1531,7 +1530,6 @@ const Board = (props) => {
                   <YouMayNoYes
                     unit={lastResolution.unit}
                     details={lastResolution.details}
-                    enterSelectUnitMode={enterSelectUnitMode}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1736,7 +1734,6 @@ const Board = (props) => {
                   <YouMayNoYes
                     unit={lastResolution.unit}
                     details={lastResolution.details}
-                    enterSelectUnitMode={enterSelectUnitMode}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1864,7 +1861,6 @@ const Board = (props) => {
                     unit={lastResolution.unit}
                     player={lastResolution.player}
                     details={lastResolution.details}
-                    enterSelectUnitMode={enterSelectUnitMode}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1947,7 +1943,6 @@ const Board = (props) => {
                   <YouMayNoYes
                     unit={lastResolution.unit}
                     details={lastResolution.details}
-                    enterSelectUnitMode={enterSelectUnitMode}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2074,7 +2069,6 @@ const Board = (props) => {
                   <YouMayNoYes
                     unit={lastResolution.unit}
                     details={lastResolution.details}
-                    enterSelectUnitMode={enterSelectUnitMode}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2126,7 +2120,6 @@ const Board = (props) => {
                   <YouMayNoYes
                     unit={lastResolution.unit}
                     details={lastResolution.details}
-                    enterSelectUnitMode={enterSelectUnitMode}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2266,7 +2259,6 @@ const Board = (props) => {
                   <YouMayNoYes
                     unit={lastResolution.unit}
                     details={lastResolution.details}
-                    enterSelectUnitMode={enterSelectUnitMode}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2425,7 +2417,6 @@ const Board = (props) => {
                   <YouMayNoYes
                     unit={lastResolution.unit}
                     details={lastResolution.details}
-                    enterSelectUnitMode={enterSelectUnitMode}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2454,7 +2445,6 @@ const Board = (props) => {
                   <YouMayNoYes
                     unit={lastResolution.unit}
                     details={lastResolution.details}
-                    enterSelectUnitMode={enterSelectUnitMode}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2519,7 +2509,6 @@ const Board = (props) => {
                   <YouMayNoYes
                     unit={lastResolution.unit}
                     details={lastResolution.details}
-                    enterSelectUnitMode={enterSelectUnitMode}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2644,7 +2633,6 @@ const Board = (props) => {
                   <YouMayNoYes
                     unit={lastResolution.unit}
                     details={lastResolution.details}
-                    enterSelectUnitMode={enterSelectUnitMode}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2847,7 +2835,6 @@ const Board = (props) => {
                   <YouMayNoYes
                     unit={lastResolution.unit}
                     details={lastResolution.details}
-                    enterSelectUnitMode={enterSelectUnitMode}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3012,7 +2999,6 @@ const Board = (props) => {
                   <YouMayNoYes
                     unit={lastResolution.unit}
                     details={lastResolution.details}
-                    enterSelectUnitMode={enterSelectUnitMode}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3040,7 +3026,6 @@ const Board = (props) => {
                   <YouMayNoYes
                     unit={lastResolution.unit}
                     details={lastResolution.details}
-                    enterSelectUnitMode={enterSelectUnitMode}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -4208,9 +4193,7 @@ const Board = (props) => {
                     unit={lastResolution.unit}
                     team="ally"
                     updateFirebase={updateFirebase}
-                    enterSelectUnitMode={enterSelectUnitMode}
                     hideOrRevealModale={hideOrRevealModale}
-                    setIntrudingPlayer={setIntrudingPlayer}
                   />
                 )}
               </>
@@ -4243,8 +4226,6 @@ const Board = (props) => {
                     team="enemy"
                     scionClass={lastResolution.scionClass}
                     method={lastResolution.method}
-                    // enterSelectUnitMode={enterSelectUnitMode}
-                    // setIntrudingPlayer={setIntrudingPlayer}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -4261,9 +4242,7 @@ const Board = (props) => {
                     unit={lastResolution.unit}
                     team="enemy"
                     updateFirebase={updateFirebase}
-                    enterSelectUnitMode={enterSelectUnitMode}
                     hideOrRevealModale={hideOrRevealModale}
-                    setIntrudingPlayer={setIntrudingPlayer}
                   />
                 )}
               </>
@@ -4276,9 +4255,7 @@ const Board = (props) => {
                   <ContingentMotion
                     mover={lastResolution.mover}
                     updateFirebase={updateFirebase}
-                    enterSelectUnitMode={enterSelectUnitMode}
                     hideOrRevealModale={hideOrRevealModale}
-                    setIntrudingPlayer={setIntrudingPlayer}
                   />
                 )}
               </>
@@ -4292,9 +4269,7 @@ const Board = (props) => {
                     attacker={lastResolution.attacker}
                     victim={lastResolution.victim}
                     updateFirebase={updateFirebase}
-                    enterSelectUnitMode={enterSelectUnitMode}
                     hideOrRevealModale={hideOrRevealModale}
-                    setIntrudingPlayer={setIntrudingPlayer}
                   />
                 )}
               </>
@@ -4308,9 +4283,7 @@ const Board = (props) => {
                     attacker={lastResolution.attacker}
                     victim={lastResolution.victim}
                     updateFirebase={updateFirebase}
-                    enterSelectUnitMode={enterSelectUnitMode}
                     hideOrRevealModale={hideOrRevealModale}
-                    setIntrudingPlayer={setIntrudingPlayer}
                   />
                 )}
               </>
@@ -4325,9 +4298,7 @@ const Board = (props) => {
                     attacker={lastResolution.attacker}
                     victim={lastResolution.victim}
                     type={lastResolution.type}
-                    enterSelectUnitMode={enterSelectUnitMode}
                     hideOrRevealModale={hideOrRevealModale}
-                    setIntrudingPlayer={setIntrudingPlayer}
                   />
                 )}
               </>
@@ -4342,9 +4313,7 @@ const Board = (props) => {
               <ContingentSymphonicScreech
                 updateFirebase={updateFirebase}
                 activator={lastResolution.activator}
-                enterSelectUnitMode={enterSelectUnitMode}
                 hideOrRevealModale={hideOrRevealModale}
-                setIntrudingPlayer={setIntrudingPlayer}
               />
             )}
           </>
@@ -5385,17 +5354,34 @@ const Board = (props) => {
           <br />
           {JSON.stringify(tileMode)} {validZones.length}
           <br />
-          {hideModal && (
-            <button onClick={() => hideOrRevealModale()}>
-              Return to options
-            </button>
-          )}
           <br />
           {!localGameState.turnPlayer && self === "host" && (
             <SelectFirstPlayer onSetFirstPlayer={onSetFirstPlayer} />
           )}
           <div className="section">
             <div className="right-container">
+              {self === localGameState.turnPlayer &&
+                localGameState.currentResolution.length > 0 &&
+                localGameState.currentResolution[
+                  localGameState.currentResolution.length - 1
+                ].resolution === "Execution Phase" && (
+                  <button
+                    className="choiceButton noYes"
+                    onClick={() => endExecutionPhase()}
+                  >
+                    End Turn
+                  </button>
+                )}
+
+              {hideModal && (
+                <button
+                  className="choiceButton noYes"
+                  onClick={() => hideOrRevealModale()}
+                >
+                  Return to Modal
+                </button>
+              )}
+
               <ActivatedSkills />
             </div>
             <div className="middle-container">
@@ -5503,13 +5489,6 @@ const Board = (props) => {
                   ))
                 )}
               </div>
-              {self === localGameState.turnPlayer &&
-                localGameState.currentResolution.length > 0 &&
-                localGameState.currentResolution[
-                  localGameState.currentResolution.length - 1
-                ].resolution === "Execution Phase" && (
-                  <button onClick={() => endExecutionPhase()}>End</button>
-                )}
             </div>
             {/* <div className="phase-indicator"></div> */}
             <div className="left-container">

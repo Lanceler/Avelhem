@@ -14,7 +14,8 @@ const ContingentSymphonicScreech = (props) => {
 
   const [selectedSkill, setSelectedSkill] = useState(null);
 
-  const { getZonesWithEnemies, isMuted } = useRecurringEffects();
+  const { enterSelectUnitMode, getZonesWithEnemies, isMuted } =
+    useRecurringEffects();
 
   let usableSkills = [];
   for (let i in localGameState[self].skillHand) {
@@ -56,9 +57,7 @@ const ContingentSymphonicScreech = (props) => {
       }
     }
 
-    props.setIntrudingPlayer(self);
-
-    props.enterSelectUnitMode(
+    enterSelectUnitMode(
       zonesWithWindScions,
       props.activator,
       newGameState,

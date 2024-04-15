@@ -107,7 +107,7 @@ background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rg
     /* min-height: 300px; */
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    background-color: rgba(69, 119, 185, 0.589);
+    /* background-color: rgba(69, 119, 185, 0.589); */
     cursor: pointer;
     padding: 0px 15px 0px 5px;
     position: relative;
@@ -121,7 +121,7 @@ background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rg
     /* min-height: 300px; */
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    background-color: rgba(69, 119, 185, 0.589);
+    /* background-color: rgba(69, 119, 185, 0.589); */
     cursor: pointer;
     padding: 0px 15px 0px 5px;
     position: relative;

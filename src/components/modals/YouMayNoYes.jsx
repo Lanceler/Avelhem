@@ -14,6 +14,7 @@ const YouMayNoYes = (props) => {
   const {
     drawAvelhem,
     drawSkill,
+    enterSelectUnitMode,
     getVacantAdjacentZones,
     getVacantFrontier,
     getZonesWithEnemies,
@@ -66,7 +67,7 @@ const YouMayNoYes = (props) => {
         break;
 
       case "Conflagration Ignite": //"ConflagrationR2"
-        props.enterSelectUnitMode(
+        enterSelectUnitMode(
           getZonesWithEnemies(props.unit, 1),
           props.unit,
           newGameState,
@@ -107,7 +108,7 @@ const YouMayNoYes = (props) => {
           unit: props.unit,
         });
 
-        props.enterSelectUnitMode(
+        enterSelectUnitMode(
           getZonesWithEnemies(props.unit, 1),
           props.unit,
           newGameState,
@@ -118,7 +119,7 @@ const YouMayNoYes = (props) => {
         break;
 
       case "Cataclysmic Tempest 2nd Paralyze": // "Cataclysmic Tempest3"
-        props.enterSelectUnitMode(
+        enterSelectUnitMode(
           props.details.adjacentEnemies,
           props.unit,
           newGameState,
@@ -129,7 +130,7 @@ const YouMayNoYes = (props) => {
         break;
 
       case "Cataclysmic Tempest Blast": // "Cataclysmic Tempest6"
-        props.enterSelectUnitMode(
+        enterSelectUnitMode(
           props.details.adjacentEnemies,
           props.unit,
           newGameState,
@@ -152,7 +153,7 @@ const YouMayNoYes = (props) => {
         break;
 
       case "Upheaval 2nd Paralyze": // "Upheaval3"
-        props.enterSelectUnitMode(
+        enterSelectUnitMode(
           props.details.adjacentEnemies,
           props.unit,
           newGameState,
@@ -163,7 +164,7 @@ const YouMayNoYes = (props) => {
         break;
 
       case "Geomancy Strike": // "Geomancy2"
-        props.enterSelectUnitMode(
+        enterSelectUnitMode(
           getZonesWithEnemies(props.unit, 1),
           props.unit,
           newGameState,
@@ -174,7 +175,7 @@ const YouMayNoYes = (props) => {
         break;
 
       case "Geomancy Paralyze": // "Geomancy4"
-        props.enterSelectUnitMode(
+        enterSelectUnitMode(
           getZonesWithEnemies(props.unit, 1),
           props.unit,
           newGameState,
@@ -202,7 +203,7 @@ const YouMayNoYes = (props) => {
         break;
 
       case "Zip and Zap Blast": // "Zip And ZapR2"
-        props.enterSelectUnitMode(
+        enterSelectUnitMode(
           getZonesWithEnemies(props.unit, 1),
           props.unit,
           newGameState,
@@ -213,16 +214,11 @@ const YouMayNoYes = (props) => {
         break;
 
       case "Galvanize": // "Galvanize1"
-        props.enterMoveMode(
-          getVacantAdjacentZones(unit),
-          unit,
-          newGameState,
-          null
-        );
+        enterMoveMode(getVacantAdjacentZones(unit), unit, newGameState, null);
         break;
 
       case "Diffusion 2nd Blast": // "Diffusion4"
-        props.enterSelectUnitMode(
+        enterSelectUnitMode(
           props.details.adjacentEnemies,
           props.unit,
           newGameState,
@@ -233,7 +229,7 @@ const YouMayNoYes = (props) => {
         break;
 
       case "Magnetic Shockwave 2nd Paralyze": // "Magnetic Shockwave2.1"
-        props.enterSelectUnitMode(
+        enterSelectUnitMode(
           props.details.adjacentEnemies,
           props.unit,
           newGameState,
@@ -244,7 +240,7 @@ const YouMayNoYes = (props) => {
         break;
 
       case "Magnetic Shockwave Blast": // "Magnetic Shockwave3.1"
-        props.enterSelectUnitMode(
+        enterSelectUnitMode(
           props.details.adjacentEnemies,
           props.unit,
           newGameState,

@@ -470,3 +470,45 @@ margin-bottom: 30px;
 .scroll-color-colors {
     scrollbar-color: rgb(255, 153, 0) lightyellow;
 }
+
+
+.defianceText{
+    height: 196px;
+    /* display: flex;
+    flex-direction: column; */
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 25% 55% 20%
+
+
+}
+
+.defianceTitle{
+    color: white;
+    padding: 10px 15px;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    font-size: 28px;
+    height: fit-content;
+    grid-row: 1;
+}
+
+.defianceDescription {
+    color: white;
+    padding: 5px 8px 0px;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    grid-row: 2;
+}
+
+.defianceDescriptionSmall {
+    font-size: 18px;
+}
+
+.fdCost {
+    color: white;
+    font-family: 'Times New Roman', Times, serif;
+    padding: 0px 5px;
+    margin: 0;
+    grid-row: 3;
+}

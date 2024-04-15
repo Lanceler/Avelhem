@@ -2131,7 +2131,7 @@ export const useRecurringEffects = () => {
         break;
     }
 
-    //remove attacker's boosts
+    //remove attacker's AP-boosts
     if (attacker.boosts.galeConjuration) {
       delete newGameState[attacker.player].units[attacker.unitIndex].boosts
         .galeConjuration;
@@ -2223,6 +2223,12 @@ export const useRecurringEffects = () => {
         newGameState[playerBP].bountyPoints + 1
       );
 
+      // Grant Fate Defiances
+      newGameState[victim.player].fateDefiances = Math.min(
+        6,
+        newGameState[victim.player].fateDefiances + 1
+      );
+
       //remove eliminated unit
       newGameState[victim.player].units[victim.unitIndex] = null;
       newZoneInfo[victim.row][victim.column].player = null;
@@ -2230,17 +2236,18 @@ export const useRecurringEffects = () => {
       newGameState.zones = JSON.stringify(newZoneInfo);
 
       //"If the attack was lethal" effects
+      switch (special) {
+        case "Gale Conjuration Strike":
+          newGameState[attacker.player].units[
+            attacker.unitIndex
+          ].temporary.galeConjurationLethal = true;
+          break;
 
-      if (special === "Gale Conjuration Strike") {
-        newGameState[attacker.player].units[
-          attacker.unitIndex
-        ].temporary.galeConjurationLethal = true;
-      }
-
-      if (special === "Geomancy") {
-        newGameState[attacker.player].units[
-          attacker.unitIndex
-        ].temporary.geomancyLethal = true;
+        case "Geomancy":
+          newGameState[attacker.player].units[
+            attacker.unitIndex
+          ].temporary.geomancyLethal = true;
+          break;
       }
 
       //strike movement
