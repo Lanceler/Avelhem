@@ -444,6 +444,10 @@ margin-bottom: 30px;
     max-width: 395.6px ;
 }
 
+.dualAbilityModal {
+    max-width: 628px;
+}
+
 /* width
 ::-webkit-scrollbar {
     width: 15px;

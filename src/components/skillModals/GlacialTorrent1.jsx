@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import "./SkillModal.css";
+import "../modals/Modal.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
@@ -24,6 +24,9 @@ const GlacialTorrent1 = (props) => {
     5
   );
 
+  // console.log("inspection");
+  // console.log(inspection);
+
   //reverse display, since last card is top of deck
   let inspectRerpertoire = [];
   for (let c in inspection) {
@@ -38,6 +41,9 @@ const GlacialTorrent1 = (props) => {
     0,
     localGameState[self].skillFloat
   );
+
+  // console.log("inspectRerpertoire");
+  // console.log(inspectRerpertoire);
 
   const canAdd = (skill) => {
     return ["02-01", "02-02", "02-03"].includes(skill);
@@ -131,7 +137,7 @@ const GlacialTorrent1 = (props) => {
                   >
                     <SkillMultiSelect
                       i={i}
-                      usableSkill={usableSkill}
+                      usableSkill={usableSkill.id}
                       canAdd={canAdd(usableSkill.id)}
                       selectedSkills={selectedSkills}
                       setSelectedSkills={setSelectedSkills}
@@ -156,7 +162,7 @@ const GlacialTorrent1 = (props) => {
               >
                 <SkillMultiSelect
                   i={i + localGameState[self].skillFloat}
-                  usableSkill={usableSkill}
+                  usableSkill={usableSkill.id}
                   canAdd={canAdd(usableSkill.id)}
                   selectedSkills={selectedSkills}
                   setSelectedSkills={setSelectedSkills}

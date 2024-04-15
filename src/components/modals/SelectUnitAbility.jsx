@@ -30,7 +30,7 @@ const SelectUnitAbility = (props) => {
   } = useRecurringEffects();
 
   let newGameState = JSON.parse(JSON.stringify(localGameState));
-  let unit = props.unit;
+  let unit = newGameState[props.unit.player].units[props.unit.unitIndex];
 
   let updateLocal = true;
   let updateData = false;
@@ -77,6 +77,15 @@ const SelectUnitAbility = (props) => {
       break;
 
     case "Water Scion":
+      switch (unit.boosts.glacialTorrent) {
+        case 2:
+          message = `Glacial Torrent boost: The next 2 abilities you activate do not require a tactic. `;
+          break;
+        case 1:
+          message = `Glacial Torrent boost: The next ability you activate does not require a tactic. `;
+          break;
+      }
+
       abilityDetails = [
         {
           abilityName: "Hydrotherapy",
@@ -456,33 +465,83 @@ const SelectUnitAbility = (props) => {
 
       case "Water Scion":
         if (selectedChoice === 0) {
-          newGameState.currentResolution.push({
-            resolution: "Unit Ability",
-            resolution2: "Water: Hydrotherapy - select tactic",
-            unit: unit,
-            details: {
-              title: "Hydrotherapy",
-              message: "Use an Advance, Assault, or Invoke tactic.",
-              restriction: ["Advance", "Assault", "Invoke"],
-              stock: 1,
-              reason: "Hydrotherapy",
-              canSkip: "Return",
-            },
-          });
+          if (unit.boosts.glacialTorrent > 0) {
+            unit.boosts.glacialTorrent -= 1;
+            newGameState[unit.player].units[unit.unitIndex] = unit;
+
+            newGameState.activatingSkill.push("Hydrotherapy");
+            newGameState.activatingUnit.push(unit);
+
+            newGameState.currentResolution.push({
+              resolution: "Tactic End",
+              unit: unit,
+              effect: true,
+            });
+
+            newGameState.currentResolution.push({
+              resolution: "Unit Ability",
+              resolution2: "Activating Hydrotherapy",
+              unit: unit,
+            });
+
+            newGameState.currentResolution.push({
+              resolution: "Animation Delay",
+              priority: self,
+            });
+          } else {
+            newGameState.currentResolution.push({
+              resolution: "Unit Ability",
+              resolution2: "Water: Hydrotherapy - select tactic",
+              unit: unit,
+              details: {
+                title: "Hydrotherapy",
+                message: "Use an Advance, Assault, or Invoke tactic.",
+                restriction: ["Advance", "Assault", "Invoke"],
+                stock: 1,
+                reason: "Hydrotherapy",
+                canSkip: "Return",
+              },
+            });
+          }
         } else if (selectedChoice === 1) {
-          newGameState.currentResolution.push({
-            resolution: "Unit Ability",
-            resolution2: "Water: Cold Embrace - select tactic",
-            unit: unit,
-            details: {
-              title: "Cold Embrace",
-              message: "Use an Assault, or Invoke tactic.",
-              restriction: ["Assault", "Invoke"],
-              stock: 1,
-              reason: "Cold Embrace",
-              canSkip: "Return",
-            },
-          });
+          if (unit.boosts.glacialTorrent > 0) {
+            unit.boosts.glacialTorrent -= 1;
+            newGameState[unit.player].units[unit.unitIndex] = unit;
+
+            newGameState.activatingSkill.push("ColdEmbrace");
+            newGameState.activatingUnit.push(unit);
+
+            newGameState.currentResolution.push({
+              resolution: "Tactic End",
+              unit: unit,
+              effect: true,
+            });
+
+            newGameState.currentResolution.push({
+              resolution: "Unit Ability",
+              resolution2: "Activating Cold Embrace",
+              unit: unit,
+            });
+
+            newGameState.currentResolution.push({
+              resolution: "Animation Delay",
+              priority: self,
+            });
+          } else {
+            newGameState.currentResolution.push({
+              resolution: "Unit Ability",
+              resolution2: "Water: Cold Embrace - select tactic",
+              unit: unit,
+              details: {
+                title: "Cold Embrace",
+                message: "Use an Assault, or Invoke tactic.",
+                restriction: ["Assault", "Invoke"],
+                stock: 1,
+                reason: "Cold Embrace",
+                canSkip: "Return",
+              },
+            });
+          }
         }
         break;
 
@@ -671,7 +730,9 @@ const SelectUnitAbility = (props) => {
     <div className="modal-backdrop">
       <div
         className={`modal ${
-          abilityDetails.length === 1 ? "singleAbilityModal" : ""
+          abilityDetails.length === 1
+            ? "singleAbilityModal"
+            : "dualAbilityModal"
         }`}
       >
         <div className="">
