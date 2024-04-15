@@ -110,6 +110,17 @@ const InspectSkill = (props) => {
         });
         break;
 
+      case "Arc Flash":
+        newGameState.currentResolution.push({
+          resolution: "Misc.",
+          resolution2: "Message To Enemy",
+          player: enemy,
+          title: "Arc Flash",
+          message:
+            "Your opponent has floated 1 Lightning skill from their repertoire.",
+        });
+        break;
+
       default:
         break;
     }
@@ -167,31 +178,35 @@ const InspectSkill = (props) => {
             </>
           )}
 
-          <h3>Non-floating skills</h3>
-          <div
-            className={`fourColumn  ${
-              localGameState[self].skillFloat > 0 ? "decreased-height" : ""
-            } `}
-          >
-            {inspectRerpertoire.map((usableSkill, i) => (
+          {inspectRerpertoire.length > 0 && (
+            <>
+              <h3>Non-floating skills</h3>
               <div
-                key={i + localGameState[self].skillFloat}
-                className={`scionSkills ${
-                  selectedSkill === i + localGameState[self].skillFloat
-                    ? "selectedSkill"
-                    : ""
-                }`}
+                className={`fourColumn  ${
+                  localGameState[self].skillFloat > 0 ? "decreased-height" : ""
+                } `}
               >
-                <Skill
-                  i={i + localGameState[self].skillFloat}
-                  usableSkill={usableSkill}
-                  canActivateSkill={canSelect(usableSkill.id)}
-                  selectedSkill={selectedSkill}
-                  setSelectedSkill={setSelectedSkill}
-                />
+                {inspectRerpertoire.map((usableSkill, i) => (
+                  <div
+                    key={i + localGameState[self].skillFloat}
+                    className={`scionSkills ${
+                      selectedSkill === i + localGameState[self].skillFloat
+                        ? "selectedSkill"
+                        : ""
+                    }`}
+                  >
+                    <Skill
+                      i={i + localGameState[self].skillFloat}
+                      usableSkill={usableSkill}
+                      canActivateSkill={canSelect(usableSkill.id)}
+                      selectedSkill={selectedSkill}
+                      setSelectedSkill={setSelectedSkill}
+                    />
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </>
+          )}
         </div>
 
         {selectedSkill === null && (

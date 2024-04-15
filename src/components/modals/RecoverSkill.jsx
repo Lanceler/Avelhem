@@ -49,6 +49,22 @@ const RecoverSkill = (props) => {
     ) {
       let message = "Your opponent has recovered and revealed a skill.";
 
+      let title = "";
+
+      switch (props.message) {
+        case "Recover then float 1 Plant skill other than “Efflorescence”.":
+          title = "Efflorescence";
+          break;
+
+        case "Recover 1 Lightning skill other than “Thunder Thaumaturge”.":
+          title = "Thunder Thaumaturge";
+          break;
+
+        case "Recover then reveal 1 burst skill.":
+          title = "Foreshadow";
+          break;
+      }
+
       newGameState.currentResolution.push({
         resolution: "Revealing Skill",
         player: enemy,

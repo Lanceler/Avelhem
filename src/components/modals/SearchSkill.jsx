@@ -113,6 +113,7 @@ const SearchSkill = (props) => {
         resolution: "Revealing Skill",
         player: enemy,
         skill: chosenSkill,
+        title: "Foreshadow",
         message:
           "Your opponent has searched for, revealed, and discarded a skill.",
       });

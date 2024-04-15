@@ -274,6 +274,8 @@ const Board = (props) => {
     reapTheWhirlwind1,
     fortify1,
     galvanize1,
+    arcFlash1,
+    arcFlash2,
     particleBeam1,
     particleBeam2,
     brandish1,
@@ -732,6 +734,7 @@ const Board = (props) => {
             {self === lastResolution.player && !hideModal && (
               <ViewRevealedSkill
                 skill={lastResolution.skill}
+                title={lastResolution.title}
                 message={lastResolution.message}
                 updateFirebase={updateFirebase}
                 hideOrRevealModale={hideOrRevealModale}
@@ -932,16 +935,7 @@ const Board = (props) => {
 
       case "Unit Ability":
         switch (lastResolution.resolution2) {
-          case "Fire: Afterburner - select tactic":
-          case "Water: Hydrotherapy - select tactic":
-          case "Water: Cold Embrace - select tactic":
-          case "Wind: Air Dash - select tactic":
-          case "Wind: Reap the Whirlwind - select tactic":
-          case "Land: Fortify - select tactic":
-          case "Lightning: Galvanize - select tactic":
-          // case "Lightning: ArcFlash - select tactic":
-          case "Mana: Particle Beam - select tactic":
-          case "Metal: Brandish - select tactic":
+          case "Ability - select tactic":
             return (
               <>
                 {self === localGameState.turnPlayer && !hideModal && (
@@ -1185,6 +1179,48 @@ const Board = (props) => {
                     hideOrRevealModale={hideOrRevealModale}
                     enterMoveMode={enterMoveMode}
                   />
+                )}
+              </>
+            );
+
+          case "Activating Arc Flash":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      arcFlash1(lastResolution.unit)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Arc Flash1":
+          case "Arc Flash3":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <SelectCustomChoice
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    enterMoveMode={enterMoveMode}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Arc Flash2":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      arcFlash2(lastResolution.unit)
+                    )}
+                  </>
                 )}
               </>
             );

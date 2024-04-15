@@ -324,6 +324,82 @@ export const useUnitAbilityEffects = () => {
     return newGameState;
   };
 
+  const arcFlash1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Arc Flash"
+    newGameState.currentResolution.pop();
+
+    //give unit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation += 1)
+      : (unit.temporary.activation = 1);
+
+    //Spend 3 charges
+    unit.charge -= 3;
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    if (canMove(unit) || canStrike(unit)) {
+      newGameState.currentResolution.push({
+        resolution: "Unit Ability",
+        resolution2: "Arc Flash1",
+        player: self,
+        unit: unit,
+        details: {
+          title: "Arc Flash",
+          reason: "Arc Flash1",
+        },
+      });
+    }
+
+    newGameState.currentResolution.push({
+      resolution: "Misc.",
+      resolution2: "Inspect Skill",
+      player: self,
+
+      details: {
+        restriction: ["05-01", "05-02", "05-03"],
+        outcome: "Float",
+        title: "Arc Flash",
+        message:
+          "Inspect 3 skills. You may float 1 Lightning skill among them.",
+        inspectionCount: 3,
+      },
+    });
+
+    return newGameState;
+  };
+
+  const arcFlash2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Arc Flash2"
+    newGameState.currentResolution.pop();
+
+    if (canMove(unit) || canStrike(unit)) {
+      newGameState.currentResolution.push({
+        resolution: "Unit Ability",
+        resolution2: "Arc Flash3",
+        player: self,
+        unit: unit,
+        details: {
+          title: "Arc Flash",
+          reason: "Arc Flash3",
+        },
+      });
+
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: self,
+      });
+    }
+
+    return newGameState;
+  };
+
   const particleBeam1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
@@ -516,6 +592,8 @@ export const useUnitAbilityEffects = () => {
     reapTheWhirlwind1,
     fortify1,
     galvanize1,
+    arcFlash1,
+    arcFlash2,
     particleBeam1,
     particleBeam2,
     brandish1,

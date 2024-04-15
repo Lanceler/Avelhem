@@ -38,14 +38,24 @@ const SelectSkillReveal = (props) => {
     //end
     newGameState.currentResolution.pop();
 
+    let revealTitle = "";
+    let revealMessage = "";
+
     switch (props.details.reason) {
       case "Symphonic Screech":
         newGameState = drawSkill(newGameState);
+        revealTitle = "Symphonic Screech";
+        revealMessage = "Your opponent has revealed 1 Wind Skill";
+
         break;
 
       case "Valiant Spark":
         unit.boosts.valiantSpark = true;
         newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+
+        revealTitle = "Valiant Spark";
+        revealMessage = "Your opponent has revealed 1 Lightning Skill";
+
         break;
 
       case "Arsenal Onslaught Paralyze":
@@ -54,6 +64,10 @@ const SelectSkillReveal = (props) => {
           resolution2: "Arsenal Onslaught3.5",
           unit: unit,
         });
+
+        revealTitle = "Arsenal Onslaught";
+        revealMessage = "Your opponent has revealed 1 Metal Skill";
+
         break;
 
       default:
@@ -64,6 +78,8 @@ const SelectSkillReveal = (props) => {
       resolution: "Revealing Skill",
       player: enemy,
       skill: usableSkills[selectedSkill].id,
+      title: revealTitle,
+      message: revealMessage,
     });
 
     dispatch(updateState(newGameState));

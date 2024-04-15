@@ -144,7 +144,16 @@ const SelectCustomChoice = (props) => {
       ChoiceSecondMessage = "Strike.";
       break;
 
+    case "Arc Flash1":
+    case "Arc Flash3":
+      canSkip = true;
+      canFirstChoice = canMove(unit);
+      canSecondChoice = canStrike(unit);
+      ChoiceFirstMessage = "Traverse.";
+      ChoiceSecondMessage = "Strike.";
+
     case "Surge2":
+      canSkip = true;
       canFirstChoice = canMove(unit);
       canSecondChoice = canStrike(unit);
       ChoiceFirstMessage = "Traverse.";
@@ -152,6 +161,7 @@ const SelectCustomChoice = (props) => {
       break;
 
     case "Surge3":
+      canSkip = true;
       canFirstChoice = canMove(unit);
       canSecondChoice = canStrike(unit);
       ChoiceFirstMessage = "Traverse.";
@@ -187,6 +197,7 @@ const SelectCustomChoice = (props) => {
       break;
 
     case "Arsenal Onslaught":
+      canSkip = true;
       canFirstChoice = canStrike(unit);
       canSecondChoice = true;
       ChoiceFirstMessage = "Strike.";
@@ -473,6 +484,52 @@ const SelectCustomChoice = (props) => {
         break;
 
       case "Fortify":
+        if (selectedChoice === 1) {
+          props.enterMoveMode(
+            getVacantAdjacentZones(unit),
+            unit,
+            newGameState,
+            null
+          );
+        } else {
+          enterSelectUnitMode(
+            getZonesWithEnemies(unit, 1),
+            unit,
+            newGameState,
+            null,
+            "strike",
+            null
+          );
+        }
+        break;
+
+      case "Arc Flash1":
+        if (selectedChoice === 1) {
+          newGameState.currentResolution.push({
+            resolution: "Unit Ability",
+            resolution2: "Arc Flash2",
+            unit: unit,
+          });
+
+          props.enterMoveMode(
+            getVacantAdjacentZones(unit),
+            unit,
+            newGameState,
+            null
+          );
+        } else {
+          enterSelectUnitMode(
+            getZonesWithEnemies(unit, 1),
+            unit,
+            newGameState,
+            null,
+            "strike",
+            null
+          );
+        }
+        break;
+
+      case "Arc Flash3":
         if (selectedChoice === 1) {
           props.enterMoveMode(
             getVacantAdjacentZones(unit),
@@ -788,13 +845,13 @@ const SelectCustomChoice = (props) => {
         </div>
 
         {selectedChoice === null && canSkip && (
-          <button className="choiceButton" onClick={() => handleSkip()}>
+          <button className="choiceButton noYes" onClick={() => handleSkip()}>
             Skip
           </button>
         )}
 
         {selectedChoice !== null && (
-          <button className="choiceButton" onClick={() => handleSelect()}>
+          <button className="choiceButton noYes" onClick={() => handleSelect()}>
             Select
           </button>
         )}

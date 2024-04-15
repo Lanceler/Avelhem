@@ -167,7 +167,7 @@ const SelectUnitAbility = (props) => {
 
     case "Land Scion":
       if (unit.boosts.mountainStance) {
-        message = `Mountain Stance boost: You may use an Invoke tactic to activate Fortify. `;
+        message = `Mountain Stance boost: You can use an Invoke tactic to activate Fortify.`;
       }
 
       abilityDetails = [
@@ -197,6 +197,10 @@ const SelectUnitAbility = (props) => {
       break;
 
     case "Lightning Scion":
+      if (unit.boosts.valiantSpark) {
+        message = `Valiant Spark boost: You can activate Arc Flash without using a tactic. `;
+      }
+
       abilityDetails = [
         {
           abilityName: "Galvanize",
@@ -426,7 +430,7 @@ const SelectUnitAbility = (props) => {
         if (selectedChoice === 0) {
           newGameState.currentResolution.push({
             resolution: "Unit Ability",
-            resolution2: "Fire: Afterburner - select tactic",
+            resolution2: "Ability - select tactic",
             unit: unit,
             details: {
               title: "Afterburner",
@@ -491,7 +495,7 @@ const SelectUnitAbility = (props) => {
           } else {
             newGameState.currentResolution.push({
               resolution: "Unit Ability",
-              resolution2: "Water: Hydrotherapy - select tactic",
+              resolution2: "Ability - select tactic",
               unit: unit,
               details: {
                 title: "Hydrotherapy",
@@ -530,7 +534,7 @@ const SelectUnitAbility = (props) => {
           } else {
             newGameState.currentResolution.push({
               resolution: "Unit Ability",
-              resolution2: "Water: Cold Embrace - select tactic",
+              resolution2: "Ability - select tactic",
               unit: unit,
               details: {
                 title: "Cold Embrace",
@@ -549,7 +553,7 @@ const SelectUnitAbility = (props) => {
         if (selectedChoice === 0) {
           newGameState.currentResolution.push({
             resolution: "Unit Ability",
-            resolution2: "Wind: Air Dash - select tactic",
+            resolution2: "Ability - select tactic",
             unit: unit,
             details: {
               title: "Air Dash",
@@ -563,7 +567,7 @@ const SelectUnitAbility = (props) => {
         } else if (selectedChoice === 1) {
           newGameState.currentResolution.push({
             resolution: "Unit Ability",
-            resolution2: "Wind: Reap the Whirlwind - select tactic",
+            resolution2: "Ability - select tactic",
             unit: unit,
             details: {
               title: "Reap the Whirlwind",
@@ -589,7 +593,7 @@ const SelectUnitAbility = (props) => {
 
           newGameState.currentResolution.push({
             resolution: "Unit Ability",
-            resolution2: "Land: Fortify - select tactic",
+            resolution2: "Ability - select tactic",
             unit: unit,
             details: {
               title: "Fortify",
@@ -607,7 +611,7 @@ const SelectUnitAbility = (props) => {
         if (selectedChoice === 0) {
           newGameState.currentResolution.push({
             resolution: "Unit Ability",
-            resolution2: "Lightning: Galvanize - select tactic",
+            resolution2: "Ability - select tactic",
             unit: unit,
             details: {
               title: "Galvanize",
@@ -619,7 +623,44 @@ const SelectUnitAbility = (props) => {
             },
           });
         } else if (selectedChoice === 1) {
-          //2nd choice
+          if (unit.boosts.valiantSpark) {
+            delete unit.boosts.valiantSpark;
+            newGameState[unit.player].units[unit.unitIndex] = unit;
+
+            newGameState.activatingSkill.push("ArcFlash");
+            newGameState.activatingUnit.push(unit);
+
+            newGameState.currentResolution.push({
+              resolution: "Tactic End",
+              unit: unit,
+              effect: true,
+            });
+
+            newGameState.currentResolution.push({
+              resolution: "Unit Ability",
+              resolution2: "Activating Arc Flash",
+              unit: unit,
+            });
+
+            newGameState.currentResolution.push({
+              resolution: "Animation Delay",
+              priority: self,
+            });
+          } else {
+            newGameState.currentResolution.push({
+              resolution: "Unit Ability",
+              resolution2: "Ability - select tactic",
+              unit: unit,
+              details: {
+                title: "Arc Flash",
+                message: "Use an Assault tactic.",
+                restriction: ["Assault"],
+                stock: 1,
+                reason: "Arc Flash",
+                canSkip: "Return",
+              },
+            });
+          }
         }
         break;
 
@@ -627,7 +668,7 @@ const SelectUnitAbility = (props) => {
         if (selectedChoice === 0) {
           newGameState.currentResolution.push({
             resolution: "Unit Ability",
-            resolution2: "Mana: Particle Beam - select tactic",
+            resolution2: "Ability - select tactic",
             unit: unit,
             details: {
               title: "Particle Beam",
@@ -645,7 +686,7 @@ const SelectUnitAbility = (props) => {
         if (selectedChoice === 0) {
           newGameState.currentResolution.push({
             resolution: "Unit Ability",
-            resolution2: "Metal: Brandish - select tactic",
+            resolution2: "Ability - select tactic",
             unit: unit,
             details: {
               title: "Brandish",

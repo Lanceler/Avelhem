@@ -16,7 +16,8 @@ export const useSovereignSkillEffects = () => {
   const { avelhemToScion, canDeploy, drawAvelhem, drawSkill, isAdjacent } =
     useRecurringEffects();
 
-  const { getScionSet, pressTheAttackList } = useCardDatabase();
+  const { getScionSet, pressTheAttackList, sovereignSkillList } =
+    useCardDatabase();
 
   const heirsEndeavor1 = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
@@ -26,27 +27,14 @@ export const useSovereignSkillEffects = () => {
 
     newGameState[self].fateDefiances -= 1;
 
+    let recoverableSkills = [...sovereignSkillList()].filter(
+      (x) => x !== "SA-01"
+    );
+
     newGameState.currentResolution.push({
       resolution: "Recover Skill",
       player: self,
-      restriction: [
-        "SX-01", // SA-01 (Heir's Endeavor) is excluded
-        "SA-02",
-        "SA-03",
-        "SA-04",
-        "SA-05",
-        "SB-01",
-        "SB-02",
-        "SB-03",
-        "SB-04",
-        "SB-05",
-        "SC-01",
-        "SC-02",
-        "SC-03",
-        "SC-04",
-        "SC-05",
-        "SD-01",
-      ],
+      restriction: recoverableSkills,
       message: "Recover 1 Sovereign skill other than “Heir's Endeavor”.",
       outcome: "Add",
     });
@@ -65,24 +53,7 @@ export const useSovereignSkillEffects = () => {
       player: self,
 
       details: {
-        restriction: [
-          "SA-01", // SX-01 (Transcedence) is excluded
-          "SA-02",
-          "SA-03",
-          "SA-04",
-          "SA-05",
-          "SB-01",
-          "SB-02",
-          "SB-03",
-          "SB-04",
-          "SB-05",
-          "SC-01",
-          "SC-02",
-          "SC-03",
-          "SC-04",
-          "SC-05",
-          "SD-01",
-        ],
+        restriction: sovereignSkillList(),
         outcome: "Float",
         title: "Heir's Endeavor",
         message:

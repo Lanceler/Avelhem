@@ -32,11 +32,13 @@ const ViewRevealedSkill = (props) => {
     <div className="modal-backdrop">
       <div className="modal">
         <div className="twoColumn3-1">
-          <h2 className="choiceTitle">{props.message}</h2>
+          <h2 className="choiceTitle">{props.title}</h2>
           <button className="choiceButton" onClick={() => handleViewBoard()}>
             View Board
           </button>
         </div>
+
+        <h3>{props.message}</h3>
 
         {props.skill && (
           <div

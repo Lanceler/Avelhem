@@ -464,6 +464,28 @@ export const useCardDatabase = () => {
     ];
   };
 
+  const sovereignSkillList = () => {
+    return [
+      "SX-01",
+      "SA-01",
+      "SA-02",
+      "SA-03",
+      "SA-04",
+      "SA-05",
+      "SB-01",
+      "SB-02",
+      "SB-03",
+      "SB-04",
+      "SB-05",
+      "SC-01",
+      "SC-02",
+      "SC-03",
+      "SC-04",
+      "SC-05",
+      "SD-01",
+    ];
+  };
+
   return {
     avelhemCardList,
     skillCardList,
@@ -472,5 +494,6 @@ export const useCardDatabase = () => {
     getSkillById,
     allBurstSkills,
     pressTheAttackList,
+    sovereignSkillList,
   };
 };
