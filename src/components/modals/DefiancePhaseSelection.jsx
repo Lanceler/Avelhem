@@ -13,21 +13,11 @@ const DefiancePhaseSelection = (props) => {
   const dispatch = useDispatch();
 
   const [selectedChoice, setSelectedChoice] = useState(null);
-  const { canActivateSovereignSkill } = useRecurringEffects();
-
-  const nextPhase = (gameState) => {
-    gameState.turnPhase = "Execution";
-    gameState.currentResolution.pop();
-    gameState.currentResolution.push({
-      resolution: "Execution Phase",
-    });
-
-    return gameState;
-  };
+  const { canActivateSovereignSkill, endDefiancePhase } = useRecurringEffects();
 
   const handleSkip = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
-    newGameState = nextPhase(newGameState);
+    newGameState = endDefiancePhase(newGameState);
 
     dispatch(updateState(newGameState));
     props.updateFirebase(newGameState);
@@ -36,18 +26,33 @@ const DefiancePhaseSelection = (props) => {
   const handleProceed = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
+    // DO NOT pop
+    // newGameState.currentResolution.pop();
+
     switch (selectedChoice) {
-      // case 1:
-      //   newGameState[self].bountyUpgrades.frontier = 1;
-      //   newGameState[self].bountyPoints -= frontierCosts[0];
-      //   setSelectedChoice(null);
-      //   break;
+      case 1:
+        //DO NOT spend fd
+        //newGameState[self].fateDefiances -= 1
+
+        newGameState.currentResolution.push({
+          resolution: "Defiance Options",
+          resolution2: "Arcana",
+          player: self,
+          details: {
+            reason: "Arcana",
+            title: "Defiance: Arcana",
+            message:
+              "Place up to 4 skills from your hand at the bottom of your repertoire, then draw the same number. Skills selected earlier will be placed below subsequent ones.",
+            count: 4,
+          },
+        });
+        break;
 
       default:
         break;
     }
 
-    // dispatch(updateState(newGameState));
+    dispatch(updateState(newGameState));
     // props.updateFirebase(newGameState);
   };
 
@@ -66,7 +71,7 @@ const DefiancePhaseSelection = (props) => {
   const defianceCosts = [1, 1, 2, 3, 3, 4];
 
   const canSelect = [
-    //Adapt
+    //Arcana
     localGameState[self].fateDefiances >= 1 &&
       localGameState[self].skillHand.length > 0,
     //Backtrack
@@ -115,7 +120,7 @@ const DefiancePhaseSelection = (props) => {
                 } `}
               >
                 <div className="defianceText">
-                  <h4 className="defianceTitle">Adapt</h4>
+                  <h4 className="defianceTitle">Arcana</h4>
                   <h3 className="defianceDescription defianceDescriptionSmall">
                     Place up to 4 skills from your hand at the bottom of your
                     repertoire, then draw the same number.
@@ -165,7 +170,7 @@ const DefiancePhaseSelection = (props) => {
                     Reroll your tactics with 3 dice; disregard 1.
                   </h3>
 
-                  <h4 className="fdCost">{`Cost: ${defianceCosts[1]} FD`}</h4>
+                  <h4 className="fdCost">{`Cost: ${defianceCosts[2]} FD`}</h4>
                 </div>
               </div>
             </div>
@@ -209,7 +214,9 @@ const DefiancePhaseSelection = (props) => {
                 <div className="defianceText">
                   <h4 className="defianceTitle">Empower</h4>
                   <h3 className="defianceDescription ">
-                    Draw 1 skill. You may recover 1 “Transcendence”.
+                    <span>Draw 1 skill.</span>
+                    <br />
+                    <span>You may recover 1 “Transcendence”.</span>
                   </h3>
 
                   <h4 className="fdCost">{`Cost: ${defianceCosts[4]} FD`}</h4>
@@ -232,7 +239,9 @@ const DefiancePhaseSelection = (props) => {
                 <div className="defianceText">
                   <h4 className="defianceTitle">Finesse</h4>
                   <h3 className="defianceDescription ">
-                    Search for 1 Sovereign skill.
+                    <span>Search for 1</span>
+                    <br />
+                    <span>Sovereign skill.</span>
                   </h3>
 
                   <h4 className="fdCost">{`Cost: ${defianceCosts[5]} FD`}</h4>

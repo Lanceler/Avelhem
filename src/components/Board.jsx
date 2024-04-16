@@ -353,6 +353,11 @@ const Board = (props) => {
     }
 
     switch (lastResolution.resolution) {
+      case "Animation Delay":
+        return (
+          <>{self === lastResolution.priority && <>{animationDelay()}</>}</>
+        );
+
       case "Acquisition Phase Selection":
         return (
           <>
@@ -411,6 +416,24 @@ const Board = (props) => {
             )}
           </>
         );
+
+      case "Defiance Options":
+        switch (lastResolution.resolution2) {
+          case "Arcana":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <SelectSkillHandMulti
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+        }
+        break;
+
       case "Deploying Pawn":
         return (
           <>
@@ -4340,11 +4363,6 @@ const Board = (props) => {
               <>{resolveEndFinalPhase()}</>
             )}
           </>
-        );
-
-      case "Animation Delay":
-        return (
-          <>{self === lastResolution.priority && <>{animationDelay()}</>}</>
         );
 
       default:

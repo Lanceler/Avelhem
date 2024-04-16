@@ -3340,6 +3340,31 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const endDefiancePhase = (newGameState) => {
+    newGameState.turnPhase = "Execution";
+    newGameState.currentResolution.pop();
+    newGameState.currentResolution.push({
+      resolution: "Execution Phase",
+    });
+
+    //Fire Scion Talent
+
+    const units = newGameState[self].units;
+
+    for (let unit of units) {
+      if (unit.unitClass === "Fire Scion" && !isMuted(unit)) {
+        unit.fever
+          ? (unit.fever = Math.min(2, unit.fever + 1))
+          : (unit.fever = 1);
+
+        // code below not needed
+        // newGameState[self].units[unit.unitIndex] = unit
+      }
+    }
+
+    return newGameState;
+  };
+
   const endFinalPhase = (newGameState, player, enemy) => {
     //to do: discard Avelhems
     //to do: discard skills
@@ -5058,6 +5083,7 @@ export const useRecurringEffects = () => {
     canStrike,
     drawAvelhem,
     drawSkill,
+    endDefiancePhase,
     endFinalPhase,
     enterSelectUnitMode,
     floatAvelhem,

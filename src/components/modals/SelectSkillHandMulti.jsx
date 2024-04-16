@@ -14,7 +14,7 @@ const SelectSkillHandMulti = (props) => {
   const { self, enemy } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const { avelhemToScion } = useRecurringEffects();
+  const { avelhemToScion, drawSkill, endDefiancePhase } = useRecurringEffects();
   const { getScionSet } = useCardDatabase();
 
   //selectedAvelhems refers to their index in the hand
@@ -28,6 +28,10 @@ const SelectSkillHandMulti = (props) => {
   let selectMessage = "Select";
 
   switch (props.details.reason) {
+    case "Arcana":
+      skipMessage = "Return";
+      break;
+
     case "Transmute":
       canSkip = false;
       selectMessage = "Shuffle";
@@ -57,6 +61,71 @@ const SelectSkillHandMulti = (props) => {
     newGameState.currentResolution.pop();
 
     switch (props.details.reason) {
+      case "Arcana":
+        //do an extra pop
+        newGameState.currentResolution.pop();
+
+        //deduct FD
+        newGameState[self].fateDefiances -= 1;
+
+        // console.log(selectedSkills);
+
+        //1. get list of cards to be returned
+        let skillsToReturn = [];
+        for (let i of selectedSkills) {
+          skillsToReturn.push(skillHand[i]);
+        }
+
+        // console.log(skillsToReturn);
+
+        //2. sort selected skills in descending order so they can be spliced smoothly
+        let sortedSelectedSkills1 = [...selectedSkills].sort((a, b) => b - a);
+
+        // console.log("sortedSelectedSkills1");
+        // console.log(sortedSelectedSkills1);
+
+        //3. remove selected skills from hand
+        for (let i of sortedSelectedSkills1) {
+          // console.log(i);
+          skillHand.splice(i, 1);
+        }
+
+        newGameState[self].skillHand = [...skillHand];
+
+        // console.log("skillHand");
+        // console.log(skillHand);
+
+        //4. place selected skills at bottom of repertoire (start of array)
+        // if skill is "Transcendence" (SX-01), sent to vestige instead
+        //5. for each returned skill, draw 1 skill
+
+        skillsToReturn.reverse();
+        for (let skill of skillsToReturn) {
+          if (skill === "SX-01") {
+            newGameState[self].skillVestige.push(skill);
+          } else {
+            newGameState[self].skillRepertoire.unshift(skill);
+          }
+
+          newGameState = drawSkill(newGameState);
+        }
+
+        //6. End Defiance Phase
+
+        newGameState = endDefiancePhase(newGameState);
+
+        //7. inform enemy Defiance Action
+
+        newGameState.currentResolution.push({
+          resolution: "Misc.",
+          resolution2: "Message To Enemy",
+          player: enemy,
+          title: "Defiance: Aracana",
+          message: `Your opponent has returned ${skillsToReturn.length} skills to their repertoire and drawn the same number.`,
+        });
+
+        break;
+
       case "Transmute":
         // console.log(selectedSkills);
 
@@ -155,6 +224,13 @@ const SelectSkillHandMulti = (props) => {
       default:
         break;
     }
+
+    console.log("newGameState[self].skillHand");
+    console.log(newGameState[self].skillHand);
+    console.log("newGameState[self].skillRepertoire");
+    console.log(newGameState[self].skillRepertoire);
+    console.log("newGameState[self].skillVestige");
+    console.log(newGameState[self].skillVestige);
 
     dispatch(updateState(newGameState));
     props.updateFirebase(newGameState);
