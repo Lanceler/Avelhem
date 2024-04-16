@@ -63,7 +63,8 @@ const CoordinationPhaseSelection = (props) => {
         newGameState = assignTactics(newGameState, rollTactic(), rollTactic());
         newGameState = nextPhase(newGameState);
         newGameState.currentResolution.push({
-          resolution: "Tactic Results",
+          resolution: "Misc.",
+          resolution2: "Tactic Results",
         });
         dispatch(updateState(newGameState));
         props.updateFirebase(newGameState);
@@ -152,33 +153,6 @@ const CoordinationPhaseSelection = (props) => {
             </div>
           </div>
         </div>
-
-        {/* <div className="phaseSelection">
-          <div className="choiceWithDescription" onClick={() => onAssent()}>
-            <h3>Assent</h3>
-            <h4>Roll 2 tactical dice.</h4>
-          </div>
-          <div className="choiceWithDescription">
-            <h3>Battle Cry</h3>
-            <h4>Spend 3 skills to gain an assault tactic.</h4>
-            <h5>
-              Upgrade:
-              <br />
-              Roll 1 tactical die.
-            </h5>
-          </div>
-
-          <div className="choiceWithDescription">
-            <h3>Convene</h3>
-            <h4>Must be unlocked.</h4>
-            <h4>Gain a rally tactic.</h4>
-            <h5>
-              Upgrade:
-              <br />
-              Gain an advance tactic.
-            </h5>
-          </div>
-        </div> */}
 
         {selectedChoice !== null && (
           <button className="choiceButton" onClick={() => handleSelect()}>

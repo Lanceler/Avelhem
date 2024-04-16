@@ -13,7 +13,12 @@ const DefiancePhaseSelection = (props) => {
   const dispatch = useDispatch();
 
   const [selectedChoice, setSelectedChoice] = useState(null);
-  const { canActivateSovereignSkill, endDefiancePhase } = useRecurringEffects();
+  const {
+    assignTactics,
+    canActivateSovereignSkill,
+    endDefiancePhase,
+    rollTactic,
+  } = useRecurringEffects();
 
   const handleSkip = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
@@ -23,6 +28,8 @@ const DefiancePhaseSelection = (props) => {
     props.updateFirebase(newGameState);
   };
 
+  let updateData = true;
+
   const handleProceed = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -31,8 +38,10 @@ const DefiancePhaseSelection = (props) => {
 
     switch (selectedChoice) {
       case 1:
-        //DO NOT spend fd
+        //DO NOT spend FD
         //newGameState[self].fateDefiances -= 1
+
+        updateData = false;
 
         newGameState.currentResolution.push({
           resolution: "Defiance Options",
@@ -48,12 +57,32 @@ const DefiancePhaseSelection = (props) => {
         });
         break;
 
+      case 2:
+        //Spend FD
+        newGameState[self].fateDefiances -= 1;
+
+        //reroll tactics
+        newGameState = assignTactics(newGameState, rollTactic(), rollTactic());
+
+        //end defiance Phase
+        newGameState = endDefiancePhase(newGameState);
+
+        newGameState.currentResolution.push({
+          resolution: "Misc.",
+          resolution2: "Tactic Results",
+          reroll: true,
+        });
+        break;
+
       default:
         break;
     }
 
     dispatch(updateState(newGameState));
-    // props.updateFirebase(newGameState);
+
+    if (updateData) {
+      props.updateFirebase(newGameState);
+    }
   };
 
   const handleSelect = (i, condition) => {

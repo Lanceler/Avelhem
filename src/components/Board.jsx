@@ -393,18 +393,6 @@ const Board = (props) => {
           </>
         );
 
-      case "Tactic Results":
-        return (
-          <>
-            {!hideModal && (
-              <TacticResults
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
       case "Defiance Phase Selection":
         return (
           <>
@@ -864,6 +852,19 @@ const Board = (props) => {
 
       case "Misc.":
         switch (lastResolution.resolution2) {
+          case "Tactic Results":
+            return (
+              <>
+                {!hideModal && (
+                  <TacticResults
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                    reroll={lastResolution.reroll}
+                  />
+                )}
+              </>
+            );
+
           case "May float resonant skill unit":
             return (
               <>
