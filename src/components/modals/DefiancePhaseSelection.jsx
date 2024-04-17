@@ -80,6 +80,20 @@ const DefiancePhaseSelection = (props) => {
         });
         break;
 
+      case 4:
+        //DO NOT spend FD
+        //newGameState[self].fateDefiances -= defianceCosts[3]
+
+        updateData = false;
+
+        newGameState.currentResolution.push({
+          resolution: "Defiance Options",
+          resolution2: "Discern",
+          player: self,
+          defianceCost: defianceCosts[3],
+        });
+        break;
+
       case 5:
         //Spend FD
         newGameState[self].fateDefiances -= defianceCosts[4];

@@ -2498,7 +2498,6 @@ export const useRecurringEffects = () => {
           unit: unit,
           enemy: unit2,
         });
-
         break;
 
       case "Match Made in Heaven":
@@ -2507,6 +2506,13 @@ export const useRecurringEffects = () => {
           resolution2: "Match Made in Heaven2",
           unit: unit,
           unit2: unit2,
+        });
+
+      case "Discern":
+        newGameState.currentResolution.push({
+          resolution: "Defiance Options",
+          resolution2: "End Phase",
+          player: unit.player,
         });
 
         break;
@@ -3362,6 +3368,12 @@ export const useRecurringEffects = () => {
       }
     }
 
+    return newGameState;
+  };
+
+  const endDefiancePhase2 = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    newGameState = endDefiancePhase(newGameState);
     return newGameState;
   };
 
@@ -4243,6 +4255,24 @@ export const useRecurringEffects = () => {
     );
   };
 
+  const selectDiscern = (scionClass) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Select Discern Pawn"
+    newGameState.currentResolution.pop();
+
+    const zonesWithPawns = getZonesForPromotion();
+
+    enterSelectUnitMode(
+      zonesWithPawns,
+      null,
+      newGameState,
+      null,
+      "discern",
+      scionClass
+    );
+  };
+
   const selectEnemies = (unitInfo, range, tactic, reason, special) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
@@ -5084,6 +5114,7 @@ export const useRecurringEffects = () => {
     drawAvelhem,
     drawSkill,
     endDefiancePhase,
+    endDefiancePhase2,
     endFinalPhase,
     enterSelectUnitMode,
     floatAvelhem,
@@ -5121,6 +5152,7 @@ export const useRecurringEffects = () => {
     selectAvelhemPawn,
     selectChainLightningBlast,
     selectDarkHalo,
+    selectDiscern,
     selectEnemies,
     selectEnemiesAfflicted,
     selectEnemiesRooted,

@@ -17,6 +17,18 @@ const PowerAtTheFinalHourProaction = (props) => {
 
   const [selectedSkill, setSelectedSkill] = useState(null);
 
+  let canSkip = false;
+  let SkipMessage = "Skip";
+  let message =
+    "Reveal the aspect of 1 Scion skill to ascend an ally pawn to the matching class.";
+
+  if (props.reason === "Discern") {
+    canSkip = true;
+    SkipMessage = "Return";
+    message =
+      "Spend 1 Scion skill to ascend an ally pawn to the matching class.";
+  }
+
   let usableSkills = [];
   for (let i in localGameState[self].skillHand) {
     usableSkills.push({
@@ -42,32 +54,60 @@ const PowerAtTheFinalHourProaction = (props) => {
 
   const handleSelect = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
+
     newGameState.currentResolution.pop();
 
     const skillCode = usableSkills[selectedSkill].id.substring(0, 2);
     const scionClass = avelhemToScion(parseInt(skillCode));
-    console.log(scionClass);
+    // console.log(scionClass);
 
-    newGameState.currentResolution.push({
-      resolution: "Sovereign Contingent Skill",
-      resolution2: "Select Power at the Final Hour Pawn",
-      player: self,
-      scionClass: scionClass,
-    });
+    if (props.reason === "Power at the Final Hour") {
+      newGameState.currentResolution.push({
+        resolution: "Sovereign Contingent Skill",
+        resolution2: "Select Power at the Final Hour Pawn",
+        player: self,
+        scionClass: scionClass,
+      });
 
-    newGameState.currentResolution.push({
-      resolution: "Misc.",
-      resolution2: "Message To Enemy",
-      player: enemy,
-      title: "Power at the Final Hour",
-      message: `Your opponent has a skill with the following aspect: ${scionClass.replace(
-        " Scion",
-        ""
-      )}.`,
-    });
+      // newGameState.currentResolution.push({
+      //   resolution: "Misc.",
+      //   resolution2: "Message To Enemy",
+      //   player: enemy,
+      //   title: "Power at the Final Hour",
+      //   message: `Your opponent has revealed the following aspect: ${scionClass.replace(
+      //     " Scion",
+      //     ""
+      //   )}.`,
+      // });
+    } else if (props.reason === "Discern") {
+      //Spend FD
+      newGameState[self].fateDefiances -= props.defianceCost;
+
+      //send selected skill to vestige
+      newGameState[self].skillVestige.push(
+        newGameState[self].skillHand.splice(
+          usableSkills[selectedSkill].handIndex,
+          1
+        )[0]
+      );
+
+      newGameState.currentResolution.push({
+        resolution: "Defiance Options",
+        resolution2: "Select Discern Pawn",
+        player: self,
+        scionClass: scionClass,
+      });
+    }
 
     dispatch(updateState(newGameState));
     props.updateFirebase(newGameState);
+  };
+
+  const handleSkip = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    newGameState.currentResolution.pop();
+
+    dispatch(updateState(newGameState));
   };
 
   const handleViewBoard = () => {
@@ -84,10 +124,7 @@ const PowerAtTheFinalHourProaction = (props) => {
           </button>
         </div>
 
-        <h3>
-          Reveal the aspect of 1 Scion skill to ascend an ally pawn to the
-          matching class.
-        </h3>
+        <h3>{message}</h3>
 
         <div className="scrollable scrollable-y-only">
           <div className="fourColumn">
@@ -109,6 +146,12 @@ const PowerAtTheFinalHourProaction = (props) => {
             ))}
           </div>
         </div>
+
+        {canSkip && selectedSkill === null && (
+          <button className="choiceButton noYes" onClick={() => handleSkip()}>
+            {SkipMessage}
+          </button>
+        )}
 
         {selectedSkill !== null && (
           <button className="choiceButton noYes" onClick={() => handleSelect()}>

@@ -117,6 +117,7 @@ const Board = (props) => {
     blast,
     drawSkill,
     enterSelectUnitMode,
+    endDefiancePhase2,
     endFinalPhase,
     getVacant2SpaceZones,
     getVacantAdjacentZones,
@@ -135,6 +136,7 @@ const Board = (props) => {
     selectAvelhemPawn,
     selectChainLightningBlast,
     selectDarkHalo,
+    selectDiscern,
     selectEnemies,
     selectEnemiesAfflicted,
     selectEnemiesRooted,
@@ -416,6 +418,38 @@ const Board = (props) => {
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
+                )}
+              </>
+            );
+
+          case "Discern":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <PowerAtTheFinalHourProaction
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                    reason="Discern"
+                    defianceCost={lastResolution.defianceCost}
+                  />
+                )}
+              </>
+            );
+
+          case "Select Discern Pawn":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>{selectDiscern(lastResolution.scionClass)}</>
+                )}
+              </>
+            );
+
+          case "End Phase":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>{resolutionUpdateGameStateOnly(endDefiancePhase2())}</>
                 )}
               </>
             );
@@ -4000,6 +4034,7 @@ const Board = (props) => {
                   <PowerAtTheFinalHourProaction
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
+                    reason={"Power at the Final Hour"}
                   />
                 )}
               </>
@@ -4855,6 +4890,7 @@ const Board = (props) => {
           unit: selectedUnit,
         });
         break;
+
       case "aerial impetus purge":
         newGameState.currentResolution.push({
           resolution: "Wind Skill",
@@ -4863,6 +4899,7 @@ const Board = (props) => {
           victim: selectedUnit,
         });
         break;
+
       case "symphonic screech":
         newGameState = activateSymphonicScreech(
           newGameState,
@@ -4870,6 +4907,7 @@ const Board = (props) => {
           unit
         );
         break;
+
       case "pitfall trap":
         newGameState = activatePitfallTrap(newGameState, selectedUnit, unit);
         break;
@@ -4977,7 +5015,6 @@ const Board = (props) => {
           "Power at the Final Hour",
           null
         );
-
         break;
 
       case "fated rivalry":
@@ -5034,7 +5071,16 @@ const Board = (props) => {
           null,
           unit
         );
+        break;
 
+      case "discern":
+        newGameState = ascendPawn(
+          newGameState,
+          selectedUnit,
+          special,
+          "Discern",
+          null
+        );
         break;
 
       default:
