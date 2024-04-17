@@ -76,10 +76,12 @@
     background-repeat: no-repeat;
     background-position: center;
     cursor: pointer;
+}
 
-    /* filter: brightness(0.51) contrast(5.4) hue-rotate(20deg); */
-    /* hue-rotate(180deg) */
-    /* background-color: #39426400; */
+.tacticSmall {
+    height: 220px;
+    width: 220px;
+
 }
 
 
@@ -90,26 +92,28 @@
 }
 
 .tacticBG {
-    width: fit-content;
     margin: 0 5px 0 5px;
+    width: fit-content;
     height: fit-content;
-    border: 2px solid;
-    /* background-image: linear-gradient(to right, rgb(112, 112, 112), rgb(255, 255, 255), rgb(112, 112, 112)); */
-
+    border: 4px solid;
     background-image: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
-
-
 }
+
+
+
+
 
 .disabledTacticBG {
     background-color: rgb(26, 26, 26);
     background-image: none;
-
 }
 
 .disabledOption:hover {
 background: rgb(117, 13, 13)
 }
+
+
+
 
 .twoColumn{
     grid-template-columns: 1fr 1fr;

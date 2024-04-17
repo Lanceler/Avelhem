@@ -80,6 +80,20 @@ const DefiancePhaseSelection = (props) => {
         });
         break;
 
+      case 3:
+        //Spend FD
+        newGameState[self].fateDefiances -= defianceCosts[2];
+
+        //reroll tactics
+
+        newGameState.currentResolution.push({
+          resolution: "Defiance Options",
+          resolution2: "Curate Results",
+          player: self,
+          reroll: [rollTactic(), rollTactic(), rollTactic()],
+        });
+        break;
+
       case 4:
         //DO NOT spend FD
         //newGameState[self].fateDefiances -= defianceCosts[3]
@@ -88,7 +102,7 @@ const DefiancePhaseSelection = (props) => {
 
         newGameState.currentResolution.push({
           resolution: "Defiance Options",
-          resolution2: "Discern",
+          resolution2: "Destine",
           player: self,
           defianceCost: defianceCosts[3],
         });
@@ -165,10 +179,10 @@ const DefiancePhaseSelection = (props) => {
     //Backtrack
     localGameState[self].fateDefiances >= 1 &&
       localGameState.tactics.length > 1,
-    //Contemplate
+    //Curate
     localGameState[self].fateDefiances >= 2 &&
       localGameState.tactics.length > 1,
-    //Discern (Power at the Final Hour has the same activation requirement)
+    //Destine (Power at the Final Hour has the same activation requirement)
     localGameState[self].fateDefiances >= 3 &&
       canActivateSovereignSkill("SC-01"),
     //Empower
@@ -253,7 +267,7 @@ const DefiancePhaseSelection = (props) => {
                 } `}
               >
                 <div className="defianceText">
-                  <h4 className="defianceTitle">Contemplate</h4>
+                  <h4 className="defianceTitle">Curate</h4>
                   <h3 className="defianceDescription">
                     Reroll your tactics with 3 dice; disregard 1.
                   </h3>
@@ -276,7 +290,7 @@ const DefiancePhaseSelection = (props) => {
                 } `}
               >
                 <div className="defianceText">
-                  <h4 className="defianceTitle">Discern</h4>
+                  <h4 className="defianceTitle">Destine</h4>
                   <h3 className="defianceDescription ">
                     Spend 1 Scion skill to ascend an ally pawn to the matching
                     class.

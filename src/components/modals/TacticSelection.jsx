@@ -18,23 +18,6 @@ const TacticSelection = (props) => {
   const { getTacticImage, getVacantAdjacentZones, getZonesInRange } =
     useRecurringEffects();
 
-  // const getTacticImage = (i) => {
-  //   if (localGameState && localGameState.tactics[i]) {
-  //     switch (localGameState.tactics[i].face) {
-  //       case "Advance":
-  //         return Advance;
-  //       case "Mobilize":
-  //         return Mobilize;
-  //       case "Assault":
-  //         return Assault;
-  //       case "Invoke":
-  //         return Invoke;
-  //       default:
-  //         return;
-  //     }
-  //   }
-  // };
-
   let canUseTactic = [true, true];
 
   if (props.unit.temporary.used0thTactic) {
@@ -113,7 +96,7 @@ const TacticSelection = (props) => {
                   }`}
                   onClick={() => handleClickTactic(index)}
                   style={{
-                    backgroundImage: `url(${getTacticImage(index)})`,
+                    backgroundImage: `url(${getTacticImage(tactic.face)})`,
                   }}
                 ></div>
               </div>

@@ -2508,7 +2508,7 @@ export const useRecurringEffects = () => {
           unit2: unit2,
         });
 
-      case "Discern":
+      case "Destine":
         newGameState.currentResolution.push({
           resolution: "Defiance Options",
           resolution2: "End Phase",
@@ -3358,7 +3358,7 @@ export const useRecurringEffects = () => {
     const units = newGameState[self].units;
 
     for (let unit of units) {
-      if (unit.unitClass === "Fire Scion" && !isMuted(unit)) {
+      if (unit && unit.unitClass === "Fire Scion" && !isMuted(unit)) {
         unit.fever
           ? (unit.fever = Math.min(2, unit.fever + 1))
           : (unit.fever = 1);
@@ -3511,20 +3511,35 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
-  const getTacticImage = (i) => {
-    if (localGameState && localGameState.tactics[i]) {
-      switch (localGameState.tactics[i].face) {
-        case "Advance":
-          return Advance;
-        case "Mobilize":
-          return Mobilize;
-        case "Assault":
-          return Assault;
-        case "Invoke":
-          return Invoke;
-        default:
-          return;
-      }
+  // const getTacticImage = (i) => {
+  //   if (localGameState && localGameState.tactics[i]) {
+  //     switch (localGameState.tactics[i].face) {
+  //       case "Advance":
+  //         return Advance;
+  //       case "Mobilize":
+  //         return Mobilize;
+  //       case "Assault":
+  //         return Assault;
+  //       case "Invoke":
+  //         return Invoke;
+  //       default:
+  //         return;
+  //     }
+  //   }
+  // };
+
+  const getTacticImage = (face) => {
+    switch (face) {
+      case "Advance":
+        return Advance;
+      case "Mobilize":
+        return Mobilize;
+      case "Assault":
+        return Assault;
+      case "Invoke":
+        return Invoke;
+      default:
+        return;
     }
   };
 
@@ -4124,12 +4139,12 @@ export const useRecurringEffects = () => {
     const mobilizeLimit = newGameState[self].bountyUpgrades.tactics > 2 ? 4 : 3;
 
     const dieFaces = [
-      { face: "Advance", stock: 1 },
-      { face: "Advance", stock: 1 },
+      { face: "Advance", stock: 1, limit: 1 },
+      { face: "Advance", stock: 1, limit: 1 },
       { face: "Mobilize", stock: mobilizeLimit, limit: mobilizeLimit },
       { face: "Mobilize", stock: mobilizeLimit, limit: mobilizeLimit },
-      { face: "Assault", stock: 1 },
-      { face: "Invoke", stock: 1 },
+      { face: "Assault", stock: 1, limit: 1 },
+      { face: "Invoke", stock: 1, limit: 1 },
     ];
 
     return dieFaces[Math.floor(Math.random() * dieFaces.length)];
@@ -4255,10 +4270,10 @@ export const useRecurringEffects = () => {
     );
   };
 
-  const selectDiscern = (scionClass) => {
+  const selectDestine = (scionClass) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    //end "Select Discern Pawn"
+    //end "Select Destine Pawn"
     newGameState.currentResolution.pop();
 
     const zonesWithPawns = getZonesForPromotion();
@@ -4268,7 +4283,7 @@ export const useRecurringEffects = () => {
       null,
       newGameState,
       null,
-      "discern",
+      "destine",
       scionClass
     );
   };
@@ -5152,7 +5167,7 @@ export const useRecurringEffects = () => {
     selectAvelhemPawn,
     selectChainLightningBlast,
     selectDarkHalo,
-    selectDiscern,
+    selectDestine,
     selectEnemies,
     selectEnemiesAfflicted,
     selectEnemiesRooted,

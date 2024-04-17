@@ -40,6 +40,7 @@ import SelectSkillFloat from "./modals/SelectSkillFloat";
 import SelectSkillReveal from "./modals/SelectSkillReveal";
 import SelectUnitAbility from "./modals/SelectUnitAbility";
 import TacticResults from "./modals/TacticResults";
+import TacticResults3 from "./modals/TacticResults3";
 import ViewRevealedSkill from "./modals/ViewRevealedSkill";
 import YouMayFloat1Skill from "./modals/YouMayFloat1Skill";
 import YouMaySpend1Skill from "./modals/YouMaySpend1Skill";
@@ -136,7 +137,7 @@ const Board = (props) => {
     selectAvelhemPawn,
     selectChainLightningBlast,
     selectDarkHalo,
-    selectDiscern,
+    selectDestine,
     selectEnemies,
     selectEnemiesAfflicted,
     selectEnemiesRooted,
@@ -422,25 +423,38 @@ const Board = (props) => {
               </>
             );
 
-          case "Discern":
+          case "Destine":
             return (
               <>
                 {self === lastResolution.player && !hideModal && (
                   <PowerAtTheFinalHourProaction
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
-                    reason="Discern"
+                    reason="Destine"
                     defianceCost={lastResolution.defianceCost}
                   />
                 )}
               </>
             );
 
-          case "Select Discern Pawn":
+          case "Select Destine Pawn":
             return (
               <>
                 {self === lastResolution.player && (
-                  <>{selectDiscern(lastResolution.scionClass)}</>
+                  <>{selectDestine(lastResolution.scionClass)}</>
+                )}
+              </>
+            );
+
+          case "Curate Results":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <TacticResults3
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                    reroll={lastResolution.reroll}
+                  />
                 )}
               </>
             );
@@ -5073,12 +5087,12 @@ const Board = (props) => {
         );
         break;
 
-      case "discern":
+      case "destine":
         newGameState = ascendPawn(
           newGameState,
           selectedUnit,
           special,
-          "Discern",
+          "Destine",
           null
         );
         break;

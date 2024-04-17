@@ -22,7 +22,7 @@ const PowerAtTheFinalHourProaction = (props) => {
   let message =
     "Reveal the aspect of 1 Scion skill to ascend an ally pawn to the matching class.";
 
-  if (props.reason === "Discern") {
+  if (props.reason === "Destine") {
     canSkip = true;
     SkipMessage = "Return";
     message =
@@ -79,7 +79,7 @@ const PowerAtTheFinalHourProaction = (props) => {
       //     ""
       //   )}.`,
       // });
-    } else if (props.reason === "Discern") {
+    } else if (props.reason === "Destine") {
       //Spend FD
       newGameState[self].fateDefiances -= props.defianceCost;
 
@@ -93,7 +93,7 @@ const PowerAtTheFinalHourProaction = (props) => {
 
       newGameState.currentResolution.push({
         resolution: "Defiance Options",
-        resolution2: "Select Discern Pawn",
+        resolution2: "Select Destine Pawn",
         player: self,
         scionClass: scionClass,
       });
@@ -118,7 +118,7 @@ const PowerAtTheFinalHourProaction = (props) => {
     <div className="modal-backdrop">
       <div className="modal">
         <div className="twoColumn3-1">
-          <h2 className="choiceTitle">Power at the Final Hour</h2>
+          <h2 className="choiceTitle">{props.reason}</h2>
           <button className="choiceButton" onClick={() => handleViewBoard()}>
             View Board
           </button>

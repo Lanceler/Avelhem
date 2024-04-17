@@ -52,7 +52,7 @@ const TacticResults = (props) => {
                   key={index}
                   className="tactic"
                   style={{
-                    backgroundImage: `url(${getTacticImage(index)})`,
+                    backgroundImage: `url(${getTacticImage(tactic.face)})`,
                   }}
                 ></div>
               </div>
