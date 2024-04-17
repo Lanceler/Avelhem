@@ -85,16 +85,21 @@ const RecoverSkill = (props) => {
         )[0]
       );
     } else if (props.outcome === "Float") {
-      //take selected card then put it at the top of deck (end of array)
-      newGameState[self].skillRepertoire.push(
-        newGameState[self].skillVestige.splice(
-          newGameState[self].skillVestige.length - 1 - selectedSkill,
-          1
-        )[0]
-      );
+      const skillToFloat = newGameState[self].skillVestige.splice(
+        newGameState[self].skillVestige.length - 1 - selectedSkill,
+        1
+      )[0];
 
-      // increase floating count
-      newGameState[self].skillFloat = newGameState[self].skillFloat + 1;
+      if (skillToFloat !== "SX-01") {
+        //take selected card then put it at the top of deck (end of array)
+        //EXCEPTION: "Transcendence" (SX-01) cannot be put in repertoire
+        newGameState[self].skillRepertoire.push(skillToFloat);
+
+        // increase floating count
+        newGameState[self].skillFloat = newGameState[self].skillFloat + 1;
+      } else {
+        newGameState[self].skillVestige(skillToFloat);
+      }
     }
 
     dispatch(updateState(newGameState));

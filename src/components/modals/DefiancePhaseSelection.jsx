@@ -7,15 +7,21 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
+import { useCardDatabase } from "../../hooks/useCardDatabase";
+
 const DefiancePhaseSelection = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
   const [selectedChoice, setSelectedChoice] = useState(null);
+
+  const { sovereignSkillList } = useCardDatabase();
+
   const {
     assignTactics,
     canActivateSovereignSkill,
+    drawSkill,
     endDefiancePhase,
     rollTactic,
   } = useRecurringEffects();
@@ -39,7 +45,7 @@ const DefiancePhaseSelection = (props) => {
     switch (selectedChoice) {
       case 1:
         //DO NOT spend FD
-        //newGameState[self].fateDefiances -= 1
+        //newGameState[self].fateDefiances -= defianceCosts[0]
 
         updateData = false;
 
@@ -59,7 +65,7 @@ const DefiancePhaseSelection = (props) => {
 
       case 2:
         //Spend FD
-        newGameState[self].fateDefiances -= 1;
+        newGameState[self].fateDefiances -= defianceCosts[1];
 
         //reroll tactics
         newGameState = assignTactics(newGameState, rollTactic(), rollTactic());
@@ -72,6 +78,45 @@ const DefiancePhaseSelection = (props) => {
           resolution2: "Tactic Results",
           reroll: true,
         });
+        break;
+
+      case 5:
+        //Spend FD
+        newGameState[self].fateDefiances -= defianceCosts[4];
+
+        //draw 1 skill
+        newGameState = drawSkill(newGameState);
+
+        //end defiance Phase
+        newGameState = endDefiancePhase(newGameState);
+
+        if (newGameState[self].skillVestige.includes("SX-01")) {
+          newGameState.currentResolution.push({
+            resolution: "Recover Skill",
+            player: self,
+            restriction: ["SX-01"],
+            message: "You may recover 1 “Transcendence”",
+            outcome: "Add",
+            canSkip: true,
+          });
+        }
+        break;
+
+      case 6:
+        //Spend FD
+        newGameState[self].fateDefiances -= defianceCosts[5];
+
+        //end defiance Phase
+        newGameState = endDefiancePhase(newGameState);
+
+        newGameState.currentResolution.push({
+          resolution: "Search Skill",
+          player: self,
+          restriction: sovereignSkillList(),
+          message: "Search for 1 Sovereign Skill.",
+          outcome: "Add",
+        });
+
         break;
 
       default:

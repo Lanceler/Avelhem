@@ -97,8 +97,6 @@ const SelectSkillHandMulti = (props) => {
 
         //4. place selected skills at bottom of repertoire (start of array)
         // if skill is "Transcendence" (SX-01), sent to vestige instead
-        //5. for each returned skill, draw 1 skill
-
         skillsToReturn.reverse();
         for (let skill of skillsToReturn) {
           if (skill === "SX-01") {
@@ -106,7 +104,11 @@ const SelectSkillHandMulti = (props) => {
           } else {
             newGameState[self].skillRepertoire.unshift(skill);
           }
+        }
 
+        //5. for each returned skill, draw 1 skill
+
+        for (let skill of skillsToReturn) {
           newGameState = drawSkill(newGameState);
         }
 
