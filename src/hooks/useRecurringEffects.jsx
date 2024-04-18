@@ -2467,6 +2467,23 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const applyScore = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Scoring"
+    newGameState.currentResolution.pop();
+
+    newGameState.turnPhase = "Acquisition";
+    newGameState.turnPlayer = enemy;
+    newGameState.turnCount = newGameState.turnCount + 1;
+
+    newGameState.currentResolution.push({
+      resolution: "Acquisition Phase Selection",
+    });
+
+    return newGameState;
+  };
+
   const ascendPawn = (
     newGameState,
     pawn,
@@ -3282,21 +3299,37 @@ export const useRecurringEffects = () => {
     );
   };
 
-  const decrementStatuses = (unit) => {
-    unit.afflictions.anathema ? unit.afflictions.anathema-- : null;
-    unit.afflictions.paralysis ? unit.afflictions.paralysis-- : null;
-    unit.afflictions.frostbite ? unit.afflictions.frostbite-- : null;
+  const decrementStatus = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    unit.enhancements.shield ? unit.enhancements.shield-- : null;
-    unit.enhancements.ward ? unit.enhancements.ward-- : null;
+    //end "Status Decrement"
+    newGameState.currentResolution.pop();
 
-    unit.enhancements.disruption ? unit.enhancements.disruption-- : null;
-    unit.enhancements.proliferation ? unit.enhancements.proliferation-- : null;
+    let units = newGameState[self].units;
 
-    unit.temporary = {};
-    unit.boosts = {};
+    for (let u in units) {
+      if (units[u]) {
+        let unit = units[u];
 
-    return unit;
+        unit.afflictions.anathema ? unit.afflictions.anathema-- : null;
+        unit.afflictions.paralysis ? unit.afflictions.paralysis-- : null;
+        unit.afflictions.frostbite ? unit.afflictions.frostbite-- : null;
+
+        unit.enhancements.shield ? unit.enhancements.shield-- : null;
+        unit.enhancements.ward ? unit.enhancements.ward-- : null;
+
+        unit.enhancements.disruption ? unit.enhancements.disruption-- : null;
+        unit.enhancements.proliferation
+          ? unit.enhancements.proliferation--
+          : null;
+
+        unit = units[u];
+      }
+    }
+
+    // newGameState[self].units = units; <--- line not needed
+
+    return newGameState;
   };
 
   const drawAvelhem = (newGameState) => {
@@ -3374,41 +3407,6 @@ export const useRecurringEffects = () => {
   const endDefiancePhase2 = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     newGameState = endDefiancePhase(newGameState);
-    return newGameState;
-  };
-
-  const endFinalPhase = (newGameState, player, enemy) => {
-    //to do: discard Avelhems
-    //to do: discard skills
-    //to do: decrementBurn
-    //to do: score
-
-    newGameState.turnPhase = "Acquisition";
-    newGameState.turnPlayer = enemy;
-    newGameState.turnCount = newGameState.turnCount + 1;
-    newGameState.tactics = [];
-
-    newGameState.currentResolution.pop();
-    newGameState.currentResolution.push({
-      resolution: "Acquisition Phase Selection",
-    });
-
-    let playerUnits = newGameState[player].units;
-    for (let i in playerUnits) {
-      if (playerUnits[i] !== null) {
-        playerUnits[i] = decrementStatuses(playerUnits[i]);
-      }
-    }
-    newGameState[player].units = playerUnits;
-
-    let enemyUnits = newGameState[enemy].units;
-    for (let i in enemyUnits) {
-      if (enemyUnits[i] !== null) {
-        enemyUnits[i] = resetAdamantArmor(enemyUnits[i]);
-      }
-    }
-    newGameState[enemy].units = enemyUnits;
-
     return newGameState;
   };
 
@@ -5110,6 +5108,7 @@ export const useRecurringEffects = () => {
     applyDamage,
     applyFrostbite,
     applyParalysis,
+    applyScore,
     ascendPawn,
     assignTactics,
     avelhemResonance,
@@ -5126,11 +5125,11 @@ export const useRecurringEffects = () => {
     canSowAndReapStrike,
     canMove,
     canStrike,
+    decrementStatus,
     drawAvelhem,
     drawSkill,
     endDefiancePhase,
     endDefiancePhase2,
-    endFinalPhase,
     enterSelectUnitMode,
     floatAvelhem,
     floatSkill,

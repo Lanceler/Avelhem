@@ -21,10 +21,12 @@ const SelectAvelhemHandMulti = (props) => {
   const avelhemHand = [...localGameState[self].avelhemHand];
   const selectLimit = props.details.count;
 
+  let canSkip = true;
   let skipMessage = "Skip";
   let selectMessage = "Select";
 
   switch (props.details.reason) {
+    case "Avelhem Hand Limit":
     case "Fervent Prayer":
       skipMessage = "Discard All";
       selectMessage = "Retain";
@@ -35,6 +37,7 @@ const SelectAvelhemHandMulti = (props) => {
     newGameState.currentResolution.pop();
 
     switch (props.details.reason) {
+      case "Avelhem Hand Limit":
       case "Fervent Prayer":
         // console.log(selectedAvelhems);
         //1. sort selected avelhems in descending order so they can be spliced smoothly
@@ -87,7 +90,7 @@ const SelectAvelhemHandMulti = (props) => {
     }
 
     dispatch(updateState(newGameState));
-    // props.updateFirebase(newGameState);
+    props.updateFirebase(newGameState);
   };
 
   const handleSkip = () => {
@@ -157,7 +160,7 @@ const SelectAvelhemHandMulti = (props) => {
           ))}
         </div>
 
-        {selectedAvelhems.length === 0 && (
+        {canSkip && selectedAvelhems.length === 0 && (
           <button className="choiceButton noYes" onClick={() => handleSkip()}>
             {skipMessage}
           </button>

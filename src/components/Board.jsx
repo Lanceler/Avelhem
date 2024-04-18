@@ -112,14 +112,15 @@ const Board = (props) => {
     applyDamage,
     applyFrostbite,
     applyParalysis,
+    applyScore,
     ascendPawn,
     avelhemResonance,
     avelhemToScion,
     blast,
+    decrementStatus,
     drawSkill,
     enterSelectUnitMode,
     endDefiancePhase2,
-    endFinalPhase,
     getVacant2SpaceZones,
     getVacantAdjacentZones,
     grantRavager,
@@ -464,6 +465,55 @@ const Board = (props) => {
               <>
                 {self === lastResolution.player && (
                   <>{resolutionUpdateGameStateOnly(endDefiancePhase2())}</>
+                )}
+              </>
+            );
+        }
+        break;
+
+      case "Final Phase":
+        switch (lastResolution.resolution2) {
+          case "Avelhem Retention":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <SelectAvelhemHandMulti
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Skill Hand Limit":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <SelectSkillHandMulti
+                    resonated={lastResolution.resonated}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Status Decrement":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>{resolutionUpdateGameStateOnly(decrementStatus())}</>
+                )}
+              </>
+            );
+
+          case "Scoring":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>{resolutionUpdate(applyScore())}</>
                 )}
               </>
             );
@@ -4406,15 +4456,6 @@ const Board = (props) => {
           </>
         );
 
-      case "Final Phase Conclusion":
-        return (
-          <>
-            {self === localGameState.turnPlayer && (
-              <>{resolveEndFinalPhase()}</>
-            )}
-          </>
-        );
-
       default:
         return;
     }
@@ -4533,7 +4574,94 @@ const Board = (props) => {
   };
 
   const endExecutionPhase = () => {
-    nextPhase();
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    newGameState.turnPhase = "Final";
+    newGameState.currentResolution.pop();
+
+    //7. If at least 3 of your units have scored, you win. Otherwise, your opponent commences the next turn as the initiator.
+    //6. If an ally is occupying a zone in the enemy base, grant them Score and purge all their other statuses.
+    newGameState.currentResolution.push({
+      resolution: "Final Phase",
+      resolution2: "Scoring",
+      player: self,
+    });
+
+    //5. Decrement the durations of your units’ other statuses simultaneously.
+    newGameState.currentResolution.push({
+      resolution: "Final Phase",
+      resolution2: "Status Decrement",
+      player: self,
+    });
+
+    //4. Decrement the duration of your units’ Burn affliction in your desired sequence sequence.
+    newGameState.currentResolution.push({
+      resolution: "Final Phase",
+      resolution2: "Burn Decrement",
+      player: self,
+    });
+
+    //3. Forfeit unused tactics and remove your units’ boosts.
+    newGameState.tactics = [];
+
+    let playerUnits = newGameState[self].units;
+    for (let unit of playerUnits) {
+      if (unit) {
+        unit.temporary = {};
+        unit.boosts = {};
+      }
+    }
+    // newGameState[self].units = playerUnits; // should delete line >_>
+
+    let enemyUnits = newGameState[enemy].units;
+    for (let unit of enemyUnits) {
+      if (unit) {
+        unit.temporary = {};
+        //unit.boosts = {}; only clear temporary
+      }
+    }
+    // newGameState[enemy].units = enemyUnits; // should delete line >_>
+
+    //2. Selectively discard skills in excess of your hand limit (8 + ???).
+    if (newGameState[self].skillHand.length > 8) {
+      newGameState.currentResolution.push({
+        resolution: "Final Phase",
+        resolution2: "Skill Hand Limit",
+        player: self,
+        details: {
+          reason: "Skill Hand Limit",
+          title: "Final Phase",
+          message: `Discard ${newGameState[self].skillHand.length - 8} skills.`,
+          count: newGameState[self].skillHand.length - 8,
+        },
+      });
+    }
+
+    //1. Discard all Avelhems from your hand.
+    //However, you can retain 1 if purchased the Avelhem upgrade.
+    if (
+      newGameState[self].avelhemHand.length > 0 &&
+      newGameState[self].bountyUpgrades.avelhem > 0
+    ) {
+      newGameState.currentResolution.push({
+        resolution: "Final Phase",
+        resolution2: "Avelhem Retention",
+        player: self,
+        details: {
+          reason: "Avelhem Hand Limit",
+          title: "Final Phase",
+          message: `You may retain up to 1 Avelhem; discard the rest.`,
+          count: 1,
+        },
+      });
+    } else {
+      //discard all Avelhems
+      newGameState[self].avelhemVestige.push(...newGameState[self].avelhemHand);
+      newGameState[self].avelhemHand = [];
+    }
+
+    dispatch(updateState(newGameState));
+    updateFirebase(newGameState);
   };
 
   const enterDeployMode = (zoneIds) => {
@@ -4609,33 +4737,6 @@ const Board = (props) => {
     setTileMode(null);
     setMovingUnit(null);
     setTacticUsed(null);
-
-    dispatch(updateState(newGameState));
-
-    updateFirebase(newGameState);
-  };
-
-  const nextPhase = () => {
-    console.log("Changing Phase");
-    const newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    if (newGameState.turnPhase === "Execution") {
-      newGameState.turnPhase = "Final";
-      newGameState.currentResolution.pop();
-      newGameState.currentResolution.push({
-        resolution: "Final Phase Conclusion",
-      });
-    } else if (newGameState.turnPhase === "Final") {
-      newGameState.turnPhase = "Acquisition";
-      newGameState.turnPlayer = enemy;
-      newGameState.turnCount = newGameState.turnCount + 1;
-      newGameState.tactics = [];
-
-      newGameState.currentResolution.pop();
-      newGameState.currentResolution.push({
-        resolution: "Acquisition Phase Selection",
-      });
-    }
 
     dispatch(updateState(newGameState));
 
@@ -4729,14 +4830,6 @@ const Board = (props) => {
         special
       );
     }
-
-    dispatch(updateState(newGameState));
-    updateFirebase(newGameState);
-  };
-
-  const resolveEndFinalPhase = () => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    newGameState = endFinalPhase(newGameState, self, enemy);
 
     dispatch(updateState(newGameState));
     updateFirebase(newGameState);

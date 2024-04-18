@@ -32,6 +32,11 @@ const SelectSkillHandMulti = (props) => {
       skipMessage = "Return";
       break;
 
+    case "Skill Hand Limit":
+      canSkip = false;
+      selectMessage = "Discard";
+      break;
+
     case "Transmute":
       canSkip = false;
       selectMessage = "Shuffle";
@@ -125,6 +130,39 @@ const SelectSkillHandMulti = (props) => {
           title: "Defiance: Aracana",
           message: `Your opponent has returned ${skillsToReturn.length} skills to their repertoire and drawn the same number.`,
         });
+
+        break;
+
+      case "Skill Hand Limit":
+        //1. get list of cards to be returned
+        let excessSkills = [];
+        for (let i of selectedSkills) {
+          excessSkills.push(skillHand[i]);
+        }
+
+        // console.log(excessSkills);
+
+        //2. sort selected skills in descending order so they can be spliced smoothly
+        let sortedSelectedSkills2 = [...selectedSkills].sort((a, b) => b - a);
+
+        // console.log("sortedSelectedSkills2");
+        // console.log(sortedSelectedSkills2);
+
+        //3. remove selected skills from hand
+        for (let i of sortedSelectedSkills2) {
+          // console.log(i);
+          skillHand.splice(i, 1);
+        }
+
+        newGameState[self].skillHand = [...skillHand];
+
+        // console.log("skillHand");
+        // console.log(skillHand);
+
+        //4. discard selected Skills
+        for (let skill of excessSkills) {
+          newGameState[self].skillVestige.push(skill);
+        }
 
         break;
 
@@ -227,12 +265,12 @@ const SelectSkillHandMulti = (props) => {
         break;
     }
 
-    console.log("newGameState[self].skillHand");
-    console.log(newGameState[self].skillHand);
-    console.log("newGameState[self].skillRepertoire");
-    console.log(newGameState[self].skillRepertoire);
-    console.log("newGameState[self].skillVestige");
-    console.log(newGameState[self].skillVestige);
+    // console.log("newGameState[self].skillHand");
+    // console.log(newGameState[self].skillHand);
+    // console.log("newGameState[self].skillRepertoire");
+    // console.log(newGameState[self].skillRepertoire);
+    // console.log("newGameState[self].skillVestige");
+    // console.log(newGameState[self].skillVestige);
 
     dispatch(updateState(newGameState));
     props.updateFirebase(newGameState);
@@ -262,6 +300,8 @@ const SelectSkillHandMulti = (props) => {
 
         <h3>{props.details.message}</h3>
 
+        <br />
+
         <div className="fourColumn  scrollable scrollable-y-only">
           {skillHand.map((usableSkill, i) => (
             <div
@@ -289,11 +329,25 @@ const SelectSkillHandMulti = (props) => {
           </button>
         )}
 
-        {selectedSkills.length > 0 && (
-          <button className="choiceButton noYes" onClick={() => handleSelect()}>
-            {selectMessage}
-          </button>
-        )}
+        {selectedSkills.length > 0 &&
+          props.details.reason !== "Skill Hand Limit" && (
+            <button
+              className="choiceButton noYes"
+              onClick={() => handleSelect()}
+            >
+              {selectMessage}
+            </button>
+          )}
+
+        {props.details.reason === "Skill Hand Limit" &&
+          selectedSkills.length === props.details.count && (
+            <button
+              className="choiceButton noYes"
+              onClick={() => handleSelect()}
+            >
+              {selectMessage}
+            </button>
+          )}
       </div>
     </div>
   );
