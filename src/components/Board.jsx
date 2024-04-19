@@ -109,6 +109,7 @@ const Board = (props) => {
     activateViridianGrave,
     activateSymphonicScreech,
     applyBurn,
+    applyBurnDamage,
     applyDamage,
     applyFrostbite,
     applyParalysis,
@@ -117,6 +118,7 @@ const Board = (props) => {
     avelhemResonance,
     avelhemToScion,
     blast,
+    decrementBurn,
     decrementStatus,
     drawSkill,
     enterSelectUnitMode,
@@ -500,6 +502,15 @@ const Board = (props) => {
               </>
             );
 
+          case "Burn Decrement":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>{resolutionUpdate(decrementBurn())}</>
+                )}
+              </>
+            );
+
           case "Status Decrement":
             return (
               <>
@@ -669,19 +680,6 @@ const Board = (props) => {
                   lastResolution.victim,
                   lastResolution.duration,
                   lastResolution.special
-                )}
-              </>
-            )}
-          </>
-        );
-
-      case "Strike Movement":
-        return (
-          <>
-            {self === lastResolution.attacker.player && (
-              <>
-                {resolutionUpdate(
-                  strikeMove(lastResolution.attacker, lastResolution.zone)
                 )}
               </>
             )}
@@ -959,6 +957,19 @@ const Board = (props) => {
                     hideOrRevealModale={hideOrRevealModale}
                     reroll={lastResolution.reroll}
                   />
+                )}
+              </>
+            );
+
+          case "Strike Movement":
+            return (
+              <>
+                {self === lastResolution.attacker.player && (
+                  <>
+                    {resolutionUpdate(
+                      strikeMove(lastResolution.attacker, lastResolution.zone)
+                    )}
+                  </>
                 )}
               </>
             );
@@ -4605,22 +4616,26 @@ const Board = (props) => {
     newGameState.tactics = [];
 
     let playerUnits = newGameState[self].units;
-    for (let unit of playerUnits) {
+    for (let u in playerUnits) {
+      let unit = playerUnits[u];
       if (unit) {
         unit.temporary = {};
         unit.boosts = {};
+        playerUnits[u] = unit;
       }
     }
-    // newGameState[self].units = playerUnits; // should delete line >_>
+    newGameState[self].units = playerUnits;
 
     let enemyUnits = newGameState[enemy].units;
-    for (let unit of enemyUnits) {
+    for (let u in enemyUnits) {
+      let unit = enemyUnits[u];
       if (unit) {
         unit.temporary = {};
         //unit.boosts = {}; only clear temporary
+        enemyUnits[u] = unit;
       }
     }
-    // newGameState[enemy].units = enemyUnits; // should delete line >_>
+    newGameState[enemy].units = enemyUnits;
 
     //2. Selectively discard skills in excess of your hand limit (8 + ???).
     if (newGameState[self].skillHand.length > 8) {
@@ -4902,6 +4917,11 @@ const Board = (props) => {
           selectedUnit,
           special
         );
+        break;
+
+      case "burn damage":
+        newGameState = applyBurnDamage(newGameState, selectedUnit);
+
         break;
 
       case "paralyze1":

@@ -2051,6 +2051,23 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const applyBurnDamage = (newGameState, unitInfo) => {
+    // newGameState.currentResolution.pop();
+
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    delete unit.afflictions.burn;
+    unit.hp -= 1;
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    if (unit.hp < 1) {
+      newGameState = eliminateUnit(newGameState, null, unit, null, "burn");
+    }
+
+    return newGameState;
+  };
+
   const applyDamage = (
     newGameState,
     attackerInfo,
@@ -2098,7 +2115,7 @@ export const useRecurringEffects = () => {
       case victim.afflictions.anathema > 0:
         aP = 5;
         break;
-      case ["Geomancy", "Surge", "Particle Beam"].includes(special):
+      case ["Geomancy", "Surge"].includes(special):
         aP = 2;
         break;
       case special === "Fire Scion" &&
@@ -2114,13 +2131,13 @@ export const useRecurringEffects = () => {
         break;
 
       default: //apply AP modifiers
-        if (attacker.boosts.galeConjuration === true) {
+        if (attacker.boosts.galeConjuration) {
           aP = 2;
         }
         if (attacker.sharpness > 0) {
           aP += attacker.sharpness;
         }
-        if (victim.temporary.adamantArmor === true) {
+        if (victim.temporary.adamantArmor) {
           aP = Math.max(0, aP - 1);
           delete newGameState[victim.player].units[victim.unitIndex].temporary
             .adamantArmor;
@@ -2131,7 +2148,7 @@ export const useRecurringEffects = () => {
         break;
     }
 
-    //remove attacker's AP-boosts
+    //remove attacker's "next attack" boosts
     if (attacker.boosts.galeConjuration) {
       delete newGameState[attacker.player].units[attacker.unitIndex].boosts
         .galeConjuration;
@@ -2216,107 +2233,13 @@ export const useRecurringEffects = () => {
         }
       }
     } else {
-      // Grant Bounty Points
-      const playerBP = victim.player === "guest" ? "host" : "guest";
-      newGameState[playerBP].bountyPoints = Math.min(
-        10,
-        newGameState[playerBP].bountyPoints + 1
+      newGameState = eliminateUnit(
+        newGameState,
+        attacker,
+        victim,
+        type,
+        special
       );
-
-      // Grant Fate Defiances
-      newGameState[victim.player].fateDefiances = Math.min(
-        6,
-        newGameState[victim.player].fateDefiances + 1
-      );
-
-      //remove eliminated unit
-      newGameState[victim.player].units[victim.unitIndex] = null;
-      newZoneInfo[victim.row][victim.column].player = null;
-      newZoneInfo[victim.row][victim.column].unitIndex = null;
-      newGameState.zones = JSON.stringify(newZoneInfo);
-
-      //"If the attack was lethal" effects
-      switch (special) {
-        case "Gale Conjuration Strike":
-          newGameState[attacker.player].units[
-            attacker.unitIndex
-          ].temporary.galeConjurationLethal = true;
-          break;
-
-        case "Geomancy":
-          newGameState[attacker.player].units[
-            attacker.unitIndex
-          ].temporary.geomancyLethal = true;
-          break;
-      }
-
-      //strike movement
-      if (type === "strike") {
-        newGameState.currentResolution.push({
-          resolution: "Strike Movement",
-          attacker: attacker,
-          zone: victim.row * 5 + victim.column,
-        });
-      }
-
-      //elimination contingency
-      const pushEliminationResolution = (resolution2, player, unit) => {
-        newGameState.currentResolution.push({
-          resolution: "Triggering Contingent Skill",
-          resolution2,
-          player,
-          unit,
-        });
-      };
-
-      if (newGameState.turnPlayer === victim.player) {
-        if (triggerEliminationAlly(victim)) {
-          pushEliminationResolution(
-            "Triggering Elimination Ally",
-            victim.player,
-            victim
-          );
-        }
-        if (triggerEliminationEnemy(victim)) {
-          pushEliminationResolution(
-            "Triggering Elimination Enemy",
-            victim.player === "host" ? "guest" : "host",
-            victim
-          );
-        }
-      } else {
-        if (triggerEliminationEnemy(victim)) {
-          pushEliminationResolution(
-            "Triggering Elimination Enemy",
-            victim.player === "host" ? "guest" : "host",
-            victim
-          );
-        }
-        if (triggerEliminationAlly(victim)) {
-          pushEliminationResolution(
-            "Triggering Elimination Ally",
-            victim.player,
-            victim
-          );
-        }
-      }
-
-      //elimination talents
-      //to do: elimination talents
-
-      //Anathema-delay for non-pawns & non-ravagers
-      if (
-        !(
-          newGameState[attacker.player].units[attacker.unitIndex].unitClass ===
-            "Pawn" ||
-          newGameState[attacker.player].units[attacker.unitIndex].enhancements
-            .ravager
-        )
-      ) {
-        newGameState[attacker.player].units[
-          attacker.unitIndex
-        ].temporary.anathemaDelay = true;
-      }
     }
 
     return newGameState;
@@ -3299,6 +3222,66 @@ export const useRecurringEffects = () => {
     );
   };
 
+  const decrementBurn = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    let units = newGameState[self].units;
+
+    let burningUnits = [];
+    for (let i in units) {
+      if (units[i] && units[i].afflictions.burn) {
+        burningUnits.push(i);
+      }
+    }
+
+    if (burningUnits.length === 0) {
+      newGameState.currentResolution.pop();
+    }
+    // else if (burningUnits.length === 1) {
+    //   // newGameState.currentResolution.pop(); // do not pop
+    //   let unit = newGameState[self].units[burningUnits[0]];
+    //   newGameState = applyBurnDamage(newGameState, unit);
+    // }
+    else {
+      let zonesWithBurningUnits = [];
+
+      for (let i in burningUnits) {
+        const unit = newGameState[self].units[burningUnits[i]];
+        const zoneId = unit.row * 5 + unit.column;
+
+        zonesWithBurningUnits.push(zoneId);
+      }
+
+      newGameState.currentResolution.push({
+        resolution: "Selecting",
+        resolution2: "Selecting Unit",
+        player: self,
+        zoneIds: zonesWithBurningUnits,
+        unit: null,
+        tactic: null,
+        reason: "burn damage",
+        special: null,
+      });
+
+      let burnMessage =
+        "You have 1 unit afflicted with Burn. Click on it to apply damage.";
+
+      if (burningUnits.length > 1) {
+        burnMessage = `You have ${burningUnits.length} units afflicted with Burn. Select which unit to apply Burn damage to first.`;
+      }
+
+      newGameState.currentResolution.push({
+        resolution: "Misc.",
+        resolution2: "Message To Enemy",
+        player: self,
+        title: "Final Phase",
+        message: burnMessage,
+      });
+    }
+
+    return newGameState;
+  };
+
   const decrementStatus = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -3374,6 +3357,207 @@ export const useRecurringEffects = () => {
 
     if (newGameState[self].skillRepertoire.length === 0) {
       newGameState = refillRepertoireSkill(newGameState);
+    }
+
+    return newGameState;
+  };
+
+  const eliminateUnit = (
+    newGameState,
+    attackerInfo,
+    victimInfo,
+    type,
+    special
+  ) => {
+    let attacker = attackerInfo
+      ? newGameState[attackerInfo.player].units[attackerInfo.unitIndex]
+      : null;
+
+    //Anathema-delay for non-pawns & non-ravagers
+    if (
+      attacker &&
+      !(attacker.unitClass === "Pawn" || attacker.enhancements.ravager)
+    ) {
+      newGameState[attacker.player].units[
+        attacker.unitIndex
+      ].temporary.anathemaDelay = true;
+    }
+
+    let victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
+
+    let newZoneInfo = JSON.parse(newGameState.zones);
+
+    // Grant Fate Defiances
+    newGameState[victim.player].fateDefiances = Math.min(
+      6,
+      newGameState[victim.player].fateDefiances + 1
+    );
+
+    // Grant Bounty Points
+    const playerBP = victim.player === "guest" ? "host" : "guest";
+    newGameState[playerBP].bountyPoints = Math.min(
+      10,
+      newGameState[playerBP].bountyPoints + 1
+    );
+
+    //remove eliminated unit
+    newGameState[victim.player].units[victim.unitIndex] = null;
+    newZoneInfo[victim.row][victim.column].player = null;
+    newZoneInfo[victim.row][victim.column].unitIndex = null;
+    newGameState.zones = JSON.stringify(newZoneInfo);
+
+    //"If the attack was lethal" subsequent effects
+    switch (special) {
+      case "Gale Conjuration Strike":
+        newGameState[attacker.player].units[
+          attacker.unitIndex
+        ].temporary.galeConjurationLethal = true;
+        break;
+      case "Geomancy":
+        newGameState[attacker.player].units[
+          attacker.unitIndex
+        ].temporary.geomancyLethal = true;
+        break;
+      default:
+        break;
+    }
+
+    //strike movement
+    if (type === "strike") {
+      newGameState.currentResolution.push({
+        resolution: "Misc.",
+        resolution2: "Strike Movement",
+        attacker: attacker,
+        zone: victim.row * 5 + victim.column,
+      });
+    }
+
+    //elimination contingency
+    const pushEliminationResolution = (resolution2, player, unit) => {
+      newGameState.currentResolution.push({
+        resolution: "Triggering Contingent Skill",
+        resolution2,
+        player,
+        unit,
+      });
+    };
+
+    if (newGameState.turnPlayer === victim.player) {
+      if (triggerEliminationAlly(victim)) {
+        pushEliminationResolution(
+          "Triggering Elimination Ally",
+          victim.player,
+          victim
+        );
+      }
+      if (triggerEliminationEnemy(victim)) {
+        pushEliminationResolution(
+          "Triggering Elimination Enemy",
+          victim.player === "host" ? "guest" : "host",
+          victim
+        );
+      }
+    } else {
+      if (triggerEliminationEnemy(victim)) {
+        pushEliminationResolution(
+          "Triggering Elimination Enemy",
+          victim.player === "host" ? "guest" : "host",
+          victim
+        );
+      }
+      if (triggerEliminationAlly(victim)) {
+        pushEliminationResolution(
+          "Triggering Elimination Ally",
+          victim.player,
+          victim
+        );
+      }
+    }
+
+    //elimination talents
+    if (!isMuted(victim)) {
+      switch (victim.unitClass) {
+        case "Wind Scion":
+          newGameState.activatingUnit.push(null);
+          // newGameState.activatingSkill.push("SecondWind")
+
+          newGameState.currentResolution.push({
+            resolution: "Unit Talent",
+            resolution2: "Talent Conclusion",
+            unit: victim,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Unit Talent",
+            resolution2: "Activating Second Wind",
+            unit: victim,
+            details: {
+              title: "Second Wind",
+              reason: "Second Wind",
+            },
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Animation Delay",
+            priority: victim.player,
+          });
+          break;
+
+        case "Mana Scion":
+          newGameState.activatingUnit.push(null);
+          // newGameState.activatingSkill.push("AmbianceAssimilation")
+
+          newGameState.currentResolution.push({
+            resolution: "Unit Talent",
+            resolution2: "Talent Conclusion",
+            unit: victim,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Unit Talent",
+            resolution2: "Activating Ambiance Assimilation",
+            unit: victim,
+            details: {
+              title: "Ambiance Assimilation",
+              reason: "Ambiance Assimilation",
+            },
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Animation Delay",
+            priority: victim.player,
+          });
+          break;
+
+        case "Plant Scion":
+          newGameState.activatingUnit.push(null);
+          // newGameState.activatingSkill.push("Everblooming")
+
+          newGameState.currentResolution.push({
+            resolution: "Unit Talent",
+            resolution2: "Talent Conclusion",
+            unit: victim,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Unit Talent",
+            resolution2: "Activating Everblooming",
+            unit: victim,
+            details: {
+              title: "Everblooming",
+              reason: "Everblooming",
+            },
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Animation Delay",
+            priority: victim.player,
+          });
+          break;
+
+        default:
+          break;
+      }
     }
 
     return newGameState;
@@ -5105,6 +5289,7 @@ export const useRecurringEffects = () => {
     activateVengefulLegacy,
     activateViridianGrave,
     applyBurn,
+    applyBurnDamage,
     applyDamage,
     applyFrostbite,
     applyParalysis,
@@ -5125,6 +5310,7 @@ export const useRecurringEffects = () => {
     canSowAndReapStrike,
     canMove,
     canStrike,
+    decrementBurn,
     decrementStatus,
     drawAvelhem,
     drawSkill,
