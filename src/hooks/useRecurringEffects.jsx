@@ -2528,7 +2528,7 @@ export const useRecurringEffects = () => {
         delete unit.afflictions.burn;
 
         newGameState.activatingUnit.push(unit);
-        // newGameState.activatingSkill.push(???)
+        newGameState.activatingSkill.push("FlashFire");
         newGameState.currentResolution.push({
           resolution: "Unit Talent",
           resolution2: "Talent Conclusion",
@@ -2549,7 +2549,7 @@ export const useRecurringEffects = () => {
         delete unit.afflictions.burn;
 
         newGameState.activatingUnit.push(unit);
-        // newGameState.activatingSkill.push(???)
+        newGameState.activatingSkill.push("Kleptothermy");
         newGameState.currentResolution.push({
           resolution: "Unit Talent",
           resolution2: "Talent Conclusion",
@@ -2568,7 +2568,7 @@ export const useRecurringEffects = () => {
         break;
       case "Land Scion":
         newGameState.activatingUnit.push(unit);
-        // newGameState.activatingSkill.push(???)
+        newGameState.activatingSkill.push("MountainStance");
         newGameState.currentResolution.push({
           resolution: "Unit Talent",
           resolution2: "Talent Conclusion",
@@ -2587,7 +2587,7 @@ export const useRecurringEffects = () => {
         break;
       case "Lightning Scion":
         newGameState.activatingUnit.push(unit);
-        // newGameState.activatingSkill.push(???)
+        newGameState.activatingSkill.push("LightningRod");
         newGameState.currentResolution.push({
           resolution: "Unit Talent",
           resolution2: "Talent Conclusion",
@@ -2608,7 +2608,7 @@ export const useRecurringEffects = () => {
         break;
       case "Metal Scion":
         newGameState.activatingUnit.push(unit);
-        // newGameState.activatingSkill.push(???)
+        newGameState.activatingSkill.push("Conduction");
         newGameState.currentResolution.push({
           resolution: "Unit Talent",
           resolution2: "Talent Conclusion",

@@ -5419,7 +5419,7 @@ const Board = (props) => {
     //end "Talent Conclusion"
     newGameState.currentResolution.pop();
 
-    // newGameState.activatingSkill.pop();
+    newGameState.activatingSkill.pop();
     newGameState.activatingUnit.pop();
 
     dispatch(updateState(newGameState));
