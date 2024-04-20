@@ -100,6 +100,7 @@ import Ambrosia from "../assets/abilities/Ambrosia.png";
 import Everblooming from "../assets/abilities/Everblooming.png";
 
 import SkillCardBack from "../assets/skillcards/SkillCardBack.png";
+import AvelhemCardBack from "../assets/avelhemcards/AvelhemCardBack.png";
 
 export const useCardImageSwitch = () => {
   const getElementImage = (scionClass) => {
@@ -140,6 +141,8 @@ export const useCardImageSwitch = () => {
     switch (id) {
       case "SkillCardBack":
         return SkillCardBack;
+      case "AvelhemCardBack":
+        return AvelhemCardBack;
 
       case "SX-01":
         return Transcendence;

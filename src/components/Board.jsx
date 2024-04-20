@@ -74,6 +74,7 @@ import ActivatedSkills from "./displays/ActivatedSkills";
 import PlayerAvelhemHand from "./hand/PlayerAvelhemHand";
 import PlayerSkillHand from "./hand/PlayerSkillHand";
 import EnemySkillHand from "./hand/EnemySkillHand";
+import EnemyAvelhemHand from "./hand/EnemyAvelhemHand";
 
 import Piece from "./Piece";
 
@@ -5697,77 +5698,23 @@ const Board = (props) => {
             </div>
             {/* <div className="phase-indicator"></div> */}
             <div className="left-container">
-              <div className="lc-player">
-                <div className="avel-hand">
-                  {/* {localGameState[enemy] && (
-                    <div className="hand-container">
-                      {localGameState[enemy].avelhemHand.map((card, index) => (
-                        <div key={index} className="handCard">
-                        </div>
-                      ))}
-                    </div>
-                  )} */}
-                </div>
+              <div className="hands-player">
                 <div className="skill-hand">
-                  <EnemySkillHand card="Skill" />
+                  <EnemySkillHand />
+                </div>
+                <div className="avel-hand">
+                  <EnemyAvelhemHand />
                 </div>
               </div>
-              <div className="lcMiddleContainer">
-                {/* <div className="lc-middle">
-                  <div className="lcm-left">
-                    <div className="lcml-player">
-                      <div className="lcml-player-left">
-                        <div className="cp"></div>
-                        <div className="fd"></div>
-                      </div>
-                      <div className="lcml-player-right">
-                        <div className="skill-used"></div>
-                        <div className="avel-used"></div>
-                      </div>
-                    </div>
-                    <div className="dice-results">
-                      <p>
-                        1st tactic:{" "}
-                        {localGameState.tactics[0] &&
-                          localGameState.tactics[0].face}
-                      </p>
-                      <p>
-                        2nd tactic:{" "}
-                        {localGameState.tactics[1] &&
-                          localGameState.tactics[1].face}
-                      </p>
-                    </div>
-                    <div className="lcml-player">
-                      <div className="lcml-player-left">
-                        <div className="fd"></div>
-                        <div className="cp"></div>
-                      </div>
-                      <div className="lcml-player-right">
-                        <div className="avel-used"></div>
-                        <div className="skill-used">
-                          <div className="card"></div>
-                          {localGameState[self] && (
-                            <div
-                              className="cardThickness"
-                              style={{
-                                height: `${
-                                  (localGameState[self].skillRepertoire.length -
-                                    1) *
-                                  0.2
-                                }px`,
-                              }}
-                            ></div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="lcm-right">
-                    <div className="lcmr-enemy"></div>
-                    <div className="lcmr-user"></div>
-                  </div>
-                </div> */}
 
+              {/* <div className="lc-player">
+                <div className="avel-hand"></div>
+                <div className="skill-hand">
+                  <EnemySkillHand />
+                </div>
+              </div> */}
+
+              <div className="lcMiddleContainer">
                 <div className="rcm-top-bot">
                   <div className="skill-container">
                     <div className="skill-deck skill-container-item"></div>
