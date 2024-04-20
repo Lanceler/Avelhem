@@ -2709,7 +2709,7 @@ export const useRecurringEffects = () => {
         resolution2: "Triggering Target",
         attacker: attacker,
         victim: victim,
-        type: "virtue-blast",
+        type: "blast",
       });
     }
 
@@ -3681,7 +3681,7 @@ export const useRecurringEffects = () => {
       attacker: attacker,
       victim: victim,
       special: special,
-      type: "freeze1",
+      type: "freeze2",
       duration: 2,
     });
 
@@ -4219,18 +4219,18 @@ export const useRecurringEffects = () => {
       attacker: attacker,
       victim: victim,
       special: special,
-      type: "paralyze1",
+      type: "paralyze2",
       duration: 2,
     });
 
     //to do in the future: consider bypass Target and Adamant Armor
-    if (triggerTarget(attacker, victim, "paralyze1")) {
+    if (triggerTarget(attacker, victim, "paralyze2")) {
       newGameState.currentResolution.push({
         resolution: "Triggering Contingent Skill",
         resolution2: "Triggering Target",
         attacker: attacker,
         victim: victim,
-        type: "paralyze1",
+        type: "paralyze2",
       });
     }
 

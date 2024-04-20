@@ -16,8 +16,6 @@ const RecoverSkill = (props) => {
   console.log(localGameState[self].skillVestige);
   console.log(localGameState[self].skillRepertoire);
 
-  const { shuffleCards } = useRecurringEffects();
-
   const [selectedSkill, setSelectedSkill] = useState(null);
 
   let vestige = [...localGameState[self].skillVestige];
@@ -73,6 +71,7 @@ const RecoverSkill = (props) => {
             newGameState[self].skillVestige.length - 1 - selectedSkill
           ],
         message: message,
+        title: title,
       });
     }
 

@@ -17,6 +17,42 @@ const ContingentTarget = (props) => {
   let victim =
     localGameState[props.victim.player].units[props.victim.unitIndex];
 
+  let targetType = "";
+
+  switch (props.type) {
+    case "virtue-blast":
+      targetType = "Virtue-blast";
+      break;
+
+    case "strike":
+      targetType = "strike";
+      break;
+
+    case "blast":
+      targetType = "strike";
+      break;
+
+    case "paralyze1":
+      targetType = "paralyze (1 turn)";
+      break;
+
+    case "paralyze2":
+      targetType = "paralyze (2 turns)";
+      break;
+
+    case "freeze1":
+      targetType = "freeze (1 turn)";
+      break;
+
+    case "freeze2":
+      targetType = "freeze (2 turns)";
+      break;
+
+    case "ignite":
+      targetType = "ignite";
+      break;
+  }
+
   const {
     activateBlazeOfGlory,
     activateThunderThaumaturge,
@@ -121,7 +157,7 @@ const ContingentTarget = (props) => {
           </button>
         </div>
 
-        <h3>Target via {props.type}.</h3>
+        <h3>Target via {targetType}.</h3>
 
         <div className="scrollable scrollable-y-only">
           <div className="fourColumn">

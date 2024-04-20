@@ -73,6 +73,7 @@ import ActivatedSkills from "./displays/ActivatedSkills";
 
 import PlayerAvelhemHand from "./hand/PlayerAvelhemHand";
 import PlayerSkillHand from "./hand/PlayerSkillHand";
+import EnemySkillHand from "./hand/EnemySkillHand";
 
 import Piece from "./Piece";
 
@@ -5708,14 +5709,7 @@ const Board = (props) => {
                   )} */}
                 </div>
                 <div className="skill-hand">
-                  {/* {localGameState[enemy] && (
-                    <div className="hand-container">
-                      {localGameState[enemy].skillHand.map((card, index) => (
-                        <div key={index} className="handCard">
-                        </div>
-                      ))}
-                    </div>
-                  )} */}
+                  <EnemySkillHand card="Skill" />
                 </div>
               </div>
               <div className="lcMiddleContainer">
