@@ -3479,7 +3479,7 @@ export const useRecurringEffects = () => {
       switch (victim.unitClass) {
         case "Wind Scion":
           newGameState.activatingUnit.push(null);
-          // newGameState.activatingSkill.push("SecondWind")
+          newGameState.activatingSkill.push("SecondWind");
 
           newGameState.currentResolution.push({
             resolution: "Unit Talent",
@@ -3505,7 +3505,7 @@ export const useRecurringEffects = () => {
 
         case "Mana Scion":
           newGameState.activatingUnit.push(null);
-          // newGameState.activatingSkill.push("AmbianceAssimilation")
+          newGameState.activatingSkill.push("AmbianceAssimilation");
 
           newGameState.currentResolution.push({
             resolution: "Unit Talent",
@@ -3518,8 +3518,11 @@ export const useRecurringEffects = () => {
             resolution2: "Activating Ambiance Assimilation",
             unit: victim,
             details: {
-              title: "Ambiance Assimilation",
               reason: "Ambiance Assimilation",
+              title: "Ambiance Assimilation",
+              message: "You may search for 1 non-burst Mana skill.",
+              no: "Skip",
+              yes: "Search",
             },
           });
 
@@ -3531,7 +3534,7 @@ export const useRecurringEffects = () => {
 
         case "Plant Scion":
           newGameState.activatingUnit.push(null);
-          // newGameState.activatingSkill.push("Everblooming")
+          newGameState.activatingSkill.push("Everblooming");
 
           newGameState.currentResolution.push({
             resolution: "Unit Talent",
@@ -3544,8 +3547,11 @@ export const useRecurringEffects = () => {
             resolution2: "Activating Everblooming",
             unit: victim,
             details: {
-              title: "Everblooming",
               reason: "Everblooming",
+              title: "Everblooming",
+              message: "You may draw 1 skill.",
+              no: "Skip",
+              yes: "Draw",
             },
           });
 

@@ -261,6 +261,17 @@ const YouMayNoYes = (props) => {
         });
         break;
 
+      case "Ambiance Assimilation":
+        updateData = true;
+        newGameState.currentResolution.push({
+          resolution: "Search Skill",
+          player: self,
+          restriction: ["06-01", "06-02", "06-03"],
+          message: "Search for 1 non-burst Mana skill.",
+          outcome: "Add",
+        });
+        break;
+
       case "Mana Restructure":
         newGameState[self].skillRepertoire.push(props.details.skill);
         newGameState[self].skillFloat += 1;
@@ -272,7 +283,10 @@ const YouMayNoYes = (props) => {
           title: "Mana Restructure",
           message: "Your opponent has floated 1 Mana skill from their hand.",
         });
+        break;
 
+      case "Everblooming": //"Activating Everblooming"
+        newGameState = drawSkill(newGameState);
         break;
 
       case "Avelhem Resonance Shuffle":

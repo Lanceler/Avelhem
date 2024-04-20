@@ -98,6 +98,7 @@ const SelectAvelhemHandMulti = (props) => {
     newGameState.currentResolution.pop();
 
     switch (props.details.reason) {
+      case "Avelhem Hand Limit":
       case "Fervent Prayer":
         //1. add entire hand to vestige
 
@@ -115,9 +116,9 @@ const SelectAvelhemHandMulti = (props) => {
         break;
     }
 
-    console.log("update");
-    console.log(newGameState[self].avelhemHand);
-    console.log(newGameState[self].avelhemVestige);
+    // console.log("update");
+    // console.log(newGameState[self].avelhemHand);
+    // console.log(newGameState[self].avelhemVestige);
 
     dispatch(updateState(newGameState));
     // props.updateFirebase(newGameState);

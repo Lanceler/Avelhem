@@ -278,6 +278,7 @@ const Board = (props) => {
     coldEmbrace1,
     airDash1,
     reapTheWhirlwind1,
+    secondWind1,
     fortify1,
     galvanize1,
     arcFlash1,
@@ -1488,7 +1489,9 @@ const Board = (props) => {
               </>
             );
 
+          case "Activating Ambiance Assimilation":
           case "Activating Conduction":
+          case "Activating Everblooming":
             return (
               <>
                 {self === lastResolution.unit.player && !hideModal && (
@@ -1498,6 +1501,15 @@ const Board = (props) => {
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
+                )}
+              </>
+            );
+
+          case "Activating Second Wind":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>{resolutionUpdateGameStateOnly(secondWind1())}</>
                 )}
               </>
             );
@@ -5686,81 +5698,110 @@ const Board = (props) => {
             <div className="left-container">
               <div className="lc-player">
                 <div className="avel-hand">
-                  {localGameState[enemy] && (
+                  {/* {localGameState[enemy] && (
                     <div className="hand-container">
                       {localGameState[enemy].avelhemHand.map((card, index) => (
                         <div key={index} className="handCard">
-                          {/* {card} */}
                         </div>
                       ))}
                     </div>
-                  )}
+                  )} */}
                 </div>
                 <div className="skill-hand">
-                  {localGameState[enemy] && (
+                  {/* {localGameState[enemy] && (
                     <div className="hand-container">
                       {localGameState[enemy].skillHand.map((card, index) => (
                         <div key={index} className="handCard">
-                          {/* {card} */}
                         </div>
                       ))}
                     </div>
-                  )}
+                  )} */}
                 </div>
               </div>
-
-              <div className="lc-middle">
-                <div className="lcm-left">
-                  <div className="lcml-player">
-                    <div className="lcml-player-left">
-                      <div className="cp"></div>
-                      <div className="fd"></div>
+              <div className="lcMiddleContainer">
+                {/* <div className="lc-middle">
+                  <div className="lcm-left">
+                    <div className="lcml-player">
+                      <div className="lcml-player-left">
+                        <div className="cp"></div>
+                        <div className="fd"></div>
+                      </div>
+                      <div className="lcml-player-right">
+                        <div className="skill-used"></div>
+                        <div className="avel-used"></div>
+                      </div>
                     </div>
-                    <div className="lcml-player-right">
-                      <div className="skill-used"></div>
-                      <div className="avel-used"></div>
+                    <div className="dice-results">
+                      <p>
+                        1st tactic:{" "}
+                        {localGameState.tactics[0] &&
+                          localGameState.tactics[0].face}
+                      </p>
+                      <p>
+                        2nd tactic:{" "}
+                        {localGameState.tactics[1] &&
+                          localGameState.tactics[1].face}
+                      </p>
                     </div>
-                  </div>
-                  <div className="dice-results">
-                    <p>
-                      1st tactic:{" "}
-                      {localGameState.tactics[0] &&
-                        localGameState.tactics[0].face}
-                    </p>
-                    <p>
-                      2nd tactic:{" "}
-                      {localGameState.tactics[1] &&
-                        localGameState.tactics[1].face}
-                    </p>
-                  </div>
-                  <div className="lcml-player">
-                    <div className="lcml-player-left">
-                      <div className="fd"></div>
-                      <div className="cp"></div>
-                    </div>
-                    <div className="lcml-player-right">
-                      <div className="avel-used"></div>
-                      <div className="skill-used">
-                        <div className="card"></div>
-                        {localGameState[self] && (
-                          <div
-                            className="cardThickness"
-                            style={{
-                              height: `${
-                                (localGameState[self].skillRepertoire.length -
-                                  1) *
-                                0.2
-                              }px`,
-                            }}
-                          ></div>
-                        )}
+                    <div className="lcml-player">
+                      <div className="lcml-player-left">
+                        <div className="fd"></div>
+                        <div className="cp"></div>
+                      </div>
+                      <div className="lcml-player-right">
+                        <div className="avel-used"></div>
+                        <div className="skill-used">
+                          <div className="card"></div>
+                          {localGameState[self] && (
+                            <div
+                              className="cardThickness"
+                              style={{
+                                height: `${
+                                  (localGameState[self].skillRepertoire.length -
+                                    1) *
+                                  0.2
+                                }px`,
+                              }}
+                            ></div>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
+                  <div className="lcm-right">
+                    <div className="lcmr-enemy"></div>
+                    <div className="lcmr-user"></div>
+                  </div>
+                </div> */}
+
+                <div className="rcm-top-bot">
+                  <div className="skill-container">
+                    <div className="skill-deck skill-container-item"></div>
+                    <div className="skill-discard skill-container-item"></div>
+                  </div>
+                  <div className="rcmtb-mid">
+                    <div className="fd-counter"></div>
+                    <div className="bp-counter"></div>
+                  </div>
+                  <div className="avel-container">
+                    <div className="avel-deck avel-container-item"></div>
+                    <div className="avel-discard avel-container-item"></div>
+                  </div>
                 </div>
-                <div className="lcm-right">
-                  <div className="lcmr-enemy"></div>
-                  <div className="lcmr-user"></div>
+                <div className="rcm-middle"></div>
+                <div className="rcm-top-bot">
+                  <div className="skill-container">
+                    <div className="skill-deck skill-container-item"></div>
+                    <div className="skill-discard skill-container-item"></div>
+                  </div>
+                  <div className="rcmtb-mid">
+                    <div className="fd-counter"></div>
+                    <div className="bp-counter"></div>
+                  </div>
+                  <div className="avel-container">
+                    <div className="avel-deck avel-container-item"></div>
+                    <div className="avel-discard avel-container-item"></div>
+                  </div>
                 </div>
               </div>
 

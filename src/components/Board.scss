@@ -220,57 +220,133 @@
         width: 100%;
     }
 
-    .lc-middle {
-        // background-color: #919e89;
-        width: 100%;
-        height: 50%;
+    .lcMiddleContainer {
+        height: 100%;
+        background-color: #838b83;
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        justify-content: space-between;
 
 
-        .lcm-left {
-            // background-color: rgb(134, 94, 94);
-            height: 100%;
-            width: 60%;
+    //     .lc-middle {
+    //         background-color: #353347;
+    //         width: 100%;
+    //         height: 50%;
+    //         display: flex;
+    //         justify-content: center;
+
+
+    //         .lcm-left {
+    //             // background-color: rgb(134, 94, 94);
+    //             height: 100%;
+    //             width: 60%;
+    //             display: flex;
+    //             flex-direction: column;
+    //             justify-content: space-between;
+    //             align-items: flex-end;
+
+    //             .lcml-player {
+    //                 // background-color: black;
+    //                 height: 20%;
+    //                 width: 100%;
+    //                 display: flex;
+    //                 justify-content: space-between;
+    //             }
+
+    //             .lcml-player-left {
+    //                 background-color: green;
+    //                 height: 100%;
+    //                 width: 20%;
+    //             }
+
+    //             .lcml-player-right {
+    //                 background-color: #98b44b;
+    //                 height: 100%;
+    //                 width: 30%;
+    //             }
+
+    //             .dice-results {
+    //                 background-color: #9b9b9b;
+    //                 height: 60%;
+    //                 width: 80%;
+    //             }
+    //     }
+
+
+    //     .lcm-right {
+    //         background-color: rgb(209, 184, 184);
+    //         height: 100%;
+    //         width: 40%;
+    //     }
+    // }
+
+        .rcm-top-bot {
+            height: 33%;
+            background-color: rgb(201, 201, 189);
             display: flex;
-            flex-direction: column;
             justify-content: space-between;
-            align-items: flex-end;
 
-            .lcml-player {
-                // background-color: black;
-                height: 20%;
-                width: 100%;
+            .skill-container {
                 display: flex;
-                justify-content: space-between;
+                justify-content: space-around;
+                align-items: center;
+                width: 33%;
+
+                .skill-container-item {
+                    height: 100px;
+                    width: 50px;
+                    margin: 2px;
+                    background-color: black;
+                }
             }
 
-            .lcml-player-left {
-                background-color: green;
-                height: 100%;
-                width: 20%;
-            }
+            .rcmtb-mid {
+                    // background-color: red;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-around;
+                    align-items: center;
+                    width: 33%;
 
-            .lcml-player-right {
-                background-color: #98b44b;
-                height: 100%;
-                width: 30%;
-            }
+                    .fd-counter {
+                        background-color: black;
+                        width: 200px;
+                        height: 50px;
+                        margin-top: 2px;
+                    }
 
-            .dice-results {
-                background-color: #9b9b9b;
-                height: 60%;
-                width: 80%;
+                    .bp-counter {
+                        background-color: black;
+                        width: 200px;
+                        height: 50px;
+                        margin-bottom: 2px;
+                    }
+                }
+
+            .avel-container{
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                width: 33%;
+
+                .avel-container-item{
+                    height: 100px;
+                    width: 50px;
+                    margin: 2px;
+                    background-color: white;
+                }
             }
         }
 
-
-        .lcm-right {
-            background-color: rgb(209, 184, 184);
-            height: 100%;
-            width: 40%;
+        .rcm-middle {
+            height: 33%;
+            background-color: red;
         }
+
+       
     }
+
+    
 
     .lc-player {
         background-color: #fa0e5d;

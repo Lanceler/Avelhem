@@ -252,6 +252,38 @@ export const useUnitAbilityEffects = () => {
     return newGameState;
   };
 
+  const secondWind1 = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Activating Second Wind" resolution
+    newGameState.currentResolution.pop();
+
+    if (
+      !["03-01", "03-02", "03-03"].some((s) =>
+        newGameState[self].skillVestige.includes(s)
+      )
+    ) {
+      newGameState.currentResolution.push({
+        resolution: "Misc.",
+        resolution2: "Message To Enemy",
+        player: self,
+        title: "Second Wind",
+        message: "You do not have any Wind skills to recover.",
+      });
+    } else {
+      newGameState.currentResolution.push({
+        resolution: "Recover Skill",
+        player: self,
+        restriction: ["03-01", "03-02", "03-03"],
+        message: "You may recover 1 non-burst Wind skill.",
+        outcome: "Add",
+        canSkip: true,
+      });
+    }
+
+    return newGameState;
+  };
+
   const fortify1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
@@ -590,6 +622,7 @@ export const useUnitAbilityEffects = () => {
     airDash1,
     coldEmbrace1,
     reapTheWhirlwind1,
+    secondWind1,
     fortify1,
     galvanize1,
     arcFlash1,
