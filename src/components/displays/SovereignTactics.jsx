@@ -12,11 +12,36 @@ const SovereignTactics = () => {
 
   const { getTacticImage } = useRecurringEffects();
 
+  const handleClick = (face, dice) => {
+    if (
+      localGameState.turnPlayer === self &&
+      localGameState.currentResolution[
+        localGameState.currentResolution.length - 1
+      ].resolution === "Execution Phase"
+    ) {
+      let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+      newGameState.currentResolution.push({
+        resolution: "Misc.",
+        resolution2: "Selecting Tactical Action - Sovereign",
+        dice: dice,
+        face: face,
+      });
+
+      dispatch(updateState(newGameState));
+    }
+  };
+
   return (
     <div className="tacticSovereignContainer">
       {localGameState.tactics.map((tactic, index) => (
         <div className="tacticSovereignDice" key={index}>
-          <div className="tacticSovereignBG">
+          <div
+            className={` tacticSovereignBG ${
+              tactic.stock < 1 ? "disabledtacticSovereignBG" : ""
+            }`}
+            onClick={() => handleClick(tactic.face, index)}
+          >
             <div
               key={index}
               className="tacticSovereign"

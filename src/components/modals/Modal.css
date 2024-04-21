@@ -13,7 +13,7 @@
     max-height: 1000px;
     width: fit-content;
     /* width: 1050px; */
-    max-width: 850px;
+    max-width: 950px;
     margin: 100px auto;
     background: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
@@ -60,7 +60,7 @@
 }
 
 .disabledOption{
-    background-color: rgb(24, 21, 21);
+    background: linear-gradient(to bottom, rgb(0, 0, 0), rgb(19, 15, 15) 60%, rgb(44, 43, 43) 100%);
     color: white;
     /* filter: grayscale(100%); */
     cursor: default;
@@ -99,7 +99,7 @@
 }
 
 .disabledTacticBG {
-    background-color: rgb(26, 26, 26);
+    background: linear-gradient(to bottom, rgb(0, 0, 0), rgb(19, 15, 15) 60%, rgb(44, 43, 43) 100%);
     background-image: none;
 }
 
@@ -382,10 +382,11 @@ margin-bottom: 30px;
 }
 
 .abilityQualifier {
-    /* padding: 10px 15px; */
+    padding: 0px 15px;
     color: white;
     font-family: "Times New Roman", Times, serif;
     font-size: 23px;
+
 }
 
 .abilityText {
@@ -393,6 +394,7 @@ margin-bottom: 30px;
     color: white;
     font-family: "Times New Roman", Times, serif;
     font-size: 25px;
+    text-align: left;
     /* justify-content: left; */
 }
 
@@ -403,7 +405,7 @@ margin-bottom: 30px;
     height: 100%;
     background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
 
-    align-items: center;
+    /* align-items: center; */
     /* vertical alignment */
     justify-content: space-between;
     /* horizontal alignment */

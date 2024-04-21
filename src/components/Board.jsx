@@ -40,6 +40,7 @@ import SelectSkillFloat from "./modals/SelectSkillFloat";
 import SelectSkillReveal from "./modals/SelectSkillReveal";
 import SelectUnitAbility from "./modals/SelectUnitAbility";
 import SelectTacticalAction from "./modals/SelectTacticalAction";
+import SelectSovereignTactic from "./modals/SelectSovereignTactic";
 import TacticResults from "./modals/TacticResults";
 import TacticResults3 from "./modals/TacticResults3";
 import ViewRevealedSkill from "./modals/ViewRevealedSkill";
@@ -930,6 +931,19 @@ const Board = (props) => {
                     dice={lastResolution.dice}
                     face={lastResolution.face}
                     enterMoveMode={enterMoveMode}
+                    updateFirebase={updateFirebase}
+                  />
+                )}
+              </>
+            );
+
+          case "Selecting Tactical Action - Sovereign":
+            return (
+              <>
+                {self === localGameState.turnPlayer && !hideModal && (
+                  <SelectSovereignTactic
+                    dice={lastResolution.dice}
+                    face={lastResolution.face}
                     updateFirebase={updateFirebase}
                   />
                 )}

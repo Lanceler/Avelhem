@@ -129,8 +129,7 @@
 }
 
 .disabledtacticSovereignBG {
-    background-color: rgb(26, 26, 26);
-    background-image: none;
+    background: linear-gradient(to bottom, rgb(0, 0, 0), rgb(19, 15, 15) 60%, rgb(44, 43, 43) 100%);
 }
 
 .tacticSovereign {
@@ -145,6 +144,7 @@
 }
 
 .tacticSovereignLabel{
+    padding: 3.5px;
     font-family: Arial,
     sans-serif;
     font-size: 20px;
