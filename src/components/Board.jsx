@@ -75,6 +75,8 @@ import PlayerSkillHand from "./hand/PlayerSkillHand";
 import EnemySkillHand from "./hand/EnemySkillHand";
 import EnemyAvelhemHand from "./hand/EnemyAvelhemHand";
 
+import SovereignTactics from "./displays/SovereignTactics";
+
 import Piece from "./Piece";
 
 const Board = (props) => {
@@ -5732,7 +5734,9 @@ const Board = (props) => {
                     <div className="avel-discard avel-container-item"></div>
                   </div>
                 </div>
-                <div className="rcm-middle"></div>
+                <div className="rcm-middle">
+                  <SovereignTactics />
+                </div>
                 <div className="rcm-top-bot">
                   <div className="skill-container">
                     <div className="skill-deck skill-container-item"></div>
