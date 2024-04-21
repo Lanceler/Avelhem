@@ -151,8 +151,15 @@ export const Piece = (props) => {
     dispatch(updateState(newGameState));
   };
 
-  const handleTactic = (unit) => {
-    props.activateTactic(unit);
+  const handleTactic = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    newGameState.currentResolution.push({
+      resolution: "Misc.",
+      resolution2: "Activating Tactic",
+      unit: props.unit,
+    });
+
+    dispatch(updateState(newGameState));
   };
 
   return (

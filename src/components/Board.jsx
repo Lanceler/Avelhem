@@ -39,6 +39,7 @@ import SelectSkillHandMulti from "./modals/SelectSkillHandMulti";
 import SelectSkillFloat from "./modals/SelectSkillFloat";
 import SelectSkillReveal from "./modals/SelectSkillReveal";
 import SelectUnitAbility from "./modals/SelectUnitAbility";
+import SelectTacticalAction from "./modals/SelectTacticalAction";
 import TacticResults from "./modals/TacticResults";
 import TacticResults3 from "./modals/TacticResults3";
 import ViewRevealedSkill from "./modals/ViewRevealedSkill";
@@ -48,8 +49,6 @@ import YouMayNoYes from "./modals/YouMayNoYes";
 
 import TacticSelection from "./modals/TacticSelection";
 import TacticSelectionViaEffect from "./modals/TacticSelectionViaEffect";
-import TacticAdvance from "./modals/TacticAdvance";
-import TacticAssault from "./modals/TacticAssault";
 
 import SelectCustomChoice from "./modals/SelectCustomChoice";
 
@@ -545,64 +544,6 @@ const Board = (props) => {
             )}
           </>
         );
-      case "Moving Unit":
-        return (
-          <>
-            {self === localGameState.turnPlayer && tileMode !== "move" && (
-              <>
-                {setTileMode("move")}
-                {setValidZones(lastResolution.zoneIds)}
-                {setMovingUnit(lastResolution.unit)}
-                {setTacticUsed(lastResolution.tactic)}
-              </>
-            )}
-          </>
-        );
-
-      case "Activating Tactic":
-        return (
-          <>
-            {self === localGameState.turnPlayer && !hideModal && (
-              <TacticSelection
-                updateFirebase={updateFirebase}
-                unit={lastResolution.unit}
-                enterMoveMode={enterMoveMode}
-              />
-            )}
-          </>
-        );
-
-      case "Using Advance Tactic":
-        return (
-          <>
-            {self === localGameState.turnPlayer && !hideModal && (
-              <TacticAdvance
-                updateFirebase={updateFirebase}
-                unit={lastResolution.unit}
-                tactic={lastResolution.tactic}
-                enterMoveMode={enterMoveMode}
-                enterSelectUnitMode={enterSelectUnitMode}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Using Assault Tactic":
-        return (
-          <>
-            {self === localGameState.turnPlayer && !hideModal && (
-              <TacticAssault
-                updateFirebase={updateFirebase}
-                unit={lastResolution.unit}
-                tactic={lastResolution.tactic}
-                enterMoveMode={enterMoveMode}
-                enterSelectUnitMode={enterSelectUnitMode}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
 
       case "Blocking Virtue-Blast":
         return (
@@ -951,6 +892,48 @@ const Board = (props) => {
 
       case "Misc.":
         switch (lastResolution.resolution2) {
+          case "Moving Unit":
+            return (
+              <>
+                {self === localGameState.turnPlayer && tileMode !== "move" && (
+                  <>
+                    {setTileMode("move")}
+                    {setValidZones(lastResolution.zoneIds)}
+                    {setMovingUnit(lastResolution.unit)}
+                    {setTacticUsed(lastResolution.tactic)}
+                  </>
+                )}
+              </>
+            );
+
+          case "Activating Tactic":
+            return (
+              <>
+                {self === localGameState.turnPlayer && !hideModal && (
+                  <TacticSelection
+                    updateFirebase={updateFirebase}
+                    unit={lastResolution.unit}
+                    enterMoveMode={enterMoveMode}
+                  />
+                )}
+              </>
+            );
+
+          case "Selecting Tactical Action":
+            return (
+              <>
+                {self === localGameState.turnPlayer && !hideModal && (
+                  <SelectTacticalAction
+                    unit={lastResolution.unit}
+                    dice={lastResolution.dice}
+                    face={lastResolution.face}
+                    enterMoveMode={enterMoveMode}
+                    updateFirebase={updateFirebase}
+                  />
+                )}
+              </>
+            );
+
           case "Tactic Results":
             return (
               <>
@@ -971,6 +954,38 @@ const Board = (props) => {
                   <>
                     {resolutionUpdate(
                       strikeMove(lastResolution.attacker, lastResolution.zone)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "Rooted Traverse":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMaySpend1Skill
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                    enterMoveMode={enterMoveMode}
+                  />
+                )}
+              </>
+            );
+
+          case "Rooted Traverse Movement":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {enterMoveMode(
+                      getVacantAdjacentZones(lastResolution.unit),
+                      lastResolution.unit,
+                      null,
+                      lastResolution.tactic,
+                      true
                     )}
                   </>
                 )}
@@ -4490,18 +4505,6 @@ const Board = (props) => {
   //====================================================================
   //Helper functions below
 
-  const activateTactic = (unit) => {
-    const newGameState = JSON.parse(JSON.stringify(localGameState));
-    newGameState.currentResolution.push({
-      resolution: "Activating Tactic",
-      unit: unit,
-    });
-
-    dispatch(updateState(newGameState));
-
-    //
-  };
-
   const animationDelay = () => {
     setTimeout(() => {
       const newGameState = JSON.parse(JSON.stringify(localGameState));
@@ -4707,16 +4710,18 @@ const Board = (props) => {
     // updateFirebase(newGameState);
   };
 
-  const enterMoveMode = (zoneIds, unit, gameState, tactic) => {
-    let newGameState = null;
-    if (gameState) {
-      newGameState = gameState;
-    } else {
-      newGameState = JSON.parse(JSON.stringify(localGameState));
+  const enterMoveMode = (zoneIds, unit, gameState, tactic, pop) => {
+    let newGameState = gameState
+      ? gameState
+      : JSON.parse(JSON.stringify(localGameState));
+
+    if (pop) {
+      newGameState.currentResolution.pop();
     }
 
     newGameState.currentResolution.push({
-      resolution: "Moving Unit",
+      resolution: "Misc.",
+      resolution2: "Moving Unit",
       zoneIds: zoneIds,
       unit: unit,
       tactic: tactic,
@@ -5622,7 +5627,6 @@ const Board = (props) => {
                         id={i} // hostUnitIds
                         expandedPiece={expandedPiece}
                         selectExpandPiece={selectExpandPiece}
-                        activateTactic={activateTactic}
                         validZones={validZones}
                         selectUnit={selectUnit}
                       />
@@ -5662,7 +5666,6 @@ const Board = (props) => {
                         id={-i - 1} // guestUnitIds
                         expandedPiece={expandedPiece}
                         selectExpandPiece={selectExpandPiece}
-                        activateTactic={activateTactic}
                         validZones={validZones}
                         selectUnit={selectUnit}
                       />

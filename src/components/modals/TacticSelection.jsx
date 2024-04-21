@@ -5,30 +5,39 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
-// import Advance from "../../assets/diceIcons/Advance.png";
-// import Assault from "../../assets/diceIcons/Assault.png";
-// import Invoke from "../../assets/diceIcons/Invoke.png";
-// import Mobilize from "../../assets/diceIcons/Mobilize.png";
-
 const TacticSelection = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const { getTacticImage, getVacantAdjacentZones, getZonesInRange } =
-    useRecurringEffects();
+  const { getTacticImage } = useRecurringEffects();
 
-  let canUseTactic = [true, true];
+  let canUseTactic = [false, false];
 
-  if (props.unit.temporary.used0thTactic) {
-    canUseTactic[0] = false;
+  let skipMessage = "Return";
+
+  if (
+    localGameState.tactics[0] !== null &&
+    !props.unit.temporary.used0thTactic &&
+    localGameState.tactics[0].stock > 0 &&
+    ["Advance", "Assault", "Mobilize"].includes(localGameState.tactics[0].face)
+  ) {
+    canUseTactic[0] = true;
   }
-  if (props.unit.temporary.used1stTactic) {
-    canUseTactic[1] = false;
+
+  if (
+    localGameState.tactics[1] !== null &&
+    !props.unit.temporary.used1stTactic &&
+    localGameState.tactics[1].stock > 0 &&
+    ["Advance", "Assault", "Mobilize"].includes(localGameState.tactics[1].face)
+  ) {
+    canUseTactic[1] = true;
   }
 
-  const handleReturn = () => {
+  const handleSkip = () => {
     const newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end Tactic Selection
     newGameState.currentResolution.pop();
 
     dispatch(updateState(newGameState));
@@ -38,61 +47,45 @@ const TacticSelection = (props) => {
     if (canUseTactic[i] && localGameState.tactics[i].stock > 0) {
       let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-      //endTactic resolution
+      //end Tactic Selection
       newGameState.currentResolution.pop();
 
-      if (newGameState.tactics[i].face === "Advance") {
-        newGameState.currentResolution.push({
-          resolution: "Using Advance Tactic",
-          unit: props.unit,
-          tactic: i,
-        });
-        dispatch(updateState(newGameState));
-      } else if (newGameState.tactics[i].face === "Mobilize") {
-        props.enterMoveMode(
-          getVacantAdjacentZones(props.unit),
-          props.unit,
-          newGameState,
-          i
-        );
-      } else if (newGameState.tactics[i].face === "Assault") {
-        newGameState.currentResolution.push({
-          resolution: "Using Assault Tactic",
-          unit: props.unit,
-          tactic: i,
-        });
-        dispatch(updateState(newGameState));
-      }
+      let unit = newGameState[props.unit.player].units[props.unit.unitIndex];
+
+      newGameState.currentResolution.push({
+        resolution: "Misc.",
+        resolution2: "Selecting Tactical Action",
+        unit: unit,
+        dice: i,
+        face: newGameState.tactics[i].face,
+      });
+
+      dispatch(updateState(newGameState));
     }
   };
 
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <div className="twoColumn3-1">
+        <div className="twoColumn">
           <h2 className="choiceTitle">Select Tactic</h2>
         </div>
+
+        {/* <h3></h3> */}
+        <br />
 
         <div className="twoColumn">
           {localGameState.tactics.map((tactic, index) => (
             <div className="center" key={index}>
               <div
                 className={`tacticBG ${
-                  !tactic.stock ||
-                  !canUseTactic[index] ||
-                  tactic.face === "Invoke"
-                    ? "disabledTacticBG"
-                    : ""
+                  !canUseTactic[index] ? "disabledTacticBG" : ""
                 }`}
               >
                 <div
                   key={index}
                   className={`tactic ${
-                    !tactic.stock ||
-                    !canUseTactic[index] ||
-                    tactic.face === "Invoke"
-                      ? "disabledTactic"
-                      : ""
+                    !canUseTactic[index] ? "disabledTactic" : ""
                   }`}
                   onClick={() => handleClickTactic(index)}
                   style={{
@@ -100,16 +93,22 @@ const TacticSelection = (props) => {
                   }}
                 ></div>
               </div>
-              <h3>
-                {tactic.face} ({tactic.stock})
-              </h3>
+              {tactic.face}
+              <br />
+              Instances: {tactic.stock}
             </div>
           ))}
         </div>
 
-        <button className="choiceButton noYes" onClick={() => handleReturn()}>
-          Return
-        </button>
+        {
+          <button
+            button
+            className="choiceButton noYes"
+            onClick={() => handleSkip()}
+          >
+            {skipMessage}
+          </button>
+        }
       </div>
     </div>
   );

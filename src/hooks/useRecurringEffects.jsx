@@ -4069,7 +4069,8 @@ export const useRecurringEffects = () => {
     if (
       unit.enhancements.score ||
       afflictions.paralysis ||
-      afflictions.frostbite
+      afflictions.frostbite ||
+      afflictions.infection
     ) {
       return true;
     }
@@ -4160,10 +4161,10 @@ export const useRecurringEffects = () => {
     delete mover.enhancements.proliferation;
     newGameState[mover.player].units[mover.unitIndex] = mover;
 
-    //pop "Moving Unit" resolution
+    //pop "Moving Unit" resolution <-- Manual movement
     if (
       newGameState.currentResolution[newGameState.currentResolution.length - 1]
-        .resolution === "Moving Unit"
+        .resolution2 === "Moving Unit"
     ) {
       newGameState.currentResolution.pop();
     }
@@ -5343,6 +5344,7 @@ export const useRecurringEffects = () => {
     ignite,
     isAdjacent,
     isDisrupted,
+    isImmobilized,
     isMuted,
     isRooted,
     move,

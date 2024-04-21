@@ -13,7 +13,8 @@ const YouMaySpend1Skill = (props) => {
   const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const { drawSkill, getZonesWithAllies, isMuted } = useRecurringEffects();
+  const { drawSkill, getZonesWithAllies, getVacantAdjacentZones, isMuted } =
+    useRecurringEffects();
 
   const [selectedSkill, setSelectedSkill] = useState(null);
 
@@ -238,6 +239,16 @@ const YouMaySpend1Skill = (props) => {
         newGameState[props.details.unit2.player].units[
           props.details.unit2.unitIndex
         ] = unit2;
+
+      case "Rooted Traverse":
+        newGameState.currentResolution.push({
+          resolution: "Misc.",
+          resolution2: "Rooted Traverse Movement",
+          unit: unit,
+          tactic: props.details.tactic,
+        });
+
+        break;
 
       default:
         break;
