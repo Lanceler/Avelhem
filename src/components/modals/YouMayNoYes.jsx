@@ -66,6 +66,11 @@ const YouMayNoYes = (props) => {
         newGameState = virtueBlastYes(newGameState, props.attacker, unit);
         break;
 
+      case "Advance Avelhem Draw": //"Advance Avelhem Draw"
+        updateData = true;
+        newGameState = drawAvelhem(newGameState);
+        break;
+
       case "Conflagration Ignite": //"ConflagrationR2"
         enterSelectUnitMode(
           getZonesWithEnemies(props.unit, 1),

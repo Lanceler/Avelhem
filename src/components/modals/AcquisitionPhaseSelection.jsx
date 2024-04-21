@@ -88,7 +88,6 @@ const AcquisitionPhaseSelection = (props) => {
         newGameState = nextPhase(newGameState);
         dispatch(updateState(newGameState));
         props.updateFirebase(newGameState);
-
         break;
       case 4:
         break;

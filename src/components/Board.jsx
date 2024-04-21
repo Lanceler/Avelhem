@@ -125,7 +125,6 @@ const Board = (props) => {
     decrementBurn,
     decrementStatus,
     drawSkill,
-    enterSelectUnitMode,
     endDefiancePhase2,
     getVacant2SpaceZones,
     getVacantAdjacentZones,
@@ -161,6 +160,7 @@ const Board = (props) => {
     shuffleCards,
     strike,
     strikeMove,
+    triggerMotion,
     unitFloatSkill,
     unitRetainSkill,
     virtueBlast,
@@ -945,6 +945,19 @@ const Board = (props) => {
                     dice={lastResolution.dice}
                     face={lastResolution.face}
                     updateFirebase={updateFirebase}
+                  />
+                )}
+              </>
+            );
+
+          case "Advance Avelhem Draw":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <YouMayNoYes
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
                   />
                 )}
               </>
@@ -4585,6 +4598,10 @@ const Board = (props) => {
 
   const deployPawn = (r, c) => {
     const newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Deploying Pawn"
+    newGameState.currentResolution.pop();
+
     let newIndex = newGameState[self].units.indexOf(null);
     if (newIndex === -1) {
       newIndex = newGameState[self].units.length;
@@ -4599,14 +4616,24 @@ const Board = (props) => {
     newZoneInfo[r][c].unitIndex = newIndex;
     newGameState.zones = JSON.stringify(newZoneInfo);
 
-    //end "Deploying Pawn"
-    newGameState.currentResolution.pop();
-
     if (localGameState.turnPhase === "Acquisition") {
       newGameState.turnPhase = "Bounty";
       newGameState.currentResolution.pop();
       newGameState.currentResolution.push({
         resolution: "Bounty Phase Selection",
+      });
+    }
+
+    //Trigger Motion Contingency
+
+    let newUnit = newGameState[self].units[newIndex];
+
+    if (newGameState[enemy].skillHand.length > 0 && triggerMotion(newUnit)) {
+      newGameState.currentResolution.push({
+        resolution: "Triggering Contingent Skill",
+        resolution2: "Triggering Motion",
+        mover: newUnit,
+        player: enemy,
       });
     }
 
@@ -4713,8 +4740,6 @@ const Board = (props) => {
   };
 
   const enterDeployMode = (zoneIds) => {
-    console.log("enterDeployMode");
-
     const newGameState = JSON.parse(JSON.stringify(localGameState));
     newGameState.currentResolution.push({
       resolution: "Deploying Pawn",
@@ -5757,7 +5782,9 @@ const Board = (props) => {
                     <div className="skill-discard skill-container-item"></div>
                   </div>
                   <div className="rcmtb-mid">
-                    <div className="fd-counter"></div>
+                    <div className="fd-counter">
+                      FD: {localGameState[self].fateDefiances}
+                    </div>
                     <div className="bp-counter"></div>
                   </div>
                   <div className="avel-container">

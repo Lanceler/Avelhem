@@ -18,7 +18,8 @@ const SelectSovereignTactic = (props) => {
 
   const [selectedChoice, setSelectedChoice] = useState(null);
 
-  const { drawAvelhem, drawSkill } = useRecurringEffects();
+  const { canDeploy, drawAvelhem, drawSkill, getVacantFrontier } =
+    useRecurringEffects();
 
   let newGameState = JSON.parse(JSON.stringify(localGameState));
   let face = props.face;
@@ -31,11 +32,26 @@ const SelectSovereignTactic = (props) => {
       abilityDetails = [
         {
           abilityName: "Deploy Pawn",
-          abilityQualifier: <div className="abilityQualifier"></div>,
+          abilityQualifier: (
+            <div className="abilityQualifier">
+              {newGameState[self].bountyUpgrades.tactics < 2 && (
+                <>
+                  Can be upgraded <br /> via Bounty Phase <br /> (2nd Tactics).
+                </>
+              )}
+            </div>
+          ),
           abilityText: (
             <>
               <div className="abilityText ">
                 ⬩Deploy a pawn in your frontier.
+              </div>
+              <div className="abilityText ">
+                ⬩
+                {newGameState[self].bountyUpgrades.tactics < 2 && (
+                  <>If upgraded: </>
+                )}
+                You may draw 1 Avelhem.
               </div>
             </>
           ),
@@ -53,7 +69,13 @@ const SelectSovereignTactic = (props) => {
         },
         {
           abilityName: "Deploy Scion",
-          abilityQualifier: <div className="abilityQualifier"></div>,
+          abilityQualifier: (
+            <div className="abilityQualifier">
+              {newGameState[self].bountyUpgrades.tactics < 4 && (
+                <>Available after 4th Tactics upgrade via Bounty Phase.</>
+              )}
+            </div>
+          ),
           abilityText: (
             <>
               <div className="abilityText ">
@@ -124,7 +146,7 @@ const SelectSovereignTactic = (props) => {
           abilityQualifier: (
             <div className="abilityQualifier">
               {newGameState[self].bountyUpgrades.tactics < 1 && (
-                <>Available after upgrading via Bounty Phase.</>
+                <>Available after 1st Tactics upgrade via Bounty Phase.</>
               )}
             </div>
           ),
@@ -148,15 +170,31 @@ const SelectSovereignTactic = (props) => {
   }
 
   const canChoice = (i) => {
+    if (newGameState.tactics[props.dice].stock < 1) {
+      return false;
+    }
+
     switch (face) {
       case "Advance":
         switch (i) {
           case 0:
-            break;
+            return canDeploy();
           case 1:
-            break;
+            return newGameState[self].fateDefiances >= 4;
+          case 2:
+            return (
+              newGameState[self].bountyUpgrades.tactics >= 4 &&
+              canDeploy() &&
+              newGameState[self].skillHand.length > 0
+            );
         }
         break;
+
+      case "Mobilize":
+        switch (i) {
+          case 0:
+            return newGameState.tactics[props.dice].stock >= 2;
+        }
 
       case "Assault":
         switch (i) {
@@ -187,11 +225,61 @@ const SelectSovereignTactic = (props) => {
   };
 
   const handleSelect = () => {
+    let updateData = true;
+
     newGameState.currentResolution.pop();
 
     newGameState.tactics[props.dice].stock -= 1;
 
     switch (face) {
+      case "Advance":
+        switch (selectedChoice) {
+          case 0:
+            updateData = false;
+
+            if (newGameState[self].bountyUpgrades.tactics >= 2) {
+              newGameState.currentResolution.push({
+                resolution: "Misc.",
+                resolution2: "Advance Avelhem Draw",
+                player: self,
+                details: {
+                  reason: "Advance Avelhem Draw",
+                  title: "Advance Tactic",
+                  message: "You may draw 1 Avelhem.",
+                  no: "Skip",
+                  yes: "Draw",
+                },
+              });
+            }
+
+            newGameState.currentResolution.push({
+              resolution: "Deploying Pawn",
+              zoneIds: getVacantFrontier(),
+            });
+            break;
+
+          case 1:
+            newGameState[self].fateDefiances -= 4;
+
+            //Gain assault command
+            newGameState.tactics[props.dice].stock += 1;
+            newGameState.tactics[props.dice].face = "Assault";
+
+            break;
+        }
+
+        break;
+
+      case "Mobilize":
+        switch (selectedChoice) {
+          case 0:
+            newGameState.tactics[props.dice].stock -= 1; // uses 2 instances
+            newGameState = drawSkill(newGameState);
+            break;
+        }
+
+        break;
+
       case "Invoke":
         switch (selectedChoice) {
           case 0:
@@ -256,7 +344,10 @@ const SelectSovereignTactic = (props) => {
     }
 
     dispatch(updateState(newGameState));
-    props.updateFirebase(newGameState);
+
+    if (updateData) {
+      props.updateFirebase(newGameState);
+    }
   };
 
   const handleReturn = () => {

@@ -4134,7 +4134,6 @@ export const useRecurringEffects = () => {
 
   const move = (newGameState, unit, zoneId, special) => {
     let mover = newGameState[unit.player].units[unit.unitIndex];
-    const moverEnemy = mover.player === "host" ? "guest" : "host";
 
     // let newZoneInfo = [...zones];
     let newZoneInfo = JSON.parse(newGameState.zones);
@@ -4170,7 +4169,7 @@ export const useRecurringEffects = () => {
     }
 
     //Trigger Motion Contingency
-
+    const moverEnemy = mover.player === "host" ? "guest" : "host";
     if (
       newGameState[moverEnemy].skillHand.length > 0 &&
       !["strike", "AerialImpetusAlly", "Surge"].includes(special) &&
@@ -4183,6 +4182,7 @@ export const useRecurringEffects = () => {
         player: moverEnemy,
       });
     }
+
     return newGameState;
   };
 
@@ -5384,6 +5384,7 @@ export const useRecurringEffects = () => {
     triggerFrenzyBlade,
     triggerHealingRain,
     triggerMatchMadeInHeaven,
+    triggerMotion,
     triggerPitfallTrap,
     triggerPowerAtTheFinalHour,
     triggerThunderThaumaturge,
