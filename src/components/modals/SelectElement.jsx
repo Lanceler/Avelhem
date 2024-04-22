@@ -112,7 +112,6 @@ const SelectElement = (props) => {
           "Power at the Final Hour Proaction",
           null
         );
-
         break;
 
       case "Fated Rivalry":
@@ -123,6 +122,7 @@ const SelectElement = (props) => {
           "Fated Rivalry Proaction",
           null
         );
+        break;
 
       case "Advance Deploy Scion":
         updateData = false;
@@ -139,9 +139,7 @@ const SelectElement = (props) => {
           message: `Float 1 skill to deploy ${
             ["A", "E", "I", "O", "U"].includes(selectedChoice[1]) ? "an" : "a"
           } ${selectedChoice} in your frontier.`,
-          //To do: {}
         });
-
         break;
 
       default:

@@ -16,16 +16,6 @@ const CoordinationPhaseSelection = (props) => {
 
   const { assignTactics, rollTactic } = useRecurringEffects();
 
-  // let canBattleCry = false;
-  // let skillHandSize = localGameState[self].skillHand.length;
-
-  // if (skillHandSize >= 3) {
-  //   console.log("Can Battle Cry");
-  //   canBattleCry = true;
-  // } else {
-  //   console.log("Cannot Battle Cry");
-  // }
-
   const canBattleCry = localGameState[self].skillHand.length > 2;
 
   const canConvene = localGameState[self].bountyUpgrades.coordination > 0;

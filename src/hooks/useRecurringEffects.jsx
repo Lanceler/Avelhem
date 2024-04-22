@@ -2396,6 +2396,58 @@ export const useRecurringEffects = () => {
     //end "Scoring"
     newGameState.currentResolution.pop();
 
+    let units = newGameState[self].units;
+
+    for (let unit of units) {
+      if (unit && !unit.enhancements.score) {
+        if (unit.row === 9 && self === "guest") {
+          //Guest scores
+          //Grant score
+          newGameState.guest.score += 1;
+          unit.enhancements = { score: true };
+          unit.afflictions = {};
+          unit.virtue = 0;
+          unit.hp = 0;
+          unit.charge = 0;
+          unit.fever = 0;
+          unit.blossom = 0;
+          unit.sharpness = 0;
+
+          //Gain 3 BP
+          newGameState.guest.bountyPoints = Math.min(
+            10,
+            newGameState.guest.bountyPoints + 3
+          );
+
+          //Enemy gains 6 FD
+          newGameState.host.fateDefiances = 6;
+        } else if (unit.row === 0 && self === "host") {
+          //Host scores
+          //Grant score
+          newGameState.host.score += 1;
+          unit.hp = 0;
+          unit.enhancements = { score: true };
+          unit.afflictions = {};
+          delete unit.virtue;
+          delete unit.charge;
+          delete unit.fever;
+          delete unit.blossom;
+          delete unit.sharpness;
+
+          //Gain 3 BP
+          newGameState.host.bountyPoints = Math.min(
+            10,
+            newGameState.host.bountyPoints + 3
+          );
+
+          //Enemy gains 6 FD
+          newGameState.guest.fateDefiances = 6;
+        }
+      }
+    }
+
+    //Change turn
+
     newGameState.turnPhase = "Acquisition";
     newGameState.turnPlayer = enemy;
     newGameState.turnCount = newGameState.turnCount + 1;
@@ -2972,7 +3024,8 @@ export const useRecurringEffects = () => {
       case "SA-02": // Tea for Two
         return true;
       case "SA-03": // Dark Halo
-        return hasScion(self);
+        return getZonesWithScions(self).length > 0;
+      // return hasScion(self);
 
       case "SA-04": // Reminiscence
         return (
@@ -2987,7 +3040,8 @@ export const useRecurringEffects = () => {
         return hasScionSkill();
 
       case "SB-02": // Ambidexterity
-        return hasScion(self);
+        return getZonesWithScions(self).length > 0;
+      // return hasScion(self);
 
       case "SB-03": // Providence
         return hasTactic(["Invoke"]);
@@ -3757,6 +3811,14 @@ export const useRecurringEffects = () => {
       (z) => zones[Math.floor(z / 5)][z % 5].player === unit.player
     );
 
+    //remove scored units
+    allyZones = allyZones.filter(
+      (z) =>
+        !localGameState[unit.player].units[
+          zones[Math.floor(z / 5)][z % 5].unitIndex
+        ].enhancements.score
+    );
+
     return allyZones;
   };
 
@@ -3774,6 +3836,14 @@ export const useRecurringEffects = () => {
 
     enemyZones = enemyZones.filter(
       (z) => zones[Math.floor(z / 5)][z % 5].player === enemyPlayer
+    );
+
+    //remove scored units
+    enemyZones = enemyZones.filter(
+      (z) =>
+        !localGameState[enemyPlayer].units[
+          zones[Math.floor(z / 5)][z % 5].unitIndex
+        ].enhancements.score
     );
 
     return enemyZones;
@@ -3831,7 +3901,12 @@ export const useRecurringEffects = () => {
     let zonesWithScions = [];
 
     for (let unit of units) {
-      if (unit && unit.unitClass !== "Pawn") {
+      //exclude pawns and Scions that have scored
+      if (
+        unit &&
+        !["Pawn"].includes(unit.unitClass) &&
+        !unit.enhancements.score
+      ) {
         zonesWithScions.push(unit.row * 5 + unit.column);
       }
     }
@@ -3855,16 +3930,16 @@ export const useRecurringEffects = () => {
     return unit;
   };
 
-  const hasScion = (player) => {
-    const units = localGameState[player].units;
+  // const hasScion = (player) => {
+  //   const units = localGameState[player].units;
 
-    for (let unit of units) {
-      if (unit && unit.unitClass !== "Pawn") {
-        return true;
-      }
-    }
-    return false;
-  };
+  //   for (let unit of units) {
+  //     if (unit && unit.unitClass !== "Pawn") {
+  //       return true;
+  //     }
+  //   }
+  //   return false;
+  // };
 
   const hasScionSkill = () => {
     const skillHand = localGameState[self].skillHand;
@@ -3934,6 +4009,10 @@ export const useRecurringEffects = () => {
   };
 
   const isDisrupted = (unit, range) => {
+    if (unit.enhancements.score) {
+      return false;
+    }
+
     //Note: range 1 prevents non-burst skill activation
     //Note: range 2 prevents virtue-spending and abilities
 
@@ -3989,6 +4068,10 @@ export const useRecurringEffects = () => {
   const isRooted = (unit) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     const zones = JSON.parse(localGameState.zones);
+
+    if (unit.enhancements.score) {
+      return false;
+    }
 
     if (
       ["Wind Scion", "Land Scion", "Plant Scion"].includes(unit.unitClass) &&

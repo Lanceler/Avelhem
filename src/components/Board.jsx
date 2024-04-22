@@ -104,8 +104,6 @@ const Board = (props) => {
 
   const [hideModal, setHideModal] = useState(false);
 
-  const [intrudingPlayer, setIntrudingPlayer] = useState(false);
-
   const {
     activateAegis,
     activateFrenzyBlade,
@@ -871,7 +869,6 @@ const Board = (props) => {
                 {self === lastResolution.player &&
                   tileMode !== "selectUnit" && (
                     <>
-                      {setIntrudingPlayer(self)}
                       {setTileMode("selectUnit")}
                       {setValidZones(lastResolution.zoneIds)}
                       {setMovingUnit(lastResolution.unit)}
@@ -1562,7 +1559,6 @@ const Board = (props) => {
                     enterMoveMode={enterMoveMode}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
-                    setIntrudingPlayer={setIntrudingPlayer}
                   />
                 )}
               </>
@@ -1735,7 +1731,6 @@ const Board = (props) => {
               <>
                 {self === lastResolution.unit.player && (
                   <>
-                    {setIntrudingPlayer(self)}
                     {selectEnemies(
                       lastResolution.unit,
                       1,
@@ -2036,7 +2031,6 @@ const Board = (props) => {
                     unit={lastResolution.unit}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
-                    setIntrudingPlayer={setIntrudingPlayer}
                   />
                 )}
               </>
@@ -5336,7 +5330,6 @@ const Board = (props) => {
     setMovingUnit(null);
     setMovingSpecial(null);
     setTacticUsed(null);
-    setIntrudingPlayer(null);
 
     dispatch(updateState(newGameState));
 
