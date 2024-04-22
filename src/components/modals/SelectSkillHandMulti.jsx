@@ -29,6 +29,7 @@ const SelectSkillHandMulti = (props) => {
 
   switch (props.details.reason) {
     case "Arcana":
+    case "Battle Cry":
       skipMessage = "Return";
       break;
 
@@ -134,7 +135,7 @@ const SelectSkillHandMulti = (props) => {
         break;
 
       case "Skill Hand Limit":
-        //1. get list of cards to be returned
+        //1. get list of cards to be discarded
         let excessSkills = [];
         for (let i of selectedSkills) {
           excessSkills.push(skillHand[i]);
@@ -163,6 +164,50 @@ const SelectSkillHandMulti = (props) => {
         for (let skill of excessSkills) {
           newGameState[self].skillVestige.push(skill);
         }
+
+        break;
+
+      case "Battle Cry":
+        //1. get list of cards to be discarded
+        let spendBattleCry = [];
+        for (let i of selectedSkills) {
+          spendBattleCry.push(skillHand[i]);
+        }
+
+        // console.log(spendBattleCry);
+
+        //2. sort selected skills in descending order so they can be spliced smoothly
+        let sortedSelectedSkills3 = [...selectedSkills].sort((a, b) => b - a);
+
+        // console.log("sortedSelectedSkills3");
+        // console.log(sortedSelectedSkills3);
+
+        //3. remove selected skills from hand
+        for (let i of sortedSelectedSkills3) {
+          // console.log(i);
+          skillHand.splice(i, 1);
+        }
+
+        newGameState[self].skillHand = [...skillHand];
+
+        // console.log("skillHand");
+        // console.log(skillHand);
+
+        //4. discard selected Skills
+        for (let skill of spendBattleCry) {
+          newGameState[self].skillVestige.push(skill);
+        }
+
+        //5. gain assault tactic
+        newGameState.tactics[0] = { face: "Assault", stock: 1, limit: 1 };
+        newGameState.tactics[1] = { face: "Assault", stock: 1, limit: 1 };
+
+        //6. change phase
+        newGameState.turnPhase = "Defiance";
+        newGameState.currentResolution.pop();
+        newGameState.currentResolution.push({
+          resolution: "Defiance Phase Selection",
+        });
 
         break;
 
@@ -330,7 +375,9 @@ const SelectSkillHandMulti = (props) => {
         )}
 
         {selectedSkills.length > 0 &&
-          props.details.reason !== "Skill Hand Limit" && (
+          !["Skill Hand Limit", "Battle Cry"].includes(
+            props.details.reason
+          ) && (
             <button
               className="choiceButton noYes"
               onClick={() => handleSelect()}
@@ -339,7 +386,7 @@ const SelectSkillHandMulti = (props) => {
             </button>
           )}
 
-        {props.details.reason === "Skill Hand Limit" &&
+        {["Skill Hand Limit", "Battle Cry"].includes(props.details.reason) &&
           selectedSkills.length === props.details.count && (
             <button
               className="choiceButton noYes"

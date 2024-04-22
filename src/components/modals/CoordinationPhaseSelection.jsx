@@ -61,8 +61,21 @@ const CoordinationPhaseSelection = (props) => {
 
         break;
       case 2:
-        // to do
+        newGameState.currentResolution.push({
+          resolution: "Misc.",
+          resolution2: "Battle Cry",
+          player: self,
+          details: {
+            reason: "Battle Cry",
+            title: "Coordination: Battle Cry",
+            message: "Spend 3 skills to gain an Assault tactic.",
+            count: 3,
+          },
+        });
+        dispatch(updateState(newGameState));
+        // props.updateFirebase(newGameState);
         break;
+
       case 3:
         // to do
 

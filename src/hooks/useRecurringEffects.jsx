@@ -3930,17 +3930,6 @@ export const useRecurringEffects = () => {
     return unit;
   };
 
-  // const hasScion = (player) => {
-  //   const units = localGameState[player].units;
-
-  //   for (let unit of units) {
-  //     if (unit && unit.unitClass !== "Pawn") {
-  //       return true;
-  //     }
-  //   }
-  //   return false;
-  // };
-
   const hasScionSkill = () => {
     const skillHand = localGameState[self].skillHand;
 

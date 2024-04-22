@@ -1154,6 +1154,19 @@ const Board = (props) => {
                 )}
               </>
             );
+
+          case "Battle Cry":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <SelectSkillHandMulti
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
         }
         break;
 
