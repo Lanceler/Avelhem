@@ -2,13 +2,17 @@
     width: 70px;
     height: 70px;
     /* background-color: bisque; */
-    /* background-color: rgb(235, 250, 255); */
-    background-color: rgb(231, 211, 179);
+    /* background-color: rgb(240, 223, 208); */
+    /* background-color: rgb(231, 211, 179); */
+
+    background-color: rgba(255, 255, 255, 0.9);
+    
+        
     display: flex;
     justify-content: center;
     align-items: center;
     user-select: none;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 1);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 1);
 }
 
 .selectable  .tile {

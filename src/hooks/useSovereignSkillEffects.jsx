@@ -637,7 +637,7 @@ export const useSovereignSkillEffects = () => {
   const fatedRivalryProaction = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    //end "Activating Match Made in Heaven" resolution
+    //end "Activating Fated Rivalry: Proaction" resolution
     newGameState.currentResolution.pop();
 
     newGameState.currentResolution.push({

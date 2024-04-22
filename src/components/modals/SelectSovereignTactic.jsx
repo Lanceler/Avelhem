@@ -266,6 +266,24 @@ const SelectSovereignTactic = (props) => {
             newGameState.tactics[props.dice].face = "Assault";
 
             break;
+
+          case 2:
+            //refund stock
+            newGameState.tactics[props.dice].stock += 1;
+
+            newGameState.currentResolution.push({
+              resolution: "Misc.",
+              resolution2: "Advance Deploy Scion: Choose Element",
+              player: self,
+              details: {
+                reason: "Advance Deploy Scion",
+                title: "Deploy Scion",
+                tactic: props.dice,
+                message: "Deploy a Scion; choose their class.",
+              },
+            });
+
+            break;
         }
 
         break;
@@ -295,7 +313,6 @@ const SelectSovereignTactic = (props) => {
 
           case 2:
             //reroll tactic
-
             const rerollInvoke = () => {
               const mobilizeLimit =
                 newGameState[self].bountyUpgrades.tactics > 2 ? 4 : 3;
@@ -324,6 +341,7 @@ const SelectSovereignTactic = (props) => {
 
             newGameState.tactics[props.dice] = rerollInvoke();
 
+            //Spend FD
             newGameState[self].fateDefiances = Math.min(
               6,
               newGameState[self].fateDefiances + 1

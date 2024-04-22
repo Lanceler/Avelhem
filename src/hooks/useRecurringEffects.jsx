@@ -2420,8 +2420,6 @@ export const useRecurringEffects = () => {
 
     unit.unitClass = scionClass;
 
-    newGameState[pawn.player].units[pawn.unitIndex] = unit; // will do this twice
-
     if (resonator !== null) {
       newGameState.currentResolution.push({
         resolution: "Avelhem Resonance",
@@ -2475,6 +2473,7 @@ export const useRecurringEffects = () => {
         method,
       });
     };
+
     if (newGameState.turnPlayer === unit.player) {
       if (triggerAscensionAlly(newGameState, unit, scionClass, method)) {
         pushAscensionResolution(
@@ -2523,115 +2522,8 @@ export const useRecurringEffects = () => {
       }
     }
 
-    switch (scionClass) {
-      case "Fire Scion":
-        delete unit.afflictions.burn;
-
-        newGameState.activatingUnit.push(unit);
-        newGameState.activatingSkill.push("FlashFire");
-        newGameState.currentResolution.push({
-          resolution: "Unit Talent",
-          resolution2: "Talent Conclusion",
-          unit: unit,
-        });
-
-        newGameState.currentResolution.push({
-          resolution: "Unit Talent",
-          resolution2: "Activating Flash Fire",
-          unit: unit,
-          details: {
-            title: "Flash Fire",
-            reason: "Flash Fire",
-          },
-        });
-        break;
-      case "Water Scion":
-        delete unit.afflictions.burn;
-
-        newGameState.activatingUnit.push(unit);
-        newGameState.activatingSkill.push("Kleptothermy");
-        newGameState.currentResolution.push({
-          resolution: "Unit Talent",
-          resolution2: "Talent Conclusion",
-          unit: unit,
-        });
-
-        newGameState.currentResolution.push({
-          resolution: "Unit Talent",
-          resolution2: "Activating Kleptothermy",
-          unit: unit,
-          details: {
-            title: "Kleptothermy",
-            reason: "Kleptothermy",
-          },
-        });
-        break;
-      case "Land Scion":
-        newGameState.activatingUnit.push(unit);
-        newGameState.activatingSkill.push("MountainStance");
-        newGameState.currentResolution.push({
-          resolution: "Unit Talent",
-          resolution2: "Talent Conclusion",
-          unit: unit,
-        });
-
-        newGameState.currentResolution.push({
-          resolution: "Unit Talent",
-          resolution2: "Activating Mountain Stance",
-          unit: unit,
-          details: {
-            title: "Mountain Stance",
-            reason: "Mountain Stance",
-          },
-        });
-        break;
-      case "Lightning Scion":
-        newGameState.activatingUnit.push(unit);
-        newGameState.activatingSkill.push("LightningRod");
-        newGameState.currentResolution.push({
-          resolution: "Unit Talent",
-          resolution2: "Talent Conclusion",
-          unit: unit,
-        });
-
-        newGameState.currentResolution.push({
-          resolution: "Unit Talent",
-          resolution2: "Activating Lightning Rod",
-          unit: unit,
-          details: {
-            title: "Lightning Rod",
-            message: "You may spend 1 skill to gain 1 Charge (Max.3).",
-            restriction: null,
-            reason: "Lightning Rod",
-          },
-        });
-        break;
-      case "Metal Scion":
-        newGameState.activatingUnit.push(unit);
-        newGameState.activatingSkill.push("Conduction");
-        newGameState.currentResolution.push({
-          resolution: "Unit Talent",
-          resolution2: "Talent Conclusion",
-          unit: unit,
-        });
-
-        newGameState.currentResolution.push({
-          resolution: "Unit Talent",
-          resolution2: "Activating Conduction",
-          player: self,
-          unit: unit,
-          details: {
-            reason: "Conduction",
-            title: "Conduction",
-            message: "You may search for then float 1 “Magnetic Shockwave”.",
-            no: "Skip",
-            yes: "Search",
-          },
-        });
-        break;
-    }
-
-    newGameState[pawn.player].units[pawn.unitIndex] = unit; // doing this a second time
+    //Upon your debut talents
+    uponDebutTalents(newGameState, unit);
 
     return newGameState;
   };
@@ -3143,7 +3035,7 @@ export const useRecurringEffects = () => {
     let scionCount = 0;
     let unmutedPawns = 0;
     for (let unit of newGameState[team].units) {
-      if (unit !== null) {
+      if (unit) {
         if (unit.unitClass === scionClass) {
           scionCount += 1;
           if (scionCount > 1) {
@@ -5178,6 +5070,120 @@ export const useRecurringEffects = () => {
     return false;
   };
 
+  const uponDebutTalents = (newGameState, unit) => {
+    switch (unit.unitClass) {
+      case "Fire Scion":
+        delete unit.afflictions.burn;
+
+        newGameState.activatingUnit.push(unit);
+        newGameState.activatingSkill.push("FlashFire");
+        newGameState.currentResolution.push({
+          resolution: "Unit Talent",
+          resolution2: "Talent Conclusion",
+          unit: unit,
+        });
+
+        newGameState.currentResolution.push({
+          resolution: "Unit Talent",
+          resolution2: "Activating Flash Fire",
+          unit: unit,
+          details: {
+            title: "Flash Fire",
+            reason: "Flash Fire",
+          },
+        });
+        break;
+
+      case "Water Scion":
+        delete unit.afflictions.burn;
+
+        newGameState.activatingUnit.push(unit);
+        newGameState.activatingSkill.push("Kleptothermy");
+        newGameState.currentResolution.push({
+          resolution: "Unit Talent",
+          resolution2: "Talent Conclusion",
+          unit: unit,
+        });
+
+        newGameState.currentResolution.push({
+          resolution: "Unit Talent",
+          resolution2: "Activating Kleptothermy",
+          unit: unit,
+          details: {
+            title: "Kleptothermy",
+            reason: "Kleptothermy",
+          },
+        });
+        break;
+
+      case "Land Scion":
+        newGameState.activatingUnit.push(unit);
+        newGameState.activatingSkill.push("MountainStance");
+        newGameState.currentResolution.push({
+          resolution: "Unit Talent",
+          resolution2: "Talent Conclusion",
+          unit: unit,
+        });
+
+        newGameState.currentResolution.push({
+          resolution: "Unit Talent",
+          resolution2: "Activating Mountain Stance",
+          unit: unit,
+          details: {
+            title: "Mountain Stance",
+            reason: "Mountain Stance",
+          },
+        });
+        break;
+
+      case "Lightning Scion":
+        newGameState.activatingUnit.push(unit);
+        newGameState.activatingSkill.push("LightningRod");
+        newGameState.currentResolution.push({
+          resolution: "Unit Talent",
+          resolution2: "Talent Conclusion",
+          unit: unit,
+        });
+
+        newGameState.currentResolution.push({
+          resolution: "Unit Talent",
+          resolution2: "Activating Lightning Rod",
+          unit: unit,
+          details: {
+            title: "Lightning Rod",
+            message: "You may spend 1 skill to gain 1 Charge (Max.3).",
+            restriction: null,
+            reason: "Lightning Rod",
+          },
+        });
+        break;
+
+      case "Metal Scion":
+        newGameState.activatingUnit.push(unit);
+        newGameState.activatingSkill.push("Conduction");
+        newGameState.currentResolution.push({
+          resolution: "Unit Talent",
+          resolution2: "Talent Conclusion",
+          unit: unit,
+        });
+
+        newGameState.currentResolution.push({
+          resolution: "Unit Talent",
+          resolution2: "Activating Conduction",
+          player: self,
+          unit: unit,
+          details: {
+            reason: "Conduction",
+            title: "Conduction",
+            message: "You may search for then float 1 “Magnetic Shockwave”.",
+            no: "Skip",
+            yes: "Search",
+          },
+        });
+        break;
+    }
+  };
+
   const unitFloatSkill = (unitInfo, skill, resonator) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -5392,6 +5398,7 @@ export const useRecurringEffects = () => {
     triggerViridianGrave,
     unitFloatSkill,
     unitRetainSkill,
+    uponDebutTalents,
     virtueBlast,
     virtueBlastYes,
   };

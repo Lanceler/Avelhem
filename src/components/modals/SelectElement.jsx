@@ -17,18 +17,21 @@ const SelectElement = (props) => {
   const { ascendPawn, canAscend, getZonesWithEnemies } = useRecurringEffects();
   const { getElementImage } = useCardImageSwitch();
 
-  //const aspects = ["Fire Scion", "Water Scion", "Wind Scion", "Land Scion", "Lightning Scion", "Mana Scion", "Metal Scion", "Plant Scion"]
-
   const aspects = [
-    "Fire",
-    "Water",
-    "Wind",
-    "Land",
-    "Lightning",
-    "Mana",
-    "Metal",
-    "Plant",
+    "Fire Scion",
+    "Water Scion",
+    "Wind Scion",
+    "Land Scion",
+    "Lightning Scion",
+    "Mana Scion",
+    "Metal Scion",
+    "Plant Scion",
   ];
+
+  let canSkip = false;
+  if (props.details.reason === "Advance Deploy Scion") {
+    canSkip = true;
+  }
 
   const fatedRivalryEnemies = [];
   if (props.details.reason === "Fated Rivalry") {
@@ -45,15 +48,39 @@ const SelectElement = (props) => {
     }
   }
 
+  const canDeployScion = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    let classList = {};
+
+    for (let unit of newGameState[self].units) {
+      if (unit) {
+        classList[unit.unitClass]
+          ? (classList[unit.unitClass] += 1)
+          : (classList[unit.unitClass] = 1);
+      }
+    }
+
+    return classList;
+  };
+
+  const classList = canDeployScion();
+
+  canDeployScion();
+
   const canSelect = (choice) => {
     switch (props.details.reason) {
+      // case "Power at the Final Hour":
+      //   return canAscend(localGameState, props.unit.player, choice);
+
       case "Power at the Final Hour":
-        return canAscend(localGameState, props.unit.player, choice + " Scion");
+      case "Advance Deploy Scion":
+        return !classList[choice] || classList[choice] < 2;
 
       case "Fated Rivalry":
         return (
-          canAscend(localGameState, props.unit.player, choice + " Scion") &&
-          fatedRivalryEnemies.includes(choice + " Scion")
+          (!classList[choice] || classList[choice] < 2) &&
+          fatedRivalryEnemies.includes(choice)
         );
 
       default:
@@ -65,8 +92,9 @@ const SelectElement = (props) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
     newGameState.currentResolution.pop();
-
     // console.log(selectedChoice);
+
+    let updateData = true;
 
     switch (props.details.reason) {
       case "Power at the Final Hour":
@@ -80,7 +108,7 @@ const SelectElement = (props) => {
         newGameState = ascendPawn(
           newGameState,
           props.unit,
-          selectedChoice + " Scion",
+          selectedChoice,
           "Power at the Final Hour Proaction",
           null
         );
@@ -91,10 +119,28 @@ const SelectElement = (props) => {
         newGameState = ascendPawn(
           newGameState,
           props.unit,
-          selectedChoice + " Scion",
+          selectedChoice,
           "Fated Rivalry Proaction",
           null
         );
+
+      case "Advance Deploy Scion":
+        updateData = false;
+
+        newGameState.currentResolution.push({
+          resolution: "Misc.",
+          resolution2: "Advance Deploy Scion: Float Skill",
+          reason: "Advance Deploy Scion",
+          player: self,
+          restriction: null,
+          title: "Deploy Scion",
+          tactic: props.details.tactic,
+          scionClass: selectedChoice,
+          message: `Float 1 skill to deploy ${
+            ["A", "E", "I", "O", "U"].includes(selectedChoice[1]) ? "an" : "a"
+          } ${selectedChoice} in your frontier.`,
+          //To do: {}
+        });
 
         break;
 
@@ -103,7 +149,9 @@ const SelectElement = (props) => {
     }
 
     dispatch(updateState(newGameState));
-    props.updateFirebase(newGameState);
+    if (updateData) {
+      props.updateFirebase(newGameState);
+    }
   };
 
   const handleSelect = (aspect) => {
@@ -112,6 +160,13 @@ const SelectElement = (props) => {
     } else if (canSelect(aspect)) {
       setSelectedChoice(aspect);
     }
+  };
+
+  const handleSkip = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    newGameState.currentResolution.pop();
+
+    dispatch(updateState(newGameState));
   };
 
   const handleViewBoard = () => {
@@ -148,10 +203,12 @@ const SelectElement = (props) => {
                 >
                   <div>
                     <img
-                      src={getElementImage(aspect + " Scion")}
+                      src={getElementImage(aspect)}
                       className="selectElementIcon"
                     />
-                    <p className="customChoiceDescription"> {aspect} </p>
+                    <p className="customChoiceDescription">
+                      {aspect.replace(" Scion", "")}{" "}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -160,6 +217,12 @@ const SelectElement = (props) => {
         </div>
 
         <div>
+          {canSkip && selectedChoice === null && (
+            <button className="choiceButton noYes" onClick={() => handleSkip()}>
+              Return
+            </button>
+          )}
+
           {selectedChoice !== null && (
             <button
               className="choiceButton noYes"

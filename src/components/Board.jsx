@@ -94,6 +94,7 @@ const Board = (props) => {
   const [validZones, setValidZones] = useState([]);
 
   const [tileMode, setTileMode] = useState(false);
+  const [deployClass, setDeployClass] = useState(null);
   const [selectUnitReason, setSelectUnitReason] = useState(null);
   const [selectUnitSpecial, setSelectUnitSpecial] = useState(null);
   const [movingUnit, setMovingUnit] = useState(null);
@@ -163,6 +164,7 @@ const Board = (props) => {
     triggerMotion,
     unitFloatSkill,
     unitRetainSkill,
+    uponDebutTalents,
     virtueBlast,
   } = useRecurringEffects();
 
@@ -295,13 +297,13 @@ const Board = (props) => {
     ambrosia1,
   } = useUnitAbilityEffects();
 
-  const newPawnStats = (player, index, row, column) => {
+  const newUnitStats = (player, index, row, column, unitClass) => {
     return {
       player: player,
       unitIndex: index,
       row: row,
       column: column,
-      unitClass: "Pawn",
+      unitClass: unitClass,
       hp: 1,
       virtue: 1,
       afflictions: {},
@@ -543,6 +545,20 @@ const Board = (props) => {
               <>
                 {setTileMode("deploy")}
                 {setValidZones(lastResolution.zoneIds)}
+                {setDeployClass("Pawn")}
+              </>
+            )}
+          </>
+        );
+
+      case "Deploying Scion":
+        return (
+          <>
+            {self === localGameState.turnPlayer && tileMode !== "deploy" && (
+              <>
+                {setTileMode("deploy")}
+                {setValidZones(lastResolution.zoneIds)}
+                {setDeployClass(lastResolution.scionClass)}
               </>
             )}
           </>
@@ -956,6 +972,37 @@ const Board = (props) => {
                 {self === lastResolution.player && !hideModal && (
                   <YouMayNoYes
                     details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Advance Deploy Scion: Choose Element":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <SelectElement
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Advance Deploy Scion: Float Skill":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <YouMayFloat1Skill
+                    restriction={lastResolution.restriction}
+                    title={lastResolution.title}
+                    message={lastResolution.message}
+                    reason={lastResolution.reason}
+                    tactic={lastResolution.tactic}
+                    scionClass={lastResolution.scionClass}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -4204,20 +4251,6 @@ const Board = (props) => {
               </>
             );
 
-          case "Fated Rivalry Proaction2":
-            return (
-              <>
-                {self === lastResolution.player && !hideModal && (
-                  <SelectElement
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
-                    updateFirebase={updateFirebase}
-                    hideOrRevealModale={hideOrRevealModale}
-                  />
-                )}
-              </>
-            );
-
           case "Fated Rivalry2":
             return (
               <>
@@ -4245,6 +4278,20 @@ const Board = (props) => {
               <>
                 {self === lastResolution.player && (
                   <>{selectFatedRivalryProaction()}</>
+                )}
+              </>
+            );
+
+          case "Fated Rivalry Proaction2":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <SelectElement
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
                 )}
               </>
             );
@@ -4596,10 +4643,10 @@ const Board = (props) => {
     updateFirebase(newGameState);
   };
 
-  const deployPawn = (r, c) => {
+  const deployUnit = (r, c, unitClass) => {
     const newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    //end "Deploying Pawn"
+    //end "Deploying unit"
     newGameState.currentResolution.pop();
 
     let newIndex = newGameState[self].units.indexOf(null);
@@ -4607,8 +4654,14 @@ const Board = (props) => {
       newIndex = newGameState[self].units.length;
     }
 
-    //creating pawn
-    newGameState[self].units[newIndex] = newPawnStats(self, newIndex, r, c);
+    //creating unit
+    newGameState[self].units[newIndex] = newUnitStats(
+      self,
+      newIndex,
+      r,
+      c,
+      unitClass
+    );
 
     //updating zones info
     let newZoneInfo = [...zones];
@@ -4636,6 +4689,8 @@ const Board = (props) => {
         player: enemy,
       });
     }
+
+    uponDebutTalents(newGameState, newUnit);
 
     dispatch(updateState(newGameState));
     setValidZones([]);
@@ -5532,15 +5587,15 @@ const Board = (props) => {
     }
 
     newGameState.host.units = [
-      newPawnStats("host", 0, 6, 0),
-      newPawnStats("host", 1, 6, 2),
-      newPawnStats("host", 2, 6, 4),
+      newUnitStats("host", 0, 6, 0, "Pawn"),
+      newUnitStats("host", 1, 6, 2, "Pawn"),
+      newUnitStats("host", 2, 6, 4, "Pawn"),
     ];
 
     newGameState.guest.units = [
-      newPawnStats("guest", 0, 3, 4),
-      newPawnStats("guest", 1, 3, 2),
-      newPawnStats("guest", 2, 3, 0),
+      newUnitStats("guest", 0, 3, 4, "Pawn"),
+      newUnitStats("guest", 1, 3, 2, "Pawn"),
+      newUnitStats("guest", 2, 3, 0, "Pawn"),
     ];
 
     let newZoneInfo = [...zones];
@@ -5611,31 +5666,35 @@ const Board = (props) => {
             <SelectFirstPlayer onSetFirstPlayer={onSetFirstPlayer} />
           )}
           <div className="section">
-            <div className="right-container">
-              {self === localGameState.turnPlayer &&
-                localGameState.currentResolution.length > 0 &&
-                localGameState.currentResolution[
-                  localGameState.currentResolution.length - 1
-                ].resolution === "Execution Phase" && (
+            <div className="bigger-right-container">
+              <div className="right-container-button-location">
+                {self === localGameState.turnPlayer &&
+                  localGameState.currentResolution.length > 0 &&
+                  localGameState.currentResolution[
+                    localGameState.currentResolution.length - 1
+                  ].resolution === "Execution Phase" && (
+                    <button
+                      className="choiceButton noYes"
+                      onClick={() => endExecutionPhase()}
+                    >
+                      End Turn
+                    </button>
+                  )}
+
+                {hideModal && (
                   <button
                     className="choiceButton noYes"
-                    onClick={() => endExecutionPhase()}
+                    onClick={() => hideOrRevealModale()}
                   >
-                    End Turn
+                    Return to Modal
                   </button>
                 )}
-
-              {hideModal && (
-                <button
-                  className="choiceButton noYes"
-                  onClick={() => hideOrRevealModale()}
-                >
-                  Return to Modal
-                </button>
-              )}
-
-              <ActivatedSkills />
+              </div>
+              <div className="right-container">
+                <ActivatedSkills />
+              </div>
             </div>
+
             <div className="middle-container">
               {localGameState.host.units.map((unit, i) => (
                 <div key={i}>
@@ -5728,13 +5787,13 @@ const Board = (props) => {
                       key={zone.id}
                       zone={zone}
                       validZones={validZones}
-                      deployPawn={deployPawn}
+                      deployUnit={deployUnit}
                       movingUnit={movingUnit}
                       movingSpecial={movingSpecial}
                       setMovingSpecial={setMovingSpecial}
                       moveUnit={moveUnit}
                       tileMode={tileMode}
-                      intrudingPlayer={intrudingPlayer}
+                      deployClass={deployClass}
                     />
                   ))
                 )}
@@ -5765,8 +5824,14 @@ const Board = (props) => {
                     <div className="skill-discard skill-container-item"></div>
                   </div>
                   <div className="rcmtb-mid">
-                    <div className="fd-counter"></div>
-                    <div className="bp-counter"></div>
+                    <div className="fd-counter">
+                      {" "}
+                      FD: {localGameState[enemy].fateDefiances}
+                    </div>
+                    <div className="bp-counter">
+                      {" "}
+                      BP: {localGameState[enemy].bountyPoints}
+                    </div>
                   </div>
                   <div className="avel-container">
                     <div className="avel-deck avel-container-item"></div>
@@ -5785,7 +5850,9 @@ const Board = (props) => {
                     <div className="fd-counter">
                       FD: {localGameState[self].fateDefiances}
                     </div>
-                    <div className="bp-counter"></div>
+                    <div className="bp-counter">
+                      BP: {localGameState[self].bountyPoints}
+                    </div>
                   </div>
                   <div className="avel-container">
                     <div className="avel-deck avel-container-item"></div>

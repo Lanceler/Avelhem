@@ -16,10 +16,7 @@ const Tile = (props) => {
   const { self } = useSelector((state) => state.teams);
   // const dispatch = useDispatch();
 
-  if (
-    props.validZones.includes(props.zone.id) &&
-    (self === localGameState.turnPlayer || self === props.intrudingPlayer)
-  ) {
+  if (props.validZones.includes(props.zone.id)) {
     if (props.tileMode === "deploy") {
       deployable = true;
     } else if (props.tileMode === "move" && !props.zone.player) {
@@ -38,7 +35,7 @@ const Tile = (props) => {
 
   const onClickTile = () => {
     if (deployable) {
-      props.deployPawn(props.zone.row, props.zone.column);
+      props.deployUnit(props.zone.row, props.zone.column, props.deployClass);
     } else if (movable) {
       props.moveUnit(props.movingUnit, props.zone.id, props.movingSpecial);
       props.setMovingSpecial(null);
@@ -53,11 +50,11 @@ const Tile = (props) => {
       onClick={() => onClickTile()}
     >
       <div className={`tile ${self !== "guest" ? "" : "reversed-tile"}`}>
-        {!props.zone.player && (
+        {/* {!props.zone.player && (
           <>
             [{props.zone.row},{props.zone.column}]
           </>
-        )}
+        )} */}
       </div>
     </div>
   );

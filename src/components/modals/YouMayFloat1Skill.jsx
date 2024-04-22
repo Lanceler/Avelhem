@@ -13,7 +13,7 @@ const YouMayFloat1Skill = (props) => {
   const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const { grantRavager } = useRecurringEffects();
+  const { getVacantFrontier, grantRavager } = useRecurringEffects();
 
   const [selectedSkill, setSelectedSkill] = useState(null);
 
@@ -75,6 +75,19 @@ const YouMayFloat1Skill = (props) => {
       case "Vengeful Legacy Ravager":
         unit = grantRavager(unit);
         newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+        break;
+
+      case "Advance Deploy Scion":
+        //consume tactic
+        newGameState.tactics[props.tactic].stock -= 1;
+
+        newGameState.currentResolution.push({
+          resolution: "Deploying Scion",
+          zoneIds: getVacantFrontier(),
+          scionClass: props.scionClass,
+        });
+        break;
+
         break;
 
       default:
