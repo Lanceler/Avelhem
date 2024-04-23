@@ -104,6 +104,7 @@ const SelectSovereignTactic = (props) => {
       break;
 
     case "Assault":
+    case "Null":
       abilityDetails = [
         {
           abilityName: "Null",
@@ -197,6 +198,7 @@ const SelectSovereignTactic = (props) => {
         }
 
       case "Assault":
+      case "Null":
         switch (i) {
           case 0:
             return false;

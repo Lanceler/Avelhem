@@ -88,14 +88,19 @@ const TacticSelection = (props) => {
                     !canUseTactic[index] ? "disabledTactic" : ""
                   }`}
                   onClick={() => handleClickTactic(index)}
-                  style={{
-                    backgroundImage: `url(${getTacticImage(tactic.face)})`,
-                  }}
-                ></div>
+                  // style={{
+                  //   backgroundImage: `url(${getTacticImage(tactic.face)})`,
+                  // }}
+                >
+                  <img
+                    src={getTacticImage(tactic.face)}
+                    className="tactic-icon"
+                  ></img>
+                </div>
               </div>
-              {tactic.face}
+              <div className="tactic-label">{tactic.face}</div>
               <br />
-              Instances: {tactic.stock}
+              <div className="tactic-label">Instances: {tactic.stock}</div>
             </div>
           ))}
         </div>

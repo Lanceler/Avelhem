@@ -83,8 +83,27 @@
     width: 220px;
 }
 
+.tactic-icon{
+    height: 270px;
+    position: relative;
+    top: 50%;
+    /* Move the image down by 50% of its height */
+    left: 50%;
+    /* Move the image right by 50% of its width */
+    transform: translate(-50%, -50%);
+    /* Center the image */
+
+
+}
+
+
+.tactic-label{
+    text-align: center;
+    font-size: 25px;
+}
 
 .disabledTactic{
+    background: linear-gradient(to bottom, rgb(0, 0, 0), rgb(19, 15, 15) 60%, rgb(44, 43, 43) 100%);
     filter: saturate(0) brightness(0.8);
     cursor: not-allowed;
 
@@ -100,7 +119,7 @@
 
 .disabledTacticBG {
     background: linear-gradient(to bottom, rgb(0, 0, 0), rgb(19, 15, 15) 60%, rgb(44, 43, 43) 100%);
-    background-image: none;
+    /* background-image: none; */
 }
 
 .disabledOption:hover {
