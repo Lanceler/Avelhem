@@ -168,6 +168,22 @@ const SelectSovereignTactic = (props) => {
         },
       ];
       break;
+
+    case "Rally":
+      abilityDetails = [
+        {
+          abilityName: "Deploy Pawn",
+          abilityQualifier: <div className="abilityQualifier"></div>,
+          abilityText: (
+            <>
+              <div className="abilityText ">
+                ⬩Spend 1 instance to deploy a pawn in your frontier.
+              </div>
+            </>
+          ),
+        },
+      ];
+      break;
   }
 
   const canChoice = (i) => {
@@ -212,6 +228,13 @@ const SelectSovereignTactic = (props) => {
 
           case 2:
             return newGameState[self].bountyUpgrades.tactics > 0;
+        }
+        break;
+
+      case "Rally":
+        switch (i) {
+          case 0:
+            return canDeploy();
         }
         break;
     }
@@ -361,6 +384,20 @@ const SelectSovereignTactic = (props) => {
             }
             break;
         }
+
+      case "Rally":
+        switch (selectedChoice) {
+          case 0:
+            updateData = false;
+
+            newGameState.currentResolution.push({
+              resolution: "Deploying Pawn",
+              zoneIds: getVacantFrontier(),
+            });
+            break;
+        }
+
+        break;
     }
 
     dispatch(updateState(newGameState));
@@ -429,13 +466,13 @@ const SelectSovereignTactic = (props) => {
         </div>
 
         {selectedChoice === null && (
-          <button className="choiceButton" onClick={() => handleReturn()}>
+          <button className="choiceButton noYes" onClick={() => handleReturn()}>
             Return
           </button>
         )}
 
         {selectedChoice !== null && (
-          <button className="choiceButton" onClick={() => handleSelect()}>
+          <button className="choiceButton noYes" onClick={() => handleSelect()}>
             Select
           </button>
         )}

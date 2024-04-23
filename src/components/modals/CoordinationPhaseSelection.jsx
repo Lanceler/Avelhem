@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Modal.css";
 
 import GoldFrame from "../../assets/others/GoldFrame.png";
+import AdvanceSmall from "../../assets/diceIcons/AdvanceSmall.png";
+import MobilizeSmall from "../../assets/diceIcons/MobilizeSmall.png";
+import AssaultSmall from "../../assets/diceIcons/AssaultSmall.png";
+import InvokeSmall from "../../assets/diceIcons/InvokeSmall.png";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
@@ -9,47 +13,127 @@ import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 const CoordinationPhaseSelection = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
-  const { self } = useSelector((state) => state.teams);
+  const { self, enemy } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
   const [selectedChoice, setSelectedChoice] = useState(null);
 
-  const { assignTactics, rollTactic } = useRecurringEffects();
+  const { assignTactics, drawAvelhem, rollTactic } = useRecurringEffects();
 
-  const canBattleCry = localGameState[self].skillHand.length > 2;
+  let newGameState = JSON.parse(JSON.stringify(localGameState));
+  const upgrade = newGameState[self].bountyUpgrades.coordination;
 
-  const canConvene = localGameState[self].bountyUpgrades.coordination > 0;
+  let conveneQualifier = "";
+  switch (upgrade) {
+    case 0:
+      conveneQualifier = (
+        <>
+          Can be unlocked <br /> via Bounty Phase <br /> (1st Coordination).
+        </>
+      );
+      break;
+    case 1:
+      conveneQualifier = (
+        <>
+          Can be upgraded <br /> via Bounty Phase <br /> (3rd Coordination).
+        </>
+      );
+      break;
+  }
 
-  const handleAssent = () => {
-    if (selectedChoice === 1) {
-      setSelectedChoice(null);
-    } else {
-      setSelectedChoice(1);
+  let abilityDetails = [
+    {
+      abilityName: "Assent",
+      abilityQualifier: <div className="abilityQualifier"></div>,
+      abilityText: (
+        <>
+          <div className="abilityText">⬩Roll 2 tactical dice.</div>
+        </>
+      ),
+    },
+
+    {
+      abilityName: "Battle Cry",
+      abilityQualifier: (
+        <div className="abilityQualifier">
+          {upgrade < 3 && (
+            <>
+              Can be upgraded <br /> via Bounty Phase <br /> (3rd Coordination).
+            </>
+          )}
+        </div>
+      ),
+      abilityText: (
+        <>
+          <div className="abilityText ">
+            ⬩Spend 3 skills to gain 1{" "}
+            <img src={AssaultSmall} style={{ height: 21 }} />.
+          </div>
+          <div className="abilityText ">
+            ⬩{upgrade < 3 && <>If upgraded: </>}
+            Roll 1 tactical die.
+          </div>
+        </>
+      ),
+    },
+
+    {
+      abilityName: "Convene",
+      abilityQualifier: (
+        <div className="abilityQualifier">
+          {upgrade < 2 && conveneQualifier}
+        </div>
+      ),
+      abilityText: (
+        <>
+          <div className="abilityText ">
+            ⬩Gain 1 Rally tactic with 2 instances; each instance can deploy a
+            pawn in your frontier.
+          </div>
+          <div className="abilityText ">
+            ⬩{upgrade < 3 && <>If upgraded: </>}
+            Gain 1 <img src={AdvanceSmall} style={{ height: 21 }} /> and draw 1
+            Avelhem.
+          </div>
+        </>
+      ),
+    },
+  ];
+
+  const nextPhase = (newGameState) => {
+    newGameState.turnPhase = "Defiance";
+    newGameState.currentResolution.pop();
+    newGameState.currentResolution.push({
+      resolution: "Defiance Phase Selection",
+    });
+
+    return newGameState;
+  };
+
+  const canChoice = (i) => {
+    switch (i) {
+      case 0:
+        return true;
+      case 1:
+        return newGameState[self].skillHand.length > 2;
+      case 2:
+        return upgrade > 0;
     }
   };
 
-  const handleBattleCry = () => {
-    if (selectedChoice === 2) {
+  const handleChoice = (i) => {
+    if (selectedChoice === i) {
       setSelectedChoice(null);
-    } else if (canBattleCry) {
-      setSelectedChoice(2);
-    }
-  };
-
-  const handleConvene = () => {
-    if (selectedChoice === 3) {
-      setSelectedChoice(null);
-    } else if (canConvene) {
-      setSelectedChoice(3);
+    } else if (canChoice(i)) {
+      setSelectedChoice(i);
     }
   };
 
   const handleSelect = () => {
-    // newGameState.currentResolution.pop();
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    // newGameState.currentResolution.pop();	Do NOT pop
 
     switch (selectedChoice) {
-      case 1:
+      case 0:
         newGameState = assignTactics(newGameState, rollTactic(), rollTactic());
         newGameState = nextPhase(newGameState);
         newGameState.currentResolution.push({
@@ -60,7 +144,7 @@ const CoordinationPhaseSelection = (props) => {
         props.updateFirebase(newGameState);
 
         break;
-      case 2:
+      case 1:
         newGameState.currentResolution.push({
           resolution: "Misc.",
           resolution2: "Battle Cry",
@@ -76,8 +160,22 @@ const CoordinationPhaseSelection = (props) => {
         // props.updateFirebase(newGameState);
         break;
 
-      case 3:
-        // to do
+      case 2:
+        newGameState.tactics[0] = { face: "Rally", stock: 2, limit: 2 };
+        if (upgrade >= 2) {
+          newGameState = drawAvelhem(newGameState);
+          newGameState.tactics[1] = { face: "Advance", stock: 1, limit: 1 };
+        } else {
+          newGameState.tactics[1] = { face: "Null", stock: 0, limit: 1 };
+        }
+
+        newGameState = nextPhase(newGameState);
+        newGameState.currentResolution.push({
+          resolution: "Misc.",
+          resolution2: "Tactic Results",
+        });
+        dispatch(updateState(newGameState));
+        props.updateFirebase(newGameState);
 
         break;
     }
@@ -85,16 +183,6 @@ const CoordinationPhaseSelection = (props) => {
 
   const handleViewBoard = () => {
     props.hideOrRevealModale();
-  };
-
-  const nextPhase = (newGameState) => {
-    newGameState.turnPhase = "Defiance";
-    newGameState.currentResolution.pop();
-    newGameState.currentResolution.push({
-      resolution: "Defiance Phase Selection",
-    });
-
-    return newGameState;
   };
 
   return (
@@ -108,57 +196,64 @@ const CoordinationPhaseSelection = (props) => {
         </div>
 
         <div className="threeColumn">
-          <div
-            className={`customChoice customChoiceSmall ${
-              selectedChoice === 1 ? "selectedChoice" : ""
-            } `}
-            style={{ backgroundImage: `url(${GoldFrame})` }}
-            onClick={() => handleAssent()}
-          >
-            <div className="customChoiceFrame">
-              <h3 className="choiceText customChoiceFrameHeader">Assent</h3>
-              <h4 className="customChoiceDescription">Roll 2 tactical dice.</h4>
-            </div>
-          </div>
+          {abilityDetails.map((detail, i) => (
+            <div
+              key={i}
+              className={`customChoice ${
+                selectedChoice === i ? "selectedChoice" : ""
+              } `}
+              style={{ backgroundImage: `url(${GoldFrame})` }}
+              onClick={() => handleChoice(i)}
+            >
+              <div
+                // className="abilityFrame"
+                className={`abilityFrame ${
+                  canChoice(i) ? "" : "disabledAbility"
+                } `}
+              >
+                <div className="abilityHeader">
+                  <h3 className="abilityName ">{detail.abilityName}</h3>
 
-          <div
-            className={`customChoice customChoiceSmall ${
-              selectedChoice === 2 ? "selectedChoice" : ""
-            } `}
-            style={{ backgroundImage: `url(${GoldFrame})` }}
-            onClick={() => handleBattleCry()}
-          >
-            <div
-              className={`customChoiceFrame ${
-                canBattleCry ? "" : "disabledChoice"
-              } `}
-            >
-              <h3 className="choiceText customChoiceFrameHeader">Battle Cry</h3>
-              <h4 className="customChoiceDescription">
-                Spend 3 skills to gain an Assault tactic.
-              </h4>
+                  <div>{detail.abilityQualifier}</div>
+                </div>
+                <div className="abilityContent scroll">
+                  {detail.abilityText}
+                </div>
+              </div>
             </div>
-          </div>
-          <div
-            className={`customChoice customChoiceSmall ${
-              selectedChoice === 3 ? "selectedChoice" : ""
-            } `}
-            style={{ backgroundImage: `url(${GoldFrame})` }}
-            onClick={() => handleConvene()}
-          >
-            <div
-              className={`customChoiceFrame ${
-                canConvene ? "" : "disabledChoice"
-              } `}
-            >
-              <h3 className="choiceText customChoiceFrameHeader">Convene</h3>
-              <h4 className="customChoiceDescription">Gain a Rally Tactic.</h4>
-            </div>
-          </div>
+          ))}
         </div>
 
+        <h3>
+          Tactical dice have the following faces:{"  "}
+          <img
+            src={AdvanceSmall}
+            style={{ height: 26, filter: "brightness(0%)" }}
+          />{" "}
+          <img
+            src={AdvanceSmall}
+            style={{ height: 26, filter: "brightness(0%)" }}
+          />{" "}
+          <img
+            src={MobilizeSmall}
+            style={{ height: 26, filter: "brightness(0%)" }}
+          />{" "}
+          <img
+            src={MobilizeSmall}
+            style={{ height: 26, filter: "brightness(0%)" }}
+          />{" "}
+          <img
+            src={AssaultSmall}
+            style={{ height: 26, filter: "brightness(0%)" }}
+          />{" "}
+          <img
+            src={InvokeSmall}
+            style={{ height: 26, filter: "brightness(0%)" }}
+          />
+        </h3>
+
         {selectedChoice !== null && (
-          <button className="choiceButton" onClick={() => handleSelect()}>
+          <button className="choiceButton noYes" onClick={() => handleSelect()}>
             Select
           </button>
         )}
