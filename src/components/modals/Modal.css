@@ -255,6 +255,7 @@ background: rgb(117, 13, 13)
 .customChoiceSmall {
     height: 280px;
     width: 200px;
+    padding: 6px 8px
 }
 
 .customChoiceSmaller {
@@ -337,10 +338,10 @@ background: rgb(117, 13, 13)
 
 
 .choiceText{
-    padding: 10px 15px;
+    padding: 4px 8px 0px 8px;
     color: white;
     font-family: "Times New Roman", Times, serif;
-    font-size: 30px;
+    font-size: 23px;
 }
 
 .choiceTitle {
@@ -405,6 +406,7 @@ margin-bottom: 30px;
     color: white;
     font-family: "Times New Roman", Times, serif;
     font-size: 23px;
+    /* font-style: italic; */
 
 }
 
