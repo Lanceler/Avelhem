@@ -151,3 +151,32 @@
     text-align: center;
 }
 
+.displayedCardOptions {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    justify-content: flex-end;    /* vertically */
+    align-items: center;    /* horizontally */
+
+}
+
+.activateButton {
+    width: fit-content;
+    margin: 0px 0px 20px;
+    padding: 10px;
+    /* justify-self: end; */
+    font-family: Arial, sans-serif;
+    font-size: 30px;
+    color: white;
+    background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
+    cursor: pointer;
+    height: fit-content;
+}
+
+.activateButton:hover {
+    filter: brightness(1.2)
+}
+
+.displayCardButton{
+    min-width: 160px
+}

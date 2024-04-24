@@ -101,21 +101,11 @@ const SelectAvelhemResonator = (props) => {
     dispatch(updateState(newGameState));
   };
 
-  const handleViewBoard = () => {
-    props.hideOrRevealModale();
-  };
-
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        {/* <button onClick={() => handleViewBoard()}>View Board</button>
-        <h2>Select skill to resonate with.</h2> */}
-
         <div className="twoColumn3-1">
           <h2 className="choiceTitle">Select resonator.</h2>
-          {/* <button className="choiceButton" onClick={() => handleViewBoard()}>
-            View Board
-          </button> */}
         </div>
 
         <div className="fourColumn scrollable scrollable-y-only">

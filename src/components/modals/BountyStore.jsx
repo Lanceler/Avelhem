@@ -617,9 +617,11 @@ const BountyStore = (props) => {
               >
                 <div className="bountyText">
                   <h4 className="bountyDescription">
-                    <p style={{ fontSize: 16.5 }}>
-                      You can spend 1 Avelhem & 1 FD to search for 1 non-burst
-                      skill with the matching aspect once per Execution Phase.
+                    <p style={{ fontSize: 16 }}>
+                      {/* You can spend 1 Avelhem & 1 FD to search for 1 non-burst
+                      skill with the matching aspect once per Execution Phase. */}
+                      Once per Execution Phase, you may spend an Avelhem & 1 FD
+                      to search for 1 non-burst skill with the matching aspect.
                     </p>
                   </h4>
                   <h4 className="bpCost">
@@ -673,9 +675,11 @@ const BountyStore = (props) => {
               >
                 <div className="bountyText">
                   <h4 className="bountyDescription">
-                    <p style={{ fontSize: 18.0 }}>
-                      You can spend 1 Avelhem & 2 FD to recover for 1 skill with
-                      the matching aspect once per Execution Phase.
+                    <p style={{ fontSize: 16.0 }}>
+                      {/* You can spend 1 Avelhem & 2 FD to recover for 1 skill with
+                      the matching aspect once per Execution Phase. */}
+                      Once per Execution Phase, you may spend an Avelhem & 2 FD
+                      to recover 1 skill with the matching aspect.
                     </p>
                   </h4>
                   <h4 className="bpCost">
@@ -709,8 +713,9 @@ const BountyStore = (props) => {
               >
                 <div className="bountyText">
                   <h4 className="bountyDescription">
-                    Gain 6 FD, draw 4 Avelhems, draw 4 skills, and restore the
-                    Virtues of all ally units.
+                    Gain 6 FD, draw 4 Avelhems,
+                    <br /> draw 4 skills, and restore the Virtues of all ally
+                    units.
                   </h4>
                   <h4 className="bpCost">
                     {localGameState[self].bountyUpgrades.victory > 0
@@ -739,7 +744,12 @@ const BountyStore = (props) => {
                 <div className="bountyText">
                   <h4 className="bountyDescription">
                     Spend 6 FD to win the game. <br />
-                    You may purchase this only if 2 of your units have scored.
+                    <br />
+                    <i>
+                      Requirement:
+                      <br />
+                      You have scored twice.
+                    </i>
                   </h4>
                   <h4 className="bpCost">
                     {localGameState[self].bountyUpgrades.victory > 1

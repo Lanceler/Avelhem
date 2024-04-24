@@ -13,25 +13,94 @@ const SelectedAvelhem = (props) => {
   const dispatch = useDispatch();
 
   const { getImage2 } = useCardImageSwitch();
-  const { getAvelhemById } = useCardDatabase();
+  const { getScionSet } = useCardDatabase();
 
   const { activateAvelhem, avelhemToScion, canAscend, isMuted } =
     useRecurringEffects();
 
   const scionClass = avelhemToScion(props.selectedAvelhem.avelhem);
 
-  let canActivateAvelhem = false;
-
-  if (
+  const yourTurn =
     localGameState.turnPlayer === self &&
     localGameState.currentResolution[
       localGameState.currentResolution.length - 1
-    ].resolution === "Execution Phase"
-  ) {
-    canActivateAvelhem = canAscend(localGameState, self, scionClass);
-  }
+    ].resolution === "Execution Phase";
 
-  //console.log(canActivateAvelhem);
+  const canSearch =
+    yourTurn &&
+    localGameState[self].bountyUpgrades.avelhem >= 1 &&
+    !localGameState[self].hasAvelhemSearch &&
+    localGameState[self].fateDefiances >= 1;
+
+  const canRecover =
+    yourTurn &&
+    localGameState[self].bountyUpgrades.avelhem >= 4 &&
+    !localGameState[self].hasAvelhemRecover &&
+    localGameState[self].fateDefiances >= 2 &&
+    getScionSet(scionClass).some((s) =>
+      localGameState[self].skillVestige.includes(s)
+    );
+
+  const canActivateAvelhem =
+    yourTurn && canAscend(localGameState, self, scionClass);
+
+  const handleRecover = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //Remove Avelhem from hand AND send to vestige
+    newGameState[self].avelhemVestige.push(
+      newGameState[self].avelhemHand.splice(
+        props.selectedAvelhem.handIndex,
+        1
+      )[0]
+    );
+
+    newGameState[self].hasAvelhemRecover = true;
+    newGameState[self].fateDefiances -= 2;
+
+    newGameState.currentResolution.push({
+      resolution: "Recover Skill",
+      player: self,
+      restriction: getScionSet(scionClass),
+      message: `Recover 1 ${scionClass.replace(" Scion", "")} skill.`,
+      outcome: "Add",
+    });
+
+    dispatch(updateState(newGameState));
+    props.updateFirebase(newGameState);
+
+    props.setRaise(false);
+    props.setSelectedAvelhem(null);
+  };
+
+  const handleSearch = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //Remove Avelhem from hand AND send to vestige
+    newGameState[self].avelhemVestige.push(
+      newGameState[self].avelhemHand.splice(
+        props.selectedAvelhem.handIndex,
+        1
+      )[0]
+    );
+
+    newGameState[self].hasAvelhemSearch = true;
+    newGameState[self].fateDefiances -= 1;
+
+    newGameState.currentResolution.push({
+      resolution: "Search Skill",
+      player: self,
+      restriction: getScionSet(scionClass).filter((s) => s[4] !== "4"),
+      message: `Recover 1 non-burst ${scionClass.replace(" Scion", "")} skill.`,
+      outcome: "Add",
+    });
+
+    dispatch(updateState(newGameState));
+    props.updateFirebase(newGameState);
+
+    props.setRaise(false);
+    props.setSelectedAvelhem(null);
+  };
 
   const handleActivate = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
@@ -82,16 +151,36 @@ const SelectedAvelhem = (props) => {
             }}
           ></div>
           <div className="displayedCardOptions">
+            {canRecover && (
+              <>
+                <button
+                  className="activateButton displayCardButton"
+                  onClick={() => handleRecover()}
+                >
+                  Recover
+                </button>
+              </>
+            )}
+            {canSearch && (
+              <>
+                <button
+                  className="activateButton displayCardButton"
+                  onClick={() => handleSearch()}
+                >
+                  Search
+                </button>
+              </>
+            )}
             {canActivateAvelhem && (
               <>
                 <button
-                  className="activateButton"
+                  className="activateButton displayCardButton"
                   onClick={() => handleActivate()}
                 >
                   Activate
                 </button>
                 <button
-                  className="activateButton"
+                  className="activateButton displayCardButton"
                   onClick={() => handleResonate()}
                 >
                   Resonate

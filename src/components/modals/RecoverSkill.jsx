@@ -13,9 +13,6 @@ const RecoverSkill = (props) => {
   const { self, enemy } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  console.log(localGameState[self].skillVestige);
-  console.log(localGameState[self].skillRepertoire);
-
   const [selectedSkill, setSelectedSkill] = useState(null);
 
   let vestige = [...localGameState[self].skillVestige];

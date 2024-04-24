@@ -310,7 +310,6 @@ const SelectSovereignTactic = (props) => {
 
             break;
         }
-
         break;
 
       case "Mobilize":
@@ -320,7 +319,6 @@ const SelectSovereignTactic = (props) => {
             newGameState = drawSkill(newGameState);
             break;
         }
-
         break;
 
       case "Invoke":
@@ -384,6 +382,7 @@ const SelectSovereignTactic = (props) => {
             }
             break;
         }
+        break;
 
       case "Rally":
         switch (selectedChoice) {
@@ -396,7 +395,6 @@ const SelectSovereignTactic = (props) => {
             });
             break;
         }
-
         break;
     }
 

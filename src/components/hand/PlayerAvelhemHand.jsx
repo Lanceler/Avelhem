@@ -26,8 +26,10 @@ const PlayerAvelhemHand = (props) => {
     setRaiseHeight(
       -45 + Math.ceil(localGameState[self].avelhemHand.length / 2) * 86
     );
-    // setRaise(false);
-    // setSelectedAvelhem(null);
+
+    if (localGameState[self].avelhemHand.length === 0) {
+      setRaise(false);
+    }
   }, [localGameState[self].avelhemHand.length]);
 
   const handleCollapse = () => {

@@ -1577,28 +1577,6 @@ export const useSkillEffects = () => {
     //end "Thunder Thaumaturge1" resolution
     newGameState.currentResolution.pop();
 
-    // if (
-    //   unit !== null &&
-    //   !isMuted(unit) &&
-    //   newGameState[unit.player].skillHand.length > 0 &&
-    //   ["05-01", "05-02", "05-04"].some((s) =>
-    //     localGameState[unit.player].skillVestige.includes(s)
-    //   )
-    // ) {
-    //   newGameState.currentResolution.push({
-    //     resolution: "Lightning Skill",
-    //     resolution2: "Thunder Thaumaturge2",
-    //     unit: unit,
-    //     details: {
-    //       title: "Thunder Thaumaturge",
-    //       message:
-    //         "You may spend 1 skill to recover 1 Lightning skill other than “Thunder Thaumaturge”.",
-    //       restriction: null,
-    //       reason: "Thunder Thaumaturge",
-    //     },
-    //   });
-    // }
-
     if (
       !["05-01", "05-02", "05-04"].some((s) =>
         newGameState[unit.player].skillVestige.includes(s)

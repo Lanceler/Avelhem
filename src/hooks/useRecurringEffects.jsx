@@ -2481,6 +2481,14 @@ export const useRecurringEffects = () => {
     }
 
     switch (method) {
+      case "Avelhem":
+        if (newGameState[unit.player].bountyUpgrades.avelhem >= 3)
+          unit.enhancements.shield
+            ? (unit.enhancements.shield = Math.max(2, unit.enhancements.shield))
+            : (unit.enhancements.shield = 2);
+
+        break;
+
       case "Fated Rivalry":
         newGameState.currentResolution.push({
           resolution: "Sovereign Contingent Skill",

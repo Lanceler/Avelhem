@@ -316,6 +316,7 @@ const Board = (props) => {
       updateDoc(gameDoc, { gameState: newGameState });
     } catch (err) {
       console.log(err);
+      console.log(newGameState);
     }
   };
 
@@ -4606,48 +4607,50 @@ const Board = (props) => {
     resonator,
     resonatorConclusion
   ) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    setTimeout(() => {
+      let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    //end "Avelhem Conclusion"
-    newGameState.currentResolution.pop();
+      //end "Avelhem Conclusion"
+      newGameState.currentResolution.pop();
 
-    if (conclusion === "discard") {
-      newGameState[self].avelhemVestige.push(avelhem);
-    } else if (conclusion === "shuffle") {
-      //insert avelhem into repertoire
-      newGameState[self].avelhemRepertoire.unshift(avelhem);
+      if (conclusion === "discard") {
+        newGameState[self].avelhemVestige.push(avelhem);
+      } else if (conclusion === "shuffle") {
+        //insert avelhem into repertoire
+        newGameState[self].avelhemRepertoire.unshift(avelhem);
 
-      //shuffle repertoire, but retain floating order
-      const floaters = newGameState[self].avelhemRepertoire.splice(
-        newGameState[self].avelhemRepertoire.length -
-          newGameState[self].avelhemFloat,
-        newGameState[self].avelhemFloat
-      );
+        //shuffle repertoire, but retain floating order
+        const floaters = newGameState[self].avelhemRepertoire.splice(
+          newGameState[self].avelhemRepertoire.length -
+            newGameState[self].avelhemFloat,
+          newGameState[self].avelhemFloat
+        );
 
-      newGameState[self].avelhemRepertoire = shuffleCards(
-        newGameState[self].avelhemRepertoire
-      );
+        newGameState[self].avelhemRepertoire = shuffleCards(
+          newGameState[self].avelhemRepertoire
+        );
 
-      newGameState[self].avelhemRepertoire = [
-        ...newGameState[self].avelhemRepertoire,
-        ...floaters,
-      ];
-    }
-
-    if (resonator !== null && resonatorConclusion === "discard") {
-      if (["SA-02"].includes(resonator)) {
-        newGameState[self].skillVestige.push(resonator);
-      } else {
-        newGameState[self].avelhemVestige.push(resonator);
+        newGameState[self].avelhemRepertoire = [
+          ...newGameState[self].avelhemRepertoire,
+          ...floaters,
+        ];
       }
-    }
 
-    newGameState.activatingSkill.pop();
-    newGameState.activatingResonator.pop();
+      if (resonator !== null && resonatorConclusion === "discard") {
+        if (["SA-02"].includes(resonator)) {
+          newGameState[self].skillVestige.push(resonator);
+        } else {
+          newGameState[self].avelhemVestige.push(resonator);
+        }
+      }
 
-    dispatch(updateState(newGameState));
+      newGameState.activatingSkill.pop();
+      newGameState.activatingResonator.pop();
 
-    updateFirebase(newGameState);
+      dispatch(updateState(newGameState));
+
+      updateFirebase(newGameState);
+    }, 1000);
   };
 
   const deployUnit = (r, c, unitClass) => {
@@ -4733,6 +4736,10 @@ const Board = (props) => {
       resolution2: "Burn Decrement",
       player: self,
     });
+
+    //3.5 reset Avelhem Search/Recover usage
+    delete newGameState[self].hasAvelhemSearch;
+    delete newGameState[self].hasAvelhemRecover;
 
     //3. Forfeit unused tactics and remove your units’ boosts.
     newGameState.tactics = [];
@@ -5354,52 +5361,54 @@ const Board = (props) => {
   };
 
   const skillConclusion = (player, unitInfo, skill, conclusion) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    setTimeout(() => {
+      let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    //end "Skill Conclusion"
-    newGameState.currentResolution.pop();
+      //end "Skill Conclusion"
+      newGameState.currentResolution.pop();
 
-    if (conclusion === "discard") {
-      newGameState[player].skillVestige.push(skill);
-    } else if (conclusion === "float") {
-      newGameState[player].skillRepertoire.push(skill);
-      newGameState[player].skillFloat = newGameState[player].skillFloat + 1;
-    } else if (conclusion === "shatter") {
-      newGameState[player].skillShattered.push(skill);
-    }
-
-    if (unitInfo !== null) {
-      let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-      if (unit) {
-        //decrease activation counter
-        unit.temporary.activation -= 1;
-
-        //apply anathema
-        if (
-          unit.temporary.activation === 0 &&
-          unit.temporary.anathemaDelay === true
-        ) {
-          delete unit.temporary.anathemaDelay;
-          unit.afflictions.anathema = 2;
-
-          //anathema purges boosts, disruption, overgrowth, & proliferation
-          unit.boosts = {};
-          delete unit.enhancements.disruption;
-          delete unit.enhancements.overgrowth;
-          delete unit.enhancements.proliferation;
-        }
-
-        newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+      if (conclusion === "discard") {
+        newGameState[player].skillVestige.push(skill);
+      } else if (conclusion === "float") {
+        newGameState[player].skillRepertoire.push(skill);
+        newGameState[player].skillFloat = newGameState[player].skillFloat + 1;
+      } else if (conclusion === "shatter") {
+        newGameState[player].skillShattered.push(skill);
       }
-    }
 
-    newGameState.activatingSkill.pop();
-    newGameState.activatingUnit.pop();
+      if (unitInfo !== null) {
+        let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
-    dispatch(updateState(newGameState));
+        if (unit) {
+          //decrease activation counter
+          unit.temporary.activation -= 1;
 
-    updateFirebase(newGameState);
+          //apply anathema
+          if (
+            unit.temporary.activation === 0 &&
+            unit.temporary.anathemaDelay === true
+          ) {
+            delete unit.temporary.anathemaDelay;
+            unit.afflictions.anathema = 2;
+
+            //anathema purges boosts, disruption, overgrowth, & proliferation
+            unit.boosts = {};
+            delete unit.enhancements.disruption;
+            delete unit.enhancements.overgrowth;
+            delete unit.enhancements.proliferation;
+          }
+
+          newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+        }
+      }
+
+      newGameState.activatingSkill.pop();
+      newGameState.activatingUnit.pop();
+
+      dispatch(updateState(newGameState));
+
+      updateFirebase(newGameState);
+    }, 1000);
   };
 
   const skillResonanceConclusion = (
@@ -5410,67 +5419,69 @@ const Board = (props) => {
     resonator,
     resonatorConclusion
   ) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    setTimeout(() => {
+      let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    //end "Resonance Conclusion"
-    newGameState.currentResolution.pop();
+      //end "Resonance Conclusion"
+      newGameState.currentResolution.pop();
 
-    if (skillConclusion === "discard") {
-      newGameState[player].skillVestige.push(skill);
-    } else if (skillConclusion === "float") {
-      newGameState[player].skillRepertoire.push(skill);
-      newGameState[player].skillFloat = newGameState[player].skillFloat + 1;
-    } else if (skillConclusion === "retain") {
-      newGameState[player].skillHand.push(skill);
-    }
-
-    if (resonatorConclusion === "discard") {
-      newGameState[player].skillVestige.push(resonator);
-    } else if (resonatorConclusion === "float") {
-      newGameState[player].skillRepertoire.push(resonator);
-      newGameState[player].skillFloat = newGameState[player].skillFloat + 1;
-    } else if (resonatorConclusion === "retain") {
-      newGameState[player].skillHand.push(resonator);
-    }
-
-    if (unitInfo !== null) {
-      let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-      if (unit) {
-        //decrease activation counter
-        unit.temporary.activation -= 1;
-
-        //apply anathema
-        if (
-          unit.temporary.activation === 0 &&
-          unit.temporary.anathemaDelay === true
-        ) {
-          delete unit.temporary.anathemaDelay;
-          unit.afflictions.anathema = 2;
-
-          //anathema purges boosts, disruption, overgrowth, & proliferation
-          unit.boosts = {};
-          delete unit.enhancements.disruption;
-          delete unit.enhancements.overgrowth;
-          delete unit.enhancements.proliferation;
-        }
-
-        newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+      if (skillConclusion === "discard") {
+        newGameState[player].skillVestige.push(skill);
+      } else if (skillConclusion === "float") {
+        newGameState[player].skillRepertoire.push(skill);
+        newGameState[player].skillFloat = newGameState[player].skillFloat + 1;
+      } else if (skillConclusion === "retain") {
+        newGameState[player].skillHand.push(skill);
       }
-    }
 
-    //Tea for Two
-    if (resonator === "SA-02") {
-      newGameState = drawSkill(newGameState);
-    }
+      if (resonatorConclusion === "discard") {
+        newGameState[player].skillVestige.push(resonator);
+      } else if (resonatorConclusion === "float") {
+        newGameState[player].skillRepertoire.push(resonator);
+        newGameState[player].skillFloat = newGameState[player].skillFloat + 1;
+      } else if (resonatorConclusion === "retain") {
+        newGameState[player].skillHand.push(resonator);
+      }
 
-    newGameState.activatingSkill.pop();
-    newGameState.activatingUnit.pop();
-    newGameState.activatingResonator.pop();
+      if (unitInfo !== null) {
+        let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
-    dispatch(updateState(newGameState));
+        if (unit) {
+          //decrease activation counter
+          unit.temporary.activation -= 1;
 
-    updateFirebase(newGameState);
+          //apply anathema
+          if (
+            unit.temporary.activation === 0 &&
+            unit.temporary.anathemaDelay === true
+          ) {
+            delete unit.temporary.anathemaDelay;
+            unit.afflictions.anathema = 2;
+
+            //anathema purges boosts, disruption, overgrowth, & proliferation
+            unit.boosts = {};
+            delete unit.enhancements.disruption;
+            delete unit.enhancements.overgrowth;
+            delete unit.enhancements.proliferation;
+          }
+
+          newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+        }
+      }
+
+      //Tea for Two
+      if (resonator === "SA-02") {
+        newGameState = drawSkill(newGameState);
+      }
+
+      newGameState.activatingSkill.pop();
+      newGameState.activatingUnit.pop();
+      newGameState.activatingResonator.pop();
+
+      dispatch(updateState(newGameState));
+
+      updateFirebase(newGameState);
+    }, 1000);
   };
 
   const skillResonanceRetain = (resonator) => {
@@ -5535,17 +5546,19 @@ const Board = (props) => {
   };
 
   const talentConclusion = () => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    setTimeout(() => {
+      let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    //end "Talent Conclusion"
-    newGameState.currentResolution.pop();
+      //end "Talent Conclusion"
+      newGameState.currentResolution.pop();
 
-    newGameState.activatingSkill.pop();
-    newGameState.activatingUnit.pop();
+      newGameState.activatingSkill.pop();
+      newGameState.activatingUnit.pop();
 
-    dispatch(updateState(newGameState));
+      dispatch(updateState(newGameState));
 
-    updateFirebase(newGameState);
+      updateFirebase(newGameState);
+    }, 1000);
   };
 
   //=========================
@@ -5826,8 +5839,12 @@ const Board = (props) => {
               <div className="lcMiddleContainer">
                 <div className="rcm-top-bot">
                   <div className="skill-container">
-                    <div className="skill-deck skill-container-item"></div>
-                    <div className="skill-discard skill-container-item"></div>
+                    <div className="skill-deck skill-container-item">
+                      {localGameState[enemy].skillRepertoire.length}
+                    </div>
+                    <div className="skill-discard skill-container-item">
+                      {localGameState[enemy].skillVestige.length}
+                    </div>
                   </div>
                   <div className="rcmtb-mid">
                     <div className="fd-counter">
@@ -5840,8 +5857,12 @@ const Board = (props) => {
                     </div>
                   </div>
                   <div className="avel-container">
-                    <div className="avel-deck avel-container-item"></div>
-                    <div className="avel-discard avel-container-item"></div>
+                    <div className="avel-deck avel-container-item">
+                      {localGameState[enemy].avelhemRepertoire.length}
+                    </div>
+                    <div className="avel-discard avel-container-item">
+                      {localGameState[enemy].avelhemVestige.length}
+                    </div>
                   </div>
                 </div>
                 <div className="rcm-middle">
@@ -5849,8 +5870,12 @@ const Board = (props) => {
                 </div>
                 <div className="rcm-top-bot">
                   <div className="skill-container">
-                    <div className="skill-deck skill-container-item"></div>
-                    <div className="skill-discard skill-container-item"></div>
+                    <div className="skill-deck skill-container-item">
+                      {localGameState[self].skillRepertoire.length}
+                    </div>
+                    <div className="skill-discard skill-container-item">
+                      {localGameState[self].skillVestige.length}
+                    </div>
                   </div>
                   <div className="rcmtb-mid">
                     <div className="fd-counter">
@@ -5861,8 +5886,12 @@ const Board = (props) => {
                     </div>
                   </div>
                   <div className="avel-container">
-                    <div className="avel-deck avel-container-item"></div>
-                    <div className="avel-discard avel-container-item"></div>
+                    <div className="avel-deck avel-container-item">
+                      {localGameState[self].avelhemRepertoire.length}
+                    </div>
+                    <div className="avel-discard avel-container-item">
+                      {localGameState[self].avelhemVestige.length}
+                    </div>
                   </div>
                 </div>
               </div>
