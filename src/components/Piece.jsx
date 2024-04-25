@@ -171,7 +171,7 @@ export const Piece = (props) => {
             onClick={() => handleClick()}
           >
             <>
-              {isActivatingUnit && <div className="glow animating"></div>}
+              {/* {isActivatingUnit && <div className="glow animating"></div>} */}
 
               {/* Mana Scion: Disruption */}
               {props.unit.enhancements.disruption > 0 && (

@@ -50,11 +50,13 @@ const Tile = (props) => {
       onClick={() => onClickTile()}
     >
       <div className={`tile ${self !== "guest" ? "" : "reversed-tile"}`}>
-        {!props.zone.player && (
+        {/* Tile coordinates below */}
+
+        {/* {!props.zone.player && (
           <>
             [{props.zone.row},{props.zone.column}]
           </>
-        )}
+        )} */}
       </div>
     </div>
   );

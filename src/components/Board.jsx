@@ -311,6 +311,54 @@ const Board = (props) => {
     };
   };
 
+  const activatingUnit = () => {
+    if (
+      localGameState.activatingUnit.length &&
+      localGameState.activatingUnit[localGameState.activatingUnit.length - 1]
+    ) {
+      let unit =
+        localGameState.activatingUnit[localGameState.activatingUnit.length - 1];
+
+      //host or spectator
+      if (self !== "guest") {
+        return {
+          position: "absolute",
+          zIndex: 101,
+          top: 21 + 78 * unit.row,
+          left: 21 + 78 * unit.column,
+        };
+      } else {
+        //guest
+        return {
+          position: "absolute",
+          zIndex: 101,
+          top: 21 + 78 * (9 - unit.row),
+          left: 21 + 78 * (4 - unit.column),
+        };
+      }
+    }
+  };
+
+  const unitPosition = (unit) => {
+    //host or spectator
+    if (self !== "guest") {
+      return {
+        position: "absolute",
+        zIndex: 100,
+        top: 12 + 78 * unit.row,
+        left: 12 + 78 * unit.column,
+      };
+    } else {
+      //guest
+      return {
+        position: "absolute",
+        zIndex: 100,
+        top: 12 + 78 * (9 - unit.row),
+        left: 12 + 78 * (4 - unit.column),
+      };
+    }
+  };
+
   const updateFirebase = (newGameState) => {
     try {
       updateDoc(gameDoc, { gameState: newGameState });
@@ -5715,27 +5763,14 @@ const Board = (props) => {
             </div>
 
             <div className="middle-container">
+              {localGameState.activatingUnit.length && (
+                <div className="glow animating" style={activatingUnit()}></div>
+              )}
+
               {localGameState.host.units.map((unit, i) => (
                 <div key={i}>
                   {unit && (
-                    <div
-                      className="board-piece"
-                      style={
-                        self === "host"
-                          ? {
-                              position: "absolute",
-                              zIndex: 100,
-                              top: 12 + 78 * unit.row,
-                              left: 12 + 78 * unit.column,
-                            }
-                          : {
-                              position: "absolute",
-                              zIndex: 100,
-                              top: 12 + 78 * (9 - unit.row),
-                              left: 12 + 78 * (4 - unit.column),
-                            }
-                      }
-                    >
+                    <div className="board-piece" style={unitPosition(unit)}>
                       <Piece
                         unit={unit}
                         enterMoveMode={enterMoveMode}
@@ -5757,24 +5792,7 @@ const Board = (props) => {
               {localGameState.guest.units.map((unit, i) => (
                 <div key={-i - 1}>
                   {unit && (
-                    <div
-                      className="board-piece"
-                      style={
-                        self === "host"
-                          ? {
-                              position: "absolute",
-                              zIndex: 100,
-                              top: 12 + 78 * unit.row,
-                              left: 12 + 78 * unit.column,
-                            }
-                          : {
-                              position: "absolute",
-                              zIndex: 100,
-                              top: 12 + 78 * (9 - unit.row),
-                              left: 12 + 78 * (4 - unit.column),
-                            }
-                      }
-                    >
+                    <div className="board-piece" style={unitPosition(unit)}>
                       <Piece
                         unit={unit}
                         enterMoveMode={enterMoveMode}
@@ -5818,7 +5836,7 @@ const Board = (props) => {
                 )}
               </div>
             </div>
-            {/* <div className="phase-indicator"></div> */}
+
             <div className="left-container">
               <div className="hands-player">
                 <div className="skill-hand">
@@ -5828,13 +5846,6 @@ const Board = (props) => {
                   <EnemyAvelhemHand />
                 </div>
               </div>
-
-              {/* <div className="lc-player">
-                <div className="avel-hand"></div>
-                <div className="skill-hand">
-                  <EnemySkillHand />
-                </div>
-              </div> */}
 
               <div className="lcMiddleContainer">
                 <div className="rcm-top-bot">

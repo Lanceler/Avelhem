@@ -301,17 +301,14 @@ animation: moveUpDownHP 1.0s ease-in-out infinite;
     background-color: rgb(255, 227, 67, 0.45);;
     /* transition: all 1.5s ease; */
     position: absolute;
-    z-index: 600;
 
-    top: 10%;
-    left: 10%;
 
     pointer-events: none;
     
 }
 
 .glow.animating {
-    animation: expand-contract 2s linear infinite;
+    animation: expand-contract 2.2s linear infinite;
 
 }
 
