@@ -26,52 +26,14 @@ import Ambidexterity from "../assets/others/Ambidexterity.png";
 
 import { useRecurringEffects } from "../hooks/useRecurringEffects";
 
+import { useCardImageSwitch } from "../hooks/useCardImageSwitch";
+
 export const Piece = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const { getZonesInRange } = useRecurringEffects();
-
-  let classIcon = null;
-
-  switch (props.unit.unitClass) {
-    case "Fire Scion":
-      classIcon = FireScion;
-      break;
-
-    case "Water Scion":
-      classIcon = WaterScion;
-      break;
-
-    case "Wind Scion":
-      classIcon = WindScion;
-      break;
-
-    case "Land Scion":
-      classIcon = LandScion;
-      break;
-
-    case "Metal Scion":
-      classIcon = MetalScion;
-      break;
-
-    case "Lightning Scion":
-      classIcon = LightningScion;
-      break;
-
-    case "Mana Scion":
-      classIcon = ManaScion;
-      break;
-
-    case "Plant Scion":
-      classIcon = PlantScion;
-      break;
-
-    default:
-      classIcon = Pawn;
-      break;
-  }
+  const { getElementImage } = useCardImageSwitch();
 
   let pieceSelectable = false;
 
@@ -95,18 +57,6 @@ export const Piece = (props) => {
     }
   }
 
-  const handleAbility = () => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    newGameState.currentResolution.push({
-      resolution: "Selecting",
-      resolution2: "Selecting Unit Ability",
-      unit: props.unit,
-    });
-
-    dispatch(updateState(newGameState));
-  };
-
   const handleClick = () => {
     if (props.tileMode === "selectUnit") {
       if (pieceSelectable) {
@@ -118,48 +68,16 @@ export const Piece = (props) => {
         );
       }
     } else {
-      if (props.expandedPiece === props.id) {
-        props.selectExpandPiece(null);
+      if (
+        props.expandedUnit &&
+        props.expandedUnit.unitIndex === props.unit.unitIndex &&
+        props.expandedUnit.player === props.unit.player
+      ) {
+        props.setExpandedUnit(null);
       } else {
-        props.selectExpandPiece(props.id);
+        props.setExpandedUnit(props.unit);
       }
     }
-  };
-
-  const handleInfo = () => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    props.selectExpandPiece(null);
-
-    props.enterMoveMode(
-      getZonesInRange(props.unit.row, props.unit.column, 1, false),
-      props.unit,
-      newGameState,
-      null
-    );
-  };
-
-  const handleSkill = () => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    newGameState.currentResolution.push({
-      resolution: "Selecting",
-      resolution2: "Selecting Scion Skill",
-      unit: props.unit,
-    });
-
-    dispatch(updateState(newGameState));
-  };
-
-  const handleTactic = () => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    newGameState.currentResolution.push({
-      resolution: "Misc.",
-      resolution2: "Activating Tactic",
-      unit: props.unit,
-    });
-
-    dispatch(updateState(newGameState));
   };
 
   return (
@@ -171,8 +89,6 @@ export const Piece = (props) => {
             onClick={() => handleClick()}
           >
             <>
-              {/* {isActivatingUnit && <div className="glow animating"></div>} */}
-
               {/* Mana Scion: Disruption */}
               {props.unit.enhancements.disruption > 0 && (
                 <div className="disruption animating"></div>
@@ -185,14 +101,12 @@ export const Piece = (props) => {
 
               <div className="piece-icon-shadow"></div>
 
-              <img src={classIcon} className="scionClass" />
-
-              {/* {props.unit.unitClass === "Pawn" && (
-                <img src={classIcon} className="scionClass" />
-              )} */}
+              <img
+                src={getElementImage(props.unit.unitClass)}
+                className="scionClass"
+              />
 
               {props.unit.unitClass !== "Pawn" && (
-                // <img src={classIcon} className="scionClass ascension" />
                 <div className="ascension"></div>
               )}
 
@@ -207,7 +121,6 @@ export const Piece = (props) => {
                       <div className="cascade-line3"></div>
                     )}
                   </div>
-                  <img src={classIcon} className="scionClass blink" />
                 </>
               )}
 
@@ -217,7 +130,6 @@ export const Piece = (props) => {
                     <div className="ravager-line"></div>
                     <div className="ravager-line2"></div>
                   </div>
-                  <img src={classIcon} className="scionClass blink" />
                 </>
               )}
             </>
@@ -395,53 +307,6 @@ export const Piece = (props) => {
           {props.unit.boosts.ambidexterity === true && (
             <>
               <img src={Ambidexterity} className="ambidexterity" />
-            </>
-          )}
-
-          {props.expandedPiece === props.id && (
-            <>
-              <div
-                className="pieceOption"
-                style={{ top: -17, left: -17 }}
-                onClick={() => handleInfo()}
-              >
-                <div className="optionIcon">Info</div>
-              </div>
-
-              {localGameState.currentResolution.length &&
-                localGameState.currentResolution[
-                  localGameState.currentResolution.length - 1
-                ].resolution === "Execution Phase" &&
-                self === props.unit.player &&
-                self === localGameState.turnPlayer && (
-                  <>
-                    <div
-                      className="pieceOption"
-                      style={{ top: -17, left: 54 }}
-                      onClick={() => handleTactic(props.unit)}
-                    >
-                      <div className="optionIcon">Dice</div>
-                    </div>
-                    {props.unit.unitClass !== "Pawn" && (
-                      <>
-                        <div
-                          className="pieceOption"
-                          style={{ top: 54, left: 54 }}
-                          onClick={() => handleAbility()}
-                        >
-                          <div className="optionIcon">Abi</div>
-                        </div>
-                        <div
-                          className="pieceOption"
-                          style={{ top: 54, left: -17 }}
-                          onClick={() => handleSkill()}
-                        >
-                          <div className="optionIcon">Ski</div>
-                        </div>
-                      </>
-                    )}
-                  </>
-                )}
             </>
           )}
         </>

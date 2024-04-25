@@ -55,7 +55,7 @@ const AcquisitionPhaseSelection = (props) => {
     },
 
     {
-      abilityName: "Bequeath",
+      abilityName: "Beseech",
       abilityQualifier: <div className="abilityQualifier"></div>,
       abilityText: (
         <>
@@ -94,17 +94,17 @@ const AcquisitionPhaseSelection = (props) => {
         <div className="abilityQualifier">
           {upgrade < 1 && (
             <div style={{ fontSize: 18 }}>
-              Available after 1st Acquisition upgrade via Bounty Phase.
+              Can be unlocked <br />
+              via Bounty Phase <br /> (1st Acquisition).
             </div>
           )}
         </div>
       ),
       abilityText: (
         <>
+          <div className="choiceText">⬩Gain 1 FD.</div>
           <div className="choiceText">⬩Draw 1 Avelhem.</div>
-          <div className="choiceText">
-            ⬩Gain 1 FD or recover 1 "Transcendence".
-          </div>
+          <div className="choiceText">⬩You may recover 1 “Transcendence”.</div>
         </>
       ),
     },
@@ -115,7 +115,8 @@ const AcquisitionPhaseSelection = (props) => {
         <div className="abilityQualifier">
           {upgrade < 3 && (
             <div style={{ fontSize: 18 }}>
-              Available after 3rd Acquisition upgrade via Bounty Phase.
+              Can be unlocked <br />
+              via Bounty Phase <br /> (3rd Acquisition).
             </div>
           )}
         </div>

@@ -100,7 +100,8 @@ const Board = (props) => {
   const [movingUnit, setMovingUnit] = useState(null);
   const [movingSpecial, setMovingSpecial] = useState(null);
   const [tacticUsed, setTacticUsed] = useState(null);
-  const [expandedPiece, setExpandedPiece] = useState(null);
+
+  const [expandedUnit, setExpandedUnit] = useState(null);
 
   const [hideModal, setHideModal] = useState(false);
 
@@ -127,6 +128,7 @@ const Board = (props) => {
     endDefiancePhase2,
     getVacant2SpaceZones,
     getVacantAdjacentZones,
+    getZonesInRange,
     grantRavager,
     freeze1,
     freeze2,
@@ -359,6 +361,107 @@ const Board = (props) => {
     }
   };
 
+  const unitButtonPosition = (unit) => {
+    //host or spectator
+    if (self !== "guest") {
+      return [
+        {
+          position: "absolute",
+          zIndex: 102,
+          top: 12 + 78 * unit.row - 17,
+          left: 12 + 78 * unit.column - 17,
+        },
+        {
+          position: "absolute",
+          zIndex: 102,
+          top: 12 + 78 * unit.row - 17,
+          left: 12 + 78 * unit.column + 54,
+        },
+        {
+          position: "absolute",
+          zIndex: 102,
+          top: 12 + 78 * unit.row + 54,
+          left: 12 + 78 * unit.column + 54,
+        },
+        {
+          position: "absolute",
+          zIndex: 102,
+          top: 12 + 78 * unit.row + 54,
+          left: 12 + 78 * unit.column - 17,
+        },
+      ];
+    } else {
+      //guest
+      return [
+        {
+          position: "absolute",
+          zIndex: 102,
+          top: 12 + 78 * (9 - unit.row) - 17,
+          left: 12 + 78 * (4 - unit.column) - 17,
+        },
+        {
+          position: "absolute",
+          zIndex: 102,
+          top: 12 + 78 * (9 - unit.row) - 17,
+          left: 12 + 78 * (4 - unit.column) + 54,
+        },
+        {
+          position: "absolute",
+          zIndex: 102,
+          top: 12 + 78 * (9 - unit.row) + 54,
+          left: 12 + 78 * (4 - unit.column) + 54,
+        },
+        {
+          position: "absolute",
+          zIndex: 102,
+          top: 12 + 78 * (9 - unit.row) + 54,
+          left: 12 + 78 * (4 - unit.column) - 17,
+        },
+      ];
+    }
+  };
+
+  const handleUnitOptions = (option) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    switch (option) {
+      case "Info":
+        enterMoveMode(
+          getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
+          expandedUnit,
+          newGameState,
+          null
+        );
+        break;
+
+      case "Tactic":
+        newGameState.currentResolution.push({
+          resolution: "Misc.",
+          resolution2: "Activating Tactic",
+          unit: expandedUnit,
+        });
+        break;
+
+      case "Ability":
+        newGameState.currentResolution.push({
+          resolution: "Selecting",
+          resolution2: "Selecting Unit Ability",
+          unit: expandedUnit,
+        });
+        break;
+
+      case "Skill":
+        newGameState.currentResolution.push({
+          resolution: "Selecting",
+          resolution2: "Selecting Scion Skill",
+          unit: expandedUnit,
+        });
+        break;
+    }
+
+    dispatch(updateState(newGameState));
+  };
+
   const updateFirebase = (newGameState) => {
     try {
       updateDoc(gameDoc, { gameState: newGameState });
@@ -383,7 +486,7 @@ const Board = (props) => {
 
   useEffect(() => {
     // console.log("local gamestate changed");
-    setExpandedPiece(null);
+    setExpandedUnit(null);
   }, [localGameState]);
 
   //Gets data regarding zones and units
@@ -4903,7 +5006,7 @@ const Board = (props) => {
 
   const hideOrRevealModale = () => {
     setHideModal(!hideModal);
-    setExpandedPiece(null);
+    setExpandedUnit(null);
   };
 
   const moveUnit = (unit, zoneId, special) => {
@@ -5404,10 +5507,6 @@ const Board = (props) => {
     updateFirebase(newGameState);
   };
 
-  const selectExpandPiece = (id) => {
-    setExpandedPiece(id);
-  };
-
   const skillConclusion = (player, unitInfo, skill, conclusion) => {
     setTimeout(() => {
       let newGameState = JSON.parse(JSON.stringify(localGameState));
@@ -5763,7 +5862,54 @@ const Board = (props) => {
             </div>
 
             <div className="middle-container">
-              {localGameState.activatingUnit.length && (
+              {expandedUnit != null && (
+                <>
+                  <div
+                    className="pieceOption"
+                    style={unitButtonPosition(expandedUnit)[0]}
+                    onClick={() => handleUnitOptions("Info")}
+                  >
+                    <div className="optionIcon">Info</div>
+                  </div>
+
+                  {localGameState.currentResolution.length &&
+                    localGameState.currentResolution[
+                      localGameState.currentResolution.length - 1
+                    ].resolution === "Execution Phase" &&
+                    self === expandedUnit.player &&
+                    self === localGameState.turnPlayer && (
+                      <>
+                        <div
+                          className="pieceOption"
+                          style={unitButtonPosition(expandedUnit)[1]}
+                          onClick={() => handleUnitOptions("Tactic")}
+                        >
+                          <div className="optionIcon">Dice</div>
+                        </div>
+                        {expandedUnit.unitClass !== "Pawn" && (
+                          <>
+                            <div
+                              className="pieceOption"
+                              style={unitButtonPosition(expandedUnit)[2]}
+                              onClick={() => handleUnitOptions("Ability")}
+                            >
+                              <div className="optionIcon">Abi</div>
+                            </div>
+                            <div
+                              className="pieceOption"
+                              style={unitButtonPosition(expandedUnit)[3]}
+                              onClick={() => handleUnitOptions("Skill")}
+                            >
+                              <div className="optionIcon">Ski</div>
+                            </div>
+                          </>
+                        )}
+                      </>
+                    )}
+                </>
+              )}
+
+              {localGameState.activatingUnit.length > 0 && (
                 <div className="glow animating" style={activatingUnit()}></div>
               )}
 
@@ -5773,14 +5919,12 @@ const Board = (props) => {
                     <div className="board-piece" style={unitPosition(unit)}>
                       <Piece
                         unit={unit}
-                        enterMoveMode={enterMoveMode}
                         movingUnit={movingUnit}
                         tileMode={tileMode}
                         selectUnitReason={selectUnitReason}
                         selectUnitSpecial={selectUnitSpecial}
-                        id={i} // hostUnitIds
-                        expandedPiece={expandedPiece}
-                        selectExpandPiece={selectExpandPiece}
+                        expandedUnit={expandedUnit}
+                        setExpandedUnit={setExpandedUnit}
                         validZones={validZones}
                         selectUnit={selectUnit}
                       />
@@ -5795,14 +5939,12 @@ const Board = (props) => {
                     <div className="board-piece" style={unitPosition(unit)}>
                       <Piece
                         unit={unit}
-                        enterMoveMode={enterMoveMode}
                         movingUnit={movingUnit}
                         tileMode={tileMode}
                         selectUnitReason={selectUnitReason}
                         selectUnitSpecial={selectUnitSpecial}
-                        id={-i - 1} // guestUnitIds
-                        expandedPiece={expandedPiece}
-                        selectExpandPiece={selectExpandPiece}
+                        expandedUnit={expandedUnit}
+                        setExpandedUnit={setExpandedUnit}
                         validZones={validZones}
                         selectUnit={selectUnit}
                       />
