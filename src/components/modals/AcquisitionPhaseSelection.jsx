@@ -191,7 +191,19 @@ const AcquisitionPhaseSelection = (props) => {
           newGameState[self].fateDefiances + 1
         );
         newGameState = drawAvelhem(newGameState);
+
         newGameState = nextPhase(newGameState);
+
+        if (newGameState[self].skillVestige.includes("SX-01")) {
+          newGameState.currentResolution.push({
+            resolution: "Recover Skill",
+            player: self,
+            restriction: ["SX-01"],
+            message: "Recover 1 “Transcendence”",
+            outcome: "Add",
+          });
+        }
+
         dispatch(updateState(newGameState));
         props.updateFirebase(newGameState);
         break;
