@@ -45,9 +45,7 @@ const YouMayNoYes = (props) => {
 
     dispatch(updateState(newGameState));
 
-    if (updateData) {
-      props.updateFirebase(newGameState);
-    }
+    props.updateFirebase(newGameState);
   };
 
   const handleYes = () => {
@@ -295,6 +293,7 @@ const YouMayNoYes = (props) => {
         break;
 
       case "Avelhem Resonance Shuffle":
+        updateData = true;
         newGameState.currentResolution[
           newGameState.currentResolution.length - 1
         ].conclusion = "shuffle";

@@ -486,6 +486,15 @@ const Board = (props) => {
 
   useEffect(() => {
     // console.log("local gamestate changed");
+
+    setValidZones([]);
+    setTileMode(null);
+    setSelectUnitReason(null);
+    setSelectUnitSpecial(null);
+    setMovingUnit(null);
+    setMovingSpecial(null);
+    setTacticUsed(null);
+
     setExpandedUnit(null);
   }, [localGameState]);
 
@@ -830,7 +839,7 @@ const Board = (props) => {
           <>
             {self === lastResolution.unit.player && (
               <>
-                {resolutionUpdateGameStateOnly(
+                {resolutionUpdate(
                   avelhemResonance(
                     lastResolution.unit,
                     lastResolution.resonator
@@ -1223,7 +1232,7 @@ const Board = (props) => {
                 {self === lastResolution.player && !hideModal && (
                   <>
                     <>
-                      {resolutionUpdateGameStateOnly(
+                      {resolutionUpdate(
                         unitFloatSkill(
                           lastResolution.unit,
                           lastResolution.skill,
@@ -1259,7 +1268,7 @@ const Board = (props) => {
                 {self === lastResolution.player && !hideModal && (
                   <>
                     <>
-                      {resolutionUpdateGameStateOnly(
+                      {resolutionUpdate(
                         unitRetainSkill(
                           lastResolution.unit,
                           lastResolution.skill,
@@ -5862,7 +5871,7 @@ const Board = (props) => {
             </div>
 
             <div className="middle-container">
-              {expandedUnit != null && (
+              {expandedUnit !== null && (
                 <>
                   <div
                     className="pieceOption"
@@ -5872,7 +5881,7 @@ const Board = (props) => {
                     <div className="optionIcon">Info</div>
                   </div>
 
-                  {localGameState.currentResolution.length &&
+                  {localGameState.currentResolution.length > 0 &&
                     localGameState.currentResolution[
                       localGameState.currentResolution.length - 1
                     ].resolution === "Execution Phase" &&
