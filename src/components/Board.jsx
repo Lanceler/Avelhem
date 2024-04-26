@@ -1777,6 +1777,20 @@ const Board = (props) => {
               </>
             );
 
+          case "Triggering Adamant Armor":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMaySpend1Skill
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
           case "Talent Conclusion":
             return (
               <>

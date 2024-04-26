@@ -177,6 +177,10 @@ const YouMaySpend1Skill = (props) => {
         });
         break;
 
+      case "Adamant Armor":
+        unit.temporary.adamantArmor = true;
+        break;
+
       case "Efflorescence1":
         newGameState.currentResolution.push({
           resolution: "Recover Skill",

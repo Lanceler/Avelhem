@@ -2323,8 +2323,9 @@ export const useRecurringEffects = () => {
     }
 
     switch (true) {
-      case victim.enhancements.ward > 0:
+      case victim.enhancements.ward > 0 || victim.temporary.adamantArmor:
         delete victim.enhancements.ward;
+        delete victim.temporary.adamantArmor;
         break;
       case victim.unitClass === "Land Scion" &&
         victim.hp > 1 &&
@@ -2654,7 +2655,7 @@ export const useRecurringEffects = () => {
       type: "blast",
     });
 
-    //to do in the future: consider bypass Target and Adamant Armor
+    //to do in the future: consider bypass Target
     if (triggerTarget(attacker, victim, "blast")) {
       newGameState.currentResolution.push({
         resolution: "Triggering Contingent Skill",
@@ -3639,7 +3640,7 @@ export const useRecurringEffects = () => {
       duration: 2,
     });
 
-    //to do in the future: consider bypass Target and Adamant Armor
+    //to do in the future: consider bypass Target
     if (triggerTarget(attacker, victim, "freeze2")) {
       newGameState.currentResolution.push({
         resolution: "Triggering Contingent Skill",
@@ -4172,7 +4173,7 @@ export const useRecurringEffects = () => {
       duration: 1,
     });
 
-    //to do in the future: consider bypass Target and Adamant Armor
+    //to do in the future: consider bypass Target
     if (triggerTarget(attacker, victim, "paralyze1")) {
       newGameState.currentResolution.push({
         resolution: "Triggering Contingent Skill",
@@ -4286,12 +4287,6 @@ export const useRecurringEffects = () => {
     );
 
     return newGameState;
-  };
-
-  const resetAdamantArmor = (unit) => {
-    delete unit.temporary.usedAdamantArmor;
-
-    return unit;
   };
 
   const rollTactic = () => {
@@ -4844,6 +4839,21 @@ export const useRecurringEffects = () => {
       });
     }
 
+    if (triggerAdamantArmor(victim)) {
+      newGameState.currentResolution.push({
+        resolution: "Unit Talent",
+        resolution2: "Triggering Adamant Armor",
+        unit: victim,
+        details: {
+          title: "Adamant Armor",
+          message:
+            "Your Metal Scion was targeted via strike. They may spend 1 skill to reduce the attack’s AP by 1.",
+          restriction: null,
+          reason: "Adamant Armor",
+        },
+      });
+    }
+
     return newGameState;
   };
 
@@ -4858,12 +4868,14 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
-  const triggerAscensionAlly = (newGameState, unit, scionClass, method) => {
-    return triggerMatchMadeInHeaven(newGameState, unit, scionClass, method);
-  };
-
-  const triggerAscensionEnemy = (newGameState, unit, scionClass, method) => {
-    return triggerFatedRivalry(newGameState, unit, scionClass, method);
+  const triggerAdamantArmor = (victim) => {
+    return (
+      victim.unitClass === "Metal Scion" && //must be Metal Scion
+      !isMuted(victim) &&
+      localGameState[victim.player].skillHand.length > 0 &&
+      !victim.temporary.usedAdamantArmor
+      // && ["strike", "virtue-blast", "paralyze1", "paralyze2"].includes(method)
+    );
   };
 
   const triggerAegis = (victim) => {
@@ -4886,6 +4898,14 @@ export const useRecurringEffects = () => {
     return false;
   };
 
+  const triggerAscensionAlly = (newGameState, unit, scionClass, method) => {
+    return triggerMatchMadeInHeaven(newGameState, unit, scionClass, method);
+  };
+
+  const triggerAscensionEnemy = (newGameState, unit, scionClass, method) => {
+    return triggerFatedRivalry(newGameState, unit, scionClass, method);
+  };
+
   const triggerBlackBusinessCard = (victim) => {
     if (victim.enhancements.ravager) {
       return true;
@@ -4903,7 +4923,6 @@ export const useRecurringEffects = () => {
       victim.fever > 0 && //enemy needs fever
       getZonesWithEnemies(victim, 1).length //must be able to burn an adjacent enemy
     ) {
-      console.log("canBlazeOfGlory");
       return true;
     }
     return false;
