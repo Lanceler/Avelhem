@@ -28,7 +28,7 @@ const SelectedAvelhem = (props) => {
 
   const canSearch =
     yourTurn &&
-    localGameState[self].bountyUpgrades.avelhem >= 1 &&
+    localGameState[self].bountyUpgrades.avelhem >= 2 &&
     !localGameState[self].hasAvelhemSearch &&
     localGameState[self].fateDefiances >= 1;
 
