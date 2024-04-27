@@ -18,8 +18,9 @@ const UnitInfo = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="handModal">
-        <div className="twoColumn">
+        <div className="selectedCardModal">
           <h2 className="choiceTitle">{`${team} ${unit.unitClass}`}</h2>
+          <h3>Test</h3>
         </div>
         <button className="collapseSelected" onClick={() => handleCollapse()}>
           X

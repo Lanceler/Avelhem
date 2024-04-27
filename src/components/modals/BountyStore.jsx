@@ -694,7 +694,7 @@ const BountyStore = (props) => {
 
           {/* space */}
 
-          <h3>March to victory</h3>
+          {/* <h3>March to victory</h3>
           <div className="twoColumn">
             <div
               className={`customChoice customChoiceSmaller ${
@@ -759,7 +759,7 @@ const BountyStore = (props) => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* space */}
         </div>

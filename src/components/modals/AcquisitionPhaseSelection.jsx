@@ -80,7 +80,7 @@ const AcquisitionPhaseSelection = (props) => {
           <div className="choiceText ">⬩Draw 1 skill.</div>
           <div className="choiceText ">
             ⬩{upgrade < 2 && <>If upgraded: </>}
-            Roll 1 tactical die.
+            If your hand contains 4 or less skills, draw another skill.
           </div>
         </>
       ),
@@ -180,6 +180,11 @@ const AcquisitionPhaseSelection = (props) => {
 
       case 2:
         newGameState = drawSkill(newGameState);
+
+        if (newGameState[self].skillHand.length <= 4) {
+          newGameState = drawSkill(newGameState);
+        }
+
         newGameState = nextPhase(newGameState);
         dispatch(updateState(newGameState));
         props.updateFirebase(newGameState);

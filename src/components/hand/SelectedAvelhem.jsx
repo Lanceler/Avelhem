@@ -150,6 +150,7 @@ const SelectedAvelhem = (props) => {
               )})`,
             }}
           ></div>
+
           <div className="displayedCardOptions">
             {canRecover && (
               <>
