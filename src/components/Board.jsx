@@ -79,6 +79,8 @@ import EnemyAvelhemHand from "./hand/EnemyAvelhemHand";
 
 import SovereignTactics from "./displays/SovereignTactics";
 
+import UnitInfo from "./modals/UnitInfo";
+
 import Piece from "./Piece";
 
 const Board = (props) => {
@@ -105,6 +107,8 @@ const Board = (props) => {
   const [expandedUnit, setExpandedUnit] = useState(null);
 
   const [hideModal, setHideModal] = useState(false);
+
+  const [unitInfor, setUnitInfor] = useState(null);
 
   const {
     activateAegis,
@@ -429,12 +433,13 @@ const Board = (props) => {
 
     switch (option) {
       case "Info":
-        enterMoveMode(
-          getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
-          expandedUnit,
-          newGameState,
-          null
-        );
+        setUnitInfor(expandedUnit);
+        // enterMoveMode(
+        //   getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
+        //   expandedUnit,
+        //   newGameState,
+        //   null
+        // );
         break;
 
       case "Tactic":
@@ -5815,6 +5820,9 @@ const Board = (props) => {
             </div>
           </div>
           {currentResolutionPrompt()}
+          {unitInfor !== null && (
+            <UnitInfo unit={unitInfor} setUnitInfor={setUnitInfor} />
+          )}
         </div>
       )}
     </>
