@@ -47,6 +47,7 @@ import ViewRevealedSkill from "./modals/ViewRevealedSkill";
 import YouMayFloat1Skill from "./modals/YouMayFloat1Skill";
 import YouMaySpend1Skill from "./modals/YouMaySpend1Skill";
 import YouMayNoYes from "./modals/YouMayNoYes";
+import VictoryScreen from "./modals/VictoryScreen";
 
 import TacticSelection from "./modals/TacticSelection";
 import TacticSelectionViaEffect from "./modals/TacticSelectionViaEffect";
@@ -318,8 +319,10 @@ const Board = (props) => {
       localGameState.activatingUnit.length &&
       localGameState.activatingUnit[localGameState.activatingUnit.length - 1]
     ) {
-      let unit =
+      let unitInfo =
         localGameState.activatingUnit[localGameState.activatingUnit.length - 1];
+
+      let unit = localGameState[unitInfo.player].units[unitInfo.unitIndex];
 
       //host or spectator
       if (self !== "guest") {
@@ -510,25 +513,24 @@ const Board = (props) => {
   //====================================================================
   //Current Resolution Prompt below
 
-  const currentResolutionPrompt = () => {
-    // setTimeout(() => {}, 1000)
+  //Current Resolution Prompt below
 
-    let lastResolution = null;
+  const currentResolutionPrompt = () => {
+    let lastResolution = { resolution: "" };
 
     if (localGameState.currentResolution.length > 0) {
       lastResolution =
         localGameState.currentResolution[
           localGameState.currentResolution.length - 1
         ];
-    } else {
-      lastResolution = { resolution: "" };
     }
 
     switch (lastResolution.resolution) {
       case "Animation Delay":
-        return (
-          <>{self === lastResolution.priority && <>{animationDelay()}</>}</>
-        );
+        if (self === lastResolution.priority) {
+          animationDelay();
+        }
+        break;
 
       case "Acquisition Phase Selection":
         return (
@@ -542,6 +544,7 @@ const Board = (props) => {
             )}
           </>
         );
+
       case "Bounty Phase Selection":
         return (
           <>
@@ -553,6 +556,7 @@ const Board = (props) => {
             )}
           </>
         );
+
       case "Coordination Phase Selection":
         return (
           <>
@@ -607,13 +611,10 @@ const Board = (props) => {
             );
 
           case "Select Destine Pawn":
-            return (
-              <>
-                {self === lastResolution.player && (
-                  <>{selectDestine(lastResolution.scionClass)}</>
-                )}
-              </>
-            );
+            if (self === lastResolution.player) {
+              selectDestine(lastResolution.scionClass);
+            }
+            break;
 
           case "Curate Results":
             return (
@@ -629,13 +630,10 @@ const Board = (props) => {
             );
 
           case "End Phase":
-            return (
-              <>
-                {self === lastResolution.player && (
-                  <>{resolutionUpdateGameStateOnly(endDefiancePhase2())}</>
-                )}
-              </>
-            );
+            if (self === lastResolution.player) {
+              resolutionUpdateGameStateOnly(endDefiancePhase2());
+            }
+            break;
         }
         break;
 
@@ -669,59 +667,40 @@ const Board = (props) => {
             );
 
           case "Burn Decrement":
-            return (
-              <>
-                {self === lastResolution.player && (
-                  <>{resolutionUpdate(decrementBurn())}</>
-                )}
-              </>
-            );
+            if (self === lastResolution.player) {
+              resolutionUpdate(decrementBurn());
+            }
+            break;
 
           case "Status Decrement":
-            return (
-              <>
-                {self === lastResolution.player && (
-                  <>{resolutionUpdateGameStateOnly(decrementStatus())}</>
-                )}
-              </>
-            );
+            if (self === lastResolution.player) {
+              resolutionUpdateGameStateOnly(decrementStatus());
+            }
+            break;
 
           case "Scoring":
-            return (
-              <>
-                {self === lastResolution.player && (
-                  <>{resolutionUpdate(applyScore())}</>
-                )}
-              </>
-            );
+            if (self === lastResolution.player) {
+              resolutionUpdate(applyScore());
+            }
+            break;
         }
         break;
 
       case "Deploying Pawn":
-        return (
-          <>
-            {self === localGameState.turnPlayer && tileMode !== "deploy" && (
-              <>
-                {setTileMode("deploy")}
-                {setValidZones(lastResolution.zoneIds)}
-                {setDeployClass("Pawn")}
-              </>
-            )}
-          </>
-        );
+        if (self === localGameState.turnPlayer && tileMode !== "deploy") {
+          setTileMode("deploy");
+          setValidZones(lastResolution.zoneIds);
+          setDeployClass("Pawn");
+        }
+        break;
 
       case "Deploying Scion":
-        return (
-          <>
-            {self === localGameState.turnPlayer && tileMode !== "deploy" && (
-              <>
-                {setTileMode("deploy")}
-                {setValidZones(lastResolution.zoneIds)}
-                {setDeployClass(lastResolution.scionClass)}
-              </>
-            )}
-          </>
-        );
+        if (self === localGameState.turnPlayer && tileMode !== "deploy") {
+          setTileMode("deploy");
+          setValidZones(lastResolution.zoneIds);
+          setDeployClass(lastResolution.scionClass);
+        }
+        break;
 
       case "Blocking Virtue-Blast":
         return (
@@ -739,74 +718,48 @@ const Board = (props) => {
         );
 
       case "Tactic End":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
-              <>{tacticEnd(lastResolution.unit, lastResolution.effect)}</>
-            )}
-          </>
-        );
+        if (self === lastResolution.unit.player) {
+          tacticEnd(lastResolution.unit, lastResolution.effect);
+        }
+        break;
 
       case "Apply Burn":
-        return (
-          <>
-            {self === lastResolution.attacker.player && (
-              <>
-                {resolveApplyBurn(
-                  lastResolution.attacker,
-                  lastResolution.victim
-                )}
-              </>
-            )}
-          </>
-        );
+        if (self === lastResolution.attacker.player) {
+          resolveApplyBurn(lastResolution.attacker, lastResolution.victim);
+        }
+        break;
 
       case "Apply Damage":
-        return (
-          <>
-            {self === lastResolution.attacker.player && (
-              <>
-                {resolveApplyDamage(
-                  lastResolution.attacker,
-                  lastResolution.victim,
-                  lastResolution.type,
-                  lastResolution.special
-                )}
-              </>
-            )}
-          </>
-        );
+        if (self === lastResolution.attacker.player) {
+          resolveApplyDamage(
+            lastResolution.attacker,
+            lastResolution.victim,
+            lastResolution.type,
+            lastResolution.special
+          );
+        }
+        break;
 
       case "Apply Frostbite":
-        return (
-          <>
-            {self === lastResolution.attacker.player && (
-              <>
-                {resolveApplyFrostbite(
-                  lastResolution.attacker,
-                  lastResolution.victim,
-                  lastResolution.duration
-                )}
-              </>
-            )}
-          </>
-        );
+        if (self === lastResolution.attacker.player) {
+          resolveApplyFrostbite(
+            lastResolution.attacker,
+            lastResolution.victim,
+            lastResolution.duration
+          );
+        }
+        break;
 
       case "Apply Paralysis":
-        return (
-          <>
-            {self === lastResolution.attacker.player && (
-              <>
-                {resolveApplyParalysis(
-                  lastResolution.attacker,
-                  lastResolution.victim,
-                  lastResolution.duration,
-                  lastResolution.special
-                )}
-              </>
-            )}
-          </>
-        );
+        if (self === lastResolution.attacker.player) {
+          resolveApplyParalysis(
+            lastResolution.attacker,
+            lastResolution.victim,
+            lastResolution.duration,
+            lastResolution.special
+          );
+        }
+        break;
 
       case "Choose Resonator":
         return (
@@ -835,20 +788,12 @@ const Board = (props) => {
         );
 
       case "Avelhem Resonance":
-        return (
-          <>
-            {self === lastResolution.unit.player && (
-              <>
-                {resolutionUpdate(
-                  avelhemResonance(
-                    lastResolution.unit,
-                    lastResolution.resonator
-                  )
-                )}
-              </>
-            )}
-          </>
-        );
+        if (self === lastResolution.unit.player) {
+          resolutionUpdateGameStateOnly(
+            avelhemResonance(lastResolution.unit, lastResolution.resonator)
+          );
+        }
+        break;
 
       case "You May Shuffle Avelhem":
         return (
@@ -864,18 +809,10 @@ const Board = (props) => {
         );
 
       case "Avelhem Select Pawn":
-        return (
-          <>
-            {self === lastResolution.player && (
-              <>
-                {selectAvelhemPawn(
-                  lastResolution.avelhem,
-                  lastResolution.resonator
-                )}
-              </>
-            )}
-          </>
-        );
+        if (self === lastResolution.player) {
+          selectAvelhemPawn(lastResolution.avelhem, lastResolution.resonator);
+        }
+        break;
 
       case "Search Avelhem":
         return (
@@ -973,73 +910,52 @@ const Board = (props) => {
         );
 
       case "Avelhem Conclusion":
-        return (
-          <>
-            {self === lastResolution.player && (
-              <>
-                {avelhemConclusion(
-                  lastResolution.avelhem,
-                  lastResolution.conclusion,
-                  lastResolution.resonator,
-                  lastResolution.resonatorConclusion
-                )}
-              </>
-            )}
-          </>
-        );
+        if (self === lastResolution.player) {
+          avelhemConclusion(
+            lastResolution.avelhem,
+            lastResolution.conclusion,
+            lastResolution.resonator,
+            lastResolution.resonatorConclusion
+          );
+        }
+        break;
 
       case "Skill Conclusion":
-        return (
-          <>
-            {self === lastResolution.player && (
-              <>
-                {skillConclusion(
-                  lastResolution.player,
-                  lastResolution.unit,
-                  lastResolution.skill,
-                  lastResolution.conclusion
-                )}
-              </>
-            )}
-          </>
-        );
+        if (self === lastResolution.player) {
+          skillConclusion(
+            lastResolution.player,
+            lastResolution.unit,
+            lastResolution.skill,
+            lastResolution.conclusion
+          );
+        }
+        break;
 
       case "Resonance Conclusion":
-        return (
-          <>
-            {self === lastResolution.player && (
-              <>
-                {skillResonanceConclusion(
-                  lastResolution.player,
-                  lastResolution.unit,
-                  lastResolution.skill,
-                  lastResolution.skillConclusion,
-                  lastResolution.resonator,
-                  lastResolution.resonatorConclusion
-                )}
-              </>
-            )}
-          </>
-        );
+        if (self === lastResolution.player) {
+          skillResonanceConclusion(
+            lastResolution.player,
+            lastResolution.unit,
+            lastResolution.skill,
+            lastResolution.skillConclusion,
+            lastResolution.resonator,
+            lastResolution.resonatorConclusion
+          );
+        }
+        break;
 
       case "Selecting":
         switch (lastResolution.resolution2) {
           case "Selecting Unit":
-            return (
-              <>
-                {self === lastResolution.player &&
-                  tileMode !== "selectUnit" && (
-                    <>
-                      {setTileMode("selectUnit")}
-                      {setValidZones(lastResolution.zoneIds)}
-                      {setMovingUnit(lastResolution.unit)}
-                      {setTacticUsed(lastResolution.tactic)}
-                      {setSelectUnitReason(lastResolution.reason)}
-                      {setSelectUnitSpecial(lastResolution.special)}
-                    </>
-                  )}
-              </>
-            );
+            if (self === lastResolution.player && tileMode !== "selectUnit") {
+              setTileMode("selectUnit");
+              setValidZones(lastResolution.zoneIds);
+              setMovingUnit(lastResolution.unit);
+              setTacticUsed(lastResolution.tactic);
+              setSelectUnitReason(lastResolution.reason);
+              setSelectUnitSpecial(lastResolution.special);
+            }
+            break;
 
           case "Selecting Scion Skill":
             return (
@@ -1070,18 +986,13 @@ const Board = (props) => {
       case "Misc.":
         switch (lastResolution.resolution2) {
           case "Moving Unit":
-            return (
-              <>
-                {self === localGameState.turnPlayer && tileMode !== "move" && (
-                  <>
-                    {setTileMode("move")}
-                    {setValidZones(lastResolution.zoneIds)}
-                    {setMovingUnit(lastResolution.unit)}
-                    {setTacticUsed(lastResolution.tactic)}
-                  </>
-                )}
-              </>
-            );
+            if (self === localGameState.turnPlayer && tileMode !== "move") {
+              setTileMode("move");
+              setValidZones(lastResolution.zoneIds);
+              setMovingUnit(lastResolution.unit);
+              setTacticUsed(lastResolution.tactic);
+            }
+            break;
 
           case "Activating Tactic":
             return (
@@ -1182,17 +1093,12 @@ const Board = (props) => {
             );
 
           case "Strike Movement":
-            return (
-              <>
-                {self === lastResolution.attacker.player && (
-                  <>
-                    {resolutionUpdate(
-                      strikeMove(lastResolution.attacker, lastResolution.zone)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.attacker.player) {
+              resolutionUpdate(
+                strikeMove(lastResolution.attacker, lastResolution.zone)
+              );
+            }
+            break;
 
           case "Rooted Traverse":
             return (
@@ -1210,40 +1116,28 @@ const Board = (props) => {
             );
 
           case "Rooted Traverse Movement":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {enterMoveMode(
-                      getVacantAdjacentZones(lastResolution.unit),
-                      lastResolution.unit,
-                      null,
-                      lastResolution.tactic,
-                      true
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              enterMoveMode(
+                getVacantAdjacentZones(lastResolution.unit),
+                lastResolution.unit,
+                null,
+                lastResolution.tactic,
+                true
+              );
+            }
+            break;
 
           case "May float resonant skill unit":
-            return (
-              <>
-                {self === lastResolution.player && !hideModal && (
-                  <>
-                    <>
-                      {resolutionUpdate(
-                        unitFloatSkill(
-                          lastResolution.unit,
-                          lastResolution.skill,
-                          lastResolution.resonator
-                        )
-                      )}
-                    </>
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.player) {
+              resolutionUpdateGameStateOnly(
+                unitFloatSkill(
+                  lastResolution.unit,
+                  lastResolution.skill,
+                  lastResolution.resonator
+                )
+              );
+            }
+            break;
 
           case "May float resonant skill":
             return (
@@ -1267,28 +1161,23 @@ const Board = (props) => {
               <>
                 {self === lastResolution.player && !hideModal && (
                   <>
-                    <>
-                      {resolutionUpdate(
-                        unitRetainSkill(
-                          lastResolution.unit,
-                          lastResolution.skill,
-                          lastResolution.resonator
-                        )
-                      )}
-                    </>
+                    {resolutionUpdateGameStateOnly(
+                      unitRetainSkill(
+                        lastResolution.unit,
+                        lastResolution.skill,
+                        lastResolution.resonator
+                      )
+                    )}
                   </>
                 )}
               </>
             );
 
           case "Retain resonant skill":
-            return (
-              <>
-                {self === lastResolution.player && (
-                  <>{skillResonanceRetain(lastResolution.resonator)}</>
-                )}
-              </>
-            );
+            if (self === lastResolution.player) {
+              skillResonanceRetain(lastResolution.resonator);
+            }
+            break;
 
           case "Inspect Skill":
             return (
@@ -1348,82 +1237,40 @@ const Board = (props) => {
             );
 
           case "Activating Afterburner":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      afterburner1(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(afterburner1(lastResolution.unit));
+            }
+            break;
 
           case "Afterburner1":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      afterburner2(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(afterburner2(lastResolution.unit));
+            }
+            break;
 
           case "Activating Fiery Heart":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      fieryHeart1(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(fieryHeart1(lastResolution.unit));
+            }
+            break;
 
           case "Fiery Heart1":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      fieryHeart2(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(fieryHeart2(lastResolution.unit));
+            }
+            break;
 
           case "Activating Hydrotherapy":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      hydrotherapy1(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(hydrotherapy1(lastResolution.unit));
+            }
+            break;
 
           case "Activating Cold Embrace":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      coldEmbrace1(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(coldEmbrace1(lastResolution.unit));
+            }
+            break;
 
           case "Cold Embrace1":
             return (
@@ -1440,44 +1287,27 @@ const Board = (props) => {
             );
 
           case "Activating Reap the Whirlwind":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      reapTheWhirlwind1(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                reapTheWhirlwind1(lastResolution.unit)
+              );
+            }
+            break;
 
           case "Activating Air Dash":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      airDash1(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(airDash1(lastResolution.unit));
+            }
+            break;
 
           case "Air Dash1":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {enterMoveModeViaSkill(
-                      getVacant2SpaceZones(lastResolution.unit),
-                      lastResolution.unit
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              enterMoveModeViaSkill(
+                getVacant2SpaceZones(lastResolution.unit),
+                lastResolution.unit
+              );
+            }
+            break;
 
           case "Reap the Whirlwind1":
             return (
@@ -1509,17 +1339,10 @@ const Board = (props) => {
             );
 
           case "Activating Fortify":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      fortify1(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(fortify1(lastResolution.unit));
+            }
+            break;
 
           case "Fortify1":
             return (
@@ -1554,17 +1377,10 @@ const Board = (props) => {
             );
 
           case "Activating Galvanize":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      galvanize1(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(galvanize1(lastResolution.unit));
+            }
+            break;
 
           case "Galvanize1":
             return (
@@ -1582,17 +1398,10 @@ const Board = (props) => {
             );
 
           case "Activating Arc Flash":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      arcFlash1(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(arcFlash1(lastResolution.unit));
+            }
+            break;
 
           case "Arc Flash1":
           case "Arc Flash3":
@@ -1611,56 +1420,28 @@ const Board = (props) => {
             );
 
           case "Arc Flash2":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      arcFlash2(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(arcFlash2(lastResolution.unit));
+            }
+            break;
 
           case "Activating Particle Beam":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      particleBeam1(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(particleBeam1(lastResolution.unit));
+            }
+            break;
 
           case "Particle Beam1":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      particleBeam2(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(particleBeam2(lastResolution.unit));
+            }
+            break;
 
           case "Activating Brandish":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      brandish1(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(brandish1(lastResolution.unit));
+            }
+            break;
 
           case "Brandish1":
             return (
@@ -1677,43 +1458,22 @@ const Board = (props) => {
             );
 
           case "Activating Flourish":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      flourish1(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(flourish1(lastResolution.unit));
+            }
+            break;
 
           case "Flourish1":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      flourish2(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(flourish2(lastResolution.unit));
+            }
+            break;
 
           case "Activating Ambrosia":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      ambrosia1(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(ambrosia1(lastResolution.unit));
+            }
+            break;
 
           //end of abilities
         }
@@ -1769,53 +1529,28 @@ const Board = (props) => {
             );
 
           case "Activating Second Wind":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>{resolutionUpdateGameStateOnly(secondWind1())}</>
-                )}
-              </>
-            );
-
-          case "Triggering Adamant Armor":
-            return (
-              <>
-                {self === lastResolution.unit.player && !hideModal && (
-                  <YouMaySpend1Skill
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
-                    updateFirebase={updateFirebase}
-                    hideOrRevealModale={hideOrRevealModale}
-                  />
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(secondWind1());
+            }
+            break;
 
           case "Talent Conclusion":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>{talentConclusion()}</>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              talentConclusion();
+            }
+            break;
         }
         break;
 
       case "Fire Skill":
         switch (lastResolution.resolution2) {
           case "Activating Ignition Propulsion":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      ignitionPropulsion1(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                ignitionPropulsion1(lastResolution.unit)
+              );
+            }
+            break;
 
           case "Ignition Propulsion1":
             return (
@@ -1833,50 +1568,32 @@ const Board = (props) => {
             );
 
           case "Activating Conflagration":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      conflagration1(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                conflagration1(lastResolution.unit)
+              );
+            }
+            break;
 
           case "Conflagration1":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {selectEnemies(
-                      lastResolution.unit,
-                      1,
-                      null,
-                      "blast",
-                      "Fire Scion"
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              selectEnemies(
+                lastResolution.unit,
+                1,
+                null,
+                "blast",
+                "Fire Scion"
+              );
+            }
+            break;
 
           case "Resonating Conflagration":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      conflagrationR1(
-                        lastResolution.unit,
-                        lastResolution.resonator
-                      )
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                conflagrationR1(lastResolution.unit, lastResolution.resonator)
+              );
+            }
+            break;
 
           case "ConflagrationR1":
             return (
@@ -4754,6 +4471,18 @@ const Board = (props) => {
           </>
         );
 
+      case "Game Over":
+        return (
+          <>
+            {!hideModal && (
+              <VictoryScreen
+                hideOrRevealModale={hideOrRevealModale}
+                player={lastResolution.player}
+              />
+            )}
+          </>
+        );
+
       default:
         return;
     }
@@ -5933,7 +5662,10 @@ const Board = (props) => {
               )}
 
               {localGameState.activatingUnit.length > 0 && (
-                <div className="glow animating" style={activatingUnit()}></div>
+                <div
+                  className="glow animating board-piece"
+                  style={activatingUnit()}
+                ></div>
               )}
 
               {localGameState.host.units.map((unit, i) => (

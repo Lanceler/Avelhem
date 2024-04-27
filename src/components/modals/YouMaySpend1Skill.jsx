@@ -179,6 +179,7 @@ const YouMaySpend1Skill = (props) => {
 
       case "Adamant Armor":
         unit.temporary.adamantArmor = true;
+        unit.temporary.usedAdamantArmor = true;
         break;
 
       case "Efflorescence1":
@@ -322,7 +323,7 @@ const YouMaySpend1Skill = (props) => {
     newGameState.currentResolution.pop();
 
     dispatch(updateState(newGameState));
-    // props.updateFirebase(newGameState); // maybe not needed?
+    props.updateFirebase(newGameState);
   };
 
   const handleViewBoard = () => {

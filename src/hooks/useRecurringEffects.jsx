@@ -2397,6 +2397,17 @@ export const useRecurringEffects = () => {
     //end "Scoring"
     newGameState.currentResolution.pop();
 
+    const applyScoreUnit = (unit) => {
+      unit.enhancements = { score: true };
+      unit.afflictions = {};
+      unit.virtue = 0;
+      unit.hp = 0;
+      unit.charge = 0;
+      unit.fever = 0;
+      unit.blossom = 0;
+      unit.sharpness = 0;
+    };
+
     let units = newGameState[self].units;
 
     for (let unit of units) {
@@ -2405,14 +2416,7 @@ export const useRecurringEffects = () => {
           //Guest scores
           //Grant score
           newGameState.guest.score += 1;
-          unit.enhancements = { score: true };
-          unit.afflictions = {};
-          unit.virtue = 0;
-          unit.hp = 0;
-          unit.charge = 0;
-          unit.fever = 0;
-          unit.blossom = 0;
-          unit.sharpness = 0;
+          applyScoreUnit(unit);
 
           //Gain 3 BP
           newGameState.guest.bountyPoints = Math.min(
@@ -2426,14 +2430,7 @@ export const useRecurringEffects = () => {
           //Host scores
           //Grant score
           newGameState.host.score += 1;
-          unit.hp = 0;
-          unit.enhancements = { score: true };
-          unit.afflictions = {};
-          delete unit.virtue;
-          delete unit.charge;
-          delete unit.fever;
-          delete unit.blossom;
-          delete unit.sharpness;
+          applyScoreUnit(unit);
 
           //Gain 3 BP
           newGameState.host.bountyPoints = Math.min(
@@ -2447,15 +2444,21 @@ export const useRecurringEffects = () => {
       }
     }
 
-    //Change turn
+    //Change turn or end game
 
-    newGameState.turnPhase = "Acquisition";
-    newGameState.turnPlayer = enemy;
-    newGameState.turnCount = newGameState.turnCount + 1;
-
-    newGameState.currentResolution.push({
-      resolution: "Acquisition Phase Selection",
-    });
+    if (newGameState[self].score >= 3) {
+      newGameState.currentResolution.push({
+        resolution: "Game Over",
+        player: self,
+      });
+    } else {
+      newGameState.turnPhase = "Acquisition";
+      newGameState.turnPlayer = enemy;
+      newGameState.turnCount = newGameState.turnCount + 1;
+      newGameState.currentResolution.push({
+        resolution: "Acquisition Phase Selection",
+      });
+    }
 
     return newGameState;
   };
@@ -4184,6 +4187,21 @@ export const useRecurringEffects = () => {
       });
     }
 
+    if (triggerAdamantArmor(victim)) {
+      newGameState.currentResolution.push({
+        resolution: "Unit Talent",
+        resolution2: "Triggering Adamant Armor",
+        unit: victim,
+        details: {
+          title: "Adamant Armor",
+          message:
+            "Your Metal Scion was targeted via paralyze (1 turn). They may spend 1 skill to negate the affliction.",
+          restriction: null,
+          reason: "Adamant Armor",
+        },
+      });
+    }
+
     return newGameState;
   };
 
@@ -4205,6 +4223,21 @@ export const useRecurringEffects = () => {
         attacker: attacker,
         victim: victim,
         type: "paralyze2",
+      });
+    }
+
+    if (triggerAdamantArmor(victim)) {
+      newGameState.currentResolution.push({
+        resolution: "Unit Talent",
+        resolution2: "Triggering Adamant Armor",
+        unit: victim,
+        details: {
+          title: "Adamant Armor",
+          message:
+            "Your Metal Scion was targeted via paralyze (2 turns). They may spend 1 skill to negate the affliction.",
+          restriction: null,
+          reason: "Adamant Armor",
+        },
       });
     }
 
@@ -5334,6 +5367,21 @@ export const useRecurringEffects = () => {
       victim: victim,
       type: "blast",
     });
+
+    if (triggerAdamantArmor(victim)) {
+      newGameState.currentResolution.push({
+        resolution: "Unit Talent",
+        resolution2: "Triggering Adamant Armor",
+        unit: victim,
+        details: {
+          title: "Adamant Armor",
+          message:
+            "Your Metal Scion was targeted via Virtue-blast. They may spend 1 skill to reduce the attack’s AP by 1.",
+          restriction: null,
+          reason: "Adamant Armor",
+        },
+      });
+    }
 
     if (victim.virtue && !isMuted(victim) && !isDisrupted(victim, 2)) {
       newGameState.currentResolution.push({

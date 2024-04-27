@@ -1628,7 +1628,9 @@ export const useSkillEffects = () => {
       newGameState = drawSkill(newGameState);
       newGameState = drawSkill(newGameState);
     } else {
-      unit.charge = Math.min(3, unit.charge + 2);
+      unit.charge
+        ? (unit.charge = Math.min(3, unit.charge + 2))
+        : (unit.charge = 2);
     }
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;

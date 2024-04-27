@@ -85,7 +85,7 @@ export default function CreateRepertoire() {
 
   const addToAvelhemRepertoire = (cardPoolIndex) => {
     if (
-      avelhemRepertoire.length < 30 &&
+      avelhemRepertoire.length < 20 &&
       avelhemCardPool[cardPoolIndex].Stock > 0
     ) {
       let newAvelhemRepertoire = [...avelhemRepertoire];
@@ -151,9 +151,9 @@ export default function CreateRepertoire() {
       setSaveError(
         "Repertoire name must have a length of 20 or less and contain no special characters."
       );
-    } else if (skillRepertoire.length < 60 || avelhemRepertoire.length < 30) {
+    } else if (skillRepertoire.length < 60 || avelhemRepertoire.length < 20) {
       setSaveError(
-        "Skill and Avelhem repertoires must have 60 and 30 cards, respectively."
+        "Skill and Avelhem repertoires must have 60 and 20 cards, respectively."
       );
     } else {
       setIsLoading(true);
@@ -257,7 +257,7 @@ export default function CreateRepertoire() {
       </div>
       <div className="main-division main-division2">
         <div className="division">
-          Avelhem Repertoire: {avelhemRepertoire.length} / 30
+          Avelhem Repertoire: {avelhemRepertoire.length} / 20
           <div className="sub-division">
             {avelhemRepertoire.map((card, index) => (
               <ARAvelhemCard

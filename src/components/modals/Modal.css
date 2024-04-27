@@ -324,7 +324,7 @@ background: rgb(117, 13, 13)
 
 
 .customChoiceFrame:not(.disabledChoice):hover {
-    filter: brightness(1.75)
+    filter: brightness(1.25)
 }
 
 .disabledChoice{
