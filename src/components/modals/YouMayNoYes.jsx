@@ -217,7 +217,12 @@ const YouMayNoYes = (props) => {
         break;
 
       case "Galvanize": // "Galvanize1"
-        enterMoveMode(getVacantAdjacentZones(unit), unit, newGameState, null);
+        props.enterMoveMode(
+          getVacantAdjacentZones(unit),
+          unit,
+          newGameState,
+          null
+        );
         break;
 
       case "Diffusion 2nd Blast": // "Diffusion4"

@@ -181,8 +181,10 @@ const AcquisitionPhaseSelection = (props) => {
       case 2:
         newGameState = drawSkill(newGameState);
 
-        if (newGameState[self].skillHand.length <= 4) {
-          newGameState = drawSkill(newGameState);
+        if (newGameState[self].bountyUpgrades.acquisition >= 2) {
+          if (newGameState[self].skillHand.length <= 4) {
+            newGameState = drawSkill(newGameState);
+          }
         }
 
         newGameState = nextPhase(newGameState);
