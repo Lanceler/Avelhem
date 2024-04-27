@@ -83,6 +83,8 @@ import UnitInfo from "./modals/UnitInfo";
 
 import Piece from "./Piece";
 
+import PileOfCards from "./displays/PileOfCards";
+
 const Board = (props) => {
   const gameDoc = doc(db, "gameInfo", props.gameId);
   const dispatch = useDispatch();
@@ -5675,12 +5677,15 @@ const Board = (props) => {
                 </>
               )}
 
-              {localGameState.activatingUnit.length > 0 && (
-                <div
-                  className="glow animating board-piece"
-                  style={activatingUnit()}
-                ></div>
-              )}
+              {localGameState.activatingUnit.length > 0 &&
+                localGameState.activatingUnit[
+                  localGameState.activatingUnit.length - 1
+                ] !== null && (
+                  <div
+                    className="glow animating board-piece"
+                    style={activatingUnit()}
+                  ></div>
+                )}
 
               {localGameState.host.units.map((unit, i) => (
                 <div key={i}>
@@ -5762,7 +5767,7 @@ const Board = (props) => {
                 <div className="rcm-top-bot">
                   <div className="skill-container">
                     <div className="skill-deck skill-container-item">
-                      {localGameState[enemy].skillRepertoire.length}
+                      <PileOfCards team={enemy} pile={"skillRepertoire"} />
                     </div>
                     <div className="skill-discard skill-container-item">
                       {localGameState[enemy].skillVestige.length}
@@ -5780,7 +5785,7 @@ const Board = (props) => {
                   </div>
                   <div className="avel-container">
                     <div className="avel-deck avel-container-item">
-                      {localGameState[enemy].avelhemRepertoire.length}
+                      <PileOfCards team={enemy} pile={"avelhemRepertoire"} />
                     </div>
                     <div className="avel-discard avel-container-item">
                       {localGameState[enemy].avelhemVestige.length}
@@ -5793,7 +5798,7 @@ const Board = (props) => {
                 <div className="rcm-top-bot">
                   <div className="skill-container">
                     <div className="skill-deck skill-container-item">
-                      {localGameState[self].skillRepertoire.length}
+                      <PileOfCards team={self} pile={"skillRepertoire"} />
                     </div>
                     <div className="skill-discard skill-container-item">
                       {localGameState[self].skillVestige.length}
@@ -5809,7 +5814,7 @@ const Board = (props) => {
                   </div>
                   <div className="avel-container">
                     <div className="avel-deck avel-container-item">
-                      {localGameState[self].avelhemRepertoire.length}
+                      <PileOfCards team={self} pile={"avelhemRepertoire"} />
                     </div>
                     <div className="avel-discard avel-container-item">
                       {localGameState[self].avelhemVestige.length}
