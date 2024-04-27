@@ -5770,7 +5770,7 @@ const Board = (props) => {
                       <PileOfCards team={enemy} pile={"skillRepertoire"} />
                     </div>
                     <div className="skill-discard skill-container-item">
-                      {localGameState[enemy].skillVestige.length}
+                      <PileOfCards team={enemy} pile={"skillVestige"} />
                     </div>
                   </div>
                   <div className="rcmtb-mid">
@@ -5788,7 +5788,7 @@ const Board = (props) => {
                       <PileOfCards team={enemy} pile={"avelhemRepertoire"} />
                     </div>
                     <div className="avel-discard avel-container-item">
-                      {localGameState[enemy].avelhemVestige.length}
+                      <PileOfCards team={enemy} pile={"avelhemVestige"} />
                     </div>
                   </div>
                 </div>
@@ -5801,7 +5801,7 @@ const Board = (props) => {
                       <PileOfCards team={self} pile={"skillRepertoire"} />
                     </div>
                     <div className="skill-discard skill-container-item">
-                      {localGameState[self].skillVestige.length}
+                      <PileOfCards team={self} pile={"skillVestige"} />
                     </div>
                   </div>
                   <div className="rcmtb-mid">
@@ -5817,7 +5817,7 @@ const Board = (props) => {
                       <PileOfCards team={self} pile={"avelhemRepertoire"} />
                     </div>
                     <div className="avel-discard avel-container-item">
-                      {localGameState[self].avelhemVestige.length}
+                      <PileOfCards team={self} pile={"avelhemVestige"} />
                     </div>
                   </div>
                 </div>

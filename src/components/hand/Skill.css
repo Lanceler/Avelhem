@@ -331,3 +331,8 @@ background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rg
 .pile-floating{
     transform: rotate(90deg);
 }
+
+.pile-vestige{
+    /* scale: 0.85; */
+    filter: grayscale(0.85);
+}

@@ -18,12 +18,18 @@ const PileOfCards = (props) => {
   const cardBack = pile[0] === "a" ? "AvelhemCardBack" : "SkillCardBack";
 
   let floatingCards = 0;
+  let isVestige = false;
   switch (pile) {
     case "avelhemRepertoire":
       floatingCards = localGameState[team].avelhemFloat;
       break;
     case "skillRepertoire":
       floatingCards = localGameState[team].skillFloat;
+      break;
+
+    case "avelhemVestige":
+    case "skillVestige":
+      isVestige = true;
       break;
 
     default:
@@ -38,20 +44,29 @@ const PileOfCards = (props) => {
     //therefore, indice has to be >= difference
   };
 
+  const handleClick = () => {
+    console.log("clicked");
+  };
+
   return (
     <div className="">
-      <div className="pile-card-container">
+      <div className="pile-card-container" onClick={() => handleClick()}>
         {stack.map((card, i) => (
           <div
             key={i}
-            className={`pile-card ${isFloating(i) ? "pile-floating" : ""}`}
+            className={`pile-card ${isFloating(i) ? "pile-floating" : ""} ${
+              isVestige ? "pile-vestige" : ""
+            }`}
             style={{
               backgroundImage: `url(${getImage2(cardBack)})`,
               top: -i * 0.35,
             }}
           ></div>
         ))}
-        <div className={`pile-label`}>Cards: {stack.length}</div>
+
+        {stack.length > 0 && (
+          <div className={`pile-label`}>Cards: {stack.length}</div>
+        )}
       </div>
     </div>
   );
