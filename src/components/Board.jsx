@@ -320,7 +320,7 @@ const Board = (props) => {
 
   const activatingUnit = () => {
     if (
-      localGameState.activatingUnit.length &&
+      localGameState.activatingUnit.length > 0 &&
       localGameState.activatingUnit[localGameState.activatingUnit.length - 1]
     ) {
       let unitInfo =
@@ -1615,17 +1615,12 @@ const Board = (props) => {
             break;
 
           case "ConflagrationR1":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      conflagrationR2(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                conflagrationR2(lastResolution.unit)
+              );
+            }
+            break;
 
           case "ConflagrationR2":
             return (
@@ -5294,7 +5289,7 @@ const Board = (props) => {
         newGameState[player].skillShattered.push(skill);
       }
 
-      if (unitInfo !== null) {
+      if (unitInfo) {
         let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
         if (unit) {

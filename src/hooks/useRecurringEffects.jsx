@@ -5368,21 +5368,6 @@ export const useRecurringEffects = () => {
       type: "blast",
     });
 
-    if (triggerAdamantArmor(victim)) {
-      newGameState.currentResolution.push({
-        resolution: "Unit Talent",
-        resolution2: "Triggering Adamant Armor",
-        unit: victim,
-        details: {
-          title: "Adamant Armor",
-          message:
-            "Your Metal Scion was targeted via Virtue-blast. They may spend 1 skill to reduce the attack’s AP by 1.",
-          restriction: null,
-          reason: "Adamant Armor",
-        },
-      });
-    }
-
     if (victim.virtue && !isMuted(victim) && !isDisrupted(victim, 2)) {
       newGameState.currentResolution.push({
         resolution: "Blocking Virtue-Blast",
@@ -5408,6 +5393,21 @@ export const useRecurringEffects = () => {
         attacker: attacker,
         victim: victim,
         type: "virtue-blast",
+      });
+    }
+
+    if (triggerAdamantArmor(victim)) {
+      newGameState.currentResolution.push({
+        resolution: "Unit Talent",
+        resolution2: "Triggering Adamant Armor",
+        unit: victim,
+        details: {
+          title: "Adamant Armor",
+          message:
+            "Your Metal Scion was targeted via Virtue-blast. They may spend 1 skill to reduce the attack’s AP by 1.",
+          restriction: null,
+          reason: "Adamant Armor",
+        },
       });
     }
 
