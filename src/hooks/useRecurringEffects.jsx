@@ -2490,7 +2490,6 @@ export const useRecurringEffects = () => {
           unit.enhancements.shield
             ? (unit.enhancements.shield = Math.max(2, unit.enhancements.shield))
             : (unit.enhancements.shield = 2);
-
         break;
 
       case "Fated Rivalry":
@@ -2509,6 +2508,7 @@ export const useRecurringEffects = () => {
           unit: unit,
           unit2: unit2,
         });
+        break;
 
       case "Destine":
         newGameState.currentResolution.push({
@@ -2516,7 +2516,6 @@ export const useRecurringEffects = () => {
           resolution2: "End Phase",
           player: unit.player,
         });
-
         break;
     }
 
