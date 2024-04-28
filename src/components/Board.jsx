@@ -201,7 +201,6 @@ const Board = (props) => {
     cataclysmicTempest2,
     cataclysmicTempest3,
     cataclysmicTempest4,
-    cataclysmicTempest5,
     crystallization1,
     crystallization2,
     upheaval1,
@@ -2274,44 +2273,6 @@ const Board = (props) => {
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
-                )}
-              </>
-            );
-
-          case "Cataclysmic Tempest7":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      cataclysmicTempest5(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
-
-          case "Cataclysmic Tempest8":
-            return (
-              <>
-                {self === lastResolution.unit.player && !hideModal && (
-                  <YouMaySpend1Skill
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
-                    updateFirebase={updateFirebase}
-                    hideOrRevealModale={hideOrRevealModale}
-                  />
-                )}
-              </>
-            );
-
-          case "Cataclysmic Tempest9":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {selectEnemies(lastResolution.unit, 1, null, "blast", null)}
-                  </>
                 )}
               </>
             );

@@ -133,9 +133,10 @@ const SelectUnitAbility = (props) => {
           abilityName: "Air Dash",
           abilityQualifier: (
             <div className="abilityQualifier">
-              <span className="abilityQualifier">One-shot {"\u00A0"}</span>
-              <img src={MobilizeSmall} style={{ height: 35 }} />
-              <img src={MobilizeSmall} style={{ height: 35 }} />
+              <span className="abilityQualifier">One-shot{"\u00A0"}</span>
+              <img src={MobilizeSmall} style={{ height: 30 }} />
+              <img src={MobilizeSmall} style={{ height: 30 }} />
+              <img src={MobilizeSmall} style={{ height: 30 }} />
             </div>
           ),
           abilityText: (
@@ -557,9 +558,9 @@ const SelectUnitAbility = (props) => {
             unit: unit,
             details: {
               title: "Air Dash",
-              message: "Use 2 instances of 1 mobilize tactic.",
+              message: "Use 3 instances of 1 mobilize tactic.",
               restriction: ["Mobilize"],
-              stock: 2,
+              stock: 3,
               reason: "Air Dash",
               canSkip: "Return",
             },

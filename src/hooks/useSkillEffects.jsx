@@ -925,13 +925,6 @@ export const useSkillEffects = () => {
       !isMuted(unit) &&
       getZonesWithEnemies(unit, 1).length > 0
     ) {
-      newGameState.currentResolution.push({
-        resolution: "Wind Skill",
-        resolution2: "Cataclysmic Tempest7",
-
-        unit: unit,
-      });
-
       if (getZonesWithEnemiesAfflicted(unit, 1, "paralysis").length > 0) {
         newGameState.currentResolution.push({
           resolution: "Wind Skill",
@@ -947,35 +940,6 @@ export const useSkillEffects = () => {
           },
         });
       }
-    }
-
-    return newGameState;
-  };
-
-  const cataclysmicTempest5 = (unitInfo) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    //end "Cataclysmic Tempest7" resolution
-    newGameState.currentResolution.pop();
-
-    if (
-      unit !== null &&
-      !isMuted(unit) &&
-      getZonesWithEnemies(unit, 1).length > 0
-    ) {
-      newGameState.currentResolution.push({
-        resolution: "Wind Skill",
-        resolution2: "Cataclysmic Tempest8",
-        unit: unit,
-        details: {
-          title: "Cataclysmic Tempest",
-          message: "You may spend 1 Wind skill to blast an adjacent enemy.",
-          restriction: ["03-01", "03-02", "03-03"],
-          reason: "Cataclysmic Tempest8",
-        },
-      });
     }
 
     return newGameState;
@@ -2566,7 +2530,6 @@ export const useSkillEffects = () => {
     cataclysmicTempest2,
     cataclysmicTempest3,
     cataclysmicTempest4,
-    cataclysmicTempest5,
     crystallization1,
     crystallization2,
     upheaval1,

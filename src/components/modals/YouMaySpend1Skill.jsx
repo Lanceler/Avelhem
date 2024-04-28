@@ -114,14 +114,6 @@ const YouMaySpend1Skill = (props) => {
         });
         break;
 
-      case "Cataclysmic Tempest8":
-        newGameState.currentResolution.push({
-          resolution: "Wind Skill",
-          resolution2: "Cataclysmic Tempest9",
-          unit: unit,
-        });
-        break;
-
       case "Crystallization1":
         newGameState.currentResolution.push({
           resolution: "Land Skill",

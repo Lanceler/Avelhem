@@ -8,9 +8,9 @@ import { useCardDatabase } from "../../hooks/useCardDatabase";
 
 const Skill = (props) => {
   const { getImage2 } = useCardImageSwitch();
-  const { getSkillById } = useCardDatabase();
+  // const { getSkillById } = useCardDatabase();
 
-  const cardInfo = getSkillById(props.usableSkill.id);
+  // const cardInfo = getSkillById(props.usableSkill.id);
 
   const image = getImage2(props.usableSkill.id);
 

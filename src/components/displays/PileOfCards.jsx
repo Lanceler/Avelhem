@@ -4,10 +4,11 @@ import "../hand/Skill.css";
 import { useSelector, useDispatch } from "react-redux";
 
 import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
+import ViewSkillVestige from "./ViewSkillVestige";
 
 const PileOfCards = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
-  const { enemy } = useSelector((state) => state.teams);
+  const { self, enemy } = useSelector((state) => state.teams);
   const { getImage2 } = useCardImageSwitch();
 
   const [showPile, setShowPile] = useState(null);
@@ -15,7 +16,7 @@ const PileOfCards = (props) => {
   let team = props.team;
   let pile = props.pile;
 
-  const stack = localGameState[team][pile];
+  let stack = [...localGameState[team][pile]];
 
   const cardBack = pile[0] === "a" ? "AvelhemCardBack" : "SkillCardBack";
 
@@ -29,8 +30,10 @@ const PileOfCards = (props) => {
       floatingCards = localGameState[team].skillFloat;
       break;
 
-    case "avelhemVestige":
     case "skillVestige":
+      stack.push(...localGameState[team].skillShattered);
+    //   break; DO NOT break
+    case "avelhemVestige":
       isVestige = true;
       break;
 
@@ -47,11 +50,15 @@ const PileOfCards = (props) => {
   };
 
   const handleClick = () => {
-    if (team === self && pile === "setShowPile") {
-      setShowPile("setShowPile");
+    if (team === self && pile === "skillVestige") {
+      setShowPile("skillVestige");
     }
 
+    console.log("pile");
+    console.log(pile);
+
     console.log("clicked");
+    console.log(showPile);
   };
 
   return (
@@ -65,7 +72,7 @@ const PileOfCards = (props) => {
             }`}
             style={{
               backgroundImage: `url(${getImage2(cardBack)})`,
-              top: -i * 0.35,
+              top: -i * 0.3,
             }}
           ></div>
         ))}
@@ -74,6 +81,8 @@ const PileOfCards = (props) => {
           <div className={`pile-label`}>Cards: {stack.length}</div>
         )}
       </div>
+
+      {showPile !== null && <ViewSkillVestige setShowPile={setShowPile} />}
     </div>
   );
 };

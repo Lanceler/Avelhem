@@ -5,12 +5,10 @@
     flex-direction: column;
     justify-content: flex-end;
     align-items:flex-end;
-
     margin: 5px;
     padding: 0 auto;
     background-size: cover;
     background-position: center;
-
     border-radius: 10px;
 }
 
@@ -309,12 +307,12 @@ background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rg
 }
 
 .pile-label {
-    width: 90px;
-    height: 25px;
-
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    
     /* cursor: pointer; */
 
-    background: linear-gradient(to bottom, rgba(0, 0, 0,0.8), rgba(0, 0, 0, 0.70) 60%, rgba(0, 0, 0, 0)100%);
+    background: linear-gradient(to bottom, rgba(0, 0, 0,0.8), rgba(0, 0, 0, 0.70) 40%, rgba(0, 0, 0, 0)100%);
 
     /* background-color: rgba(0, 0, 0, 0.65); */
     color: white;
@@ -325,14 +323,34 @@ background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rg
     display: flex;
     justify-content: center;
     /* top: -30px; */
-    top: 100px;
+    top: -30px;
+    left: -2px;
+    
+    width: 94px;
+    height: 35px;
 }
 
 .pile-floating{
     transform: rotate(90deg);
+    box-shadow: 4px 0px 4px 2px rgba(5, 9, 20, 0.80);
 }
 
 .pile-vestige{
     /* scale: 0.85; */
     filter: grayscale(0.85);
 }
+
+.pile-view-skill{
+    width: 180px;
+    height: 252px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin: 5px;
+    padding: 0 auto;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+}
+
