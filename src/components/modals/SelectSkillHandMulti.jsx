@@ -187,7 +187,7 @@ const SelectSkillHandMulti = (props) => {
           resolution: "Misc.",
           resolution2: "Message To Player",
           player: enemy,
-          title: "Defiance: Aracana",
+          title: "Defiance: Arcana",
           message: `Your opponent has returned ${skillsToReturn.length} skills to their repertoire and drawn the same number.`,
         });
 

@@ -8,16 +8,24 @@ import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 
-import Skill from "../hand/Skill";
-
 const ViewSkillVestige = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
 
   const { getImage2 } = useCardImageSwitch();
 
-  let vestige = [...localGameState[props.team].skillVestige];
-  let shattered = [...localGameState[props.team].skillShattered];
+  let vestige = [];
+  let shattered = [];
+
+  switch (props.vestige) {
+    case "Skill":
+      vestige = [...localGameState[props.team].skillVestige];
+      shattered = [...localGameState[props.team].skillShattered];
+      break;
+    case "Avelhem":
+      vestige = [...localGameState[props.team].avelhemVestige];
+      break;
+  }
 
   //reverse display (for consistency with repertoire)
   let reverseVestige = [];
@@ -38,7 +46,7 @@ const ViewSkillVestige = (props) => {
     <div className="modal-backdrop">
       <div className="modal">
         <div className="twoColumn3-1">
-          <h2 className="choiceTitle">Skill Vestige</h2>
+          <h2 className="choiceTitle">{`${props.vestige} Vestige`}</h2>
         </div>
 
         <div className="scrollable scrollable-y-only">

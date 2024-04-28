@@ -170,25 +170,25 @@ const DefiancePhaseSelection = (props) => {
     props.hideOrRevealModale();
   };
 
-  const defianceCosts = [1, 1, 2, 3, 3, 4];
+  const defianceCosts = [1, 1, 2, 3, 3, 3];
 
   const canSelect = [
     //Arcana
-    localGameState[self].fateDefiances >= 1 &&
+    localGameState[self].fateDefiances >= defianceCosts[0] &&
       localGameState[self].skillHand.length > 0,
     //Backtrack
-    localGameState[self].fateDefiances >= 1 &&
+    localGameState[self].fateDefiances >= defianceCosts[1] &&
       localGameState.tactics.length > 1,
     //Curate
-    localGameState[self].fateDefiances >= 2 &&
+    localGameState[self].fateDefiances >= defianceCosts[2] &&
       localGameState.tactics.length > 1,
     //Destine (Power at the Final Hour has the same activation requirement)
-    localGameState[self].fateDefiances >= 3 &&
+    localGameState[self].fateDefiances >= defianceCosts[3] &&
       canActivateSovereignSkill("SC-01"),
     //Empower
-    localGameState[self].fateDefiances >= 3,
+    localGameState[self].fateDefiances >= defianceCosts[4],
     //Finesse
-    localGameState[self].fateDefiances >= 4,
+    localGameState[self].fateDefiances >= defianceCosts[5],
   ];
 
   // console.log(canFrontier);

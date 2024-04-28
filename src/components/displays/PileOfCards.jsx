@@ -51,14 +51,10 @@ const PileOfCards = (props) => {
 
   const handleClick = () => {
     if (pile === "skillVestige") {
-      setShowPile(pile);
+      setShowPile("Skill");
+    } else if (pile === "avelhemVestige") {
+      setShowPile("Avelhem");
     }
-
-    console.log("pile");
-    console.log(pile);
-
-    console.log("clicked");
-    console.log(showPile);
   };
 
   return (
@@ -83,7 +79,11 @@ const PileOfCards = (props) => {
       </div>
 
       {showPile !== null && (
-        <ViewSkillVestige setShowPile={setShowPile} team={team} />
+        <ViewSkillVestige
+          setShowPile={setShowPile}
+          team={team}
+          vestige={showPile}
+        />
       )}
     </div>
   );
