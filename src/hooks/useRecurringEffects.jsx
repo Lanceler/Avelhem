@@ -1475,7 +1475,7 @@ export const useRecurringEffects = () => {
           newGameState,
           skill,
           "Sovereign Standard Skill",
-          "Activating Heir's Endeavor"
+          "Activating Heir’s Endeavor"
         );
 
       case "SA-02":
@@ -2057,7 +2057,11 @@ export const useRecurringEffects = () => {
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
     delete unit.afflictions.burn;
-    unit.hp -= 1;
+    if (unit.afflictions.anathema) {
+      unit.hp = 0;
+    } else {
+      unit.hp -= 1;
+    }
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
@@ -3030,7 +3034,7 @@ export const useRecurringEffects = () => {
     };
 
     switch (skill) {
-      case "SA-01": //Heir's Endeavor
+      case "SA-01": //Heir’s Endeavor
         return canHeirsEndeavor();
       case "SA-02": // Tea for Two
         return true;
@@ -3229,7 +3233,7 @@ export const useRecurringEffects = () => {
 
       newGameState.currentResolution.push({
         resolution: "Misc.",
-        resolution2: "Message To Enemy",
+        resolution2: "Message To Player",
         player: self,
         title: "Final Phase",
         message: burnMessage,

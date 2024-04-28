@@ -95,6 +95,7 @@ import ParticleBeam from "../assets/abilities/ParticleBeam.png";
 import AmbianceAssimilation from "../assets/abilities/AmbianceAssimilation.png";
 import Brandish from "../assets/abilities/Brandish.png";
 import Conduction from "../assets/abilities/Conduction.png";
+import AdamantArmor from "../assets/abilities/AdamantArmor.png";
 import Flourish from "../assets/abilities/Flourish.png";
 import Ambrosia from "../assets/abilities/Ambrosia.png";
 import Everblooming from "../assets/abilities/Everblooming.png";
@@ -259,6 +260,8 @@ export const useCardImageSwitch = () => {
         return Brandish;
       case "Conduction":
         return Conduction;
+      case "AdamantArmor":
+        return AdamantArmor;
 
       case 8:
         return PlantAvelhem;

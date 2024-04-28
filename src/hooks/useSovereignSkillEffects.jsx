@@ -22,7 +22,7 @@ export const useSovereignSkillEffects = () => {
   const heirsEndeavor1 = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    //end "Activating Heir's Endeavor" resolution
+    //end "Activating Heir’s Endeavor" resolution
     newGameState.currentResolution.pop();
 
     newGameState[self].fateDefiances -= 1;
@@ -35,7 +35,7 @@ export const useSovereignSkillEffects = () => {
       resolution: "Recover Skill",
       player: self,
       restriction: recoverableSkills,
-      message: "Recover 1 Sovereign skill other than “Heir's Endeavor”.",
+      message: "Recover 1 Sovereign skill other than “Heir’s Endeavor”.",
       outcome: "Add",
     });
 
@@ -55,7 +55,7 @@ export const useSovereignSkillEffects = () => {
       details: {
         restriction: sovereignSkillList(),
         outcome: "Float",
-        title: "Heir's Endeavor",
+        title: "Heir’s Endeavor",
         message:
           "Inspect 5 skills. You may float 1 Sovereign skill among them.",
         inspectionCount: 5,
@@ -571,10 +571,9 @@ export const useSovereignSkillEffects = () => {
         canSkip: true,
       });
     } else {
-      //using "Message to Enemy to send message to self"
       newGameState.currentResolution.push({
         resolution: "Misc.",
-        resolution2: "Message To Enemy",
+        resolution2: "Message To Player",
         player: self,
         title: "Power at the Final Hour",
         message: "There are no valid skills to recover.",

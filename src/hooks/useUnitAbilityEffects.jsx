@@ -245,8 +245,8 @@ export const useUnitAbilityEffects = () => {
       resolution: "Search Skill",
       player: self,
       restriction: ["03-02"],
-      message: "Search for 1 “Gale Conjuration”.",
-      outcome: "Add",
+      message: "Search for then float 1 “Gale Conjuration”.",
+      outcome: "Float",
     });
 
     return newGameState;
@@ -265,7 +265,7 @@ export const useUnitAbilityEffects = () => {
     ) {
       newGameState.currentResolution.push({
         resolution: "Misc.",
-        resolution2: "Message To Enemy",
+        resolution2: "Message To Player",
         player: self,
         title: "Second Wind",
         message: "You do not have any Wind skills to recover.",
@@ -275,8 +275,8 @@ export const useUnitAbilityEffects = () => {
         resolution: "Recover Skill",
         player: self,
         restriction: ["03-01", "03-02", "03-03"],
-        message: "You may recover 1 non-burst Wind skill.",
-        outcome: "Add",
+        message: "You may recover then float 1 non-burst Wind skill.",
+        outcome: "Float",
         canSkip: true,
       });
     }

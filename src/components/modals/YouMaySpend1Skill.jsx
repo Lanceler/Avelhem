@@ -172,6 +172,20 @@ const YouMaySpend1Skill = (props) => {
       case "Adamant Armor":
         unit.temporary.adamantArmor = true;
         unit.temporary.usedAdamantArmor = true;
+
+        newGameState.activatingUnit.push(unit);
+        newGameState.activatingSkill.push("AdamantArmor");
+        newGameState.currentResolution.push({
+          resolution: "Unit Talent",
+          resolution2: "Talent Conclusion",
+          unit: unit,
+        });
+
+        newGameState.currentResolution.push({
+          resolution: "Animation Delay",
+          priority: unit.player,
+        });
+
         break;
 
       case "Efflorescence1":

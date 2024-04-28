@@ -68,17 +68,6 @@ const PowerAtTheFinalHourProaction = (props) => {
         player: self,
         scionClass: scionClass,
       });
-
-      // newGameState.currentResolution.push({
-      //   resolution: "Misc.",
-      //   resolution2: "Message To Enemy",
-      //   player: enemy,
-      //   title: "Power at the Final Hour",
-      //   message: `Your opponent has revealed the following aspect: ${scionClass.replace(
-      //     " Scion",
-      //     ""
-      //   )}.`,
-      // });
     } else if (props.reason === "Destine") {
       //Spend FD
       newGameState[self].fateDefiances -= props.defianceCost;

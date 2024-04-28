@@ -185,7 +185,7 @@ const SelectSkillHandMulti = (props) => {
 
         newGameState.currentResolution.push({
           resolution: "Misc.",
-          resolution2: "Message To Enemy",
+          resolution2: "Message To Player",
           player: enemy,
           title: "Defiance: Aracana",
           message: `Your opponent has returned ${skillsToReturn.length} skills to their repertoire and drawn the same number.`,
@@ -280,7 +280,7 @@ const SelectSkillHandMulti = (props) => {
 
         newGameState.currentResolution.push({
           resolution: "Misc.",
-          resolution2: "Message To Enemy",
+          resolution2: "Message To Player",
           player: enemy,
           title: "Transmute",
           message: transmuteMessage,

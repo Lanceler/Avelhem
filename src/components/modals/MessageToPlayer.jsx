@@ -4,7 +4,7 @@ import "./Modal.css";
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
 
-const MessageToEnemy = (props) => {
+const MessageToPlayer = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const dispatch = useDispatch();
 
@@ -30,4 +30,4 @@ const MessageToEnemy = (props) => {
   );
 };
 
-export default MessageToEnemy;
+export default MessageToPlayer;

@@ -24,7 +24,7 @@ import CoordinationPhaseSelection from "./modals/CoordinationPhaseSelection";
 import DefiancePhaseSelection from "./modals/DefiancePhaseSelection";
 
 import InspectSkill from "./modals/InspectSkill";
-import MessageToEnemy from "./modals/MessageToEnemy";
+import MessageToPlayer from "./modals/MessageToPlayer";
 import RecoverAvelhem from "./modals/RecoverAvelhem";
 import RecoverSkill from "./modals/RecoverSkill";
 import ScionSkillSelect from "./modals/ScionSkillSelect";
@@ -434,13 +434,15 @@ const Board = (props) => {
 
     switch (option) {
       case "Info":
-        setUnitInfor(expandedUnit);
-        // enterMoveMode(
-        //   getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
-        //   expandedUnit,
-        //   newGameState,
-        //   null
-        // );
+        // setUnitInfor(expandedUnit);
+
+        //for testing: quick movement
+        enterMoveMode(
+          getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
+          expandedUnit,
+          newGameState,
+          null
+        );
         break;
 
       case "Tactic":
@@ -1198,11 +1200,11 @@ const Board = (props) => {
               </>
             );
 
-          case "Message To Enemy":
+          case "Message To Player":
             return (
               <>
                 {self === lastResolution.player && (
-                  <MessageToEnemy
+                  <MessageToPlayer
                     title={lastResolution.title}
                     message={lastResolution.message}
                     updateFirebase={updateFirebase}
@@ -3584,7 +3586,7 @@ const Board = (props) => {
 
       case "Sovereign Standard Skill":
         switch (lastResolution.resolution2) {
-          case "Activating Heir's Endeavor":
+          case "Activating Heir’s Endeavor":
             return (
               <>
                 {self === lastResolution.player && (

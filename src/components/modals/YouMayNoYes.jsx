@@ -290,7 +290,7 @@ const YouMayNoYes = (props) => {
 
         newGameState.currentResolution.push({
           resolution: "Misc.",
-          resolution2: "Message To Enemy",
+          resolution2: "Message To Player",
           player: enemy,
           title: "Mana Restructure",
           message: "Your opponent has floated 1 Mana skill from their hand.",

@@ -13,12 +13,11 @@ import Skill from "../hand/Skill";
 const ViewSkillVestige = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
-  const dispatch = useDispatch();
 
   const { getImage2 } = useCardImageSwitch();
 
-  let vestige = [...localGameState[self].skillVestige];
-  let shattered = [...localGameState[self].skillShattered];
+  let vestige = [...localGameState[props.team].skillVestige];
+  let shattered = [...localGameState[props.team].skillShattered];
 
   //reverse display (for consistency with repertoire)
   let reverseVestige = [];
@@ -43,17 +42,19 @@ const ViewSkillVestige = (props) => {
         </div>
 
         <div className="scrollable scrollable-y-only">
-          <div className="fourColumn">
-            {reverseVestige.map((usableSkill, i) => (
-              <div
-                key={i}
-                className="scionSkills pile-view-skill"
-                style={{
-                  backgroundImage: `url(${getImage2(usableSkill.id)})`,
-                }}
-              ></div>
-            ))}
-          </div>
+          {props.team === self && (
+            <div className="fourColumn">
+              {reverseVestige.map((usableSkill, i) => (
+                <div
+                  key={i}
+                  className="scionSkills pile-view-skill"
+                  style={{
+                    backgroundImage: `url(${getImage2(usableSkill.id)})`,
+                  }}
+                ></div>
+              ))}
+            </div>
+          )}
 
           {shattered.length > 0 && (
             <>

@@ -99,12 +99,12 @@ const InspectSkill = (props) => {
     //INSPECTION DOES NOT SHUFFLE
 
     switch (props.details.title) {
-      case "Heir's Endeavor":
+      case "Heir’s Endeavor":
         newGameState.currentResolution.push({
           resolution: "Misc.",
-          resolution2: "Message To Enemy",
+          resolution2: "Message To Player",
           player: enemy,
-          title: "Heir's Endeavor",
+          title: "Heir’s Endeavor",
           message:
             "Your opponent has floated 1 Sovereign skill from their repertoire.",
         });
@@ -113,7 +113,7 @@ const InspectSkill = (props) => {
       case "Arc Flash":
         newGameState.currentResolution.push({
           resolution: "Misc.",
-          resolution2: "Message To Enemy",
+          resolution2: "Message To Player",
           player: enemy,
           title: "Arc Flash",
           message:

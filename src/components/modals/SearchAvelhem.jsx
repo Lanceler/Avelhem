@@ -54,7 +54,7 @@ const SearchAvelhem = (props) => {
 
         newGameState.currentResolution.push({
           resolution: "Misc.",
-          resolution2: "Message To Enemy",
+          resolution2: "Message To Player",
           player: enemy,
           title: "Transmute",
           message: `Your oppnent has search for 1 ${avelhemToScion(

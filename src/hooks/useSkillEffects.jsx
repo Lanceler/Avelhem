@@ -1570,7 +1570,7 @@ export const useSkillEffects = () => {
     ) {
       newGameState.currentResolution.push({
         resolution: "Misc.",
-        resolution2: "Message To Enemy",
+        resolution2: "Message To Player",
         player: self,
         title: "Thunder Thaumaturge",
         message: "You do not have any Lightning skills to recover.",
