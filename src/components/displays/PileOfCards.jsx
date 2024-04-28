@@ -10,6 +10,8 @@ const PileOfCards = (props) => {
   const { enemy } = useSelector((state) => state.teams);
   const { getImage2 } = useCardImageSwitch();
 
+  const [showPile, setShowPile] = useState(null);
+
   let team = props.team;
   let pile = props.pile;
 
@@ -45,6 +47,10 @@ const PileOfCards = (props) => {
   };
 
   const handleClick = () => {
+    if (team === self && pile === "setShowPile") {
+      setShowPile("setShowPile");
+    }
+
     console.log("clicked");
   };
 

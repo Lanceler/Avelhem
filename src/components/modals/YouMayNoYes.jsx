@@ -121,13 +121,17 @@ const YouMayNoYes = (props) => {
         );
         break;
 
+      case "Gale Conjuration Draw": // "Gale ConjurationR4"
+        newGameState = drawSkill(newGameState);
+        break;
+
       case "Cataclysmic Tempest 2nd Paralyze": // "Cataclysmic Tempest3"
         enterSelectUnitMode(
           props.details.adjacentEnemies,
           props.unit,
           newGameState,
           null,
-          "paralyze2",
+          "paralyze1",
           "Cataclysmic Tempest"
         );
         break;

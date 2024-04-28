@@ -709,17 +709,39 @@ export const useSkillEffects = () => {
     // end "Gale ConjurationR3"
     newGameState.currentResolution.pop();
 
+    //NERFED!!!
+    // if (
+    //   unit !== null &&
+    //   !isMuted(unit) &&
+    //   newGameState[enemy].skillHand.length > 0 &&
+    //   unit.temporary.galeConjurationLethal
+    // ) {
+    //   newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+    //   newGameState.currentResolution.push({
+    //     resolution: "Wind Skill",
+    //     resolution2: "Gale ConjurationR4",
+    //     player: enemy,
+    //   });
+    // }
+
     if (
       unit !== null &&
       !isMuted(unit) &&
-      newGameState[enemy].skillHand.length > 0 &&
-      unit.temporary.galeConjurationLethal
+      unit.temporary.galeConjurationLethal &&
+      newGameState[self].skillFloat.length > 0
     ) {
       newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
       newGameState.currentResolution.push({
         resolution: "Wind Skill",
         resolution2: "Gale ConjurationR4",
-        player: enemy,
+        player: self,
+        details: {
+          reason: "Gale Conjuration Draw",
+          title: "Gale Conjuration",
+          message: `You may draw 1 floating skill.`,
+          no: "Skip",
+          yes: "Draw",
+        },
       });
     }
 
@@ -846,7 +868,7 @@ export const useSkillEffects = () => {
           details: {
             reason: "Cataclysmic Tempest 2nd Paralyze",
             title: "Cataclysmic Tempest",
-            message: "You may paralyze another adjacent enemy for 2 turns.",
+            message: "You may paralyze another adjacent enemy for 1 turn.",
             no: "Skip",
             yes: "Paralyze",
             adjacentEnemies: adjacentEnemies,

@@ -96,7 +96,7 @@ const CataclysmicTempestFloat = (props) => {
             >
               <SkillMultiSelect
                 i={i}
-                usableSkill={usableSkill}
+                usableSkill={usableSkill.id}
                 canAdd={true}
                 selectedSkills={selectedSkills}
                 setSelectedSkills={setSelectedSkills}

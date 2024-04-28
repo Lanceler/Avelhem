@@ -178,7 +178,7 @@ const SelectCustomChoice = (props) => {
     case "Reinforce":
       canFirstChoice = true;
       canSecondChoice = newGameState[unit.player].skillHand.length > 0;
-      ChoiceFirstMessage = "Gain 1 Sharpness (Max. 2).";
+      ChoiceFirstMessage = "Draw 1 skill and gain 1 Sharpness (Max. 2).";
       ChoiceSecondMessage = "Spend 1 skill to gain 1 HP (Max. 2).";
       break;
 
@@ -633,6 +633,7 @@ const SelectCustomChoice = (props) => {
 
       case "Reinforce":
         if (selectedChoice === 1) {
+          newGameState = drawSkill(newGameState);
           unit.sharpness
             ? (unit.sharpness = Math.min(2, unit.sharpness + 1))
             : (unit.sharpness = 1);

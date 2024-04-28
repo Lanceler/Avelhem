@@ -2117,13 +2117,11 @@ const Board = (props) => {
           case "Gale ConjurationR4":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
-                  <SelectSkillFloat
-                    unit={null}
-                    reason="Gale Conjuration Lethal"
-                    title="Gale Conjuration"
-                    message="You are forced to float 1 skill."
-                    restriction={null}
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMayNoYes
+                    unit={lastResolution.unit}
+                    attacker={lastResolution.attacker}
+                    details={lastResolution.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2194,7 +2192,7 @@ const Board = (props) => {
                       lastResolution.unit,
                       1,
                       null,
-                      "paralyze2",
+                      "paralyze1",
                       "Cataclysmic Tempest"
                     )}
                   </>

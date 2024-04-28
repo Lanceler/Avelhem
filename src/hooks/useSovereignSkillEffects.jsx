@@ -353,7 +353,7 @@ export const useSovereignSkillEffects = () => {
       },
     });
 
-    let limit = 6;
+    let limit = 4;
     newGameState.currentResolution.push({
       resolution: "Sovereign Resonant Skill",
       resolution2: "Fervent Prayer1",
