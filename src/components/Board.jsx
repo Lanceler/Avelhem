@@ -434,15 +434,15 @@ const Board = (props) => {
 
     switch (option) {
       case "Info":
-        // setUnitInfor(expandedUnit);
+        setUnitInfor(expandedUnit);
 
-        //for testing: quick movement
-        enterMoveMode(
-          getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
-          expandedUnit,
-          newGameState,
-          null
-        );
+        // //for testing: quick movement
+        // enterMoveMode(
+        //   getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
+        //   expandedUnit,
+        //   newGameState,
+        //   null
+        // );
         break;
 
       case "Tactic":
@@ -4415,6 +4415,33 @@ const Board = (props) => {
     setExpandedUnit(null);
   };
 
+  const isYourTurn = () => {
+    if (localGameState.currentResolution.length > 0) {
+      const lastResolution =
+        localGameState.currentResolution[
+          localGameState.currentResolution.length - 1
+        ];
+
+      if (lastResolution.resolution2 === "Triggering Target") {
+        return lastResolution.victim.player === self;
+      }
+
+      if (lastResolution.player) {
+        return lastResolution.player === self;
+      }
+
+      if (lastResolution.unit) {
+        return lastResolution.unit.player === self;
+      }
+
+      if (lastResolution.attacker) {
+        return lastResolution.attacker.player === self;
+      }
+
+      return localGameState.turnPlayer === self;
+    }
+  };
+
   const moveUnit = (unit, zoneId, special) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -5267,7 +5294,12 @@ const Board = (props) => {
               </div>
             </div>
 
-            <div className="middle-container">
+            <div
+              // className="middle-container"
+              className={`middle-container ${
+                !isYourTurn() ? "middle-container-enemy" : ""
+              }`}
+            >
               {expandedUnit !== null && (
                 <>
                   <div

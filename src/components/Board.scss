@@ -184,7 +184,7 @@
 
 .middle-container {
     // background-color: rgb(51, 46, 38);
-    background-image: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
+    background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
     border: 2px solid black;
     width: 25%;
     // height: 70%;
@@ -193,8 +193,11 @@
     position: relative;
     // overflow: hidden;
     justify-self: start;
-
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 1);
+}
+
+.middle-container-enemy {
+    background: linear-gradient(to bottom, rgb(0, 0, 0), rgb(19, 15, 15) 60%, rgb(44, 43, 43) 100%);
 }
 
 //actually right container
