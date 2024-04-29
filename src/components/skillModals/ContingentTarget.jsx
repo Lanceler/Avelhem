@@ -157,7 +157,9 @@ const ContingentTarget = (props) => {
           </button>
         </div>
 
-        <h3>Target via {targetType}.</h3>
+        <h3>
+          Your {props.victim.unitClass} was targeted via {targetType}.
+        </h3>
 
         <div className="scrollable scrollable-y-only">
           <div className="fourColumn">
