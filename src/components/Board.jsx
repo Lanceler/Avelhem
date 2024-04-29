@@ -235,6 +235,7 @@ const Board = (props) => {
     magneticShockwave3,
     reinforce1,
     reinforceR1,
+    reinforceR2,
     frenzyBlade1,
     frenzyBlade2,
     arsenalOnslaught1,
@@ -2858,6 +2859,19 @@ const Board = (props) => {
                   <>
                     {resolutionUpdateGameStateOnly(
                       reinforceR1(lastResolution.unit, lastResolution.resonator)
+                    )}
+                  </>
+                )}
+              </>
+            );
+
+          case "ReinforceR1":
+            return (
+              <>
+                {self === lastResolution.unit.player && (
+                  <>
+                    {resolutionUpdateGameStateOnly(
+                      reinforceR2(lastResolution.unit)
                     )}
                   </>
                 )}

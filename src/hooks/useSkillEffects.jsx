@@ -2075,17 +2075,8 @@ export const useSkillEffects = () => {
 
     newGameState.currentResolution.push({
       resolution: "Metal Skill",
-      resolution2: "Reinforce1",
+      resolution2: "ReinforceR1",
       unit: unit,
-      details: {
-        title: "Reinforce",
-        reason: "Reinforce",
-      },
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Animation Delay",
-      priority: self,
     });
 
     newGameState.currentResolution.push({
@@ -2097,6 +2088,23 @@ export const useSkillEffects = () => {
         reason: "Reinforce",
       },
     });
+
+    return newGameState;
+  };
+
+  const reinforceR2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "ReinforceR1" resolution
+    newGameState.currentResolution.pop();
+
+    //give unit activationCounter
+    unit.sharpness
+      ? (unit.sharpness = Math.min(unit.sharpness + 1, 2))
+      : (unit.sharpness = 1);
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     return newGameState;
   };
@@ -2564,6 +2572,7 @@ export const useSkillEffects = () => {
     magneticShockwave3,
     reinforce1,
     reinforceR1,
+    reinforceR2,
     frenzyBlade1,
     frenzyBlade2,
     arsenalOnslaught1,
