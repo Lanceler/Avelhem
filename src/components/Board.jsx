@@ -2507,15 +2507,10 @@ const Board = (props) => {
       case "Mana Skill":
         switch (lastResolution.resolution2) {
           case "Activating Surge":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(surge1(lastResolution.unit))}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(surge1(lastResolution.unit));
+            }
+            break;
 
           case "Surge1":
             return (
@@ -2564,17 +2559,10 @@ const Board = (props) => {
             );
 
           case "Activating Diffusion":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      diffusion1(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(diffusion1(lastResolution.unit));
+            }
+            break;
 
           case "Diffusion1":
             return (
@@ -2591,34 +2579,16 @@ const Board = (props) => {
             );
 
           case "Diffusion2":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {selectEnemies(
-                      lastResolution.unit,
-                      1,
-                      null,
-                      "blast",
-                      "Diffusion"
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              selectEnemies(lastResolution.unit, 1, null, "blast", "Diffusion");
+            }
+            break;
 
           case "Diffusion3":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      diffusion2(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(diffusion2(lastResolution.unit));
+            }
+            break;
 
           case "Diffusion4":
             return (
@@ -2635,30 +2605,18 @@ const Board = (props) => {
             );
 
           case "Resonating Diffusion":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdate(
-                      diffusionR1(lastResolution.unit, lastResolution.resonator)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                diffusionR1(lastResolution.unit, lastResolution.resonator)
+              );
+            }
+            break;
 
           case "DiffusionR1":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      diffusionR2(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(diffusionR2(lastResolution.unit));
+            }
+            break;
 
           case "DiffusionR2":
             return (
@@ -2675,39 +2633,24 @@ const Board = (props) => {
             );
 
           case "DiffusionR3":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      diffusionR3(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(diffusionR3(lastResolution.unit));
+            }
+            break;
 
           case "Select Aegis Activator":
-            return (
-              <>
-                {self === lastResolution.player && (
-                  <>{selectAegisActivator(lastResolution.victim)}</>
-                )}
-              </>
-            );
+            if (self === lastResolution.player) {
+              selectAegisActivator(lastResolution.victim);
+            }
+            break;
 
           case "Activating Aegis":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      aegis1(lastResolution.unit, lastResolution.victim)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                aegis1(lastResolution.unit, lastResolution.victim)
+              );
+            }
+            break;
 
           case "Aegis1":
             return (
@@ -2725,64 +2668,44 @@ const Board = (props) => {
             );
 
           case "Activating Disruption Field":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      disruptionField1(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                disruptionField1(lastResolution.unit)
+              );
+            }
+            break;
         }
         break;
 
       case "Metal Skill":
         switch (lastResolution.resolution2) {
           case "Activating Magnetic Shockwave":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      magneticShockwave1(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                magneticShockwave1(lastResolution.unit)
+              );
+            }
+            break;
 
           case "Magnetic Shockwave1":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {selectEnemies(
-                      lastResolution.unit,
-                      1,
-                      null,
-                      "paralyze1",
-                      "MagneticShockwave1stParalysis"
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              selectEnemies(
+                lastResolution.unit,
+                1,
+                null,
+                "paralyze1",
+                "MagneticShockwave1stParalysis"
+              );
+            }
+            break;
 
           case "Magnetic Shockwave2":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      magneticShockwave2(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                magneticShockwave2(lastResolution.unit)
+              );
+            }
+            break;
 
           case "Magnetic Shockwave2.1":
             return (
@@ -2799,17 +2722,12 @@ const Board = (props) => {
             );
 
           case "Magnetic Shockwave3":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      magneticShockwave3(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                magneticShockwave3(lastResolution.unit)
+              );
+            }
+            break;
 
           case "Magnetic Shockwave3.1":
             return (
@@ -2826,17 +2744,10 @@ const Board = (props) => {
             );
 
           case "Activating Reinforce":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      reinforce1(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(reinforce1(lastResolution.unit));
+            }
+            break;
 
           case "Reinforce1":
             return (
@@ -2853,52 +2764,32 @@ const Board = (props) => {
             );
 
           case "Resonating Reinforce":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      reinforceR1(lastResolution.unit, lastResolution.resonator)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                reinforceR1(lastResolution.unit, lastResolution.resonator)
+              );
+            }
+            break;
 
           case "ReinforceR1":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      reinforceR2(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(reinforceR2(lastResolution.unit));
+            }
+            break;
 
           case "Select Frenzy Blade Activator":
-            return (
-              <>
-                {self === lastResolution.player && (
-                  <>{selectFrenzyBladeActivator(lastResolution.victim)}</>
-                )}
-              </>
-            );
+            if (self === lastResolution.player) {
+              selectFrenzyBladeActivator(lastResolution.victim);
+            }
+            break;
 
           case "Activating Frenzy Blade":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      frenzyBlade1(lastResolution.unit, lastResolution.victim)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                frenzyBlade1(lastResolution.unit, lastResolution.victim)
+              );
+            }
+            break;
 
           case "Frenzy Blade1":
             return (
@@ -2915,17 +2806,10 @@ const Board = (props) => {
             );
 
           case "Frenzy Blade1.5":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      frenzyBlade2(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(frenzyBlade2(lastResolution.unit));
+            }
+            break;
 
           case "Frenzy Blade2":
             return (
@@ -2942,58 +2826,32 @@ const Board = (props) => {
             );
 
           case "Activating Arsenal Onslaught":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      arsenalOnslaught1(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                arsenalOnslaught1(lastResolution.unit)
+              );
+            }
+            break;
 
           case "Arsenal Onslaught1":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {selectEnemies(
-                      lastResolution.unit,
-                      1,
-                      null,
-                      "strike",
-                      null
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              selectEnemies(lastResolution.unit, 1, null, "strike", null);
+            }
+            break;
 
           case "Arsenal Onslaught1.1":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {selectEnemies(lastResolution.unit, 1, null, "blast", null)}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              selectEnemies(lastResolution.unit, 1, null, "blast", null);
+            }
+            break;
 
           case "Arsenal Onslaught2":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      arsenalOnslaught2(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                arsenalOnslaught2(lastResolution.unit)
+              );
+            }
+            break;
 
           case "Arsenal Onslaught3":
             return (
@@ -3010,34 +2868,18 @@ const Board = (props) => {
             );
 
           case "Arsenal Onslaught3.5":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {selectEnemies(
-                      lastResolution.unit,
-                      1,
-                      null,
-                      "paralyze1",
-                      null
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              selectEnemies(lastResolution.unit, 1, null, "paralyze1", null);
+            }
+            break;
 
           case "Arsenal Onslaught4":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      arsenalOnslaught3(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                arsenalOnslaught3(lastResolution.unit)
+              );
+            }
+            break;
 
           case "Arsenal Onslaught5":
             return (
@@ -3072,17 +2914,10 @@ const Board = (props) => {
       case "Plant Skill":
         switch (lastResolution.resolution2) {
           case "Activating Sow And Reap":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      sowAndReap1(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(sowAndReap1(lastResolution.unit));
+            }
+            break;
 
           case "Sow and Reap1":
             return (
@@ -3099,30 +2934,22 @@ const Board = (props) => {
             );
 
           case "Sow and Reap Blast":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {selectEnemiesRooted(
-                      lastResolution.unit,
-                      1,
-                      null,
-                      "blast",
-                      "sowAndReapBlast"
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              selectEnemiesRooted(
+                lastResolution.unit,
+                1,
+                null,
+                "blast",
+                "sowAndReapBlast"
+              );
+            }
+            break;
 
           case "Select Sow and Reap Striker":
-            return (
-              <>
-                {self === lastResolution.player && (
-                  <>{selectSowAndReapStriker(lastResolution.unit)}</>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              selectSowAndReapStriker(lastResolution.unit);
+            }
+            break;
 
           case "Sow and Reap Strike":
             return (

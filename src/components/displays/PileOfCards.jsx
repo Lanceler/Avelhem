@@ -65,7 +65,7 @@ const PileOfCards = (props) => {
             key={i}
             className={`pile-card ${isFloating(i) ? "pile-floating" : ""} ${
               isVestige ? "pile-vestige" : ""
-            }`}
+            } ${team === enemy ? "pile-enemy" : ""}`}
             style={{
               backgroundImage: `url(${getImage2(cardBack)})`,
               top: -i * 0.3,
