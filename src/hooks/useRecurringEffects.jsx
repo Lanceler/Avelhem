@@ -3369,7 +3369,7 @@ export const useRecurringEffects = () => {
 
     //"If the attack was lethal" subsequent effects
     switch (special) {
-      case "Gale Conjuration Strike":
+      case "Gale Conjuration Blast":
         newGameState[attacker.player].units[
           attacker.unitIndex
         ].temporary.galeConjurationLethal = true;

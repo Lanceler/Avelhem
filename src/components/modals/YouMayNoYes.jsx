@@ -116,8 +116,8 @@ const YouMayNoYes = (props) => {
           props.unit,
           newGameState,
           null,
-          "strike",
-          "Gale Conjuration Strike"
+          "blast",
+          "Gale Conjuration Blast"
         );
         break;
 

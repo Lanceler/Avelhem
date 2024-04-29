@@ -692,9 +692,9 @@ export const useSkillEffects = () => {
         details: {
           reason: "Gale Conjuration Strike",
           title: "Gale Conjuration",
-          message: "You may strike.",
+          message: "You may blast an adjacent enemy.",
           no: "Skip",
-          yes: "Strike",
+          yes: "Blast",
         },
       });
     }
