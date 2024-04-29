@@ -7,6 +7,8 @@ import { useLogOut } from "../hooks/useLogOut";
 
 import { useAuthContext } from "../hooks/useAuthContext";
 
+import AvelhemLogo from "../assets/others/AvelhemLogo.png";
+
 const Navbar = () => {
   const { user } = useAuthContext();
   const { logOut } = useLogOut();
@@ -18,7 +20,8 @@ const Navbar = () => {
         <nav>
           <div className="leftContainer">
             <Link to="/">
-              <h1 className="avelhem-title">Avelhem</h1>
+              {/* <h1 className="avelhem-title">Avelhem</h1> */}
+              <img src={AvelhemLogo} className="avelhem-logo" />
             </Link>
             <h3>{user && user.displayName}</h3>
           </div>

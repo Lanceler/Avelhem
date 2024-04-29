@@ -231,7 +231,7 @@ export const useSkillEffects = () => {
     //end "Blaze of Glory2"
     newGameState.currentResolution.pop();
 
-    if (unit !== null && !isMuted(unit) && unit.fever > 0) {
+    if (unit && !isMuted(unit) && unit.fever > 0) {
       newGameState.currentResolution.push({
         resolution: "Fire Skill",
         resolution2: "Blaze of Glory3",

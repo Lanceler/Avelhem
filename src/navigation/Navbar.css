@@ -21,6 +21,11 @@
     color: #caac28
 }
 
+.avelhem-logo{
+    height: 45px;
+
+}
+
 .navbar nav {
     display: flex;
     align-items: center;

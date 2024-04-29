@@ -1640,43 +1640,22 @@ const Board = (props) => {
             );
 
           case "Activating Blaze of Glory":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>{resolutionUpdate(blazeOfGlory1(lastResolution.unit))}</>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(blazeOfGlory1(lastResolution.unit));
+            }
+            break;
 
           case "Blaze of Glory1":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {selectEnemies(
-                      lastResolution.unit,
-                      1,
-                      null,
-                      "ignite",
-                      null
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              selectEnemies(lastResolution.unit, 1, null, "ignite", null);
+            }
+            break;
 
           case "Blaze of Glory2":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      blazeOfGlory2(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(blazeOfGlory2(lastResolution.unit));
+            }
+            break;
 
           case "Blaze of Glory3":
             return (
@@ -1693,17 +1672,10 @@ const Board = (props) => {
             );
 
           case "Activating Resplendence":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      resplendence1(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(resplendence1(lastResolution.unit));
+            }
+            break;
 
           case "Resplendence1":
             return (
@@ -1720,51 +1692,26 @@ const Board = (props) => {
             );
 
           case "Resplendence2":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {selectEnemies(
-                      lastResolution.unit,
-                      1,
-                      null,
-                      "ignite",
-                      null
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              selectEnemies(lastResolution.unit, 1, null, "ignite", null);
+            }
+            break;
         }
         break;
 
       case "Water Skill":
         switch (lastResolution.resolution2) {
           case "Activating Purification":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>{resolutionUpdate(purification1(lastResolution.unit))}</>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(purification1(lastResolution.unit));
+            }
+            break;
 
           case "Purification1":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {selectAllies(
-                      lastResolution.unit,
-                      2,
-                      true,
-                      "purification",
-                      null
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              selectAllies(lastResolution.unit, 2, true, "purification", null);
+            }
+            break;
 
           case "Purification2":
             return (
@@ -1781,43 +1728,22 @@ const Board = (props) => {
             );
 
           case "Activating Frigid Breath":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>{resolutionUpdate(frigidBreath1(lastResolution.unit))}</>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(frigidBreath1(lastResolution.unit));
+            }
+            break;
 
           case "Frigid Breath1":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {selectEnemies(
-                      lastResolution.unit,
-                      2,
-                      null,
-                      "freeze1",
-                      null
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              selectEnemies(lastResolution.unit, 2, null, "freeze1", null);
+            }
+            break;
 
           case "Frigid Breath2":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      frigidBreath2(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(frigidBreath2(lastResolution.unit));
+            }
+            break;
 
           case "Frigid Breath3":
             return (
@@ -1837,50 +1763,26 @@ const Board = (props) => {
             );
 
           case "Frigid Breath4":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {selectEnemies(
-                      lastResolution.unit,
-                      1,
-                      null,
-                      "freeze2",
-                      null
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              selectEnemies(lastResolution.unit, 1, null, "freeze2", null);
+            }
+            break;
 
           case "Resonating Frigid Breath":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdate(
-                      frigidBreathR1(
-                        lastResolution.unit,
-                        lastResolution.resonator
-                      )
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                frigidBreathR1(lastResolution.unit, lastResolution.resonator)
+              );
+            }
+            break;
 
           case "Frigid BreathR1":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      frigidBreathR2(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                frigidBreathR2(lastResolution.unit)
+              );
+            }
+            break;
 
           case "Frigid BreathR2":
             return (
@@ -1897,53 +1799,39 @@ const Board = (props) => {
             );
 
           case "Frigid BreathR3":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {selectEnemiesAfflicted(
-                      lastResolution.unit,
-                      1,
-                      null,
-                      "blast",
-                      null,
-                      "frostbite"
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              selectEnemiesAfflicted(
+                lastResolution.unit,
+                1,
+                null,
+                "blast",
+                null,
+                "frostbite"
+              );
+            }
+            break;
 
           case "Select Healing Rain Activator":
-            return (
-              <>
-                {self === lastResolution.player && (
-                  <>{selectHealingRainActivator(lastResolution.victim)}</>
-                )}
-              </>
-            );
+            if (self === lastResolution.player) {
+              selectHealingRainActivator(lastResolution.victim);
+            }
+            break;
 
           case "Activating Healing Rain":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdate(
-                      healingRain1(lastResolution.unit, lastResolution.victim)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                healingRain1(lastResolution.unit, lastResolution.victim)
+              );
+            }
+            break;
 
           case "Activating Glacial Torrent":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>{resolutionUpdate(glacialTorrent1(lastResolution.unit))}</>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                glacialTorrent1(lastResolution.unit)
+              );
+            }
+            break;
 
           case "Glacial Torrent 1":
             return (
@@ -1963,13 +1851,12 @@ const Board = (props) => {
       case "Wind Skill":
         switch (lastResolution.resolution2) {
           case "Activating Aerial Impetus":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>{resolutionUpdate(aerialImpetus1(lastResolution.unit))}</>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                aerialImpetus1(lastResolution.unit)
+              );
+            }
+            break;
 
           case "Aerial Impetus1":
             return (
@@ -1986,26 +1873,18 @@ const Board = (props) => {
             );
 
           case "Aerial Impetus Prompt":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>{selectAerialImpetusMove(lastResolution.unit, "Ally")}</>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              selectAerialImpetusMove(lastResolution.unit, "Ally");
+            }
+            break;
 
           case "Aerial Impetus Purge":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      aerialImpetus2E(lastResolution.victim)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                aerialImpetus2E(lastResolution.victim)
+              );
+            }
+            break;
 
           case "Aerial Impetus Purge Move":
             return (
@@ -2023,26 +1902,18 @@ const Board = (props) => {
             );
 
           case "Aerial Impetus Purge Move2":
-            return (
-              <>
-                {self === lastResolution.player && (
-                  <>{selectAerialImpetusMove(lastResolution.victim, "Enemy")}</>
-                )}
-              </>
-            );
+            if (self === lastResolution.player) {
+              selectAerialImpetusMove(lastResolution.victim, "Enemy");
+            }
+            break;
 
           case "Activating Gale Conjuration":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      galeConjuration1(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                galeConjuration1(lastResolution.unit)
+              );
+            }
+            break;
 
           case "Gale Conjuration1":
             return (
@@ -2062,33 +1933,20 @@ const Board = (props) => {
             );
 
           case "Resonating Gale Conjuration":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdate(
-                      galeConjurationR1(
-                        lastResolution.unit,
-                        lastResolution.resonator
-                      )
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                galeConjurationR1(lastResolution.unit, lastResolution.resonator)
+              );
+            }
+            break;
 
           case "Gale ConjurationR1":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      galeConjurationR2(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                galeConjurationR2(lastResolution.unit)
+              );
+            }
+            break;
 
           case "Gale ConjurationR2":
             return (
@@ -2105,15 +1963,12 @@ const Board = (props) => {
             );
 
           case "Gale ConjurationR3":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdate(galeConjurationR3(lastResolution.unit))}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                galeConjurationR3(lastResolution.unit)
+              );
+            }
+            break;
 
           case "Gale ConjurationR4":
             return (
@@ -2131,20 +1986,13 @@ const Board = (props) => {
             );
 
           case "Activating Symphonic Screech":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdate(
-                      symphonicScreech1(
-                        lastResolution.unit,
-                        lastResolution.victim
-                      )
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              //Do not use UpdateGameStateOnly
+              resolutionUpdate(
+                symphonicScreech1(lastResolution.unit, lastResolution.victim)
+              );
+            }
+            break;
 
           case "Symphonic Screech Negate":
             return (
@@ -2174,45 +2022,32 @@ const Board = (props) => {
             );
 
           case "Activating Cataclysmic Tempest":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdate(cataclysmicTempest1(lastResolution.unit))}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                cataclysmicTempest1(lastResolution.unit)
+              );
+            }
+            break;
 
           case "Cataclysmic Tempest1":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {selectEnemies(
-                      lastResolution.unit,
-                      1,
-                      null,
-                      "paralyze1",
-                      "Cataclysmic Tempest"
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              selectEnemies(
+                lastResolution.unit,
+                1,
+                null,
+                "paralyze1",
+                "Cataclysmic Tempest"
+              );
+            }
+            break;
 
           case "Cataclysmic Tempest2":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      cataclysmicTempest2(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                cataclysmicTempest2(lastResolution.unit)
+              );
+            }
+            break;
 
           case "Cataclysmic Tempest3":
             return (
@@ -2229,15 +2064,11 @@ const Board = (props) => {
             );
 
           case "Cataclysmic Tempest4":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdate(cataclysmicTempest3(lastResolution.unit))}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              //Do not use UpdateGameStateOnly
+              resolutionUpdate(cataclysmicTempest3(lastResolution.unit));
+            }
+            break;
 
           case "Cataclysmic Tempest Float":
             return (
@@ -2253,17 +2084,12 @@ const Board = (props) => {
             );
 
           case "Cataclysmic Tempest5":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      cataclysmicTempest4(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                cataclysmicTempest4(lastResolution.unit)
+              );
+            }
+            break;
 
           case "Cataclysmic Tempest6":
             return (
@@ -2284,17 +2110,12 @@ const Board = (props) => {
       case "Land Skill":
         switch (lastResolution.resolution2) {
           case "Activating Crystallization":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      crystallization1(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                crystallization1(lastResolution.unit)
+              );
+            }
+            break;
 
           case "Crystallization1":
             return (
@@ -2311,60 +2132,38 @@ const Board = (props) => {
             );
 
           case "Crystallization2":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      crystallization2(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                crystallization2(lastResolution.unit)
+              );
+            }
+            break;
 
           case "Activating Upheaval":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      upheaval1(lastResolution.unit, lastResolution.victim)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                upheaval1(lastResolution.unit, lastResolution.victim)
+              );
+            }
+            break;
 
           case "Upheaval1":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {selectEnemies(
-                      lastResolution.unit,
-                      1,
-                      null,
-                      "paralyze1",
-                      "Upheaval"
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              selectEnemies(
+                lastResolution.unit,
+                1,
+                null,
+                "paralyze1",
+                "Upheaval"
+              );
+            }
+            break;
 
           case "Upheaval2":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      upheaval2(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(upheaval2(lastResolution.unit));
+            }
+            break;
 
           case "Upheaval3":
             return (
@@ -2381,30 +2180,18 @@ const Board = (props) => {
             );
 
           case "Resonating Upheaval":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdate(
-                      upheavalR1(lastResolution.unit, lastResolution.resonator)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                upheavalR1(lastResolution.unit, lastResolution.resonator)
+              );
+            }
+            break;
 
           case "UpheavalR1":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      upheavalR2(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(upheavalR2(lastResolution.unit));
+            }
+            break;
 
           case "UpheavalR2":
             return (
@@ -2421,53 +2208,37 @@ const Board = (props) => {
             );
 
           case "UpheavalR3":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {enterMoveModeViaSkill(
-                      getVacantAdjacentZones(lastResolution.unit),
-                      lastResolution.unit
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              enterMoveModeViaSkill(
+                getVacantAdjacentZones(lastResolution.unit),
+                lastResolution.unit
+              );
+            }
+            break;
 
           case "Select Pitfall Trap Activator":
-            return (
-              <>
-                {self === lastResolution.player && (
-                  <>{selectPitfallTrapActivator(lastResolution.mover)}</>
-                )}
-              </>
-            );
+            if (self === lastResolution.player) {
+              selectPitfallTrapActivator(lastResolution.mover);
+            }
+            break;
 
           case "Activating Pitfall Trap":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdate(
-                      pitfallTrap1(lastResolution.unit, lastResolution.victim)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              //Do not use UpdateGameStateOnly
+              resolutionUpdate(
+                pitfallTrap1(lastResolution.unit, lastResolution.victim)
+              );
+            }
+            break;
 
           case "Pitfall Trap1":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdate(
-                      pitfallTrap2(lastResolution.unit, lastResolution.victim)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              //Do not use UpdateGameStateOnly
+              resolutionUpdate(
+                pitfallTrap2(lastResolution.unit, lastResolution.victim)
+              );
+            }
+            break;
 
           case "Pitfall Trap2":
             return (
@@ -2485,30 +2256,19 @@ const Board = (props) => {
             );
 
           case "Pitfall Trap3":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdate(
-                      pitfallTrap3(lastResolution.unit, lastResolution.victim)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              //Do not use UpdateGameStateOnly
+              resolutionUpdate(
+                pitfallTrap3(lastResolution.unit, lastResolution.victim)
+              );
+            }
+            break;
 
           case "Activating Geomancy":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdate(
-                      geomancy1(lastResolution.unit, lastResolution.victim)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(geomancy1(lastResolution.unit));
+            }
+            break;
 
           case "Geomancy1":
             return (
@@ -2539,18 +2299,10 @@ const Board = (props) => {
             );
 
           case "Geomancy3":
-            return (
-              <>
-                {self ===
-                  lastResolution.unit.player(
-                    <>
-                      {resolutionUpdate(
-                        geomancy2(lastResolution.unit, lastResolution.victim)
-                      )}
-                    </>
-                  )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(geomancy2(lastResolution.unit));
+            }
+            break;
 
           case "Geomancy4":
             return (
@@ -2571,50 +2323,32 @@ const Board = (props) => {
       case "Lightning Skill":
         switch (lastResolution.resolution2) {
           case "Activating Chain Lightning":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      chainLightning1(
-                        lastResolution.unit,
-                        lastResolution.victim
-                      )
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                chainLightning1(lastResolution.unit)
+              );
+            }
+            break;
 
           case "Chain Lightning1":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {selectEnemies(
-                      lastResolution.unit,
-                      1,
-                      null,
-                      "paralyze1",
-                      "ChainLightningParalysis"
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              selectEnemies(
+                lastResolution.unit,
+                1,
+                null,
+                "paralyze1",
+                "ChainLightningParalysis"
+              );
+            }
+            break;
 
           case "Chain Lightning2":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      chainLightning2(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                chainLightning2(lastResolution.unit)
+              );
+            }
+            break;
 
           case "Chain Lightning3":
             return (
@@ -2631,74 +2365,45 @@ const Board = (props) => {
             );
 
           case "Chain Lightning4":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      chainLightning3(
-                        lastResolution.unit,
-                        lastResolution.adjacentEnemies
-                      )
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                chainLightning3(
+                  lastResolution.unit,
+                  lastResolution.adjacentEnemies
+                )
+              );
+            }
+            break;
 
           case "Chain Lightning5":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {selectChainLightningBlast(
-                      lastResolution.unit,
-                      lastResolution.adjacentEnemies
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              selectChainLightningBlast(
+                lastResolution.unit,
+                lastResolution.adjacentEnemies
+              );
+            }
+            break;
 
           case "Activating Zip and Zap":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      zipAndZap1(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(zipAndZap1(lastResolution.unit));
+            }
+            break;
 
           case "Zip And Zap1":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {enterMoveModeViaSkill(
-                      getVacantAdjacentZones(lastResolution.unit),
-                      lastResolution.unit
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              enterMoveModeViaSkill(
+                getVacantAdjacentZones(lastResolution.unit),
+                lastResolution.unit
+              );
+            }
+            break;
 
           case "Zip And Zap2":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      zipAndZap2(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(zipAndZap2(lastResolution.unit));
+            }
+            break;
 
           case "Zip And Zap3":
             return (
@@ -2715,30 +2420,18 @@ const Board = (props) => {
             );
 
           case "Resonating Zip And Zap":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdate(
-                      zipAndZapR1(lastResolution.unit, lastResolution.resonator)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                zipAndZapR1(lastResolution.unit, lastResolution.resonator)
+              );
+            }
+            break;
 
           case "Zip And ZapR1":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      zipAndZapR2(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(zipAndZapR2(lastResolution.unit));
+            }
+            break;
 
           case "Zip And ZapR2":
             return (
@@ -2755,33 +2448,24 @@ const Board = (props) => {
             );
 
           case "Activating Thunder Thaumaturge":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdate(
-                      thunderThaumaturge1(
-                        lastResolution.unit,
-                        lastResolution.attacker
-                      )
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              //Do not use UpdateGameStateOnly
+              resolutionUpdate(
+                thunderThaumaturge1(
+                  lastResolution.unit,
+                  lastResolution.attacker
+                )
+              );
+            }
+            break;
 
           case "Thunder Thaumaturge1":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      thunderThaumaturge2(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                thunderThaumaturge2(lastResolution.unit)
+              );
+            }
+            break;
 
           case "Thunder Thaumaturge2":
             return (
@@ -2798,17 +2482,10 @@ const Board = (props) => {
             );
 
           case "Activating Valiant Spark":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      valiantSpark1(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(valiantSpark1(lastResolution.unit));
+            }
+            break;
 
           case "Valiant Spark1":
             return (
