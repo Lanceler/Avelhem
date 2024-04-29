@@ -353,7 +353,11 @@ const SelectSovereignTactic = (props) => {
                   stock: mobilizeLimit,
                   limit: mobilizeLimit,
                 },
-                { face: "Assault", stock: 1, limit: 1 },
+                {
+                  face: "Mobilize",
+                  stock: mobilizeLimit,
+                  limit: mobilizeLimit,
+                },
 
                 //   { face: "Invoke", stock: 1, limit: 1 }, // replaced with 2nd Assault
                 { face: "Assault", stock: 1, limit: 1 },

@@ -13,6 +13,7 @@ export const useSkillEffects = () => {
 
   const {
     blast,
+    canBlast,
     canMove,
     canStrike,
     drawSkill,
@@ -678,7 +679,7 @@ export const useSkillEffects = () => {
     // end "Gale ConjurationR1"
     newGameState.currentResolution.pop();
 
-    if (canStrike(unit)) {
+    if (canBlast(unit)) {
       // newGameState.currentResolution.push({
       //   resolution: "Wind Skill",
       //   resolution2: "Gale ConjurationR3",
