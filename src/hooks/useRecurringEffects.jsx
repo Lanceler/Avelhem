@@ -4955,7 +4955,7 @@ export const useRecurringEffects = () => {
       !isMuted(victim) &&
       !isDisrupted(victim, 1) &&
       ["strike", "virtue-blast", "blast"].includes(method) && //only attacks can trigger it
-      localGameState[victim.player].skillHand.length > 1 && //needs at least 2 cards: Blaze of Glory itself + 1 card to discard
+      localGameState[victim.player].skillHand.length > 0 &&
       victim.fever > 0 && //enemy needs fever
       getZonesWithEnemies(victim, 1).length //must be able to burn an adjacent enemy
     ) {

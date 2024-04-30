@@ -203,24 +203,23 @@ export const useSkillEffects = () => {
     newGameState.currentResolution.push({
       resolution: "Fire Skill",
       resolution2: "Blaze of Glory2",
-      // resolution: "Blaze of Glory2",
       unit: unit,
     });
 
     newGameState.currentResolution.push({
       resolution: "Fire Skill",
       resolution2: "Blaze of Glory1",
-      // resolution: "Blaze of Glory1",
       unit: unit,
     });
 
-    newGameState.currentResolution.push({
-      resolution: "Discard Skill",
-      unit: unit,
-      player: self,
-      message: "Spend 1 skill.",
-      restriction: null,
-    });
+    //Buffed; no need to spend
+    // newGameState.currentResolution.push({
+    //   resolution: "Discard Skill",
+    //   unit: unit,
+    //   player: self,
+    //   message: "Spend 1 skill.",
+    //   restriction: null,
+    // });
 
     return newGameState;
   };

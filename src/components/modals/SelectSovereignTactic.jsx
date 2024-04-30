@@ -157,12 +157,13 @@ const SelectSovereignTactic = (props) => {
                 ⬩Reroll this tactic. <br />
                 If the result is{" "}
                 <img src={InvokeSmall} style={{ height: 21 }} />, convert it to{" "}
-                <img src={AssaultSmall} style={{ height: 21 }} />.
+                <img src={MobilizeSmall} style={{ height: 21 }} />.
               </div>
               <div className="abilityText ">⬩Gain 1 FD.</div>
-              <div className="abilityText ">
+              {/* nerfed: no longer recovers transcendence */}
+              {/* <div className="abilityText ">
                 ⬩You may recover 1 “Transcendence”.
-              </div>
+              </div> */}
             </>
           ),
         },
@@ -374,16 +375,17 @@ const SelectSovereignTactic = (props) => {
               newGameState[self].fateDefiances + 1
             );
 
-            if (newGameState[self].skillVestige.includes("SX-01")) {
-              newGameState.currentResolution.push({
-                resolution: "Recover Skill",
-                player: self,
-                restriction: ["SX-01"],
-                message: "You may recover 1 “Transcendence”",
-                outcome: "Add",
-                canSkip: true,
-              });
-            }
+            //Nerfed: no longer recovers transcendence
+            // if (newGameState[self].skillVestige.includes("SX-01")) {
+            //   newGameState.currentResolution.push({
+            //     resolution: "Recover Skill",
+            //     player: self,
+            //     restriction: ["SX-01"],
+            //     message: "You may recover 1 “Transcendence”",
+            //     outcome: "Add",
+            //     canSkip: true,
+            //   });
+            // }
             break;
         }
         break;
