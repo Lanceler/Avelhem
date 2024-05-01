@@ -21,6 +21,7 @@ import HP from "../assets/attributeIcons/HP.png";
 import BurnGif from "../assets/attributeIcons/BurnGif.gif";
 import FrostbiteGif from "../assets/attributeIcons/FrostbiteGif.gif";
 import ParalysisGif from "../assets/attributeIcons/ParalysisGif.gif";
+import RootGif from "../assets/attributeIcons/RootGif.gif";
 
 import Ambidexterity from "../assets/others/Ambidexterity.png";
 
@@ -34,6 +35,8 @@ export const Piece = (props) => {
   const dispatch = useDispatch();
 
   const { getElementImage } = useCardImageSwitch();
+
+  const { isRooted } = useRecurringEffects();
 
   let pieceSelectable = false;
 
@@ -109,6 +112,10 @@ export const Piece = (props) => {
               {props.unit.unitClass !== "Pawn" && (
                 <div className="ascension"></div>
               )}
+
+              {/* root */}
+
+              {isRooted(props.unit) && <img src={RootGif} className="rooted" />}
 
               {/* anathema / ravager */}
 

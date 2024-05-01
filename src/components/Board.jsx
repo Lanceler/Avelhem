@@ -435,15 +435,15 @@ const Board = (props) => {
 
     switch (option) {
       case "Info":
-        setUnitInfor(expandedUnit);
+        // setUnitInfor(expandedUnit);
 
-        // //for testing: quick movement
-        // enterMoveMode(
-        //   getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
-        //   expandedUnit,
-        //   newGameState,
-        //   null
-        // );
+        //for testing: quick movement
+        enterMoveMode(
+          getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
+          expandedUnit,
+          newGameState,
+          null
+        );
         break;
 
       case "Tactic":
@@ -504,7 +504,7 @@ const Board = (props) => {
     setSelectUnitReason(null);
     setSelectUnitSpecial(null);
     setMovingUnit(null);
-    setMovingSpecial(null);
+    // setMovingSpecial(null);
     setTacticUsed(null);
 
     setExpandedUnit(null);
@@ -1214,6 +1214,19 @@ const Board = (props) => {
               </>
             );
 
+          case "Acquisition Phase: Cultivate":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <YouMaySpend1Skill
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
           case "Battle Cry":
             return (
               <>
@@ -1315,6 +1328,7 @@ const Board = (props) => {
                 getVacant2SpaceZones(lastResolution.unit),
                 lastResolution.unit
               );
+              setMovingSpecial("AirDash");
             }
             break;
 
@@ -4078,6 +4092,10 @@ const Board = (props) => {
     newGameState.zones = JSON.stringify(newZoneInfo);
 
     if (localGameState.turnPhase === "Acquisition") {
+      if (newGameState[self].bountyUpgrades.acquisition >= 1) {
+        newUnit.boosts.canVirtueBlast = true;
+      }
+
       newGameState.turnPhase = "Bounty";
       newGameState.currentResolution.pop();
       newGameState.currentResolution.push({
@@ -5287,11 +5305,11 @@ const Board = (props) => {
                   <div className="rcmtb-mid">
                     <div className="fd-counter">
                       {" "}
-                      FD: {localGameState[enemy].fateDefiances}
+                      FD: {localGameState[enemy].fateDefiances} / 6
                     </div>
                     <div className="bp-counter">
                       {" "}
-                      BP: {localGameState[enemy].bountyPoints}
+                      BP: {localGameState[enemy].bountyPoints} / 10
                     </div>
                   </div>
                   <div className="avel-container">
@@ -5317,10 +5335,10 @@ const Board = (props) => {
                   </div>
                   <div className="rcmtb-mid">
                     <div className="fd-counter">
-                      FD: {localGameState[self].fateDefiances}
+                      FD: {localGameState[self].fateDefiances} / 6
                     </div>
                     <div className="bp-counter">
-                      BP: {localGameState[self].bountyPoints}
+                      BP: {localGameState[self].bountyPoints} / 10
                     </div>
                   </div>
                   <div className="avel-container">

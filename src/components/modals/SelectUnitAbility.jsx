@@ -141,7 +141,9 @@ const SelectUnitAbility = (props) => {
           ),
           abilityText: (
             <>
-              <div className="abilityText ">⬩Move to a zone 2 spaces away.</div>
+              <div className="abilityText ">
+                ⬩Move to a zone 2 spaces away (bypass motion contingent skills).
+              </div>
             </>
           ),
         },

@@ -460,7 +460,7 @@ export const useSovereignSkillEffects = () => {
 
     newGameState[self].fateDefiances = Math.min(
       6,
-      newGameState[self].fateDefiances + 3
+      newGameState[self].fateDefiances + 2
     );
 
     //Resonance also grants an advance tactic, but that will be handled via spending the invoke
@@ -513,7 +513,7 @@ export const useSovereignSkillEffects = () => {
       details: {
         reason: "Press the Attack Avelhem",
         title: "Press the Attack",
-        message: "You may draw 3 Avelhems.",
+        message: "You may draw 2 Avelhems.",
         no: "Skip",
         yes: "Draw",
       },

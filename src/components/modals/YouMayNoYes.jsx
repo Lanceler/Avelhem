@@ -370,7 +370,6 @@ const YouMayNoYes = (props) => {
       case "Press the Attack Avelhem":
         newGameState = drawAvelhem(newGameState);
         newGameState = drawAvelhem(newGameState);
-        newGameState = drawAvelhem(newGameState);
         break;
 
       case "Press the Attack Pawn":

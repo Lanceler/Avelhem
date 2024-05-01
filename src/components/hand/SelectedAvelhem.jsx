@@ -29,14 +29,14 @@ const SelectedAvelhem = (props) => {
   const canSearch =
     yourTurn &&
     localGameState[self].bountyUpgrades.avelhem >= 2 &&
-    !localGameState[self].hasAvelhemSearch &&
-    localGameState[self].fateDefiances >= 1;
+    // !localGameState[self].hasAvelhemSearch &&
+    localGameState[self].fateDefiances >= 3;
 
   const canRecover =
     yourTurn &&
     localGameState[self].bountyUpgrades.avelhem >= 4 &&
-    !localGameState[self].hasAvelhemRecover &&
-    localGameState[self].fateDefiances >= 2 &&
+    // !localGameState[self].hasAvelhemRecover &&
+    localGameState[self].fateDefiances >= 3 &&
     getScionSet(scionClass).some((s) =>
       localGameState[self].skillVestige.includes(s)
     );
@@ -56,7 +56,7 @@ const SelectedAvelhem = (props) => {
     );
 
     newGameState[self].hasAvelhemRecover = true;
-    newGameState[self].fateDefiances -= 2;
+    newGameState[self].fateDefiances -= 3;
 
     newGameState.currentResolution.push({
       resolution: "Recover Skill",
@@ -85,7 +85,7 @@ const SelectedAvelhem = (props) => {
     );
 
     newGameState[self].hasAvelhemSearch = true;
-    newGameState[self].fateDefiances -= 1;
+    newGameState[self].fateDefiances -= 3;
 
     newGameState.currentResolution.push({
       resolution: "Search Skill",
@@ -158,7 +158,7 @@ const SelectedAvelhem = (props) => {
                   className="activateButton displayCardButton"
                   onClick={() => handleRecover()}
                 >
-                  Recover
+                  Recover (3 FD)
                 </button>
               </>
             )}
@@ -168,7 +168,7 @@ const SelectedAvelhem = (props) => {
                   className="activateButton displayCardButton"
                   onClick={() => handleSearch()}
                 >
-                  Search
+                  Search (3 FD)
                 </button>
               </>
             )}

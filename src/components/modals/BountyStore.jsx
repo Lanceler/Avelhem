@@ -52,7 +52,6 @@ const BountyStore = (props) => {
       case 3:
         newGameState[self].bountyUpgrades.frontier = 3;
         newGameState[self].bountyPoints -= frontierCosts[2];
-        newGameState = drawSkill(newGameState);
         setSelectedChoice(null);
         break;
 
@@ -162,18 +161,11 @@ const BountyStore = (props) => {
     props.hideOrRevealModale();
   };
 
-  //bountyUpgrades.frontier
-  //bountyUpgrades.acquisition
-  //bountyUpgrades.coordination
-  //bountyUpgrades.tactics
-  //bountyUpgrades.avelhem
-  //bountyUpgrades.victory
-
   const frontierCosts = [2, 3, 5];
-  const acquisitionCosts = [2, 2, 4];
-  const coordinationCosts = [2, 3, 3];
+  const acquisitionCosts = [2, 2, 2];
+  const coordinationCosts = [2, 2, 2];
   const tacticsCosts = [2, 2, 2, 2];
-  const avelhemCosts = [3, 1, 2, 2];
+  const avelhemCosts = [3, 3, 3, 3];
   const victoryCosts = [10, 5];
 
   const canFrontier = [
@@ -315,7 +307,7 @@ const BountyStore = (props) => {
               >
                 <div className="bountyText">
                   <h4 className="bountyDescription">
-                    Expand your frontier to 5 rows and draw 1 skill.
+                    Expand your frontier to 5 rows.
                   </h4>
                   <h4 className="bpCost">
                     {localGameState[self].bountyUpgrades.frontier > 2
@@ -344,7 +336,7 @@ const BountyStore = (props) => {
                 } `}
               >
                 <div className="bountyText">
-                  <h4 className="bountyDescription">Unlock Divine</h4>
+                  <h4 className="bountyDescription">Upgrade Appoint.</h4>
                   <h4 className="bpCost">
                     {localGameState[self].bountyUpgrades.acquisition > 0
                       ? "Purchased"
@@ -367,7 +359,7 @@ const BountyStore = (props) => {
                 } `}
               >
                 <div className="bountyText">
-                  <h4 className="bountyDescription">Upgrade Cultivate.</h4>
+                  <h4 className="bountyDescription">Upgrade Beseech.</h4>
                   <h4 className="bpCost">
                     {localGameState[self].bountyUpgrades.acquisition > 1
                       ? "Purchased"
@@ -390,7 +382,7 @@ const BountyStore = (props) => {
                 } `}
               >
                 <div className="bountyText">
-                  <h4 className="bountyDescription">Unlock Expedite.</h4>
+                  <h4 className="bountyDescription">Upgrade Cultivate.</h4>
                   <h4 className="bpCost">
                     {localGameState[self].bountyUpgrades.acquisition > 2
                       ? "Purchased"
@@ -563,7 +555,9 @@ const BountyStore = (props) => {
                 } `}
               >
                 <div className="bountyText">
-                  <h4 className="bountyDescription">Upgrade Advance again.</h4>
+                  <h4 className="bountyDescription">
+                    Upgrade Advance further.
+                  </h4>
                   <h4 className="bpCost">
                     {localGameState[self].bountyUpgrades.tactics > 3
                       ? "Purchased"
@@ -618,10 +612,8 @@ const BountyStore = (props) => {
                 <div className="bountyText">
                   <h4 className="bountyDescription">
                     <p style={{ fontSize: 16 }}>
-                      {/* You can spend 1 Avelhem & 1 FD to search for 1 non-burst
-                      skill with the matching aspect once per Execution Phase. */}
-                      Once per Execution Phase, you may spend an Avelhem & 1 FD
-                      to search for 1 non-burst skill with the matching aspect.
+                      Your Avelhems have an alternate effect: Spend 3 FD to
+                      search for 1 non-burst skill with the matching aspect.
                     </p>
                   </h4>
                   <h4 className="bpCost">
@@ -676,10 +668,8 @@ const BountyStore = (props) => {
                 <div className="bountyText">
                   <h4 className="bountyDescription">
                     <p style={{ fontSize: 16.0 }}>
-                      {/* You can spend 1 Avelhem & 2 FD to recover for 1 skill with
-                      the matching aspect once per Execution Phase. */}
-                      Once per Execution Phase, you may spend an Avelhem & 2 FD
-                      to recover 1 skill with the matching aspect.
+                      Your Avelhems have an alternate effect: Spend 3 FD to
+                      recover 1 skill with the matching aspect.
                     </p>
                   </h4>
                   <h4 className="bpCost">

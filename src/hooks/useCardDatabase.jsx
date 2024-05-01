@@ -452,7 +452,6 @@ export const useCardDatabase = () => {
       "01-01", //Ignition Propulsion
       "01-02", //Conflagration
       "02-02", //Frigid Breath
-      "03-02", //Gale Conjuration
       "04-03", //Pitfall Trap
       "05-01", //Chain Lightning
       "05-02", //Zip and Zap

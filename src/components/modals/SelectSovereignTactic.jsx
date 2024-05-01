@@ -143,7 +143,7 @@ const SelectSovereignTactic = (props) => {
           ),
         },
         {
-          abilityName: "Reroll Tactic",
+          abilityName: "???",
           abilityQualifier: (
             <div className="abilityQualifier">
               {newGameState[self].bountyUpgrades.tactics < 1 && (
@@ -153,17 +153,10 @@ const SelectSovereignTactic = (props) => {
           ),
           abilityText: (
             <>
+              <div className="abilityText ">⬩Gain 2 FD.</div>
               <div className="abilityText ">
-                ⬩Reroll this tactic. <br />
-                If the result is{" "}
-                <img src={InvokeSmall} style={{ height: 21 }} />, convert it to{" "}
-                <img src={MobilizeSmall} style={{ height: 21 }} />.
-              </div>
-              <div className="abilityText ">⬩Gain 1 FD.</div>
-              {/* nerfed: no longer recovers transcendence */}
-              {/* <div className="abilityText ">
                 ⬩You may recover 1 “Transcendence”.
-              </div> */}
+              </div>
             </>
           ),
         },
@@ -336,56 +329,57 @@ const SelectSovereignTactic = (props) => {
             break;
 
           case 2:
-            //reroll tactic
-            const rerollInvoke = () => {
-              const mobilizeLimit =
-                newGameState[self].bountyUpgrades.tactics > 2 ? 4 : 3;
-
-              const dieFaces = [
-                { face: "Advance", stock: 1, limit: 1 },
-                { face: "Advance", stock: 1, limit: 1 },
-                {
-                  face: "Mobilize",
-                  stock: mobilizeLimit,
-                  limit: mobilizeLimit,
-                },
-                {
-                  face: "Mobilize",
-                  stock: mobilizeLimit,
-                  limit: mobilizeLimit,
-                },
-                {
-                  face: "Mobilize",
-                  stock: mobilizeLimit,
-                  limit: mobilizeLimit,
-                },
-
-                //   { face: "Invoke", stock: 1, limit: 1 }, // replaced with 2nd Assault
-                { face: "Assault", stock: 1, limit: 1 },
-              ];
-
-              return dieFaces[Math.floor(Math.random() * dieFaces.length)];
-            };
-
-            newGameState.tactics[props.dice] = rerollInvoke();
-
-            //Spend FD
+            //Gain FD
             newGameState[self].fateDefiances = Math.min(
               6,
-              newGameState[self].fateDefiances + 1
+              newGameState[self].fateDefiances + 2
             );
 
-            //Nerfed: no longer recovers transcendence
-            // if (newGameState[self].skillVestige.includes("SX-01")) {
-            //   newGameState.currentResolution.push({
-            //     resolution: "Recover Skill",
-            //     player: self,
-            //     restriction: ["SX-01"],
-            //     message: "You may recover 1 “Transcendence”",
-            //     outcome: "Add",
-            //     canSkip: true,
-            //   });
-            // }
+            //Recover Transcendence
+            if (newGameState[self].skillVestige.includes("SX-01")) {
+              newGameState.currentResolution.push({
+                resolution: "Recover Skill",
+                player: self,
+                restriction: ["SX-01"],
+                message: "You may recover 1 “Transcendence”",
+                outcome: "Add",
+                canSkip: true,
+              });
+            }
+            //NERFED: no longer rerolls
+            //reroll tactic
+            // const rerollInvoke = () => {
+            //   const mobilizeLimit =
+            //     newGameState[self].bountyUpgrades.tactics > 2 ? 4 : 3;
+
+            //   const dieFaces = [
+            //     { face: "Advance", stock: 1, limit: 1 },
+            //     { face: "Advance", stock: 1, limit: 1 },
+            //     {
+            //       face: "Mobilize",
+            //       stock: mobilizeLimit,
+            //       limit: mobilizeLimit,
+            //     },
+            //     {
+            //       face: "Mobilize",
+            //       stock: mobilizeLimit,
+            //       limit: mobilizeLimit,
+            //     },
+            //     {
+            //       face: "Mobilize",
+            //       stock: mobilizeLimit,
+            //       limit: mobilizeLimit,
+            //     },
+
+            //     //   { face: "Invoke", stock: 1, limit: 1 }, // replaced with 2nd Assault
+            //     { face: "Assault", stock: 1, limit: 1 },
+            //   ];
+
+            //   return dieFaces[Math.floor(Math.random() * dieFaces.length)];
+            // };
+
+            // newGameState.tactics[props.dice] = rerollInvoke();
+
             break;
         }
         break;

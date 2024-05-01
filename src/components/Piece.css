@@ -652,3 +652,14 @@ animation: moveUpDownHP 1.0s ease-in-out infinite;
             opacity: 10%;
         }
     }
+
+
+.rooted{
+    top: -8px;
+    left: -10px;
+    width: 80px;
+    height: 74px;
+    position: absolute;
+    z-index: 4;
+
+}

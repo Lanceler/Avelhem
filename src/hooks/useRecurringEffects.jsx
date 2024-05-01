@@ -2057,11 +2057,8 @@ export const useRecurringEffects = () => {
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
     delete unit.afflictions.burn;
-    if (unit.afflictions.anathema) {
-      unit.hp = 0;
-    } else {
-      unit.hp -= 1;
-    }
+
+    unit.hp -= 1;
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
@@ -2116,9 +2113,9 @@ export const useRecurringEffects = () => {
     //calculate AP
     let aP = 1;
     switch (true) {
-      case victim.afflictions.anathema > 0:
-        aP = 5;
-        break;
+      // case victim.afflictions.anathema > 0:
+      //   aP = 5;
+      //   break;
       case ["Geomancy", "Surge"].includes(special):
         aP = 2;
         break;
@@ -2340,7 +2337,7 @@ export const useRecurringEffects = () => {
         !isMuted(victim):
         break;
       case ["Upheaval", "Pitfall Trap"].includes(special) &&
-        ["Wind Scion", "Land Scion"].includes(victim.unitClass) &&
+        ["Land Scion"].includes(victim.unitClass) &&
         !isMuted(victim):
         break;
       case special === "Cataclysmic Tempest" &&
@@ -3351,7 +3348,7 @@ export const useRecurringEffects = () => {
     // Grant Fate Defiances
     newGameState[victim.player].fateDefiances = Math.min(
       6,
-      newGameState[victim.player].fateDefiances + 1
+      newGameState[victim.player].fateDefiances + 2
     );
 
     // Grant Bounty Points
@@ -4078,7 +4075,7 @@ export const useRecurringEffects = () => {
     }
 
     if (
-      ["Wind Scion", "Land Scion", "Plant Scion"].includes(unit.unitClass) &&
+      ["Land Scion", "Plant Scion"].includes(unit.unitClass) &&
       !isMuted(unit)
     ) {
       return false;
@@ -4151,7 +4148,7 @@ export const useRecurringEffects = () => {
     const moverEnemy = mover.player === "host" ? "guest" : "host";
     if (
       newGameState[moverEnemy].skillHand.length > 0 &&
-      !["strike", "AerialImpetusAlly", "Surge"].includes(special) &&
+      !["strike", "AerialImpetusAlly", "AirDash", "Surge"].includes(special) &&
       triggerMotion(mover)
     ) {
       newGameState.currentResolution.push({

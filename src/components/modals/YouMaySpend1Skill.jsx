@@ -97,7 +97,7 @@ const YouMaySpend1Skill = (props) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
     let unit = null;
-    if (props.unit !== null) {
+    if (props.unit) {
       unit = newGameState[props.unit.player].units[props.unit.unitIndex];
     }
 
@@ -105,6 +105,10 @@ const YouMaySpend1Skill = (props) => {
     newGameState.currentResolution.pop();
 
     switch (props.details.reason) {
+      case "Cultivate":
+        newGameState = drawSkill(newGameState);
+        break;
+
       case "Resplendence1":
         newGameState.currentResolution.push({
           resolution: "Fire Skill",
@@ -378,16 +382,14 @@ const YouMaySpend1Skill = (props) => {
           </button>
         )}
 
-        {selectedSkill === null &&
-          props.unit !== null &&
-          props.unit.blossom > 0 && (
-            <button
-              className="choiceButton noYes"
-              onClick={() => handleBlossom()}
-            >
-              Spend 1 Blossom
-            </button>
-          )}
+        {selectedSkill === null && props.unit && props.unit.blossom > 0 && (
+          <button
+            className="choiceButton noYes"
+            onClick={() => handleBlossom()}
+          >
+            Spend 1 Blossom
+          </button>
+        )}
 
         {selectedSkill !== null && (
           <button className="choiceButton noYes" onClick={() => handleSelect()}>
