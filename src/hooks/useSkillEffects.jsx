@@ -678,12 +678,11 @@ export const useSkillEffects = () => {
     // end "Gale ConjurationR1"
     newGameState.currentResolution.pop();
 
-    if (newGameState[self].skillFloat.length > 0) {
-      newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+    if (newGameState[self].skillFloat > 0) {
       newGameState.currentResolution.push({
         resolution: "Wind Skill",
         resolution2: "Gale ConjurationR3",
-        player: self,
+        unit: unit,
         details: {
           reason: "Gale Conjuration Draw",
           title: "Gale Conjuration",
