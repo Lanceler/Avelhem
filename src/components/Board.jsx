@@ -125,6 +125,7 @@ const Board = (props) => {
     applyFrostbite,
     applyParalysis,
     applyScore,
+    appointShield,
     ascendPawn,
     avelhemResonance,
     avelhemToScion,
@@ -195,7 +196,6 @@ const Board = (props) => {
     galeConjuration1,
     galeConjurationR1,
     galeConjurationR2,
-    galeConjurationR3,
     symphonicScreech1,
     cataclysmicTempest1,
     cataclysmicTempest2,
@@ -1088,6 +1088,12 @@ const Board = (props) => {
               </>
             );
 
+          case "Appoint - Upgraded":
+            if (self === lastResolution.unit.player) {
+              resolutionUpdate(appointShield(lastResolution.unit));
+            }
+            break;
+
           case "Tactic Results":
             return (
               <>
@@ -1978,14 +1984,6 @@ const Board = (props) => {
             );
 
           case "Gale ConjurationR3":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                galeConjurationR3(lastResolution.unit)
-              );
-            }
-            break;
-
-          case "Gale ConjurationR4":
             return (
               <>
                 {self === lastResolution.unit.player && !hideModal && (
@@ -4085,6 +4083,8 @@ const Board = (props) => {
       unitClass
     );
 
+    let newUnit = newGameState[self].units[newIndex];
+
     //updating zones info
     let newZoneInfo = [...zones];
     newZoneInfo[r][c].player = self;
@@ -4092,21 +4092,22 @@ const Board = (props) => {
     newGameState.zones = JSON.stringify(newZoneInfo);
 
     if (localGameState.turnPhase === "Acquisition") {
-      if (newGameState[self].bountyUpgrades.acquisition >= 1) {
-        newUnit.boosts.canVirtueBlast = true;
-      }
-
       newGameState.turnPhase = "Bounty";
       newGameState.currentResolution.pop();
       newGameState.currentResolution.push({
         resolution: "Bounty Phase Selection",
       });
+
+      if (newGameState[self].bountyUpgrades.acquisition >= 1) {
+        newGameState.currentResolution.push({
+          resolution: "Misc.",
+          resolution2: "Appoint - Upgraded",
+          unit: newUnit,
+        });
+      }
     }
 
     //Trigger Motion Contingency
-
-    let newUnit = newGameState[self].units[newIndex];
-
     if (newGameState[enemy].skillHand.length > 0 && triggerMotion(newUnit)) {
       newGameState.currentResolution.push({
         resolution: "Triggering Contingent Skill",
@@ -4597,6 +4598,19 @@ const Board = (props) => {
           unit: unit,
           victim: selectedUnit,
         });
+        break;
+
+      case "gale conjuration purge":
+        let galeConjurationEnemy =
+          newGameState[selectedUnit.player].units[selectedUnit.unitIndex];
+
+        if (galeConjurationEnemy.unitClass !== "Wind Scion") {
+          delete galeConjurationEnemy.enhancements.ward;
+          delete galeConjurationEnemy.enhancements.shield;
+
+          newGameState[selectedUnit.player].units[selectedUnit.unitIndex] =
+            galeConjurationEnemy;
+        }
         break;
 
       case "symphonic screech":

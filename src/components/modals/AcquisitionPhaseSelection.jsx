@@ -41,7 +41,7 @@ const AcquisitionPhaseSelection = (props) => {
           <div className="choiceText ">⬩Deploy a pawn in your frontier.</div>
           <div className="choiceText ">
             ⬩{upgrade < 1 && <>If upgraded: </>}
-            Grant them a boost: “You can Virtue-blast.”
+            Grant them Shield for 2 turns.
           </div>
         </>
       ),

@@ -75,8 +75,8 @@ const YouMaySpend1Skill = (props) => {
 
       case "Viridian Grave":
         unit.enhancements.shield
-          ? (unit.enhancements.shield = Math.max(3, unit.enhancements.shield))
-          : (unit.enhancements.shield = 3);
+          ? (unit.enhancements.shield = Math.max(2, unit.enhancements.shield))
+          : (unit.enhancements.shield = 2);
         newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
         break;
 
@@ -218,8 +218,8 @@ const YouMaySpend1Skill = (props) => {
 
       case "Viridian Grave":
         unit.enhancements.shield
-          ? (unit.enhancements.shield = Math.max(3, unit.enhancements.shield))
-          : (unit.enhancements.shield = 3);
+          ? (unit.enhancements.shield = Math.max(2, unit.enhancements.shield))
+          : (unit.enhancements.shield = 2);
         newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
         break;
 

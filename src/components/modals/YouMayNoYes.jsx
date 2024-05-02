@@ -104,20 +104,14 @@ const YouMayNoYes = (props) => {
 
         break;
 
-      case "Gale Conjuration Strike": // "Gale ConjurationR2"
-        newGameState.currentResolution.push({
-          resolution: "Wind Skill",
-          resolution2: "Gale ConjurationR3",
-          unit: props.unit,
-        });
-
+      case "Gale Conjuration Purge": // "Gale ConjurationR2"
         enterSelectUnitMode(
-          getZonesWithEnemies(props.unit, 1),
+          props.details.zones,
           props.unit,
           newGameState,
           null,
-          "blast",
-          "Gale Conjuration Blast"
+          "gale conjuration purge",
+          "null"
         );
         break;
 

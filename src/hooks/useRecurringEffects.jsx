@@ -2464,6 +2464,23 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const appointShield = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    newGameState.currentResolution.pop();
+
+    if (unit) {
+      unit.enhancements.shield
+        ? (unit.enhancements.shield = Math.max(unit.enhancements.shield, 2))
+        : (unit.enhancements.shield = 2);
+    }
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    return newGameState;
+  };
+
   const ascendPawn = (
     newGameState,
     pawn,
@@ -3366,11 +3383,6 @@ export const useRecurringEffects = () => {
 
     //"If the attack was lethal" subsequent effects
     switch (special) {
-      case "Gale Conjuration Blast":
-        newGameState[attacker.player].units[
-          attacker.unitIndex
-        ].temporary.galeConjurationLethal = true;
-        break;
       case "Geomancy":
         newGameState[attacker.player].units[
           attacker.unitIndex
@@ -5454,6 +5466,7 @@ export const useRecurringEffects = () => {
     applyFrostbite,
     applyParalysis,
     applyScore,
+    appointShield,
     ascendPawn,
     assignTactics,
     avelhemResonance,

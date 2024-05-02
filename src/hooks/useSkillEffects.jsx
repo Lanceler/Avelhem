@@ -24,7 +24,6 @@ export const useSkillEffects = () => {
     isMuted,
     isRooted,
     paralyze1,
-    paralyze2,
   } = useRecurringEffects();
 
   const ignitionPropulsion1 = (unitInfo) => {
@@ -642,7 +641,7 @@ export const useSkillEffects = () => {
     if (resonator !== "SA-02") {
       newGameState.currentResolution.push({
         resolution: "Misc.",
-        resolution2: "May float resonant skill unit",
+        resolution2: "Retain resonant skill unit",
         unit: unit,
         player: unit.player,
         skill: "03-02",
@@ -674,66 +673,16 @@ export const useSkillEffects = () => {
   const galeConjurationR2 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+    const zones = JSON.parse(localGameState.zones);
 
     // end "Gale ConjurationR1"
     newGameState.currentResolution.pop();
 
-    if (canBlast(unit)) {
-      // newGameState.currentResolution.push({
-      //   resolution: "Wind Skill",
-      //   resolution2: "Gale ConjurationR3",
-      //   unit: unit,
-      // });
-
-      newGameState.currentResolution.push({
-        resolution: "Wind Skill",
-        resolution2: "Gale ConjurationR2",
-        unit: unit,
-        details: {
-          reason: "Gale Conjuration Strike",
-          title: "Gale Conjuration",
-          message: "You may blast an adjacent enemy.",
-          no: "Skip",
-          yes: "Blast",
-        },
-      });
-    }
-
-    return newGameState;
-  };
-
-  const galeConjurationR3 = (unitInfo) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    // end "Gale ConjurationR3"
-    newGameState.currentResolution.pop();
-
-    //NERFED!!!
-    // if (
-    //   unit !== null &&
-    //   !isMuted(unit) &&
-    //   newGameState[enemy].skillHand.length > 0 &&
-    //   unit.temporary.galeConjurationLethal
-    // ) {
-    //   newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-    //   newGameState.currentResolution.push({
-    //     resolution: "Wind Skill",
-    //     resolution2: "Gale ConjurationR4",
-    //     player: enemy,
-    //   });
-    // }
-
-    if (
-      unit !== null &&
-      !isMuted(unit) &&
-      unit.temporary.galeConjurationLethal &&
-      newGameState[self].skillFloat.length > 0
-    ) {
+    if (newGameState[self].skillFloat.length > 0) {
       newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
       newGameState.currentResolution.push({
         resolution: "Wind Skill",
-        resolution2: "Gale ConjurationR4",
+        resolution2: "Gale ConjurationR3",
         player: self,
         details: {
           reason: "Gale Conjuration Draw",
@@ -745,8 +694,34 @@ export const useSkillEffects = () => {
       });
     }
 
-    delete unit.temporary.galeConjurationLethal;
-    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+    const zonesWithEnemies = getZonesWithEnemies(unit, 1);
+    let shieldedEnemyZones = [];
+
+    for (let z of zonesWithEnemies) {
+      const zone = zones[Math.floor(z / 5)][z % 5];
+      const enemy = newGameState[zone.player].units[zone.unitIndex];
+
+      if (enemy.enhancements.shield > 0 || enemy.enhancements.ward > 0) {
+        shieldedEnemyZones.push(z);
+      }
+    }
+
+    if (shieldedEnemyZones.length > 0) {
+      newGameState.currentResolution.push({
+        resolution: "Wind Skill",
+        resolution2: "Gale ConjurationR2",
+        unit: unit,
+        details: {
+          reason: "Gale Conjuration Purge",
+          title: "Gale Conjuration",
+          message:
+            "You may purge an adjacent enemy’s Shield and Ward. This cannot affect Wind Scions.",
+          no: "Skip",
+          yes: "Purge",
+          zones: shieldedEnemyZones,
+        },
+      });
+    }
 
     return newGameState;
   };
@@ -2466,7 +2441,7 @@ export const useSkillEffects = () => {
       unit: unit,
       details: {
         title: "Viridian Grave",
-        message: "You may spend 1 skill to gain Shield for 3 turns.",
+        message: "You may spend 1 skill to gain Shield for 2 turns.",
         restriction: null,
         reason: "Viridian Grave",
       },
@@ -2532,7 +2507,6 @@ export const useSkillEffects = () => {
     galeConjuration1,
     galeConjurationR1,
     galeConjurationR2,
-    galeConjurationR3,
     symphonicScreech1,
     cataclysmicTempest1,
     cataclysmicTempest2,
