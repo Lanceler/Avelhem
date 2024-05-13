@@ -435,15 +435,15 @@ const Board = (props) => {
 
     switch (option) {
       case "Info":
-        setUnitInfor(expandedUnit);
+        // setUnitInfor(expandedUnit);
 
-        // //for testing: quick movement
-        // enterMoveMode(
-        //   getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
-        //   expandedUnit,
-        //   newGameState,
-        //   null
-        // );
+        //for testing: quick movement
+        enterMoveMode(
+          getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
+          expandedUnit,
+          newGameState,
+          null
+        );
         break;
 
       case "Tactic":
@@ -4604,7 +4604,10 @@ const Board = (props) => {
         let galeConjurationEnemy =
           newGameState[selectedUnit.player].units[selectedUnit.unitIndex];
 
-        if (galeConjurationEnemy.unitClass !== "Wind Scion") {
+        if (
+          galeConjurationEnemy.unitClass !== "Wind Scion" ||
+          isMuted(galeConjurationEnemy)
+        ) {
           delete galeConjurationEnemy.enhancements.ward;
           delete galeConjurationEnemy.enhancements.shield;
 

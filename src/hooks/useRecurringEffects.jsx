@@ -3076,7 +3076,7 @@ export const useRecurringEffects = () => {
         return hasTactic(["Invoke"]);
 
       case "SB-04": // Fervent Prayer
-        return true;
+        return localGameState[self].fateDefiances >= 2;
 
       case "SB-05": // Press the Attack
         return canPressTheAttack();
