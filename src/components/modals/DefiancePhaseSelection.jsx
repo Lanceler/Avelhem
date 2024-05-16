@@ -112,6 +112,23 @@ const DefiancePhaseSelection = (props) => {
         //Spend FD
         newGameState[self].fateDefiances -= defianceCosts[4];
 
+        //end defiance Phase
+        newGameState = endDefiancePhase(newGameState);
+
+        newGameState.currentResolution.push({
+          resolution: "Search Skill",
+          player: self,
+          restriction: sovereignSkillList(),
+          message: "Search for 1 Sovereign Skill.",
+          outcome: "Add",
+        });
+
+        break;
+
+      case 6:
+        //Spend FD
+        newGameState[self].fateDefiances -= defianceCosts[5];
+
         //draw 1 skill
         newGameState = drawSkill(newGameState);
 
@@ -128,22 +145,6 @@ const DefiancePhaseSelection = (props) => {
             canSkip: true,
           });
         }
-        break;
-
-      case 6:
-        //Spend FD
-        newGameState[self].fateDefiances -= defianceCosts[5];
-
-        //end defiance Phase
-        newGameState = endDefiancePhase(newGameState);
-
-        newGameState.currentResolution.push({
-          resolution: "Search Skill",
-          player: self,
-          restriction: sovereignSkillList(),
-          message: "Search for 1 Sovereign Skill.",
-          outcome: "Add",
-        });
 
         break;
 
@@ -170,7 +171,7 @@ const DefiancePhaseSelection = (props) => {
     props.hideOrRevealModale();
   };
 
-  const defianceCosts = [1, 1, 2, 3, 3, 3];
+  const defianceCosts = [1, 1, 2, 3, 3, 4];
 
   const canSelect = [
     //Arcana
@@ -224,8 +225,8 @@ const DefiancePhaseSelection = (props) => {
                 <div className="defianceText">
                   <h4 className="defianceTitle">Arcana</h4>
                   <h3 className="defianceDescription defianceDescriptionSmall">
-                    Place up to 4 skills from your hand at the bottom of your
-                    repertoire, then draw the same number.
+                    Select up to 4 skills from your hand; place them at the
+                    bottom of your repertoire, then draw the same number.
                   </h3>
 
                   <h4 className="fdCost">{`Cost: ${defianceCosts[0]} FD`}</h4>
@@ -316,9 +317,9 @@ const DefiancePhaseSelection = (props) => {
                 <div className="defianceText">
                   <h4 className="defianceTitle">Empower</h4>
                   <h3 className="defianceDescription ">
-                    <span>Draw 1 skill.</span>
+                    <span>Search for 1</span>
                     <br />
-                    <span>You may recover 1 “Transcendence”.</span>
+                    <span>Sovereign skill.</span>
                   </h3>
 
                   <h4 className="fdCost">{`Cost: ${defianceCosts[4]} FD`}</h4>
@@ -341,9 +342,9 @@ const DefiancePhaseSelection = (props) => {
                 <div className="defianceText">
                   <h4 className="defianceTitle">Finesse</h4>
                   <h3 className="defianceDescription ">
-                    <span>Search for 1</span>
+                    <span>Draw 1 skill.</span>
                     <br />
-                    <span>Sovereign skill.</span>
+                    <span>You may recover 1 “Transcendence”.</span>
                   </h3>
 
                   <h4 className="fdCost">{`Cost: ${defianceCosts[5]} FD`}</h4>

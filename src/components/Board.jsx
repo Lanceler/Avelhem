@@ -257,6 +257,7 @@ const Board = (props) => {
     reminiscence1,
     foreshadow1,
     foreshadow2,
+    foreshadow3,
     darkHalo1,
     transmute1,
     transmuteR1,
@@ -3258,6 +3259,15 @@ const Board = (props) => {
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
+                )}
+              </>
+            );
+
+          case "Foreshadow3":
+            return (
+              <>
+                {self === lastResolution.player && (
+                  <>{resolutionUpdateGameStateOnly(foreshadow3())}</>
                 )}
               </>
             );

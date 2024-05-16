@@ -180,16 +180,8 @@ export const useSovereignSkillEffects = () => {
     if (discardedBurst) {
       newGameState.currentResolution.push({
         resolution: "Sovereign Standard Skill",
-        resolution2: "Foreshadow Draw",
+        resolution2: "Foreshadow3",
         player: self,
-        // unit: null,
-        details: {
-          reason: "Foreshadow Draw",
-          title: "Foreshadow",
-          message: "You may draw 1 skill.",
-          no: "Skip",
-          yes: "Draw",
-        },
       });
     }
 
@@ -198,7 +190,6 @@ export const useSovereignSkillEffects = () => {
         resolution: "Sovereign Standard Skill",
         resolution2: "Foreshadow Draw",
         player: self,
-        // unit: null,
         details: {
           reason: "Foreshadow Draw",
           title: "Foreshadow",
@@ -208,6 +199,23 @@ export const useSovereignSkillEffects = () => {
         },
       });
     }
+
+    return newGameState;
+  };
+
+  const foreshadow3 = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Foreshadow3" resolution
+    newGameState.currentResolution.pop();
+
+    newGameState = drawSkill(newGameState);
+    newGameState = drawSkill(newGameState);
+
+    newGameState[self].fateDefiances = Math.min(
+      6,
+      newGameState[self].fateDefiances + 2
+    );
 
     return newGameState;
   };
@@ -775,6 +783,7 @@ export const useSovereignSkillEffects = () => {
     reminiscence1,
     foreshadow1,
     foreshadow2,
+    foreshadow3,
     transmute1,
     transmuteR1,
     ambidexterity1,
