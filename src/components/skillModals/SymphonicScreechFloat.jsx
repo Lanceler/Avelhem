@@ -48,19 +48,21 @@ const SymphonicScreechFloat = (props) => {
     if (props.canFloat) {
       return (
         <>
-          <h3>Do you want to float it?</h3>
+          <h3>
+            Because they are 2 spaces from the activator, they may float it.
+          </h3>
           <div className="twoColumn bottomAnchor">
             <button
               className="choiceButton noYes"
               onClick={() => handleProceed()}
             >
-              No
+              Skip
             </button>
             <button
               className="choiceButton noYes"
               onClick={() => handleFloat()}
             >
-              Yes
+              Float
             </button>
           </div>
         </>
@@ -87,7 +89,7 @@ const SymphonicScreechFloat = (props) => {
           </button>
         </div>
 
-        <h3>The effects of your skill have been negated!</h3>
+        <h3>The effects of your unit’s skill have been negated!</h3>
         {revealOptions()}
       </div>
     </div>

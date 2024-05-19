@@ -10,6 +10,8 @@ import { useCardDatabase } from "../../hooks/useCardDatabase";
 
 import DisplayedCard from "./DisplayedCard";
 
+import { AnimatePresence, motion } from "framer-motion";
+
 const ActivatedSkills = () => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
@@ -20,31 +22,43 @@ const ActivatedSkills = () => {
     <>
       <div className="activatedCardDisplay">
         <div className="skillChain">
-          {localGameState.activatingSkill.map((card, i) => (
-            <div
-              key={i}
-              className={`activatedSkill displayedSkills ${
-                localGameState.activatingSkill.length - 1 === i
-                  ? "topmostDisplay"
-                  : ""
-              }`}
-              style={{
-                filter: `${
+          <AnimatePresence mode={"popLayout"}>
+            {localGameState.activatingSkill.map((card, i) => (
+              <motion.div
+                // layout={true}
+                // initial={{ opacity: 0, scale: 0.5 }}
+                animate={{
+                  opacity: 1,
+                  scale: 1,
+                  rotate:
+                    (localGameState.activatingSkill.length - (i + 1)) * -10,
+                }}
+                transition={{ duration: 0.4, scale: 0.5 }}
+                exit={{ opacity: 0, scale: 1.5 }}
+                key={i}
+                className={`activatedSkill displayedSkills ${
                   localGameState.activatingSkill.length - 1 === i
-                    ? ""
-                    : "grayscale(65%)"
-                }`,
-                left: 5 + i * 10,
-                transform: `rotate(${
-                  (localGameState.activatingSkill.length - (i + 1)) * -10
-                }deg)`,
-                backgroundImage: `url(${getImage2(
-                  card
-                  // localGameState.activatingSkill[i]
-                )})`,
-              }}
-            ></div>
-          ))}
+                    ? "topmostDisplay"
+                    : ""
+                }`}
+                style={{
+                  filter: `${
+                    localGameState.activatingSkill.length - 1 === i
+                      ? ""
+                      : "grayscale(65%)"
+                  }`,
+                  left: 5 + i * 10,
+                  transform: `rotate(${
+                    (localGameState.activatingSkill.length - (i + 1)) * -10
+                  }deg)`,
+                  backgroundImage: `url(${getImage2(
+                    card
+                    // localGameState.activatingSkill[i]
+                  )})`,
+                }}
+              ></motion.div>
+            ))}
+          </AnimatePresence>
         </div>
 
         <br />
