@@ -44,7 +44,6 @@ const YouMayNoYes = (props) => {
     }
 
     dispatch(updateState(newGameState));
-
     props.updateFirebase(newGameState);
   };
 
@@ -372,6 +371,20 @@ const YouMayNoYes = (props) => {
         newGameState.currentResolution.push({
           resolution: "Deploying Pawn",
           zoneIds: getVacantFrontier(),
+        });
+        break;
+
+      case "Continue Game":
+        newGameState.currentResolution.pop(); // yes, pop again
+
+        newGameState.winner = null;
+        newGameState.winObjective = newGameState[enemy].score + 1;
+
+        newGameState.turnPhase = "Acquisition";
+        newGameState.turnPlayer = self;
+        newGameState.turnCount = newGameState.turnCount + 1;
+        newGameState.currentResolution.push({
+          resolution: "Acquisition Phase Selection",
         });
 
         break;

@@ -84,20 +84,19 @@ export default function MyGames() {
           guestId: null,
           guestName: null,
           gameState: {
+            // eventLog: [],
             activatingSkill: [],
             activatingUnit: [],
             activatingResonator: [],
+            currentResolution: [],
             turnCount: 0,
             turnPlayer: null,
             turnPhase: null,
             tactics: [],
-            currentResolution: [],
-            eventLog: [],
             zones: zones,
-
             host: playerData,
-
             guest: playerData,
+            winObjective: 1,
             winner: null,
           },
         });

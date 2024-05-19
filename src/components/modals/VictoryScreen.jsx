@@ -2,6 +2,8 @@ import React from "react";
 import "./Modal.css";
 
 import { useSelector, useDispatch } from "react-redux";
+import { updateState } from "../../redux/gameState";
+
 const VictoryScreen = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
@@ -11,12 +13,45 @@ const VictoryScreen = (props) => {
     props.hideOrRevealModale();
   };
 
-  let message = "";
+  const handleOffer = () => {
+    const newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    newGameState.currentResolution.push({
+      resolution: "Continue Game",
+      player: enemy,
+      details: {
+        reason: "Continue Game",
+        title: "Continue Game?",
+        message: "Your opponent has offered to extend the game.",
+        no: "Decline",
+        yes: "Accept",
+      },
+    });
+
+    dispatch(updateState(newGameState));
+    props.updateFirebase(newGameState);
+  };
+
+  let message1 = "";
+  let message2 = "";
+  let message3 = "";
 
   if (self === props.player) {
-    message = "Victory is yours!";
+    message1 = "Victory is yours!";
+    message2 = `You scored with ${localGameState[self].score} unit${
+      localGameState[self].score > 1 ? "s" : ""
+    }.`;
+
+    if (localGameState[self].score < 5) {
+      message3 = `You may offer to continue the game by setting the score objective to ${
+        localGameState[self].score + 1
+      }.`;
+    }
   } else if (enemy === props.player) {
-    message = "Defeat...";
+    message1 = "Defeat...";
+    message2 = `${localGameState[enemy].displayName} scored with ${
+      localGameState[enemy].score
+    } unit${localGameState[enemy].score > 1 ? "s" : ""}.`;
   }
 
   return (
@@ -29,7 +64,17 @@ const VictoryScreen = (props) => {
           </button>
         </div>
 
-        <h3>{message}</h3>
+        <h3>{message1}</h3>
+        <h3>{message2}</h3>
+        <br />
+        {/* <h3>{message3}</h3> */}
+
+        {self === props.player && localGameState[self].score < 5 && (
+          <button className="choiceButton noYes" onClick={() => handleOffer()}>
+            {/* Offer to continue */}
+            {message3}
+          </button>
+        )}
       </div>
     </div>
   );

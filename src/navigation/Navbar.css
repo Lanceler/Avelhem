@@ -11,6 +11,10 @@
     margin: 0;
 
     box-shadow: -5px 2px 4px 4px rgba(6, 21, 61, 0.25);
+
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-items: center; */
 }
 
 .pushDown {
@@ -37,7 +41,8 @@
 
 }
 
-a {
+.navbar a {
+    position: relative;
     text-decoration: none;
     margin-left: 10px;
     margin-right: 10px;
@@ -48,7 +53,6 @@ a {
 .navbar a:last-child {
     color: #caac28;
     text-decoration: none;
-
     padding: 8px;
     border: 1px solid #caac28;
     border-radius: 6px;

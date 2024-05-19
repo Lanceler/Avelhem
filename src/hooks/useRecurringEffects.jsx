@@ -2447,11 +2447,12 @@ export const useRecurringEffects = () => {
 
     //Change turn or end game
 
-    if (newGameState[self].score >= 3) {
+    if (newGameState[self].score >= newGameState.winObjective) {
       newGameState.currentResolution.push({
         resolution: "Game Over",
         player: self,
       });
+      newGameState.winner = self;
     } else {
       newGameState.turnPhase = "Acquisition";
       newGameState.turnPlayer = enemy;

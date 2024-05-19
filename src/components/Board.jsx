@@ -4021,8 +4021,22 @@ const Board = (props) => {
           <>
             {!hideModal && (
               <VictoryScreen
-                hideOrRevealModale={hideOrRevealModale}
                 player={lastResolution.player}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
+              />
+            )}
+          </>
+        );
+
+      case "Continue Game":
+        return (
+          <>
+            {self === lastResolution.player && !hideModal && (
+              <YouMayNoYes
+                details={lastResolution.details}
+                updateFirebase={updateFirebase}
+                hideOrRevealModale={hideOrRevealModale}
               />
             )}
           </>
@@ -5169,6 +5183,8 @@ const Board = (props) => {
         <div>
           Turn Player: {localGameState.turnPlayer}
           <br />
+          Turn Count: {localGameState.turnCount}
+          <br />
           Phase: {localGameState.turnPhase}
           <br />
           Resolution:{" "}
@@ -5194,8 +5210,6 @@ const Board = (props) => {
           )}
           <br />
           {/* {JSON.stringify(tileMode)} {validZones.length} */}
-          <br />
-          <br />
           {!localGameState.turnPlayer && self === "host" && (
             <SelectFirstPlayer onSetFirstPlayer={onSetFirstPlayer} />
           )}
