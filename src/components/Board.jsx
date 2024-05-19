@@ -55,7 +55,6 @@ import TacticSelectionViaEffect from "./modals/TacticSelectionViaEffect";
 import SelectCustomChoice from "./modals/SelectCustomChoice";
 
 import GlacialTorrent1 from "./skillModals/GlacialTorrent1";
-import SymphonicScreechFloat from "./skillModals/SymphonicScreechFloat";
 import CataclysmicTempestFloat from "./skillModals/CataclysmicTempestFloat";
 import FerventPrayerResonance from "./skillModals/FerventPrayerResonance";
 import PowerAtTheFinalHourProaction from "./skillModals/PowerAtTheFinalHourProaction";
@@ -2036,19 +2035,6 @@ const Board = (props) => {
             }
             break;
 
-          case "Symphonic Screech Negate":
-            return (
-              <>
-                {self === lastResolution.player && !hideModal && (
-                  <SymphonicScreechFloat
-                    updateFirebase={updateFirebase}
-                    hideOrRevealModale={hideOrRevealModale}
-                    canFloat={lastResolution.canFloat}
-                  />
-                )}
-              </>
-            );
-
           case "Symphonic Screech Float":
             return (
               <>
@@ -2151,7 +2137,7 @@ const Board = (props) => {
             return (
               <>
                 {self === lastResolution.unit.player && !hideModal && (
-                  <YouMayNoYes
+                  <SelectSkillReveal
                     unit={lastResolution.unit}
                     details={lastResolution.details}
                     updateFirebase={updateFirebase}
@@ -2160,6 +2146,35 @@ const Board = (props) => {
                 )}
               </>
             );
+
+          case "Cataclysmic Tempest6.5":
+            if (self === lastResolution.unit.player) {
+              // selectEnemiesAfflicted(lastResolution.unit, 1, null, "paralyze1", null);
+
+              selectEnemiesAfflicted(
+                lastResolution.unit,
+                1,
+                null,
+                "blast",
+                null,
+                "paralysis"
+              );
+            }
+            break;
+
+          // case "Cataclysmic Tempest6":
+          //   return (
+          //     <>
+          //       {self === lastResolution.unit.player && !hideModal && (
+          //         <YouMayNoYes
+          //           unit={lastResolution.unit}
+          //           details={lastResolution.details}
+          //           updateFirebase={updateFirebase}
+          //           hideOrRevealModale={hideOrRevealModale}
+          //         />
+          //       )}
+          //     </>
+          //   );
         }
         break;
 

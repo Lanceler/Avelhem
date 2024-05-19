@@ -33,11 +33,13 @@ const CataclysmicTempestFloat = (props) => {
     newGameState.currentResolution.pop();
 
     for (let i of selectedSkills) {
-      newGameState[self].skillRepertoire.push(hand[i].id);
-      newGameState[self].skillFloat += 1;
+      if (hand[i].id === "SX-01") {
+        newGameState[self].skillVestige.push(hand[i].id);
+      } else {
+        newGameState[self].skillRepertoire.push(hand[i].id);
+        newGameState[self].skillFloat += 1;
+      }
     }
-
-    //to do: discard Transcendence
 
     const sortHandIndexes = [...selectedSkills].sort((a, b) => b - a);
 

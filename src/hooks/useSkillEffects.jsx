@@ -768,7 +768,7 @@ export const useSkillEffects = () => {
     //activator can reveal 1 Wind skill to draw 1 floating skill
     if (
       // newGameState[self].skillFloat > 0 &&
-      newGameState[self].skillHand.length
+      newGameState[self].skillHand.length > 0
     ) {
       newGameState.currentResolution.push({
         resolution: "Wind Skill",
@@ -782,13 +782,6 @@ export const useSkillEffects = () => {
         },
       });
     }
-
-    // newGameState.currentResolution.push({
-    //   resolution: "Wind Skill",
-    //   resolution2: "Symphonic Screech Negate",
-    //   player: victim.player,
-    //   canFloat: !isAdjacent(unit, victim),
-    // });
 
     if (!isAdjacent(unit, victim)) {
       newGameState.currentResolution.push({
@@ -865,7 +858,7 @@ export const useSkillEffects = () => {
         unit.temporary.previousTarget
     );
 
-    if (unit !== null && !isMuted(unit)) {
+    if (unit && !isMuted(unit)) {
       //4. Continue
       newGameState.currentResolution.push({
         resolution: "Wind Skill",
@@ -902,7 +895,7 @@ export const useSkillEffects = () => {
     //end "Cataclysmic Tempest3" resolution
     newGameState.currentResolution.pop();
 
-    if (unit !== null && !isMuted(unit)) {
+    if (unit && !isMuted(unit)) {
       //6. Continue
       newGameState.currentResolution.push({
         resolution: "Wind Skill",
@@ -934,22 +927,35 @@ export const useSkillEffects = () => {
     //end "Cataclysmic Tempest5"
     newGameState.currentResolution.pop();
 
-    if (
-      unit !== null &&
-      !isMuted(unit) &&
-      getZonesWithEnemies(unit, 1).length > 0
-    ) {
-      if (getZonesWithEnemiesAfflicted(unit, 1, "paralysis").length > 0) {
+    if (unit && !isMuted(unit) && getZonesWithEnemies(unit, 1).length > 0) {
+      if (
+        newGameState[self].skillHand.length > 0 &&
+        getZonesWithEnemiesAfflicted(unit, 1, "paralysis").length > 0
+      ) {
+        // newGameState.currentResolution.push({
+        //   resolution: "Wind Skill",
+        //   resolution2: "Cataclysmic Tempest6",
+        //   unit: unit,
+        //   details: {
+        //     reason: "Cataclysmic Tempest Blast",
+        //     title: "Cataclysmic Tempest",
+        //     message: "You may blast an adjacent paralyzed enemy.",
+        //     no: "Skip",
+        //     yes: "Blast",
+        //     adjacentEnemies: getZonesWithEnemiesAfflicted(unit, 1, "paralysis"),
+        //   },
+        // });
+
         newGameState.currentResolution.push({
           resolution: "Wind Skill",
           resolution2: "Cataclysmic Tempest6",
           unit: unit,
           details: {
-            reason: "Cataclysmic Tempest Blast",
             title: "Cataclysmic Tempest",
-            message: "You may blast an adjacent paralyzed enemy.",
-            no: "Skip",
-            yes: "Blast",
+            message:
+              "You may reveal 1 Wind skill to blast an adjacent paralyzed enemy.",
+            restriction: ["03-01", "03-02", "03-03", "03-04"],
+            reason: "Cataclysmic Tempest",
             adjacentEnemies: getZonesWithEnemiesAfflicted(unit, 1, "paralysis"),
           },
         });

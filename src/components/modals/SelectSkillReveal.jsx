@@ -13,7 +13,7 @@ const SelectSkillReveal = (props) => {
   const { self, enemy } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const { drawSkill } = useRecurringEffects();
+  const { drawSkill, enterSelectUnitMode } = useRecurringEffects();
 
   const [selectedSkill, setSelectedSkill] = useState(null);
 
@@ -60,7 +60,17 @@ const SelectSkillReveal = (props) => {
         newGameState = drawSkill(newGameState);
         revealTitle = "Symphonic Screech";
         revealMessage = "Your opponent has revealed 1 Wind Skill";
+        break;
 
+      case "Cataclysmic Tempest":
+        newGameState.currentResolution.push({
+          resolution: "Wind Skill",
+          resolution2: "Cataclysmic Tempest6.5",
+          unit: unit,
+        });
+
+        revealTitle = "Cataclysmic Tempest";
+        revealMessage = "Your opponent has revealed 1 Wind Skill";
         break;
 
       case "Valiant Spark":
@@ -69,7 +79,6 @@ const SelectSkillReveal = (props) => {
 
         revealTitle = "Valiant Spark";
         revealMessage = "Your opponent has revealed 1 Lightning Skill";
-
         break;
 
       case "Arsenal Onslaught Paralyze":
@@ -81,7 +90,6 @@ const SelectSkillReveal = (props) => {
 
         revealTitle = "Arsenal Onslaught";
         revealMessage = "Your opponent has revealed 1 Metal Skill";
-
         break;
 
       default:

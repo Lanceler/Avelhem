@@ -145,16 +145,16 @@ const YouMayNoYes = (props) => {
         );
         break;
 
-      case "Cataclysmic Tempest Blast": // "Cataclysmic Tempest6"
-        enterSelectUnitMode(
-          props.details.adjacentEnemies,
-          props.unit,
-          newGameState,
-          null,
-          "blast",
-          null
-        );
-        break;
+      // case "Cataclysmic Tempest Blast": // "Cataclysmic Tempest6"
+      //   enterSelectUnitMode(
+      //     props.details.adjacentEnemies,
+      //     props.unit,
+      //     newGameState,
+      //     null,
+      //     "blast",
+      //     null
+      //   );
+      //   break;
 
       case "Reap the Whirlwind": //Reap the Whirlwind1
         newGameState.currentResolution.push({
