@@ -49,7 +49,11 @@ export default function LogIn() {
             <Link to="/signup">No account? Sign up here.</Link>
           </div>
           <input type="submit" value="Submit"></input>
-          {error && <span className="login-error">{error}</span>}
+          {error === "Firebase: Error (auth/invalid-credential)." && (
+            <span className="login-error">
+              Email and password do not match.
+            </span>
+          )}
         </form>
       </div>
     </div>

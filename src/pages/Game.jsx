@@ -137,6 +137,7 @@ export default function Game() {
       let newGameState = JSON.parse(JSON.stringify(gameData.gameState));
       newGameState[userRole].skillRepertoire = rep.skillRepertoire;
       newGameState[userRole].avelhemRepertoire = rep.avelhemRepertoire;
+      newGameState[userRole].displayName = user.displayName;
 
       await updateDoc(gameDoc, { gameState: newGameState });
 
@@ -183,7 +184,7 @@ export default function Game() {
       case 1:
         return (
           <>
-            <div>Play, {userRole}</div>
+            <div>Role: {userRole}</div>
             <Board
               gameState={gameData.gameState}
               gameId={gameData.id}
@@ -193,12 +194,7 @@ export default function Game() {
         );
 
       case 1.5:
-        return (
-          <>
-            <div>Select your repertoire</div>
-            <SelectRepertoire onSelectRepertoire={onSelectRepertoire} />
-          </>
-        );
+        return <SelectRepertoire onSelectRepertoire={onSelectRepertoire} />;
 
       case 1.6:
         return (
@@ -224,8 +220,8 @@ export default function Game() {
 
   return (
     <>
-      <div>Game</div>
-      {gameId && <div>Game Id: {gameId}</div>}
+      {/* <div>Game</div> */}
+      {/* {gameId && <div>Game Id: {gameId}</div>} */}
       {gameData && <div>Creator: {gameData.hostName}</div>}
       {error && <div>Error: {error}</div>}
       {readgameState()}

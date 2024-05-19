@@ -108,39 +108,66 @@ export const useSignUp = () => {
     7, 7, 7, 7,
   ];
 
-  const signUp = async (email, password, displayName) => {
+  const signUp = async (email, password, password2, displayName) => {
     setError(null);
 
-    displayName = displayName.trim();
+    if (password !== password2) {
+      setError("Passwords do not match.");
+    } else {
+      displayName = displayName.trim();
 
-    try {
-      const res = await createUserWithEmailAndPassword(auth, email, password);
+      try {
+        const res = await createUserWithEmailAndPassword(auth, email, password);
 
-      await updateProfile(res.user, { displayName: displayName });
+        await updateProfile(res.user, { displayName: displayName });
 
-      const usersCollectionRef = collection(db, "userInfo");
+        const usersCollectionRef = collection(db, "userInfo");
 
-      const userRef = await addDoc(usersCollectionRef, {
-        userId: res.user.uid,
-      });
+        const userRef = await addDoc(usersCollectionRef, {
+          userId: res.user.uid,
+        });
 
-      const userDoc = doc(db, "userInfo", userRef.id);
+        const userDoc = doc(db, "userInfo", userRef.id);
 
-      await updateDoc(userDoc, {
-        id: userRef.id,
-        displayName: res.user.displayName,
-        repertoire: [
-          {
-            name: "Starter Repertoire",
-            skillRepertoire: starterSkillRepertoire,
-            avelhemRepertoire: starterAvelhemRepertoire,
-          },
-        ],
-      });
+        await updateDoc(userDoc, {
+          id: userRef.id,
+          displayName: res.user.displayName,
+          repertoire: [
+            {
+              name: "Starter Repertoire 1",
+              skillRepertoire: starterSkillRepertoire,
+              avelhemRepertoire: starterAvelhemRepertoire,
+            },
+            {
+              name: "Starter Repertoire 2",
+              skillRepertoire: starterSkillRepertoire,
+              avelhemRepertoire: starterAvelhemRepertoire,
+            },
+            {
+              name: "Starter Repertoire 3",
+              skillRepertoire: starterSkillRepertoire,
+              avelhemRepertoire: starterAvelhemRepertoire,
+            },
+          ],
+        });
 
-      await dispatch({ type: "LOGIN", payload: res.user });
-    } catch (err) {
-      setError(err.message);
+        await dispatch({ type: "LOGIN", payload: res.user });
+      } catch (err) {
+        switch (err.message) {
+          case "Firebase: Error (auth/network-request-failed).":
+            setError("Connection error. Please try again.");
+            break;
+          case "Firebase: Error (auth/email-already-in-use).":
+            setError("Email already in use.");
+            break;
+          case "Firebase: Password should be at least 6 characters (auth/weak-password).":
+            setError("Password must contain at least 6 characters.");
+            break;
+          default:
+            setError(err.message);
+            break;
+        }
+      }
     }
   };
 

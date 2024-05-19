@@ -5158,7 +5158,7 @@ const Board = (props) => {
             </>
           )}
           <br />
-          {JSON.stringify(tileMode)} {validZones.length}
+          {/* {JSON.stringify(tileMode)} {validZones.length} */}
           <br />
           <br />
           {!localGameState.turnPlayer && self === "host" && (
