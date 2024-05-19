@@ -141,11 +141,11 @@ const Board = (props) => {
     freeze1,
     freeze2,
     ignite,
+    isAdjacent,
     isMuted,
     move,
     paralyze1,
     paralyze2,
-    purificationPurge,
     selectAegisActivator,
     selectAllies,
     selectAmbidexterity,
@@ -1730,8 +1730,22 @@ const Board = (props) => {
             break;
 
           case "Purification1":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <SelectCustomChoice
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Purification1.5":
             if (self === lastResolution.unit.player) {
-              selectAllies(lastResolution.unit, 2, true, "purification", null);
+              selectAllies(lastResolution.unit, 2, false, "purification", null);
             }
             break;
 
@@ -4570,7 +4584,28 @@ const Board = (props) => {
         break;
 
       case "purification":
-        newGameState = purificationPurge(newGameState, selectedUnit);
+        let purificationAlly =
+          newGameState[selectedUnit.player].units[selectedUnit.unitIndex];
+
+        delete purificationAlly.afflictions.paralysis;
+        delete purificationAlly.afflictions.frostbite;
+        delete purificationAlly.afflictions.burn;
+        delete purificationAlly.afflictions.infection;
+
+        if (isAdjacent(unit, purificationAlly)) {
+          if (purificationAlly.enhancements.ward > 0) {
+            purificationAlly.enhancements.ward = Math.max(
+              purificationAlly.enhancements.ward,
+              2
+            );
+          } else {
+            purificationAlly.enhancements.ward = 2;
+          }
+        }
+
+        newGameState[selectedUnit.player].units[selectedUnit.unitIndex] =
+          purificationAlly;
+
         break;
 
       case "healing rain":

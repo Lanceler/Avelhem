@@ -73,12 +73,13 @@ const SelectCustomChoice = (props) => {
         "Spend 1 skill to recover then float 1 non-burst Fire skill.";
       break;
 
-    // case "Purification":
-    //   canFirstChoice = true;
-    //   canSecondChoice = true;
-    //   ChoiceFirstMessage = "Draw 1 skill.";
-    //   ChoiceSecondMessage = "Search for then float 1 non-burst Water skill.";
-    //   break;
+    case "Purification":
+      canFirstChoice = true;
+      canSecondChoice = getZonesWithAllies(unit, 2, false).length > 0;
+      ChoiceFirstMessage = "Gain Ward for 2 turns.";
+      ChoiceSecondMessage =
+        "Purge the Paralysis, Frostbite, and Burn of an ally within 2 spaces; if they are adjacent, grant them Ward for 2 turns.";
+      break;
 
     case "Kleptothermy":
       canFirstChoice = true;
@@ -317,20 +318,23 @@ const SelectCustomChoice = (props) => {
         }
         break;
 
-      // case "Purification":
-      //   if (selectedChoice === 1) {
-      //     newGameState = drawSkill(newGameState);
-      //   } else {
-      //     updateData = true;
-      //     newGameState.currentResolution.push({
-      //       resolution: "Search Skill",
-      //       player: self,
-      //       restriction: ["02-01", "02-02", "02-03"],
-      //       message: "Search for then float 1 non-burst Water skill.",
-      //       outcome: "Float",
-      //     });
-      //   }
-      //   break;
+      case "Purification":
+        if (selectedChoice === 1) {
+          if (unit.enhancements.ward > 0) {
+            unit.enhancements.ward = Math.max(unit.enhancements.ward, 2);
+          } else {
+            unit.enhancements.ward = 2;
+          }
+        } else {
+          // updateData = true;
+
+          newGameState.currentResolution.push({
+            resolution: "Water Skill",
+            resolution2: "Purification1.5",
+            unit: unit,
+          });
+        }
+        break;
 
       case "Kleptothermy":
         if (selectedChoice === 1) {

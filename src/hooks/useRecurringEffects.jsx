@@ -4256,25 +4256,6 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
-  const purificationPurge = (newGameState, selectedUnit) => {
-    let unit = newGameState[selectedUnit.player].units[selectedUnit.unitIndex];
-
-    if (unit.enhancements.ward > 0) {
-      unit.enhancements.ward = Math.max(unit.enhancements.ward, 2);
-    } else {
-      unit.enhancements.ward = 2;
-    }
-
-    delete unit.afflictions.paralysis;
-    delete unit.afflictions.frostbite;
-    delete unit.afflictions.burn;
-    delete unit.afflictions.infection;
-
-    newGameState[selectedUnit.player].units[selectedUnit.unitIndex] = unit;
-
-    return newGameState;
-  };
-
   const refillRepertoireAvelhem = (newGameState) => {
     //If deck empties, shuffle discard pile into it.
 
@@ -5516,7 +5497,6 @@ export const useRecurringEffects = () => {
     move,
     paralyze1,
     paralyze2,
-    purificationPurge,
     refillRepertoireAvelhem,
     refillRepertoireSkill,
     rollTactic,

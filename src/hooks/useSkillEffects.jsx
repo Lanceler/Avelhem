@@ -349,6 +349,10 @@ export const useSkillEffects = () => {
       resolution: "Water Skill",
       resolution2: "Purification1",
       unit: unit,
+      details: {
+        title: "Purification",
+        reason: "Purification",
+      },
     });
 
     return newGameState;
