@@ -118,6 +118,22 @@ const YouMayNoYes = (props) => {
         newGameState = drawSkill(newGameState);
         break;
 
+      case "Symphonic Screech Float": // "Symphonic Screech Float"
+        updateData = true;
+        let backtrack = 2;
+        if (
+          newGameState.currentResolution[
+            newGameState.currentResolution.length - 1
+          ].resolution2 === "Symphonic Screech2"
+        ) {
+          backtrack = 3;
+        }
+        newGameState.currentResolution[
+          newGameState.currentResolution.length - backtrack
+        ].conclusion = "float";
+
+        break;
+
       case "Cataclysmic Tempest 2nd Paralyze": // "Cataclysmic Tempest3"
         enterSelectUnitMode(
           props.details.adjacentEnemies,

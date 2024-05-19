@@ -2049,6 +2049,20 @@ const Board = (props) => {
               </>
             );
 
+          case "Symphonic Screech Float":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMayNoYes
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
           case "Symphonic Screech2":
             return (
               <>

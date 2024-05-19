@@ -186,7 +186,7 @@ const DefiancePhaseSelection = (props) => {
     //Destine (Power at the Final Hour has the same activation requirement)
     localGameState[self].fateDefiances >= defianceCosts[3] &&
       canActivateSovereignSkill("SC-01"),
-    //Empower
+    //Ex Machina
     localGameState[self].fateDefiances >= defianceCosts[4],
     //Finesse
     localGameState[self].fateDefiances >= defianceCosts[5],
@@ -315,7 +315,7 @@ const DefiancePhaseSelection = (props) => {
                 } `}
               >
                 <div className="defianceText">
-                  <h4 className="defianceTitle">Empower</h4>
+                  <h4 className="defianceTitle">Ex Machina</h4>
                   <h3 className="defianceDescription ">
                     <span>Search for 1</span>
                     <br />

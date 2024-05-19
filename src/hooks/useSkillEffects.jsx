@@ -767,7 +767,7 @@ export const useSkillEffects = () => {
 
     //activator can reveal 1 Wind skill to draw 1 floating skill
     if (
-      newGameState[self].skillFloat > 0 &&
+      // newGameState[self].skillFloat > 0 &&
       newGameState[self].skillHand.length
     ) {
       newGameState.currentResolution.push({
@@ -776,18 +776,41 @@ export const useSkillEffects = () => {
         unit: unit,
         details: {
           title: "Symphonic Screech",
-          message: "You may reveal 1 Wind skill to draw a floating skill.",
+          message: "You may reveal 1 Wind skill to draw 1 skill.",
           restriction: ["03-01", "03-02", "03-03", "03-04"],
           reason: "Symphonic Screech",
         },
       });
     }
 
+    // newGameState.currentResolution.push({
+    //   resolution: "Wind Skill",
+    //   resolution2: "Symphonic Screech Negate",
+    //   player: victim.player,
+    //   canFloat: !isAdjacent(unit, victim),
+    // });
+
+    if (!isAdjacent(unit, victim)) {
+      newGameState.currentResolution.push({
+        resolution: "Wind Skill",
+        resolution2: "Symphonic Screech Float",
+        unit: victim,
+        details: {
+          reason: "Symphonic Screech Float",
+          title: "Symphonic Screech",
+          message: "You may float your negated skill.",
+          no: "Skip",
+          yes: "Float",
+        },
+      });
+    }
+
     newGameState.currentResolution.push({
-      resolution: "Wind Skill",
-      resolution2: "Symphonic Screech Negate",
-      player: victim.player,
-      canFloat: !isAdjacent(unit, victim),
+      resolution: "Misc.",
+      resolution2: "Message To Player",
+      player: enemy,
+      title: "Symphonic Screech",
+      message: "The effects of your unit’s skill have been negated!",
     });
 
     return newGameState;
