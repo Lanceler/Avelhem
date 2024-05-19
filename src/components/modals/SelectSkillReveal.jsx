@@ -42,6 +42,20 @@ const SelectSkillReveal = (props) => {
     let revealMessage = "";
 
     switch (props.details.reason) {
+      case "Purification":
+        newGameState.currentResolution.push({
+          resolution: "Search Skill",
+          player: self,
+          restriction: usableSkills[selectedSkill].id,
+          message: "Search for then float the skill you revealed.",
+          outcome: "Float",
+        });
+
+        revealTitle = "Purification";
+        revealMessage = "Your opponent has revealed 1 Water Skill";
+
+        break;
+
       case "Symphonic Screech":
         newGameState = drawSkill(newGameState);
         revealTitle = "Symphonic Screech";

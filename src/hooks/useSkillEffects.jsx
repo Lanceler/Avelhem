@@ -305,32 +305,45 @@ export const useSkillEffects = () => {
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
-    const isAdjacentToFrostbitten = () => {
-      const zones = JSON.parse(localGameState.zones);
-      const adjacentEnemies = getZonesWithEnemies(unit, 1);
+    // const isAdjacentToFrostbitten = () => {
+    //   const zones = JSON.parse(localGameState.zones);
+    //   const adjacentEnemies = getZonesWithEnemies(unit, 1);
 
-      for (let i of adjacentEnemies) {
-        const zone = zones[Math.floor(i / 5)][i % 5];
-        const enemy = localGameState[zone.player].units[zone.unitIndex];
+    //   for (let i of adjacentEnemies) {
+    //     const zone = zones[Math.floor(i / 5)][i % 5];
+    //     const enemy = localGameState[zone.player].units[zone.unitIndex];
 
-        if (enemy.afflictions.frostbite > 0) {
-          return true;
-        }
-      }
-      return false;
-    };
+    //     if (enemy.afflictions.frostbite > 0) {
+    //       return true;
+    //     }
+    //   }
+    //   return false;
+    // };
 
-    if (isAdjacentToFrostbitten()) {
-      newGameState.currentResolution.push({
-        resolution: "Water Skill",
-        resolution2: "Purification2",
-        unit: unit,
-        details: {
-          title: "Purification",
-          reason: "Purification",
-        },
-      });
-    }
+    // if (isAdjacentToFrostbitten()) {
+    //   newGameState.currentResolution.push({
+    //     resolution: "Water Skill",
+    //     resolution2: "Purification2",
+    //     unit: unit,
+    //     details: {
+    //       title: "Purification",
+    //       reason: "Purification",
+    //     },
+    //   });
+    // }
+
+    newGameState.currentResolution.push({
+      resolution: "Water Skill",
+      resolution2: "Purification2",
+      unit: unit,
+      details: {
+        title: "Purification",
+        message:
+          "You may reveal 1 non-burst Water skill to search for then float an identical skill.",
+        restriction: ["02-01", "02-02", "02-03"],
+        reason: "Purification",
+      },
+    });
 
     newGameState.currentResolution.push({
       resolution: "Water Skill",

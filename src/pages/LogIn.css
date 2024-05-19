@@ -1,3 +1,182 @@
+.login-body{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.login-box{
+    position: relative;
+    width: 380px;
+    height: 520px;
+    /* background-color: silver; */
+    background-image: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.login-box::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 380px;
+    height: 520px;
+    background: linear-gradient(0deg, transparent, goldenrod, goldenrod, goldenrod, goldenrod);
+    /* background: linear-gradient(0deg, transparent, transparent, rgb(255, 255, 255), rgb(241, 241, 241), rgb(241, 241, 241)); */
+    z-index: 1;
+    transform-origin: bottom right;
+    animation: border-animate 5s linear infinite;
+}
+
+.login-box::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 380px;
+    height: 520px;
+    background: linear-gradient(0deg, transparent, goldenrod, goldenrod, goldenrod, goldenrod);
+    z-index: 1;
+    transform-origin: bottom right;
+    animation: border-animate 5s linear infinite;
+    animation-delay: -2.5s;
+}
+
+@keyframes border-animate{
+    0%{
+        transform: rotate(0deg)
+    }
+    100% {
+        transform: rotate(360deg)
+    }
+}
+
+.login-box form{
+    position: absolute;
+    inset: 4px;
+    /* background: rgb(175, 40, 40); */
+    background-image: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
+    padding: 50px 40px;
+    border-radius: 8px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+}
+
+.login-box form h2 {
+    color: goldenrod;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 0.1em;
+}
+
+.login-box form .login-input {
+    position: relative;
+    width: 300px;
+    margin-top: 35px;
+    margin-bottom: 35px;
+}
+
+.login-box form .login-input input{
+    position: relative;
+    width: 100%;
+    padding: 20px 10px 10px;
+    background: transparent;
+    outline: none;
+    border: none;
+    box-shadow: none;
+    color: rgb(255, 255, 255);
+    font-size: 1em;
+    letter-spacing: 0.05em;
+    transition: 0.5s;
+    z-index: 10;
+
+}
+
+.login-box form .login-input span {
+    position: absolute;
+    left: 0;
+    padding: 20px 0px 10px;
+    pointer-events: none;
+    color: white;
+    font-size: 1em;
+    letter-spacing: 0.05em;
+    transition: 0.5s;
+    
+}
+
+.login-box form .login-input input:valid ~ span,
+.login-box form .login-input input:focus ~ span {
+    color: white;
+    font-size: 0.75em;;
+    transform: translateY(-90px);
+}
+
+.login-box form .login-input i {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background: goldenrod;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: 0.5s;
+    pointer-events: none;
+}
+
+.login-box form .login-input input:valid~i,
+.login-box form .login-input input:focus~i {
+    height: 44px;
+}
+
+.login-box form .login-links{
+    display: flex;
+    justify-content: space-between;
+}
+
+.login-box form .login-links a{
+    margin: 30px 0;
+    font-size: 0.75em;
+    color: white;
+    text-decoration: none;
+}
+
+.login-box form .login-links a:hover {
+    color: goldenrod;
+}
+
+.login-box form input[type="submit"] {
+    border: none;
+    outline: none;
+    padding: 9px 25px;
+    background: white;
+    cursor: pointer;
+    font-size: 0.9em;
+    border-radius: 4px;
+    font-weight: 600;
+    width: 120px;
+    /* margin-top: 10px; */
+    margin: 10px auto 0 auto;
+        /* Center horizontally with top margin */
+}
+
+.login-box form input[type="submit"]:active {
+    opacity: 0.7;
+}
+
+.login-error{
+    font-size: 0.6em;
+    color: white;
+    margin: 10px;
+
+}
+/* =================================================================== */
+
+
 .login-form {
     max-width: 400px;
     margin: 60px auto;
@@ -36,3 +215,4 @@
     background: #281049;
     color: #fff
 }
+

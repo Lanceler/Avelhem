@@ -73,12 +73,12 @@ const SelectCustomChoice = (props) => {
         "Spend 1 skill to recover then float 1 non-burst Fire skill.";
       break;
 
-    case "Purification":
-      canFirstChoice = true;
-      canSecondChoice = true;
-      ChoiceFirstMessage = "Draw 1 skill.";
-      ChoiceSecondMessage = "Search for then float 1 non-burst Water skill.";
-      break;
+    // case "Purification":
+    //   canFirstChoice = true;
+    //   canSecondChoice = true;
+    //   ChoiceFirstMessage = "Draw 1 skill.";
+    //   ChoiceSecondMessage = "Search for then float 1 non-burst Water skill.";
+    //   break;
 
     case "Kleptothermy":
       canFirstChoice = true;
@@ -317,20 +317,20 @@ const SelectCustomChoice = (props) => {
         }
         break;
 
-      case "Purification":
-        if (selectedChoice === 1) {
-          newGameState = drawSkill(newGameState);
-        } else {
-          updateData = true;
-          newGameState.currentResolution.push({
-            resolution: "Search Skill",
-            player: self,
-            restriction: ["02-01", "02-02", "02-03"],
-            message: "Search for then float 1 non-burst Water skill.",
-            outcome: "Float",
-          });
-        }
-        break;
+      // case "Purification":
+      //   if (selectedChoice === 1) {
+      //     newGameState = drawSkill(newGameState);
+      //   } else {
+      //     updateData = true;
+      //     newGameState.currentResolution.push({
+      //       resolution: "Search Skill",
+      //       player: self,
+      //       restriction: ["02-01", "02-02", "02-03"],
+      //       message: "Search for then float 1 non-burst Water skill.",
+      //       outcome: "Float",
+      //     });
+      //   }
+      //   break;
 
       case "Kleptothermy":
         if (selectedChoice === 1) {

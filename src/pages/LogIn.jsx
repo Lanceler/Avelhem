@@ -1,4 +1,5 @@
 import "./LogIn.css";
+import { Link } from "react-router-dom";
 
 import { useState, useEffect } from "react";
 import { useLogIn } from "../hooks/useLogIn";
@@ -19,31 +20,38 @@ export default function LogIn() {
   };
 
   return (
-    <div>
-      <h3>Login</h3>
-      <form onSubmit={handleSubmit} className="login-form">
-        <label>
-          <span>Email:</span>
-          <input
-            required
-            type="email"
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-          />
-        </label>
-        <label>
-          <span>Password:</span>
-          <input
-            required
-            type="password"
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-          />
-        </label>
+    <div className="login-body">
+      <div className="login-box">
+        <form onSubmit={handleSubmit}>
+          <h2>Log in</h2>
+          <div className="login-input">
+            <input
+              required
+              type="email"
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+            />
 
-        <button className="btn">Log in</button>
-        {error && <p>{error}</p>}
-      </form>
+            <span>Email</span>
+            <i></i>
+          </div>
+          <div className="login-input">
+            <input
+              required
+              type="password"
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+            />
+            <span>Password</span>
+            <i></i>
+          </div>
+          <div className="login-links">
+            <Link to="/signup">No account? Sign up here.</Link>
+          </div>
+          <input type="submit" value="Submit"></input>
+          {error && <span className="login-error">{error}</span>}
+        </form>
+      </div>
     </div>
   );
 }

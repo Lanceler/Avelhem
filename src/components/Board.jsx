@@ -1739,7 +1739,7 @@ const Board = (props) => {
             return (
               <>
                 {self === lastResolution.unit.player && !hideModal && (
-                  <SelectCustomChoice
+                  <SelectSkillReveal
                     unit={lastResolution.unit}
                     details={lastResolution.details}
                     updateFirebase={updateFirebase}
@@ -1748,6 +1748,20 @@ const Board = (props) => {
                 )}
               </>
             );
+
+          // case "Purification2":
+          //   return (
+          //     <>
+          //       {self === lastResolution.unit.player && !hideModal && (
+          //         <SelectCustomChoice
+          //           unit={lastResolution.unit}
+          //           details={lastResolution.details}
+          //           updateFirebase={updateFirebase}
+          //           hideOrRevealModale={hideOrRevealModale}
+          //         />
+          //       )}
+          //     </>
+          //   );
 
           case "Activating Frigid Breath":
             if (self === lastResolution.unit.player) {
