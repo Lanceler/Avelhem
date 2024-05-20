@@ -95,6 +95,8 @@ const ContingentTarget = (props) => {
     //pop "Triggering Target"
     newGameState.currentResolution.pop();
 
+    newGameState.activatingTarget.pop();
+
     dispatch(updateState(newGameState));
     props.updateFirebase(newGameState);
   };
@@ -105,6 +107,8 @@ const ContingentTarget = (props) => {
 
     //pop "Triggering Target"
     newGameState.currentResolution.pop();
+
+    newGameState.activatingTarget.pop();
 
     //remove activated card from hand but do not send to vestige
     newGameState[self].skillHand.splice(

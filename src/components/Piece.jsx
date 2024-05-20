@@ -4,16 +4,6 @@ import { updateState } from "../redux/gameState";
 
 import "./Piece.css";
 
-import Pawn from "../assets/scionIcons/Pawn.png";
-import FireScion from "../assets/scionIcons/FireScion.png";
-import WaterScion from "../assets/scionIcons/WaterScion.png";
-import WindScion from "../assets/scionIcons/WindScion.png";
-import LandScion from "../assets/scionIcons/LandScion.png";
-import MetalScion from "../assets/scionIcons/MetalScion.png";
-import LightningScion from "../assets/scionIcons/LightningScion.png";
-import ManaScion from "../assets/scionIcons/ManaScion.png";
-import PlantScion from "../assets/scionIcons/PlantScion.png";
-
 import Shield from "../assets/attributeIcons/Shield.png";
 import Ward from "../assets/attributeIcons/Ward.png";
 import Virtue from "../assets/attributeIcons/Virtue.png";
@@ -24,6 +14,7 @@ import ParalysisGif from "../assets/attributeIcons/ParalysisGif.gif";
 import RootGif from "../assets/attributeIcons/RootGif.gif";
 
 import Ambidexterity from "../assets/others/Ambidexterity.png";
+import Crosshair from "../assets/others/Crosshair.png";
 
 import { useRecurringEffects } from "../hooks/useRecurringEffects";
 
@@ -44,21 +35,39 @@ export const Piece = (props) => {
     pieceSelectable = true;
   }
 
-  let activatingUnit = null;
-  let isActivatingUnit = false;
+  // let activatingUnit = null;
+  // let isActivatingUnit = false;
 
-  if (localGameState.activatingUnit.length) {
-    activatingUnit =
-      localGameState.activatingUnit[localGameState.activatingUnit.length - 1];
+  // if (localGameState.activatingUnit.length) {
+  //   activatingUnit =
+  //     localGameState.activatingUnit[localGameState.activatingUnit.length - 1];
 
-    if (
-      activatingUnit &&
-      props.unit.player === activatingUnit.player &&
-      props.unit.unitIndex === activatingUnit.unitIndex
-    ) {
-      isActivatingUnit = true;
-    }
-  }
+  //   if (
+  //     activatingUnit &&
+  //     props.unit.player === activatingUnit.player &&
+  //     props.unit.unitIndex === activatingUnit.unitIndex
+  //   ) {
+  //     isActivatingUnit = true;
+  //   }
+  // }
+
+  // let activatingTarget = null;
+  // let isActivatingTarget = false;
+
+  // if (localGameState.activatingTarget.length) {
+  //   activatingTarget =
+  //     localGameState.activatingTarget[
+  //       localGameState.activatingTarget.length - 1
+  //     ];
+
+  //   if (
+  //     activatingTarget &&
+  //     props.unit.player === activatingTarget.player &&
+  //     props.unit.unitIndex === activatingTarget.unitIndex
+  //   ) {
+  //     isActivatingTarget = true;
+  //   }
+  // }
 
   const handleClick = () => {
     if (props.tileMode === "selectUnit") {
@@ -316,6 +325,14 @@ export const Piece = (props) => {
               <img src={Ambidexterity} className="ambidexterity" />
             </>
           )}
+
+          {/* target */}
+
+          {/* {isActivatingTarget && (
+            <>
+              <img src={Crosshair} className="crosshair" />
+            </>
+          )} */}
         </>
       )}
       {!props.unit && <div className="piece"></div>}

@@ -663,3 +663,35 @@ animation: moveUpDownHP 1.0s ease-in-out infinite;
     z-index: 4;
 
 }
+
+.crosshair {
+    z-index: 700;
+    /* height: 75px;
+    width: 70px; */
+    position: absolute;
+    pointer-events: none;
+    top: -27.5px;
+    left: -17.5px;
+    scale: 1.05;
+    opacity: 0.55;
+    animation: scaleAnimation2 2.40s ease-in-out infinite alternate;
+
+    /* filter: sepia(2.5) saturate(10000%) hue-rotate(-290deg); */
+    /* filter: sepia(2.5) saturate(10000%) hue-rotate(-70deg) contrast(1.5); */
+    filter: sepia(1) saturate(10000%) hue-rotate(-35deg);
+}
+
+@keyframes scaleAnimation2 {
+
+    0%,
+    100% {
+        opacity: 0.35;
+    }
+
+    45%,
+    50%,
+    55% {
+        opacity: 0.8;
+        top: -17.5px;
+    }
+}

@@ -2685,6 +2685,8 @@ export const useRecurringEffects = () => {
         victim: victim,
         type: "blast",
       });
+
+      newGameState.activatingTarget.push(victim);
     }
 
     return newGameState;
@@ -3641,6 +3643,8 @@ export const useRecurringEffects = () => {
         victim: victim,
         type: "freeze1",
       });
+
+      newGameState.activatingTarget.push(victim);
     }
 
     return newGameState;
@@ -3665,6 +3669,8 @@ export const useRecurringEffects = () => {
         victim: victim,
         type: "freeze2",
       });
+
+      newGameState.activatingTarget.push(victim);
     }
 
     return newGameState;
@@ -4002,6 +4008,8 @@ export const useRecurringEffects = () => {
         victim: victim,
         type: "ignite",
       });
+
+      newGameState.activatingTarget.push(victim);
     }
 
     return newGameState;
@@ -4198,6 +4206,8 @@ export const useRecurringEffects = () => {
         victim: victim,
         type: "paralyze1",
       });
+
+      newGameState.activatingTarget.push(victim);
     }
 
     if (triggerAdamantArmor(victim)) {
@@ -4237,6 +4247,8 @@ export const useRecurringEffects = () => {
         victim: victim,
         type: "paralyze2",
       });
+
+      newGameState.activatingTarget.push(victim);
     }
 
     if (triggerAdamantArmor(victim)) {
@@ -4864,6 +4876,8 @@ export const useRecurringEffects = () => {
         victim: victim,
         type: "strike",
       });
+
+      newGameState.activatingTarget.push(victim);
     }
 
     if (triggerAdamantArmor(victim)) {
@@ -4879,6 +4893,8 @@ export const useRecurringEffects = () => {
           reason: "Adamant Armor",
         },
       });
+
+      newGameState.activatingTarget.push(victim);
     }
 
     return newGameState;
@@ -5377,6 +5393,8 @@ export const useRecurringEffects = () => {
           yes: "Yes",
         },
       });
+
+      newGameState.activatingTarget.push(victim);
     }
 
     //to do in the future: consider bypass Target and Adamant Armor
@@ -5388,6 +5406,8 @@ export const useRecurringEffects = () => {
         victim: victim,
         type: "virtue-blast",
       });
+
+      newGameState.activatingTarget.push(victim);
     }
 
     if (triggerAdamantArmor(victim)) {
@@ -5403,6 +5423,8 @@ export const useRecurringEffects = () => {
           reason: "Adamant Armor",
         },
       });
+
+      newGameState.activatingTarget.push(victim);
     }
 
     newGameState[attacker.player].units[attacker.unitIndex].virtue = 0;

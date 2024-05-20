@@ -174,6 +174,7 @@ const YouMaySpend1Skill = (props) => {
         break;
 
       case "Adamant Armor":
+        newGameState.activatingTarget.pop();
         unit.temporary.adamantArmor = true;
         unit.temporary.usedAdamantArmor = true;
 

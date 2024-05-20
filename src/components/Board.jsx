@@ -84,6 +84,8 @@ import Piece from "./Piece";
 
 import PileOfCards from "./displays/PileOfCards";
 
+import Crosshair from "../assets/others/Crosshair.png";
+
 const Board = (props) => {
   const gameDoc = doc(db, "gameInfo", props.gameId);
   const dispatch = useDispatch();
@@ -318,6 +320,40 @@ const Board = (props) => {
       boosts: {},
       temporary: {},
     };
+  };
+
+  const activatingTarget = () => {
+    if (
+      localGameState.activatingTarget.length > 0 &&
+      localGameState.activatingTarget[
+        localGameState.activatingTarget.length - 1
+      ]
+    ) {
+      let unitInfo =
+        localGameState.activatingTarget[
+          localGameState.activatingTarget.length - 1
+        ];
+
+      let unit = localGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+      //host or spectator
+      if (self !== "guest") {
+        return {
+          position: "absolute",
+          zIndex: 101,
+          top: 13 + 78 * unit.row,
+          left: 13 + 78 * unit.column,
+        };
+      } else {
+        //guest
+        return {
+          position: "absolute",
+          zIndex: 101,
+          top: 13 + 78 * (9 - unit.row),
+          left: 13 + 78 * (4 - unit.column),
+        };
+      }
+    }
   };
 
   const activatingUnit = () => {
@@ -5333,6 +5369,15 @@ const Board = (props) => {
                     className="glow animating board-piece"
                     style={activatingUnit()}
                   ></div>
+                )}
+
+              {localGameState.activatingTarget.length > 0 &&
+                localGameState.activatingTarget[
+                  localGameState.activatingTarget.length - 1
+                ] !== null && (
+                  <div className="board-piece" style={activatingTarget()}>
+                    <img src={Crosshair} className="crosshair" />
+                  </div>
                 )}
 
               {localGameState.host.units.map((unit, i) => (

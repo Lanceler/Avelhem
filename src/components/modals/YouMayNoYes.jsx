@@ -39,6 +39,10 @@ const YouMayNoYes = (props) => {
 
     newGameState.currentResolution.pop();
 
+    if (props.details.reason === "Block Virtue-Blast") {
+      newGameState.activatingTarget.pop();
+    }
+
     if (props.details.reason === "Mana Restructure") {
       newGameState[self].skillVestige.push(props.details.skill);
     }
@@ -60,6 +64,7 @@ const YouMayNoYes = (props) => {
 
     switch (props.details.reason) {
       case "Block Virtue-Blast": //"Blocking Virtue-Blast"
+        newGameState.activatingTarget.pop();
         newGameState = virtueBlastYes(newGameState, props.attacker, unit);
         break;
 

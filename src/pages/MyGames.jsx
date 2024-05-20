@@ -86,6 +86,7 @@ export default function MyGames() {
           gameState: {
             // eventLog: [],
             activatingSkill: [],
+            activatingTarget: [],
             activatingUnit: [],
             activatingResonator: [],
             currentResolution: [],
