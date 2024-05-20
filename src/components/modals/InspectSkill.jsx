@@ -78,8 +78,6 @@ const InspectSkill = (props) => {
 
         //3. Empty vestige
         newGameState[self].skillVestige = [];
-
-        //to do: alert both players (and give opponent BP)
       }
     } else if (props.details.outcome === "Float") {
       //take selected card then put it at the top of deck (end of array)

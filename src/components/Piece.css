@@ -670,7 +670,7 @@ animation: moveUpDownHP 1.0s ease-in-out infinite;
     width: 70px; */
     position: absolute;
     pointer-events: none;
-    top: -27.5px;
+    top: -24.0px;
     left: -17.5px;
     scale: 1.05;
     opacity: 0.55;

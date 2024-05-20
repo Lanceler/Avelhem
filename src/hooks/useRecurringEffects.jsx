@@ -65,8 +65,6 @@ export const useRecurringEffects = () => {
       });
     }
 
-    //to do: alert opponent that contingent skill was used
-
     return newGameState;
   };
 
@@ -237,8 +235,6 @@ export const useRecurringEffects = () => {
         priority: self,
       });
     }
-
-    //to do: alert opponent that contingent skill was used
 
     return newGameState;
   };
@@ -690,8 +686,6 @@ export const useRecurringEffects = () => {
       });
     }
 
-    //to do: alert opponent that contingent skill was used
-
     return newGameState;
   };
 
@@ -927,8 +921,6 @@ export const useRecurringEffects = () => {
       });
     }
 
-    //to do: alert opponent that contingent skill was used
-
     return newGameState;
   };
 
@@ -1120,8 +1112,6 @@ export const useRecurringEffects = () => {
         priority: self,
       });
     }
-
-    //to do: alert opponent that contingent skill was used
 
     return newGameState;
   };
@@ -1785,8 +1775,6 @@ export const useRecurringEffects = () => {
       });
     }
 
-    //to do: alert opponent that contingent skill was used
-
     return newGameState;
   };
 
@@ -1952,8 +1940,6 @@ export const useRecurringEffects = () => {
         priority: self,
       });
     }
-
-    //to do: alert opponent that contingent skill was used
 
     return newGameState;
   };
@@ -5387,10 +5373,10 @@ export const useRecurringEffects = () => {
         details: {
           reason: "Block Virtue-Blast",
           title: "Block Virtue-Blast",
-          message: `Enemy ${attacker.unitClass} is about to Virtue-blast your ${victim.unitClass}. Do you want to spend your unit’s Virtue to reduce the attack’s AP by
-          1? This will restore the attaking unit’s Virtue.`,
-          no: "No",
-          yes: "Yes",
+          message: `Enemy ${attacker.unitClass} is about to Virtue-blast your ${victim.unitClass}. Your unit may spend their Virtue to reduce the attack’s AP by
+          1.`,
+          no: "Skip",
+          yes: "Reduce AP",
         },
       });
 

@@ -303,7 +303,7 @@ const YouMaySpend1Skill = (props) => {
           reason: "Mana Restructure",
           title: "Mana Restructure",
           message:
-            "When a Mana Scion or their adjacent ally spends a Mana skill, they may float it instead. Do you want to do so?",
+            "When a Mana Scion or their adjacent ally spends a Mana skill, they may float it instead.",
           no: "Discard",
           yes: "Float",
           skill: newGameState[self].skillHand.splice(
