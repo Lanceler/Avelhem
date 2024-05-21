@@ -73,19 +73,6 @@
 
 }
 
-.remaining{
-    background-color: rgba(0, 0, 0, 0.75);
-    color: white;
-    padding: 3px;
-/* align-self: flex-end; */
-    width: 100%;
-    max-width: 100%;
-    margin-bottom: 2px;
-    text-overflow: ellipsis;
-/* white-space:nowrap; */
-    overflow: hidden
-
-}
 
 .repertoire-card {
     width: 50px;

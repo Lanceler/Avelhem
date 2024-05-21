@@ -28,9 +28,10 @@
 }
 
 .remaining {
-    background-color: rgba(0, 0, 0, 0.75);
+    background-color: rgba(0, 0, 0, 0.55);
     color: white;
-    padding: 3px;
+    font-size: 16.5px;
+    padding: 5px;
     /* align-self: flex-end; */
     width: 100%;
     max-width: 100%;

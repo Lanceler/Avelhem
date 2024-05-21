@@ -1,7 +1,7 @@
 import React from "react";
 import "./AvelhemCard.css";
 
-import {motion} from "framer-motion"
+import { motion } from "framer-motion";
 
 import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 

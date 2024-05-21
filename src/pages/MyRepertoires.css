@@ -39,6 +39,7 @@
     padding: 10px 15px;
     color: white;
     font-family: Arial, sans-serif;
+    pointer-events: none;
 }
 
 .repertoire-name {

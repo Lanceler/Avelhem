@@ -61,6 +61,7 @@ export default function Repertoire() {
         Name: avelhemCardList[cardPoolIndex].Name,
         CardId: avelhemCardList[cardPoolIndex].CardId,
         CardPoolIndex: cardPoolIndex,
+        timeAdded: new Date(),
       });
 
       newAvelhemRepertoire.sort((a, b) => a.CardPoolIndex - b.CardPoolIndex);
@@ -76,6 +77,7 @@ export default function Repertoire() {
     let newAvelhemRepertoire = [...avelhemRepertoire];
     newAvelhemRepertoire.splice(avelhemCardIndex, 1);
     setAvelhemRepertoire(newAvelhemRepertoire);
+
     let newCardPool = [...avelhemCardPool];
     newCardPool[cardPoolIndex].Stock++;
     setAvelhemCardPool(newCardPool);
@@ -137,6 +139,13 @@ export default function Repertoire() {
 
     return () => unsubscribe?.();
   }, [documentId]);
+
+  useEffect(() => {
+    if (userData) {
+      handleReloadAvelhem();
+    }
+  }, [userData]);
+
   //---Realtime data functionality above
 
   const handleClearAvelhem = () => {
@@ -150,6 +159,96 @@ export default function Repertoire() {
     setAvelhemCardPool(newCardPool);
   };
 
+  const handleReloadAvelhem = () => {
+    handleClearAvelhem();
+
+    const fixedArray = [];
+
+    for (let i = 0; i < 20; i++) {
+      fixedArray.push(i);
+    }
+
+    // console.log(userData.repertoire[id].avelhemRepertoire);
+
+    let newAvelhemRepertoire = [];
+    let newCardPool = [...avelhemCardPool];
+    for (let i of userData.repertoire[id].avelhemRepertoire) {
+      let cardPoolIndex = i - 1;
+      newAvelhemRepertoire.push({
+        Name: avelhemCardList[cardPoolIndex].Name,
+        CardId: avelhemCardList[cardPoolIndex].CardId,
+        CardPoolIndex: cardPoolIndex,
+        timeAdded: JSON.stringify(new Date()) + fixedArray.pop(), // needed to be 100% unique,
+      });
+
+      newAvelhemRepertoire.sort((a, b) => a.CardPoolIndex - b.CardPoolIndex);
+
+      newCardPool[cardPoolIndex].Stock--;
+    }
+    setAvelhemRepertoire(newAvelhemRepertoire);
+    setAvelhemCardPool(newCardPool);
+  };
+
+  const handleSave = async () => {
+    const repertoireNameTrimmed = repertoireName.trim();
+
+    if (
+      repertoireNameTrimmed.length > 20 ||
+      hasSpecialCharacter(repertoireNameTrimmed)
+    ) {
+      setSaveError(
+        "Repertoire name must have a length of 20 or less and contain no special characters."
+      );
+    } else if (
+      // skillRepertoire.length !== 60 ||
+      avelhemRepertoire.length !== 20
+    ) {
+      setSaveError(
+        "Skill and Avelhem repertoires must have 60 and 20 cards, respectively."
+      );
+    } else {
+      setIsLoading(true);
+      setSaveError("");
+
+      const userInfoRef = query(
+        collection(db, "userInfo"),
+        where("userId", "==", user.uid)
+      );
+
+      let results = null;
+
+      getDocs(userInfoRef)
+        .then((snapshot) => {
+          if (snapshot.empty) {
+            throw new Error("No user found.");
+          } else {
+            const UserDoc = snapshot.docs[0];
+            results = { ...UserDoc.data() };
+          }
+        })
+        .then(() => {
+          const updatedRepertoire = [...results.repertoire];
+
+          updatedRepertoire[id].avelhemRepertoire = getAvelhemIndexes();
+
+          const userDoc = doc(db, "userInfo", results.id);
+          updateDoc(userDoc, { repertoire: updatedRepertoire });
+
+          navigate("/repertoires");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      setIsLoading(false);
+    }
+  };
+
+  function hasSpecialCharacter(inputString) {
+    const specialCharacterRegex = /[!@#$%^&*(),.?":{}|<>]/;
+    return specialCharacterRegex.test(inputString);
+  }
+
   return (
     <div>
       <div>Repertoire: {id}</div>
@@ -160,27 +259,46 @@ export default function Repertoire() {
         <button>Return</button>
       </Link>
 
+      <button onClick={() => handleSave()}>Save</button>
+
       <div className="repertoire-body">
         <div className="main-division">
-          <div className="division">
-            <div className="repertoire-text">
-              Avelhem Repertoire: {avelhemRepertoire.length} / 20{" "}
-              <button onClick={() => handleClearAvelhem()}>Clear</button>
+          <div className="repertoire-division">
+            <div className="repertoire-header">
+              <div className="repertoire-text">
+                Avelhem Repertoire ({avelhemRepertoire.length} / 20)
+              </div>
+              <div className="repertoire-buttons">
+                <button
+                  className="repertoire-button"
+                  onClick={() => handleReloadAvelhem()}
+                >
+                  Reload
+                </button>
+                <button
+                  className="repertoire-button"
+                  onClick={() => handleClearAvelhem()}
+                >
+                  Clear
+                </button>
+              </div>
             </div>
 
             <div className="avelhem-repertoire">
-              {avelhemRepertoire.map((card, index) => (
-                <ARAvelhemCard
-                  key={index}
-                  index={index}
-                  cardInfo={card}
-                  returnToAvelhemCardPool={returnToAvelhemCardPool}
-                />
-              ))}
+              <AnimatePresence mode={"popLayout"}>
+                {avelhemRepertoire.map((card, index) => (
+                  <ARAvelhemCard
+                    key={JSON.stringify({ c: card })}
+                    index={index}
+                    cardInfo={card}
+                    returnToAvelhemCardPool={returnToAvelhemCardPool}
+                  />
+                ))}
+              </AnimatePresence>
             </div>
           </div>
 
-          <div className="division">
+          <div className="repertoire-division">
             <div className="repertoire-text">Avelhem Selection</div>
 
             <div className="avelhem-selection">
