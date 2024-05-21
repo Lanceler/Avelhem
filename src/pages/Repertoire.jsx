@@ -37,7 +37,7 @@ export default function Repertoire() {
   const { user } = useAuthContext();
   const [isLoading, setIsLoading] = useState(false);
 
-  const { avelhemCardList, skillCardList, getAvelhemById, getSkillIndex } =
+  const { avelhemCardList, skillCardList, getAvelhemIndex, getSkillIndex } =
     useCardDatabase();
   const [skillCardPool, setSkillCardPool] = useState(skillCardList);
   const [skillRepertoire, setSkillRepertoire] = useState([]);
@@ -226,7 +226,9 @@ export default function Repertoire() {
     let newAvelhemRepertoire = [];
     let newCardPool = [...avelhemCardPool];
     for (let i of userData.repertoire[id].avelhemRepertoire) {
-      let cardPoolIndex = i - 1;
+      //   let cardPoolIndex = i - 1;
+      let cardPoolIndex = getAvelhemIndex(i);
+
       newAvelhemRepertoire.push({
         Name: avelhemCardList[cardPoolIndex].Name,
         CardId: avelhemCardList[cardPoolIndex].CardId,

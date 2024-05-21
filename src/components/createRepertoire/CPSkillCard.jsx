@@ -1,46 +1,59 @@
-import React from "react";
+import React, { useState } from "react";
 import "./AvelhemCard.css";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-
 
 import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 
-import {motion} from "framer-motion"
+import ZoomCard from "../displays/ZoomCard";
 
 const CPSkillCard = (props) => {
   const { getImage } = useCardImageSwitch();
   let image = "";
   image = getImage(props.cardInfo.Name);
 
-  return (
-    <div
-      className={
-        props.cardInfo.Stock
-          ? "full-skill-card"
-          : "full-skill-card out-of-stock"
-      }
-      style={{
-        backgroundImage: `url(${image})`,
-      }}
-    >
-      <button
-        className="view-button"
-        onClick={() => {
-          props.selectViewCard(props.cardInfo);
-        }}
-      >
-        <FontAwesomeIcon icon={faMagnifyingGlass}/>
+  const [zoom, setZoom] = useState(false);
 
-      </button>
+  const closeZoom = () => {
+    setZoom(false);
+  };
+
+  const openZoom = () => {
+    setZoom(true);
+    console.log("Open Zoom");
+  };
+
+  return (
+    <div>
+      {zoom === true && (
+        <ZoomCard cardInfo={props.cardInfo.CardId} closeZoom={closeZoom} />
+      )}
 
       <div
-        className="skill-card"
-        onClick={() => props.addToSkillRepertoire(props.index)}
+        className={`repertoire-card ${
+          props.cardInfo.Stock ? "" : "out-of-stock"
+        }`}
+        style={{
+          backgroundImage: `url(${image})`,
+        }}
       >
-        <div className="remaining">{props.cardInfo.Name}</div>
-        <div className="remaining">Remaining: {props.cardInfo.Stock}</div>
+        <button
+          className="zoom-button"
+          onClick={() => {
+            openZoom();
+          }}
+        >
+          <FontAwesomeIcon icon={faMagnifyingGlass} />
+        </button>
+
+        <div
+          className="skill-card"
+          onClick={() => props.addToSkillRepertoire(props.index)}
+        >
+          {/* <div className="remaining">{props.cardInfo.Name}</div> */}
+          <div className="remaining">Remaining: {props.cardInfo.Stock}</div>
+        </div>
       </div>
     </div>
   );

@@ -58,11 +58,18 @@
     position: relative;
 }
 
-.view-button{
+.zoom-button{
     position: absolute;
-    top: 0;
+    top: 1.5px;
     right: 0;
-    margin: 2px
+    margin: 3px;
+
+    background-color: rgba(255, 255, 255, 0.75);
+    border: none;
+    border-radius: 2px;
+
+    cursor: pointer;
+
 }
 
 .out-of-stock {

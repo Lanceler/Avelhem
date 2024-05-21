@@ -429,6 +429,10 @@ export const useCardDatabase = () => {
     return avelhemCardList.find((card) => card.CardId === id);
   };
 
+  const getAvelhemIndex = (id) => {
+    return avelhemCardList.findIndex((card) => card.CardId === id);
+  };
+
   const getSkillById = (id) => {
     return skillCardList.find((card) => card.CardId === id);
   };
@@ -494,6 +498,7 @@ export const useCardDatabase = () => {
     skillCardList,
     getScionSet,
     getAvelhemById,
+    getAvelhemIndex,
     getSkillById,
     getSkillIndex,
     allBurstSkills,
