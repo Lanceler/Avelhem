@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 
 import "./MyRepertoires.css";
 
+import GoldFrame from "../assets/others/GoldFrame.png";
+
 import { useAuthContext } from "../hooks/useAuthContext";
 
 import { db } from "../config/firebaseConfig";
@@ -111,19 +113,41 @@ export default function MyRepertoires() {
   //---Delete repertoire functionality above
 
   return (
-    <div>
+    <div className="repertoires-body">
       <div>
-        {userData &&
+        {/* {userData &&
           userData.repertoire.map((rep, index) => (
             <div key={index} className="repertoire-box">
               <h2>{rep.name}</h2>
               <button>View</button>
               <button onClick={() => onDelete(index)}>Delete</button>
             </div>
-          ))}
+          ))} */}
+        <div className="threeColumn">
+          {userData &&
+            userData.repertoire.map((rep, index) => (
+              <Link to={`/repertoire/${index}`} className="repertoire-link">
+                <div
+                  key={index}
+                  className="customChoice"
+                  style={{ backgroundImage: `url(${GoldFrame})` }}
+                >
+                  <div className="repertoire-frame">
+                    <div className="repertoire-text repertoire-name">
+                      <h3>{rep.name}</h3>
+                    </div>
+
+                    <div className="repertoire-text repertoire-desc scroll">
+                      {rep.description}
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            ))}
+        </div>
       </div>
 
-      <Link to="/create-repertoire">
+      {/* <Link to="/create-repertoire">
         <button>Create Repertoire</button>
       </Link>
       {showYesNo && (
@@ -131,7 +155,7 @@ export default function MyRepertoires() {
           message="Are you sure you want to delete this repertoire?"
           getResponse={getResponse}
         />
-      )}
+      )} */}
 
       {isLoading && <Loading />}
     </div>

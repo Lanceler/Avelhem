@@ -54,7 +54,6 @@ export default function CreateRepertoire() {
         Name: skillCardList[cardPoolIndex].Name,
         CardId: skillCardList[cardPoolIndex].CardId,
         CardPoolIndex: cardPoolIndex,
-        timeAdded: new Date(),
       });
 
       newSkillRepertoire.sort((a, b) => a.CardPoolIndex - b.CardPoolIndex);
@@ -93,7 +92,6 @@ export default function CreateRepertoire() {
         Name: avelhemCardList[cardPoolIndex].Name,
         CardId: avelhemCardList[cardPoolIndex].CardId,
         CardPoolIndex: cardPoolIndex,
-        timeAdded: new Date(),
       });
 
       newAvelhemRepertoire.sort((a, b) => a.CardPoolIndex - b.CardPoolIndex);

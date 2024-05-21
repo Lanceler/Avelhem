@@ -1,3 +1,13 @@
+.repertoires-body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+
 .repertoire-box {
     background: #fff;
     color: #333;
@@ -7,4 +17,39 @@
     transition: all 0.3s ease;
     position: relative;
     width: fit-content
+}
+
+
+.repertoire-frame {
+    /* position: absolute; */
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
+
+    /* align-items: center; */
+    /* vertical alignment */
+    /* justify-content: space-between; */
+    /* horizontal alignment */
+    display: flex;
+    flex-direction: column;
+}
+
+
+.repertoire-text {
+    padding: 10px 15px;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.repertoire-name {
+    font-size: 28px;
+}
+
+.repertoire-desc {
+    font-size: 24px;
+    flex-grow: 1;
+}
+
+.repertoire-link{
+    text-decoration: none;
 }

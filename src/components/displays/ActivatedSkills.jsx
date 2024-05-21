@@ -64,23 +64,31 @@ const ActivatedSkills = () => {
         <br />
 
         <div className="resonatorChain">
-          {localGameState.activatingResonator.length > 0 && (
-            <div
-              className="activatedSkill displayedSkills"
-              style={{
-                left: 5,
-                filter: `${
-                  localGameState.activatingSkill.length === 1
-                    ? ""
-                    : "grayscale(65%)"
-                }`,
+          <AnimatePresence mode={"popLayout"}>
+            {localGameState.activatingResonator.length > 0 && (
+              <motion.div
+                animate={{
+                  opacity: 1,
+                  scale: 1,
+                }}
+                transition={{ duration: 0.4, scale: 0.5 }}
+                exit={{ opacity: 0, scale: 1.5 }}
+                className="activatedSkill displayedSkills"
+                style={{
+                  left: 5,
+                  filter: `${
+                    localGameState.activatingSkill.length === 1
+                      ? ""
+                      : "grayscale(65%)"
+                  }`,
 
-                backgroundImage: `url(${getImage2(
-                  localGameState.activatingResonator[0]
-                )})`,
-              }}
-            ></div>
-          )}
+                  backgroundImage: `url(${getImage2(
+                    localGameState.activatingResonator[0]
+                  )})`,
+                }}
+              ></motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </>
