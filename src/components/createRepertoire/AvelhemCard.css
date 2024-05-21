@@ -1,4 +1,4 @@
-.avelhem-card {
+.repertoire-card {
     width: 100px;
     height: 140px;
     background-color: rgb(83, 157, 218);
@@ -11,7 +11,6 @@
     border-color: black;
     padding: 5px;
     text-align: center;
-    font-size: .7em;
     cursor: pointer;
 
     margin: 5px 5px 5px 5px;

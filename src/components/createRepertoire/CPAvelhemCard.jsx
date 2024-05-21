@@ -12,9 +12,9 @@ const CPAvelhemCard = (props) => {
 
   return (
     <motion.div
-      className={
-        props.cardInfo.Stock ? "avelhem-card" : "avelhem-card out-of-stock"
-      }
+      className={`repertoire-card ${
+        props.cardInfo.Stock ? "" : "out-of-stock"
+      }`}
       onClick={() => props.addToAvelhemRepertoire(props.index)}
       style={{
         backgroundImage: `url(${image})`,

@@ -32,7 +32,7 @@ const ARAvelhemCard = (props) => {
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.2, scale: 0.5 }}
       exit={{ opacity: 0 }}
-      className="avelhem-card"
+      className="repertoire-card"
       style={{
         backgroundImage: `url(${image})`,
       }}

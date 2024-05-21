@@ -433,6 +433,10 @@ export const useCardDatabase = () => {
     return skillCardList.find((card) => card.CardId === id);
   };
 
+  const getSkillIndex = (id) => {
+    return skillCardList.findIndex((card) => card.CardId === id);
+  };
+
   const allBurstSkills = () => {
     return [
       "01-04",
@@ -491,6 +495,7 @@ export const useCardDatabase = () => {
     getScionSet,
     getAvelhemById,
     getSkillById,
+    getSkillIndex,
     allBurstSkills,
     pressTheAttackList,
     sovereignSkillList,
