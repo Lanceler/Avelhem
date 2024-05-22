@@ -22,7 +22,7 @@ const ActivatedSkills = () => {
     <>
       <div className="activatedCardDisplay">
         <div className="skillChain">
-          <AnimatePresence mode={"popLayout"}>
+          <AnimatePresence>
             {localGameState.activatingSkill.map((card, i) => (
               <motion.div
                 // layout={true}
@@ -64,7 +64,7 @@ const ActivatedSkills = () => {
         <br />
 
         <div className="resonatorChain">
-          <AnimatePresence mode={"popLayout"}>
+          <AnimatePresence>
             {localGameState.activatingResonator.length > 0 && (
               <motion.div
                 animate={{

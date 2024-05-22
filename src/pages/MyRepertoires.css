@@ -32,6 +32,7 @@
     /* horizontal alignment */
     display: flex;
     flex-direction: column;
+
 }
 
 
@@ -39,16 +40,36 @@
     padding: 10px 15px;
     color: white;
     font-family: Arial, sans-serif;
-    pointer-events: none;
+    /* pointer-events: none; */
 }
 
-.repertoire-name {
-    font-size: 28px;
+.repertoire-name h3{
+    padding: 5px;
+    font-size: 30px;
+    height: 68px;
+    max-width: 220px;
+    width: auto;
+    /* overflow-wrap: break-word; */
+    text-overflow: ellipsis;
+    overflow: hidden;
+    
+
+    margin-bottom: 25px;
+
+
 }
+
+
 
 .repertoire-desc {
     font-size: 24px;
     flex-grow: 1;
+    overflow-wrap: break-word;
+
+    scrollbar-color: rgb(255, 168, 7) rgba(92, 63, 52, 0);
+    scrollbar-width: thin
+
+
 }
 
 .repertoire-link{

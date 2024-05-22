@@ -40,8 +40,6 @@ export const useSignUp = () => {
     //Healing Rain
     "02-03", //21
     "02-03", //22
-    "02-03", //23
-    "02-03", //24
     //Glacial Torrent
     "02-04", //25
     //Crystallization
@@ -91,6 +89,9 @@ export const useSignUp = () => {
     //Fervent Prayer
     "SB-04", //58
     "SB-04", //59
+    //Press the Attack
+    "SB-05", //21
+    "SB-05", //22
     //Cataclysmic Tempest
     "03-04", //60
   ];

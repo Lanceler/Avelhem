@@ -22,43 +22,6 @@ export default function SignUp() {
   };
 
   return (
-    // <div>
-    //   <h3>Sign up</h3>
-    //   <form onSubmit={handleSubmit} className="signup-form">
-    //     <label>
-    //       <span>Email:</span>
-    //       <input
-    //         required
-    //         type="email"
-    //         onChange={(e) => setEmail(e.target.value)}
-    //         value={email}
-    //       />
-    //     </label>
-    //     <label>
-    //       <span>Password:</span>
-    //       <input
-    //         required
-    //         type="password"
-    //         onChange={(e) => setPassword(e.target.value)}
-    //         value={password}
-    //       />
-    //     </label>
-
-    //     <label>
-    //       <span>Display name:</span>
-    //       <input
-    //         required
-    //         type="text"
-    //         onChange={(e) => setDisplayName(e.target.value)}
-    //         value={displayName}
-    //       />
-    //     </label>
-
-    //     <button className="btn">sign up</button>
-    //     {error && <p>{error}</p>}
-    //   </form>
-    // </div>
-
     <div className="login-body">
       <div className="login-box signup">
         <form onSubmit={handleSubmit}>

@@ -9,13 +9,10 @@ import { useAuthContext } from "../hooks/useAuthContext";
 
 import { db } from "../config/firebaseConfig";
 
-import YesNo from "../components/modals/YesNo";
 import Loading from "../components/modals/Loading";
 
 import {
   collection,
-  addDoc,
-  updateDoc,
   doc,
   query,
   where,
@@ -26,9 +23,6 @@ import {
 export default function MyRepertoires() {
   const { user } = useAuthContext();
   const [isLoading, setIsLoading] = useState(false);
-  const [showYesNo, setShowYesNo] = useState(false);
-  const [confirmDelete, setConfirmDelete] = useState(false);
-  const [indexToDelete, setIndexToDelete] = useState(null);
 
   //---Realtime data functionality below
   const userInfoRef = query(
@@ -68,7 +62,6 @@ export default function MyRepertoires() {
       unsubscribe = onSnapshot(documentRef, (docSnapshot) => {
         if (docSnapshot.exists()) {
           setUserData(docSnapshot.data());
-          console.log("Change!");
         } else {
           console.log("Document does not exist");
         }
@@ -79,56 +72,19 @@ export default function MyRepertoires() {
   }, [documentId]);
   //---Realtime data functionality above
 
-  //---Delete repertoire functionality below
-  useEffect(() => {
-    if (confirmDelete) {
-      if (!isLoading) {
-        setIsLoading(true);
-        let updatedRepertoire = [...userData.repertoire];
-        updatedRepertoire.splice(indexToDelete, 1);
-
-        const userDoc = doc(db, "userInfo", userData.id);
-
-        try {
-          updateDoc(userDoc, { repertoire: updatedRepertoire });
-          setIsLoading(false);
-        } catch (err) {
-          console.error(err);
-          setIsLoading(false);
-        }
-      }
-    }
-  }, [confirmDelete]);
-
-  const onDelete = async (index) => {
-    setConfirmDelete(false);
-    setIndexToDelete(index);
-    setShowYesNo(true);
-  };
-
-  const getResponse = (resp) => {
-    setConfirmDelete(resp);
-    setShowYesNo(false);
-  };
-  //---Delete repertoire functionality above
-
   return (
     <div className="repertoires-body">
       <div>
-        {/* {userData &&
-          userData.repertoire.map((rep, index) => (
-            <div key={index} className="repertoire-box">
-              <h2>{rep.name}</h2>
-              <button>View</button>
-              <button onClick={() => onDelete(index)}>Delete</button>
-            </div>
-          ))} */}
         <div className="threeColumn">
           {userData &&
             userData.repertoire.map((rep, index) => (
-              <Link to={`/repertoire/${index}`} className="repertoire-link">
+              <Link
+                to={`/repertoire/${index}`}
+                className="repertoire-link"
+                key={index}
+              >
                 <div
-                  key={index}
+                  // key={index}
                   className="customChoice"
                   style={{ backgroundImage: `url(${GoldFrame})` }}
                 >
@@ -137,7 +93,7 @@ export default function MyRepertoires() {
                       <h3>{rep.name}</h3>
                     </div>
 
-                    <div className="repertoire-text repertoire-desc scroll">
+                    <div className="repertoire-text repertoire-desc repertoire-scrollable">
                       {rep.description}
                     </div>
                   </div>
@@ -146,16 +102,6 @@ export default function MyRepertoires() {
             ))}
         </div>
       </div>
-
-      {/* <Link to="/create-repertoire">
-        <button>Create Repertoire</button>
-      </Link>
-      {showYesNo && (
-        <YesNo
-          message="Are you sure you want to delete this repertoire?"
-          getResponse={getResponse}
-        />
-      )} */}
 
       {isLoading && <Loading />}
     </div>

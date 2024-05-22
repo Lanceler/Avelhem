@@ -21,7 +21,6 @@ import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
 import MyRepertoires from "./pages/MyRepertoires";
 import Repertoire from "./pages/Repertoire";
-import CreateRepertoire from "./pages/CreateRepertoire";
 import MyGames from "./pages/MyGames";
 import Game from "./pages/Game";
 
@@ -57,11 +56,6 @@ function App() {
             <Route
               path="/repertoire/:id"
               element={user ? <Repertoire /> : <Navigate to="/login" />}
-            />
-
-            <Route
-              path="/create-repertoire"
-              element={user ? <CreateRepertoire /> : <Navigate to="/login" />}
             />
 
             <Route

@@ -10,19 +10,21 @@ const ZoomCard = (props) => {
 
   return (
     <div className="modal-backdrop">
-      <div className="zoom-body">
-        <div
-          className="zoom-card"
-          style={{
-            backgroundImage: `url(${image})`,
-          }}
-        >
-          <button
-            className="collapseSelected zoom-close"
-            onClick={() => props.closeZoom()}
+      <div className="modal-backdrop">
+        <div className="zoom-body">
+          <div
+            className="zoom-card"
+            style={{
+              backgroundImage: `url(${image})`,
+            }}
           >
-            X
-          </button>
+            <button
+              className="collapseSelected zoom-close"
+              onClick={() => props.closeZoom()}
+            >
+              X
+            </button>
+          </div>
         </div>
       </div>
     </div>

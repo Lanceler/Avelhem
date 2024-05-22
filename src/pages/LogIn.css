@@ -81,7 +81,6 @@
 .login-box form{
     position: absolute;
     inset: 4px;
-    /* background: rgb(175, 40, 40); */
     background-image: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
     padding: 50px 40px;
     border-radius: 8px;
@@ -117,7 +116,6 @@
     letter-spacing: 0.05em;
     transition: 0.5s;
     z-index: 10;
-
 }
 
 .login-box form .login-input span {

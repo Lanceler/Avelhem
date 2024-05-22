@@ -12,10 +12,6 @@ const ARAvelhemCard = (props) => {
 
   const [isClicked, setIsClicked] = useState(false);
 
-  // useEffect(() => {
-  //   setIsClicked(false);
-  // }, []);
-
   const handleClick = () => {
     if (!isClicked) {
       setIsClicked(true);

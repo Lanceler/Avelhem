@@ -4,13 +4,13 @@ import "./MyRepertoires.css";
 import "./Repertoire.css";
 
 import { useParams, useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
-
-import { useCardDatabase } from "../hooks/useCardDatabase";
 
 import { useAuthContext } from "../hooks/useAuthContext";
 import { db } from "../config/firebaseConfig";
+
 import { AnimatePresence } from "framer-motion";
+
+import { useCardDatabase } from "../hooks/useCardDatabase";
 
 import Loading from "../components/modals/Loading";
 
@@ -29,7 +29,6 @@ import CPSkillCard from "../components/createRepertoire/CPSkillCard";
 import SRSkillCard from "../components/createRepertoire/SRSkillCard";
 import CPAvelhemCard from "../components/createRepertoire/CPAvelhemCard";
 import ARAvelhemCard from "../components/createRepertoire/ARAvelhemCard";
-import DisplayedCard from "../components/displays/DisplayedCard";
 
 export default function Repertoire() {
   //   const params = useParams();  // destructure instead
@@ -45,9 +44,8 @@ export default function Repertoire() {
   const [avelhemRepertoire, setAvelhemRepertoire] = useState([]);
 
   const [repertoireName, setRepertoireName] = useState("");
+  const [repertoireDescription, setRepertoireDescription] = useState("");
   const [saveError, setSaveError] = useState("");
-
-  const [displayCard, setDisplayCard] = useState(null);
 
   const navigate = useNavigate();
 
@@ -137,63 +135,6 @@ export default function Repertoire() {
     return skillIndexes;
   };
 
-  //---Realtime data functionality below
-  const userInfoRef = query(
-    collection(db, "userInfo"),
-    where("userId", "==", user.uid)
-  );
-
-  const [documentId, setDocumentId] = useState(null);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    setIsLoading(true);
-    getDocs(userInfoRef)
-      .then((snapshot) => {
-        if (snapshot.empty) {
-          throw new Error("No user found");
-        } else {
-          const UserDoc = snapshot.docs[0];
-          setDocumentId(UserDoc.data().id);
-
-          setIsLoading(false);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        setIsLoading(false);
-      });
-  }, []);
-
-  const [userData, setUserData] = useState(null);
-
-  useEffect(() => {
-    let unsubscribe;
-    if (documentId) {
-      let documentRef = doc(db, "userInfo", documentId);
-
-      unsubscribe = onSnapshot(documentRef, (docSnapshot) => {
-        if (docSnapshot.exists()) {
-          setUserData(docSnapshot.data());
-          console.log("Change!");
-        } else {
-          console.log("Document does not exist");
-        }
-      });
-    }
-
-    return () => unsubscribe?.();
-  }, [documentId]);
-
-  useEffect(() => {
-    if (userData) {
-      handleReloadAvelhem();
-      handleReloadSkill();
-    }
-  }, [userData]);
-
-  //---Realtime data functionality above
-
   const handleClearAvelhem = () => {
     let newCardPool = [...avelhemCardPool];
     for (let i = avelhemRepertoire.length - 1; i >= 0; i--) {
@@ -275,16 +216,20 @@ export default function Repertoire() {
     setSkillCardPool(newCardPool);
   };
 
-  const handleSave = async () => {
-    const repertoireNameTrimmed = repertoireName.trim();
+  const handleSave = async (e) => {
+    e.preventDefault();
 
-    if (
-      repertoireNameTrimmed.length > 40 ||
-      hasSpecialCharacter(repertoireNameTrimmed)
-    ) {
+    const hasSpecialCharacter = (inputString) => {
+      const specialCharacterRegex = /[!@#$%^&*(),.?":{}|<>]/;
+      return specialCharacterRegex.test(inputString);
+    };
+
+    if (repertoireName.length > 30 || hasSpecialCharacter(repertoireName)) {
       setSaveError(
-        "Repertoire name must have a length of 40 or less and contain no special characters."
+        "Repertoire name must have a length of 30 characters or less and contain no special characters."
       );
+    } else if (repertoireDescription.length > 150) {
+      setSaveError("Description must have a length of 150 characters or less.");
     } else if (
       skillRepertoire.length !== 60 ||
       avelhemRepertoire.length !== 20
@@ -313,10 +258,13 @@ export default function Repertoire() {
           }
         })
         .then(() => {
+          console.log("EDITED");
           const updatedRepertoire = [...results.repertoire];
 
           updatedRepertoire[id].avelhemRepertoire = getAvelhemIndexes();
           updatedRepertoire[id].skillRepertoire = getSkillIndexes();
+          updatedRepertoire[id].name = repertoireName;
+          updatedRepertoire[id].description = repertoireDescription;
 
           const userDoc = doc(db, "userInfo", results.id);
           updateDoc(userDoc, { repertoire: updatedRepertoire });
@@ -331,25 +279,125 @@ export default function Repertoire() {
     }
   };
 
-  function hasSpecialCharacter(inputString) {
-    const specialCharacterRegex = /[!@#$%^&*(),.?":{}|<>]/;
-    return specialCharacterRegex.test(inputString);
-  }
+  //---Realtime data functionality below
+  const userInfoRef = query(
+    collection(db, "userInfo"),
+    where("userId", "==", user.uid)
+  );
+
+  const [documentId, setDocumentId] = useState(null);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    setIsLoading(true);
+    getDocs(userInfoRef)
+      .then((snapshot) => {
+        if (snapshot.empty) {
+          throw new Error("No user found");
+        } else {
+          const UserDoc = snapshot.docs[0];
+          setDocumentId(UserDoc.data().id);
+
+          setIsLoading(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsLoading(false);
+      });
+  }, []);
+
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    let unsubscribe;
+    if (documentId) {
+      let documentRef = doc(db, "userInfo", documentId);
+
+      unsubscribe = onSnapshot(documentRef, (docSnapshot) => {
+        if (docSnapshot.exists()) {
+          setUserData(docSnapshot.data());
+          console.log("Change!");
+        } else {
+          console.log("Document does not exist");
+        }
+      });
+    }
+
+    return () => unsubscribe?.();
+  }, [documentId]);
+
+  useEffect(() => {
+    if (userData) {
+      if (![0, 1, 2].includes(id * 1)) {
+        console.log(id);
+        navigate("/repertoires");
+      } else {
+        handleReloadAvelhem();
+        handleReloadSkill();
+        setRepertoireName(userData.repertoire[id].name);
+        setRepertoireDescription(userData.repertoire[id].description);
+      }
+    }
+  }, [userData]);
+
+  //---Realtime data functionality above
 
   return (
     <div>
-      <div>Repertoire: {id}</div>
-      {userData && userData.repertoire[id].name}
+      {/* <div>Repertoire: {id}</div>
+      {userData && userData.repertoire[id].name} */}
+
+      <div className="repertoire-input-box">
+        <form>
+          <div className="repertoire-input">
+            <input
+              className="repertoire-input-name"
+              required
+              type="text"
+              onChange={(e) => setRepertoireName(e.target.value)}
+              value={repertoireName}
+              placeholder="Repertoire Name (Max. 30 characters)"
+            />
+
+            {/* <span>Repertoire Name</span> */}
+            <i></i>
+          </div>
+
+          <div className="repertoire-input">
+            <textarea
+              className="repertoire-input-desc"
+              required
+              type="text"
+              onChange={(e) => setRepertoireDescription(e.target.value)}
+              value={repertoireDescription}
+              placeholder="Description (Max. 150 characters)"
+            />
+          </div>
+
+          <button
+            className="repertoire-button repertoire-save"
+            // onClick={() => handleSave()}
+            onClick={handleSave}
+          >
+            Save
+          </button>
+
+          {saveError && (
+            <div className="repertoire-save-error">{saveError}</div>
+          )}
+        </form>
+      </div>
 
       <br />
-      <Link to="/repertoires">
+      {/* <Link to="/repertoires">
         <button>Return</button>
       </Link>
 
-      <button onClick={() => handleSave()}>Save</button>
+      <button onClick={() => handleSave()}>Save</button> */}
 
       <div className="repertoire-body">
-        <div className="main-division">
+        <div className="repertoire-main-division">
           <div className="repertoire-division">
             <div className="repertoire-header">
               <div className="repertoire-text">
@@ -372,7 +420,10 @@ export default function Repertoire() {
             </div>
 
             <div className="avelhem-repertoire">
-              <AnimatePresence mode={"popLayout"}>
+              <AnimatePresence
+
+              // mode={"popLayout"}
+              >
                 {avelhemRepertoire.map((card, index) => (
                   <ARAvelhemCard
                     key={JSON.stringify({ c: card })}
@@ -401,9 +452,7 @@ export default function Repertoire() {
           </div>
         </div>
 
-        {/* rfgergergerg */}
-
-        <div className="main-division">
+        <div className="repertoire-main-division">
           <div className="repertoire-division">
             <div className="repertoire-header">
               <div className="repertoire-text">
@@ -426,7 +475,9 @@ export default function Repertoire() {
             </div>
 
             <div className="skill-repertoire repertoire-scrollable">
-              <AnimatePresence mode={"popLayout"}>
+              <AnimatePresence
+              // mode={"popLayout"}
+              >
                 {skillRepertoire.map((card, index) => (
                   <SRSkillCard
                     key={JSON.stringify({ c: card })}
