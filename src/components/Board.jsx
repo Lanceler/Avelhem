@@ -471,15 +471,16 @@ const Board = (props) => {
 
     switch (option) {
       case "Info":
-        // setUnitInfor(expandedUnit);
+        setUnitInfor(expandedUnit);
 
-        //for testing: quick movement
-        enterMoveMode(
-          getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
-          expandedUnit,
-          newGameState,
-          null
-        );
+        // //for testing: quick movement
+        // enterMoveMode(
+        //   getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
+        //   expandedUnit,
+        //   newGameState,
+        //   null
+        // );
+        // //for testing: quick movement
         break;
 
       case "Tactic":
@@ -5246,35 +5247,37 @@ const Board = (props) => {
     <>
       {zones && localGameState && (
         <div>
-          Turn Player: {localGameState.turnPlayer}
-          <br />
-          Turn Count: {localGameState.turnCount}
-          <br />
-          Phase: {localGameState.turnPhase}
-          <br />
-          Resolution:{" "}
-          {localGameState.currentResolution.length > 0 && (
-            <>
-              {
-                localGameState.currentResolution[
-                  localGameState.currentResolution.length - 1
-                ].resolution
-              }
-            </>
-          )}
-          <br />
-          Resolution:{" "}
-          {localGameState.currentResolution.length > 0 && (
-            <>
-              {
-                localGameState.currentResolution[
-                  localGameState.currentResolution.length - 1
-                ].resolution2
-              }
-            </>
-          )}
-          <br />
-          {/* {JSON.stringify(tileMode)} {validZones.length} */}
+          <div className="abilityText">
+            Turn Player: {localGameState.turnPlayer}
+            <br />
+            Turn Count: {localGameState.turnCount}
+            <br />
+            Phase: {localGameState.turnPhase}
+            <br />
+            Resolution:{" "}
+            {localGameState.currentResolution.length > 0 && (
+              <>
+                {
+                  localGameState.currentResolution[
+                    localGameState.currentResolution.length - 1
+                  ].resolution
+                }
+              </>
+            )}
+            <br />
+            Resolution:{" "}
+            {localGameState.currentResolution.length > 0 && (
+              <>
+                {
+                  localGameState.currentResolution[
+                    localGameState.currentResolution.length - 1
+                  ].resolution2
+                }
+              </>
+            )}
+            <br />
+            {/* {JSON.stringify(tileMode)} {validZones.length} */}
+          </div>
           {!localGameState.turnPlayer && self === "host" && (
             <SelectFirstPlayer onSetFirstPlayer={onSetFirstPlayer} />
           )}

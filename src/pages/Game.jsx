@@ -180,11 +180,15 @@ export default function Game() {
 
     switch (playerSituation) {
       case 0:
-        return <div>Waiting</div>;
+        return (
+          <div className="abilityText">
+            Waiting... Copy the URL and send it to a friend to play with them.
+          </div>
+        );
       case 1:
         return (
           <>
-            <div>Role: {userRole}</div>
+            <div className="abilityText">Role: {userRole}</div>
             <Board
               gameState={gameData.gameState}
               gameId={gameData.id}
@@ -199,7 +203,9 @@ export default function Game() {
       case 1.6:
         return (
           <>
-            <div>Waiting for opponent to select repertoire</div>
+            <div className="abilityText">
+              Waiting for opponent to select repertoire
+            </div>
           </>
         );
 
@@ -210,9 +216,9 @@ export default function Game() {
           </>
         );
       case 3:
-        return <div>Spectate?</div>;
+        return <div className="abilityText">Spectate?</div>;
       default:
-        return <div>Spectate?</div>;
+        return <div className="abilityText">Spectate?</div>;
     }
   };
 
@@ -222,8 +228,10 @@ export default function Game() {
     <>
       {/* <div>Game</div> */}
       {/* {gameId && <div>Game Id: {gameId}</div>} */}
-      {gameData && <div>Creator: {gameData.hostName}</div>}
-      {error && <div>Error: {error}</div>}
+      {gameData && (
+        <div className="abilityText">Creator: {gameData.hostName}</div>
+      )}
+      {error && <div className="abilityText">Error: {error}</div>}
       {readgameState()}
       {isLoading && <Loading />}
     </>

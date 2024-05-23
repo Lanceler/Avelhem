@@ -118,8 +118,14 @@ export default function MyGames() {
 
   return (
     <>
-      <div>MyGames</div>
-      <button onClick={() => onCreateGame()}>Create Game</button>
+      <div className="abilityText">
+        This page is under construction. For the time being, press the button
+        below to start a new game.
+      </div>
+      <br />
+      <button className="choiceButton noYes" onClick={() => onCreateGame()}>
+        Create Game
+      </button>
     </>
   );
 }

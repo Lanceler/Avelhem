@@ -544,3 +544,113 @@ margin-bottom: 30px;
     align-items: center;
     min-height: 100vh;
 }
+
+
+
+.unitInfoModal{
+    padding: 30px;
+        height: 650px;
+        width: 740px;
+        /* max-width: 850px; */
+        margin: 100px auto;
+        background: rgba(132, 0, 255, 0.411);
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        /* justify-content: flex-end; */
+}
+
+.unitInfoHeader{
+position: relative;
+display: flex;
+background: rgba(229, 255, 0, 0.411);
+
+
+}
+
+.unitInfo-close {
+    position: absolute;
+    z-index: 300;
+    margin: 5px;
+    right: 0
+}
+
+.unitInfo-icon {
+    /* object-fit: cover; */
+    width: 80px;
+    height: 80px;
+    /* position: absolute; */
+    z-index: 3;
+}
+
+.unitInfo-name{
+        color: rgb(0, 0, 0);
+        font-family: "Times New Roman", Times, serif;
+        font-size: 45px;
+        line-height: 135%;
+        padding: 10px 15px;
+}
+
+.unitInfo-Abilities-Attributes{
+    margin-top: 10px;
+    position: relative;
+    display: flex;
+    background: rgba(229, 255, 0, 0.411);
+    height: 280px;
+}
+
+.unitInfo-Abilities {
+    margin: 10px;
+    padding: 7px;
+    position: relative;
+
+    background: rgba(255, 0, 0, 0.411);
+    width: 350px;
+    
+        scrollbar-color: rgb(255, 168, 7) rgba(92, 63, 52, 0);
+        scrollbar-width: thin;
+}
+
+.unitInfo-Attributes {
+    margin: 10px;
+    padding: 7px;
+    position: relative;
+
+    background: rgba(0, 255, 115, 0.411);
+    width: 350px;
+    
+        scrollbar-color: rgb(255, 168, 7) rgba(92, 63, 52, 0);
+        scrollbar-width: thin;
+}
+
+.unitInfo-Talents-Statuses {
+    margin-top: 10px;
+    position: relative;
+    display: flex;
+    background: rgba(229, 255, 0, 0.411);
+    height: 280px;
+}
+
+.unitInfo-Talents {
+    margin: 10px;
+    padding: 7px;
+    position: relative;
+
+    background: rgba(255, 0, 0, 0.411);
+    width: 350px;
+
+        scrollbar-color: rgb(255, 168, 7) rgba(92, 63, 52, 0);
+            scrollbar-width: thin;
+}
+
+.unitInfo-Statuses {
+    margin: 10px;
+    padding: 7px;
+    position: relative;
+
+    background: rgba(0, 255, 115, 0.411);
+    width: 350px;
+    
+        scrollbar-color: rgb(255, 168, 7) rgba(92, 63, 52, 0);
+        scrollbar-width: thin;
+}

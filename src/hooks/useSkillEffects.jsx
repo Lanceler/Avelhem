@@ -1830,7 +1830,7 @@ export const useSkillEffects = () => {
         unit: unit,
         details: {
           title: "Diffusion",
-          message: "You may spend 1 skill to gain Shield for 3 turns.",
+          message: "You may spend 1 skill to gain Shield for 2 turns.",
           restriction: null,
           reason: "Diffusion Shield",
         },
@@ -1849,7 +1849,7 @@ export const useSkillEffects = () => {
 
     unit.enhancements.shield
       ? (unit.enhancements.shield = Math.max(3, unit.enhancements.shield))
-      : (unit.enhancements.shield = 3);
+      : (unit.enhancements.shield = 2);
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 

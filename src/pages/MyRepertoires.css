@@ -32,7 +32,6 @@
     /* horizontal alignment */
     display: flex;
     flex-direction: column;
-
 }
 
 
@@ -52,24 +51,15 @@
     /* overflow-wrap: break-word; */
     text-overflow: ellipsis;
     overflow: hidden;
-    
-
     margin-bottom: 25px;
-
-
 }
-
-
 
 .repertoire-desc {
     font-size: 24px;
     flex-grow: 1;
     overflow-wrap: break-word;
-
     scrollbar-color: rgb(255, 168, 7) rgba(92, 63, 52, 0);
     scrollbar-width: thin
-
-
 }
 
 .repertoire-link{

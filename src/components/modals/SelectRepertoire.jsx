@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./Modal.css";
 
+import GoldFrame from "../../assets/others/GoldFrame.png";
+
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { db } from "../../config/firebaseConfig";
 
@@ -71,13 +73,30 @@ export default function SelectRepertoire(props) {
       <div className="modal">
         <h1>Select your repertoire.</h1>
 
-        <div>
+        <div className="threeColumn">
           {repertoireList &&
             repertoireList.map((rep, index) => (
-              <div key={index}>
-                <button onClick={() => props.onSelectRepertoire(rep)}>
-                  {rep.name}
-                </button>
+              // <div key={index}>
+              //   <button onClick={() => props.onSelectRepertoire(rep)}>
+              //     {rep.name}
+              //   </button>
+              // </div>
+
+              <div
+                key={index}
+                className="customChoice"
+                style={{ backgroundImage: `url(${GoldFrame})` }}
+                onClick={() => props.onSelectRepertoire(rep)}
+              >
+                <div className="repertoire-frame">
+                  <div className="repertoire-text repertoire-name">
+                    <h3>{rep.name}</h3>
+                  </div>
+
+                  <div className="repertoire-text repertoire-desc repertoire-scrollable">
+                    {rep.description}
+                  </div>
+                </div>
               </div>
             ))}
         </div>

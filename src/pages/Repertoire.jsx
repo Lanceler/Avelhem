@@ -228,8 +228,8 @@ export default function Repertoire() {
       setSaveError(
         "Repertoire name must have a length of 30 characters or less and contain no special characters."
       );
-    } else if (repertoireDescription.length > 150) {
-      setSaveError("Description must have a length of 150 characters or less.");
+    } else if (repertoireDescription.length > 200) {
+      setSaveError("Description must have a length of 200 characters or less.");
     } else if (
       skillRepertoire.length !== 60 ||
       avelhemRepertoire.length !== 20
@@ -317,7 +317,7 @@ export default function Repertoire() {
       unsubscribe = onSnapshot(documentRef, (docSnapshot) => {
         if (docSnapshot.exists()) {
           setUserData(docSnapshot.data());
-          console.log("Change!");
+          console.log("Data was updated");
         } else {
           console.log("Document does not exist");
         }
@@ -371,7 +371,7 @@ export default function Repertoire() {
               type="text"
               onChange={(e) => setRepertoireDescription(e.target.value)}
               value={repertoireDescription}
-              placeholder="Description (Max. 150 characters)"
+              placeholder="Description (Max. 200 characters)"
             />
           </div>
 

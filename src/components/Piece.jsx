@@ -14,7 +14,6 @@ import ParalysisGif from "../assets/attributeIcons/ParalysisGif.gif";
 import RootGif from "../assets/attributeIcons/RootGif.gif";
 
 import Ambidexterity from "../assets/others/Ambidexterity.png";
-import Crosshair from "../assets/others/Crosshair.png";
 
 import { useRecurringEffects } from "../hooks/useRecurringEffects";
 
@@ -87,7 +86,8 @@ export const Piece = (props) => {
       ) {
         props.setExpandedUnit(null);
       } else {
-        props.setExpandedUnit(props.unit);
+        const unitCopy = JSON.parse(JSON.stringify(props.unit));
+        props.setExpandedUnit(unitCopy);
       }
     }
   };

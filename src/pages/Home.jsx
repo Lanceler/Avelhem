@@ -9,5 +9,20 @@ export default function Home() {
 
   const { user } = useAuthContext();
 
-  return <div>Hello, {user.displayName}</div>;
+  return (
+    <>
+      <div className="abilityText">Hello, {user.displayName}</div>
+      <br />
+      <div className="abilityText">
+        This page (and the website in general) is under construction.
+      </div>
+      <div className="abilityText">
+        To get started with a game, click on "My Games" in the navigation bar
+        above.
+      </div>
+      <div className="abilityText">
+        You may also view your repertoires by clicking on "My Repertoires".
+      </div>
+    </>
+  );
 }
