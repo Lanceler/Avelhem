@@ -145,13 +145,14 @@ const SelectCustomChoice = (props) => {
       ChoiceSecondMessage = "Strike.";
       break;
 
-    case "Arc Flash1":
+    // case "Arc Flash1":
     case "Arc Flash3":
       canSkip = true;
       canFirstChoice = canMove(unit);
       canSecondChoice = canStrike(unit);
       ChoiceFirstMessage = "Traverse.";
       ChoiceSecondMessage = "Strike.";
+      break;
 
     case "Surge2":
       canSkip = true;
@@ -507,31 +508,31 @@ const SelectCustomChoice = (props) => {
         }
         break;
 
-      case "Arc Flash1":
-        if (selectedChoice === 1) {
-          newGameState.currentResolution.push({
-            resolution: "Unit Ability",
-            resolution2: "Arc Flash2",
-            unit: unit,
-          });
+      // case "Arc Flash1":
+      //   if (selectedChoice === 1) {
+      //     newGameState.currentResolution.push({
+      //       resolution: "Unit Ability",
+      //       resolution2: "Arc Flash2",
+      //       unit: unit,
+      //     });
 
-          props.enterMoveMode(
-            getVacantAdjacentZones(unit),
-            unit,
-            newGameState,
-            null
-          );
-        } else {
-          enterSelectUnitMode(
-            getZonesWithEnemies(unit, 1),
-            unit,
-            newGameState,
-            null,
-            "strike",
-            null
-          );
-        }
-        break;
+      //     props.enterMoveMode(
+      //       getVacantAdjacentZones(unit),
+      //       unit,
+      //       newGameState,
+      //       null
+      //     );
+      //   } else {
+      //     enterSelectUnitMode(
+      //       getZonesWithEnemies(unit, 1),
+      //       unit,
+      //       newGameState,
+      //       null,
+      //       "strike",
+      //       null
+      //     );
+      //   }
+      //   break;
 
       case "Arc Flash3":
         if (selectedChoice === 1) {

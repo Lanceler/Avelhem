@@ -208,6 +208,181 @@ const UnitInfo = (props) => {
     }
   };
 
+  const talents = () => {
+    switch (unit.unitClass) {
+      case "Pawn":
+        return (
+          <>
+            <p className="unitInfo-text-heading2">1. Apotheosis </p>
+            <p className="unitInfo-text-desc unitInfo-text-last">
+              ⬩You can ascend to a Scion.
+            </p>
+
+            <p className="unitInfo-text-heading2">2. Outclassed</p>
+            <p className="unitInfo-text-desc">⬩You cannot Virtue-blast.</p>
+          </>
+        );
+
+      case "Fire Scion":
+        return (
+          <>
+            <p className="unitInfo-text-heading2">1. Flash Fire</p>
+            <p className="unitInfo-text-desc unitInfo-text-last">
+              ⬩Upon your debut, gain 2 Fevers (Max. 2) or spend 1 skill to
+              recover then float 1 non-burst Fire skill.
+            </p>
+
+            <p className="unitInfo-text-heading2">2. Eternal Ember</p>
+            <p className="unitInfo-text-desc">
+              ⬩You are immune to Frostbite and Burn.
+            </p>
+            <p className="unitInfo-text-desc unitInfo-text-last">
+              ⬩At the start of your Execution Phase, gain 1 Fever (Max. 2).
+            </p>
+          </>
+        );
+
+      case "Water Scion":
+        return (
+          <>
+            <p className="unitInfo-text-heading2">1. Kleptothermy</p>
+            <p className="unitInfo-text-desc unitInfo-text-last">
+              ⬩Upon your debut, restore your or an adjacent ally’s Virtue.
+              Alternatively, purge an adjacent enemy’s Virtue; this cannot
+              affect Water Scions.
+            </p>
+
+            <p className="unitInfo-text-heading2">2. Clear as Crystal</p>
+            <p className="unitInfo-text-desc">
+              ⬩You are immune to Frostbite and Burn.
+            </p>
+            <p className="unitInfo-text-desc unitInfo-text-last">
+              ⬩Your attacks against frostbitten enemies bypass Shield.
+            </p>
+          </>
+        );
+
+      case "Wind Scion":
+        return (
+          <>
+            <p className="unitInfo-text-heading2">1. Second Wind</p>
+            <p className="unitInfo-text-desc unitInfo-text-last">
+              ⬩Upon your elimination, you may recover then float 1 non-burst
+              Wind skill.
+            </p>
+
+            <p className="unitInfo-text-heading2">2. Soundproof</p>
+            <p className="unitInfo-text-desc unitInfo-text-last">
+              ⬩Your and your adjacent allies’ skills bypass “Symphonic Screech”.
+            </p>
+          </>
+        );
+
+      case "Land Scion":
+        return (
+          <>
+            <p className="unitInfo-text-heading2">1. Mountain Stance</p>
+            <p className="unitInfo-text-desc unitInfo-text-last">
+              ⬩Upon your debut, gain a boost: you can use{" "}
+              <span className="unitInfo-tactic-group2">
+                <img src={InvokeSmall} className="unitInfo-tactic-icon2" />
+              </span>{" "}
+              to activate “Fortify”. Alternatively, spend 1 skill to search for
+              1 “Crystallization”.
+            </p>
+
+            <p className="unitInfo-text-heading2">2. Earthen Safeguard</p>
+            <p className="unitInfo-text-desc">⬩You are immune to Root.</p>
+            <p className="unitInfo-text-desc unitInfo-text-last">
+              ⬩If your HP is above 1, you are immune to Paralysis.
+            </p>
+          </>
+        );
+
+      case "Lightning Scion":
+        return (
+          <>
+            <p className="unitInfo-text-heading2">1. Lightning Rod</p>
+            <p className="unitInfo-text-desc unitInfo-text-last">
+              ⬩Upon your debut, you may spend 1 skill to gain 1 Charge (Max. 3).
+            </p>
+
+            <p className="unitInfo-text-heading2">2. Defibrillation</p>
+            <p className="unitInfo-text-desc ">⬩You are immune to Frostbite.</p>
+            <p className="unitInfo-text-desc unitInfo-text-last">
+              ⬩If you have 3 Charges, you are immune to Paralysis.
+            </p>
+          </>
+        );
+
+      case "Mana Scion":
+        return (
+          <>
+            <p className="unitInfo-text-heading2">1. Ambiance Assimilation</p>
+            <p className="unitInfo-text-desc unitInfo-text-last">
+              ⬩Upon your elimination, you may search for 1 non-burst Mana skill.
+            </p>
+
+            <p className="unitInfo-text-heading2">2. Mana Restructure</p>
+            <p className="unitInfo-text-desc unitInfo-text-last">
+              ⬩When you and your adjacent allies spend a Mana skill, you may
+              recover then float it.
+            </p>
+          </>
+        );
+
+      case "Metal Scion":
+        return (
+          <>
+            <p className="unitInfo-text-heading2">1. Conduction</p>
+            <p className="unitInfo-text-desc unitInfo-text-last">
+              ⬩Upon your debut, you may search for then float 1 “Magnetic
+              Shockwave”.
+            </p>
+
+            <p className="unitInfo-text-heading2">
+              2. Adamant Armor (One-shot)
+            </p>
+            <p className="unitInfo-text-desc unitInfo-text-last">
+              ⬩
+              <em>
+                You may activate when targeted via Virtue-blast, strike, or
+                paralyze.
+              </em>{" "}
+              Spend 1 skill to reduce the attack’s AP by 1 or negate the
+              affliction.
+            </p>
+
+            <p className="unitInfo-text-heading2">3. Penetrator</p>
+            <p className="unitInfo-text-desc ">
+              ⬩Your attacks gain 1 AP for each Sharpness you have.
+            </p>
+            <p className="unitInfo-text-desc unitInfo-text-last">
+              ⬩If you have 2 Sharpness, your strikes bypass Shield.
+            </p>
+          </>
+        );
+
+      case "Plant Scion":
+        return (
+          <>
+            <p className="unitInfo-text-heading2">1. Everblooming</p>
+            <p className="unitInfo-text-desc unitInfo-text-last">
+              ⬩Upon your elimination, you may draw 1 skill.
+            </p>
+
+            <p className="unitInfo-text-heading2">2. Flora’s Reverence</p>
+            <p className="unitInfo-text-desc ">
+              ⬩You can spend Blossoms in lieu of skills.
+            </p>
+            <p className="unitInfo-text-desc unitInfo-text-last">
+              ⬩You are immune to Root.
+            </p>
+          </>
+        );
+    }
+  };
+
   return (
     <div className="modal-backdrop unitInfo-text">
       <div className="unitInfoModal">
@@ -226,59 +401,71 @@ const UnitInfo = (props) => {
         </div>
 
         <div className="unitInfo-Abilities-Attributes">
-          <div className="unitInfo-Abilities scrollable">
+          <div className="unitInfo-Abilities  ">
             <p className="unitInfo-text-heading1">
               <u>
                 <strong>Abilities</strong>
               </u>
             </p>
-            <>{abilities()}</>
+            <div className="unitInfo-scroll scrollable">{abilities()}</div>
           </div>
-          <div className="unitInfo-Attributes scrollable">
+
+          <div className="unitInfo-Attributes">
             <p className="unitInfo-text-heading1">
               <u>
                 <strong>Attributes</strong>
               </u>
             </p>
 
-            {!unit.enhancements.score && (
-              <>
-                <p className="unitInfo-text-heading2">HP: {unit.hp}</p>
-                <p className="unitInfo-text-heading2">
-                  Virtue: {unit.virtue ? "Present" : "Absent"}
-                </p>
-                {unit.fever && (
-                  <p className="unitInfo-text-heading2">Fever: {unit.fever}</p>
-                )}
-                {unit.charge && (
+            <div className="unitInfo-scroll scrollable">
+              {!unit.enhancements.score && (
+                <>
+                  <p className="unitInfo-text-heading2">HP: {unit.hp}</p>
                   <p className="unitInfo-text-heading2">
-                    Charge: {unit.charge}
+                    Virtue: {unit.virtue ? "Present" : "Absent"}
                   </p>
-                )}
-                {unit.sharpness && (
-                  <p className="unitInfo-text-heading2">
-                    Sharpness: {unit.sharpness}
-                  </p>
-                )}
-                {unit.blossom && (
-                  <p className="unitInfo-text-heading2">
-                    Blossom: {unit.blossom}
-                  </p>
-                )}
-              </>
-            )}
+                  {unit.fever && (
+                    <p className="unitInfo-text-heading2">
+                      Fever: {unit.fever}
+                    </p>
+                  )}
+                  {unit.charge && (
+                    <p className="unitInfo-text-heading2">
+                      Charge: {unit.charge}
+                    </p>
+                  )}
+                  {unit.sharpness && (
+                    <p className="unitInfo-text-heading2">
+                      Sharpness: {unit.sharpness}
+                    </p>
+                  )}
+                  {unit.blossom && (
+                    <p className="unitInfo-text-heading2">
+                      Blossom: {unit.blossom}
+                    </p>
+                  )}
+                </>
+              )}
 
-            {unit.enhancements.score && (
-              <>
-                <p className="unitInfo-text-heading2">This unit has scored.</p>
-              </>
-            )}
+              {unit.enhancements.score && (
+                <>
+                  <p className="unitInfo-text-heading2">
+                    This unit has scored.
+                  </p>
+                </>
+              )}
+            </div>
           </div>
         </div>
 
         <div className="unitInfo-Talents-Statuses">
-          <div className="unitInfo-Talents scrollable">
-            <h3>Talents</h3>
+          <div className="unitInfo-Talents ">
+            <p className="unitInfo-text-heading1">
+              <u>
+                <strong>Talents</strong>
+              </u>
+            </p>
+            <div className="unitInfo-scroll scrollable">{talents()}</div>
           </div>
           <div className="unitInfo-Statuses scrollable">
             {(unit.enhancements.ravager ||
@@ -506,12 +693,13 @@ const UnitInfo = (props) => {
                     <p className="unitInfo-text-heading2">Mountain Stance</p>
                     <p className="unitInfo-text-desc unitInfo-text-last">
                       ⬩Can activate “Fortify” by using{" "}
-                      <span className="unitInfo-tactic-group">
+                      <span className="unitInfo-tactic-group2">
                         <img
                           src={InvokeSmall}
                           className="unitInfo-tactic-icon2"
                         />
                       </span>
+                      .
                     </p>
                   </>
                 )}

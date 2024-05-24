@@ -231,13 +231,10 @@ const SelectUnitAbility = (props) => {
           abilityText: (
             <>
               <div className="abilityText ">
-                ⬩Spend 3 Charges to inspect 3 skills; you may float 1 Lightning
-                skill among them.
+                ⬩Spend 3 Charges to search for then float 1 Lightning skill.
               </div>
+              <div className="abilityText ">⬩You may traverse.</div>
               <div className="abilityText ">⬩You may traverse or strike.</div>
-              <div className="abilityText ">
-                ⬩If you chose to traverse, you may traverse again or strike.
-              </div>
             </>
           ),
         },

@@ -553,7 +553,7 @@ margin-bottom: 30px;
         width: 740px;
         /* max-width: 850px; */
         margin: 100px auto;
-        background: rgba(132, 0, 255, 0.411);
+        background: rgba(255, 255, 255, 0.8);
         border-radius: 10px;
         display: flex;
         flex-direction: column;
@@ -563,7 +563,7 @@ margin-bottom: 30px;
 .unitInfoHeader{
 position: relative;
 display: flex;
-background: rgba(229, 255, 0, 0.411);
+/* background: rgba(229, 255, 0, 0.411); */
 
 
 }
@@ -597,7 +597,7 @@ background: rgba(229, 255, 0, 0.411);
     display: flex;
     gap: 1rem;
 
-    background: rgba(229, 255, 0, 1);
+    /* background: rgba(229, 255, 0, 1); */
     height: 280px;
 }
 
@@ -605,21 +605,21 @@ background: rgba(229, 255, 0, 0.411);
     padding: 7px;
     position: relative;
 
-    background: rgb(197, 44, 44);
+    /* background: rgb(197, 44, 44); */
     width: 350px;
     
-        scrollbar-color: rgb(255, 168, 7) rgba(92, 63, 52, 0);
-        scrollbar-width: thin;
+    scrollbar-color: rgb(255, 168, 7) rgba(92, 63, 52, 0);
+    scrollbar-width: thin;
 }
 
 .unitInfo-Attributes {
     padding: 7px;
     position: relative;
-    background: rgba(70, 236, 145, 0.822);
+    /* background: rgba(70, 236, 145, 0.822); */
     width: 350px;
     
-        scrollbar-color: rgb(255, 168, 7) rgba(92, 63, 52, 0);
-        scrollbar-width: thin;
+    scrollbar-color: rgb(255, 168, 7) rgba(92, 63, 52, 0);
+    scrollbar-width: thin;
 }
 
 .unitInfo-Talents-Statuses {
@@ -627,7 +627,7 @@ background: rgba(229, 255, 0, 0.411);
     position: relative;
     display: flex;
     gap: 1rem;
-    background: rgba(229, 255, 0, 0.411);
+    /* background: rgba(229, 255, 0, 0.411); */
     height: 280px;
 }
 
@@ -635,22 +635,33 @@ background: rgba(229, 255, 0, 0.411);
     padding: 7px;
     position: relative;
 
-    background: rgba(255, 0, 0, 0.411);
+    /* background: rgba(255, 0, 0, 0.411); */
     width: 350px;
 
-        scrollbar-color: rgb(255, 168, 7) rgba(92, 63, 52, 0);
-        scrollbar-width: thin;
+    /* scrollbar-color: rgb(255, 168, 7) rgba(92, 63, 52, 0);
+    scrollbar-width: thin; */
+}
+
+.unitInfo-scroll {
+    height: 80%;
+    /* background: rgba(255, 0, 0, 0.411); */
+
+    padding: 0;
+
+    scrollbar-color: rgb(255, 168, 7) rgba(92, 63, 52, 0);
+    scrollbar-width: thin;
+    position: relative;
 }
 
 .unitInfo-Statuses {
     padding: 7px;
     position: relative;
 
-    background: rgba(0, 255, 115, 0.411);
+    /* background: rgba(0, 255, 115, 0.411); */
     width: 350px;
     
-        scrollbar-color: rgb(255, 168, 7) rgba(92, 63, 52, 0);
-        scrollbar-width: thin;
+    scrollbar-color: rgb(255, 168, 7) rgba(92, 63, 52, 0);
+    scrollbar-width: thin;
 }
 
 
@@ -685,7 +696,11 @@ background: rgba(229, 255, 0, 0.411);
 
 .unitInfo-tactic-group {
     position: absolute;
+}
 
+.unitInfo-tactic-group2 {
+    position: relative;
+    top: 2px;
 }
 
 .unitInfo-tactic-icon{
@@ -695,8 +710,8 @@ background: rgba(229, 255, 0, 0.411);
 }
 
 .unitInfo-tactic-icon2 {
-    height: 24px;
-    margin: 2px 6px 0px;
+    height: 19px;
+    margin: 1.5px 1px 0px;
     filter: brightness(0%);
 }
 

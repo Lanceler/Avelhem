@@ -21,6 +21,7 @@ export const useUnitAbilityEffects = () => {
     getVacant2SpaceZones,
     getZonesWithAllies,
     getZonesWithEnemies,
+    isMuted,
   } = useRecurringEffects();
 
   const {} = useCardDatabase();
@@ -373,32 +374,48 @@ export const useUnitAbilityEffects = () => {
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
-    if (canMove(unit) || canStrike(unit)) {
+    newGameState.currentResolution.push({
+      resolution: "Unit Ability",
+      resolution2: "Arc Flash2",
+      unit: unit,
+    });
+
+    if (canMove(unit)) {
       newGameState.currentResolution.push({
         resolution: "Unit Ability",
         resolution2: "Arc Flash1",
-        player: self,
         unit: unit,
         details: {
+          reason: "Arc Flash",
           title: "Arc Flash",
-          reason: "Arc Flash1",
+          message: "You may traverse.",
+          no: "Skip",
+          yes: "Traverse",
         },
       });
     }
 
-    newGameState.currentResolution.push({
-      resolution: "Misc.",
-      resolution2: "Inspect Skill",
-      player: self,
+    // newGameState.currentResolution.push({
+    //   resolution: "Misc.",
+    //   resolution2: "Inspect Skill",
+    //   player: self,
 
-      details: {
-        restriction: ["05-01", "05-02", "05-03"],
-        outcome: "Float",
-        title: "Arc Flash",
-        message:
-          "Inspect 3 skills. You may float 1 Lightning skill among them.",
-        inspectionCount: 3,
-      },
+    //   details: {
+    //     restriction: ["05-01", "05-02", "05-03"],
+    //     outcome: "Float",
+    //     title: "Arc Flash",
+    //     message:
+    //       "Inspect 3 skills. You may float 1 Lightning skill among them.",
+    //     inspectionCount: 3,
+    //   },
+    // });
+
+    newGameState.currentResolution.push({
+      resolution: "Search Skill",
+      player: self,
+      restriction: ["05-01", "05-02", "05-03"],
+      message: "Search for then float 1 non-burst Lightning skill.",
+      outcome: "Float",
     });
 
     return newGameState;
@@ -411,7 +428,7 @@ export const useUnitAbilityEffects = () => {
     //end "Arc Flash2"
     newGameState.currentResolution.pop();
 
-    if (canMove(unit) || canStrike(unit)) {
+    if (unit && !isMuted(unit) && (canMove(unit) || canStrike(unit))) {
       newGameState.currentResolution.push({
         resolution: "Unit Ability",
         resolution2: "Arc Flash3",

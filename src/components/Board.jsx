@@ -336,6 +336,10 @@ const Board = (props) => {
 
       let unit = localGameState[unitInfo.player].units[unitInfo.unitIndex];
 
+      if (!unit) {
+        return;
+      }
+
       //host or spectator
       if (self !== "guest") {
         return {
@@ -365,6 +369,10 @@ const Board = (props) => {
         localGameState.activatingUnit[localGameState.activatingUnit.length - 1];
 
       let unit = localGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+      if (!unit) {
+        return;
+      }
 
       //host or spectator
       if (self !== "guest") {
@@ -1465,11 +1473,31 @@ const Board = (props) => {
 
           case "Activating Arc Flash":
             if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(arcFlash1(lastResolution.unit));
+              resolutionUpdate(arcFlash1(lastResolution.unit));
             }
             break;
 
           case "Arc Flash1":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMayNoYes
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                    enterMoveMode={enterMoveMode}
+                  />
+                )}
+              </>
+            );
+
+          case "Arc Flash2":
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(arcFlash2(lastResolution.unit));
+            }
+            break;
+
           case "Arc Flash3":
             return (
               <>
@@ -1484,12 +1512,6 @@ const Board = (props) => {
                 )}
               </>
             );
-
-          case "Arc Flash2":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(arcFlash2(lastResolution.unit));
-            }
-            break;
 
           case "Activating Particle Beam":
             if (self === lastResolution.unit.player) {
