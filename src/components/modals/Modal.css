@@ -595,16 +595,17 @@ background: rgba(229, 255, 0, 0.411);
     margin-top: 10px;
     position: relative;
     display: flex;
-    background: rgba(229, 255, 0, 0.411);
+    gap: 1rem;
+
+    background: rgba(229, 255, 0, 1);
     height: 280px;
 }
 
 .unitInfo-Abilities {
-    margin: 10px;
     padding: 7px;
     position: relative;
 
-    background: rgba(255, 0, 0, 0.411);
+    background: rgb(197, 44, 44);
     width: 350px;
     
         scrollbar-color: rgb(255, 168, 7) rgba(92, 63, 52, 0);
@@ -612,11 +613,9 @@ background: rgba(229, 255, 0, 0.411);
 }
 
 .unitInfo-Attributes {
-    margin: 10px;
     padding: 7px;
     position: relative;
-
-    background: rgba(0, 255, 115, 0.411);
+    background: rgba(70, 236, 145, 0.822);
     width: 350px;
     
         scrollbar-color: rgb(255, 168, 7) rgba(92, 63, 52, 0);
@@ -627,12 +626,12 @@ background: rgba(229, 255, 0, 0.411);
     margin-top: 10px;
     position: relative;
     display: flex;
+    gap: 1rem;
     background: rgba(229, 255, 0, 0.411);
     height: 280px;
 }
 
 .unitInfo-Talents {
-    margin: 10px;
     padding: 7px;
     position: relative;
 
@@ -640,11 +639,10 @@ background: rgba(229, 255, 0, 0.411);
     width: 350px;
 
         scrollbar-color: rgb(255, 168, 7) rgba(92, 63, 52, 0);
-            scrollbar-width: thin;
+        scrollbar-width: thin;
 }
 
 .unitInfo-Statuses {
-    margin: 10px;
     padding: 7px;
     position: relative;
 
@@ -653,4 +651,57 @@ background: rgba(229, 255, 0, 0.411);
     
         scrollbar-color: rgb(255, 168, 7) rgba(92, 63, 52, 0);
         scrollbar-width: thin;
+}
+
+
+.unitInfo-text{
+    color: black;
+    font-family: 'Times New Roman', Times, serif;
+    padding: 0px 5px;
+    margin: 0;
+}
+
+.unitInfo-text-heading1 {
+    font-family: 'Raleway, sans-serif', Times, serif;
+    font-size: 1.5em;
+    margin-bottom: 5px;
+}
+
+.unitInfo-text-heading2 {
+    font-family: 'Arial, sans-serif', Times, serif;
+    font-size: 1.05em;
+    margin: 0;
+    font-weight: 600;
+}
+
+.unitInfo-text-desc {
+    font-size: .925em;
+    margin-left: 10px;
+}
+
+.unitInfo-text-last{
+    margin-bottom: 8px;
+}
+
+.unitInfo-tactic-group {
+    position: absolute;
+
+}
+
+.unitInfo-tactic-icon{
+    height: 27.5px;
+    margin: 0px 8px;
+    filter: brightness(0%);
+}
+
+.unitInfo-tactic-icon2 {
+    height: 24px;
+    margin: 2px 6px 0px;
+    filter: brightness(0%);
+}
+
+.unitInfo-tactic-mobilize {
+    height: 27.5px;
+    margin: 0px -15px 0px 8px;
+    filter: brightness(0%);
 }

@@ -246,14 +246,6 @@ export const Piece = (props) => {
             </>
           )}
 
-          {props.unit.unitClass === "Wind Scion" && (
-            <>
-              {props.unit.boosts.galeConjuration === true && (
-                <div className="gale-conjuration" style={{ left: 29 }}></div>
-              )}
-            </>
-          )}
-
           {props.unit.unitClass === "Water Scion" && (
             <>
               {props.unit.boosts.glacialTorrent === 1 && (
@@ -264,6 +256,22 @@ export const Piece = (props) => {
                   <div className="glacial-torrent" style={{ left: 20 }}></div>
                   <div className="glacial-torrent" style={{ left: 38 }}></div>
                 </>
+              )}
+            </>
+          )}
+
+          {props.unit.unitClass === "Wind Scion" && (
+            <>
+              {props.unit.boosts.galeConjuration === true && (
+                <div className="gale-conjuration" style={{ left: 29 }}></div>
+              )}
+            </>
+          )}
+
+          {props.unit.unitClass === "Land Scion" && (
+            <>
+              {props.unit.boosts.mountainStance === true && (
+                <div className="mountain-stance" style={{ left: 29 }}></div>
               )}
             </>
           )}

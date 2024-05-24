@@ -596,6 +596,7 @@ export const useUnitAbilityEffects = () => {
 
     //Spend 1 Blossom
     unit.blossom -= 1;
+    unit.temporary.usedFlourish = true;
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 

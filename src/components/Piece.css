@@ -573,6 +573,19 @@ animation: moveUpDownHP 1.0s ease-in-out infinite;
             z-index: 5;
     }
 
+    
+.mountain-stance{
+        transform: rotate(45deg);
+        background: linear-gradient(22deg, #502000, #7e3707, #b1500f, #d3641a, #e97b31, #d8ffd8);
+        border: 0.5px solid #000000de;
+        height: 7.5px;
+        width: 7.5px;
+        position: absolute;
+        animation: moveUpDown 0.95s ease-in-out infinite;
+        pointer-events: none;
+            z-index: 5;
+    }
+
 .sharpness {
     transform: rotate(45deg);
     background: linear-gradient(22deg, #2b2a2a, #3b3535, #5c4c4c, #ffffff, #cec7c4, #6b6b6b);

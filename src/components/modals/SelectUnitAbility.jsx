@@ -402,7 +402,7 @@ const SelectUnitAbility = (props) => {
               ? unit.blossom + newGameState[unit.player].skillHand.length >= 2
               : newGameState[unit.player].skillHand.length >= 2;
           case 1:
-            return unit.blossom >= 1;
+            return unit.blossom >= 1 && !unit.temporary.usedFlourish;
         }
     }
 
