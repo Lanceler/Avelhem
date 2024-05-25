@@ -162,7 +162,7 @@ const BountyStore = (props) => {
   };
 
   const frontierCosts = [2, 3, 5];
-  const acquisitionCosts = [2, 2, 2];
+  const acquisitionCosts = [3, 3, 3];
   const coordinationCosts = [2, 2, 2];
   const tacticsCosts = [2, 2, 2, 2];
   const avelhemCosts = [3, 3, 3, 3];

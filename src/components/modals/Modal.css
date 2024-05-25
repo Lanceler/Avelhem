@@ -581,6 +581,8 @@ display: flex;
     height: 80px;
     /* position: absolute; */
     z-index: 3;
+    border-radius: 100%;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.95);
 }
 
 .unitInfo-name{

@@ -62,7 +62,7 @@ const SelectSovereignTactic = (props) => {
           abilityText: (
             <>
               <div className="abilityText ">
-                ⬩Spend 4 FD to gain an Assault tactic.
+                ⬩Spend 6 FD to gain an Assault tactic.
               </div>
             </>
           ),
@@ -143,7 +143,7 @@ const SelectSovereignTactic = (props) => {
           ),
         },
         {
-          abilityName: "???",
+          abilityName: "Special Invocation",
           abilityQualifier: (
             <div className="abilityQualifier">
               {newGameState[self].bountyUpgrades.tactics < 1 && (
@@ -154,6 +154,7 @@ const SelectSovereignTactic = (props) => {
           abilityText: (
             <>
               <div className="abilityText ">⬩Gain 2 FD.</div>
+              <div className="abilityText ">⬩Draw 1 Avelhem.</div>
               <div className="abilityText ">
                 ⬩You may recover 1 “Transcendence”.
               </div>
@@ -191,7 +192,7 @@ const SelectSovereignTactic = (props) => {
           case 0:
             return canDeploy();
           case 1:
-            return newGameState[self].fateDefiances >= 4;
+            return newGameState[self].fateDefiances >= 6;
           case 2:
             return (
               newGameState[self].bountyUpgrades.tactics >= 4 &&
@@ -278,7 +279,7 @@ const SelectSovereignTactic = (props) => {
             break;
 
           case 1:
-            newGameState[self].fateDefiances -= 4;
+            newGameState[self].fateDefiances -= 6;
 
             //Gain assault command
             newGameState.tactics[props.dice].stock += 1;
@@ -334,6 +335,9 @@ const SelectSovereignTactic = (props) => {
               6,
               newGameState[self].fateDefiances + 2
             );
+
+            //Draw 1 Avelhem
+            newGameState = drawAvelhem(newGameState);
 
             //Recover Transcendence
             if (newGameState[self].skillVestige.includes("SX-01")) {

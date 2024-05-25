@@ -271,6 +271,8 @@ background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rg
     font-size: 45px;
     /* margin-left: auto; */
 
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.95);
+
 
 }
 
