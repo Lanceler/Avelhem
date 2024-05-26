@@ -89,9 +89,10 @@ const ScionSkillSelect = (props) => {
 
   return (
     <div className="modal-backdrop">
-      {/* <div className="modal modalNoYes"> */}
       <div className={`modal ${usableSkills.length === 0 ? "modalNoYes" : ""}`}>
-        <h2 className="choiceTitle">Select Skill</h2>
+        <h2 className="choiceTitle">Activate Scion Skill</h2>
+
+        {usableSkills.length === 0 && <h3>No valid skills in hand.</h3>}
 
         <div className="fourColumn scrollable scrollable-y-only">
           {usableSkills.map((usableSkill, i) => (
@@ -123,10 +124,6 @@ const ScionSkillSelect = (props) => {
             Return
           </button>
         )}
-
-        {/* {selectedSkill !== null && (
-          <button onClick={() => handleSelect()}>Select</button>
-        )} */}
 
         {selectedSkill !== null &&
           canActivateSkill(props.unit, usableSkills[selectedSkill].id) && (

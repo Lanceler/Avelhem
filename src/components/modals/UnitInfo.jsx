@@ -610,7 +610,7 @@ const UnitInfo = (props) => {
                       {unit.afflictions.frostbite > 1 ? "s" : ""})
                     </p>
                     <p className="unitInfo-text-desc unitInfo-text-last">
-                      ⬩<em>Frozen</em>, muted, and immobilized.
+                      ⬩<em>Frostbitten</em>, muted, and immobilized.
                     </p>
                   </>
                 )}
@@ -625,7 +625,7 @@ const UnitInfo = (props) => {
                       ⬩<em>Burning</em>; immune to Frostbite.
                     </p>
                     <p className="unitInfo-text-desc unitInfo-text-last">
-                      ⬩When Burn expires, lose 1 HP.
+                      ⬩When Burn expires at the end of the turn, lose 1 HP.
                     </p>
                   </>
                 )}

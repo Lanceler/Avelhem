@@ -62,9 +62,9 @@ const SelectTacticalAction = (props) => {
             <>
               <div className="abilityText ">
                 ⬩Spend your Virtue to blast an adjacent enemy. <br /> <br />{" "}
-                (When a unit is targeted via Virtue-blast, they may spend their
-                Virtue to reduce the attack’s AP by 1 and restore the attacker’s
-                Virtue.)
+                (When a unit is attacked via Virtue-blast, they may spend their
+                Virtue to reduce the attack’s AP by 1. Doing so restores the
+                attacker’s Virtue.)
               </div>
             </>
           ),
@@ -351,7 +351,7 @@ const SelectTacticalAction = (props) => {
         }`}
       >
         <div className="">
-          <h2 className="choiceTitle">Tactical Action</h2>
+          <h2 className="choiceTitle">Tactical Action: {face}</h2>
         </div>
 
         {message && <h4>{message}</h4>}

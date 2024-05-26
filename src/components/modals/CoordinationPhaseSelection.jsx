@@ -226,30 +226,33 @@ const CoordinationPhaseSelection = (props) => {
 
         <h3>
           Tactical dice have the following faces:{"  "}
-          <img
-            src={AdvanceSmall}
-            style={{ height: 26, filter: "brightness(0%)" }}
-          />{" "}
-          <img
-            src={AdvanceSmall}
-            style={{ height: 26, filter: "brightness(0%)" }}
-          />{" "}
-          <img
-            src={MobilizeSmall}
-            style={{ height: 26, filter: "brightness(0%)" }}
-          />{" "}
-          <img
-            src={MobilizeSmall}
-            style={{ height: 26, filter: "brightness(0%)" }}
-          />{" "}
-          <img
-            src={AssaultSmall}
-            style={{ height: 26, filter: "brightness(0%)" }}
-          />{" "}
-          <img
-            src={InvokeSmall}
-            style={{ height: 26, filter: "brightness(0%)" }}
-          />
+          <span className="unitInfo-tactic-group2">
+            {" "}
+            <img
+              src={AdvanceSmall}
+              style={{ height: 26, filter: "brightness(0%)" }}
+            />{" "}
+            <img
+              src={AdvanceSmall}
+              style={{ height: 26, filter: "brightness(0%)" }}
+            />{" "}
+            <img
+              src={MobilizeSmall}
+              style={{ height: 26, filter: "brightness(0%)" }}
+            />{" "}
+            <img
+              src={MobilizeSmall}
+              style={{ height: 26, filter: "brightness(0%)" }}
+            />{" "}
+            <img
+              src={AssaultSmall}
+              style={{ height: 26, filter: "brightness(0%)" }}
+            />{" "}
+            <img
+              src={InvokeSmall}
+              style={{ height: 26, filter: "brightness(0%)" }}
+            />
+          </span>
         </h3>
 
         {selectedChoice !== null && (

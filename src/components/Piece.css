@@ -1,3 +1,7 @@
+.piece-body {
+    cursor: pointer;
+}
+
 .piece {
     width: 60px;
     height: 60px;
@@ -8,14 +12,13 @@
     text-align: center;
     position: relative;
     user-select: none;
-
-        justify-content: center; /* horizontal alignment */
-        display: flex;
-        align-items: center; /* vertical alignment */
-
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.85);
-       
+    justify-content: center;
+    display: flex;
+    align-items: center;    
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.85);  
 }
+
+
 
 .piece-icon-shadow {
     width: 52px;
@@ -207,17 +210,12 @@ animation: frostbitefadeInOut 3s ease infinite alternate
 
 
 .shieldAndWard {
-    /* height: 100px;
-    width: 100px; */
     height: 25px;
     position: absolute;
     z-index: 397;
     pointer-events: none;
     top: 48px;
-    /* left: 22px; */
     left: 48px;
-
-
 }
 
 .fade-in-out {

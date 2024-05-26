@@ -433,7 +433,7 @@ const SelectSovereignTactic = (props) => {
     <div className="modal-backdrop">
       <div className={`modal ${modalClass}`}>
         <div className="">
-          <h2 className="choiceTitle">Tactical Action</h2>
+          <h2 className="choiceTitle">Tactical Action: {props.face}</h2>
         </div>
 
         {message && <h4>{message}</h4>}

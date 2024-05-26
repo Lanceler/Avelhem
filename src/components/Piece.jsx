@@ -93,7 +93,7 @@ export const Piece = (props) => {
   };
 
   return (
-    <>
+    <div className="piece-body">
       {props.unit && (
         <>
           <div
@@ -344,7 +344,7 @@ export const Piece = (props) => {
         </>
       )}
       {!props.unit && <div className="piece"></div>}
-    </>
+    </div>
   );
 };
 
