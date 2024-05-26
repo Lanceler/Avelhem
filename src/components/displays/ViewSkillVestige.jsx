@@ -1,10 +1,14 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "../modals/Modal.css";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
+
+import ZoomCard from "./ZoomCard";
 
 import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 
@@ -13,6 +17,19 @@ const ViewSkillVestige = (props) => {
   const { self, enemy } = useSelector((state) => state.teams);
 
   const { getImage2 } = useCardImageSwitch();
+
+  const [zoom, setZoom] = useState(false);
+  const [zoomId, setZoomId] = useState(null);
+
+  const closeZoom = () => {
+    setZoom(false);
+  };
+
+  const openZoom = (id) => {
+    setZoom(true);
+    setZoomId(id);
+    console.log("Open Zoom");
+  };
 
   let vestige = [];
   let shattered = [];
@@ -43,50 +60,71 @@ const ViewSkillVestige = (props) => {
   };
 
   return (
-    <div className="modal-backdrop">
-      <div className="modal">
-        <div className="twoColumn3-1">
-          <h2 className="choiceTitle">{`${props.vestige} Vestige`}</h2>
-        </div>
+    <>
+      <div className="modal-backdrop">
+        {zoom === true && <ZoomCard cardInfo={zoomId} closeZoom={closeZoom} />}
+        <div className="modal">
+          <div className="twoColumn3-1">
+            <h2 className="choiceTitle">{`${props.vestige} Vestige`}</h2>
+          </div>
 
-        <div className="scrollable scrollable-y-only">
-          {props.team === self && (
-            <div className="fourColumn">
-              {reverseVestige.map((usableSkill, i) => (
-                <div
-                  key={i}
-                  className="scionSkills pile-view-skill"
-                  style={{
-                    backgroundImage: `url(${getImage2(usableSkill.id)})`,
-                  }}
-                ></div>
-              ))}
-            </div>
-          )}
-
-          {shattered.length > 0 && (
-            <>
-              <h3>Shattered skills:</h3>
+          <div className="scrollable scrollable-y-only">
+            {props.team === self && (
               <div className="fourColumn">
-                {reverseShattered.map((usableSkill, i) => (
+                {reverseVestige.map((usableSkill, i) => (
                   <div
                     key={i}
                     className="scionSkills pile-view-skill"
                     style={{
                       backgroundImage: `url(${getImage2(usableSkill.id)})`,
                     }}
-                  ></div>
+                  >
+                    <button
+                      className="zoom-button"
+                      onClick={() => {
+                        openZoom(usableSkill.id);
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faMagnifyingGlass} />
+                    </button>
+                  </div>
                 ))}
               </div>
-            </>
-          )}
-        </div>
+            )}
 
-        <button className="choiceButton noYes" onClick={() => handleSkip()}>
-          Close
-        </button>
+            {shattered.length > 0 && (
+              <>
+                <h3>Shattered skills:</h3>
+                <div className="fourColumn">
+                  {reverseShattered.map((usableSkill, i) => (
+                    <div
+                      key={i}
+                      className="scionSkills pile-view-skill"
+                      style={{
+                        backgroundImage: `url(${getImage2(usableSkill.id)})`,
+                      }}
+                    >
+                      <button
+                        className="zoom-button"
+                        onClick={() => {
+                          openZoom(usableSkill.id);
+                        }}
+                      >
+                        <FontAwesomeIcon icon={faMagnifyingGlass} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+
+          <button className="choiceButton noYes" onClick={() => handleSkip()}>
+            Close
+          </button>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

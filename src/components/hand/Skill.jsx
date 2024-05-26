@@ -1,16 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Skill.css";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+
+import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
+
+import ZoomCard from "../displays/ZoomCard";
 
 import { useSelector, useDispatch } from "react-redux";
 
-import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
-import { useCardDatabase } from "../../hooks/useCardDatabase";
-
 const Skill = (props) => {
   const { getImage2 } = useCardImageSwitch();
-  // const { getSkillById } = useCardDatabase();
 
-  // const cardInfo = getSkillById(props.usableSkill.id);
+  const [zoom, setZoom] = useState(false);
+
+  const closeZoom = () => {
+    setZoom(false);
+  };
+
+  const openZoom = () => {
+    setZoom(true);
+    console.log("Open Zoom");
+  };
 
   const image = getImage2(props.usableSkill.id);
 
@@ -25,17 +37,31 @@ const Skill = (props) => {
   };
 
   return (
-    <div
-      className={`select-skill ${
-        !props.canActivateSkill ? "cannotUseSkill" : ""
-      }`}
-      style={{
-        backgroundImage: `url(${image})`,
-      }}
-      onClick={() => handleClick()}
-    >
-      {/* {!image && <div> {cardInfo.Name}</div>} */}
-    </div>
+    <>
+      {zoom === true && (
+        <ZoomCard cardInfo={props.usableSkill.id} closeZoom={closeZoom} />
+      )}
+
+      <div
+        className={`select-skill ${
+          !props.canActivateSkill ? "cannotUseSkill" : ""
+        }`}
+        style={{
+          backgroundImage: `url(${image})`,
+        }}
+        // onClick={() => handleClick()}
+      >
+        <button
+          className="zoom-button"
+          onClick={() => {
+            openZoom();
+          }}
+        >
+          <FontAwesomeIcon icon={faMagnifyingGlass} />
+        </button>
+        <div className="select-skill-click" onClick={() => handleClick()}></div>
+      </div>
+    </>
   );
 };
 
