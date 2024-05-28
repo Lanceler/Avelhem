@@ -43,6 +43,7 @@ import SelectTacticalAction from "./modals/SelectTacticalAction";
 import SelectSovereignTactic from "./modals/SelectSovereignTactic";
 import TacticResults from "./modals/TacticResults";
 import TacticResults3 from "./modals/TacticResults3";
+import ViewBPUpgrades from "./modals/ViewBPUpgrades";
 import ViewRevealedSkill from "./modals/ViewRevealedSkill";
 import YouMayFloat1Skill from "./modals/YouMayFloat1Skill";
 import YouMaySpend1Skill from "./modals/YouMaySpend1Skill";
@@ -112,6 +113,7 @@ const Board = (props) => {
   const [hideModal, setHideModal] = useState(false);
 
   const [unitInfor, setUnitInfor] = useState(null);
+  const [viewBP, setViewBP] = useState(null);
 
   const {
     activateAegis,
@@ -5496,7 +5498,10 @@ const Board = (props) => {
                       {" "}
                       FD: {localGameState[enemy].fateDefiances} / 6
                     </div>
-                    <div className="bp-counter">
+                    <div
+                      className="bp-counter"
+                      onClick={() => setViewBP("enemy")}
+                    >
                       {" "}
                       BP: {localGameState[enemy].bountyPoints} / 10
                     </div>
@@ -5526,7 +5531,10 @@ const Board = (props) => {
                     <div className="fd-counter">
                       FD: {localGameState[self].fateDefiances} / 6
                     </div>
-                    <div className="bp-counter">
+                    <div
+                      className="bp-counter"
+                      onClick={() => setViewBP("self")}
+                    >
                       BP: {localGameState[self].bountyPoints} / 10
                     </div>
                   </div>
@@ -5554,6 +5562,9 @@ const Board = (props) => {
           {currentResolutionPrompt()}
           {unitInfor !== null && (
             <UnitInfo unit={unitInfor} setUnitInfor={setUnitInfor} />
+          )}
+          {viewBP !== null && (
+            <ViewBPUpgrades team={viewBP} setViewBP={setViewBP} />
           )}
         </div>
       )}
