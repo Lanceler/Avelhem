@@ -7,7 +7,7 @@ import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 const SovereignTactics = () => {
   const { localGameState } = useSelector((state) => state.gameState);
-  const { self } = useSelector((state) => state.teams);
+  const { self, enemy } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
   const { getTacticImage } = useRecurringEffects();
@@ -38,7 +38,9 @@ const SovereignTactics = () => {
         <div className="tacticSovereignDice" key={index}>
           <div
             className={` tacticSovereignBG ${
-              tactic.stock < 1 ? "disabledtacticSovereignBG" : ""
+              tactic.stock < 1 || localGameState.turnPlayer === enemy
+                ? "disabledtacticSovereignBG"
+                : ""
             }`}
             onClick={() => handleClick(tactic.face, index)}
           >

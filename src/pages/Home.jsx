@@ -17,11 +17,11 @@ export default function Home() {
         This page (and the website in general) is under construction.
       </div>
       <div className="abilityText">
-        To get started with a game, click on "My Games" in the navigation bar
+        To get started with a game, click on "Create Game" in the navigation bar
         above.
       </div>
       <div className="abilityText">
-        You may also view your repertoires by clicking on "My Repertoires".
+        You may also view your repertoires by clicking on "Repertoires".
       </div>
     </>
   );

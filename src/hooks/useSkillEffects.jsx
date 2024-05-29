@@ -1175,6 +1175,8 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
+    delete attacker.temporary.pitfallTrapBlast;
+
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     newGameState.currentResolution.push({
@@ -1199,7 +1201,6 @@ export const useSkillEffects = () => {
     newGameState.currentResolution.pop();
 
     if (attacker.temporary.pitfallTrapBlast === true) {
-      delete attacker.temporary.pitfallTrapBlast;
       newGameState[attackerInfo.player].units[attackerInfo.unitIndex] =
         attacker;
 

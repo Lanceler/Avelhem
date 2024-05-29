@@ -21,7 +21,7 @@ import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
 import MyRepertoires from "./pages/MyRepertoires";
 import Repertoire from "./pages/Repertoire";
-import MyGames from "./pages/MyGames";
+import CreateGame from "./pages/CreateGame";
 import Game from "./pages/Game";
 
 function App() {
@@ -59,8 +59,8 @@ function App() {
             />
 
             <Route
-              path="/my-games"
-              element={user ? <MyGames /> : <Navigate to="/login" />}
+              path="/create-game"
+              element={user ? <CreateGame /> : <Navigate to="/login" />}
             />
 
             <Route

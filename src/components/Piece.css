@@ -500,7 +500,7 @@ animation: moveUpDownHP 1.0s ease-in-out infinite;
     height: 250px;
     top: 65px;
     
-    background: linear-gradient(to bottom, rgb(197, 39, 0), rgba(129, 0, 0, .95) 5%, rgba(129, 0, 0, 0.15) 50%, rgba(129, 0, 0, 0.15) 100%);
+    background: linear-gradient(to bottom, rgb(197, 39, 0), rgba(129, 0, 0, .95) 5%, rgba(129, 0, 0, 0.10) 50%, rgba(129, 0, 0, 0.10) 100%);
     animation: ravagerAnimation 2s linear infinite;
 }
 
@@ -518,7 +518,7 @@ animation: moveUpDownHP 1.0s ease-in-out infinite;
     left: -5px;
     width: 120%;
     height: 80px;
-    background: rgba(129, 0, 0, 0.15);
+    background: rgba(129, 0, 0, 0.10);
     animation: ravagerAnimation2 2s linear infinite;
 }
 

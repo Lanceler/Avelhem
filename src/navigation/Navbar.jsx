@@ -28,8 +28,8 @@ const Navbar = () => {
 
           <div>
             <div className="navLinks">
-              {user && <Link to="/my-games">My Games</Link>}
-              {user && <Link to="/repertoires">My Repertoires</Link>}
+              {user && <Link to="/create-game">Create Game</Link>}
+              {user && <Link to="/repertoires">Repertoires</Link>}
               {!user && <Link to="/login">Login</Link>}
               {!user && <Link to="/signup">Sign up</Link>}
               {user && (

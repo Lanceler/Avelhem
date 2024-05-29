@@ -364,6 +364,11 @@
     filter: grayscale(0.85);
 }
 
+.pile-vestige:hover {
+    filter: grayscale(0.85) brightness(120%);
+    cursor: pointer;
+}
+
 .pile-view-skill{
     width: 180px;
     height: 252px;

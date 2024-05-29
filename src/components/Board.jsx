@@ -1205,15 +1205,13 @@ const Board = (props) => {
             return (
               <>
                 {self === lastResolution.player && !hideModal && (
-                  <>
-                    <MayFloatResonantSkill
-                      player={lastResolution.player}
-                      skill={lastResolution.skill}
-                      resonator={lastResolution.resonator}
-                      updateFirebase={updateFirebase}
-                      hideOrRevealModale={hideOrRevealModale}
-                    />
-                  </>
+                  <MayFloatResonantSkill
+                    player={lastResolution.player}
+                    skill={lastResolution.skill}
+                    resonator={lastResolution.resonator}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
                 )}
               </>
             );
@@ -3777,44 +3775,30 @@ const Board = (props) => {
             );
 
           case "Select Fated Rivalry":
-            return (
-              <>
-                {self === lastResolution.player && (
-                  <>{selectFatedRivalry(lastResolution.unit)}</>
-                )}
-              </>
-            );
+            if (self === lastResolution.player) {
+              selectFatedRivalry(lastResolution.unit);
+            }
+            break;
 
           case "Fated Rivalry2":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      fatedRivalry2(lastResolution.unit, lastResolution.enemy)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                fatedRivalry2(lastResolution.unit, lastResolution.enemy)
+              );
+            }
+            break;
 
           case "Activating Fated Rivalry: Proaction":
-            return (
-              <>
-                {self === lastResolution.player && (
-                  <>{resolutionUpdateGameStateOnly(fatedRivalryProaction())}</>
-                )}
-              </>
-            );
+            if (self === lastResolution.player) {
+              resolutionUpdateGameStateOnly(fatedRivalryProaction());
+            }
+            break;
 
           case "Select Fated Rivalry Proaction":
-            return (
-              <>
-                {self === lastResolution.player && (
-                  <>{selectFatedRivalryProaction()}</>
-                )}
-              </>
-            );
+            if (self === lastResolution.player) {
+              selectFatedRivalryProaction();
+            }
+            break;
 
           case "Fated Rivalry Proaction2":
             return (
@@ -3831,51 +3815,32 @@ const Board = (props) => {
             );
 
           case "Activating Match Made In Heaven":
-            return (
-              <>
-                {self === lastResolution.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      matchMadeInHeaven1(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.player) {
+              resolutionUpdateGameStateOnly(
+                matchMadeInHeaven1(lastResolution.unit)
+              );
+            }
+            break;
 
           case "Select Match Made in Heaven Pawn":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>{selectMatchMadeInHeavenPawn(lastResolution.unit)}</>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              selectMatchMadeInHeavenPawn(lastResolution.unit);
+            }
+            break;
 
           case "Match Made in Heaven2":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      matchMadeInHeaven2(
-                        lastResolution.unit,
-                        lastResolution.unit2
-                      )
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                matchMadeInHeaven2(lastResolution.unit, lastResolution.unit2)
+              );
+            }
+            break;
 
           case "Match Made in Heaven3":
-            return (
-              <>
-                {self === lastResolution.player && (
-                  <>{resolutionUpdateGameStateOnly(matchMadeInHeaven3())}</>
-                )}
-              </>
-            );
+            if (self === lastResolution.player) {
+              resolutionUpdateGameStateOnly(matchMadeInHeaven3());
+            }
+            break;
 
           case "Match Made in Heaven4":
             return (
@@ -3892,39 +3857,26 @@ const Board = (props) => {
             );
 
           case "Activating Vengeful Legacy":
-            return (
-              <>
-                {self === lastResolution.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      vengefulLegacy1(lastResolution.victim)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.player) {
+              resolutionUpdateGameStateOnly(
+                vengefulLegacy1(lastResolution.victim)
+              );
+            }
+            break;
 
           case "Select Vengeful Legacy":
-            return (
-              <>
-                {self === lastResolution.player && (
-                  <>{selectVengefulLegacy(lastResolution.victim)}</>
-                )}
-              </>
-            );
+            if (self === lastResolution.player) {
+              selectVengefulLegacy(lastResolution.victim);
+            }
+            break;
 
           case "Vengeful Legacy2":
-            return (
-              <>
-                {self === lastResolution.unit.player && (
-                  <>
-                    {resolutionUpdateGameStateOnly(
-                      vengefulLegacy2(lastResolution.unit)
-                    )}
-                  </>
-                )}
-              </>
-            );
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                vengefulLegacy2(lastResolution.unit)
+              );
+            }
+            break;
 
           case "Vengeful Legacy Ravager":
             return (
@@ -5268,7 +5220,7 @@ const Board = (props) => {
   //====================================================================
 
   return (
-    <>
+    <div className="board-body">
       {zones && localGameState && (
         <div>
           <div className="abilityText">
@@ -5305,260 +5257,264 @@ const Board = (props) => {
           {!localGameState.turnPlayer && self === "host" && (
             <SelectFirstPlayer onSetFirstPlayer={onSetFirstPlayer} />
           )}
-          <div className="section">
-            <div className="bigger-right-container">
-              <div className="right-container-button-location">
-                {self === localGameState.turnPlayer &&
-                  localGameState.currentResolution.length > 0 &&
-                  localGameState.currentResolution[
-                    localGameState.currentResolution.length - 1
-                  ].resolution === "Execution Phase" && (
-                    <button
-                      className="choiceButton noYes"
-                      onClick={() => endExecutionPhase()}
-                    >
-                      End Turn
-                    </button>
-                  )}
 
-                {hideModal && (
-                  <button
-                    className="choiceButton noYes"
-                    onClick={() => hideOrRevealModale()}
-                  >
-                    Return to Modal
-                  </button>
-                )}
-              </div>
-              <div className="right-container">
-                <ActivatedSkills />
-              </div>
-            </div>
-
-            <div
-              // className="middle-container"
-              className={`middle-container ${
-                !isYourTurn() ? "middle-container-enemy" : ""
-              }`}
-            >
-              {expandedUnit !== null && (
-                <>
-                  <div
-                    className="pieceOption"
-                    style={unitButtonPosition(expandedUnit)[0]}
-                    onClick={() => handleUnitOptions("Info")}
-                  >
-                    <div className="optionIcon">Info</div>
-                  </div>
-
-                  {localGameState.currentResolution.length > 0 &&
+          <div className="board-physical">
+            <div className="section">
+              <div className="bigger-right-container">
+                <div className="right-container-button-location">
+                  {self === localGameState.turnPlayer &&
+                    localGameState.currentResolution.length > 0 &&
                     localGameState.currentResolution[
                       localGameState.currentResolution.length - 1
-                    ].resolution === "Execution Phase" &&
-                    self === expandedUnit.player &&
-                    self === localGameState.turnPlayer && (
-                      <>
-                        <div
-                          className="pieceOption"
-                          style={unitButtonPosition(expandedUnit)[1]}
-                          onClick={() => handleUnitOptions("Tactic")}
-                        >
-                          <div className="optionIcon">Dice</div>
-                        </div>
-                        {expandedUnit.unitClass !== "Pawn" && (
-                          <>
-                            <div
-                              className="pieceOption"
-                              style={unitButtonPosition(expandedUnit)[2]}
-                              onClick={() => handleUnitOptions("Ability")}
-                            >
-                              <div className="optionIcon">Abi</div>
-                            </div>
-                            <div
-                              className="pieceOption"
-                              style={unitButtonPosition(expandedUnit)[3]}
-                              onClick={() => handleUnitOptions("Skill")}
-                            >
-                              <div className="optionIcon">Ski</div>
-                            </div>
-                          </>
-                        )}
-                      </>
+                    ].resolution === "Execution Phase" && (
+                      <button
+                        className="choiceButton noYes"
+                        onClick={() => endExecutionPhase()}
+                      >
+                        End Turn
+                      </button>
                     )}
-                </>
-              )}
 
-              {localGameState.activatingUnit.length > 0 &&
-                localGameState.activatingUnit[
-                  localGameState.activatingUnit.length - 1
-                ] !== null && (
-                  <div
-                    className="glow animating board-piece"
-                    style={activatingUnit()}
-                  ></div>
-                )}
-
-              {localGameState.activatingTarget.length > 0 &&
-                localGameState.activatingTarget[
-                  localGameState.activatingTarget.length - 1
-                ] !== null && (
-                  <div className="board-piece" style={activatingTarget()}>
-                    <img src={Crosshair} className="crosshair" />
-                  </div>
-                )}
-
-              {localGameState.host.units.map((unit, i) => (
-                <div key={i}>
-                  {unit && (
-                    <div className="board-piece" style={unitPosition(unit)}>
-                      <Piece
-                        unit={unit}
-                        movingUnit={movingUnit}
-                        tileMode={tileMode}
-                        selectUnitReason={selectUnitReason}
-                        selectUnitSpecial={selectUnitSpecial}
-                        expandedUnit={expandedUnit}
-                        setExpandedUnit={setExpandedUnit}
-                        validZones={validZones}
-                        selectUnit={selectUnit}
-                      />
-                    </div>
+                  {hideModal && (
+                    <button
+                      className="choiceButton noYes"
+                      onClick={() => hideOrRevealModale()}
+                    >
+                      Return to Modal
+                    </button>
                   )}
                 </div>
-              ))}
-
-              {localGameState.guest.units.map((unit, i) => (
-                <div key={-i - 1}>
-                  {unit && (
-                    <div className="board-piece" style={unitPosition(unit)}>
-                      <Piece
-                        unit={unit}
-                        movingUnit={movingUnit}
-                        tileMode={tileMode}
-                        selectUnitReason={selectUnitReason}
-                        selectUnitSpecial={selectUnitSpecial}
-                        expandedUnit={expandedUnit}
-                        setExpandedUnit={setExpandedUnit}
-                        validZones={validZones}
-                        selectUnit={selectUnit}
-                      />
-                    </div>
-                  )}
+                <div className="right-container">
+                  <ActivatedSkills />
                 </div>
-              ))}
+              </div>
 
               <div
-                className={
-                  self !== "guest"
-                    ? "tile-grid"
-                    : "tile-grid reversed-tile-grid"
-                }
+                // className="middle-container"
+                className={`middle-container ${
+                  !isYourTurn() ? "middle-container-enemy" : ""
+                }`}
               >
-                {zones.map((row, r) =>
-                  row.map((zone, c) => (
-                    <Tile
-                      key={zone.id}
-                      zone={zone}
-                      validZones={validZones}
-                      deployUnit={deployUnit}
-                      movingUnit={movingUnit}
-                      movingSpecial={movingSpecial}
-                      setMovingSpecial={setMovingSpecial}
-                      moveUnit={moveUnit}
-                      tileMode={tileMode}
-                      deployClass={deployClass}
-                    />
-                  ))
+                {expandedUnit !== null && (
+                  <>
+                    <div
+                      className="pieceOption"
+                      style={unitButtonPosition(expandedUnit)[0]}
+                      onClick={() => handleUnitOptions("Info")}
+                    >
+                      <div className="optionIcon">Info</div>
+                    </div>
+
+                    {localGameState.currentResolution.length > 0 &&
+                      localGameState.currentResolution[
+                        localGameState.currentResolution.length - 1
+                      ].resolution === "Execution Phase" &&
+                      self === expandedUnit.player &&
+                      self === localGameState.turnPlayer && (
+                        <>
+                          <div
+                            className="pieceOption"
+                            style={unitButtonPosition(expandedUnit)[1]}
+                            onClick={() => handleUnitOptions("Tactic")}
+                          >
+                            <div className="optionIcon">Dice</div>
+                          </div>
+                          {expandedUnit.unitClass !== "Pawn" && (
+                            <>
+                              <div
+                                className="pieceOption"
+                                style={unitButtonPosition(expandedUnit)[2]}
+                                onClick={() => handleUnitOptions("Ability")}
+                              >
+                                <div className="optionIcon">Abi</div>
+                              </div>
+                              <div
+                                className="pieceOption"
+                                style={unitButtonPosition(expandedUnit)[3]}
+                                onClick={() => handleUnitOptions("Skill")}
+                              >
+                                <div className="optionIcon">Ski</div>
+                              </div>
+                            </>
+                          )}
+                        </>
+                      )}
+                  </>
                 )}
-              </div>
-            </div>
 
-            <div className="left-container">
-              <div className="hands-player">
-                <div className="skill-hand">
-                  <EnemySkillHand />
-                </div>
-                <div className="avel-hand">
-                  <EnemyAvelhemHand />
-                </div>
-              </div>
-
-              <div className="lcMiddleContainer">
-                <div className="rcm-top-bot">
-                  <div className="skill-container">
-                    <div className="skill-deck skill-container-item">
-                      <PileOfCards team={enemy} pile={"skillRepertoire"} />
-                    </div>
-                    <div className="skill-discard skill-container-item">
-                      <PileOfCards team={enemy} pile={"skillVestige"} />
-                    </div>
-                  </div>
-                  <div className="rcmtb-mid">
-                    <div className="fd-counter">
-                      {" "}
-                      FD: {localGameState[enemy].fateDefiances} / 6
-                    </div>
+                {localGameState.activatingUnit.length > 0 &&
+                  localGameState.activatingUnit[
+                    localGameState.activatingUnit.length - 1
+                  ] !== null && (
                     <div
-                      className="bp-counter"
-                      onClick={() => setViewBP("enemy")}
-                    >
-                      {" "}
-                      BP: {localGameState[enemy].bountyPoints} / 10
+                      className="glow animating board-piece"
+                      style={activatingUnit()}
+                    ></div>
+                  )}
+
+                {localGameState.activatingTarget.length > 0 &&
+                  localGameState.activatingTarget[
+                    localGameState.activatingTarget.length - 1
+                  ] !== null && (
+                    <div className="board-piece" style={activatingTarget()}>
+                      <img src={Crosshair} className="crosshair" />
                     </div>
+                  )}
+
+                {localGameState.host.units.map((unit, i) => (
+                  <div key={i}>
+                    {unit && (
+                      <div className="board-piece" style={unitPosition(unit)}>
+                        <Piece
+                          unit={unit}
+                          movingUnit={movingUnit}
+                          tileMode={tileMode}
+                          selectUnitReason={selectUnitReason}
+                          selectUnitSpecial={selectUnitSpecial}
+                          expandedUnit={expandedUnit}
+                          setExpandedUnit={setExpandedUnit}
+                          validZones={validZones}
+                          selectUnit={selectUnit}
+                        />
+                      </div>
+                    )}
                   </div>
-                  <div className="avel-container">
-                    <div className="avel-deck avel-container-item">
-                      <PileOfCards team={enemy} pile={"avelhemRepertoire"} />
-                    </div>
-                    <div className="avel-discard avel-container-item">
-                      <PileOfCards team={enemy} pile={"avelhemVestige"} />
-                    </div>
+                ))}
+
+                {localGameState.guest.units.map((unit, i) => (
+                  <div key={-i - 1}>
+                    {unit && (
+                      <div className="board-piece" style={unitPosition(unit)}>
+                        <Piece
+                          unit={unit}
+                          movingUnit={movingUnit}
+                          tileMode={tileMode}
+                          selectUnitReason={selectUnitReason}
+                          selectUnitSpecial={selectUnitSpecial}
+                          expandedUnit={expandedUnit}
+                          setExpandedUnit={setExpandedUnit}
+                          validZones={validZones}
+                          selectUnit={selectUnit}
+                        />
+                      </div>
+                    )}
                   </div>
-                </div>
-                <div className="rcm-middle">
-                  <SovereignTactics />
-                </div>
-                <div className="rcm-top-bot">
-                  <div className="skill-container">
-                    <div className="skill-deck skill-container-item">
-                      <PileOfCards team={self} pile={"skillRepertoire"} />
-                    </div>
-                    <div className="skill-discard skill-container-item">
-                      <PileOfCards team={self} pile={"skillVestige"} />
-                    </div>
-                  </div>
-                  <div className="rcmtb-mid">
-                    <div className="fd-counter">
-                      FD: {localGameState[self].fateDefiances} / 6
-                    </div>
-                    <div
-                      className="bp-counter"
-                      onClick={() => setViewBP("self")}
-                    >
-                      BP: {localGameState[self].bountyPoints} / 10
-                    </div>
-                  </div>
-                  <div className="avel-container">
-                    <div className="avel-deck avel-container-item">
-                      <PileOfCards team={self} pile={"avelhemRepertoire"} />
-                    </div>
-                    <div className="avel-discard avel-container-item">
-                      <PileOfCards team={self} pile={"avelhemVestige"} />
-                    </div>
-                  </div>
+                ))}
+
+                <div
+                  className={
+                    self !== "guest"
+                      ? "tile-grid"
+                      : "tile-grid reversed-tile-grid"
+                  }
+                >
+                  {zones.map((row, r) =>
+                    row.map((zone, c) => (
+                      <Tile
+                        key={zone.id}
+                        zone={zone}
+                        validZones={validZones}
+                        deployUnit={deployUnit}
+                        movingUnit={movingUnit}
+                        movingSpecial={movingSpecial}
+                        setMovingSpecial={setMovingSpecial}
+                        moveUnit={moveUnit}
+                        tileMode={tileMode}
+                        deployClass={deployClass}
+                      />
+                    ))
+                  )}
                 </div>
               </div>
 
-              <div className="hands-player">
-                <div className="skill-hand">
-                  <PlayerSkillHand updateFirebase={updateFirebase} />
+              <div className="left-container">
+                <div className="hands-player">
+                  <div className="skill-hand">
+                    <EnemySkillHand />
+                  </div>
+                  <div className="avel-hand">
+                    <EnemyAvelhemHand />
+                  </div>
                 </div>
-                <div className="avel-hand">
-                  <PlayerAvelhemHand updateFirebase={updateFirebase} />
+
+                <div className="lcMiddleContainer">
+                  <div className="rcm-top-bot">
+                    <div className="skill-container">
+                      <div className="skill-deck skill-container-item">
+                        <PileOfCards team={enemy} pile={"skillRepertoire"} />
+                      </div>
+                      <div className="skill-discard skill-container-item">
+                        <PileOfCards team={enemy} pile={"skillVestige"} />
+                      </div>
+                    </div>
+                    <div className="rcmtb-mid">
+                      <div className="fd-counter">
+                        {" "}
+                        FD: {localGameState[enemy].fateDefiances} / 6
+                      </div>
+                      <div
+                        className="bp-counter"
+                        onClick={() => setViewBP("enemy")}
+                      >
+                        {" "}
+                        BP: {localGameState[enemy].bountyPoints} / 10
+                      </div>
+                    </div>
+                    <div className="avel-container">
+                      <div className="avel-deck avel-container-item">
+                        <PileOfCards team={enemy} pile={"avelhemRepertoire"} />
+                      </div>
+                      <div className="avel-discard avel-container-item">
+                        <PileOfCards team={enemy} pile={"avelhemVestige"} />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="rcm-middle">
+                    <SovereignTactics />
+                  </div>
+                  <div className="rcm-top-bot">
+                    <div className="skill-container">
+                      <div className="skill-deck skill-container-item">
+                        <PileOfCards team={self} pile={"skillRepertoire"} />
+                      </div>
+                      <div className="skill-discard skill-container-item">
+                        <PileOfCards team={self} pile={"skillVestige"} />
+                      </div>
+                    </div>
+                    <div className="rcmtb-mid">
+                      <div className="fd-counter">
+                        FD: {localGameState[self].fateDefiances} / 6
+                      </div>
+                      <div
+                        className="bp-counter"
+                        onClick={() => setViewBP("self")}
+                      >
+                        BP: {localGameState[self].bountyPoints} / 10
+                      </div>
+                    </div>
+                    <div className="avel-container">
+                      <div className="avel-deck avel-container-item">
+                        <PileOfCards team={self} pile={"avelhemRepertoire"} />
+                      </div>
+                      <div className="avel-discard avel-container-item">
+                        <PileOfCards team={self} pile={"avelhemVestige"} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="hands-player">
+                  <div className="skill-hand">
+                    <PlayerSkillHand updateFirebase={updateFirebase} />
+                  </div>
+                  <div className="avel-hand">
+                    <PlayerAvelhemHand updateFirebase={updateFirebase} />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+
           {currentResolutionPrompt()}
           {unitInfor !== null && (
             <UnitInfo unit={unitInfor} setUnitInfor={setUnitInfor} />
@@ -5568,7 +5524,7 @@ const Board = (props) => {
           )}
         </div>
       )}
-    </>
+    </div>
   );
 };
 

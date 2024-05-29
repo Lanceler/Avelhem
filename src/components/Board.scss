@@ -1,3 +1,9 @@
+.board-physical{
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
 .board-piece{
     transition: top 0.5s ease, left 0.5s ease;
     animation: deploy 0.75s ease-in-out;
@@ -148,14 +154,15 @@
 }
 
 .section {
-    // background-color: rgb(255, 255, 255);
     background: linear-gradient(to bottom, rgb(61, 61, 61), rgb(116, 116, 116) 60%, rgb(173, 173, 173) 100%);
     // height: 100vh;
     height: 800px;
-    padding: 15px 0px;
+    width: 1400px;
+    padding: 45px 20px;
     display: flex;
     // justify-content: space-around;
     align-items: center;
+    overflow: hidden;
     
 }
 
@@ -262,21 +269,36 @@
                     width: 33%;
 
                     .fd-counter {
-                        background-color: black;
-                        width: 200px;
-                        height: 50px;
+                        // background-color: black;
+                            background-image: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
+                        width: 150px;
+                        height: 30px;
                         margin-top: 2px;
-                        color: white
+                        color: white;
+                        padding: 5px;
+                        border: goldenrod 3px solid;
+                        border-radius: 8px;
+                        text-align: center;
                     }
 
                     .bp-counter {
-                        background-color: black;
-                        width: 200px;
-                        height: 50px;
+                        // background-color: black;
+                        background-image: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
+                        width: 150px;
+                        height: 30px;
                         margin-bottom: 2px;
                         color: white;
                         cursor: pointer;
+                        padding: 5px;
+                        border: goldenrod 3px solid;
+                        border-radius: 8px;
+                        text-align: center;
                     }
+
+                    .bp-counter:hover {
+                        filter: brightness(120%);
+                    }
+
                 }
 
             .avel-container{
