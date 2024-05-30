@@ -381,7 +381,7 @@ const SelectTacticalAction = (props) => {
 
                   <div>{detail.abilityQualifier}</div>
                 </div>
-                <div className="abilityContent scroll">
+                <div className="abilityContent scrollable">
                   {detail.abilityText}
                 </div>
               </div>

@@ -28,48 +28,50 @@ function App() {
   const { user, authIsReady } = useAuthContext();
 
   return (
-    <div className="App">
-      {authIsReady && (
-        <BrowserRouter>
-          <Navbar />
-          <Routes>
-            <Route
-              exact
-              path="/"
-              element={user ? <Home /> : <Navigate to="/login" />}
-            />
+    <div className="App-body">
+      <div className="App">
+        {authIsReady && (
+          <BrowserRouter>
+            <Navbar />
+            <Routes>
+              <Route
+                exact
+                path="/"
+                element={user ? <Home /> : <Navigate to="/login" />}
+              />
 
-            <Route
-              path="/login"
-              element={!user ? <LogIn /> : <Navigate to="/" />}
-            />
-            <Route
-              path="/signup"
-              element={!user ? <SignUp /> : <Navigate to="/" />}
-            />
+              <Route
+                path="/login"
+                element={!user ? <LogIn /> : <Navigate to="/" />}
+              />
+              <Route
+                path="/signup"
+                element={!user ? <SignUp /> : <Navigate to="/" />}
+              />
 
-            <Route
-              path="/repertoires"
-              element={user ? <MyRepertoires /> : <Navigate to="/login" />}
-            />
+              <Route
+                path="/repertoires"
+                element={user ? <MyRepertoires /> : <Navigate to="/login" />}
+              />
 
-            <Route
-              path="/repertoire/:id"
-              element={user ? <Repertoire /> : <Navigate to="/login" />}
-            />
+              <Route
+                path="/repertoire/:id"
+                element={user ? <Repertoire /> : <Navigate to="/login" />}
+              />
 
-            <Route
-              path="/create-game"
-              element={user ? <CreateGame /> : <Navigate to="/login" />}
-            />
+              <Route
+                path="/create-game"
+                element={user ? <CreateGame /> : <Navigate to="/login" />}
+              />
 
-            <Route
-              path="/game"
-              element={user ? <Game /> : <Navigate to="/login" />}
-            />
-          </Routes>
-        </BrowserRouter>
-      )}
+              <Route
+                path="/game"
+                element={user ? <Game /> : <Navigate to="/login" />}
+              />
+            </Routes>
+          </BrowserRouter>
+        )}
+      </div>
     </div>
   );
 }

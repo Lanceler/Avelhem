@@ -23,7 +23,7 @@ const Navbar = () => {
               {/* <h1 className="avelhem-title">Avelhem</h1> */}
               <img src={AvelhemLogo} className="avelhem-logo" />
             </Link>
-            <h3>{user && user.displayName}</h3>
+            <div className="nav-user">{user && user.displayName}</div>
           </div>
 
           <div>
@@ -34,7 +34,7 @@ const Navbar = () => {
               {!user && <Link to="/signup">Sign up</Link>}
               {user && (
                 <span onClick={logOut} className="logout">
-                  Logout
+                  <a>Logout</a>
                 </span>
               )}
             </div>

@@ -9,42 +9,10 @@ const ZoomCard = (props) => {
   let image = getImage2(props.cardInfo);
 
   return (
-    // <div className="modal-backdrop">
-    //   <div className="modal-backdrop" onClick={() => props.closeZoom()}>
-    //     <div className="zoom-body">
-    //       <div
-    //         className="zoom-card"
-    //         style={{
-    //           backgroundImage: `url(${image})`,
-    //         }}
-    //       >
-    //         <button
-    //           className="collapseSelected zoom-close"
-    //           onClick={() => props.closeZoom()}
-    //         >
-    //           X
-    //         </button>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>\
     <>
       <div className="modal-backdrop">
         <div className="zoom-body">
           <img src={image} className="zoom-card-image" />
-          {/* <div
-            className="zoom-card"
-            style={{
-              backgroundImage: `url(${image})`,
-            }}
-          > */}
-          {/* <button
-              className="collapseSelected zoom-close"
-              onClick={() => props.closeZoom()}
-            >
-              X
-            </button> */}
-          {/* </div> */}
 
           <div
             className="modal-backdrop"

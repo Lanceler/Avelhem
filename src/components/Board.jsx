@@ -5512,16 +5512,24 @@ const Board = (props) => {
                   </div>
                 </div>
               </div>
+
+              {currentResolutionPrompt()}
+              {unitInfor !== null && (
+                <UnitInfo unit={unitInfor} setUnitInfor={setUnitInfor} />
+              )}
+              {viewBP !== null && (
+                <ViewBPUpgrades team={viewBP} setViewBP={setViewBP} />
+              )}
             </div>
           </div>
 
-          {currentResolutionPrompt()}
+          {/* {currentResolutionPrompt()}
           {unitInfor !== null && (
             <UnitInfo unit={unitInfor} setUnitInfor={setUnitInfor} />
           )}
           {viewBP !== null && (
             <ViewBPUpgrades team={viewBP} setViewBP={setViewBP} />
-          )}
+          )} */}
         </div>
       )}
     </div>
