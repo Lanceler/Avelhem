@@ -35,9 +35,9 @@ const SelectSovereignTactic = (props) => {
           abilityQualifier: (
             <div className="abilityQualifier">
               {newGameState[self].bountyUpgrades.tactics < 2 && (
-                <>
+                <div style={{ fontSize: 18 }}>
                   Can be upgraded <br /> via Bounty Phase <br /> (2nd Tactics).
-                </>
+                </div>
               )}
             </div>
           ),
@@ -72,7 +72,9 @@ const SelectSovereignTactic = (props) => {
           abilityQualifier: (
             <div className="abilityQualifier">
               {newGameState[self].bountyUpgrades.tactics < 4 && (
-                <>Available after 4th Tactics upgrade via Bounty Phase.</>
+                <div style={{ fontSize: 18 }}>
+                  Available after 4th Tactics upgrade via Bounty Phase.
+                </div>
               )}
             </div>
           ),
@@ -143,11 +145,13 @@ const SelectSovereignTactic = (props) => {
           ),
         },
         {
-          abilityName: "Special Invocation",
+          abilityName: "Divine Invocation",
           abilityQualifier: (
             <div className="abilityQualifier">
               {newGameState[self].bountyUpgrades.tactics < 1 && (
-                <>Available after 1st Tactics upgrade via Bounty Phase.</>
+                <div style={{ fontSize: 18 }}>
+                  Available after 1st Tactics upgrade via Bounty Phase.
+                </div>
               )}
             </div>
           ),

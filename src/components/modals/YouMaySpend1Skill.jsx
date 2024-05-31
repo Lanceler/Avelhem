@@ -180,6 +180,7 @@ const YouMaySpend1Skill = (props) => {
 
         newGameState.activatingUnit.push(unit);
         newGameState.activatingSkill.push("AdamantArmor");
+
         newGameState.currentResolution.push({
           resolution: "Unit Talent",
           resolution2: "Talent Conclusion",
@@ -332,6 +333,10 @@ const YouMaySpend1Skill = (props) => {
 
     //end Discarding Skill resolution
     newGameState.currentResolution.pop();
+
+    if (props.details.reason === "Adamant Armor") {
+      newGameState.activatingTarget.pop();
+    }
 
     dispatch(updateState(newGameState));
     props.updateFirebase(newGameState);

@@ -93,7 +93,7 @@ const ViewBPUpgrades = (props) => {
                 <h3>Tactics:</h3>
 
                 {upgrades.tactics >= 1 && (
-                  <p>Invoke upgraded: Unlocked Special Invocation</p>
+                  <p>Invoke upgraded: Unlocked Divine Invocation</p>
                 )}
                 {upgrades.tactics >= 2 && (
                   <p>
