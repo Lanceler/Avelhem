@@ -374,3 +374,13 @@
     
 }
 
+.question-icon {
+    height: 22px;
+    // color: white;
+    filter: invert(100%);
+    position: relative;
+    top: 3px;
+    left: 6px;
+    cursor: pointer;
+}
+

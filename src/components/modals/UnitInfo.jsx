@@ -180,7 +180,7 @@ const UnitInfo = (props) => {
             <p className="unitInfo-text-heading2">
               1. Brandish{" "}
               <span className="unitInfo-tactic-group">
-                <img src={AssaultSmall} className="unitInfo-tactic-icon" />
+                <img src={InvokeSmall} className="unitInfo-tactic-icon" />
               </span>
             </p>
             <p className="unitInfo-text-desc">⬩Search for 1 “Frenzy Blade”.</p>

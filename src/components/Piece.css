@@ -238,9 +238,9 @@ animation: frostbitefadeInOut 3s ease infinite alternate
     position: absolute;
     z-index: 398;
     pointer-events: none;
-    top: 50px;
+    top: 47.5px;
     left: 20px;
-    filter: brightness(.9) contrast(1.3) hue-rotate(340deg);
+    /* filter: brightness(1.85)  ; */
     animation: scaleAnimation 1s ease-in-out infinite alternate
 }
 

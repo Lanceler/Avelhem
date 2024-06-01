@@ -1175,7 +1175,7 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    delete attacker.temporary.pitfallTrapBlast;
+    delete unit.temporary.pitfallTrapBlast;
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 

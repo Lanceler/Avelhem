@@ -127,7 +127,7 @@ const SelectCustomChoice = (props) => {
         localGameState[self].skillVestige.includes(s)
       );
       ChoiceFirstMessage = "Gain 1 HP (Max 3).";
-      ChoiceSecondMessage = "Recover then float 1 Land skill.";
+      ChoiceSecondMessage = "Recover 1 Land skill.";
       break;
 
     case "Mountain Stance":
@@ -460,8 +460,8 @@ const SelectCustomChoice = (props) => {
             resolution: "Recover Skill",
             player: self,
             restriction: ["04-01", "04-02", "04-03"],
-            message: "Recover then float 1 Land skill.",
-            outcome: "Float",
+            message: "Recover 1 Land skill.",
+            outcome: "Add",
           });
         }
         break;
