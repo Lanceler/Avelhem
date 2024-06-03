@@ -65,8 +65,7 @@
 
 
 .zoom-card-image{
-    /* height: 75vh; */
-    height: 75%;
+    height: 75vh;
     z-index: 502;
     border-radius: 15px;
 }
@@ -158,6 +157,16 @@
 
 .tacticSovereignContainer{
     display: flex;
+    position: relative;
+    /* background-color: brown; */
+    width: 335px;
+}
+
+.tacticSovereignContainer-info {
+    position: absolute;
+    right: 10px;
+    
+
 }
 
 .tacticSovereignDice{

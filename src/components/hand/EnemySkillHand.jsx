@@ -20,9 +20,6 @@ const EnemySkillHand = () => {
     }
   }
 
-  console.log("transcendenceCount");
-  console.log(transcendenceCount);
-
   const cardImage = (position) => {
     switch (transcendenceCount) {
       case 0:

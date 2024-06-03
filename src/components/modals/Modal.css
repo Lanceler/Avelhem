@@ -574,7 +574,7 @@ margin-bottom: 30px;
         width: 740px;
         /* max-width: 850px; */
         margin: 100px auto;
-        background: rgba(255, 255, 255, 0.8);
+        background: rgba(255, 255, 255, 0.875);
         border-radius: 10px;
         display: flex;
         flex-direction: column;
@@ -742,4 +742,23 @@ display: flex;
     height: 27.5px;
     margin: 0px -15px 0px 8px;
     filter: brightness(0%);
+}
+
+.infoPopUp-tactic-group {
+    position: relative;
+    top: 4px;
+    left: -6px;
+}
+
+.infoPopUp-tactic-icon {
+    height: 35px;
+    margin: 0px 8px;
+    filter: brightness(0%);
+}
+
+.infoPopUp-list{
+    position: relative;
+    list-style-type: upper-alpha;
+    margin: 2px;
+    /* background-color: #b30000; */
 }
