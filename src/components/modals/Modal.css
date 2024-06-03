@@ -24,6 +24,7 @@
     padding: 20px ;
     max-height: 1000px;
     width: fit-content;
+    min-width: 50%;
     /* width: 1050px; */
     max-width: 950px;
     margin: 100px auto;

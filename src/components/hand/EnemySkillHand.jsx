@@ -12,6 +12,45 @@ const EnemySkillHand = () => {
 
   let handNum = localGameState[enemy].skillHand.length;
 
+  let transcendenceCount = 0;
+
+  for (let i of localGameState[enemy].skillHand) {
+    if (i === "SX-01") {
+      transcendenceCount += 1;
+    }
+  }
+
+  console.log("transcendenceCount");
+  console.log(transcendenceCount);
+
+  const cardImage = (position) => {
+    switch (transcendenceCount) {
+      case 0:
+        return `url(${getImage2("SkillCardBack")})`;
+
+      case 1:
+        if (handNum === 1) {
+          return `url(${getImage2("SX-01")})`;
+        }
+        if (handNum < 4 && position === 2) {
+          return `url(${getImage2("SX-01")})`;
+        }
+        if (position === 3) {
+          return `url(${getImage2("SX-01")})`;
+        }
+        return `url(${getImage2("SkillCardBack")})`;
+
+      case 2:
+        if (handNum < 4) {
+          return `url(${getImage2("SX-01")})`;
+        }
+        if (position > 1) {
+          return `url(${getImage2("SX-01")})`;
+        }
+        return `url(${getImage2("SkillCardBack")})`;
+    }
+  };
+
   return (
     <div className="mainSkillHand">
       <div className="enemy-skillhand-container">
@@ -19,7 +58,8 @@ const EnemySkillHand = () => {
           <div
             className={`enemy-hand-card`}
             style={{
-              backgroundImage: `url(${getImage2("SkillCardBack")})`,
+              // backgroundImage: `url(${getImage2("SkillCardBack")})`,
+              backgroundImage: cardImage(1),
               //   top: -131,
               top: handNum < 5 && handNum % 2 === 0 ? -123 : -131,
               //   left: 160,
@@ -36,7 +76,8 @@ const EnemySkillHand = () => {
           <div
             className={`enemy-hand-card`}
             style={{
-              backgroundImage: `url(${getImage2("SkillCardBack")})`,
+              // backgroundImage: `url(${getImage2("SkillCardBack")})`,
+              backgroundImage: cardImage(2),
               top: -123,
               //   left: 220,
               left: handNum < 5 && handNum % 2 === 0 ? 195 : 220,
@@ -71,7 +112,7 @@ const EnemySkillHand = () => {
           <div
             className={`enemy-hand-card`}
             style={{
-              backgroundImage: `url(${getImage2("SkillCardBack")})`,
+              backgroundImage: cardImage(3),
               top: -110,
               //   left: 265,
               left: handNum < 5 && handNum % 2 === 0 ? 240 : 265,

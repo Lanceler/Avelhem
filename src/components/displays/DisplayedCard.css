@@ -65,7 +65,8 @@
 
 
 .zoom-card-image{
-    height: 75vh;
+    /* height: 75vh; */
+    height: 75%;
     z-index: 502;
     border-radius: 15px;
 }
