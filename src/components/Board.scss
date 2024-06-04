@@ -137,7 +137,7 @@
     border: goldenrod 3px solid;
     height: 800px;
     // min-height: 100%;
-    width: 1400px;
+    width: 1450px;
     margin-bottom: 20px;
     box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.35);
 
@@ -380,6 +380,16 @@
     filter: invert(100%);
     position: relative;
     top: 3px;
+    left: 6px;
+    cursor: pointer;
+}
+
+.question-icon2 {
+    height: 28px;
+    // color: white;
+    // filter: invert(100%);
+    position: relative;
+    top: 1px;
     left: 6px;
     cursor: pointer;
 }

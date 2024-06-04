@@ -711,6 +711,7 @@ display: flex;
 .unitInfo-text-desc {
     font-size: .925em;
     margin-left: 10px;
+    line-height: 1.4;
 }
 
 .unitInfo-text-last{
@@ -759,6 +760,12 @@ display: flex;
 .infoPopUp-list{
     position: relative;
     list-style-type: upper-alpha;
+    margin: 2px;
+    /* background-color: #b30000; */
+}
+
+.infoPopUp-list2 {
+    position: relative;
     margin: 2px;
     /* background-color: #b30000; */
 }

@@ -89,7 +89,7 @@ const PlayerAvelhemHand = (props) => {
               style={{
                 backgroundImage: `url(${getImage(getAvelhemById(card).Name)})`,
                 top: Math.floor(index / 2) * -110,
-                left: (index % 2) * -60,
+                left: 5 + (index % 2) * -60,
                 // left: (index % 5) * -30,
               }}
             ></div>

@@ -24,6 +24,12 @@ const InfoPopUp = (props) => {
     switch (props.info) {
       case "Tactics":
         return "Tactics Guide";
+
+      case "BP":
+        return "BP (Bounty Point) Info.";
+
+      case "FD":
+        return "FD (Fate Defiance) Info.";
     }
   };
 
@@ -87,11 +93,11 @@ const InfoPopUp = (props) => {
             </ol>
 
             <div className="unitInfo-text-heading2">
-              <em>
-                Note: Mobilize provides 3 (4 if upgraded) instances. Once a unit
-                has used any instances of a Mobilize tactic, they are prohibited
-                from using its remainder.
-              </em>
+              {/* <em> */}
+              Note: Mobilize provides 3 (4 if upgraded) instances. Once a unit
+              has used any instances of a Mobilize tactic, they are prohibited
+              from using its remainder.
+              {/* </em> */}
             </div>
 
             <br />
@@ -127,7 +133,50 @@ const InfoPopUp = (props) => {
                 Avelhem. ⬩You may recover 1 “Transcendence”.
               </li>
             </ol>
+
+            <br />
+
+            <div className="unitInfo-text-heading1">
+              <strong>Rally </strong>
+            </div>
+            <div className="unitInfo-text-heading2">
+              Sovereign Tactical Actions
+            </div>
+            <ol className="infoPopUp-list">
+              <li className="unitInfo-text-desc">
+                Use 1 instance to deploy a pawn in your frontier.
+              </li>
+            </ol>
           </>
+        );
+
+      case "BP":
+        return (
+          <div>
+            <div className="unitInfo-text-desc">
+              <p>
+                BP is a resource that can be spent on upgrades during the Bounty
+                Phase.
+              </p>
+              <p>
+                Sovereigns can possess up to 10 BP at a time; excesses gained
+                are forfeit.
+              </p>
+              <p>Sovereigns earn BP as follows:</p>
+
+              <ul className="infoPopUp-list2">
+                <li className="unitInfo-text-desc">
+                  1 BP when an enemy is eliminated.
+                </li>
+                <li className="unitInfo-text-desc">
+                  2 BP when an ally scores.
+                </li>
+                <li className="unitInfo-text-desc">
+                  3 BP when the opponent’s skill repertoire is depleted.
+                </li>
+              </ul>
+            </div>
+          </div>
         );
     }
   };

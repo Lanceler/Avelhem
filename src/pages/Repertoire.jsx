@@ -345,9 +345,6 @@ export default function Repertoire() {
 
   return (
     <div>
-      {/* <div>Repertoire: {id}</div>
-      {userData && userData.repertoire[id].name} */}
-
       <div className="repertoire-input-box">
         <form>
           <div className="repertoire-input">
@@ -390,11 +387,6 @@ export default function Repertoire() {
       </div>
 
       <br />
-      {/* <Link to="/repertoires">
-        <button>Return</button>
-      </Link>
-
-      <button onClick={() => handleSave()}>Save</button> */}
 
       <div className="repertoire-body">
         <div className="repertoire-main-division">

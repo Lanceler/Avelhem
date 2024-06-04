@@ -4,9 +4,11 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    /* align-items: center; */
+    /* background-color: aquamarine; */
+    /* overflow: scroll; */
+    position: relative;
 }
-
 
 .repertoire-main-division {
     display: grid;
@@ -21,13 +23,20 @@
     background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
     border-radius: 15px;
     transition: all 0.3s ease;
-    position: relative;
     align-items: center;
     display: flex;
     flex-direction: column;
     padding-bottom: 5px;
     box-shadow: 2px 2px 5px 2px rgba(6, 21, 61, 0.75);
     width: fit-content;
+
+        
+    position: relative;
+
+    /* position: absolute; */
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
 }
 
 .repertoire-header {
@@ -166,20 +175,6 @@
 }
 
 
-
-/* .repertoire-input-box form span {
-    position: absolute;
-    left: 0;
-    padding: 20px 0px 10px;
-    pointer-events: none;
-    color: white;
-    font-size: 1em;
-    letter-spacing: 0.05em;
-    transition: 0.5s;
-
-} */
-
-
 .repertoire-input-box form .repertoire-input i {
     position: absolute;
     left: 0;
@@ -201,8 +196,3 @@
     
 }
 
-
-/* .repertoire-input-box form .repertoire-input input:valid~i,
-.repertoire-input-box form .repertoire-input input:focus~i {
-    height: 44px;
-} */
