@@ -5082,7 +5082,7 @@ const Board = (props) => {
               </>
             )}
             <br />
-            Resolution:{" "}
+            Resolution2:{" "}
             {localGameState.currentResolution.length > 0 && (
               <>
                 {

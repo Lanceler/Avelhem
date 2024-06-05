@@ -6,6 +6,12 @@
     align-items: center;
     /* min-height: 100vh; */
     min-height: 90vh;
+
+    width: 100vw;
+    /* max-width: 1500px */
+    /* min-width: 1500px; */
+
+    overflow: scroll;
 }
 
 
