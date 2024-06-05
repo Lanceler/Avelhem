@@ -1,10 +1,10 @@
 .App-body{
   display: flex;
   background-color: black;
-  /* justify-content: center; */
+  justify-content: center;
 
 
-min-width: 1500px;
+  min-width: 1500px;
 
 
 }
@@ -18,10 +18,12 @@ min-width: 1500px;
   max-width: 1500px;
   background-color: rgb(90, 84, 84);
 
+  /* align-self: center; */
+
   /* overflow-x: scroll; */
 
-  left: 50%;
-  transform: translateX(-50%);
+  /* left: 50%;
+  transform: translateX(-50%); */
   position: relative;
 
 }
