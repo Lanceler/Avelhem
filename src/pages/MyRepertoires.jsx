@@ -74,7 +74,7 @@ export default function MyRepertoires() {
 
   return (
     <div className="repertoires-body">
-      <div>
+      <div className="repertoires-body2">
         <div className="threeColumn">
           {userData &&
             userData.repertoire.map((rep, index) => (

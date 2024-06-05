@@ -2,16 +2,26 @@
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
     /* min-height: 100vh; */
     min-height: 90vh;
 
-    width: 100vw;
-    /* max-width: 1500px */
+    /* width: 100vw; */
+    min-width: fit-content;
+    max-width: 1500px;
     /* min-width: 1500px; */
 
-    overflow: scroll;
+    /* overflow: scroll; */
+}
+
+.repertoires-body2 {
+    /* background-color: blue; */
+    left: 50%;
+    /* top: 50%; */
+    transform: translateX( -50%); 
+    position: relative;
+    
 }
 
 
