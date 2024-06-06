@@ -87,12 +87,13 @@
 }
 
 .avelhem-selection {
-    width: 516px;
+    width: 515px;
     height: 660px;
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
     padding: 0px 5px;
+
 }
 
 .skill-repertoire {
@@ -108,7 +109,7 @@
 }
 
 .skill-selection {
-    width: 510px;
+    width: 515px;
     height: 600px;
     display: flex;
     flex-wrap: wrap;

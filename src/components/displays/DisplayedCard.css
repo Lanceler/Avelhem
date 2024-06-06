@@ -66,14 +66,15 @@
 
 .zoom-card-image{
     height: 75vh;
+    /* min-height: 270px; */
     z-index: 502;
     border-radius: 15px;
 
-        position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
 }
 
 .zoom-body {
