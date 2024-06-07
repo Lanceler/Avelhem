@@ -27,9 +27,12 @@ const YouMayNoYes = (props) => {
 
   let updateData = false;
   if (
-    ["Block Virtue-Blast", "Mana Restructure", "Fervent Prayer"].includes(
-      props.details.reason
-    )
+    [
+      "Block Virtue-Blast",
+      "Mana Restructure",
+      "Fervent Prayer",
+      "Press the Attack Avelhem",
+    ].includes(props.details.reason)
   ) {
     updateData = true;
   }
@@ -60,7 +63,12 @@ const YouMayNoYes = (props) => {
     }
 
     //end
-    newGameState.currentResolution.pop();
+
+    const popExceptions = ["Press the Attack Pawn"];
+
+    if (!popExceptions.includes(props.details.reason)) {
+      newGameState.currentResolution.pop();
+    }
 
     switch (props.details.reason) {
       case "Block Virtue-Blast": //"Blocking Virtue-Blast"
@@ -396,8 +404,6 @@ const YouMayNoYes = (props) => {
         break;
 
       case "Press the Attack Pawn":
-        // props.enterDeployMode(getVacantFrontier());
-
         newGameState.currentResolution.push({
           resolution: "Deploying Pawn",
           zoneIds: getVacantFrontier(),

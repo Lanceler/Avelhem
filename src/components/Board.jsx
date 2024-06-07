@@ -593,7 +593,6 @@ const Board = (props) => {
           <>
             {self === localGameState.turnPlayer && !hideModal && (
               <AcquisitionPhaseSelection
-                enterDeployMode={enterDeployMode}
                 updateFirebase={updateFirebase}
                 hideOrRevealModale={hideOrRevealModale}
               />
@@ -3539,7 +3538,6 @@ const Board = (props) => {
                 {self === lastResolution.player && !hideModal && (
                   <YouMayNoYes
                     details={lastResolution.details}
-                    enterDeployMode={enterDeployMode}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3998,10 +3996,46 @@ const Board = (props) => {
     }, 1000);
   };
 
+  const cancelDeploy = () => {
+    const newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    const dice =
+      newGameState.currentResolution[newGameState.currentResolution.length - 1]
+        .dice;
+
+    if ([0, 1].includes(dice)) {
+      newGameState.tactics[dice].stock += 1;
+    }
+
+    newGameState.currentResolution.pop();
+
+    if (
+      newGameState.currentResolution[newGameState.currentResolution.length - 1]
+        .resolution2 === "Advance Avelhem Draw"
+    ) {
+      newGameState.currentResolution.pop();
+    }
+
+    dispatch(updateState(newGameState));
+
+    setValidZones([]);
+    setTileMode(null);
+
+    console.log("newGameState.currentResolution");
+    console.log(newGameState.currentResolution);
+  };
+
   const deployUnit = (r, c, unitClass) => {
     const newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    //end "Deploying unit"
+    const deployingPawn =
+      newGameState.currentResolution[newGameState.currentResolution.length - 1]
+        .resolution === "Deploying Pawn";
+
+    console.log("deployingPawn");
+    console.log(deployingPawn);
+
+    //end "Deploying Pawn / Scion"
     newGameState.currentResolution.pop();
 
     let newIndex = newGameState[self].units.indexOf(null);
@@ -4026,9 +4060,16 @@ const Board = (props) => {
     newZoneInfo[r][c].unitIndex = newIndex;
     newGameState.zones = JSON.stringify(newZoneInfo);
 
+    console.log("deployingPawn");
+    console.log(deployingPawn);
+
+    if (deployingPawn) {
+      newGameState.currentResolution.pop();
+    }
+
     if (localGameState.turnPhase === "Acquisition") {
       newGameState.turnPhase = "Bounty";
-      newGameState.currentResolution.pop();
+      // newGameState.currentResolution.pop();
       newGameState.currentResolution.push({
         resolution: "Bounty Phase Selection",
       });
@@ -4158,18 +4199,6 @@ const Board = (props) => {
 
     dispatch(updateState(newGameState));
     updateFirebase(newGameState);
-  };
-
-  const enterDeployMode = (zoneIds) => {
-    const newGameState = JSON.parse(JSON.stringify(localGameState));
-    newGameState.currentResolution.push({
-      resolution: "Deploying Pawn",
-      zoneIds: zoneIds,
-    });
-
-    dispatch(updateState(newGameState));
-
-    // updateFirebase(newGameState);
   };
 
   const enterMoveMode = (zoneIds, unit, gameState, tactic, pop) => {
@@ -5113,6 +5142,19 @@ const Board = (props) => {
                         onClick={() => endExecutionPhase()}
                       >
                         End Turn
+                      </button>
+                    )}
+
+                  {self === localGameState.turnPlayer &&
+                    localGameState.currentResolution.length > 0 &&
+                    localGameState.currentResolution[
+                      localGameState.currentResolution.length - 1
+                    ].resolution === "Deploying Pawn" && (
+                      <button
+                        className="choiceButton noYes"
+                        onClick={() => cancelDeploy()}
+                      >
+                        Cancel
                       </button>
                     )}
 

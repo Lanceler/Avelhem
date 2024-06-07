@@ -302,7 +302,7 @@ export default function Repertoire() {
         }
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         setIsLoading(false);
       });
   }, []);
@@ -317,9 +317,9 @@ export default function Repertoire() {
       unsubscribe = onSnapshot(documentRef, (docSnapshot) => {
         if (docSnapshot.exists()) {
           setUserData(docSnapshot.data());
-          console.log("Data was updated");
+          // console.log("Data was updated");
         } else {
-          console.log("Document does not exist");
+          // console.log("Document does not exist");
         }
       });
     }
@@ -330,7 +330,7 @@ export default function Repertoire() {
   useEffect(() => {
     if (userData) {
       if (![0, 1, 2].includes(id * 1)) {
-        console.log(id);
+        // console.log(id);
         navigate("/repertoires");
       } else {
         handleReloadAvelhem();

@@ -124,7 +124,13 @@ const AcquisitionPhaseSelection = (props) => {
 
     switch (selectedChoice) {
       case 0:
-        props.enterDeployMode(getVacantFrontier());
+        newGameState.currentResolution.push({
+          resolution: "Deploying Pawn",
+          zoneIds: getVacantFrontier(),
+        });
+
+        dispatch(updateState(newGameState));
+
         break;
 
       case 1:

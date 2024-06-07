@@ -251,7 +251,13 @@ const SelectSovereignTactic = (props) => {
   const handleSelect = () => {
     let updateData = true;
 
-    newGameState.currentResolution.pop();
+    const deployPawnSelected =
+      (face === "Advance" && selectedChoice === 0) ||
+      (face === "Rally" && selectedChoice === 0);
+
+    if (!deployPawnSelected) {
+      newGameState.currentResolution.pop();
+    }
 
     newGameState.tactics[props.dice].stock -= 1;
 
@@ -279,6 +285,7 @@ const SelectSovereignTactic = (props) => {
             newGameState.currentResolution.push({
               resolution: "Deploying Pawn",
               zoneIds: getVacantFrontier(),
+              dice: props.dice,
             });
             break;
 
@@ -400,7 +407,9 @@ const SelectSovereignTactic = (props) => {
             newGameState.currentResolution.push({
               resolution: "Deploying Pawn",
               zoneIds: getVacantFrontier(),
+              dice: props.dice,
             });
+
             break;
         }
         break;
