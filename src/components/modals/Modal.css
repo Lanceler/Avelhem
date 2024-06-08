@@ -141,8 +141,11 @@ background: rgb(117, 13, 13)
 
 
 .twoColumn{
-    grid-template-columns: 1fr 1fr;
-    display: grid;
+    /* grid-template-columns: 1fr 1fr;
+    display: grid; */
+
+    display: flex;
+    justify-content: center;
 }
 
 /* .justifyContents{
@@ -157,14 +160,18 @@ background: rgb(117, 13, 13)
 }
 
 .threeColumn {
-    grid-template-columns: 1fr 1fr 1fr;
-    display: grid;
+    /* grid-template-columns: 1fr 1fr 1fr;
+    display: grid; */
+        display: flex;
+            justify-content: center;
 
 }
 
 .fourColumn {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    display: grid;
+    /* grid-template-columns: 1fr 1fr 1fr 1fr;
+    display: grid; */
+            display: flex;
+                justify-content: center;
 }
 
 .scrollable{

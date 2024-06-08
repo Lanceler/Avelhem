@@ -85,6 +85,10 @@ import Piece from "./Piece";
 import PileOfCards from "./displays/PileOfCards";
 
 import Crosshair from "../assets/others/Crosshair.png";
+import UnitAbility from "../assets/others/UnitAbility.png";
+import UnitProfile from "../assets/others/UnitProfile.png";
+import UnitSkill from "../assets/others/UnitSkill.png";
+import UnitTactic from "../assets/others/UnitTactic.png";
 
 const Board = (props) => {
   const gameDoc = doc(db, "gameInfo", props.gameId);
@@ -4032,9 +4036,6 @@ const Board = (props) => {
       newGameState.currentResolution[newGameState.currentResolution.length - 1]
         .resolution === "Deploying Pawn";
 
-    console.log("deployingPawn");
-    console.log(deployingPawn);
-
     //end "Deploying Pawn / Scion"
     newGameState.currentResolution.pop();
 
@@ -4059,9 +4060,6 @@ const Board = (props) => {
     newZoneInfo[r][c].player = self;
     newZoneInfo[r][c].unitIndex = newIndex;
     newGameState.zones = JSON.stringify(newZoneInfo);
-
-    console.log("deployingPawn");
-    console.log(deployingPawn);
 
     if (deployingPawn) {
       newGameState.currentResolution.pop();
@@ -5094,7 +5092,9 @@ const Board = (props) => {
       {zones && localGameState && (
         <div>
           <div className="abilityText">
-            Turn Player: {localGameState.turnPlayer}
+            Turn Player:{" "}
+            {localGameState.turnPlayer !== null &&
+              localGameState[localGameState.turnPlayer].displayName}
             <br />
             Turn Count: {localGameState.turnCount}
             <br />
@@ -5185,7 +5185,9 @@ const Board = (props) => {
                       style={unitButtonPosition(expandedUnit)[0]}
                       onClick={() => handleUnitOptions("Info")}
                     >
-                      <div className="optionIcon">Info</div>
+                      <div className="optionIcon">
+                        <img src={UnitProfile} className="unitOptions" />
+                      </div>
                     </div>
 
                     {localGameState.currentResolution.length > 0 &&
@@ -5200,7 +5202,9 @@ const Board = (props) => {
                             style={unitButtonPosition(expandedUnit)[1]}
                             onClick={() => handleUnitOptions("Tactic")}
                           >
-                            <div className="optionIcon">Dice</div>
+                            <div className="optionIcon">
+                              <img src={UnitTactic} className="unitOptions" />
+                            </div>
                           </div>
                           {expandedUnit.unitClass !== "Pawn" && (
                             <>
@@ -5209,14 +5213,27 @@ const Board = (props) => {
                                 style={unitButtonPosition(expandedUnit)[2]}
                                 onClick={() => handleUnitOptions("Ability")}
                               >
-                                <div className="optionIcon">Abi</div>
+                                <div className="optionIcon">
+                                  {" "}
+                                  <img
+                                    src={UnitAbility}
+                                    className="unitOptions"
+                                  />
+                                </div>
                               </div>
                               <div
                                 className="pieceOption"
                                 style={unitButtonPosition(expandedUnit)[3]}
                                 onClick={() => handleUnitOptions("Skill")}
                               >
-                                <div className="optionIcon">Ski</div>
+                                <div className="optionIcon">
+                                  {/* Ski */}
+
+                                  <img
+                                    src={UnitSkill}
+                                    className="unitOptions"
+                                  />
+                                </div>
                               </div>
                             </>
                           )}

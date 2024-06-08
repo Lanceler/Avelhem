@@ -395,3 +395,14 @@
     cursor: pointer;
 }
 
+.optionIcon {
+    transform: rotate(-45deg);
+    display: flex;
+    overflow: hidden;
+}
+
+.unitOptions{
+position: relative;
+height: 20px;
+// background-color: #7cc07c;
+}

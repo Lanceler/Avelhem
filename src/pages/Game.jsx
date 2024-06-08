@@ -188,7 +188,7 @@ export default function Game() {
       case 1:
         return (
           <>
-            <div className="abilityText">Role: {userRole}</div>
+            {/* <div className="abilityText">Role: {userRole}</div> */}
             <Board
               gameState={gameData.gameState}
               gameId={gameData.id}
@@ -228,9 +228,7 @@ export default function Game() {
     <>
       {/* <div>Game</div> */}
       {/* {gameId && <div>Game Id: {gameId}</div>} */}
-      {gameData && (
-        <div className="abilityText">Creator: {gameData.hostName}</div>
-      )}
+      {gameData && <div className="abilityText">Host: {gameData.hostName}</div>}
       {error && <div className="abilityText">Error: {error}</div>}
       {readgameState()}
       {isLoading && <Loading />}

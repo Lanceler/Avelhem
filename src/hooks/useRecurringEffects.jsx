@@ -8,6 +8,7 @@ import Advance from "../assets/diceIcons/Advance.png";
 import Assault from "../assets/diceIcons/Assault.png";
 import Invoke from "../assets/diceIcons/Invoke.png";
 import Mobilize from "../assets/diceIcons/Mobilize.png";
+import Rally from "../assets/diceIcons/Rally.png";
 
 export const useRecurringEffects = () => {
   const { localGameState } = useSelector((state) => state.gameState);
@@ -3689,6 +3690,8 @@ export const useRecurringEffects = () => {
         return Assault;
       case "Invoke":
         return Invoke;
+      case "Rally":
+        return Rally;
       default:
         return;
     }
