@@ -159,18 +159,18 @@
 }
 
 .threeColumn {
-    /* grid-template-columns: 1fr 1fr 1fr;
-    display: grid; */
-        display: flex;
-            justify-content: center;
+    grid-template-columns: 1fr 1fr 1fr;
+    display: grid;
+        /* display: flex;
+            justify-content: center; */
 
 }
 
 .fourColumn {
-    /* grid-template-columns: 1fr 1fr 1fr 1fr;
-    display: grid; */
-            display: flex;
-                justify-content: center;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    display: grid;
+    /* display: flex;
+    justify-content: center; */
 }
 
 .scrollable{
@@ -384,7 +384,7 @@
     width: fit-content;
     /* margin: 4px; */
     padding: 4px 6px;
-    /* justify-self: end; */
+    justify-self: end;
     font-family: Arial, sans-serif;
     font-size: 20px;
     color: white;
