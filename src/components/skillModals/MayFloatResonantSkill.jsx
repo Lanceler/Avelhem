@@ -90,14 +90,11 @@ const MayFloatResonantSkill = (props) => {
         ></div>
 
         <div className="twoColumn bottomAnchor">
-          <button
-            className="choiceButton noYes"
-            onClick={() => handleDiscard()}
-          >
+          <button className="choiceButton" onClick={() => handleDiscard()}>
             Discard
           </button>
 
-          <button className="choiceButton noYes" onClick={() => handleFloat()}>
+          <button className="choiceButton" onClick={() => handleFloat()}>
             Float
           </button>
         </div>

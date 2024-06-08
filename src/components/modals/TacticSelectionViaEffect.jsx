@@ -441,11 +441,7 @@ const TacticSelectionViaEffect = (props) => {
         </div>
 
         {props.details.canSkip && (
-          <button
-            button
-            className="choiceButton noYes"
-            onClick={() => handleSkip()}
-          >
+          <button button className="choiceButton" onClick={() => handleSkip()}>
             {skipMessage}
           </button>
         )}

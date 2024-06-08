@@ -383,22 +383,19 @@ const YouMaySpend1Skill = (props) => {
         </div>
 
         {selectedSkill === null && (
-          <button className="choiceButton noYes" onClick={() => handleSkip()}>
+          <button className="choiceButton" onClick={() => handleSkip()}>
             Skip
           </button>
         )}
 
         {selectedSkill === null && props.unit && props.unit.blossom > 0 && (
-          <button
-            className="choiceButton noYes"
-            onClick={() => handleBlossom()}
-          >
+          <button className="choiceButton" onClick={() => handleBlossom()}>
             Spend 1 Blossom
           </button>
         )}
 
         {selectedSkill !== null && (
-          <button className="choiceButton noYes" onClick={() => handleSelect()}>
+          <button className="choiceButton" onClick={() => handleSelect()}>
             Select
           </button>
         )}

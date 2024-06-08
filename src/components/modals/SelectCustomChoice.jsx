@@ -851,13 +851,13 @@ const SelectCustomChoice = (props) => {
         </div>
 
         {selectedChoice === null && canSkip && (
-          <button className="choiceButton noYes" onClick={() => handleSkip()}>
+          <button className="choiceButton" onClick={() => handleSkip()}>
             Skip
           </button>
         )}
 
         {selectedChoice !== null && (
-          <button className="choiceButton noYes" onClick={() => handleSelect()}>
+          <button className="choiceButton" onClick={() => handleSelect()}>
             Select
           </button>
         )}

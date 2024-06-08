@@ -178,6 +178,38 @@ const InfoPopUp = (props) => {
             </div>
           </div>
         );
+
+      case "FD":
+        return (
+          <div>
+            <div className="unitInfo-text-desc">
+              <p>
+                FD is a resource that can be spent to obtain immediate benefits
+                during the Defiance Phase.
+              </p>
+              <p>
+                Some effects also require the expenditure of FD to activate.
+              </p>
+              <p>
+                Sovereigns can possess up to 6 FD at a time; excesses gained are
+                forfeited.
+              </p>
+              <p>Sovereigns earn FD as follows:</p>
+
+              <ul className="infoPopUp-list2">
+                <li className="unitInfo-text-desc">
+                  2 FD when an ally is eliminated.
+                </li>
+                <li className="unitInfo-text-desc">
+                  6 FD when an enemy scores.
+                </li>
+                <li className="unitInfo-text-desc">
+                  6 FD when the opponent’s skill repertoire is depleted.
+                </li>
+              </ul>
+            </div>
+          </div>
+        );
     }
   };
 

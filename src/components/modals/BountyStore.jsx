@@ -755,16 +755,13 @@ const BountyStore = (props) => {
         </div>
         <div>
           {selectedChoice === null && (
-            <button className="choiceButton noYes" onClick={() => handleSkip()}>
+            <button className="choiceButton" onClick={() => handleSkip()}>
               Proceed
             </button>
           )}
 
           {selectedChoice !== null && (
-            <button
-              className="choiceButton noYes"
-              onClick={() => handlePurchase()}
-            >
+            <button className="choiceButton" onClick={() => handlePurchase()}>
               Purchase
             </button>
           )}

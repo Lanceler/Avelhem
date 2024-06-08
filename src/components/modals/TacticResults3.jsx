@@ -90,10 +90,7 @@ const TacticResults3 = (props) => {
         <br />
 
         {selectedChoice !== null && (
-          <button
-            className="choiceButton noYes"
-            onClick={() => handleProceed()}
-          >
+          <button className="choiceButton" onClick={() => handleProceed()}>
             {`Disregard ${props.reroll[selectedChoice].face}`}
           </button>
         )}

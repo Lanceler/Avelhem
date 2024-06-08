@@ -358,16 +358,13 @@ const DefiancePhaseSelection = (props) => {
 
         <div>
           {selectedChoice === null && (
-            <button className="choiceButton noYes" onClick={() => handleSkip()}>
+            <button className="choiceButton" onClick={() => handleSkip()}>
               Skip
             </button>
           )}
 
           {selectedChoice !== null && (
-            <button
-              className="choiceButton noYes"
-              onClick={() => handleProceed()}
-            >
+            <button className="choiceButton" onClick={() => handleProceed()}>
               Select
             </button>
           )}

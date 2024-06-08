@@ -449,10 +449,10 @@ const YouMayNoYes = (props) => {
         <h3 className="noYesMessage">{props.details.message}</h3>
 
         <div className="twoColumn bottomAnchor">
-          <button className="choiceButton noYes" onClick={() => handleNo()}>
+          <button className="choiceButton" onClick={() => handleNo()}>
             {props.details.no}
           </button>
-          <button className="choiceButton noYes" onClick={() => handleYes()}>
+          <button className="choiceButton" onClick={() => handleYes()}>
             {props.details.yes}
           </button>
         </div>

@@ -481,13 +481,13 @@ const SelectSovereignTactic = (props) => {
         </div>
 
         {selectedChoice === null && (
-          <button className="choiceButton noYes" onClick={() => handleReturn()}>
+          <button className="choiceButton" onClick={() => handleReturn()}>
             Return
           </button>
         )}
 
         {selectedChoice !== null && (
-          <button className="choiceButton noYes" onClick={() => handleSelect()}>
+          <button className="choiceButton" onClick={() => handleSelect()}>
             Select
           </button>
         )}

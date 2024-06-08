@@ -216,16 +216,13 @@ const SelectElement = (props) => {
 
         <div>
           {canSkip && selectedChoice === null && (
-            <button className="choiceButton noYes" onClick={() => handleSkip()}>
+            <button className="choiceButton" onClick={() => handleSkip()}>
               Return
             </button>
           )}
 
           {selectedChoice !== null && (
-            <button
-              className="choiceButton noYes"
-              onClick={() => handleProceed()}
-            >
+            <button className="choiceButton" onClick={() => handleProceed()}>
               Select
             </button>
           )}

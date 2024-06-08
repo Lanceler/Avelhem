@@ -162,13 +162,13 @@ const SelectAvelhemHandMulti = (props) => {
         </div>
 
         {canSkip && selectedAvelhems.length === 0 && (
-          <button className="choiceButton noYes" onClick={() => handleSkip()}>
+          <button className="choiceButton" onClick={() => handleSkip()}>
             {skipMessage}
           </button>
         )}
 
         {selectedAvelhems.length > 0 && (
-          <button className="choiceButton noYes" onClick={() => handleSelect()}>
+          <button className="choiceButton" onClick={() => handleSelect()}>
             {selectMessage}
           </button>
         )}

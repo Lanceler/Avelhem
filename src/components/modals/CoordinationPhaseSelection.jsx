@@ -256,7 +256,7 @@ const CoordinationPhaseSelection = (props) => {
         </h3>
 
         {selectedChoice !== null && (
-          <button className="choiceButton noYes" onClick={() => handleSelect()}>
+          <button className="choiceButton" onClick={() => handleSelect()}>
             Select
           </button>
         )}

@@ -137,13 +137,13 @@ const PowerAtTheFinalHourProaction = (props) => {
         </div>
 
         {canSkip && selectedSkill === null && (
-          <button className="choiceButton noYes" onClick={() => handleSkip()}>
+          <button className="choiceButton" onClick={() => handleSkip()}>
             {SkipMessage}
           </button>
         )}
 
         {selectedSkill !== null && (
-          <button className="choiceButton noYes" onClick={() => handleSelect()}>
+          <button className="choiceButton" onClick={() => handleSelect()}>
             Select
           </button>
         )}

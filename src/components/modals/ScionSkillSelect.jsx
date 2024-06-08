@@ -127,19 +127,13 @@ const ScionSkillSelect = (props) => {
 
         {selectedSkill !== null &&
           canActivateSkill(props.unit, usableSkills[selectedSkill].id) && (
-            <button
-              className="choiceButton noYes"
-              onClick={() => handleSelect()}
-            >
+            <button className="choiceButton" onClick={() => handleSelect()}>
               Select
             </button>
           )}
 
         {canResonate && (
-          <button
-            className="choiceButton noYes"
-            onClick={() => handleResonate()}
-          >
+          <button className="choiceButton" onClick={() => handleResonate()}>
             Resonate
           </button>
         )}

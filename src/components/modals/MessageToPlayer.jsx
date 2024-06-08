@@ -22,7 +22,7 @@ const MessageToPlayer = (props) => {
         <h2 className="choiceTitle">{props.title}</h2>
         <h3>{props.message}</h3>
 
-        <button className="choiceButton noYes" onClick={() => handleProceed()}>
+        <button className="choiceButton" onClick={() => handleProceed()}>
           Proceed
         </button>
       </div>

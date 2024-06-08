@@ -119,7 +119,7 @@ const ViewSkillVestige = (props) => {
             )}
           </div>
 
-          <button className="choiceButton noYes" onClick={() => handleSkip()}>
+          <button className="choiceButton" onClick={() => handleSkip()}>
             Close
           </button>
         </div>

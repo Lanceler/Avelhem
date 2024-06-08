@@ -153,15 +153,12 @@ const ContingentAscension = (props) => {
         </div>
 
         {selectedSkill === null && (
-          <button className="choiceButton noYes" onClick={() => handleSkip()}>
+          <button className="choiceButton" onClick={() => handleSkip()}>
             Skip
           </button>
         )}
         {selectedSkill !== null && (
-          <button
-            className="choiceButton noYes"
-            onClick={() => handleActivate()}
-          >
+          <button className="choiceButton" onClick={() => handleActivate()}>
             Activate
           </button>
         )}

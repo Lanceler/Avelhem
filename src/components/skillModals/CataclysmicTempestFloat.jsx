@@ -109,10 +109,7 @@ const CataclysmicTempestFloat = (props) => {
         </div>
 
         {selectedSkills.length === selectAmount && (
-          <button
-            className="choiceButton noYes"
-            onClick={() => handleProceed()}
-          >
+          <button className="choiceButton" onClick={() => handleProceed()}>
             Select
           </button>
         )}

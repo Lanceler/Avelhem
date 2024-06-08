@@ -174,13 +174,13 @@ const GlacialTorrent1 = (props) => {
         </div>
 
         {selectedSkills.length === 0 && (
-          <button className="choiceButton noYes" onClick={() => handleSkip()}>
+          <button className="choiceButton" onClick={() => handleSkip()}>
             Skip
           </button>
         )}
 
         {selectedSkills.length > 0 && (
-          <button className="choiceButton noYes" onClick={() => handleSelect()}>
+          <button className="choiceButton" onClick={() => handleSelect()}>
             Select
           </button>
         )}

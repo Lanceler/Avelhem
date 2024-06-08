@@ -63,7 +63,7 @@ const ViewRevealedSkill = (props) => {
           </div>
         )}
 
-        <button className="choiceButton noYes" onClick={() => handleProceed()}>
+        <button className="choiceButton" onClick={() => handleProceed()}>
           Proceed
         </button>
       </div>

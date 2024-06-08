@@ -5138,7 +5138,7 @@ const Board = (props) => {
                       localGameState.currentResolution.length - 1
                     ].resolution === "Execution Phase" && (
                       <button
-                        className="choiceButton noYes"
+                        className="choiceButton"
                         onClick={() => endExecutionPhase()}
                       >
                         End Turn
@@ -5151,7 +5151,7 @@ const Board = (props) => {
                       localGameState.currentResolution.length - 1
                     ].resolution === "Deploying Pawn" && (
                       <button
-                        className="choiceButton noYes"
+                        className="choiceButton"
                         onClick={() => cancelDeploy()}
                       >
                         Cancel
@@ -5160,7 +5160,7 @@ const Board = (props) => {
 
                   {hideModal && (
                     <button
-                      className="choiceButton noYes"
+                      className="choiceButton"
                       onClick={() => hideOrRevealModale()}
                     >
                       Return to Modal

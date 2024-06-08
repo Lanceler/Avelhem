@@ -12,19 +12,19 @@ export default function SelectFirstPlayer(props) {
     <div className="modal-backdrop">
       <div className="modal">
         <button
-          className="choiceButton noYes"
+          className="choiceButton"
           onClick={() => props.onSetFirstPlayer("host")}
         >
           Go First
         </button>
         <button
-          className="choiceButton noYes"
+          className="choiceButton"
           onClick={() => props.onSetFirstPlayer("guest")}
         >
           Go Second
         </button>
         <button
-          className="choiceButton noYes"
+          className="choiceButton"
           onClick={() =>
             props.onSetFirstPlayer(getRandomFromArray(randomChoices))
           }

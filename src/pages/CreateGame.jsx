@@ -123,7 +123,7 @@ export default function MyGames() {
         below to start a new game.
       </div>
       <br />
-      <button className="choiceButton noYes" onClick={() => onCreateGame()}>
+      <button className="choiceButton" onClick={() => onCreateGame()}>
         Create Game
       </button>
     </>

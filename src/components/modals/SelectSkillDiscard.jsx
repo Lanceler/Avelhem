@@ -165,22 +165,19 @@ const SelectSkillDiscard = (props) => {
         </div>
 
         {selectedSkill === null && unit && unit.blossom > 0 && (
-          <button
-            className="choiceButton noYes"
-            onClick={() => handleBlossom()}
-          >
+          <button className="choiceButton" onClick={() => handleBlossom()}>
             Spend 1 Blossom
           </button>
         )}
 
         {selectedSkill === null && props.fever && unit.fever >= props.fever && (
-          <button className="choiceButton noYes" onClick={() => handleFever()}>
+          <button className="choiceButton" onClick={() => handleFever()}>
             {`Spend ${props.fever === 1 ? "1 Fever" : "2 Fevers"}`}
           </button>
         )}
 
         {selectedSkill !== null && (
-          <button className="choiceButton noYes" onClick={() => handleSelect()}>
+          <button className="choiceButton" onClick={() => handleSelect()}>
             Select
           </button>
         )}

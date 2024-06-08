@@ -147,13 +147,13 @@ const SelectAvelhemResonator = (props) => {
         </div>
 
         {selectedSkill === null && (
-          <button className="choiceButton noYes" onClick={() => handleCancel()}>
+          <button className="choiceButton" onClick={() => handleCancel()}>
             Cancel
           </button>
         )}
 
         {selectedSkill !== null && (
-          <button className="choiceButton noYes" onClick={() => handleSelect()}>
+          <button className="choiceButton" onClick={() => handleSelect()}>
             Select
           </button>
         )}

@@ -70,7 +70,7 @@ const VictoryScreen = (props) => {
         {/* <h3>{message3}</h3> */}
 
         {self === props.player && localGameState[self].score < 5 && (
-          <button className="choiceButton noYes" onClick={() => handleOffer()}>
+          <button className="choiceButton" onClick={() => handleOffer()}>
             {/* Offer to continue */}
             {message3}
           </button>

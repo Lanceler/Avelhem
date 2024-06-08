@@ -194,9 +194,13 @@ export default function Game() {
       case 0:
         return (
           <div className="abilityText">
-            Waiting... Copy the URL and send it to a friend to play with them.
+            Status: Waiting for opponent.
             <br />
-            <button onClick={handleCopyUrl}>Copy URL to Clipboard</button>
+            Send the URL to a friend to play with them.
+            <br />
+            <button className="choiceButton" onClick={handleCopyUrl}>
+              Copy URL to Clipboard
+            </button>
           </div>
         );
       case 1:
@@ -225,9 +229,11 @@ export default function Game() {
 
       case 2:
         return (
-          <>
-            <button onClick={() => onJoinGame()}>Join Game</button>
-          </>
+          <div className="abilityText">
+            <button className="choiceButton" onClick={() => onJoinGame()}>
+              Join Game
+            </button>
+          </div>
         );
       case 3:
         return <div className="abilityText">Spectate?</div>;

@@ -157,13 +157,13 @@ const SelectSkillReveal = (props) => {
         </div>
 
         {selectedSkill === null && (
-          <button className="choiceButton noYes" onClick={() => handleSkip()}>
+          <button className="choiceButton" onClick={() => handleSkip()}>
             Skip
           </button>
         )}
 
         {selectedSkill !== null && (
-          <button className="choiceButton noYes" onClick={() => handleSelect()}>
+          <button className="choiceButton" onClick={() => handleSelect()}>
             Select
           </button>
         )}
