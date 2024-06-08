@@ -36,6 +36,18 @@ export default function Game() {
   const queryParams = new URLSearchParams(queryString);
   const queryGame = queryParams.get("g");
 
+  const handleCopyUrl = () => {
+    const url = window.location.href;
+    navigator.clipboard
+      .writeText(url)
+      .then(() => {
+        alert("URL copied to clipboard");
+      })
+      .catch((err) => {
+        console.error("Failed to copy: ", err);
+      });
+  };
+
   //---Realtime data functionality below
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -183,6 +195,8 @@ export default function Game() {
         return (
           <div className="abilityText">
             Waiting... Copy the URL and send it to a friend to play with them.
+            <br />
+            <button onClick={handleCopyUrl}>Copy URL to Clipboard</button>
           </div>
         );
       case 1:
