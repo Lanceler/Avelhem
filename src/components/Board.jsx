@@ -5124,14 +5124,11 @@ const Board = (props) => {
             <br />
             {/* {JSON.stringify(tileMode)} {validZones.length} */}
           </div>
-          {!localGameState.turnPlayer && self === "host" && (
-            <SelectFirstPlayer onSetFirstPlayer={onSetFirstPlayer} />
-          )}
 
           <div className="board-physical">
-            <div className="section">
-              <div className="bigger-right-container">
-                <div className="right-container-button-location">
+            <div className="board-space">
+              <div className="board-left">
+                <div className="board-left-buttons">
                   {self === localGameState.turnPlayer &&
                     localGameState.currentResolution.length > 0 &&
                     localGameState.currentResolution[
@@ -5167,15 +5164,14 @@ const Board = (props) => {
                     </button>
                   )}
                 </div>
-                <div className="right-container">
+                <div className="activated-card-display">
                   <ActivatedSkills />
                 </div>
               </div>
 
               <div
-                // className="middle-container"
-                className={`middle-container ${
-                  !isYourTurn() ? "middle-container-enemy" : ""
+                className={`board-frame ${
+                  !isYourTurn() ? "board-frame-enemy" : ""
                 }`}
               >
                 {expandedUnit !== null && (
@@ -5327,7 +5323,7 @@ const Board = (props) => {
                 </div>
               </div>
 
-              <div className="left-container">
+              <div className="board-right">
                 <div className="hands-player">
                   <div className="skill-hand">
                     <EnemySkillHand />
@@ -5337,8 +5333,8 @@ const Board = (props) => {
                   </div>
                 </div>
 
-                <div className="lcMiddleContainer">
-                  <div className="rcm-top-bot">
+                <div className="deck-and-dice-container">
+                  <div className="deck-container">
                     <div className="skill-container">
                       <div className="skill-deck skill-container-item">
                         <PileOfCards team={enemy} pile={"skillRepertoire"} />
@@ -5347,7 +5343,7 @@ const Board = (props) => {
                         <PileOfCards team={enemy} pile={"skillVestige"} />
                       </div>
                     </div>
-                    <div className="rcmtb-mid">
+                    <div className="resource-points">
                       <div className="fd-counter">
                         {" "}
                         FD: {localGameState[enemy].fateDefiances} / 6{" "}
@@ -5384,10 +5380,10 @@ const Board = (props) => {
                       </div>
                     </div>
                   </div>
-                  <div className="rcm-middle">
+                  <div className="dice-container">
                     <SovereignTactics />
                   </div>
-                  <div className="rcm-top-bot">
+                  <div className="deck-container">
                     <div className="skill-container">
                       <div className="skill-deck skill-container-item">
                         <PileOfCards team={self} pile={"skillRepertoire"} />
@@ -5396,7 +5392,7 @@ const Board = (props) => {
                         <PileOfCards team={self} pile={"skillVestige"} />
                       </div>
                     </div>
-                    <div className="rcmtb-mid">
+                    <div className="resource-points">
                       <div className="fd-counter">
                         FD: {localGameState[self].fateDefiances} / 6{" "}
                         <svg
@@ -5453,6 +5449,10 @@ const Board = (props) => {
 
               {infoPopUp && (
                 <InfoPopUp info={infoPopUp} setInfoPopUp={setInfoPopUp} />
+              )}
+
+              {!localGameState.turnPlayer && self === "host" && (
+                <SelectFirstPlayer onSetFirstPlayer={onSetFirstPlayer} />
               )}
             </div>
           </div>

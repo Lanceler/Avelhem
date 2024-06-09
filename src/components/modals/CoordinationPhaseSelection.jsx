@@ -224,7 +224,12 @@ const CoordinationPhaseSelection = (props) => {
           ))}
         </div>
 
-        <h3>
+        <h3
+          style={{
+            marginTop: "5px",
+            marginBottom: "10px",
+          }}
+        >
           Tactical dice have the following faces:{"  "}
           <span className="unitInfo-tactic-group2">
             {" "}

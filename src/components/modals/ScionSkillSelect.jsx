@@ -89,7 +89,7 @@ const ScionSkillSelect = (props) => {
 
   return (
     <div className="modal-backdrop">
-      <div className={`modal ${usableSkills.length === 0 ? "modalNoYes" : ""}`}>
+      <div className={`modal`}>
         <h2 className="choiceTitle">Activate Scion Skill</h2>
 
         {usableSkills.length === 0 && <h3>No valid skills in hand.</h3>}

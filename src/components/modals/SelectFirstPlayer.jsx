@@ -10,7 +10,7 @@ export default function SelectFirstPlayer(props) {
 
   return (
     <div className="modal-backdrop">
-      <div className="modal">
+      <div className="modal column-centered">
         <button
           className="choiceButton"
           onClick={() => props.onSetFirstPlayer("host")}

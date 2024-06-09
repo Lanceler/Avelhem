@@ -816,7 +816,7 @@ const SelectCustomChoice = (props) => {
           </button>
         </div>
 
-        <div className="twoColumn">
+        <div className="twoColumn column-centered">
           <div
             className={`customChoice ${
               selectedChoice === 1 ? "selectedChoice" : ""

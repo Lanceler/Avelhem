@@ -39,13 +39,6 @@
 }
 
 
-.deck-container {
-    position: relative;
-    border-radius: 4px;
-    overflow:hidden;
-    width: fit-content
-}
-
 .hand-container {
     display: flex;
     width: 700px;
@@ -124,16 +117,16 @@
 
 }
 
-.section {
+.board-space {
     background: linear-gradient(to bottom, rgb(61, 61, 61), rgb(116, 116, 116) 60%, rgb(173, 173, 173) 100%);
     // height: 100vh;
     padding: 45px 20px;
     display: flex;
     align-items: center;
     overflow: hidden;
-        overflow-x: auto;
-        scrollbar-color: rgb(255, 168, 7) rgba(92, 63, 52, 0);
-            scrollbar-width: thin;
+    overflow-x: auto;
+    scrollbar-color: rgb(255, 168, 7) rgba(92, 63, 52, 0);
+    scrollbar-width: thin;
     border: goldenrod 3px solid;
     height: 800px;
     // min-height: 100%;
@@ -146,11 +139,12 @@
 
 }
 
-.bigger-right-container{
+.board-left{
     height: 100%;
-    width: 280px;
+    width: 290px;
+    // background-color: green;
 
-    .right-container-button-location {
+    .board-left-buttons {
         height: 10%;
         display: flex;
         justify-content: center;
@@ -158,18 +152,11 @@
     }
 }
 
-// actually left container
-.right-container {
-    // background-color: rgb(221, 162, 0);
-
+.activated-card-display {
     height: 80%;
-    width: 500px
-
-    // width: 20%;
-    // width: 280px;
 }
 
-.middle-container {
+.board-frame {
     // background-color: rgb(51, 46, 38);
     background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
     border: 2.5px solid goldenrod;
@@ -184,15 +171,14 @@
     
 }
 
-.middle-container-enemy {
+.board-frame-enemy {
     background: linear-gradient(to bottom, rgb(0, 0, 0), rgb(19, 15, 15) 60%, rgb(44, 43, 43) 100%);
 }
 
-//actually right container
-.left-container {
-    // background-color: rgb(212, 183, 104);
-    // width: 45%;
-    width: 700px;
+.board-right {
+    // background-color: rgb(255, 0, 0);
+    // width: 700px;\
+    width: fit-content;
     height: 80%;
     display: flex;
     flex-direction: column;
@@ -213,15 +199,14 @@
         width: 100%;
     }
 
-    .lcMiddleContainer {
+    .deck-and-dice-container {
         height: 100%;
-        // background-color: #838b83;
+        // background-color: #fff;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
 
-
-        .rcm-top-bot {
+        .deck-container{
             height: 33%;
             // background-color: rgb(201, 201, 189);
             display: flex;
@@ -232,6 +217,7 @@
                 justify-content: space-around;
                 align-items: center;
                 width: 33%;
+                // background-color: #fa0e5d;
 
                 .skill-container-item {
                     height: 100px;
@@ -241,13 +227,14 @@
                 }
             }
 
-            .rcmtb-mid {
+            .resource-points {
                     // background-color: red;
                     display: flex;
                     flex-direction: column;
                     justify-content: space-around;
                     align-items: center;
                     width: 33%;
+                    // background-color: red;
 
                     .fd-counter {
                         // background-color: black;
@@ -299,36 +286,14 @@
             }
         }
 
-        .rcm-middle {
+        .dice-container {
             height: 33%;
-            // background-color: rgba(252, 106, 106, 0.247);
+            width: auto;
+            // background-color: rgb(34, 31, 31);
+            padding: 10px 5px 10px 15px
         }
 
        
-    }
-
-    
-
-    .lc-player {
-        background-color: #fa0e5d;
-        width: 100%;
-        height: 15%;
-
-
-        // .avel-hand {
-        //     background-color: #ffffff94;
-        //     height: 40%;
-        //     width: 100%;
-        // }
-
-        // .skill-hand {
-        //     background-color: #0000007a;
-        //     // height: 60%;
-        //     // width: 100;
-        //     height: 75px;
-        //     width: 440px;
-        //     display: grid;
-        // }
     }
 
     .hands-player {
@@ -341,29 +306,21 @@
         
         
         .avel-hand {
-            // background-color: #ffffff94;
             height: 75px;
             width: 260px;
         }
 
         .skill-hand {
-            // background-color: #0000007a;
-            // height: 60%;
-            // width: 100;
             height: 75px;
             width: 440px;
             display: grid;
+            margin: 0 10px 0 15px
+            // background-color: red;
         }
     }
 
 
 }
-
-// .phase-indicator {
-//     background-color: green;
-//     width: 5%;
-//     height: 70%;
-// }
 
 .eye-icon{
     height: 22px;

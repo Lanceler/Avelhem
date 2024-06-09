@@ -29,7 +29,7 @@ const ContingentTarget = (props) => {
       break;
 
     case "blast":
-      targetType = "strike";
+      targetType = "blast";
       break;
 
     case "paralyze1":

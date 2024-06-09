@@ -94,7 +94,7 @@ const RecoverSkill = (props) => {
         // increase floating count
         newGameState[self].skillFloat = newGameState[self].skillFloat + 1;
       } else {
-        newGameState[self].skillVestige(skillToFloat);
+        newGameState[self].skillVestige.push(skillToFloat);
       }
     }
 
@@ -126,8 +126,11 @@ const RecoverSkill = (props) => {
           </button>
         </div>
 
-        <div className="scrollable scrollable-y-only">
-          <div className="fourColumn">
+        <div
+        // className="scrollable scrollable-y-only"
+        // className="scrollable"
+        >
+          <div className="fourColumn scrollable scrollable-y-only">
             {recoverVestige.map((usableSkill, i) => (
               <div
                 key={i}

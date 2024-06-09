@@ -18,7 +18,7 @@ const MessageToPlayer = (props) => {
 
   return (
     <div className="modal-backdrop">
-      <div className="modal modalNoYes">
+      <div className="modal">
         <h2 className="choiceTitle">{props.title}</h2>
         <h3>{props.message}</h3>
 

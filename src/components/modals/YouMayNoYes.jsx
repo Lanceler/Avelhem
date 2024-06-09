@@ -438,7 +438,7 @@ const YouMayNoYes = (props) => {
 
   return (
     <div className="modal-backdrop">
-      <div className="modal modalNoYes">
+      <div className="modal">
         <div className="twoColumn">
           <h2 className="choiceTitle">{props.details.title}</h2>
           <button className="choiceButton" onClick={() => handleViewBoard()}>

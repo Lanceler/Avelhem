@@ -451,7 +451,7 @@ const SelectSovereignTactic = (props) => {
 
         {message && <h4>{message}</h4>}
 
-        <div className={modalColumn}>
+        <div className={modalColumn} column-centered>
           {abilityDetails.map((detail, i) => (
             <div
               key={i}

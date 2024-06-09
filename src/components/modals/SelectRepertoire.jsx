@@ -73,7 +73,7 @@ export default function SelectRepertoire(props) {
       <div className="modal">
         <h1>Select your repertoire.</h1>
 
-        <div className="threeColumn">
+        <div className="threeColumn column-centered">
           {repertoireList &&
             repertoireList.map((rep, index) => (
               // <div key={index}>
