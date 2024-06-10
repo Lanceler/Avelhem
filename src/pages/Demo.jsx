@@ -234,14 +234,14 @@ export default function Demo() {
           />
         )}
 
-        {/* {currentPlayer === "guest" && (
+        {currentPlayer === "guest" && (
           <Board
             gameState={demoGameState}
             userRole={"guest"}
             demo={true}
             setDemoGameState={setDemoGameState}
           />
-        )} */}
+        )}
 
         <button
           className="choiceButton demo-switch-button"
