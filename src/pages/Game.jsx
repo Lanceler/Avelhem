@@ -10,7 +10,6 @@ import {
   collection,
   query,
   where,
-  addDoc,
   updateDoc,
   doc,
   onSnapshot,
@@ -115,7 +114,7 @@ export default function Game() {
     } else {
       SetUserRole("");
     }
-    console.log("Role identified: " + userRole);
+    // console.log("Role identified: " + userRole);
   }, [gameData && gameData.hostId, gameData && gameData.guestId]);
 
   //---Realtime data functionality above

@@ -80,8 +80,7 @@ const ViewBPUpgrades = (props) => {
                 )}
                 {upgrades.acquisition >= 3 && (
                   <p className="unitInfo-text-desc">
-                    Sovereign may spend 1 skill to draw another skill via
-                    Cultivate.
+                    May spend 1 skill to draw another skill via Cultivate.
                   </p>
                 )}
                 <br />
@@ -119,24 +118,23 @@ const ViewBPUpgrades = (props) => {
 
                 {upgrades.tactics >= 1 && (
                   <p className="unitInfo-text-desc">
-                    Invoke upgraded: Unlocked Divine Invocation
+                    Invoke upgraded: unlocked Divine Invocation
                   </p>
                 )}
                 {upgrades.tactics >= 2 && (
                   <p className="unitInfo-text-desc">
-                    Advance upgraded: Sovereign may draw 1 Avelhem after
-                    deploying a pawn.
+                    Advance upgraded: may draw 1 Avelhem after deploying a pawn.
                   </p>
                 )}
                 {upgrades.tactics >= 3 && (
                   <p className="unitInfo-text-desc">
-                    Mobilize upgraded: Instances raised from 3 to 4.
+                    Mobilize upgraded: instances raised from 3 to 4.
                   </p>
                 )}
                 {upgrades.tactics >= 4 && (
                   <p className="unitInfo-text-desc">
-                    Advance upgraded: Sovereign may float 1 skill to deploy a
-                    Scion in their frontier.
+                    Advance upgraded: can float 1 skill to deploy a Scion in
+                    their frontier.
                   </p>
                 )}
                 <br />
@@ -156,7 +154,7 @@ const ViewBPUpgrades = (props) => {
                 )}
                 {upgrades.avelhem >= 2 && (
                   <p className="unitInfo-text-desc">
-                    Avelhems have an alternate effect: Spend 3 FD to search for
+                    Avelhems have an alternate effect: spend 3 FD to search for
                     1 non-burst skill with the matching aspect.
                   </p>
                 )}
@@ -167,7 +165,7 @@ const ViewBPUpgrades = (props) => {
                 )}
                 {upgrades.avelhem >= 4 && (
                   <p className="unitInfo-text-desc">
-                    Avelhems have an alternate effect: Spend 3 FD to recover 1
+                    Avelhems have an alternate effect: spend 3 FD to recover 1
                     skill with the matching aspect.
                   </p>
                 )}

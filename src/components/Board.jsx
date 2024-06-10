@@ -91,7 +91,14 @@ import UnitSkill from "../assets/others/UnitSkill.png";
 import UnitTactic from "../assets/others/UnitTactic.png";
 
 const Board = (props) => {
-  const gameDoc = doc(db, "gameInfo", props.gameId);
+  let gameDoc = null;
+
+  if (props.demo) {
+    // to do
+  } else {
+    gameDoc = doc(db, "gameInfo", props.gameId);
+  }
+
   const dispatch = useDispatch();
 
   const { localGameState } = useSelector((state) => state.gameState);
@@ -526,11 +533,15 @@ const Board = (props) => {
   };
 
   const updateFirebase = (newGameState) => {
-    try {
-      updateDoc(gameDoc, { gameState: newGameState });
-    } catch (err) {
-      console.log(err);
-      console.log(newGameState);
+    if (props.demo) {
+      props.setDemoGameState(newGameState);
+    } else {
+      try {
+        updateDoc(gameDoc, { gameState: newGameState });
+      } catch (err) {
+        console.log(err);
+        // console.log(newGameState);
+      }
     }
   };
 
@@ -5002,7 +5013,7 @@ const Board = (props) => {
 
   //=========================
   //=========================
-  const onSetFirstPlayer = async (choice) => {
+  const handleSetFirstPlayer = (choice) => {
     const newGameState = JSON.parse(JSON.stringify(localGameState));
 
     newGameState.turnPlayer = choice;
@@ -5452,7 +5463,9 @@ const Board = (props) => {
               )}
 
               {!localGameState.turnPlayer && self === "host" && (
-                <SelectFirstPlayer onSetFirstPlayer={onSetFirstPlayer} />
+                <SelectFirstPlayer
+                  handleSetFirstPlayer={handleSetFirstPlayer}
+                />
               )}
             </div>
           </div>

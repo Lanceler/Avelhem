@@ -23,6 +23,8 @@ import MyRepertoires from "./pages/MyRepertoires";
 import Repertoire from "./pages/Repertoire";
 import CreateGame from "./pages/CreateGame";
 import Game from "./pages/Game";
+import Demo from "./pages/Demo";
+import Rules from "./pages/Rules";
 
 function App() {
   const { user, authIsReady } = useAuthContext();
@@ -68,6 +70,10 @@ function App() {
                 path="/game"
                 element={user ? <Game /> : <Navigate to="/login" />}
               />
+
+              <Route path="/rules" element={<Rules />} />
+
+              <Route path="/demo" element={<Demo />} />
             </Routes>
           </BrowserRouter>
         )}

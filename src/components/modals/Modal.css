@@ -8,8 +8,6 @@
     z-index: 500
 }
 
-
-
 .modal{
     padding: 20px ;
     max-height: 1000px;
@@ -23,40 +21,11 @@
     position: relative;
     top: 50%;
     transform: translateY(-50%);
-
-
-
-
-
-
 }
 
-
-
-/* .modalNoYes {
-    margin: 300px auto;
-    min-height: 200px;
-    justify-content: space-between;
-    display: flex;
-    flex-direction: column;
-} */
 
 .bountyHeader {
     justify-content: space-between;
-}
-
-.phaseSelection{
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-gap: 8px;
-    margin: 10px;
-}
-
-.aquisitionSelection {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 8px;
-    margin: 10px;
 }
 
 .choiceWithDescription{
@@ -78,7 +47,6 @@
     cursor: default;
 }
 
-
 .tactic{
     padding: 10px;
     height: 280px;
@@ -99,15 +67,12 @@
     height: 270px;
     position: relative;
     top: 50%;
-    /* Move the image down by 50% of its height */
-    left: 50%;
-    /* Move the image right by 50% of its width */
-    transform: translate(-50%, -50%);
-    /* Center the image */
 
+    left: 50%;
+
+    transform: translate(-50%, -50%);
 
 }
-
 
 .tactic-label{
     text-align: center;
@@ -144,13 +109,6 @@
     grid-template-columns: 1fr 1fr;
     display: grid;
 }
-/* 
-.twoColumn-center {
-
-    display: flex;
-    justify-content: center;
-} */
-
 
 .twoColumn3-1 {
     grid-template-columns: 3fr 1fr;
@@ -235,8 +193,6 @@
     max-height: 320px !important;
 }
 
-
-
 .customChoice {
     border: 4px solid rgba(0, 0, 0, 1.0);
     text-align: center;
@@ -249,8 +205,6 @@
     background-repeat: no-repeat;
     background-position: center;  
 }
-
-
 
 .customChoiceFrame {
     /* position: absolute; */
@@ -274,9 +228,6 @@
 
     padding-top: 10px;
 
-    /* vertical alignment */
-    /* justify-content: center; */
-    /* horizontal alignment */
     display: flex;
     flex-direction: column;
 }
@@ -290,22 +241,15 @@
 
 .customChoiceSmaller {
     height: 180px;
-
     width: 95%;
-    /* max-width: 383px;  */
-
-    /* width: 180px; */
-    /* width: 90%; */
     padding: 4px;
     margin: 5px 5px 15px 5px;
 }
 
 .customChoiceElement{
-    
     height: 180px;
     width: 165px;
     padding: 4.5px 7px;
-
 }
 
 
@@ -337,11 +281,7 @@
     font-family: Arial, sans-serif;
     font-size: 22px;
 
-
     height: 80px;
-    /* height: 75%; */
-    /* max-height: 80px */
-
 }
 
 .bpCost {
@@ -363,7 +303,9 @@
 }
 
 .selectedChoice{
-        border: 4px solid rgba(52, 185, 35, 0.65);
+    /* border: 4px solid rgba(52, 185, 35, 0.65); */
+
+    border: 4px solid  rgb(72, 209, 30);
 }
 
 
@@ -377,10 +319,12 @@
 .choiceTitle {
     color: rgb(0, 0, 0);
     font-family: "Times New Roman", Times, serif;
-    font-size: 40px;
+    /* font-size: 40px; */
+    font-size: 45px;
     line-height: 135%;
     position: relative;
     align-self: left;
+    padding: 0px 0px 10px;
 }
 
 .smallerTitle{
@@ -401,16 +345,6 @@
     border-color: goldenrod;
     min-width: 100px;
     align-self: self-end;
-}
-
-/* .noYes{
-    min-width: 100px;
-    justify-self: center;
-        
-} */
-
-.noYesMessage {
-margin-bottom: 30px;
 }
 
 .choiceButton:hover{

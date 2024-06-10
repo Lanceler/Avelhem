@@ -13,20 +13,20 @@ export default function SelectFirstPlayer(props) {
       <div className="modal column-centered">
         <button
           className="choiceButton"
-          onClick={() => props.onSetFirstPlayer("host")}
+          onClick={() => props.handleSetFirstPlayer("host")}
         >
           Go First
         </button>
         <button
           className="choiceButton"
-          onClick={() => props.onSetFirstPlayer("guest")}
+          onClick={() => props.handleSetFirstPlayer("guest")}
         >
           Go Second
         </button>
         <button
           className="choiceButton"
           onClick={() =>
-            props.onSetFirstPlayer(getRandomFromArray(randomChoices))
+            props.handleSetFirstPlayer(getRandomFromArray(randomChoices))
           }
         >
           Random

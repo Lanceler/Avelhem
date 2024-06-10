@@ -66,6 +66,12 @@ const ViewSkillVestige = (props) => {
         <div className="modal">
           <div className="twoColumn3-1">
             <h2 className="choiceTitle">{`${props.vestige} Vestige`}</h2>
+            <button
+              className="collapseSelected unitInfo-close"
+              onClick={() => handleSkip()}
+            >
+              X
+            </button>
           </div>
 
           <div className="scrollable scrollable-y-only">
@@ -117,11 +123,17 @@ const ViewSkillVestige = (props) => {
                 </div>
               </>
             )}
+
+            {(props.team !== self && shattered.length) === 0 && (
+              <>
+                <h3>No cards available for viewing.</h3>
+              </>
+            )}
           </div>
 
-          <button className="choiceButton" onClick={() => handleSkip()}>
+          {/* <button className="choiceButton" onClick={() => handleSkip()}>
             Close
-          </button>
+          </button> */}
         </div>
       </div>
     </>

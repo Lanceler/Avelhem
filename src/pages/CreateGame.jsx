@@ -121,11 +121,12 @@ export default function MyGames() {
       <div className="abilityText">
         This page is under construction. For the time being, press the button
         below to start a new game.
+        <br />
+        <br />
+        <button className="choiceButton" onClick={() => onCreateGame()}>
+          Create Game
+        </button>
       </div>
-      <br />
-      <button className="choiceButton" onClick={() => onCreateGame()}>
-        Create Game
-      </button>
     </>
   );
 }
