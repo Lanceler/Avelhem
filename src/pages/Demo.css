@@ -1,6 +1,8 @@
 .demo-body {
     /* background-color: rgb(252, 163, 163); */
     /* height: 1050px; */
+    min-height: fit-content;
+
 }
 
 
@@ -10,6 +12,14 @@
     width: fit-content;
     left: 50%;
     transform: translateX(-50%);
+}
+
+.demo-board{
+    /* background-color: rgb(255, 202, 202); */
+    /* min-height: 1000px; */
+    height: 1060px;
+    /* min-height: 1000px; */
+
 
 }
 
@@ -18,4 +28,5 @@
     top: 995px;
     left: 140px;
     /* margin-bottom: 300px; */
+    margin: 0px;
 }
