@@ -10,17 +10,22 @@
 
 .modal{
     padding: 20px ;
-    max-height: 1000px;
+    /* max-height: 1000px; */
+    max-height: 80vh;
+
     width: fit-content;
     min-width: 50%;
     max-width: 950px;
+
     margin: 0px auto;
     background: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
-
     position: relative;
     top: 50%;
     transform: translateY(-50%);
+
+    overflow-y: scroll;
+    scrollbar-width: thin;
 }
 
 
@@ -526,15 +531,15 @@
 
 .unitInfoModal{
     padding: 30px;
-        height: 650px;
-        width: 740px;
-        /* max-width: 850px; */
-        margin: 100px auto;
-        background: rgba(255, 255, 255, 0.875);
-        border-radius: 10px;
-        display: flex;
-        flex-direction: column;
-        /* justify-content: flex-end; */
+    height: 650px;
+    width: 740px;
+    /* max-width: 850px; */
+     margin: 100px auto;
+    background: rgba(255, 255, 255, 0.875);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: flex-end; */
 }
 
 .unitInfoHeader{

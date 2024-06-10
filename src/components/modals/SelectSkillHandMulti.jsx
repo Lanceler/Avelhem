@@ -350,27 +350,29 @@ const SelectSkillHandMulti = (props) => {
           ))}
         </div>
 
-        {canSkip && selectedSkills.length === 0 && (
-          <button className="choiceButton" onClick={() => handleSkip()}>
-            {skipMessage}
-          </button>
-        )}
-
-        {selectedSkills.length > 0 &&
-          !["Skill Hand Limit", "Battle Cry"].includes(
-            props.details.reason
-          ) && (
-            <button className="choiceButton" onClick={() => handleSelect()}>
-              {selectMessage}
+        <div>
+          {canSkip && selectedSkills.length === 0 && (
+            <button className="choiceButton" onClick={() => handleSkip()}>
+              {skipMessage}
             </button>
           )}
 
-        {["Skill Hand Limit", "Battle Cry"].includes(props.details.reason) &&
-          selectedSkills.length === props.details.count && (
-            <button className="choiceButton" onClick={() => handleSelect()}>
-              {selectMessage}
-            </button>
-          )}
+          {selectedSkills.length > 0 &&
+            !["Skill Hand Limit", "Battle Cry"].includes(
+              props.details.reason
+            ) && (
+              <button className="choiceButton" onClick={() => handleSelect()}>
+                {selectMessage}
+              </button>
+            )}
+
+          {["Skill Hand Limit", "Battle Cry"].includes(props.details.reason) &&
+            selectedSkills.length === props.details.count && (
+              <button className="choiceButton" onClick={() => handleSelect()}>
+                {selectMessage}
+              </button>
+            )}
+        </div>
       </div>
     </div>
   );

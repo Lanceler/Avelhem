@@ -58,6 +58,7 @@ const DefiancePhaseSelection = (props) => {
             title: "Defiance: Arcana",
             message:
               "Place up to 4 skills from your hand at the bottom of your repertoire, then draw the same number. Skills selected earlier will be placed below subsequent ones.",
+            // "Test.",
             count: 4,
           },
         });
