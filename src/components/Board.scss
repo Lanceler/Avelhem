@@ -337,7 +337,7 @@
     // left: 2px
 }
 
-.question-icon, .question-icon2 {
+.question-icon0, .question-icon, .question-icon2 {
     height: 22px;
     fill: white;
     position: relative;
@@ -347,10 +347,16 @@
     cursor: pointer;
 }
 
+.question-icon0 {
+    height: 18px;
+    fill: black;
+    margin: 0 2px;
+    cursor: default;
+}
+
 .question-icon2 {
     height: 28px;
     fill: black;
-
 }
 
 .question-icon:hover,
