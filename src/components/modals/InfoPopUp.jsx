@@ -30,6 +30,9 @@ const InfoPopUp = (props) => {
 
       case "FD":
         return "FD (Fate Defiance) Info.";
+
+      case "Demo":
+        return "Gameplay Demo";
     }
   };
 
@@ -207,6 +210,99 @@ const InfoPopUp = (props) => {
                   6 FD when the opponent’s skill repertoire is depleted.
                 </li>
               </ul>
+            </div>
+          </div>
+        );
+
+      case "Demo":
+        return (
+          <div>
+            <div className="unitInfo-text-desc">
+              <p>
+                <em>
+                  Note: You can close this message by clicking on the X button
+                  to the right. If you wish to view this again, click on the (?)
+                  beside the page header.
+                </em>
+              </p>
+              <br />
+              <p>
+                <strong>
+                  Thank you for trying this demo. Please note the following:
+                </strong>
+              </p>
+              <br />
+              <p>
+                1. This demo allows you play as both players. Identical
+                pre-constructed repertoires (decks) have been provided, and they
+                will be shuffled. To switch player perspective, click on the
+                “Switch Player” button at the bottom left of the board.
+              </p>
+
+              <br />
+              <p>
+                2. This game is coded with rule enforcement and semi-automation.
+                If anything appears inconsistent with your interpretation of the
+                rules, please let me know. (You can contact me via Discord, my
+                username is Lanceler.)
+              </p>
+
+              <br />
+              <p>
+                3. The game board’s color can either be red or black. It appears
+                red to player with priority (usually the turn player). If it
+                appears black, switch player to proceed.
+              </p>
+
+              <br />
+              <p>
+                4. The state of the game will not be saved if you leave the
+                demo.{" "}
+                <em>
+                  (Note: Real games are saved, allowing players to resume
+                  progress whenever.)
+                </em>
+              </p>
+
+              <br />
+              <p>
+                5. To activate an Avelhem or Sovereign skill card, you must
+                first raise your entire hand by clicking on it. Once the cards
+                have been raised, you can click on an individual one to display
+                it. If you can activate (or even resonate) the displayed card,
+                the option will appear.
+              </p>
+
+              <br />
+              <p>
+                6. To use a tactical die, click on it. You can find them at the
+                right of the board, between both players’ skill repertoires.
+              </p>
+
+              <br />
+              <p>7. Clicking on a unit will display its available options.</p>
+              <ul className="infoPopUp-list2">
+                <li className="unitInfo-text-desc">
+                  Top-left: display unit info
+                </li>
+                <li className="unitInfo-text-desc">
+                  Top-right: activate tactical action
+                </li>
+                <li className="unitInfo-text-desc">
+                  Bottom-left: activate skill card
+                </li>
+                <li className="unitInfo-text-desc">
+                  Bottom-right: activate ability
+                </li>
+              </ul>
+              <br />
+              <p>
+                8. Feel free to contact me with any feedback (especially for
+                either game or UI improvements.) Again, my Discord username is
+                Lanceler.
+              </p>
+
+              <br />
             </div>
           </div>
         );

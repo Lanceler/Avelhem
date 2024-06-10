@@ -1,0 +1,21 @@
+.demo-body {
+    /* background-color: rgb(252, 163, 163); */
+    height: 1050px;
+}
+
+
+.demo-header{
+    color: white;
+    position: relative;
+    width: fit-content;
+    left: 50%;
+    transform: translateX(-50%);
+
+}
+
+.demo-switch-button {
+    position: absolute;
+    top: 995px;
+    left: 140px;
+    /* margin-bottom: 300px; */
+}

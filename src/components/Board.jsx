@@ -5171,7 +5171,7 @@ const Board = (props) => {
                       className="choiceButton"
                       onClick={() => hideOrRevealModale()}
                     >
-                      Return to Modal
+                      Return to Message
                     </button>
                   )}
                 </div>
