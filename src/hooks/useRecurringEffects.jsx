@@ -4639,7 +4639,7 @@ export const useRecurringEffects = () => {
     //end "Select Healing Rain Activator"
     newGameState.currentResolution.pop();
 
-    const zonesWithAllies = getZonesWithAllies(victim, 1, true);
+    const zonesWithAllies = getZonesWithAllies(victim, 2, true);
     let zonesWithWaterScions = [];
 
     for (let z of zonesWithAllies) {
@@ -5004,9 +5004,9 @@ export const useRecurringEffects = () => {
 
   const triggerHealingRain = (victim) => {
     const zones = JSON.parse(localGameState.zones);
-    const adjacentAllies = getZonesWithAllies(victim, 1, true); // includes self
+    const alliesInRange = getZonesWithAllies(victim, 2, true); // includes self
 
-    for (let i of adjacentAllies) {
+    for (let i of alliesInRange) {
       const zone = zones[Math.floor(i / 5)][i % 5];
       const unit = localGameState[zone.player].units[zone.unitIndex];
 
