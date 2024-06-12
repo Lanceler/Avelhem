@@ -73,6 +73,17 @@ const SelectSkillReveal = (props) => {
         revealMessage = "Your opponent has revealed 1 Wind Skill";
         break;
 
+      case "Upheaval":
+        newGameState.currentResolution.push({
+          resolution: "Land Skill",
+          resolution2: "UpheavalR3",
+          unit: unit,
+        });
+
+        revealTitle = "Upheaval";
+        revealMessage = "Your opponent has revealed 1 Land Skill";
+        break;
+
       case "Valiant Spark":
         unit.boosts.valiantSpark = true;
         newGameState[props.unit.player].units[props.unit.unitIndex] = unit;

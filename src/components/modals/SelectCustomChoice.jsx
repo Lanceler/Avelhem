@@ -115,10 +115,14 @@ const SelectCustomChoice = (props) => {
 
     case "Upheaval":
       canFirstChoice =
-        canMove(unit) && localGameState[props.unit.player].skillHand.length > 0;
+        canMove(unit) &&
+        ["04-01", "04-02", "04-03", "04-04"].some((s) =>
+          localGameState[unit.player].skillHand.includes(s)
+        );
+
       canSecondChoice = true;
-      ChoiceFirstMessage = "Spend 1 skill to traverse.";
-      ChoiceSecondMessage = "Search for then float 1 non-burst Land skill.";
+      ChoiceFirstMessage = "Reveal 1 Land skill to traverse.";
+      ChoiceSecondMessage = "Search for 1 non-burst Land skill.";
       break;
 
     case "Geomancy":
@@ -426,18 +430,30 @@ const SelectCustomChoice = (props) => {
 
       case "Upheaval":
         if (selectedChoice === 1) {
-          newGameState.currentResolution.push({
-            resolution: "Land Skill",
-            resolution2: "UpheavalR3",
-            unit: unit,
-          });
+          // newGameState.currentResolution.push({
+          //   resolution: "Land Skill",
+          //   resolution2: "UpheavalR3",
+          //   unit: unit,
+          // });
+
+          // newGameState.currentResolution.push({
+          //   resolution: "Discard Skill",
+          //   unit: unit,
+          //   player: self,
+          //   message: "Spend 1 skill.",
+          //   restriction: null,
+          // });
 
           newGameState.currentResolution.push({
-            resolution: "Discard Skill",
+            resolution: "Land Skill",
+            resolution2: "UpheavalR2.5",
             unit: unit,
-            player: self,
-            message: "Spend 1 skill.",
-            restriction: null,
+            details: {
+              title: "Upheaval",
+              message: "Reveal 1 Land skill to traverse.",
+              restriction: ["04-01", "04-02", "04-03", "04-04"],
+              reason: "Upheaval",
+            },
           });
         } else {
           updateData = true;
@@ -445,8 +461,8 @@ const SelectCustomChoice = (props) => {
             resolution: "Search Skill",
             player: self,
             restriction: ["04-01", "04-02", "04-03"],
-            message: "Search for then float 1 non-burst Land skill.",
-            outcome: "Float",
+            message: "Search for 1 non-burst Land skill.",
+            outcome: "Add",
           });
         }
         break;

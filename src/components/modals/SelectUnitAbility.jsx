@@ -785,7 +785,7 @@ const SelectUnitAbility = (props) => {
         <div
           className={`${
             abilityDetails.length === 2 ? "twoColumn" : "oneAbility"
-          }`}
+          } column-centered`}
         >
           {abilityDetails.map((detail, i) => (
             <div

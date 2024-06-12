@@ -495,12 +495,14 @@ const Board = (props) => {
         setUnitInfor(expandedUnit);
 
         // //for testing: quick movement
+
         // enterMoveMode(
         //   getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
         //   expandedUnit,
         //   newGameState,
         //   null
         // );
+
         // //for testing: quick movement
         break;
 
@@ -2342,6 +2344,20 @@ const Board = (props) => {
               <>
                 {self === lastResolution.unit.player && !hideModal && (
                   <SelectCustomChoice
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "UpheavalR2.5":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <SelectSkillReveal
                     unit={lastResolution.unit}
                     details={lastResolution.details}
                     updateFirebase={updateFirebase}
