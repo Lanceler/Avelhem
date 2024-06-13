@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../redux/gameState";
+import { updateDemo } from "../redux/demoGuide";
 
 import "./Piece.css";
 
@@ -22,6 +23,7 @@ import { useCardImageSwitch } from "../hooks/useCardImageSwitch";
 export const Piece = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
+  const { demoGuide } = useSelector((state) => state.demoGuide);
   const dispatch = useDispatch();
 
   const { getElementImage } = useCardImageSwitch();
@@ -33,40 +35,6 @@ export const Piece = (props) => {
   if (props.validZones.includes(props.unit.row * 5 + props.unit.column)) {
     pieceSelectable = true;
   }
-
-  // let activatingUnit = null;
-  // let isActivatingUnit = false;
-
-  // if (localGameState.activatingUnit.length) {
-  //   activatingUnit =
-  //     localGameState.activatingUnit[localGameState.activatingUnit.length - 1];
-
-  //   if (
-  //     activatingUnit &&
-  //     props.unit.player === activatingUnit.player &&
-  //     props.unit.unitIndex === activatingUnit.unitIndex
-  //   ) {
-  //     isActivatingUnit = true;
-  //   }
-  // }
-
-  // let activatingTarget = null;
-  // let isActivatingTarget = false;
-
-  // if (localGameState.activatingTarget.length) {
-  //   activatingTarget =
-  //     localGameState.activatingTarget[
-  //       localGameState.activatingTarget.length - 1
-  //     ];
-
-  //   if (
-  //     activatingTarget &&
-  //     props.unit.player === activatingTarget.player &&
-  //     props.unit.unitIndex === activatingTarget.unitIndex
-  //   ) {
-  //     isActivatingTarget = true;
-  //   }
-  // }
 
   const handleClick = () => {
     if (props.tileMode === "selectUnit") {

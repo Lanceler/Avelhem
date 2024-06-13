@@ -124,7 +124,7 @@
     display: flex;
     align-items: center;
     overflow: hidden;
-    overflow-x: auto;
+    // overflow-x: auto;
     scrollbar-color: rgb(255, 168, 7) rgba(92, 63, 52, 0);
     scrollbar-width: thin;
     border: goldenrod 3px solid;
@@ -345,6 +345,8 @@
     // transform: translateY(-50%);
     // left: 6px;
     cursor: pointer;
+
+    pointer-events: all;
 }
 
 .question-icon0 {

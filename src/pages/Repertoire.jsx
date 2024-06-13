@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
 import "./MyRepertoires.css";
 import "./Repertoire.css";
-
-import { useParams, useNavigate } from "react-router-dom";
 
 import { useAuthContext } from "../hooks/useAuthContext";
 import { db } from "../config/firebaseConfig";

@@ -108,6 +108,32 @@
     z-index: 2;
 }
 
+.demoClick {
+    box-shadow: 0px 0px 5px 2px red;
+    animation: demoGlow 2s infinite;
+    pointer-events: all;
+    cursor: pointer;
+}
+
+.demoBlocker {
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+@keyframes demoGlow {
+    0% {
+        box-shadow: 0px 0px 10px 5px red;
+    }
+
+    50% {
+        box-shadow: 0px 0px 15px 10px red;
+    }
+
+    100% {
+        box-shadow: 0px 0px 10px 5px red;
+    }
+}
+
 .player-skillhand-container{
     /* max-width: 700px; */
     width: 420px;
@@ -165,6 +191,7 @@
     /* margin-left: auto; */
     position: relative;
     z-index: 3;
+    pointer-events: all;
 }
 
 .collapseIcon{
@@ -286,7 +313,7 @@
     /* margin-left: auto; */
 
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.95);
-
+    pointer-events: all;
 
 }
 

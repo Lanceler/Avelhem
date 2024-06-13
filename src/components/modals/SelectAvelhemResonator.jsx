@@ -4,6 +4,7 @@ import "./Modal.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
+import { updateDemo } from "../../redux/demoGuide";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import Skill from "../hand/Skill";
@@ -11,6 +12,8 @@ import Skill from "../hand/Skill";
 const SelectAvelhemResonator = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
+  const { demoGuide } = useSelector((state) => state.demoGuide);
+
   const dispatch = useDispatch();
 
   const [selectedSkill, setSelectedSkill] = useState(null);
@@ -101,6 +104,32 @@ const SelectAvelhemResonator = (props) => {
     dispatch(updateState(newGameState));
   };
 
+  const canClick = (element, element2) => {
+    switch (demoGuide) {
+      case "Fire1.1":
+        switch (element) {
+          case "Resonator":
+            return element2.id === 1;
+        }
+        break;
+
+      case "Fire1.2":
+        switch (element) {
+          case "Select Button":
+            return true;
+        }
+        break;
+    }
+  };
+
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+      case "Fire1.1":
+        dispatch(updateDemo("Fire1.2"));
+        break;
+    }
+  };
+
   return (
     <div className="modal-backdrop">
       <div className="modal">
@@ -114,7 +143,15 @@ const SelectAvelhemResonator = (props) => {
               key={i}
               className={`scionSkills ${
                 selectedSkill === i ? "selectedSkill" : ""
-              }`}
+              }
+              
+              
+              ${canClick("Resonator", usableAvelhem) ? "demoClick" : ""}
+              
+              `}
+              onClick={() => {
+                handleUpdateDemoGuide();
+              }}
             >
               <Skill
                 i={i}
@@ -153,7 +190,12 @@ const SelectAvelhemResonator = (props) => {
         )}
 
         {selectedSkill !== null && (
-          <button className="choiceButton" onClick={() => handleSelect()}>
+          <button
+            className={`choiceButton ${
+              canClick("Select Button") ? "demoClick" : ""
+            }`}
+            onClick={() => handleSelect()}
+          >
             Select
           </button>
         )}

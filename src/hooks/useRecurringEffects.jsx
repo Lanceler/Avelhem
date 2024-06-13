@@ -2056,19 +2056,15 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
-  const applyDamage = (
-    newGameState,
-    attackerInfo,
-    victimInfo,
-    type,
-    special
-  ) => {
+  const applyDamage = (attackerInfo, victimInfo, type, special) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    newGameState.currentResolution.pop();
+
     //Update info
     let attacker =
       newGameState[attackerInfo.player].units[attackerInfo.unitIndex];
     let victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
-
-    let newZoneInfo = JSON.parse(newGameState.zones);
 
     //this can happen with effects like thunder thaumaturge
     if (attacker === null || isMuted(attacker)) {

@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import SelectFirstPlayer from "./modals/SelectFirstPlayer";
 
 import { useSelector, useDispatch } from "react-redux";
-import gameState, { updateState } from "../redux/gameState";
+import { updateState } from "../redux/gameState";
 import { updateSelf, updateEnemy } from "../redux/teams";
 import { db } from "../config/firebaseConfig";
 import { updateDoc, doc } from "firebase/firestore";
@@ -492,16 +492,16 @@ const Board = (props) => {
 
     switch (option) {
       case "Info":
-        setUnitInfor(expandedUnit);
+        // setUnitInfor(expandedUnit);
 
         // //for testing: quick movement
 
-        // enterMoveMode(
-        //   getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
-        //   expandedUnit,
-        //   newGameState,
-        //   null
-        // );
+        enterMoveMode(
+          getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
+          expandedUnit,
+          newGameState,
+          null
+        );
 
         // //for testing: quick movement
         break;
@@ -558,6 +558,8 @@ const Board = (props) => {
       dispatch(updateSelf("guest"));
       dispatch(updateEnemy("host"));
     }
+
+    // console.log(JSON.stringify(localGameState));
   }, []);
 
   useEffect(() => {
@@ -802,12 +804,24 @@ const Board = (props) => {
         break;
 
       case "Apply Damage":
+        console.log("APPLY DAMAGE");
         if (self === lastResolution.attacker.player) {
-          resolveApplyDamage(
-            lastResolution.attacker,
-            lastResolution.victim,
-            lastResolution.type,
-            lastResolution.special
+          resolutionUpdate(
+            applyDamage(
+              lastResolution.attacker,
+              lastResolution.victim,
+              lastResolution.type,
+              lastResolution.special
+            )
+          );
+        } else if (self === lastResolution.victim.player) {
+          resolutionUpdateGameStateOnly(
+            applyDamage(
+              lastResolution.attacker,
+              lastResolution.victim,
+              lastResolution.type,
+              lastResolution.special
+            )
           );
         }
         break;
@@ -4339,29 +4353,6 @@ const Board = (props) => {
 
     if (attacker !== null && !isMuted(attacker)) {
       newGameState = applyBurn(newGameState, victimInfo, attackerInfo);
-    }
-
-    dispatch(updateState(newGameState));
-
-    updateFirebase(newGameState);
-  };
-
-  const resolveApplyDamage = (attackerInfo, victimInfo, type, special) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    const attacker =
-      newGameState[attackerInfo.player].units[attackerInfo.unitIndex];
-
-    newGameState.currentResolution.pop();
-
-    if (attacker !== null && !isMuted(attacker)) {
-      newGameState = applyDamage(
-        newGameState,
-        attackerInfo,
-        victimInfo,
-        type,
-        special
-      );
     }
 
     dispatch(updateState(newGameState));

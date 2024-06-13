@@ -3,6 +3,7 @@ import "./Skill.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
+import { updateDemo } from "../../redux/demoGuide";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
@@ -13,6 +14,8 @@ import Collapse from "../../assets/others/Collapse.png";
 import SelectedAvelhem from "./SelectedAvelhem";
 
 const PlayerAvelhemHand = (props) => {
+  const { demoGuide } = useSelector((state) => state.demoGuide);
+
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const { getImage } = useCardImageSwitch();
@@ -45,7 +48,18 @@ const PlayerAvelhemHand = (props) => {
   const handleCard = (card, index) => {
     if (raise) {
       setSelectedAvelhem({ avelhem: card, handIndex: index });
+
+      // if (["Fire1.1"].includes(demoGuide)) {
+      //   updateDemo("Fire1.2");
+      // }
       //setRaise(false);
+    }
+  };
+
+  const canClick = () => {
+    switch (demoGuide) {
+      case "Fire1.1":
+        return true;
     }
   };
 
@@ -83,9 +97,12 @@ const PlayerAvelhemHand = (props) => {
             <div
               onClick={() => handleCard(card, index)}
               key={index}
+              // className={`player-hand-card indivAvelhem ${
+              //   raise ? "enlargable" : ""
+              // }`}
               className={`player-hand-card indivAvelhem ${
                 raise ? "enlargable" : ""
-              }`}
+              } ${canClick() ? "demoClick" : ""}`}
               style={{
                 backgroundImage: `url(${getImage(getAvelhemById(card).Name)})`,
                 top: Math.floor(index / 2) * -110,

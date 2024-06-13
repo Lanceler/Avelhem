@@ -2,6 +2,7 @@ import React from "react";
 import "./Skill.css";
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
+import { updateDemo } from "../../redux/demoGuide";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
@@ -10,6 +11,8 @@ import { useCardDatabase } from "../../hooks/useCardDatabase";
 const SelectedAvelhem = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
+  const { demoGuide } = useSelector((state) => state.demoGuide);
+
   const dispatch = useDispatch();
 
   const { getImage2 } = useCardImageSwitch();
@@ -138,6 +141,18 @@ const SelectedAvelhem = (props) => {
     dispatch(updateState(newGameState));
   };
 
+  const canClick = (element) => {
+    switch (demoGuide) {
+      case "Fire1.1":
+        switch (element) {
+          case "Resonate Button":
+            return true;
+        }
+
+        break;
+    }
+  };
+
   return (
     <div className="handModal-backdrop">
       <div className="handModal">
@@ -181,7 +196,11 @@ const SelectedAvelhem = (props) => {
                   Activate
                 </button>
                 <button
-                  className="activateButton displayCardButton"
+                  // className="activateButton displayCardButton"
+
+                  className={`activateButton displayCardButton ${
+                    canClick("Resonate Button") ? "demoClick" : ""
+                  }`}
                   onClick={() => handleResonate()}
                 >
                   Resonate
