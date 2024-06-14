@@ -4,6 +4,8 @@ import "./Modal.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
+import { updateDemo } from "../../redux/demoGuide";
+
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import Skill from "../hand/Skill";
@@ -11,6 +13,8 @@ import Skill from "../hand/Skill";
 const SelectSkillDiscard = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
+  const { demoGuide } = useSelector((state) => state.demoGuide);
+
   const dispatch = useDispatch();
 
   const { getZonesWithAllies, isMuted } = useRecurringEffects();
@@ -130,6 +134,77 @@ const SelectSkillDiscard = (props) => {
     props.hideOrRevealModale();
   };
 
+  const canClick = (element, element2) => {
+    switch (demoGuide) {
+      case "Fire1.10":
+      case "Fire1.19":
+        switch (element) {
+          case "Skill Card":
+            return element2.id === "SX-01";
+        }
+        break;
+
+      case "Fire1.28":
+        switch (element) {
+          case "Skill Card":
+            return element2.id === "02-03";
+        }
+        break;
+
+      case "Fire1.38":
+        switch (element) {
+          case "Skill Card":
+            return true;
+        }
+        break;
+
+      case "Fire1.11":
+      case "Fire1.20":
+      case "Fire1.29":
+      case "Fire1.39":
+        switch (element) {
+          case "Select Button":
+            return true;
+        }
+        break;
+
+      case "Fire1.14":
+        switch (element) {
+          case "Select Fever Button":
+            return true;
+        }
+        break;
+    }
+  };
+
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+      case "Fire1.10":
+        dispatch(updateDemo("Fire1.11"));
+        break;
+
+      case "Fire1.11":
+        dispatch(updateDemo("Fire1.12"));
+        break;
+
+      case "Fire1.14":
+        dispatch(updateDemo("Fire1.15"));
+        break;
+
+      case "Fire1.19":
+        dispatch(updateDemo("Fire1.20"));
+        break;
+
+      case "Fire1.28":
+        dispatch(updateDemo("Fire1.29"));
+        break;
+
+      case "Fire1.38":
+        dispatch(updateDemo("Fire1.39"));
+        break;
+    }
+  };
+
   return (
     <div className="modal-backdrop">
       <div className="modal">
@@ -150,7 +225,10 @@ const SelectSkillDiscard = (props) => {
                 key={i}
                 className={`scionSkills ${
                   selectedSkill === i ? "selectedSkill" : ""
-                }`}
+                } ${canClick("Skill Card", usableSkill) ? "demoClick" : ""}`}
+                onClick={() => {
+                  handleUpdateDemoGuide();
+                }}
               >
                 <Skill
                   i={i}
@@ -165,19 +243,40 @@ const SelectSkillDiscard = (props) => {
         </div>
 
         {selectedSkill === null && unit && unit.blossom > 0 && (
-          <button className="choiceButton" onClick={() => handleBlossom()}>
+          <button
+            className={`choiceButton ${
+              canClick("Select Button") ? "demoClick" : ""
+            }`}
+            onClick={() => handleBlossom()}
+          >
             Spend 1 Blossom
           </button>
         )}
 
         {selectedSkill === null && props.fever && unit.fever >= props.fever && (
-          <button className="choiceButton" onClick={() => handleFever()}>
+          <button
+            className={`choiceButton ${
+              canClick("Select Fever Button") ? "demoClick" : ""
+            }`}
+            onClick={() => {
+              handleFever();
+              handleUpdateDemoGuide();
+            }}
+          >
             {`Spend ${props.fever === 1 ? "1 Fever" : "2 Fevers"}`}
           </button>
         )}
 
         {selectedSkill !== null && (
-          <button className="choiceButton" onClick={() => handleSelect()}>
+          <button
+            className={`choiceButton ${
+              canClick("Select Button") ? "demoClick" : ""
+            }`}
+            onClick={() => {
+              handleSelect();
+              handleUpdateDemoGuide();
+            }}
+          >
             Select
           </button>
         )}

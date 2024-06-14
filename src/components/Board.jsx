@@ -7,6 +7,9 @@ import SelectFirstPlayer from "./modals/SelectFirstPlayer";
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../redux/gameState";
 import { updateSelf, updateEnemy } from "../redux/teams";
+import { updateDemo } from "../redux/demoGuide";
+import { updateMagnifiedSkill } from "../redux/magnifySkill";
+
 import { db } from "../config/firebaseConfig";
 import { updateDoc, doc } from "firebase/firestore";
 
@@ -45,6 +48,7 @@ import YouMayFloat1Skill from "./modals/YouMayFloat1Skill";
 import YouMaySpend1Skill from "./modals/YouMaySpend1Skill";
 import YouMayNoYes from "./modals/YouMayNoYes";
 import VictoryScreen from "./modals/VictoryScreen";
+import ZoomCard from "./displays/ZoomCard";
 
 import TacticSelection from "./modals/TacticSelection";
 import TacticSelectionViaEffect from "./modals/TacticSelectionViaEffect";
@@ -102,9 +106,10 @@ const Board = (props) => {
   const dispatch = useDispatch();
 
   const { localGameState } = useSelector((state) => state.gameState);
-
   const { self } = useSelector((state) => state.teams);
   const { enemy } = useSelector((state) => state.teams);
+  const { demoGuide } = useSelector((state) => state.demoGuide);
+  const { magnifiedSkill } = useSelector((state) => state.magnifiedSkill);
 
   const [zones, setZones] = useState(null);
 
@@ -492,16 +497,16 @@ const Board = (props) => {
 
     switch (option) {
       case "Info":
-        // setUnitInfor(expandedUnit);
+        setUnitInfor(expandedUnit);
 
         // //for testing: quick movement
 
-        enterMoveMode(
-          getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
-          expandedUnit,
-          newGameState,
-          null
-        );
+        // enterMoveMode(
+        //   getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
+        //   expandedUnit,
+        //   newGameState,
+        //   null
+        // );
 
         // //for testing: quick movement
         break;
@@ -3978,6 +3983,12 @@ const Board = (props) => {
   //Helper functions below
 
   const animationDelay = () => {
+    let time = 1250;
+
+    if (props.demo) {
+      time = 300;
+    }
+
     setTimeout(() => {
       const newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -3986,7 +3997,7 @@ const Board = (props) => {
       dispatch(updateState(newGameState));
 
       // updateFirebase(newGameState);
-    }, 1750);
+    }, time);
   };
 
   const avelhemConclusion = (
@@ -5102,6 +5113,42 @@ const Board = (props) => {
     updateFirebase(newGameState);
   };
 
+  const canClick = (element, element2) => {
+    switch (demoGuide) {
+      case "Fire1.9":
+      case "Fire1.13":
+        switch (element) {
+          case "Ability Button":
+            return true;
+        }
+        break;
+
+      case "Fire1.16":
+      case "Fire1.18":
+      case "Fire1.26":
+      case "Fire1.31":
+        switch (element) {
+          case "Skill Button":
+            return true;
+        }
+        break;
+
+      case "Fire1.23":
+        switch (element) {
+          case "Tactic Button":
+            return true;
+        }
+        break;
+
+      case "Fire1.45":
+        switch (element) {
+          case "End Button":
+            return true;
+        }
+        break;
+    }
+  };
+
   //====================================================================
   //====================================================================
 
@@ -5153,7 +5200,9 @@ const Board = (props) => {
                       localGameState.currentResolution.length - 1
                     ].resolution === "Execution Phase" && (
                       <button
-                        className="choiceButton"
+                        className={`choiceButton ${
+                          canClick("End Button") ? "demoClick" : ""
+                        }`}
                         onClick={() => endExecutionPhase()}
                       >
                         End Turn
@@ -5212,7 +5261,9 @@ const Board = (props) => {
                       self === localGameState.turnPlayer && (
                         <>
                           <div
-                            className="pieceOption"
+                            className={`pieceOption ${
+                              canClick("Tactic Button") ? "demoClick" : ""
+                            }`}
                             style={unitButtonPosition(expandedUnit)[1]}
                             onClick={() => handleUnitOptions("Tactic")}
                           >
@@ -5223,7 +5274,9 @@ const Board = (props) => {
                           {expandedUnit.unitClass !== "Pawn" && (
                             <>
                               <div
-                                className="pieceOption"
+                                className={`pieceOption ${
+                                  canClick("Ability Button") ? "demoClick" : ""
+                                }`}
                                 style={unitButtonPosition(expandedUnit)[2]}
                                 onClick={() => handleUnitOptions("Ability")}
                               >
@@ -5236,7 +5289,9 @@ const Board = (props) => {
                                 </div>
                               </div>
                               <div
-                                className="pieceOption"
+                                className={`pieceOption ${
+                                  canClick("Skill Button") ? "demoClick" : ""
+                                }`}
                                 style={unitButtonPosition(expandedUnit)[3]}
                                 onClick={() => handleUnitOptions("Skill")}
                               >
@@ -5478,6 +5533,8 @@ const Board = (props) => {
           </div>
         </div>
       )}
+
+      {magnifiedSkill && <ZoomCard cardInfo={magnifiedSkill} />}
     </div>
   );
 };

@@ -24,6 +24,8 @@
     border-radius: 100%;
     border-color: azure;
     cursor: pointer;
+
+    pointer-events: all;
 }
 
 .zoom-button:hover{

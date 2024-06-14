@@ -4,6 +4,8 @@ import "./Modal.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
+import { updateDemo } from "../../redux/demoGuide";
+
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import Skill from "../hand/Skill";
@@ -11,6 +13,8 @@ import Skill from "../hand/Skill";
 const YouMayFloat1Skill = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
+  const { demoGuide } = useSelector((state) => state.demoGuide);
+
   const dispatch = useDispatch();
 
   const { getVacantFrontier, grantRavager } = useRecurringEffects();
@@ -133,6 +137,25 @@ const YouMayFloat1Skill = (props) => {
     props.hideOrRevealModale();
   };
 
+  const canClick = (element, element2) => {
+    switch (demoGuide) {
+      case "Fire1.40":
+        switch (element) {
+          case "Skip Button":
+            return true;
+        }
+        break;
+    }
+  };
+
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+      case "Fire1.40":
+        dispatch(updateDemo("Fire1.41"));
+        break;
+    }
+  };
+
   return (
     <div className="modal-backdrop">
       <div className="modal">
@@ -165,7 +188,15 @@ const YouMayFloat1Skill = (props) => {
         </div>
 
         {selectedSkill === null && (
-          <button className="choiceButton" onClick={() => handleSkip()}>
+          <button
+            className={`choiceButton ${
+              canClick("Skip Button") ? "demoClick" : ""
+            }`}
+            onClick={() => {
+              handleSkip();
+              handleUpdateDemoGuide();
+            }}
+          >
             Skip
           </button>
         )}

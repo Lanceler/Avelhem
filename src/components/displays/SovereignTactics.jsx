@@ -3,6 +3,8 @@ import "./DisplayedCard.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
+import { updateDemo } from "../../redux/demoGuide";
+
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import InfoPopUp from "../modals/InfoPopUp";
@@ -10,6 +12,8 @@ import InfoPopUp from "../modals/InfoPopUp";
 const SovereignTactics = () => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
+  const { demoGuide } = useSelector((state) => state.demoGuide);
+
   const dispatch = useDispatch();
 
   const [infoPopUp, setInfoPopUp] = useState(null);
@@ -40,6 +44,11 @@ const SovereignTactics = () => {
     setInfoPopUp("Tactics");
   };
 
+  const canClick = (element, element2) => {
+    switch (demoGuide) {
+    }
+  };
+
   return (
     <div className="tacticSovereignContainer">
       {infoPopUp && <InfoPopUp info={infoPopUp} setInfoPopUp={setInfoPopUp} />}
@@ -61,7 +70,8 @@ const SovereignTactics = () => {
               tactic.stock < 1 || localGameState.turnPlayer === enemy
                 ? "disabledtacticSovereignBG"
                 : ""
-            }`}
+            } ${canClick("Tactic", index) ? "demoClick" : ""}
+            `}
             onClick={() => handleClick(tactic.face, index)}
           >
             <div

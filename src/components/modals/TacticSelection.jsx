@@ -3,6 +3,8 @@ import "./Modal.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
+import { updateDemo } from "../../redux/demoGuide";
+
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import InfoPopUp from "./InfoPopUp";
@@ -10,6 +12,8 @@ import InfoPopUp from "./InfoPopUp";
 const TacticSelection = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
+  const { demoGuide } = useSelector((state) => state.demoGuide);
+
   const dispatch = useDispatch();
 
   const { getTacticImage } = useRecurringEffects();
@@ -68,6 +72,17 @@ const TacticSelection = (props) => {
     }
   };
 
+  const canClick = (element, element2) => {
+    switch (demoGuide) {
+      case "Fire1.23":
+        switch (element) {
+          case "Tactic":
+            return element2 === 1;
+        }
+        break;
+    }
+  };
+
   return (
     <div className="modal-backdrop">
       <div className="modal">
@@ -91,14 +106,16 @@ const TacticSelection = (props) => {
               <div
                 className={`tacticBG ${
                   !canUseTactic[index] ? "disabledTacticBG" : ""
-                }`}
+                } ${canClick("Tactic", index) ? "demoClick" : ""} `}
               >
                 <div
                   key={index}
                   className={`tactic ${
                     !canUseTactic[index] ? "disabledTactic" : ""
                   }`}
-                  onClick={() => handleClickTactic(index)}
+                  onClick={() => {
+                    handleClickTactic(index);
+                  }}
                 >
                   <img
                     src={getTacticImage(tactic.face)}

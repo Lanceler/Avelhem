@@ -5,31 +5,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 import { useSelector, useDispatch } from "react-redux";
+import { updateMagnifiedSkill } from "../../redux/magnifySkill";
 import { updateState } from "../../redux/gameState";
-import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
-import ZoomCard from "./ZoomCard";
+import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 
 const ViewSkillVestige = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
+  const { magnifiedSkill } = useSelector((state) => state.magnifiedSkill);
+
+  const dispatch = useDispatch();
 
   const { getImage2 } = useCardImageSwitch();
-
-  const [zoom, setZoom] = useState(false);
-  const [zoomId, setZoomId] = useState(null);
-
-  const closeZoom = () => {
-    setZoom(false);
-  };
-
-  const openZoom = (id) => {
-    setZoom(true);
-    setZoomId(id);
-    console.log("Open Zoom");
-  };
 
   let vestige = [];
   let shattered = [];
@@ -62,7 +52,6 @@ const ViewSkillVestige = (props) => {
   return (
     <>
       <div className="modal-backdrop">
-        {zoom === true && <ZoomCard cardInfo={zoomId} closeZoom={closeZoom} />}
         <div className="modal">
           <div className="twoColumn3-1">
             <h2 className="choiceTitle">{`${props.vestige} Vestige`}</h2>
@@ -88,7 +77,7 @@ const ViewSkillVestige = (props) => {
                     <button
                       className="zoom-button"
                       onClick={() => {
-                        openZoom(usableSkill.id);
+                        dispatch(updateMagnifiedSkill(usableSkill.id));
                       }}
                     >
                       <FontAwesomeIcon icon={faMagnifyingGlass} />
@@ -113,7 +102,7 @@ const ViewSkillVestige = (props) => {
                       <button
                         className="zoom-button"
                         onClick={() => {
-                          openZoom(usableSkill.id);
+                          dispatch(updateMagnifiedSkill(usableSkill.id));
                         }}
                       >
                         <FontAwesomeIcon icon={faMagnifyingGlass} />

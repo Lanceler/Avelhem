@@ -4,6 +4,8 @@ import "./Modal.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
+import { updateDemo } from "../../redux/demoGuide";
+
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 import { useCardDatabase } from "../../hooks/useCardDatabase";
 
@@ -12,6 +14,8 @@ import Skill from "../hand/Skill";
 const ScionSkillSelect = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
+  const { demoGuide } = useSelector((state) => state.demoGuide);
+
   const dispatch = useDispatch();
 
   const { activateSkill, canActivateResonance, canActivateSkill } =
@@ -87,6 +91,74 @@ const ScionSkillSelect = (props) => {
     props.updateFirebase(newGameState);
   };
 
+  const canClick = (element, element2) => {
+    switch (demoGuide) {
+      case "Fire1.16":
+        switch (element) {
+          case "Skill Card":
+            return element2.id === "01-04";
+        }
+        break;
+
+      case "Fire1.18":
+        switch (element) {
+          case "Skill Card":
+            return element2.id === "01-01";
+        }
+        break;
+
+      case "Fire1.17":
+      case "Fire1.19":
+      case "Fire1.32":
+        switch (element) {
+          case "Select Button":
+            return true;
+        }
+        break;
+
+      case "Fire1.26":
+        switch (element) {
+          case "Skill Card":
+            return element2.id === "01-02";
+        }
+        break;
+
+      case "Fire1.27":
+        switch (element) {
+          case "Resonate Button":
+            return true;
+        }
+        break;
+
+      case "Fire1.31":
+        switch (element) {
+          case "Skill Card":
+            return element2.id === "07-04";
+        }
+        break;
+    }
+  };
+
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+      case "Fire1.16":
+        dispatch(updateDemo("Fire1.17"));
+        break;
+
+      case "Fire1.18":
+        dispatch(updateDemo("Fire1.19"));
+        break;
+
+      case "Fire1.26":
+        dispatch(updateDemo("Fire1.27"));
+        break;
+
+      case "Fire1.31":
+        dispatch(updateDemo("Fire1.32"));
+        break;
+    }
+  };
+
   return (
     <div className="modal-backdrop">
       <div className={`modal`}>
@@ -100,7 +172,10 @@ const ScionSkillSelect = (props) => {
               key={i}
               className={`scionSkills ${
                 selectedSkill === i ? "selectedSkill" : ""
-              }`}
+              } ${canClick("Skill Card", usableSkill) ? "demoClick" : ""}`}
+              onClick={() => {
+                handleUpdateDemoGuide();
+              }}
             >
               <Skill
                 i={i}
@@ -111,6 +186,9 @@ const ScionSkillSelect = (props) => {
                 }
                 selectedSkill={selectedSkill}
                 setSelectedSkill={setSelectedSkill}
+                // onClick={() => {
+                //   handleUpdateDemoGuide();
+                // }}
               />
             </div>
           ))}
@@ -127,13 +205,23 @@ const ScionSkillSelect = (props) => {
 
         {selectedSkill !== null &&
           canActivateSkill(props.unit, usableSkills[selectedSkill].id) && (
-            <button className="choiceButton" onClick={() => handleSelect()}>
+            <button
+              className={`choiceButton ${
+                canClick("Select Button") ? "demoClick" : ""
+              }`}
+              onClick={() => handleSelect()}
+            >
               Select
             </button>
           )}
 
         {canResonate && (
-          <button className="choiceButton" onClick={() => handleResonate()}>
+          <button
+            className={`choiceButton ${
+              canClick("Resonate Button") ? "demoClick" : ""
+            }`}
+            onClick={() => handleResonate()}
+          >
             Resonate
           </button>
         )}

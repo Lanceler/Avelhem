@@ -9,12 +9,16 @@ import InvokeSmall from "../../assets/diceIcons/InvokeSmall.png";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
+import { updateDemo } from "../../redux/demoGuide";
+
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 import { useCardDatabase } from "../../hooks/useCardDatabase";
 
 const SelectUnitAbility = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
+  const { demoGuide } = useSelector((state) => state.demoGuide);
+
   const dispatch = useDispatch();
 
   const [selectedChoice, setSelectedChoice] = useState(null);
@@ -767,6 +771,48 @@ const SelectUnitAbility = (props) => {
     props.hideOrRevealModale();
   };
 
+  const canClick = (element, element2) => {
+    switch (demoGuide) {
+      case "Fire1.9":
+        switch (element) {
+          case "Ability":
+            return element2 === 1;
+        }
+        break;
+
+      case "Fire1.10":
+      case "Fire1.14":
+        switch (element) {
+          case "Select Button":
+            return true;
+        }
+        break;
+
+      case "Fire1.13":
+        switch (element) {
+          case "Ability":
+            return element2 === 0;
+        }
+        break;
+    }
+  };
+
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+      case "Fire1.9":
+        dispatch(updateDemo("Fire1.10"));
+        break;
+
+      case "Fire1.10":
+        dispatch(updateDemo("Fire1.11"));
+        break;
+
+      case "Fire1.13":
+        dispatch(updateDemo("Fire1.14"));
+        break;
+    }
+  };
+
   return (
     <div className="modal-backdrop">
       <div
@@ -792,9 +838,12 @@ const SelectUnitAbility = (props) => {
               key={i}
               className={`customChoice ${
                 selectedChoice === i ? "selectedChoice" : ""
-              } `}
+              } ${canClick("Ability", i) ? "demoClick" : ""}`}
               style={{ backgroundImage: `url(${GoldFrame})` }}
-              onClick={() => handleChoice(i)}
+              onClick={() => {
+                handleChoice(i);
+                handleUpdateDemoGuide();
+              }}
             >
               <div
                 // className="abilityFrame"
@@ -822,7 +871,12 @@ const SelectUnitAbility = (props) => {
         )}
 
         {selectedChoice !== null && (
-          <button className="choiceButton" onClick={() => handleSelect()}>
+          <button
+            className={`choiceButton ${
+              canClick("Select Button") ? "demoClick" : ""
+            }`}
+            onClick={() => handleSelect()}
+          >
             Select
           </button>
         )}

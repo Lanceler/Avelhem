@@ -9,11 +9,15 @@ import InvokeSmall from "../../assets/diceIcons/InvokeSmall.png";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
+import { updateDemo } from "../../redux/demoGuide";
+
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 const SelectSovereignTactic = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
+  const { demoGuide } = useSelector((state) => state.demoGuide);
+
   const dispatch = useDispatch();
 
   const [selectedChoice, setSelectedChoice] = useState(null);
@@ -442,6 +446,16 @@ const SelectSovereignTactic = (props) => {
       break;
   }
 
+  const canClick = (element, element2) => {
+    switch (demoGuide) {
+    }
+  };
+
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+    }
+  };
+
   return (
     <div className="modal-backdrop">
       <div className={`modal ${modalClass}`}>
@@ -457,7 +471,7 @@ const SelectSovereignTactic = (props) => {
               key={i}
               className={`customChoice ${
                 selectedChoice === i ? "selectedChoice" : ""
-              } `}
+              } ${canClick("Tactic", i) ? "demoClick" : ""}`}
               style={{ backgroundImage: `url(${GoldFrame})` }}
               onClick={() => handleChoice(i)}
             >

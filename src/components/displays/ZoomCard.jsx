@@ -2,9 +2,15 @@ import React from "react";
 import "./DisplayedCard.css";
 import "../hand/Skill.css";
 
+import { useSelector, useDispatch } from "react-redux";
+import { updateMagnifiedSkill } from "../../redux/magnifySkill";
+
 import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 
 const ZoomCard = (props) => {
+  const { magnifiedSkill } = useSelector((state) => state.magnifiedSkill);
+  const dispatch = useDispatch();
+
   const { getImage2 } = useCardImageSwitch();
   let image = getImage2(props.cardInfo);
 
@@ -15,8 +21,8 @@ const ZoomCard = (props) => {
           <img src={image} className="zoom-card-image" />
 
           <div
-            className="modal-backdrop"
-            onClick={() => props.closeZoom()}
+            className="modal-backdrop2"
+            onClick={() => dispatch(updateMagnifiedSkill(null))}
           ></div>
         </div>
       </div>

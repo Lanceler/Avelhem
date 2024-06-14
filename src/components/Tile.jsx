@@ -1,11 +1,15 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { updateDemo } from "../redux/demoGuide";
+
 import "./Tile.css";
 
 const Tile = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
-  // const dispatch = useDispatch();
+  const { demoGuide } = useSelector((state) => state.demoGuide);
+
+  const dispatch = useDispatch();
 
   let deployable = false;
   let movable = false;
@@ -32,10 +36,34 @@ const Tile = (props) => {
     }
   };
 
+  const canClick = (element, element2) => {
+    switch (demoGuide) {
+      case "Fire1.25":
+        switch (element) {
+          case "Tile":
+            return [2, 3, 4].includes(element2);
+        }
+        break;
+    }
+  };
+
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+      case "Fire1.25":
+        dispatch(updateDemo("Fire1.26"));
+        break;
+    }
+  };
+
   return (
     <div
-      className={deployable || movable || unitSelectable ? "selectable" : ""}
-      onClick={() => onClickTile()}
+      className={`${
+        deployable || movable || unitSelectable ? "selectable" : ""
+      } ${canClick("Tile", props.zone.id) ? "demoClick" : ""}`}
+      onClick={() => {
+        onClickTile();
+        handleUpdateDemoGuide();
+      }}
     >
       <div className={`tile ${self !== "guest" ? "" : "reversed-tile"}`}>
         {/* Tile coordinates below */}

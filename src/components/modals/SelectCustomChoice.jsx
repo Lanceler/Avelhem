@@ -5,12 +5,16 @@ import GoldFrame from "../../assets/others/GoldFrame.png";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
+import { updateDemo } from "../../redux/demoGuide";
+
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 import { useCardDatabase } from "../../hooks/useCardDatabase";
 
 const SelectCustomChoice = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
+  const { demoGuide } = useSelector((state) => state.demoGuide);
+
   const dispatch = useDispatch();
 
   const [selectedChoice, setSelectedChoice] = useState(null);
@@ -822,6 +826,63 @@ const SelectCustomChoice = (props) => {
     props.hideOrRevealModale();
   };
 
+  const canClick = (element) => {
+    switch (demoGuide) {
+      case "Fire1.2":
+      case "Fire1.44":
+        switch (element) {
+          case "1st Choice":
+            return true;
+        }
+        break;
+
+      case "Fire1.20":
+      case "Fire1.37":
+        switch (element) {
+          case "2nd Choice":
+            return true;
+        }
+        break;
+
+      case "Fire1.3":
+      case "Fire1.21":
+      case "Fire1.38":
+      case "Fire1.45":
+        switch (element) {
+          case "Select Button":
+            return true;
+        }
+        break;
+    }
+  };
+
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+      case "Fire1.2":
+        dispatch(updateDemo("Fire1.3"));
+        break;
+      case "Fire1.3":
+        dispatch(updateDemo("Fire1.4"));
+        break;
+
+      case "Fire1.20":
+        dispatch(updateDemo("Fire1.21"));
+        break;
+
+      case "Fire1.21":
+        dispatch(updateDemo("Fire1.22"));
+        break;
+
+      case "Fire1.37":
+        dispatch(updateDemo("Fire1.38"));
+        break;
+
+      case "Fire1.44":
+        dispatch(updateDemo("Fire1.45"));
+        break;
+    }
+  };
+
   return (
     <div className="modal-backdrop">
       <div className="modal">
@@ -836,9 +897,12 @@ const SelectCustomChoice = (props) => {
           <div
             className={`customChoice ${
               selectedChoice === 1 ? "selectedChoice" : ""
-            } `}
+            } ${canClick("1st Choice") ? "demoClick" : ""} `}
             style={{ backgroundImage: `url(${GoldFrame})` }}
-            onClick={() => handleFirstChoice()}
+            onClick={() => {
+              handleFirstChoice();
+              handleUpdateDemoGuide();
+            }}
           >
             <div
               className={`customChoiceFrame ${
@@ -852,9 +916,12 @@ const SelectCustomChoice = (props) => {
           <div
             className={`customChoice ${
               selectedChoice === 2 ? "selectedChoice" : ""
-            } `}
+            } ${canClick("2nd Choice") ? "demoClick" : ""} `}
             style={{ backgroundImage: `url(${GoldFrame})` }}
-            onClick={() => handleSecondChoice()}
+            onClick={() => {
+              handleSecondChoice();
+              handleUpdateDemoGuide();
+            }}
           >
             <div
               className={`customChoiceFrame ${
@@ -873,7 +940,16 @@ const SelectCustomChoice = (props) => {
         )}
 
         {selectedChoice !== null && (
-          <button className="choiceButton" onClick={() => handleSelect()}>
+          // <button className="choiceButton" onClick={() => handleSelect()}>
+          <button
+            className={`choiceButton ${
+              canClick("Select Button") ? "demoClick" : ""
+            }`}
+            onClick={() => {
+              handleSelect();
+              handleUpdateDemoGuide();
+            }}
+          >
             Select
           </button>
         )}

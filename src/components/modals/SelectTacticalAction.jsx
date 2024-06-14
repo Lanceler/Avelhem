@@ -9,11 +9,15 @@ import InvokeSmall from "../../assets/diceIcons/InvokeSmall.png";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
+import { updateDemo } from "../../redux/demoGuide";
+
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 const SelectTacticalAction = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
+  const { demoGuide } = useSelector((state) => state.demoGuide);
+
   const dispatch = useDispatch();
 
   const [selectedChoice, setSelectedChoice] = useState(null);
@@ -341,6 +345,36 @@ const SelectTacticalAction = (props) => {
     dispatch(updateState(newGameState));
   };
 
+  const canClick = (element, element2) => {
+    switch (demoGuide) {
+      case "Fire1.23":
+        switch (element) {
+          case "Action":
+            return element2 === 0;
+        }
+        break;
+
+      case "Fire1.24":
+        switch (element) {
+          case "Select Button":
+            return true;
+        }
+        break;
+    }
+  };
+
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+      case "Fire1.23":
+        dispatch(updateDemo("Fire1.24"));
+        break;
+
+      case "Fire1.24":
+        dispatch(updateDemo("Fire1.25"));
+        break;
+    }
+  };
+
   return (
     <div className="modal-backdrop">
       <div
@@ -366,9 +400,12 @@ const SelectTacticalAction = (props) => {
               key={i}
               className={`customChoice ${
                 selectedChoice === i ? "selectedChoice" : ""
-              } `}
+              } ${canClick("Action", i) ? "demoClick" : ""}    `}
               style={{ backgroundImage: `url(${GoldFrame})` }}
-              onClick={() => handleChoice(i)}
+              onClick={() => {
+                handleChoice(i);
+                handleUpdateDemoGuide();
+              }}
             >
               <div
                 // className="abilityFrame"
@@ -396,7 +433,15 @@ const SelectTacticalAction = (props) => {
         )}
 
         {selectedChoice !== null && (
-          <button className="choiceButton" onClick={() => handleSelect()}>
+          <button
+            className={`choiceButton ${
+              canClick("Select Button") ? "demoClick" : ""
+            }`}
+            onClick={() => {
+              handleSelect();
+              handleUpdateDemoGuide();
+            }}
+          >
             Select
           </button>
         )}

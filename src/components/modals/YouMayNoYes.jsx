@@ -3,11 +3,14 @@ import "./Modal.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
+import { updateDemo } from "../../redux/demoGuide";
+
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 const YouMayNoYes = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
+  const { demoGuide } = useSelector((state) => state.demoGuide);
 
   const dispatch = useDispatch();
 
@@ -436,6 +439,40 @@ const YouMayNoYes = (props) => {
     }
   };
 
+  const canClick = (element) => {
+    switch (demoGuide) {
+      case "Fire1.7":
+        switch (element) {
+          case "No Choice":
+            return true;
+
+          case "Yes Choice":
+            return true;
+        }
+        break;
+
+      case "Fire1.29":
+      case "Fire1.36":
+        switch (element) {
+          case "Yes Choice":
+            return true;
+        }
+        break;
+    }
+  };
+
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+      case "Fire1.7":
+        dispatch(updateDemo("Fire1.8"));
+        break;
+
+      case "Fire1.29":
+        dispatch(updateDemo("Fire1.30"));
+        break;
+    }
+  };
+
   return (
     <div className="modal-backdrop">
       <div className="modal">
@@ -449,10 +486,26 @@ const YouMayNoYes = (props) => {
         <h3 className="noYesMessage">{props.details.message}</h3>
 
         <div className="twoColumn bottomAnchor">
-          <button className="choiceButton" onClick={() => handleNo()}>
+          <button
+            className={`choiceButton ${
+              canClick("No Choice") ? "demoClick" : ""
+            }`}
+            onClick={() => {
+              handleNo();
+              handleUpdateDemoGuide();
+            }}
+          >
             {props.details.no}
           </button>
-          <button className="choiceButton" onClick={() => handleYes()}>
+          <button
+            className={`choiceButton ${
+              canClick("Yes Choice") ? "demoClick" : ""
+            }`}
+            onClick={() => {
+              handleYes();
+              handleUpdateDemoGuide();
+            }}
+          >
             {props.details.yes}
           </button>
         </div>

@@ -4,12 +4,16 @@ import "./SkillModal.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
+import { updateDemo } from "../../redux/demoGuide";
+
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 import Skill from "../hand/Skill";
 
 const ContingentElimination = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
+  const { demoGuide } = useSelector((state) => state.demoGuide);
+
   const dispatch = useDispatch();
 
   const [selectedSkill, setSelectedSkill] = useState(null);
@@ -122,6 +126,32 @@ const ContingentElimination = (props) => {
     props.hideOrRevealModale();
   };
 
+  const canClick = (element, element2) => {
+    switch (demoGuide) {
+      case "Fire1.36":
+        switch (element) {
+          case "Skill Card":
+            return element2.id === "SC-04";
+        }
+        break;
+
+      case "Fire1.37":
+        switch (element) {
+          case "Select Button":
+            return true;
+        }
+        break;
+    }
+  };
+
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+      case "Fire1.36":
+        dispatch(updateDemo("Fire1.37"));
+        break;
+    }
+  };
+
   return (
     <div className="modal-backdrop">
       <div className="modal">
@@ -142,7 +172,10 @@ const ContingentElimination = (props) => {
                 key={i}
                 className={`scionSkills ${
                   selectedSkill === i ? "selectedSkill" : ""
-                }`}
+                } ${canClick("Skill Card", usableSkill) ? "demoClick" : ""}`}
+                onClick={() => {
+                  handleUpdateDemoGuide();
+                }}
               >
                 <Skill
                   i={i}
@@ -162,7 +195,12 @@ const ContingentElimination = (props) => {
           </button>
         )}
         {selectedSkill !== null && (
-          <button className="choiceButton" onClick={() => handleActivate()}>
+          <button
+            className={`choiceButton ${
+              canClick("Select Button") ? "demoClick" : ""
+            }`}
+            onClick={() => handleActivate()}
+          >
             Activate
           </button>
         )}

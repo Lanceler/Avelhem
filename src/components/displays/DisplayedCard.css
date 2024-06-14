@@ -77,6 +77,8 @@
 
 }
 
+
+
 .zoom-body {
     margin: 0;
     padding: 0;
@@ -86,10 +88,15 @@
     align-items: center;
     min-height: 100vh;
     /* background-color: rgba(54, 211, 49, 0.479); */
-    position: relative;
+    /* position: relative; */
+
+
+    position: fixed;
+    left: 50%;
+
+
     z-index: 501;
-
-
+    background-color: aqua;
 }
 
 .zoom-close {

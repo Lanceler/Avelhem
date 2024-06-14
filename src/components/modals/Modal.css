@@ -1,4 +1,4 @@
-.modal-backdrop{
+.modal-backdrop, .modal-backdrop2{
     position: fixed;
     top: 0;
     left: 0;
@@ -6,6 +6,12 @@
     height: 100%;
     background: rgba(0,0,0,0.5);
     z-index: 500
+}
+
+.modal-backdrop2 {
+    z-index: 501;
+    cursor: pointer;
+    pointer-events: all;
 }
 
 .modal{
@@ -26,6 +32,7 @@
 
     overflow-y: scroll;
     scrollbar-width: thin;
+
 }
 
 
@@ -740,3 +747,12 @@ display: flex;
     /* background-color: #b30000; */
 }
 
+
+.FinalPhase-Button{
+
+    /* background-color: red; */
+
+    display: flex;
+    justify-content: center;
+
+}

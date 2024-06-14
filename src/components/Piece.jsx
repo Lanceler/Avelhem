@@ -24,6 +24,7 @@ export const Piece = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
+
   const dispatch = useDispatch();
 
   const { getElementImage } = useCardImageSwitch();
@@ -60,13 +61,125 @@ export const Piece = (props) => {
     }
   };
 
+  const canClick = (element, element2) => {
+    switch (demoGuide) {
+      case "Fire1.2":
+      case "Fire1.8":
+      case "Fire1.9":
+      case "Fire1.13":
+      case "Fire1.16":
+      case "Fire1.18":
+      case "Fire1.23":
+        switch (element) {
+          case "Unit":
+            return element2.unitIndex === 2 && element2.player === "host";
+        }
+        break;
+
+      case "Fire1.12":
+      case "Fire1.31":
+      case "Fire1.35":
+      case "Fire1.46":
+        switch (element) {
+          case "Unit":
+            return element2.unitIndex === 3 && element2.player === "host";
+        }
+        break;
+
+      case "Fire1.15":
+        switch (element) {
+          case "Unit":
+            return element2.unitIndex === 4 && element2.player === "guest";
+        }
+        break;
+
+      case "Fire1.22":
+        switch (element) {
+          case "Unit":
+            return element2.unitIndex === 0 && element2.player === "guest";
+        }
+        break;
+
+      case "Fire1.26":
+        switch (element) {
+          case "Unit":
+            return element2.unitIndex === 0 && element2.player === "host";
+        }
+        break;
+
+      case "Fire1.29":
+      case "Fire1.30":
+        switch (element) {
+          case "Unit":
+            return (
+              [2, 3].includes(element2.unitIndex) && element2.player === "guest"
+            );
+        }
+        break;
+
+      case "Fire1.32":
+        switch (element) {
+          case "Unit":
+            return element2.unitIndex === 1 && element2.player === "guest";
+        }
+        break;
+
+      case "Fire1.37":
+      case "Fire1.45":
+        switch (element) {
+          case "Unit":
+            return element2.unitIndex === 5 && element2.player === "guest";
+        }
+        break;
+    }
+  };
+
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+      case "Fire1.8":
+        dispatch(updateDemo("Fire1.9"));
+        break;
+
+      case "Fire1.12":
+        dispatch(updateDemo("Fire1.13"));
+        break;
+
+      case "Fire1.15":
+        dispatch(updateDemo("Fire1.16"));
+        break;
+
+      case "Fire1.22":
+        dispatch(updateDemo("Fire1.23"));
+        break;
+
+      case "Fire1.30":
+        dispatch(updateDemo("Fire1.31"));
+        break;
+
+      case "Fire1.32":
+        dispatch(updateDemo("Fire1.33"));
+        break;
+
+      case "Fire1.35":
+        dispatch(updateDemo("Fire1.36"));
+        break;
+    }
+  };
+
   return (
     <div className="piece-body">
       {props.unit && (
         <>
           <div
-            className={`piece ${props.unit.player}`}
-            onClick={() => handleClick()}
+            className={`piece ${props.unit.player}
+            ${canClick("Unit", props.unit) ? "demoClick" : ""}
+            
+            
+            `}
+            onClick={() => {
+              handleClick();
+              handleUpdateDemoGuide();
+            }}
           >
             <>
               {/* Mana Scion: Disruption */}

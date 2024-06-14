@@ -1,35 +1,24 @@
 import React, { useState } from "react";
 import "./AvelhemCard.css";
 
+import { useSelector, useDispatch } from "react-redux";
+import { updateMagnifiedSkill } from "../../redux/magnifySkill";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 
-import ZoomCard from "../displays/ZoomCard";
-
 const CPSkillCard = (props) => {
+  const { magnifiedSkill } = useSelector((state) => state.magnifiedSkill);
+  const dispatch = useDispatch();
+
   const { getImage } = useCardImageSwitch();
   let image = "";
   image = getImage(props.cardInfo.Name);
 
-  const [zoom, setZoom] = useState(false);
-
-  const closeZoom = () => {
-    setZoom(false);
-  };
-
-  const openZoom = () => {
-    setZoom(true);
-    console.log("Open Zoom");
-  };
-
   return (
     <div>
-      {zoom === true && (
-        <ZoomCard cardInfo={props.cardInfo.CardId} closeZoom={closeZoom} />
-      )}
-
       <div
         className={`repertoire-card ${
           props.cardInfo.Stock ? "" : "out-of-stock"
@@ -41,7 +30,7 @@ const CPSkillCard = (props) => {
         <button
           className="zoom-button"
           onClick={() => {
-            openZoom();
+            dispatch(updateMagnifiedSkill(props.cardInfo.CardId));
           }}
         >
           <FontAwesomeIcon icon={faMagnifyingGlass} />

@@ -143,11 +143,8 @@ const SelectAvelhemResonator = (props) => {
               key={i}
               className={`scionSkills ${
                 selectedSkill === i ? "selectedSkill" : ""
-              }
-              
-              
+              }        
               ${canClick("Resonator", usableAvelhem) ? "demoClick" : ""}
-              
               `}
               onClick={() => {
                 handleUpdateDemoGuide();

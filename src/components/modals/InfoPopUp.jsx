@@ -346,14 +346,14 @@ const InfoPopUp = (props) => {
               </p>
               <br />
               <p>
-                Please follow the instructions below. If you make a mistake, you
-                can refresh the page to reset the game state.
+                Please follow the instructions below. A green glow will envelop
+                the objects you need to click on.
               </p>
               <br />
               <p>
                 1. Click on your Avelhem hand to raise it, then click on either
-                Fire Avelhem then <strong>resonate</strong> (do not press
-                activate) it with the other copy to ascend your pawn.
+                Fire Avelhem then <strong>resonate</strong> it with the other
+                copy to ascend your pawn.
               </p>
               <br />
               <p>
@@ -393,8 +393,7 @@ const InfoPopUp = (props) => {
               ability: Afterburner. It will require the use of an Invoke tactic,
               as well as either 2 Fevers or 1 skill. This time, we will spend
               Fever. Without clicking on any cards, click on the “Spend 2 Fever”
-              button. (If you had accidentally selected a card, click on it
-              again to unselect it).
+              button.
               <br />
               <p>
                 8. Click on the enemy pawn to strike them as per Afterburner’s
@@ -442,8 +441,7 @@ const InfoPopUp = (props) => {
               <br />
               <p>
                 16. As per Vengeful Legacy’s effect, you may float a skill to
-                grant the Fire Scion the Ravager status. You may choose
-                whatever.
+                grant the Fire Scion the Ravager status. Press skip.
               </p>
               <br />
               <p>

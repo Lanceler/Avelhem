@@ -66,6 +66,40 @@ export default function Demo() {
     }
   };
 
+  const canClick = (element) => {
+    switch (demoGuide) {
+      case "Fire1.4":
+      case "Fire1.6":
+      case "Fire1.33":
+      case "Fire1.41":
+        switch (element) {
+          case "Switch Player Button":
+            return true;
+        }
+        break;
+    }
+  };
+
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+      case "Fire1.4":
+        dispatch(updateDemo("Fire1.5"));
+        break;
+
+      case "Fire1.6":
+        dispatch(updateDemo("Fire1.7"));
+        break;
+
+      case "Fire1.33":
+        dispatch(updateDemo("Fire1.34"));
+        break;
+
+      case "Fire1.41":
+        dispatch(updateDemo("Fire1.42"));
+        break;
+    }
+  };
+
   return (
     <>
       {demoGameState && (
@@ -85,19 +119,38 @@ export default function Demo() {
             </svg>
           </h1>
           <br></br>
-          {demoGuide && <h1>{demoGuide}</h1>}
+
+          {/* display demoGuide for debugging */}
+
+          {/* {demoGuide && <h1>{demoGuide}</h1>} */}
+
           <div className="demo-board">
             {currentPlayer === "host" && (
-              <Board gameState={demoGameState} userRole={"host"} demo={true} />
+              <Board
+                gameState={demoGameState}
+                userRole={"host"}
+                demo={true}
+                setDemoGameState={setDemoGameState}
+              />
             )}
 
             {currentPlayer === "guest" && (
-              <Board gameState={demoGameState} userRole={"guest"} demo={true} />
+              <Board
+                gameState={demoGameState}
+                userRole={"guest"}
+                demo={true}
+                setDemoGameState={setDemoGameState}
+              />
             )}
 
             <button
-              className="choiceButton demo-switch-button"
-              onClick={() => changeCurrentPlayer()}
+              className={`choiceButton demo-switch-button ${
+                canClick("Switch Player Button") ? "demoClick" : ""
+              }`}
+              onClick={() => {
+                changeCurrentPlayer();
+                handleUpdateDemoGuide();
+              }}
             >
               Switch Player
             </button>

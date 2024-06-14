@@ -1,28 +1,19 @@
 import React, { useState } from "react";
 import "./Skill.css";
 
+import { useSelector, useDispatch } from "react-redux";
+import { updateMagnifiedSkill } from "../../redux/magnifySkill";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-
-import ZoomCard from "../displays/ZoomCard";
-
-import { useSelector, useDispatch } from "react-redux";
 
 import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 
 const SkillMultiSelect = (props) => {
+  const { magnifiedSkill } = useSelector((state) => state.magnifiedSkill);
+  const dispatch = useDispatch();
+
   const { getImage2 } = useCardImageSwitch();
-
-  const [zoom, setZoom] = useState(false);
-
-  const closeZoom = () => {
-    setZoom(false);
-  };
-
-  const openZoom = () => {
-    setZoom(true);
-    console.log("Open Zoom");
-  };
 
   const image = getImage2(props.usableSkill);
 
@@ -39,10 +30,6 @@ const SkillMultiSelect = (props) => {
 
   return (
     <>
-      {zoom === true && (
-        <ZoomCard cardInfo={props.usableSkill} closeZoom={closeZoom} />
-      )}
-
       <div
         className={`select-skill ${!props.canAdd ? "cannotUseSkill" : ""}`}
         style={{
@@ -53,7 +40,7 @@ const SkillMultiSelect = (props) => {
         <button
           className="zoom-button"
           onClick={() => {
-            openZoom();
+            dispatch(updateMagnifiedSkill(props.usableSkill));
           }}
         >
           <FontAwesomeIcon icon={faMagnifyingGlass} />

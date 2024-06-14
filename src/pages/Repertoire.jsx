@@ -13,6 +13,11 @@ import { useCardDatabase } from "../hooks/useCardDatabase";
 
 import Loading from "../components/modals/Loading";
 
+import { useSelector, useDispatch } from "react-redux";
+import { updateMagnifiedSkill } from "../redux/magnifySkill";
+
+import ZoomCard from "../components/displays/ZoomCard";
+
 import {
   collection,
   addDoc,
@@ -34,6 +39,9 @@ export default function Repertoire() {
   const { id } = useParams(); //note: id was entered as the parameter in the routes of App.jsx
   const { user } = useAuthContext();
   const [isLoading, setIsLoading] = useState(false);
+
+  const { magnifiedSkill } = useSelector((state) => state.magnifiedSkill);
+  const dispatch = useDispatch();
 
   const { avelhemCardList, skillCardList, getAvelhemIndex, getSkillIndex } =
     useCardDatabase();
@@ -500,6 +508,8 @@ export default function Repertoire() {
       </div>
 
       {isLoading && <Loading />}
+
+      {magnifiedSkill && <ZoomCard cardInfo={magnifiedSkill} />}
     </div>
   );
 }

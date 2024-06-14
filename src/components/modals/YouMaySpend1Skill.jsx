@@ -4,6 +4,8 @@ import "./Modal.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
+import { updateDemo } from "../../redux/demoGuide";
+
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import Skill from "../hand/Skill";
@@ -11,6 +13,8 @@ import Skill from "../hand/Skill";
 const YouMaySpend1Skill = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
+  const { demoGuide } = useSelector((state) => state.demoGuide);
+
   const dispatch = useDispatch();
 
   const { drawSkill, getZonesWithAllies, getVacantAdjacentZones, isMuted } =
@@ -346,6 +350,43 @@ const YouMaySpend1Skill = (props) => {
     props.hideOrRevealModale();
   };
 
+  const canClick = (element, element2) => {
+    switch (demoGuide) {
+      case "Fire1.17":
+        switch (element) {
+          case "Skip Button":
+            return true;
+        }
+        break;
+
+      case "Fire1.43":
+        switch (element) {
+          case "Skill Card":
+            return element2.id === "05-01";
+        }
+        break;
+
+      case "Fire1.44":
+        switch (element) {
+          case "Select Button":
+            return true;
+        }
+        break;
+    }
+  };
+
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+      case "Fire1.17":
+        dispatch(updateDemo("Fire1.18"));
+        break;
+
+      case "Fire1.43":
+        dispatch(updateDemo("Fire1.44"));
+        break;
+    }
+  };
+
   return (
     <div className="modal-backdrop">
       <div className="modal">
@@ -368,7 +409,10 @@ const YouMaySpend1Skill = (props) => {
                 key={i}
                 className={`scionSkills ${
                   selectedSkill === i ? "selectedSkill" : ""
-                }`}
+                } ${canClick("Skill Card", usableSkill) ? "demoClick" : ""}`}
+                onClick={() => {
+                  handleUpdateDemoGuide();
+                }}
               >
                 <Skill
                   i={i}
@@ -383,7 +427,15 @@ const YouMaySpend1Skill = (props) => {
         </div>
 
         {selectedSkill === null && (
-          <button className="choiceButton" onClick={() => handleSkip()}>
+          <button
+            className={`choiceButton ${
+              canClick("Skip Button") ? "demoClick" : ""
+            }`}
+            onClick={() => {
+              handleSkip();
+              handleUpdateDemoGuide();
+            }}
+          >
             Skip
           </button>
         )}
@@ -395,7 +447,15 @@ const YouMaySpend1Skill = (props) => {
         )}
 
         {selectedSkill !== null && (
-          <button className="choiceButton" onClick={() => handleSelect()}>
+          <button
+            className={`choiceButton ${
+              canClick("Select Button") ? "demoClick" : ""
+            }`}
+            onClick={() => {
+              handleSelect();
+              handleUpdateDemoGuide();
+            }}
+          >
             Select
           </button>
         )}
