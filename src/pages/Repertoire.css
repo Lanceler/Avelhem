@@ -57,19 +57,23 @@
 
 .repertoire-button {
     margin: 3px;
-    padding: 3px 5px;
+    padding: 3px 8px;
     font-size: 15px;
+    font-weight: 600;
     background-color: rgba(218, 165, 32, 0.75);
     border-radius: 5px;
     border: none;
-    color: white;
+    color: #e8e8e8;
     letter-spacing: 0.04em;
     cursor: pointer;
+
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .repertoire-button:hover{
     background-color: rgba(255, 217, 0, 0.8);
-    font-weight: 200;
+        color: #fefefe;
+    
 }
 
 .repertoire-save {
@@ -193,7 +197,7 @@
 
 .repertoire-save-error{
     margin: 3px;
-    color: white;
+    color: #e8e8e8;
     font-size: 0.65em;
     /* letter-spacing: 0.02em; */
     

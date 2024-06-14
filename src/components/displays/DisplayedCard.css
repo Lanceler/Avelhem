@@ -225,7 +225,7 @@
     font-size: 18px;
     text-align: center;
 
-    color: white;
+    color: #e8e8e8;
 }
 
 .displayedCardOptions {
@@ -244,7 +244,7 @@
     /* justify-self: end; */
     font-family: Arial, sans-serif;
     font-size: 30px;
-    color: white;
+    color: #e8e8e8;
     background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
     cursor: pointer;
     height: fit-content;

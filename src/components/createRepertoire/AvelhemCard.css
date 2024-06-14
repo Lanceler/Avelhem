@@ -26,13 +26,13 @@
 .out-of-stock {
 
     background-color: rgb(66, 68, 70);
-    color: white;
+    color: #e8e8e8;
     filter: grayscale(100%)
 }
 
 .remaining {
     background-color: rgba(0, 0, 0, 0.55);
-    color: white;
+    color: #e8e8e8;
     font-size: 16.5px;
     padding: 5px;
     /* align-self: flex-end; */

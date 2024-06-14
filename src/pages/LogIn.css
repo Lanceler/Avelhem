@@ -125,7 +125,7 @@
     left: 0;
     padding: 20px 0px 10px;
     pointer-events: none;
-    color: white;
+    color: #e8e8e8;
     font-size: 1em;
     letter-spacing: 0.05em;
     transition: 0.5s;
@@ -134,7 +134,7 @@
 
 .login-box form .login-input input:valid ~ span,
 .login-box form .login-input input:focus ~ span {
-    color: white;
+    color: #e8e8e8;
     font-size: 0.75em;;
     transform: translateY(-90px);
 }
@@ -165,7 +165,7 @@
 .login-box form .login-links a{
     margin: 30px 0;
     font-size: 0.75em;
-    color: white;
+    color: #e8e8e8;
     text-decoration: none;
 }
 
@@ -194,7 +194,7 @@
 
 .login-error{
     font-size: 0.6em;
-    color: white;
+    color: #e8e8e8;
     margin: 10px;
 
 }

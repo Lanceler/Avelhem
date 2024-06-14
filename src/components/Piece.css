@@ -39,7 +39,7 @@
 }
 
 .ascension{
-    background-color: white;
+    background-color: #e8e8e8;
     animation: ascend 2.5s ease-in-out;
     border-radius: 100%;
     width: 50px;
@@ -89,7 +89,7 @@
 
     /* background-color: rgb(255, 255, 255); */
     background: linear-gradient(to right, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
-    color: white;
+    color: #e8e8e8;
     align-items: center;
     justify-content: center;
     display: flex;
@@ -262,7 +262,7 @@ animation: moveUpDownHP 1.0s ease-in-out infinite;
 
 .hP-amount {
     left: 3.75px;
-    color: white;
+    color: #e8e8e8;
     font-size: 0.65em;
     font-weight: 500;
 }

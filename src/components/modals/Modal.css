@@ -54,7 +54,7 @@
 
 .disabledOption{
     background: linear-gradient(to bottom, rgb(0, 0, 0), rgb(19, 15, 15) 60%, rgb(44, 43, 43) 100%);
-    color: white;
+    color: #e8e8e8;
     /* filter: grayscale(100%); */
     cursor: default;
 }
@@ -273,7 +273,7 @@
 .customChoiceDescription {
     flex: 80;
     padding: 10px 15px;
-    color: white;
+    color: #e8e8e8;
     font-family: Arial, sans-serif;
     font-size: 22px;
 }
@@ -289,7 +289,7 @@
 }
 
 .bountyDescription{
-    color: white;
+    color: #e8e8e8;
     padding: 5px 8px 0px;
     font-family: Arial, sans-serif;
     font-size: 22px;
@@ -298,7 +298,7 @@
 }
 
 .bpCost {
-    color: white;
+    color: #e8e8e8;
     font-family: 'Times New Roman', Times, serif;
     /* height: 25px; */
     height: 25%;
@@ -324,7 +324,7 @@
 
 .choiceText{
     padding: 4px 8px 0px 8px;
-    color: white;
+    color: #e8e8e8;
     font-family: "Times New Roman", Times, serif;
     font-size: 23px;
 }
@@ -353,7 +353,7 @@
     justify-self: end;
     font-family: Arial, sans-serif;
     font-size: 20px;
-    color: white;
+    color: #e8e8e8;
     background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
     cursor: pointer;
     height: 47px;
@@ -384,14 +384,14 @@
 
 .abilityName {
     padding: 10px 15px;
-    color: white;
+    color: #e8e8e8;
     font-family: "Times New Roman", Times, serif;
     font-size: 34px;
 }
 
 .abilityQualifier {
     padding: 0px 15px;
-    color: white;
+    color: #e8e8e8;
     font-family: "Times New Roman", Times, serif;
     font-size: 23px;
     /* font-style: italic; */
@@ -401,7 +401,7 @@
 
 .abilityText {
     padding: 1px 10px 1px 15px;
-    color: white;
+    color: #e8e8e8;
     font-family: "Times New Roman", Times, serif;
     font-size: 25px;
     text-align: left;
@@ -496,7 +496,7 @@
 }
 
 .defianceTitle{
-    color: white;
+    color: #e8e8e8;
     padding: 10px 15px;
     margin: 0;
     font-family: Arial, sans-serif;
@@ -506,7 +506,7 @@
 }
 
 .defianceDescription {
-    color: white;
+    color: #e8e8e8;
     padding: 5px 8px 0px;
     font-family: Arial, sans-serif;
     font-size: 20px;
@@ -518,7 +518,7 @@
 }
 
 .fdCost {
-    color: white;
+    color: #e8e8e8;
     font-family: 'Times New Roman', Times, serif;
     padding: 0px 5px;
     margin: 0;

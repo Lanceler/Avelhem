@@ -7,7 +7,7 @@
 
 
 .demo-header{
-    color: white;
+    color: #e8e8e8;
     position: relative;
     width: fit-content;
     left: 50%;
@@ -45,7 +45,7 @@
     border: 4px solid goldenrod;
     background-color: rgba(0, 0, 0, 0.90);
 
-    color: white;
+    color: #e8e8e8;
     font-family: Arial, sans-serif;
     font-size: 23px;
 

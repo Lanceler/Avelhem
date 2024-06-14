@@ -36,6 +36,6 @@
 
 .out-of-stock {
     background-color: rgb(66, 68, 70);
-    color: white;
+    color: #e8e8e8;
     filter: grayscale(100%)
 }
