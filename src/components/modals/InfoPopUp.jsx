@@ -342,115 +342,18 @@ const InfoPopUp = (props) => {
                   offense-oriented kit that must be fueled through the
                   expenditure of skill cards and Fever—a unique attribute
                   exclusive to their class.
-                </strong>
+                </strong>{" "}
+                The fever attribute will be displayed as orange crystals
+                hovering above the class icon.
               </p>
               <br />
+
               <p>
-                Please follow the instructions below. A green glow will envelop
-                the objects you need to click on.
+                This demo will showcase the skills and abilities of Fire Scions.
+                Instructions will be displayed at the top right corner of the
+                board, and a green glow will envelop the objects you need to
+                click on.
               </p>
-              <br />
-              <p>
-                1. Click on your Avelhem hand to raise it, then click on either
-                Fire Avelhem then <strong>resonate</strong> it with the other
-                copy to ascend your pawn.
-              </p>
-              <br />
-              <p>
-                2. Flash Fire (their debut talent) will activate, giving you 2
-                options. Select “Gain 2 Fevers.” (The other option of recovering
-                a Fire skill will not be available because there are no Fire
-                skills in your Vestige.)
-              </p>
-              <br />
-              <p>
-                3. Switch player, then press skip at the prompt. Then switch
-                back to the first player.
-              </p>
-              <br />
-              <p>
-                4. Because you resonated an Avelhem, you may either discard or
-                shuffle it back in your repertoire. For this demo, you may do
-                either.
-              </p>
-              <br />
-              <p>
-                5. Click on the Fire Scion that just ascended and view their
-                abilities (bottom right). Activate “Fiery Heart”. This will
-                require you to spend 1 Fever or skill; for this demo, we will
-                spend the latter. Scroll down the card list and select
-                “Transcendence”. (“Transcendence” is a card that literally does
-                nothing, and it was designed to be used as discard fodder.)
-              </p>
-              <br />
-              <p>
-                6. Click on your ally Metal Scion, who is currently afflicted
-                with Frostbite; as per the effect of ”Fiery Heart”, they will be
-                thawed from the ice.
-              </p>
-              <br />
-              7. Click on the Fire Scion again, then activate their other
-              ability: Afterburner. It will require the use of an Invoke tactic,
-              as well as either 2 Fevers or 1 skill. This time, we will spend
-              Fever. Without clicking on any cards, click on the “Spend 2 Fever”
-              button.
-              <br />
-              <p>
-                8. Click on the enemy pawn to strike them as per Afterburner’s
-                effect.
-              </p>
-              <br />
-              <p>
-                9. Prompt the same Fire Scion activate a skill (bottom left).
-                Activate their burst skill: Resplendence. You will be given the
-                option to spend 1 skill to ignite an adjacent enemy; however,
-                the only enemy is range is a Water Scion, and they possess a
-                talent that grant them immunity to burn. Therefore, press skip.
-              </p>
-              <br />
-              <p>
-                10. Prompt the Fire Scion to activate their standard skill:
-                Ignition Propulsion. Spend “Transcendence” and choose “strike”
-                to attack the Water Scion.
-              </p>
-              <br />
-              <p>
-                11. Prompt the Fire Scion to use a tactic (top right) and select
-                Mobilize. Have them traverse forward into the opponent’s base.
-              </p>
-              <br />
-              <p>
-                12. Select your other Fire Scion and prompt them to resonate
-                their resonant skill: Conflagration. When selecting a resonator,
-                use “Tea For Two”. You must spend a skill, select “Healing
-                Rain.” Click on either Land Scion to attack them.
-              </p>
-              <br />
-              <p>
-                13. Prompt your Metal Scion to activate their burst skill:
-                Arsenal Onslaught. Attack the enemy Fire Scion.
-              </p>
-              <br />
-              <p>
-                15. Activate Vengeful Legacy, then click on the pawn to ascend
-                them to a Fire Scion. Flash Fire will activate; this time, the
-                second option (recovering a Fire skill) is available. Click on
-                it and spend any skill, then recover “Blaze Of Glory.”
-              </p>
-              <br />
-              <p>
-                16. As per Vengeful Legacy’s effect, you may float a skill to
-                grant the Fire Scion the Ravager status. Press skip.
-              </p>
-              <br />
-              <p>
-                17. Switch back to the gold player. You will be given the option
-                to reveal a metal skill; since you have none, press skip. You
-                will be then given the option to spend a skill to attack again.
-                Spend “Chain Lightning”, then strike the enemy Fire Scion.
-              </p>
-              <br />
-              <p>18. Press “End Turn”, then follow the instructions.</p>
               <br />
             </div>
           </div>
