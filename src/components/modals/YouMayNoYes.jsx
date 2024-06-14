@@ -470,6 +470,10 @@ const YouMayNoYes = (props) => {
       case "Fire1.29":
         dispatch(updateDemo("Fire1.30"));
         break;
+
+      case "Fire1.36":
+        dispatch(updateDemo("Fire1.36.1"));
+        break;
     }
   };
 

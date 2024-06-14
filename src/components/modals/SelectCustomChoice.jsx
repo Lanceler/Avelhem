@@ -828,7 +828,7 @@ const SelectCustomChoice = (props) => {
 
   const canClick = (element) => {
     switch (demoGuide) {
-      case "Fire1.2":
+      case "Fire1.2.1":
       case "Fire1.44":
         switch (element) {
           case "1st Choice":
@@ -858,7 +858,7 @@ const SelectCustomChoice = (props) => {
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
-      case "Fire1.2":
+      case "Fire1.2.1":
         dispatch(updateDemo("Fire1.3"));
         break;
       case "Fire1.3":

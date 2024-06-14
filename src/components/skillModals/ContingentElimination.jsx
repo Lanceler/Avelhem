@@ -128,7 +128,7 @@ const ContingentElimination = (props) => {
 
   const canClick = (element, element2) => {
     switch (demoGuide) {
-      case "Fire1.36":
+      case "Fire1.36.1":
         switch (element) {
           case "Skill Card":
             return element2.id === "SC-04";
@@ -146,7 +146,7 @@ const ContingentElimination = (props) => {
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
-      case "Fire1.36":
+      case "Fire1.36.1":
         dispatch(updateDemo("Fire1.37"));
         break;
     }

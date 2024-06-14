@@ -126,6 +126,7 @@ const SelectAvelhemResonator = (props) => {
     switch (demoGuide) {
       case "Fire1.1":
         dispatch(updateDemo("Fire1.2"));
+
         break;
     }
   };

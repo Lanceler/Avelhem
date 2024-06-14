@@ -5140,7 +5140,7 @@ const Board = (props) => {
         }
         break;
 
-      case "Fire1.45":
+      case "Fire1.45.1":
         switch (element) {
           case "End Button":
             return true;

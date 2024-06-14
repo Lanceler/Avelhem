@@ -21,7 +21,7 @@ const MessageToPlayer = (props) => {
 
   const canClick = (element) => {
     switch (demoGuide) {
-      case "Fire1.45":
+      case "Fire1.45.1":
         switch (element) {
           case "Proceed Button":
             return true;
@@ -32,7 +32,7 @@ const MessageToPlayer = (props) => {
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
-      case "Fire1.45":
+      case "Fire1.45.1":
         dispatch(updateDemo("Fire1.46"));
         break;
     }

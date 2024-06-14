@@ -122,7 +122,7 @@ const RecoverSkill = (props) => {
       case "Fire1.39":
         switch (element) {
           case "Skill Card":
-            return ["01-01", "01-02", "01-03", "01-04"].includes(element2.id);
+            return ["01-03"].includes(element2.id);
         }
         break;
 
@@ -139,6 +139,10 @@ const RecoverSkill = (props) => {
     switch (demoGuide) {
       case "Fire1.39":
         dispatch(updateDemo("Fire1.40"));
+        break;
+
+      case "Fire1.40":
+        dispatch(updateDemo("Fire1.40.1"));
         break;
     }
   };
@@ -194,7 +198,10 @@ const RecoverSkill = (props) => {
             className={`choiceButton ${
               canClick("Select Button") ? "demoClick" : ""
             }`}
-            onClick={() => handleSelect()}
+            onClick={() => {
+              handleSelect();
+              handleUpdateDemoGuide();
+            }}
           >
             Select
           </button>

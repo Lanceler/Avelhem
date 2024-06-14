@@ -136,6 +136,10 @@ export const Piece = (props) => {
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
+      case "Fire1.2":
+        dispatch(updateDemo("Fire1.2.1"));
+        break;
+
       case "Fire1.8":
         dispatch(updateDemo("Fire1.9"));
         break;
@@ -162,6 +166,10 @@ export const Piece = (props) => {
 
       case "Fire1.35":
         dispatch(updateDemo("Fire1.36"));
+        break;
+
+      case "Fire1.45":
+        dispatch(updateDemo("Fire1.45.1"));
         break;
     }
   };

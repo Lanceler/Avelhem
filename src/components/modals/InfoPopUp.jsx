@@ -420,11 +420,10 @@ const InfoPopUp = (props) => {
               </p>
               <br />
               <p>
-                12. Select your <strong>other</strong> Fire Scion and prompt
-                them to resonate their resonant skill: Conflagration. When
-                selecting a resonator, use “Tea For Two”. You must spend a
-                skill, select “Healing Rain.” Click on either Land Scion to
-                attack them.
+                12. Select your other Fire Scion and prompt them to resonate
+                their resonant skill: Conflagration. When selecting a resonator,
+                use “Tea For Two”. You must spend a skill, select “Healing
+                Rain.” Click on either Land Scion to attack them.
               </p>
               <br />
               <p>

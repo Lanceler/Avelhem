@@ -139,7 +139,7 @@ const YouMayFloat1Skill = (props) => {
 
   const canClick = (element, element2) => {
     switch (demoGuide) {
-      case "Fire1.40":
+      case "Fire1.40.1":
         switch (element) {
           case "Skip Button":
             return true;
@@ -150,7 +150,7 @@ const YouMayFloat1Skill = (props) => {
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
-      case "Fire1.40":
+      case "Fire1.40.1":
         dispatch(updateDemo("Fire1.41"));
         break;
     }

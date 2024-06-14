@@ -181,6 +181,7 @@ const SelectSkillDiscard = (props) => {
     switch (demoGuide) {
       case "Fire1.10":
         dispatch(updateDemo("Fire1.11"));
+
         break;
 
       case "Fire1.11":

@@ -39,7 +39,8 @@ const SkillMultiSelect = (props) => {
       >
         <button
           className="zoom-button"
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             dispatch(updateMagnifiedSkill(props.usableSkill));
           }}
         >
