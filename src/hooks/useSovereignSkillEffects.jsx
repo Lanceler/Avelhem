@@ -498,6 +498,7 @@ export const useSovereignSkillEffects = () => {
         message:
           "Search for 1 non-burst Scion skill that enables the activator to strike or blast.",
         outcome: "Add",
+        reveal: "Press the Attack",
       });
     }
 

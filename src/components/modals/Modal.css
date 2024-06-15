@@ -350,7 +350,7 @@
 }
 
 .choiceTitle {
-    color: rgb(0, 0, 0);
+    color: #333333;
     font-family: "Times New Roman", Times, serif;
     /* font-size: 40px; */
     font-size: 45px;
@@ -604,7 +604,7 @@ display: flex;
 }
 
 .unitInfo-name{
-        color: rgb(0, 0, 0);
+        color: #333333;
         font-family: "Times New Roman", Times, serif;
         font-size: 45px;
         line-height: 135%;
@@ -775,4 +775,9 @@ display: flex;
     display: flex;
     justify-content: center;
 
+}
+
+.view-revealed-skill{
+    display: flex;
+    justify-content: center;
 }

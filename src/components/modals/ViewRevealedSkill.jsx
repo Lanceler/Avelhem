@@ -7,6 +7,8 @@ import { updateState } from "../../redux/gameState";
 import { useCardDatabase } from "../../hooks/useCardDatabase";
 import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 
+import Skill from "../hand/Skill";
+
 const ViewRevealedSkill = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const dispatch = useDispatch();
@@ -40,28 +42,32 @@ const ViewRevealedSkill = (props) => {
 
         <h3>{props.message}</h3>
 
-        {props.skill && (
-          <div
-            className="revealed-skill"
-            style={{
-              backgroundImage: `url(${getImage2(props.skill)})`,
-            }}
-          ></div>
-        )}
+        <div className="view-revealed-skill">
+          {props.skill && (
+            // <div
+            //   className="revealed-skill"
+            //   style={{
+            //     backgroundImage: `url(${getImage2(props.skill)})`,
+            //   }}
+            // ></div>
 
-        {props.avelhems && (
-          <div className="fourColumn scrollable scrollable-y-only">
-            {props.avelhems.map((avelhem, i) => (
-              <div
-                key={i}
-                className="revealed-skill"
-                style={{
-                  backgroundImage: `url(${getImage2(avelhem)})`,
-                }}
-              ></div>
-            ))}
-          </div>
-        )}
+            <Skill usableSkill={{ id: props.skill }} canActivateSkill={true} />
+          )}
+
+          {props.avelhems && (
+            <div className="fourColumn scrollable scrollable-y-only">
+              {props.avelhems.map((avelhem, i) => (
+                <div
+                  key={i}
+                  className="revealed-skill"
+                  style={{
+                    backgroundImage: `url(${getImage2(avelhem)})`,
+                  }}
+                ></div>
+              ))}
+            </div>
+          )}
+        </div>
 
         <button className="choiceButton" onClick={() => handleProceed()}>
           Proceed

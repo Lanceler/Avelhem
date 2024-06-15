@@ -74,6 +74,20 @@ const SearchSkill = (props) => {
             parseInt(skillCode)
           ).replace("Scion", "Skill")} and added it to their hand.`,
         });
+      } else if (props.reveal === "Press the Attack") {
+        let chosenSkill =
+          newGameState[self].skillRepertoire[
+            newGameState[self].skillRepertoire.length - 1 - selectedSkill
+          ];
+
+        newGameState.currentResolution.push({
+          resolution: "Revealing Skill",
+          player: enemy,
+          skill: chosenSkill,
+          title: "Press the Attack",
+          message:
+            "Your opponent has searched for a skill that enables the activator to strike or blast.",
+        });
       }
 
       //add selected skill from repertoire to hand
@@ -195,7 +209,8 @@ const SearchSkill = (props) => {
     <div className="modal-backdrop">
       <div className="modal">
         <div className="twoColumn3-1">
-          <h2 className="choiceTitle">{props.message}</h2>
+          {/* <h2 className="choiceTitle">{props.message}</h2> */}
+          <h3 className="">{props.message}</h3>
           <button className="choiceButton" onClick={() => handleViewBoard()}>
             View Board
           </button>
