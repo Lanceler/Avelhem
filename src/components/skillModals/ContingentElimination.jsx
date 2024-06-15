@@ -13,6 +13,9 @@ const ContingentElimination = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
+  const { contingencySettings } = useSelector(
+    (state) => state.contingencySettings
+  );
 
   const dispatch = useDispatch();
 
@@ -162,6 +165,18 @@ const ContingentElimination = (props) => {
     }
   };
 
+  const contingencySkip = () => {
+    if (!contingencySettings.Elimination) {
+      for (let usableSkill of usableSkills) {
+        if (canActivateContingency(usableSkill.id)) {
+          return;
+        }
+      }
+
+      handleSkip();
+    }
+  };
+
   return (
     <div className="modal-backdrop">
       <div className="modal">
@@ -214,6 +229,7 @@ const ContingentElimination = (props) => {
           </button>
         )}
       </div>
+      {contingencySkip()}
     </div>
   );
 };

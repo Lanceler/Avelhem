@@ -13,6 +13,10 @@ const ContingentAscension = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
+  const { contingencySettings } = useSelector(
+    (state) => state.contingencySettings
+  );
+
   const dispatch = useDispatch();
 
   const [selectedSkill, setSelectedSkill] = useState(null);
@@ -149,6 +153,18 @@ const ContingentAscension = (props) => {
     }
   };
 
+  const contingencySkip = () => {
+    if (!contingencySettings.Ascension) {
+      for (let usableSkill of usableSkills) {
+        if (canActivateContingency(usableSkill.id)) {
+          return;
+        }
+      }
+
+      handleSkip();
+    }
+  };
+
   return (
     <div className="modal-backdrop">
       <div className="modal">
@@ -205,6 +221,7 @@ const ContingentAscension = (props) => {
           </button>
         )}
       </div>
+      {contingencySkip()}
     </div>
   );
 };

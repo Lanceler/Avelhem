@@ -10,6 +10,7 @@ import { useDemoGameStates } from "../hooks/useDemoGameStates";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateDemo } from "../redux/demoGuide";
+import { updatecontingencySettings } from "../redux/contingencySettings";
 
 export const demoSteps = {
   aveleimHand: 1.1,
@@ -23,6 +24,9 @@ export default function Demo() {
   const { getDemoGameState } = useDemoGameStates();
 
   const { demoGuide } = useSelector((state) => state.demoGuide);
+  const { contingencySettings } = useSelector(
+    (state) => state.contingencySettings
+  );
   const dispatch = useDispatch();
 
   const [demoGameState, setDemoGameState] = useState(null);
@@ -35,8 +39,19 @@ export default function Demo() {
   // const [isDemoGuide, setIsDemoGuide] = useState(null);
 
   useEffect(() => {
+    dispatch(
+      updatecontingencySettings({
+        Activation: true,
+        Ascension: true,
+        Elimination: true,
+        Motion: true,
+        Survival: true,
+        Target: true,
+      })
+    );
+
     if (!id || !["game", "fire"].includes(id)) {
-      console.log(id);
+      // console.log(id);
       navigate("/demo/game");
     } else {
       setDemoGameState(JSON.parse(JSON.stringify(getDemoGameState(id))));
@@ -222,6 +237,7 @@ export default function Demo() {
                 gameState={demoGameState}
                 userRole={"host"}
                 demo={true}
+                demoGame={id === "game"}
                 setDemoGameState={setDemoGameState}
               />
             )}
@@ -231,6 +247,7 @@ export default function Demo() {
                 gameState={demoGameState}
                 userRole={"guest"}
                 demo={true}
+                demoGame={id === "game"}
                 setDemoGameState={setDemoGameState}
               />
             )}

@@ -10,6 +10,10 @@ import Skill from "../hand/Skill";
 const ContingentSurvivalAlly = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
+  const { contingencySettings } = useSelector(
+    (state) => state.contingencySettings
+  );
+
   const dispatch = useDispatch();
 
   const [selectedSkill, setSelectedSkill] = useState(null);
@@ -117,6 +121,18 @@ const ContingentSurvivalAlly = (props) => {
     props.hideOrRevealModale();
   };
 
+  const contingencySkip = () => {
+    if (!contingencySettings.Survival) {
+      for (let usableSkill of usableSkills) {
+        if (canActivateContingency(usableSkill.id)) {
+          return;
+        }
+      }
+
+      handleSkip();
+    }
+  };
+
   return (
     <div className="modal-backdrop">
       <div className="modal">
@@ -161,6 +177,7 @@ const ContingentSurvivalAlly = (props) => {
           </button>
         )}
       </div>
+      {contingencySkip()}
     </div>
   );
 };

@@ -76,12 +76,6 @@ export default function SelectRepertoire(props) {
         <div className="threeColumn column-centered">
           {repertoireList &&
             repertoireList.map((rep, index) => (
-              // <div key={index}>
-              //   <button onClick={() => props.onSelectRepertoire(rep)}>
-              //     {rep.name}
-              //   </button>
-              // </div>
-
               <div
                 key={index}
                 className="customChoice"

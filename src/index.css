@@ -23,7 +23,7 @@ p {
   margin: 0;
 }
 
-input:not([type="radio"]),
+input:not([type="radio"]):not([type="checkbox"])
 textarea {
   color: #333;
   padding: 8px;

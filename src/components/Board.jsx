@@ -9,6 +9,7 @@ import { updateState } from "../redux/gameState";
 import { updateSelf, updateEnemy } from "../redux/teams";
 import { updateDemo } from "../redux/demoGuide";
 import { updateMagnifiedSkill } from "../redux/magnifySkill";
+import { updatecontingencySettings } from "../redux/contingencySettings";
 
 import { db } from "../config/firebaseConfig";
 import { updateDoc, doc } from "firebase/firestore";
@@ -82,6 +83,7 @@ import SovereignTactics from "./displays/SovereignTactics";
 import UnitInfo from "./modals/UnitInfo";
 import ViewBPUpgrades from "./modals/ViewBPUpgrades";
 import InfoPopUp from "./modals/InfoPopUp";
+import ContingencySettings from "./modals/ContingencySettings";
 
 import Tile from "./Tile";
 import Piece from "./Piece";
@@ -130,6 +132,7 @@ const Board = (props) => {
   const [unitInfor, setUnitInfor] = useState(null);
   const [viewBP, setViewBP] = useState(null);
   const [infoPopUp, setInfoPopUp] = useState(null);
+  const [openContingencySettings, setOpenContingencySettings] = useState(false);
 
   const {
     activateAegis,
@@ -5234,6 +5237,19 @@ const Board = (props) => {
                       Return to Message
                     </button>
                   )}
+
+                  {(!props.demo || props.demoGame) && (
+                    <div className="contingency-settings">
+                      <button
+                        className="choiceButton"
+                        onClick={() => {
+                          setOpenContingencySettings(true);
+                        }}
+                      >
+                        Contingency Settings
+                      </button>
+                    </div>
+                  )}
                 </div>
                 <div className="activated-card-display">
                   <ActivatedSkills />
@@ -5539,6 +5555,12 @@ const Board = (props) => {
       )}
 
       {magnifiedSkill && <ZoomCard cardInfo={magnifiedSkill} />}
+
+      {openContingencySettings && (
+        <ContingencySettings
+          setOpenContingencySettings={setOpenContingencySettings}
+        />
+      )}
     </div>
   );
 };

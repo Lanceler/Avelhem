@@ -10,6 +10,10 @@ import Skill from "../hand/Skill";
 const ContingentSymphonicScreech = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
+  const { contingencySettings } = useSelector(
+    (state) => state.contingencySettings
+  );
+
   const dispatch = useDispatch();
 
   const [selectedSkill, setSelectedSkill] = useState(null);
@@ -81,6 +85,18 @@ const ContingentSymphonicScreech = (props) => {
     props.hideOrRevealModale();
   };
 
+  const contingencySkip = () => {
+    if (!contingencySettings.Activation) {
+      for (let usableSkill of usableSkills) {
+        if (canActivateContingency(usableSkill.id)) {
+          return;
+        }
+      }
+
+      handleSkip();
+    }
+  };
+
   return (
     <div className="modal-backdrop">
       <div className="modal">
@@ -128,6 +144,7 @@ const ContingentSymphonicScreech = (props) => {
           </button>
         )}
       </div>
+      {contingencySkip()}
     </div>
   );
 };

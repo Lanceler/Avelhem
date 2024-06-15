@@ -781,3 +781,20 @@ display: flex;
     display: flex;
     justify-content: center;
 }
+
+
+.check-box-list{
+
+    /* background-color: rgb(175, 238, 133); */
+    
+
+}
+
+.check-box-label {
+
+    /* background-color: rgb(127, 138, 235); */
+    margin: 4px;
+
+    font-size: 30px;
+
+}

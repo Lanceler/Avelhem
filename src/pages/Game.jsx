@@ -5,6 +5,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 import { db } from "../config/firebaseConfig";
 
+import { useSelector, useDispatch } from "react-redux";
+
 import {
   getDocs,
   collection,
@@ -19,7 +21,11 @@ import SelectRepertoire from "../components/modals/SelectRepertoire";
 import Loading from "../components/modals/Loading";
 import Board from "../components/Board";
 
+import { updatecontingencySettings } from "../redux/contingencySettings";
+
 export default function Game() {
+  const dispatch = useDispatch();
+
   const { user } = useAuthContext();
   const navigate = useNavigate();
 
@@ -50,6 +56,17 @@ export default function Game() {
   //---Realtime data functionality below
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    dispatch(
+      updatecontingencySettings({
+        Activation: true,
+        Ascension: false,
+        Elimination: true,
+        Motion: true,
+        Survival: true,
+        Target: true,
+      })
+    );
   }, []);
 
   useEffect(() => {
