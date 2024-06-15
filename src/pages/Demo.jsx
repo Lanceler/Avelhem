@@ -123,7 +123,7 @@ export default function Demo() {
 
       case "Fire1.2.1":
       case "Fire1.3":
-        return "2. Flash Fire (their debut talent) will activate, giving you 2 options. Select “Gain 2 Fevers.” (The other option of recovering a Fire skill will not be available because there are no Fire skills in your Vestige.)";
+        return "2. Flash Fire (their debut talent) will activate, giving you 2 options. Select “Gain 2 Fevers.” (The other option is not available because there are no Fire skills in your Vestige.)";
 
       case "Fire1.4":
       case "Fire1.5":
@@ -180,7 +180,7 @@ export default function Demo() {
       case "Fire1.34":
       case "Fire1.35":
       case "Fire1.36":
-        return "14. Switch player, then prompt the Fire Scion to activate their contingent skill: Blaze of Glory. Ignite the Metal Scion, then draw 1 skill when given the option.";
+        return "14. Switch player, then prompt the Fire Scion to activate their contingent skill: Blaze of Glory, which is triggered when a Fire Scion is targeted by an attack. Ignite the Metal Scion, then draw 1 skill when given the option.";
 
       case "Fire1.36.1":
       case "Fire1.37":

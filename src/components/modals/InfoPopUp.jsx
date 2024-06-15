@@ -357,6 +357,13 @@ const InfoPopUp = (props) => {
                 </strong>
               </p>
               <br />
+
+              <p>
+                Clicking on the magnifying glass icon at the top right corner of
+                a card will display a large version on screen so you can read
+                its effects. Click on the darkened area around it to close the
+                view.
+              </p>
             </div>
           </div>
         );
