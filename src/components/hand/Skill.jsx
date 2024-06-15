@@ -17,16 +17,6 @@ const Skill = (props) => {
 
   const image = getImage2(props.usableSkill.id);
 
-  const handleClick = () => {
-    if (props.canActivateSkill) {
-      if (props.selectedSkill === props.i) {
-        props.setSelectedSkill(null);
-      } else {
-        props.setSelectedSkill(props.i);
-      }
-    }
-  };
-
   return (
     <>
       <div
@@ -46,11 +36,7 @@ const Skill = (props) => {
         >
           <FontAwesomeIcon icon={faMagnifyingGlass} />
         </button>
-        <div
-          className="select-skill-click"
-
-          // onClick={() => handleClick()}
-        ></div>
+        <div className="select-skill-click"></div>
       </div>
     </>
   );

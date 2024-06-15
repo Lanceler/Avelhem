@@ -170,7 +170,7 @@ export default function Demo() {
       case "Fire1.28":
       case "Fire1.29":
       case "Fire1.30":
-        return "12. Select your other Fire Scion and prompt them to resonate their resonant skill: Conflagration. When selecting a resonator, use “Tea For Two”. You must spend a skill, select “Healing Rain.” Click on either Land Scion to attack them.";
+        return "12. Select your other Fire Scion and prompt them to resonate their resonant skill: Conflagration. When selecting a resonator, use “Tea For Two”. You must spend a skill; select “Healing Rain.” Click on either Land Scion to attack them.";
 
       case "Fire1.31":
       case "Fire1.32":
@@ -197,11 +197,11 @@ export default function Demo() {
       case "Fire1.43":
       case "Fire1.44":
       case "Fire1.45":
-        return "17. Switch back to the gold player. You will be given the option to reveal a metal skill; since you have none, press skip. You will be then given the option to spend a skill to attack again. Spend “Chain Lightning”, then strike the enemy Fire Scion.";
+        return "17. Switch back to the gold player. You will be given the option to reveal a Metal skill; since you have none, press skip. You will be then given the option to spend a skill to attack again. Spend “Chain Lightning”, then strike the enemy Fire Scion.";
 
       case "Fire1.45.1":
       case "Fire1.46":
-        return "18. Press “End Turn”, then follow the instructions until the victory screen. This ends the demo.";
+        return "18. Press “End Turn”, then follow the instructions regarding the application of the Burn affliction. This ends the demo.";
 
       // space
     }

@@ -176,7 +176,7 @@
 }
 
 .scionSkills{
-    margin: 4px;
+    margin: 4px 6px;
     border-radius: 10px;
     background-color: #33333300;
 }
@@ -190,15 +190,15 @@
 @keyframes selectedSkillGlow {
     0% {
         /* box-shadow: 0px 0px 8px 5px rgb(194, 65, 253); */
-        box-shadow: 0px 0px 4px 2px rgba(252, 255, 64, 0.45);
+        box-shadow: 0px 0px 4px 4px rgba(252, 255, 64, 0.45);
     }
 
     35%, 50%, 65% {
-        box-shadow: 0px 0px 8px 5px rgba(255, 255, 64, 0.7);
+        box-shadow: 0px 0px 8px 10px rgba(255, 255, 64, 0.7);
     }
 
     100% {
-        box-shadow: 0px 0px 4px 2px rgb(252, 255, 64,
+        box-shadow: 0px 0px 4px 4px rgb(252, 255, 64,
             0.45);
     }
 }
