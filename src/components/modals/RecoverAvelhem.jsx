@@ -13,7 +13,7 @@ const RecoverAvelhem = (props) => {
   const { self, enemy } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const { shuffleCards } = useRecurringEffects();
+  const {} = useRecurringEffects();
 
   const [selectedAvelhem, setSelectedAvelhem] = useState(null);
 
@@ -62,6 +62,16 @@ const RecoverAvelhem = (props) => {
     props.updateFirebase(newGameState);
   };
 
+  const handleClick = (canActivate, i) => {
+    if (canActivate) {
+      if (selectedAvelhem === i) {
+        setSelectedAvelhem(null);
+      } else {
+        setSelectedAvelhem(i);
+      }
+    }
+  };
+
   const handleSkip = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     newGameState.currentResolution.pop();
@@ -91,22 +101,20 @@ const RecoverAvelhem = (props) => {
                 className={`scionSkills ${
                   selectedAvelhem === i ? "selectedSkill" : ""
                 }`}
+                onClick={() => {
+                  handleClick(canRecover(usableAvelhem.id), i);
+                  // handleUpdateDemoGuide();
+                }}
               >
                 <Skill
                   i={i}
                   usableSkill={usableAvelhem}
                   canActivateSkill={canRecover(usableAvelhem.id)}
-                  selectedSkill={selectedAvelhem}
-                  setSelectedSkill={setSelectedAvelhem}
                 />
               </div>
             ))}
           </div>
         </div>
-
-        {/* {selectedAvelhem === null && (
-          <button onClick={() => handleSkip()}>Skip</button>
-        )} */}
 
         {selectedAvelhem !== null && (
           <button className="choiceButton" onClick={() => handleSelect()}>

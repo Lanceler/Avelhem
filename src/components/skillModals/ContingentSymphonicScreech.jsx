@@ -67,6 +67,16 @@ const ContingentSymphonicScreech = (props) => {
     );
   };
 
+  const handleClick = (canActivate, i) => {
+    if (canActivate) {
+      if (selectedSkill === i) {
+        setSelectedSkill(null);
+      } else {
+        setSelectedSkill(i);
+      }
+    }
+  };
+
   const handleViewBoard = () => {
     props.hideOrRevealModale();
   };
@@ -92,13 +102,15 @@ const ContingentSymphonicScreech = (props) => {
                 className={`scionSkills ${
                   selectedSkill === i ? "selectedSkill" : ""
                 }`}
+                onClick={() => {
+                  handleClick(true, i);
+                  // handleUpdateDemoGuide();
+                }}
               >
                 <Skill
                   i={i}
                   usableSkill={usableSkill}
                   canActivateSkill={true}
-                  selectedSkill={selectedSkill}
-                  setSelectedSkill={setSelectedSkill}
                 />
               </div>
             ))}

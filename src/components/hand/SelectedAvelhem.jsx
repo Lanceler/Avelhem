@@ -94,7 +94,10 @@ const SelectedAvelhem = (props) => {
       resolution: "Search Skill",
       player: self,
       restriction: getScionSet(scionClass).filter((s) => s[4] !== "4"),
-      message: `Recover 1 non-burst ${scionClass.replace(" Scion", "")} skill.`,
+      message: `Search for 1 non-burst ${scionClass.replace(
+        " Scion",
+        ""
+      )} skill.`,
       outcome: "Add",
     });
 

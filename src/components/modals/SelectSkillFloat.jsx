@@ -4,7 +4,6 @@ import "./Modal.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
-import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import Skill from "../hand/Skill";
 
@@ -12,8 +11,6 @@ const SelectSkillFloat = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
-
-  const { getZonesWithAllies, isMuted } = useRecurringEffects();
 
   const [selectedSkill, setSelectedSkill] = useState(null);
 
@@ -35,20 +32,21 @@ const SelectSkillFloat = (props) => {
     return false;
   };
 
+  const handleClick = (canActivate, i) => {
+    if (canActivate) {
+      if (selectedSkill === i) {
+        setSelectedSkill(null);
+      } else {
+        setSelectedSkill(i);
+      }
+    }
+  };
+
   const handleSelect = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
     //end Floating Skill resolution
     newGameState.currentResolution.pop();
-
-    // switch (props.reason) {
-    //   case "Gale Conjuration Lethal":
-    //     // nothing :)
-    //     break;
-
-    //   default:
-    //     break;
-    // }
 
     //send selected skill to repertoire
     //Transcendence is discarded rather than floated
@@ -97,13 +95,15 @@ const SelectSkillFloat = (props) => {
               className={`scionSkills ${
                 selectedSkill === i ? "selectedSkill" : ""
               }`}
+              onClick={() => {
+                handleClick(canBeFloated(usableSkill.id), i);
+                // handleUpdateDemoGuide();
+              }}
             >
               <Skill
                 i={i}
                 usableSkill={usableSkill}
                 canActivateSkill={canBeFloated(usableSkill.id)}
-                selectedSkill={selectedSkill}
-                setSelectedSkill={setSelectedSkill}
               />
             </div>
           ))}

@@ -72,6 +72,17 @@ const CataclysmicTempestFloat = (props) => {
     props.hideOrRevealModale();
   };
 
+  const handleClick = (canActivate, i) => {
+    if (canActivate) {
+      if (selectedSkills.includes(i)) {
+        selectedSkills.splice(selectedSkills.indexOf(i), 1);
+        setSelectedSkills([...selectedSkills]);
+      } else if (selectedSkills.length < selectAmount) {
+        setSelectedSkills([...selectedSkills, i]);
+      }
+    }
+  };
+
   return (
     <div className="modal-backdrop">
       <div className="modal">
@@ -95,13 +106,16 @@ const CataclysmicTempestFloat = (props) => {
               className={`scionSkills ${
                 selectedSkills.includes(i) ? "selectedSkill" : ""
               }`}
+              onClick={() => {
+                handleClick(true, i);
+                // handleUpdateDemoGuide();
+              }}
             >
               <SkillMultiSelect
                 i={i}
                 usableSkill={usableSkill.id}
                 canAdd={true}
                 selectedSkills={selectedSkills}
-                setSelectedSkills={setSelectedSkills}
                 addLimit={selectAmount}
               />
             </div>

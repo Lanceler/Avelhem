@@ -497,16 +497,16 @@ const Board = (props) => {
 
     switch (option) {
       case "Info":
-        setUnitInfor(expandedUnit);
+        // setUnitInfor(expandedUnit);
 
         // //for testing: quick movement
 
-        // enterMoveMode(
-        //   getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
-        //   expandedUnit,
-        //   newGameState,
-        //   null
-        // );
+        enterMoveMode(
+          getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
+          expandedUnit,
+          newGameState,
+          null
+        );
 
         // //for testing: quick movement
         break;
@@ -4211,6 +4211,8 @@ const Board = (props) => {
 
     //2. Selectively discard skills in excess of your hand limit (8 + ???).
     if (newGameState[self].skillHand.length > 8) {
+      const excessSkills = newGameState[self].skillHand.length - 8;
+
       newGameState.currentResolution.push({
         resolution: "Final Phase",
         resolution2: "Skill Hand Limit",
@@ -4218,7 +4220,9 @@ const Board = (props) => {
         details: {
           reason: "Skill Hand Limit",
           title: "Final Phase",
-          message: `Discard ${newGameState[self].skillHand.length - 8} skills.`,
+          message: `Skill hand limit is 8 cards. Discard ${excessSkills} excess skill${
+            excessSkills === 1 ? "" : "s"
+          }.`,
           count: newGameState[self].skillHand.length - 8,
         },
       });

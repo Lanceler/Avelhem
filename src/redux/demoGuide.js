@@ -7,7 +7,6 @@ export const demoGuideSlice = createSlice({
     },
     reducers: {
         updateDemo: (state, action) => {
-
             state.demoGuide = action.payload;
         }
     }

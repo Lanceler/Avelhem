@@ -115,6 +115,16 @@ const SearchAvelhem = (props) => {
     props.updateFirebase(newGameState);
   };
 
+  const handleClick = (canActivate, i) => {
+    if (canActivate) {
+      if (selectedAvelhem === i) {
+        setSelectedAvelhem(null);
+      } else {
+        setSelectedAvelhem(i);
+      }
+    }
+  };
+
   const handleSkip = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     newGameState.currentResolution.pop();
@@ -163,13 +173,15 @@ const SearchAvelhem = (props) => {
                     className={`scionSkills ${
                       selectedAvelhem === i ? "selectedSkill" : ""
                     }`}
+                    onClick={() => {
+                      handleClick(canSearch(usableAvelhem.id), i);
+                      // handleUpdateDemoGuide();
+                    }}
                   >
                     <Skill
                       i={i}
                       usableSkill={usableAvelhem}
                       canActivateSkill={canSearch(usableAvelhem.id)}
-                      selectedSkill={selectedAvelhem}
-                      setSelectedSkill={setSelectedAvelhem}
                     />
                   </div>
                 ))}
@@ -191,13 +203,18 @@ const SearchAvelhem = (props) => {
                     ? "selectedSkill"
                     : ""
                 }`}
+                onClick={() => {
+                  handleClick(
+                    canSearch(usableAvelhem.id),
+                    i + localGameState[self].avelhemFloat
+                  );
+                  // handleUpdateDemoGuide();
+                }}
               >
                 <Skill
                   i={i + localGameState[self].avelhemFloat}
                   usableSkill={usableAvelhem}
                   canActivateSkill={canSearch(usableAvelhem.id)}
-                  selectedSkill={selectedAvelhem}
-                  setSelectedSkill={setSelectedAvelhem}
                 />
               </div>
             ))}

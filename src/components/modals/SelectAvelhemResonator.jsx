@@ -104,6 +104,16 @@ const SelectAvelhemResonator = (props) => {
     dispatch(updateState(newGameState));
   };
 
+  const handleClick = (canActivate, i) => {
+    if (canActivate) {
+      if (selectedSkill === i) {
+        setSelectedSkill(null);
+      } else {
+        setSelectedSkill(i);
+      }
+    }
+  };
+
   const canClick = (element, element2) => {
     switch (demoGuide) {
       case "Fire1.1":
@@ -148,6 +158,7 @@ const SelectAvelhemResonator = (props) => {
               ${canClick("Resonator", usableAvelhem) ? "demoClick" : ""}
               `}
               onClick={() => {
+                handleClick(true, i);
                 handleUpdateDemoGuide();
               }}
             >
@@ -155,8 +166,6 @@ const SelectAvelhemResonator = (props) => {
                 i={i}
                 usableSkill={usableAvelhem}
                 canActivateSkill={true}
-                selectedSkill={selectedSkill}
-                setSelectedSkill={setSelectedSkill}
               />
             </div>
           ))}
@@ -169,13 +178,15 @@ const SelectAvelhemResonator = (props) => {
                   ? "selectedSkill"
                   : ""
               }`}
+              onClick={() => {
+                handleClick(true, i + usableAvelhems.length);
+                handleUpdateDemoGuide();
+              }}
             >
               <Skill
                 i={i + usableAvelhems.length}
                 usableSkill={usableSkill}
                 canActivateSkill={true}
-                selectedSkill={selectedSkill}
-                setSelectedSkill={setSelectedSkill}
               />
             </div>
           ))}

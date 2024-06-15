@@ -10,7 +10,7 @@
     align-items: center;
     border-radius: 5px;
     /* border: 2px solid; */
-    border-color: black;
+    border-color: #333;
     padding: 5px;
     text-align: center;
     font-size: .7em;
@@ -112,7 +112,7 @@
     height: 350px; */
     width: 220px;
     height: 308px;
-    background-color: black;
+    background-color: #333;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;

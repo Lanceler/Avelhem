@@ -135,6 +135,16 @@ const SelectSkillReveal = (props) => {
     props.hideOrRevealModale();
   };
 
+  const handleClick = (canActivate, i) => {
+    if (canActivate) {
+      if (selectedSkill === i) {
+        setSelectedSkill(null);
+      } else {
+        setSelectedSkill(i);
+      }
+    }
+  };
+
   const canClick = (element, element2) => {
     switch (demoGuide) {
       case "Fire1.42":
@@ -177,13 +187,15 @@ const SelectSkillReveal = (props) => {
                 className={`scionSkills ${
                   selectedSkill === i ? "selectedSkill" : ""
                 }`}
+                onClick={() => {
+                  handleClick(true, i);
+                  handleUpdateDemoGuide();
+                }}
               >
                 <Skill
                   i={i}
                   usableSkill={usableSkill}
-                  canActivateSkill={true} // any skill can be revealed
-                  selectedSkill={selectedSkill}
-                  setSelectedSkill={setSelectedSkill}
+                  canActivateSkill={true} // any filtered skill can be revealed
                 />
               </div>
             ))}

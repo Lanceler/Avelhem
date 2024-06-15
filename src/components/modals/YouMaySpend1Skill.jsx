@@ -332,6 +332,16 @@ const YouMaySpend1Skill = (props) => {
     props.updateFirebase(newGameState);
   };
 
+  const handleClick = (canActivate, i) => {
+    if (canActivate) {
+      if (selectedSkill === i) {
+        setSelectedSkill(null);
+      } else {
+        setSelectedSkill(i);
+      }
+    }
+  };
+
   const handleSkip = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -411,6 +421,7 @@ const YouMaySpend1Skill = (props) => {
                   selectedSkill === i ? "selectedSkill" : ""
                 } ${canClick("Skill Card", usableSkill) ? "demoClick" : ""}`}
                 onClick={() => {
+                  handleClick(canBeDiscarded(usableSkill.id), i);
                   handleUpdateDemoGuide();
                 }}
               >
@@ -418,8 +429,6 @@ const YouMaySpend1Skill = (props) => {
                   i={i}
                   usableSkill={usableSkill}
                   canActivateSkill={canBeDiscarded(usableSkill.id)}
-                  selectedSkill={selectedSkill}
-                  setSelectedSkill={setSelectedSkill}
                 />
               </div>
             ))}

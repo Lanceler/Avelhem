@@ -94,6 +94,16 @@ const SelectSkillResonator = (props) => {
     props.hideOrRevealModale();
   };
 
+  const handleClick = (canActivate, i) => {
+    if (canActivate) {
+      if (selectedSkill === i) {
+        setSelectedSkill(null);
+      } else {
+        setSelectedSkill(i);
+      }
+    }
+  };
+
   const canClick = (element, element2) => {
     switch (demoGuide) {
       case "Fire1.27":
@@ -145,6 +155,7 @@ const SelectSkillResonator = (props) => {
                 selectedSkill === i ? "selectedSkill" : ""
               } ${canClick("Skill Card", usableSkill) ? "demoClick" : ""}`}
               onClick={() => {
+                handleClick(canUseResonator(usableSkill.id), i);
                 handleUpdateDemoGuide();
               }}
             >
@@ -152,8 +163,6 @@ const SelectSkillResonator = (props) => {
                 i={i}
                 usableSkill={usableSkill}
                 canActivateSkill={canUseResonator(usableSkill.id)}
-                selectedSkill={selectedSkill}
-                setSelectedSkill={setSelectedSkill}
               />
             </div>
           ))}

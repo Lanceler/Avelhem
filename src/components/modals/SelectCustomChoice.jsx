@@ -758,7 +758,7 @@ const SelectCustomChoice = (props) => {
           newGameState.currentResolution.push({
             resolution: "Discard Skill",
             player: self,
-            message: "Spend 1 skill.",
+            message: "Discard 1 skill.",
             restriction: null,
           });
         }

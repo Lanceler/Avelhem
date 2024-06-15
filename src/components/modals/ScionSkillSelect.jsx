@@ -91,6 +91,16 @@ const ScionSkillSelect = (props) => {
     props.updateFirebase(newGameState);
   };
 
+  const handleClick = (canActivate, i) => {
+    if (canActivate) {
+      if (selectedSkill === i) {
+        setSelectedSkill(null);
+      } else {
+        setSelectedSkill(i);
+      }
+    }
+  };
+
   const canClick = (element, element2) => {
     switch (demoGuide) {
       case "Fire1.16":
@@ -174,6 +184,11 @@ const ScionSkillSelect = (props) => {
                 selectedSkill === i ? "selectedSkill" : ""
               } ${canClick("Skill Card", usableSkill) ? "demoClick" : ""}`}
               onClick={() => {
+                handleClick(
+                  canActivateSkill(props.unit, usableSkill.id) ||
+                    canActivateResonance(props.unit, usableSkill.id),
+                  i
+                );
                 handleUpdateDemoGuide();
               }}
             >
@@ -184,11 +199,6 @@ const ScionSkillSelect = (props) => {
                   canActivateSkill(props.unit, usableSkill.id) ||
                   canActivateResonance(props.unit, usableSkill.id)
                 }
-                selectedSkill={selectedSkill}
-                setSelectedSkill={setSelectedSkill}
-                // onClick={() => {
-                //   handleUpdateDemoGuide();
-                // }}
               />
             </div>
           ))}

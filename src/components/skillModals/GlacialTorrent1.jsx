@@ -99,6 +99,17 @@ const GlacialTorrent1 = (props) => {
     // props.updateFirebase(newGameState);
   };
 
+  const handleClick = (canActivate, i) => {
+    if (canActivate) {
+      if (selectedSkills.includes(i)) {
+        selectedSkills.splice(selectedSkills.indexOf(i), 1);
+        setSelectedSkills([...selectedSkills]);
+      } else if (selectedSkills.length < addLimit) {
+        setSelectedSkills([...selectedSkills, i]);
+      }
+    }
+  };
+
   const handleSkip = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     newGameState.currentResolution.pop();
@@ -134,13 +145,16 @@ const GlacialTorrent1 = (props) => {
                     className={`scionSkills ${
                       selectedSkills.includes(i) ? "selectedSkill" : ""
                     }`}
+                    onClick={() => {
+                      handleClick(canAdd(usableSkill.id), i);
+                      // handleUpdateDemoGuide();
+                    }}
                   >
                     <SkillMultiSelect
                       i={i}
                       usableSkill={usableSkill.id}
                       canAdd={canAdd(usableSkill.id)}
                       selectedSkills={selectedSkills}
-                      setSelectedSkills={setSelectedSkills}
                       addLimit={addLimit}
                     />
                   </div>
@@ -159,13 +173,19 @@ const GlacialTorrent1 = (props) => {
                     ? "selectedSkill"
                     : ""
                 }`}
+                onClick={() => {
+                  handleClick(
+                    canAdd(usableSkill.id),
+                    i + localGameState[self].skillFloat
+                  );
+                  // handleUpdateDemoGuide();
+                }}
               >
                 <SkillMultiSelect
                   i={i + localGameState[self].skillFloat}
                   usableSkill={usableSkill.id}
                   canAdd={canAdd(usableSkill.id)}
                   selectedSkills={selectedSkills}
-                  setSelectedSkills={setSelectedSkills}
                   addLimit={addLimit}
                 />
               </div>

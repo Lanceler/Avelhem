@@ -17,16 +17,16 @@ const SkillMultiSelect = (props) => {
 
   const image = getImage2(props.usableSkill);
 
-  const handleClick = () => {
-    if (props.canAdd) {
-      if (props.selectedSkills.includes(props.i)) {
-        props.selectedSkills.splice(props.selectedSkills.indexOf(props.i), 1);
-        props.setSelectedSkills([...props.selectedSkills]);
-      } else if (props.selectedSkills.length < props.addLimit) {
-        props.setSelectedSkills([...props.selectedSkills, props.i]);
-      }
-    }
-  };
+  // const handleClick = () => {
+  //   if (props.canAdd) {
+  //     if (props.selectedSkills.includes(props.i)) {
+  //       props.selectedSkills.splice(props.selectedSkills.indexOf(props.i), 1);
+  //       props.setSelectedSkills([...props.selectedSkills]);
+  //     } else if (props.selectedSkills.length < props.addLimit) {
+  //       props.setSelectedSkills([...props.selectedSkills, props.i]);
+  //     }
+  //   }
+  // };
 
   return (
     <>
@@ -55,7 +55,11 @@ const SkillMultiSelect = (props) => {
           </div>
         )}
 
-        <div className="select-skill-click" onClick={() => handleClick()}></div>
+        <div
+          className="select-skill-click"
+
+          // onClick={() => handleClick()}
+        ></div>
       </div>
     </>
   );

@@ -70,6 +70,16 @@ const SelectSkillDiscard = (props) => {
     //props.updateFirebase(newGameState);
   };
 
+  const handleClick = (canActivate, i) => {
+    if (canActivate) {
+      if (selectedSkill === i) {
+        setSelectedSkill(null);
+      } else {
+        setSelectedSkill(i);
+      }
+    }
+  };
+
   const handleSelect = () => {
     //end Discarding Skill resolution
     newGameState.currentResolution.pop();
@@ -209,9 +219,6 @@ const SelectSkillDiscard = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        {/* <button onClick={() => handleViewBoard()}>View Board</button>
-        <h2>{props.message}</h2> */}
-
         <div className="twoColumn3-1">
           <h2 className="choiceTitle">{props.message}</h2>
           <button className="choiceButton" onClick={() => handleViewBoard()}>
@@ -228,6 +235,7 @@ const SelectSkillDiscard = (props) => {
                   selectedSkill === i ? "selectedSkill" : ""
                 } ${canClick("Skill Card", usableSkill) ? "demoClick" : ""}`}
                 onClick={() => {
+                  handleClick(canBeDiscarded(usableSkill.id), i);
                   handleUpdateDemoGuide();
                 }}
               >
@@ -235,8 +243,6 @@ const SelectSkillDiscard = (props) => {
                   i={i}
                   usableSkill={usableSkill}
                   canActivateSkill={canBeDiscarded(usableSkill.id)}
-                  selectedSkill={selectedSkill}
-                  setSelectedSkill={setSelectedSkill}
                 />
               </div>
             ))}

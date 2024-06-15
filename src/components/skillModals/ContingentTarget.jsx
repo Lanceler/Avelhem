@@ -152,6 +152,16 @@ const ContingentTarget = (props) => {
     props.updateFirebase(newGameState);
   };
 
+  const handleClick = (canActivate, i) => {
+    if (canActivate) {
+      if (selectedSkill === i) {
+        setSelectedSkill(null);
+      } else {
+        setSelectedSkill(i);
+      }
+    }
+  };
+
   const handleViewBoard = () => {
     props.hideOrRevealModale();
   };
@@ -205,6 +215,7 @@ const ContingentTarget = (props) => {
                   selectedSkill === i ? "selectedSkill" : ""
                 } ${canClick("Skill Card", usableSkill) ? "demoClick" : ""}`}
                 onClick={() => {
+                  handleClick(canActivateContingency(usableSkill.id), i);
                   handleUpdateDemoGuide();
                 }}
               >
@@ -212,8 +223,6 @@ const ContingentTarget = (props) => {
                   i={i}
                   usableSkill={usableSkill}
                   canActivateSkill={canActivateContingency(usableSkill.id)}
-                  selectedSkill={selectedSkill}
-                  setSelectedSkill={setSelectedSkill}
                 />
               </div>
             ))}

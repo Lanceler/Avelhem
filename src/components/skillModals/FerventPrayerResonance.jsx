@@ -85,6 +85,17 @@ const FerventPrayerResonance = (props) => {
     props.updateFirebase(newGameState);
   };
 
+  const handleClick = (canActivate, i) => {
+    if (canActivate) {
+      if (selectedAvelhems.includes(i)) {
+        selectedAvelhems.splice(selectedAvelhems.indexOf(i), 1);
+        setSelectedAvelhems([...selectedAvelhems]);
+      } else if (selectedAvelhems.length < selectLimit) {
+        setSelectedAvelhems([...selectedAvelhems, i]);
+      }
+    }
+  };
+
   const handleSkip = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     newGameState.currentResolution.pop();
@@ -119,6 +130,14 @@ const FerventPrayerResonance = (props) => {
               className={`scionSkills ${
                 selectedAvelhems.includes(i) ? "selectedSkill" : ""
               }`}
+              onClick={() => {
+                handleClick(
+                  selectedAvelhems.includes(i) ||
+                    !selectedAvelhemIds.includes(avelhemVestige[i]),
+                  i
+                );
+                // handleUpdateDemoGuide();
+              }}
             >
               <SkillMultiSelect
                 i={i}
@@ -128,7 +147,6 @@ const FerventPrayerResonance = (props) => {
                   !selectedAvelhemIds.includes(avelhemVestige[i])
                 }
                 selectedSkills={selectedAvelhems}
-                setSelectedSkills={setSelectedAvelhems}
                 addLimit={selectLimit}
               />
             </div>

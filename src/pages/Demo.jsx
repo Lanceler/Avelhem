@@ -104,7 +104,7 @@ export default function Demo() {
     switch (demoGuide) {
       case "Fire1.1":
       case "Fire1.2":
-        return "1. Click on your Avelhem hand to raise it, then click on either Fire Avelhem; resonate it with the other copy to ascend your pawn.";
+        return "1. In this demo, objects that you need to click will be enveloped in a green glow. Click on your Avelhem hand to raise it, then click on either Fire Avelhem; resonate it with the other copy to ascend your pawn. ";
 
       case "Fire1.2.1":
       case "Fire1.3":

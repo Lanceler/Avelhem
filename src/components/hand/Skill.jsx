@@ -9,8 +9,6 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 
-import ZoomCard from "../displays/ZoomCard";
-
 const Skill = (props) => {
   const { magnifiedSkill } = useSelector((state) => state.magnifiedSkill);
   const dispatch = useDispatch();
@@ -48,7 +46,11 @@ const Skill = (props) => {
         >
           <FontAwesomeIcon icon={faMagnifyingGlass} />
         </button>
-        <div className="select-skill-click" onClick={() => handleClick()}></div>
+        <div
+          className="select-skill-click"
+
+          // onClick={() => handleClick()}
+        ></div>
       </div>
     </>
   );

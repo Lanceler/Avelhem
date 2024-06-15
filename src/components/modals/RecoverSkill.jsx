@@ -117,6 +117,16 @@ const RecoverSkill = (props) => {
     props.hideOrRevealModale();
   };
 
+  const handleClick = (canActivate, i) => {
+    if (canActivate) {
+      if (selectedSkill === i) {
+        setSelectedSkill(null);
+      } else {
+        setSelectedSkill(i);
+      }
+    }
+  };
+
   const canClick = (element, element2) => {
     switch (demoGuide) {
       case "Fire1.39":
@@ -150,9 +160,6 @@ const RecoverSkill = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        {/* <button onClick={() => handleViewBoard()}>View Board</button>
-        <h2>{props.message}</h2> */}
-
         <div className="twoColumn3-1">
           <h2 className="choiceTitle">{props.message}</h2>
           <button className="choiceButton" onClick={() => handleViewBoard()}>
@@ -172,6 +179,7 @@ const RecoverSkill = (props) => {
                   selectedSkill === i ? "selectedSkill" : ""
                 } ${canClick("Skill Card", usableSkill) ? "demoClick" : ""}`}
                 onClick={() => {
+                  handleClick(canRecover(usableSkill.id), i);
                   handleUpdateDemoGuide();
                 }}
               >
@@ -179,8 +187,6 @@ const RecoverSkill = (props) => {
                   i={i}
                   usableSkill={usableSkill}
                   canActivateSkill={canRecover(usableSkill.id)}
-                  selectedSkill={selectedSkill}
-                  setSelectedSkill={setSelectedSkill}
                 />
               </div>
             ))}

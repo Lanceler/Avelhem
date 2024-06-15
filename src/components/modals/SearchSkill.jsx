@@ -42,6 +42,16 @@ const SearchSkill = (props) => {
     }
   };
 
+  const handleClick = (canActivate, i) => {
+    if (canActivate) {
+      if (selectedSkill === i) {
+        setSelectedSkill(null);
+      } else {
+        setSelectedSkill(i);
+      }
+    }
+  };
+
   const handleSelect = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     newGameState.currentResolution.pop();
@@ -195,25 +205,22 @@ const SearchSkill = (props) => {
           {localGameState[self].skillFloat > 0 && (
             <>
               <h3>Floating skills</h3>
-              <div
-                // className={`fourColumn ${
-                //   localGameState[self].skillFloat > 0 ? "decreased-height" : ""
-                // } `}
-                className="fourColumn"
-              >
+              <div className="fourColumn">
                 {floatingRepertoire.map((usableSkill, i) => (
                   <div
                     key={i}
                     className={`scionSkills ${
                       selectedSkill === i ? "selectedSkill" : ""
                     }`}
+                    onClick={() => {
+                      handleClick(canSearch(usableSkill.id), i);
+                      // handleUpdateDemoGuide();
+                    }}
                   >
                     <Skill
                       i={i}
                       usableSkill={usableSkill}
                       canActivateSkill={canSearch(usableSkill.id)}
-                      selectedSkill={selectedSkill}
-                      setSelectedSkill={setSelectedSkill}
                     />
                   </div>
                 ))}
@@ -235,13 +242,18 @@ const SearchSkill = (props) => {
                     ? "selectedSkill"
                     : ""
                 }`}
+                onClick={() => {
+                  handleClick(
+                    canSearch(usableSkill.id),
+                    i + localGameState[self].skillFloat
+                  );
+                  // handleUpdateDemoGuide();
+                }}
               >
                 <Skill
                   i={i + localGameState[self].skillFloat}
                   usableSkill={usableSkill}
                   canActivateSkill={canSearch(usableSkill.id)}
-                  selectedSkill={selectedSkill}
-                  setSelectedSkill={setSelectedSkill}
                 />
               </div>
             ))}

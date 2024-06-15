@@ -124,6 +124,17 @@ const SelectAvelhemHandMulti = (props) => {
     // props.updateFirebase(newGameState);
   };
 
+  const handleClick = (canActivate, i) => {
+    if (canActivate) {
+      if (selectedAvelhems.includes(i)) {
+        selectedAvelhems.splice(selectedAvelhems.indexOf(i), 1);
+        setSelectedAvelhems([...selectedAvelhems]);
+      } else if (selectedAvelhems.length < selectLimit) {
+        setSelectedAvelhems([...selectedAvelhems, i]);
+      }
+    }
+  };
+
   const handleViewBoard = () => {
     props.hideOrRevealModale();
   };
@@ -147,14 +158,16 @@ const SelectAvelhemHandMulti = (props) => {
               className={`scionSkills ${
                 selectedAvelhems.includes(i) ? "selectedSkill" : ""
               }`}
+              onClick={() => {
+                handleClick(true, i);
+                // handleUpdateDemoGuide();
+              }}
             >
               <SkillMultiSelect
                 i={i}
                 usableSkill={usableSkill}
-                // canAdd={canAdd(usableSkill.id)}
                 canAdd={true}
                 selectedSkills={selectedAvelhems}
-                setSelectedSkills={setSelectedAvelhems}
                 addLimit={selectLimit}
               />
             </div>

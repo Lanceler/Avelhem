@@ -303,6 +303,17 @@ const SelectSkillHandMulti = (props) => {
     props.updateFirebase(newGameState);
   };
 
+  const handleClick = (canActivate, i) => {
+    if (canActivate) {
+      if (selectedSkills.includes(i)) {
+        selectedSkills.splice(selectedSkills.indexOf(i), 1);
+        setSelectedSkills([...selectedSkills]);
+      } else if (selectedSkills.length < selectLimit) {
+        setSelectedSkills([...selectedSkills, i]);
+      }
+    }
+  };
+
   const handleSkip = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     newGameState.currentResolution.pop();
@@ -336,14 +347,16 @@ const SelectSkillHandMulti = (props) => {
               className={`scionSkills ${
                 selectedSkills.includes(i) ? "selectedSkill" : ""
               }`}
+              onClick={() => {
+                handleClick(canAdd(usableSkill), i);
+                // handleUpdateDemoGuide();
+              }}
             >
               <SkillMultiSelect
                 i={i}
                 usableSkill={usableSkill}
                 canAdd={canAdd(usableSkill)}
-                // canAdd={true}
                 selectedSkills={selectedSkills}
-                setSelectedSkills={setSelectedSkills}
                 addLimit={selectLimit}
               />
             </div>

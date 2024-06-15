@@ -351,8 +351,10 @@ const InfoPopUp = (props) => {
               <p>
                 This demo will showcase the skills and abilities of Fire Scions.
                 Instructions will be displayed at the top right corner of the
-                board, and a green glow will envelop the objects you need to
-                click on.
+                board, and a{" "}
+                <strong>
+                  green glow will envelop the objects you need to click on.
+                </strong>
               </p>
               <br />
             </div>

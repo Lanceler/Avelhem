@@ -123,6 +123,16 @@ const YouMayFloat1Skill = (props) => {
     props.updateFirebase(newGameState);
   };
 
+  const handleClick = (canActivate, i) => {
+    if (canActivate) {
+      if (selectedSkill === i) {
+        setSelectedSkill(null);
+      } else {
+        setSelectedSkill(i);
+      }
+    }
+  };
+
   const handleSkip = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -175,13 +185,15 @@ const YouMayFloat1Skill = (props) => {
               className={`scionSkills ${
                 selectedSkill === i ? "selectedSkill" : ""
               }`}
+              onClick={() => {
+                handleClick(canBeFloated(usableSkill.id), i);
+                // handleUpdateDemoGuide();
+              }}
             >
               <Skill
                 i={i}
                 usableSkill={usableSkill}
                 canActivateSkill={canBeFloated(usableSkill.id)}
-                selectedSkill={selectedSkill}
-                setSelectedSkill={setSelectedSkill}
               />
             </div>
           ))}

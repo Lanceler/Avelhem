@@ -65,6 +65,16 @@ const ContingentAscension = (props) => {
     }
   };
 
+  const handleClick = (canActivate, i) => {
+    if (canActivate) {
+      if (selectedSkill === i) {
+        setSelectedSkill(null);
+      } else {
+        setSelectedSkill(i);
+      }
+    }
+  };
+
   const handleSkip = () => {
     const newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -161,13 +171,15 @@ const ContingentAscension = (props) => {
                 className={`scionSkills ${
                   selectedSkill === i ? "selectedSkill" : ""
                 }`}
+                onClick={() => {
+                  handleClick(canActivateContingency(usableSkill.id), i);
+                  handleUpdateDemoGuide();
+                }}
               >
                 <Skill
                   i={i}
                   usableSkill={usableSkill}
                   canActivateSkill={canActivateContingency(usableSkill.id)}
-                  selectedSkill={selectedSkill}
-                  setSelectedSkill={setSelectedSkill}
                 />
               </div>
             ))}

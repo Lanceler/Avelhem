@@ -52,6 +52,16 @@ const PowerAtTheFinalHourProaction = (props) => {
     return false;
   };
 
+  const handleClick = (canActivate, i) => {
+    if (canActivate) {
+      if (selectedSkill === i) {
+        setSelectedSkill(null);
+      } else {
+        setSelectedSkill(i);
+      }
+    }
+  };
+
   const handleSelect = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -123,13 +133,15 @@ const PowerAtTheFinalHourProaction = (props) => {
                 className={`scionSkills ${
                   selectedSkill === i ? "selectedSkill" : ""
                 }`}
+                onClick={() => {
+                  handleClick(canBeRevealed(usableSkill.id), i);
+                  // handleUpdateDemoGuide();
+                }}
               >
                 <Skill
                   i={i}
                   usableSkill={usableSkill}
                   canActivateSkill={canBeRevealed(usableSkill.id)}
-                  selectedSkill={selectedSkill}
-                  setSelectedSkill={setSelectedSkill}
                 />
               </div>
             ))}

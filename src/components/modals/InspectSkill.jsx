@@ -43,6 +43,16 @@ const InspectSkill = (props) => {
     }
   };
 
+  const handleClick = (canActivate, i) => {
+    if (canActivate) {
+      if (selectedSkill === i) {
+        setSelectedSkill(null);
+      } else {
+        setSelectedSkill(i);
+      }
+    }
+  };
+
   const handleSelect = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     newGameState.currentResolution.pop();
@@ -162,13 +172,15 @@ const InspectSkill = (props) => {
                     className={`scionSkills ${
                       selectedSkill === i ? "selectedSkill" : ""
                     }`}
+                    onClick={() => {
+                      handleClick(canSelect(usableSkill.id), i);
+                      // handleUpdateDemoGuide();
+                    }}
                   >
                     <Skill
                       i={i}
                       usableSkill={usableSkill}
                       canActivateSkill={canSelect(usableSkill.id)}
-                      selectedSkill={selectedSkill}
-                      setSelectedSkill={setSelectedSkill}
                     />
                   </div>
                 ))}
@@ -192,13 +204,18 @@ const InspectSkill = (props) => {
                         ? "selectedSkill"
                         : ""
                     }`}
+                    onClick={() => {
+                      handleClick(
+                        canSelect(usableSkill.id),
+                        +localGameState[self].skillFloat
+                      );
+                      // handleUpdateDemoGuide();
+                    }}
                   >
                     <Skill
                       i={i + localGameState[self].skillFloat}
                       usableSkill={usableSkill}
                       canActivateSkill={canSelect(usableSkill.id)}
-                      selectedSkill={selectedSkill}
-                      setSelectedSkill={setSelectedSkill}
                     />
                   </div>
                 ))}
