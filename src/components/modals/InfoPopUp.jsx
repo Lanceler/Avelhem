@@ -335,16 +335,20 @@ const InfoPopUp = (props) => {
                   beside the page header.
                 </em>
               </p>
+
               <br />
+
               <p>
                 <strong>
                   Brandishing destructive power, Fire Scions exhibit an
                   offense-oriented kit that must be fueled through the
-                  expenditure of skill cards and Fever—a unique attribute
+                  expenditure of a skill card and Fever—a unique attribute
                   exclusive to their class.
                 </strong>{" "}
-                The fever attribute will be displayed as orange crystals
-                hovering above the class icon.
+                Fever is displayed as orange crystals hovering above the unit.
+                As per their talent, Fire Scions may opt to initiate with 2
+                Fevers upon ascension. Furthermore, they obtain 1 Fever (up to a
+                maximum of 2) at the start of their turn.
               </p>
               <br />
 

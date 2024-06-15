@@ -1,6 +1,9 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 export const useDemoGameStates = () => {
+  const { demoGuide } = useSelector((state) => state.demoGuide);
+
   const getDemoGameState = (demo) => {
     switch (demo) {
       case "game":
@@ -252,11 +255,11 @@ export const useDemoGameStates = () => {
             skillHand: [
               "SX-01",
               "SX-01",
+              "01-04",
               "01-01",
               "01-02",
               "01-02",
               "SA-02",
-              "01-04",
               "01-01",
               "02-03",
               "07-04",
@@ -347,10 +350,10 @@ export const useDemoGameStates = () => {
             skillShattered: ["02-04"],
             skillHand: [
               "01-03",
-              "01-03",
               "01-01",
               "02-02",
               "02-01",
+              "05-03",
               "07-02",
               "04-03",
               "SC-04",
@@ -513,5 +516,97 @@ export const useDemoGameStates = () => {
     }
   };
 
-  return { getDemoGameState };
+  const getDemoInstructions = () => {
+    switch (demoGuide) {
+      case "Fire1.1":
+      case "Fire1.2":
+        return "1. In this demo, objects that you need to click will be enveloped in a green glow. Click on your Avelhem hand to raise it, then click on either Fire Avelhem; resonate it with the other copy to ascend your pawn. ";
+
+      case "Fire1.2.1":
+      case "Fire1.3":
+        return "2. Flash Fire (their debut talent) will activate, giving you 2 options. Select “Gain 2 Fevers.” (The other option is not available because there are no Fire skills in your Vestige.)";
+
+      case "Fire1.4":
+      case "Fire1.5":
+      case "Fire1.6":
+        return "3. Switch player, then press skip at the prompt. Then switch back to the first player.";
+
+      case "Fire1.7":
+        return "4. Because you resonated an Avelhem, you may either discard or shuffle it back in your repertoire. You may do either.";
+
+      case "Fire1.8":
+      case "Fire1.9":
+      case "Fire1.10":
+      case "Fire1.11":
+        return "5. Click on the Fire Scion that just ascended and view their abilities (bottom right). Activate “Fiery Heart”. This will require you to spend 1 Fever or skill; spend the latter by selecting “Transcendence”.";
+
+      case "Fire1.12":
+        return "6. Click on your ally Metal Scion, who is currently afflicted with Frostbite; as per the effect of ”Fiery Heart”, they will be thawed from the ice.";
+
+      case "Fire1.13":
+      case "Fire1.14":
+        return "7. Click on the Fire Scion again, then activate their other ability: Afterburner. It will require the use of an Invoke tactic, as well as either 2 Fevers or 1 skill. Without clicking on any cards, click on the “Spend 2 Fevers” button.";
+
+      case "Fire1.15":
+        return "8. Click on the enemy pawn to strike them as per Afterburner’s effect.";
+
+      case "Fire1.16":
+      case "Fire1.17":
+        return "9. Prompt the same Fire Scion to activate a skill (bottom left). Activate their burst skill: Resplendence, which restores their Fevers and bolsters their defenses. It can also ignite an adjacent enemy; however, the only one in range is a Water Scion with Burn immunity. Therefore, press skip.";
+
+      case "Fire1.18":
+      case "Fire1.19":
+      case "Fire1.20":
+      case "Fire1.21":
+      case "Fire1.22":
+        return "10. Prompt the Fire Scion to activate their standard skill: Ignition Propulsion. Spend “Transcendence” and choose “strike” to attack the Water Scion.";
+
+      case "Fire1.23":
+      case "Fire1.24":
+      case "Fire1.25":
+        return "11. Prompt the Fire Scion to use a tactic (top right) and select Mobilize. Have them traverse forward into the opponent’s base.";
+
+      case "Fire1.26":
+      case "Fire1.27":
+      case "Fire1.28":
+      case "Fire1.29":
+      case "Fire1.30":
+        return "12. Select your other Fire Scion and prompt them to resonate their resonant skill: Conflagration. When selecting a resonator, use “Tea For Two”. You must spend a skill; select “Healing Rain.” Click on either Land Scion to attack them.";
+
+      case "Fire1.31":
+      case "Fire1.32":
+        return "13. Prompt your Metal Scion to activate their burst skill: Arsenal Onslaught. Attack the enemy Fire Scion.";
+
+      case "Fire1.33":
+      case "Fire1.34":
+      case "Fire1.35":
+      case "Fire1.36":
+        return "14. Switch player, then prompt the Fire Scion to activate their contingent skill: Blaze of Glory, which is triggered when a Fire Scion is targeted by an attack. Ignite the Metal Scion, then draw 1 skill when given the option.";
+
+      case "Fire1.36.1":
+      case "Fire1.37":
+      case "Fire1.38":
+      case "Fire1.39":
+      case "Fire1.40":
+        return "15. Activate Vengeful Legacy, then click on the pawn to ascend them to a Fire Scion. Flash Fire will activate; this time, the second option (recovering a Fire skill) is available. Click on it and spend any skill, then recover “Blaze Of Glory.”";
+
+      case "Fire1.40.1":
+        return "16. As per Vengeful Legacy’s effect, you may float a skill to grant the Fire Scion the Ravager status. Press skip.";
+
+      case "Fire1.41":
+      case "Fire1.42":
+      case "Fire1.43":
+      case "Fire1.44":
+      case "Fire1.45":
+        return "17. Switch back to the gold player. You will be given the option to reveal a Metal skill; since you have none, press skip. You will be then given the option to spend a skill to attack again. Spend “Chain Lightning”, then strike the enemy Fire Scion.";
+
+      case "Fire1.45.1":
+      case "Fire1.46":
+        return "18. Press “End Turn”, then follow the instructions regarding the application of the Burn affliction. This ends the demo.";
+
+      // space
+    }
+  };
+
+  return { getDemoGameState, getDemoInstructions };
 };
