@@ -7,6 +7,8 @@ import { db } from "../config/firebaseConfig";
 
 import { useSelector, useDispatch } from "react-redux";
 
+import { updateDemo } from "../redux/demoGuide";
+
 import {
   getDocs,
   collection,
@@ -67,6 +69,7 @@ export default function Game() {
         Target: true,
       })
     );
+    updateDemo(null);
   }, []);
 
   useEffect(() => {

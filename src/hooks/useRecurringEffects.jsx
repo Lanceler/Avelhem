@@ -50,7 +50,7 @@ export const useRecurringEffects = () => {
 
     if (triggerScreech(unit)) {
       newGameState.currentResolution.push({
-        resolution: "Triggering Screech",
+        resolution: "Triggering Activation",
         player: enemy,
         activator: unit,
       });
@@ -221,7 +221,7 @@ export const useRecurringEffects = () => {
 
     if (triggerScreech(unit)) {
       newGameState.currentResolution.push({
-        resolution: "Triggering Screech",
+        resolution: "Triggering Activation",
         player: enemy,
         activator: unit,
       });
@@ -328,7 +328,7 @@ export const useRecurringEffects = () => {
 
     if (triggerScreech(unit)) {
       newGameState.currentResolution.push({
-        resolution: "Triggering Screech",
+        resolution: "Triggering Activation",
         player: enemy,
         activator: unit,
       });
@@ -444,7 +444,7 @@ export const useRecurringEffects = () => {
 
     if (triggerScreech(unit)) {
       newGameState.currentResolution.push({
-        resolution: "Triggering Screech",
+        resolution: "Triggering Activation",
         player: enemy,
         activator: unit,
       });
@@ -671,7 +671,7 @@ export const useRecurringEffects = () => {
 
     if (triggerScreech(unit)) {
       newGameState.currentResolution.push({
-        resolution: "Triggering Screech",
+        resolution: "Triggering Activation",
         player: enemy,
         activator: unit,
       });
@@ -906,7 +906,7 @@ export const useRecurringEffects = () => {
 
     if (triggerScreech(unit)) {
       newGameState.currentResolution.push({
-        resolution: "Triggering Screech",
+        resolution: "Triggering Activation",
         player: enemy,
         activator: unit,
       });
@@ -956,7 +956,7 @@ export const useRecurringEffects = () => {
 
     if (triggerScreech(unit)) {
       newGameState.currentResolution.push({
-        resolution: "Triggering Screech",
+        resolution: "Triggering Activation",
         player: enemy,
         activator: unit,
       });
@@ -1005,7 +1005,7 @@ export const useRecurringEffects = () => {
 
     if (triggerScreech(unit)) {
       newGameState.currentResolution.push({
-        resolution: "Triggering Screech",
+        resolution: "Triggering Activation",
         player: enemy,
         activator: unit,
       });
@@ -1098,7 +1098,7 @@ export const useRecurringEffects = () => {
 
     if (triggerScreech(unit)) {
       newGameState.currentResolution.push({
-        resolution: "Triggering Screech",
+        resolution: "Triggering Activation",
         player: enemy,
         activator: unit,
       });
@@ -1147,7 +1147,7 @@ export const useRecurringEffects = () => {
 
     if (triggerScreech(unit)) {
       newGameState.currentResolution.push({
-        resolution: "Triggering Screech",
+        resolution: "Triggering Activation",
         player: enemy,
         activator: unit,
       });
@@ -1414,7 +1414,7 @@ export const useRecurringEffects = () => {
 
     if (triggerScreech(unit)) {
       newGameState.currentResolution.push({
-        resolution: "Triggering Screech",
+        resolution: "Triggering Activation",
         player: enemy,
         activator: unit,
       });
@@ -1717,7 +1717,7 @@ export const useRecurringEffects = () => {
 
     if (triggerScreech(unit)) {
       newGameState.currentResolution.push({
-        resolution: "Triggering Screech",
+        resolution: "Triggering Activation",
         player: enemy,
         activator: unit,
       });
@@ -1760,7 +1760,7 @@ export const useRecurringEffects = () => {
 
     if (triggerScreech(unit)) {
       newGameState.currentResolution.push({
-        resolution: "Triggering Screech",
+        resolution: "Triggering Activation",
         player: enemy,
         activator: unit,
       });
@@ -1926,7 +1926,7 @@ export const useRecurringEffects = () => {
 
     if (triggerScreech(unit)) {
       newGameState.currentResolution.push({
-        resolution: "Triggering Screech",
+        resolution: "Triggering Activation",
         player: enemy,
         activator: unit,
       });

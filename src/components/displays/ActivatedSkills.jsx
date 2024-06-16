@@ -73,7 +73,7 @@ const ActivatedSkills = () => {
                 }}
                 transition={{ duration: 0.4, scale: 0.5 }}
                 exit={{ opacity: 0, scale: 1.5 }}
-                className="activatedSkill displayedSkills"
+                className="activatedSkill displayedSkills topmostDisplay"
                 style={{
                   left: 5,
                   filter: `${

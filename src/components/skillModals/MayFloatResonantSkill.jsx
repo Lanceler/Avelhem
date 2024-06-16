@@ -9,6 +9,8 @@ import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 import { useCardDatabase } from "../../hooks/useCardDatabase";
 import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 
+import Skill from "../hand/Skill";
+
 const MayFloatResonantSkill = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
@@ -56,9 +58,11 @@ const MayFloatResonantSkill = (props) => {
 
   //Dark Halo Overides
   if (props.resonator === "SA-03") {
-    revealedCard = getSkillById(props.resonator);
+    // revealedCard = getSkillById(props.resonator);
+    revealedCard = props.resonator;
   } else {
-    revealedCard = getSkillById(props.skill);
+    // revealedCard = getSkillById(props.skill);
+    revealedCard = props.skill;
   }
 
   return (
@@ -76,18 +80,28 @@ const MayFloatResonantSkill = (props) => {
 
         <h3>You may float this skill.</h3>
         {props.resonator === "SA-03" && (
-          <p>
-            When a skill resonates with Dark Halo, the sub-effect that would
-            retain or float it applies to the latter instead.
+          <p style={{ maxWidth: "700px" }}>
+            <em>
+              When a skill resonates with Dark Halo, the sub-effect that would
+              retain or float it applies to the latter instead.
+            </em>
           </p>
         )}
 
-        <div
+        <br />
+
+        {/* <div
           className="revealed-skill"
           style={{
             backgroundImage: `url(${getImage(revealedCard.Name)})`,
           }}
-        ></div>
+        ></div> */}
+
+        <div className="view-revealed-skill">
+          {props.skill && (
+            <Skill usableSkill={{ id: revealedCard }} canActivateSkill={true} />
+          )}
+        </div>
 
         <div className="twoColumn bottomAnchor">
           <button className="choiceButton" onClick={() => handleDiscard()}>

@@ -34,7 +34,7 @@ const ContingentSymphonicScreech = (props) => {
   const handleSkip = () => {
     const newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    //pop "Triggering Screech"
+    //pop "Triggering Activation"
     newGameState.currentResolution.pop();
     // newGameState.currentResolution.pop(); // why is there a second?
 
@@ -46,7 +46,7 @@ const ContingentSymphonicScreech = (props) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     const zones = JSON.parse(newGameState.zones);
 
-    //pop "Triggering Screech"
+    //pop "Triggering Activation"
     newGameState.currentResolution.pop();
 
     const zonesWithEnemies = getZonesWithEnemies(props.activator, 2);

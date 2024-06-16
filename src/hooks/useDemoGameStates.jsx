@@ -505,7 +505,7 @@ export const useDemoGameStates = () => {
           activatingTarget: [],
           winObjective: 1,
           activatingSkill: [],
-          turnCount: 9,
+          turnCount: 0,
           winner: null,
           currentResolution: [{ resolution: "Execution Phase" }],
           activatingResonator: [],

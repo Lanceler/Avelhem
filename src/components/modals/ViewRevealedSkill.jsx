@@ -44,13 +44,6 @@ const ViewRevealedSkill = (props) => {
 
         <div className="view-revealed-skill">
           {props.skill && (
-            // <div
-            //   className="revealed-skill"
-            //   style={{
-            //     backgroundImage: `url(${getImage2(props.skill)})`,
-            //   }}
-            // ></div>
-
             <Skill usableSkill={{ id: props.skill }} canActivateSkill={true} />
           )}
 

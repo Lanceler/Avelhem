@@ -56,7 +56,7 @@ import TacticSelectionViaEffect from "./modals/TacticSelectionViaEffect";
 
 import SelectCustomChoice from "./modals/SelectCustomChoice";
 
-import GlacialTorrent1 from "./skillModals/GlacialTorrent1";
+import GlacialTorrent from "./skillModals/GlacialTorrent";
 import CataclysmicTempestFloat from "./skillModals/CataclysmicTempestFloat";
 import FerventPrayerResonance from "./skillModals/FerventPrayerResonance";
 import PowerAtTheFinalHourProaction from "./skillModals/PowerAtTheFinalHourProaction";
@@ -66,7 +66,7 @@ import ContingentElimination from "./skillModals/ContingentElimination";
 import ContingentMotion from "./skillModals/ContingentMotion";
 import ContingentSurvivalAlly from "./skillModals/ContingentSurvivalAlly";
 import ContingentSurvivalEnemy from "./skillModals/ContingentSurvivalEnemy";
-import ContingentSymphonicScreech from "./skillModals/ContingentSymphonicScreech";
+import ContingentActivation from "./skillModals/ContingentActivation";
 import ContingentTarget from "./skillModals/ContingentTarget";
 
 import MayFloatResonantSkill from "./skillModals/MayFloatResonantSkill";
@@ -1983,7 +1983,7 @@ const Board = (props) => {
             return (
               <>
                 {self === lastResolution.unit.player && !hideModal && (
-                  <GlacialTorrent1
+                  <GlacialTorrent
                     unit={lastResolution.unit}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
@@ -3923,11 +3923,11 @@ const Board = (props) => {
         }
         break;
 
-      case "Triggering Screech":
+      case "Triggering Activation":
         return (
           <>
             {self === lastResolution.player && !hideModal && (
-              <ContingentSymphonicScreech
+              <ContingentActivation
                 updateFirebase={updateFirebase}
                 activator={lastResolution.activator}
                 hideOrRevealModale={hideOrRevealModale}
