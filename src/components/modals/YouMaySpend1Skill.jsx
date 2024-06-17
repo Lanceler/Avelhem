@@ -362,7 +362,7 @@ const YouMaySpend1Skill = (props) => {
 
   const canClick = (element, element2) => {
     switch (demoGuide) {
-      case "Fire1.17":
+      case "Fire1.17.1":
         switch (element) {
           case "Skip Button":
             return true;
@@ -387,7 +387,7 @@ const YouMaySpend1Skill = (props) => {
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
-      case "Fire1.17":
+      case "Fire1.17.1":
         dispatch(updateDemo("Fire1.18"));
         break;
 

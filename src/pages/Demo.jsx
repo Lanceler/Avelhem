@@ -135,10 +135,6 @@ export default function Demo() {
           </h1>
           <br></br>
 
-          {/* display demoGuide for debugging */}
-
-          {/* {demoGuide && <h1>{demoGuide}</h1>} */}
-
           <div className="demo-board">
             {currentPlayer === "host" && (
               <Board
@@ -182,6 +178,10 @@ export default function Demo() {
           {infoPopUp && (
             <InfoPopUp info={infoPopUp} setInfoPopUp={setInfoPopUp} />
           )}
+
+          {/* display demoGuide for debugging */}
+
+          {/* {demoGuide && <h1>{demoGuide}</h1>} */}
         </div>
       )}
     </>

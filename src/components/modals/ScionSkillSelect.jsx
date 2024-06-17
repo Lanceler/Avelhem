@@ -155,6 +155,10 @@ const ScionSkillSelect = (props) => {
         dispatch(updateDemo("Fire1.17"));
         break;
 
+      case "Fire1.17":
+        dispatch(updateDemo("Fire1.17.1"));
+        break;
+
       case "Fire1.18":
         dispatch(updateDemo("Fire1.19"));
         break;
@@ -219,7 +223,10 @@ const ScionSkillSelect = (props) => {
               className={`choiceButton ${
                 canClick("Select Button") ? "demoClick" : ""
               }`}
-              onClick={() => handleSelect()}
+              onClick={() => {
+                handleSelect();
+                handleUpdateDemoGuide();
+              }}
             >
               Select
             </button>
