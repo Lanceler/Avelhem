@@ -334,6 +334,9 @@
 .pile-card-container{
     position: relative;
     /* top: -25px */
+    height: 130px;
+    width: 90px;
+    /* background-color: red; */
 }
 
 .pile-card {

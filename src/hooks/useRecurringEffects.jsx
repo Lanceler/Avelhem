@@ -1649,7 +1649,7 @@ export const useRecurringEffects = () => {
           "Sovereign Resonant Skill",
           "Activating Ambidexterity",
           resonator,
-          "float"
+          "retain"
         );
 
       case "SB-03":
@@ -2099,7 +2099,7 @@ export const useRecurringEffects = () => {
       // case victim.afflictions.anathema > 0:
       //   aP = 5;
       //   break;
-      case ["Geomancy", "Surge"].includes(special):
+      case ["Geomancy", "Surge", "Particle Beam"].includes(special):
         aP = 2;
         break;
       case special === "Fire Scion" &&
@@ -3720,9 +3720,14 @@ export const useRecurringEffects = () => {
   };
 
   const getVacantFrontier = () => {
-    let frontierLength = 1 + localGameState[self].bountyUpgrades.frontier;
+    //let frontierLength = 1 + localGameState[self].bountyUpgrades.frontier;
+    //initial frontier expanded to 3 rows (0,1,2)
 
-    let zones = JSON.parse(localGameState.zones);
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    let frontierLength = 2 + newGameState[self].bountyUpgrades.frontier;
+
+    let zones = JSON.parse(newGameState.zones);
 
     let validZones = [];
 

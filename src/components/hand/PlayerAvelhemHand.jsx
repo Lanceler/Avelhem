@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Skill.css";
 
 import { useSelector, useDispatch } from "react-redux";
-import { updateState } from "../../redux/gameState";
 import { updateDemo } from "../../redux/demoGuide";
-import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 import { useCardDatabase } from "../../hooks/useCardDatabase";
@@ -15,6 +13,7 @@ import SelectedAvelhem from "./SelectedAvelhem";
 
 const PlayerAvelhemHand = (props) => {
   const { demoGuide } = useSelector((state) => state.demoGuide);
+  const dispatch = useDispatch();
 
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
@@ -48,18 +47,41 @@ const PlayerAvelhemHand = (props) => {
   const handleCard = (card, index) => {
     if (raise) {
       setSelectedAvelhem({ avelhem: card, handIndex: index });
-
-      // if (["Fire1.1"].includes(demoGuide)) {
-      //   updateDemo("Fire1.2");
-      // }
-      //setRaise(false);
     }
   };
 
-  const canClick = () => {
+  const canClick = (element1) => {
     switch (demoGuide) {
+      case "Learn1.18":
+      case "Learn1.21":
       case "Fire1.1":
         return true;
+
+      case "Learn1.19":
+        return element1 === 6;
+
+      case "Learn1.22":
+        return element1 === 4;
+    }
+  };
+
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+      case "Learn1.18":
+        dispatch(updateDemo("Learn1.19"));
+        break;
+
+      case "Learn1.19":
+        dispatch(updateDemo("Learn1.20"));
+        break;
+
+      case "Learn1.21":
+        dispatch(updateDemo("Learn1.22"));
+        break;
+
+      case "Learn1.22":
+        dispatch(updateDemo("Learn1.23"));
+        break;
     }
   };
 
@@ -95,14 +117,18 @@ const PlayerAvelhemHand = (props) => {
         >
           {localGameState[self].avelhemHand.map((card, index) => (
             <div
-              onClick={() => handleCard(card, index)}
+              onClick={() => {
+                handleCard(card, index);
+
+                handleUpdateDemoGuide();
+              }}
               key={index}
               // className={`player-hand-card indivAvelhem ${
               //   raise ? "enlargable" : ""
               // }`}
               className={`player-hand-card indivAvelhem ${
                 raise ? "enlargable" : ""
-              } ${canClick() ? "demoClick" : ""}`}
+              } ${canClick(card) ? "demoClick" : ""}`}
               style={{
                 backgroundImage: `url(${getImage(getAvelhemById(card).Name)})`,
                 top: Math.floor(index / 2) * -110,

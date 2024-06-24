@@ -836,6 +836,7 @@ const SelectCustomChoice = (props) => {
         }
         break;
 
+      case "Learn1.25":
       case "Fire1.20":
       case "Fire1.37":
         switch (element) {
@@ -844,6 +845,7 @@ const SelectCustomChoice = (props) => {
         }
         break;
 
+      case "Learn1.26":
       case "Fire1.3":
       case "Fire1.21":
       case "Fire1.38":
@@ -858,6 +860,15 @@ const SelectCustomChoice = (props) => {
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
+      case "Learn1.25":
+        dispatch(updateDemo("Learn1.26"));
+        break;
+
+      case "Learn1.26":
+        dispatch(updateDemo("Learn1.27"));
+        break;
+
+      ///////////////////////
       case "Fire1.2.1":
         dispatch(updateDemo("Fire1.3"));
         break;

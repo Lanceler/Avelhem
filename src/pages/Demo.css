@@ -33,20 +33,34 @@
 
 .demo-instructions{
     position: absolute;
-    top: 370px;
+    top: 365px;
     left: 750px;
 
     margin: 0px;
-    padding: 15px;
+    padding: 10px;
+    padding-bottom: 20px;
 
-    height: 135px;
+    height: 140px;
     width: 600px;
 
     border: 4px solid goldenrod;
-    background-color: rgba(0, 0, 0, 0.955);
+    background-color: rgba(0, 0, 0, 0.90);
 
-    color: #e8e8e8;
+    /* color: #e8e8e8; */
+    color: rgb(255, 210, 95);
     font-family: Arial, sans-serif;
-    font-size: 21.5px;
+    font-size: 21px;
+    letter-spacing: 0.02em;
+    line-height: 120%;
+}
+
+
+.demo-instructions-button{
+
+    position: absolute;
+    top: 550px;
+    left: 1279px;
+    margin: 0px;
+
 
 }

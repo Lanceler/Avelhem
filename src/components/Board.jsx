@@ -567,6 +567,7 @@ const Board = (props) => {
       dispatch(updateEnemy("host"));
     }
 
+    // console.log("STRINGED GAMESTATE");
     // console.log(JSON.stringify(localGameState));
   }, []);
 
@@ -584,12 +585,20 @@ const Board = (props) => {
     setExpandedUnit(null);
   }, [localGameState]);
 
+  useEffect(() => {
+    if (["Learn1.3", "Learn1.9"].includes(demoGuide)) {
+      setHideModal(true);
+    } else if (["Learn1.6", "Learn1.10"].includes(demoGuide)) {
+      setHideModal(false);
+    }
+  }, [demoGuide]);
+
   //Gets data regarding zones and units
   useEffect(() => {
     // console.log("Updated local from online");
     setZones(JSON.parse(props.gameState.zones));
     dispatch(updateState(props.gameState));
-    setHideModal(false);
+    // setHideModal(false);
   }, [props.gameState]);
 
   //====================================================================
@@ -5122,36 +5131,52 @@ const Board = (props) => {
 
   const canClick = (element, element2) => {
     switch (demoGuide) {
+      case "Learn1.38":
+        return element === "Cancel Button";
+
+      case "Learn1.39":
+      case "Learn1.49":
+      case "Learn1.54":
+      case "Learn1.59":
+        return element === "Tactic Button";
+
+      case "Learn1.67":
+        return element === "Skill Button";
+
       case "Fire1.9":
       case "Fire1.13":
-        switch (element) {
-          case "Ability Button":
-            return true;
-        }
-        break;
+        return element === "Ability Button";
 
       case "Fire1.16":
       case "Fire1.18":
       case "Fire1.26":
       case "Fire1.31":
-        switch (element) {
-          case "Skill Button":
-            return true;
-        }
-        break;
+        return element === "Skill Button";
 
       case "Fire1.23":
-        switch (element) {
-          case "Tactic Button":
-            return true;
-        }
-        break;
+        return element === "Tactic Button";
 
       case "Fire1.45.1":
-        switch (element) {
-          case "End Button":
-            return true;
-        }
+        return element === "Wnd Button";
+    }
+  };
+
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+      case "Learn1.39":
+        dispatch(updateDemo("Learn1.40"));
+        break;
+
+      case "Learn1.54":
+        dispatch(updateDemo("Learn1.55"));
+        break;
+
+      case "Learn1.59":
+        dispatch(updateDemo("Learn1.60"));
+        break;
+
+      case "Learn1.67":
+        dispatch(updateDemo("Learn1.68"));
         break;
     }
   };
@@ -5222,8 +5247,13 @@ const Board = (props) => {
                       localGameState.currentResolution.length - 1
                     ].resolution === "Deploying Pawn" && (
                       <button
-                        className="choiceButton"
-                        onClick={() => cancelDeploy()}
+                        className={`choiceButton ${
+                          canClick("Cancel Button") ? "demoClick" : ""
+                        }`}
+                        onClick={() => {
+                          cancelDeploy();
+                          handleUpdateDemoGuide();
+                        }}
                       >
                         Cancel
                       </button>
@@ -5285,7 +5315,10 @@ const Board = (props) => {
                               canClick("Tactic Button") ? "demoClick" : ""
                             }`}
                             style={unitButtonPosition(expandedUnit)[1]}
-                            onClick={() => handleUnitOptions("Tactic")}
+                            onClick={() => {
+                              handleUnitOptions("Tactic");
+                              handleUpdateDemoGuide();
+                            }}
                           >
                             <div className="optionIcon">
                               <img src={UnitTactic} className="unitOptions" />

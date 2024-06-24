@@ -146,13 +146,12 @@ const SelectedAvelhem = (props) => {
 
   const canClick = (element) => {
     switch (demoGuide) {
-      case "Fire1.1":
-        switch (element) {
-          case "Resonate Button":
-            return true;
-        }
+      case "Learn1.20":
+      case "Learn1.23":
+        return element === "Activate Button";
 
-        break;
+      case "Fire1.1":
+        return element === "Resonate Button";
     }
   };
 
@@ -193,7 +192,9 @@ const SelectedAvelhem = (props) => {
             {canActivateAvelhem && (
               <>
                 <button
-                  className="activateButton displayCardButton"
+                  className={`activateButton displayCardButton ${
+                    canClick("Activate Button") ? "demoClick" : ""
+                  }`}
                   onClick={() => handleActivate()}
                 >
                   Activate

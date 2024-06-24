@@ -9,11 +9,15 @@ import InvokeSmall from "../../assets/diceIcons/InvokeSmall.png";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
+import { updateDemo } from "../../redux/demoGuide";
+
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 const CoordinationPhaseSelection = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
+  const { demoGuide } = useSelector((state) => state.demoGuide);
+
   const dispatch = useDispatch();
 
   const [selectedChoice, setSelectedChoice] = useState(null);
@@ -185,6 +189,27 @@ const CoordinationPhaseSelection = (props) => {
     props.hideOrRevealModale();
   };
 
+  const canClick = (element1, element2) => {
+    switch (demoGuide) {
+      case "Learn1.11":
+        return element1 === "choice" && element2 === 0;
+
+      case "Learn1.12":
+        return element1 === "select";
+    }
+  };
+
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+      case "Learn1.11":
+        dispatch(updateDemo("Learn1.12"));
+        break;
+      case "Learn1.12":
+        dispatch(updateDemo("Learn1.13"));
+        break;
+    }
+  };
+
   return (
     <div className="modal-backdrop">
       <div className="modal">
@@ -201,9 +226,12 @@ const CoordinationPhaseSelection = (props) => {
               key={i}
               className={`customChoice ${
                 selectedChoice === i ? "selectedChoice" : ""
-              } `}
+              } ${canClick("choice", i) ? "demoClick" : ""}`}
               style={{ backgroundImage: `url(${GoldFrame})` }}
-              onClick={() => handleChoice(i)}
+              onClick={() => {
+                handleChoice(i);
+                handleUpdateDemoGuide();
+              }}
             >
               <div
                 // className="abilityFrame"
@@ -261,7 +289,13 @@ const CoordinationPhaseSelection = (props) => {
         </h3>
 
         {selectedChoice !== null && (
-          <button className="choiceButton" onClick={() => handleSelect()}>
+          <button
+            className={`choiceButton ${canClick("select") ? "demoClick" : ""}`}
+            onClick={() => {
+              handleSelect();
+              handleUpdateDemoGuide();
+            }}
+          >
             Select
           </button>
         )}

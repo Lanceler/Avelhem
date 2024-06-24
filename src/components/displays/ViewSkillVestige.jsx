@@ -7,6 +7,7 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { useSelector, useDispatch } from "react-redux";
 import { updateMagnifiedSkill } from "../../redux/magnifySkill";
 import { updateState } from "../../redux/gameState";
+import { updateDemo } from "../../redux/demoGuide";
 
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
@@ -16,6 +17,7 @@ const ViewSkillVestige = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
   const { magnifiedSkill } = useSelector((state) => state.magnifiedSkill);
+  const { demoGuide } = useSelector((state) => state.demoGuide);
 
   const dispatch = useDispatch();
 
@@ -49,6 +51,21 @@ const ViewSkillVestige = (props) => {
     props.setShowPile(null);
   };
 
+  const canClick = () => {
+    switch (demoGuide) {
+      case "Learn1.20.2":
+        return true;
+    }
+  };
+
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+      case "Learn1.20.2":
+        dispatch(updateDemo("Learn1.21"));
+        break;
+    }
+  };
+
   return (
     <>
       <div className="modal-backdrop">
@@ -56,8 +73,13 @@ const ViewSkillVestige = (props) => {
           <div className="twoColumn3-1">
             <h2 className="choiceTitle">{`${props.vestige} Vestige`}</h2>
             <button
-              className="collapseSelected unitInfo-close"
-              onClick={() => handleSkip()}
+              className={`collapseSelected unitInfo-close ${
+                canClick() ? "demoClick" : ""
+              }`}
+              onClick={() => {
+                handleSkip();
+                handleUpdateDemoGuide();
+              }}
             >
               X
             </button>

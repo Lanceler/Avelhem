@@ -4,6 +4,8 @@ import "./Modal.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
+import { updateDemo } from "../../redux/demoGuide";
+
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 import { useCardDatabase } from "../../hooks/useCardDatabase";
 
@@ -12,6 +14,8 @@ import Skill from "../hand/Skill";
 const SearchSkill = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
+  const { demoGuide } = useSelector((state) => state.demoGuide);
+
   const dispatch = useDispatch();
 
   const { avelhemToScion, refillRepertoireSkill, shuffleCards } =
@@ -205,6 +209,28 @@ const SearchSkill = (props) => {
     props.hideOrRevealModale();
   };
 
+  const canClick = (element1, element2, element3) => {
+    switch (demoGuide) {
+      case "Learn1.32":
+        return element3 === 2;
+
+      case "Learn1.33":
+        return element1 === "Select Button";
+    }
+  };
+
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+      case "Learn1.32":
+        dispatch(updateDemo("Learn1.33"));
+        break;
+
+      case "Learn1.33":
+        dispatch(updateDemo("Learn1.34"));
+        break;
+    }
+  };
+
   return (
     <div className="modal-backdrop">
       <div className="modal">
@@ -226,10 +252,12 @@ const SearchSkill = (props) => {
                     key={i}
                     className={`scionSkills ${
                       selectedSkill === i ? "selectedSkill" : ""
+                    } ${
+                      canClick("Skill Card", usableSkill, i) ? "demoClick" : ""
                     }`}
                     onClick={() => {
                       handleClick(canSearch(usableSkill.id), i);
-                      // handleUpdateDemoGuide();
+                      handleUpdateDemoGuide();
                     }}
                   >
                     <Skill
@@ -243,7 +271,7 @@ const SearchSkill = (props) => {
             </>
           )}
 
-          <h3>Non-floating skills</h3>
+          {localGameState[self].skillFloat > 0 && <h3>Non-floating skills</h3>}
           <div
             className={`fourColumn  ${
               localGameState[self].skillFloat > 0 ? "decreased-height" : ""
@@ -256,13 +284,13 @@ const SearchSkill = (props) => {
                   selectedSkill === i + localGameState[self].skillFloat
                     ? "selectedSkill"
                     : ""
-                }`}
+                } ${canClick("Skill Card", usableSkill, i) ? "demoClick" : ""}`}
                 onClick={() => {
                   handleClick(
                     canSearch(usableSkill.id),
                     i + localGameState[self].skillFloat
                   );
-                  // handleUpdateDemoGuide();
+                  handleUpdateDemoGuide();
                 }}
               >
                 <Skill
@@ -282,7 +310,15 @@ const SearchSkill = (props) => {
         )}
 
         {selectedSkill !== null && (
-          <button className="choiceButton" onClick={() => handleSelect()}>
+          <button
+            className={`choiceButton ${
+              canClick("Select Button") ? "demoClick" : ""
+            }`}
+            onClick={() => {
+              handleSelect();
+              handleUpdateDemoGuide();
+            }}
+          >
             Select
           </button>
         )}

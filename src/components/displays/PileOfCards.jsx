@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../hand/Skill.css";
 
 import { useSelector, useDispatch } from "react-redux";
+import { updateDemo } from "../../redux/demoGuide";
 
 import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 import ViewSkillVestige from "./ViewSkillVestige";
@@ -9,6 +10,10 @@ import ViewSkillVestige from "./ViewSkillVestige";
 const PileOfCards = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
+  const { demoGuide } = useSelector((state) => state.demoGuide);
+
+  const dispatch = useDispatch();
+
   const { getImage2 } = useCardImageSwitch();
 
   const [showPile, setShowPile] = useState(null);
@@ -57,15 +62,43 @@ const PileOfCards = (props) => {
     }
   };
 
+  const canClick = () => {
+    switch (demoGuide) {
+      case "Learn1.20.1":
+        return (
+          ["avelhemVestige", "skillVestige"].includes(pile) &&
+          team === "host" &&
+          stack.length
+        );
+    }
+  };
+
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+      case "Learn1.20.1":
+        dispatch(updateDemo("Learn1.20.2"));
+        break;
+    }
+  };
+
   return (
     <div className="">
-      <div className="pile-card-container" onClick={() => handleClick()}>
+      <div
+        className={`pile-card-container ${canClick() ? "demoClick" : ""}`}
+        onClick={() => {
+          handleClick();
+          handleUpdateDemoGuide();
+        }}
+      >
         {stack.map((card, i) => (
           <div
             key={i}
             className={`pile-card ${isFloating(i) ? "pile-floating" : ""} ${
               isVestige ? "pile-vestige" : ""
-            } ${team === enemy ? "pile-enemy" : ""}`}
+            } ${team === enemy ? "pile-enemy" : ""}
+            
+            
+            `}
             style={{
               backgroundImage: `url(${getImage2(cardBack)})`,
               top: -i * 0.3,

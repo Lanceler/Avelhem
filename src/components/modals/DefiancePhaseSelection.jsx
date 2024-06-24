@@ -5,6 +5,8 @@ import GoldFrame from "../../assets/others/GoldFrame.png";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
+import { updateDemo } from "../../redux/demoGuide";
+
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import { useCardDatabase } from "../../hooks/useCardDatabase";
@@ -12,6 +14,8 @@ import { useCardDatabase } from "../../hooks/useCardDatabase";
 const DefiancePhaseSelection = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
+  const { demoGuide } = useSelector((state) => state.demoGuide);
+
   const dispatch = useDispatch();
 
   const [selectedChoice, setSelectedChoice] = useState(null);
@@ -193,9 +197,20 @@ const DefiancePhaseSelection = (props) => {
     localGameState[self].fateDefiances >= defianceCosts[5],
   ];
 
-  // console.log(canFrontier);
-  // console.log(canAcquisition);
+  const canClick = (element1, element2) => {
+    switch (demoGuide) {
+      case "Learn1.15":
+        return element1 === "skip";
+    }
+  };
 
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+      case "Learn1.15":
+        dispatch(updateDemo("Learn1.16"));
+        break;
+    }
+  };
   return (
     <div className="modal-backdrop">
       <div className="modal ">
@@ -359,7 +374,13 @@ const DefiancePhaseSelection = (props) => {
 
         <div>
           {selectedChoice === null && (
-            <button className="choiceButton" onClick={() => handleSkip()}>
+            <button
+              className={`choiceButton ${canClick("skip") ? "demoClick" : ""}`}
+              onClick={() => {
+                handleSkip();
+                handleUpdateDemoGuide();
+              }}
+            >
               Skip
             </button>
           )}

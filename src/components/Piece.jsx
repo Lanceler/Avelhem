@@ -62,115 +62,177 @@ export const Piece = (props) => {
   };
 
   const canClick = (element, element2) => {
-    switch (demoGuide) {
-      case "Fire1.2":
-      case "Fire1.8":
-      case "Fire1.9":
-      case "Fire1.13":
-      case "Fire1.16":
-      case "Fire1.18":
-      case "Fire1.23":
-        switch (element) {
-          case "Unit":
-            return element2.unitIndex === 2 && element2.player === "host";
-        }
-        break;
+    if (demoGuide) {
+      switch (true) {
+        case demoGuide.slice(0, 5) === "Learn":
+          switch (demoGuide) {
+            case "Learn1.20":
+            case "Learn1.39":
+            case "Learn1.49":
+              return (
+                element === "Unit" &&
+                element2.unitIndex === 1 &&
+                element2.player === "host"
+              );
 
-      case "Fire1.12":
-      case "Fire1.31":
-      case "Fire1.35":
-      case "Fire1.46":
-        switch (element) {
-          case "Unit":
-            return element2.unitIndex === 3 && element2.player === "host";
-        }
-        break;
+            case "Learn1.23":
+            case "Learn1.59":
+            case "Learn1.67":
+              return (
+                element === "Unit" &&
+                element2.unitIndex === 2 &&
+                element2.player === "host"
+              );
 
-      case "Fire1.15":
-        switch (element) {
-          case "Unit":
-            return element2.unitIndex === 4 && element2.player === "guest";
-        }
-        break;
+            case "Learn1.54":
+              return (
+                element === "Unit" &&
+                element2.unitIndex === 0 &&
+                element2.player === "host"
+              );
+          }
+          break;
 
-      case "Fire1.22":
-        switch (element) {
-          case "Unit":
-            return element2.unitIndex === 0 && element2.player === "guest";
-        }
-        break;
+        case demoGuide.slice(0, 4) === "Fire":
+          switch (demoGuide) {
+            case "Fire1.2":
+            case "Fire1.8":
+            case "Fire1.9":
+            case "Fire1.13":
+            case "Fire1.16":
+            case "Fire1.18":
+            case "Fire1.23":
+              switch (element) {
+                case "Unit":
+                  return element2.unitIndex === 2 && element2.player === "host";
+              }
+              break;
 
-      case "Fire1.26":
-        switch (element) {
-          case "Unit":
-            return element2.unitIndex === 0 && element2.player === "host";
-        }
-        break;
+            case "Fire1.12":
+            case "Fire1.31":
+            case "Fire1.35":
+            case "Fire1.46":
+              switch (element) {
+                case "Unit":
+                  return element2.unitIndex === 3 && element2.player === "host";
+              }
+              break;
 
-      case "Fire1.29":
-      case "Fire1.30":
-        switch (element) {
-          case "Unit":
-            return (
-              [2, 3].includes(element2.unitIndex) && element2.player === "guest"
-            );
-        }
-        break;
+            case "Fire1.15":
+              switch (element) {
+                case "Unit":
+                  return (
+                    element2.unitIndex === 4 && element2.player === "guest"
+                  );
+              }
+              break;
 
-      case "Fire1.32":
-        switch (element) {
-          case "Unit":
-            return element2.unitIndex === 1 && element2.player === "guest";
-        }
-        break;
+            case "Fire1.22":
+              switch (element) {
+                case "Unit":
+                  return (
+                    element2.unitIndex === 0 && element2.player === "guest"
+                  );
+              }
+              break;
 
-      case "Fire1.37":
-      case "Fire1.45":
-        switch (element) {
-          case "Unit":
-            return element2.unitIndex === 5 && element2.player === "guest";
-        }
-        break;
+            case "Fire1.26":
+              switch (element) {
+                case "Unit":
+                  return element2.unitIndex === 0 && element2.player === "host";
+              }
+              break;
+
+            case "Fire1.29":
+            case "Fire1.30":
+              switch (element) {
+                case "Unit":
+                  return (
+                    [2, 3].includes(element2.unitIndex) &&
+                    element2.player === "guest"
+                  );
+              }
+              break;
+
+            case "Fire1.32":
+              switch (element) {
+                case "Unit":
+                  return (
+                    element2.unitIndex === 1 && element2.player === "guest"
+                  );
+              }
+              break;
+
+            case "Fire1.37":
+            case "Fire1.45":
+              switch (element) {
+                case "Unit":
+                  return (
+                    element2.unitIndex === 5 && element2.player === "guest"
+                  );
+              }
+              break;
+          }
+          break;
+      }
     }
   };
 
   const handleUpdateDemoGuide = () => {
-    switch (demoGuide) {
-      case "Fire1.2":
-        dispatch(updateDemo("Fire1.2.1"));
-        break;
+    if (demoGuide) {
+      switch (true) {
+        case demoGuide.slice(0, 5) === "Learn":
+          switch (demoGuide) {
+            case "Learn1.20":
+              dispatch(updateDemo("Learn1.20.1"));
+              break;
 
-      case "Fire1.8":
-        dispatch(updateDemo("Fire1.9"));
-        break;
+            case "Learn1.23":
+              dispatch(updateDemo("Learn1.24"));
+              break;
+          }
+          break;
 
-      case "Fire1.12":
-        dispatch(updateDemo("Fire1.13"));
-        break;
+        case demoGuide.slice(0, 4) === "Fire":
+          switch (demoGuide) {
+            case "Fire1.2":
+              dispatch(updateDemo("Fire1.2.1"));
+              break;
 
-      case "Fire1.15":
-        dispatch(updateDemo("Fire1.16"));
-        break;
+            case "Fire1.8":
+              dispatch(updateDemo("Fire1.9"));
+              break;
 
-      case "Fire1.22":
-        dispatch(updateDemo("Fire1.23"));
-        break;
+            case "Fire1.12":
+              dispatch(updateDemo("Fire1.13"));
+              break;
 
-      case "Fire1.30":
-        dispatch(updateDemo("Fire1.31"));
-        break;
+            case "Fire1.15":
+              dispatch(updateDemo("Fire1.16"));
+              break;
 
-      case "Fire1.32":
-        dispatch(updateDemo("Fire1.33"));
-        break;
+            case "Fire1.22":
+              dispatch(updateDemo("Fire1.23"));
+              break;
 
-      case "Fire1.35":
-        dispatch(updateDemo("Fire1.36"));
-        break;
+            case "Fire1.30":
+              dispatch(updateDemo("Fire1.31"));
+              break;
 
-      case "Fire1.45":
-        dispatch(updateDemo("Fire1.45.1"));
-        break;
+            case "Fire1.32":
+              dispatch(updateDemo("Fire1.33"));
+              break;
+
+            case "Fire1.35":
+              dispatch(updateDemo("Fire1.36"));
+              break;
+
+            case "Fire1.45":
+              dispatch(updateDemo("Fire1.45.1"));
+              break;
+          }
+          break;
+      }
     }
   };
 
@@ -192,8 +254,39 @@ export const Piece = (props) => {
             <>
               {/* Mana Scion: Disruption */}
               {props.unit.enhancements.disruption > 0 && (
-                <div className="disruption animating"></div>
+                <>
+                  <div className="disruption2"></div>
+                  <div className="disruption2 disruption2-animate"></div>
+                </>
               )}
+
+              {props.unit.unitClass === "Mana Scion" && (
+                <>
+                  {props.unit.enhancements.disruption === 1 && (
+                    <div
+                      className="disruptionCounter"
+                      style={{ left: 20 }}
+                    ></div>
+                  )}
+                  {props.unit.enhancements.disruption > 1 && (
+                    <>
+                      <div
+                        className="disruptionCounter"
+                        style={{ left: 20 }}
+                      ></div>
+                      <div
+                        className="disruptionCounter"
+                        style={{ left: 38 }}
+                      ></div>
+                    </>
+                  )}
+                </>
+              )}
+
+              {/* Mana Scion: Disruption */}
+              {/* {props.unit.enhancements.disruption > 0 && (
+                <div className="disruption animating"></div>
+              )} */}
 
               {/* Plant Scion: Overgrowth */}
               {props.unit.enhancements.overgrowth === true && (

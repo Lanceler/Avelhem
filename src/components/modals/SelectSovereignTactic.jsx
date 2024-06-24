@@ -448,11 +448,35 @@ const SelectSovereignTactic = (props) => {
 
   const canClick = (element, element2) => {
     switch (demoGuide) {
+      case "Learn1.35":
+        return element === "Tactic" && element2 === 0;
+
+      case "Learn1.36":
+        return element === "Select Button";
+
+      case "Learn1.38":
+      case "Learn1.48":
+        return element === "Return Button";
     }
   };
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
+      case "Learn1.35":
+        dispatch(updateDemo("Learn1.36"));
+        break;
+
+      case "Learn1.36":
+        dispatch(updateDemo("Learn1.37"));
+        break;
+
+      case "Learn1.38":
+        dispatch(updateDemo("Learn1.39"));
+        break;
+
+      case "Learn1.48":
+        dispatch(updateDemo("Learn1.49"));
+        break;
     }
   };
 
@@ -465,7 +489,7 @@ const SelectSovereignTactic = (props) => {
 
         {message && <h4>{message}</h4>}
 
-        <div className={modalColumn} column-centered>
+        <div className={modalColumn}>
           {abilityDetails.map((detail, i) => (
             <div
               key={i}
@@ -473,7 +497,10 @@ const SelectSovereignTactic = (props) => {
                 selectedChoice === i ? "selectedChoice" : ""
               } ${canClick("Tactic", i) ? "demoClick" : ""}`}
               style={{ backgroundImage: `url(${GoldFrame})` }}
-              onClick={() => handleChoice(i)}
+              onClick={() => {
+                handleChoice(i);
+                handleUpdateDemoGuide();
+              }}
             >
               <div
                 // className="abilityFrame"
@@ -495,13 +522,29 @@ const SelectSovereignTactic = (props) => {
         </div>
 
         {selectedChoice === null && (
-          <button className="choiceButton" onClick={() => handleReturn()}>
+          <button
+            className={`choiceButton ${
+              canClick("Return Button") ? "demoClick" : ""
+            }`}
+            onClick={() => {
+              handleReturn();
+              handleUpdateDemoGuide();
+            }}
+          >
             Return
           </button>
         )}
 
         {selectedChoice !== null && (
-          <button className="choiceButton" onClick={() => handleSelect()}>
+          <button
+            className={`choiceButton ${
+              canClick("Select Button") ? "demoClick" : ""
+            }`}
+            onClick={() => {
+              handleSelect();
+              handleUpdateDemoGuide();
+            }}
+          >
             Select
           </button>
         )}

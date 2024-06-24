@@ -38,17 +38,43 @@ const Tile = (props) => {
 
   const canClick = (element, element2) => {
     switch (demoGuide) {
+      case "Learn1.44":
+        return element === "Tile" && [27].includes(element2);
+
+      case "Learn1.52":
+        return element === "Tile" && [22].includes(element2);
+
+      case "Learn1.58":
+        return element === "Tile" && [26].includes(element2);
+
+      case "Learn1.63":
+        return element === "Tile" && [28].includes(element2);
+
+      ////////////////////////////
       case "Fire1.25":
-        switch (element) {
-          case "Tile":
-            return [2, 3, 4].includes(element2);
-        }
-        break;
+        return element === "Tile" && [2, 3, 4].includes(element2);
     }
   };
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
+      case "Learn1.44":
+        dispatch(updateDemo("Learn1.45"));
+        break;
+
+      case "Learn1.52":
+        dispatch(updateDemo("Learn1.53"));
+        break;
+
+      case "Learn1.58":
+        dispatch(updateDemo("Learn1.59"));
+        break;
+
+      case "Learn1.63":
+        dispatch(updateDemo("Learn1.64"));
+        break;
+
+      /////////////////////////////
       case "Fire1.25":
         dispatch(updateDemo("Fire1.26"));
         break;

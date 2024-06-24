@@ -497,8 +497,8 @@ const UnitInfo = (props) => {
                       {unit.enhancements.ward > 1 ? "s" : ""})
                     </p>
                     <p className="unitInfo-text-desc unitInfo-text-last">
-                      ⬩Negates the next attack or targeting affliction, then
-                      purges. (Applies before Shield.)
+                      ⬩Negates the next attack or targeting affliction. (Applies
+                      before Shield.)
                     </p>
                   </>
                 )}
@@ -510,7 +510,8 @@ const UnitInfo = (props) => {
                       {unit.enhancements.shield > 1 ? "s" : ""})
                     </p>
                     <p className="unitInfo-text-desc unitInfo-text-last">
-                      ⬩Negates the next attack, then purges.
+                      ⬩Negates the next attack. (Does not apply if unit is
+                      enhanced with Ward.)
                     </p>
                   </>
                 )}

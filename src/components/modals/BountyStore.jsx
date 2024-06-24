@@ -5,15 +5,16 @@ import GoldFrame from "../../assets/others/GoldFrame.png";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
-import { useRecurringEffects } from "../../hooks/useRecurringEffects";
+import { updateDemo } from "../../redux/demoGuide";
 
 const BountyStore = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
+  const { demoGuide } = useSelector((state) => state.demoGuide);
+
   const dispatch = useDispatch();
 
   const [selectedChoice, setSelectedChoice] = useState(null);
-  const { drawSkill } = useRecurringEffects();
 
   const nextPhase = (gameState) => {
     gameState.turnPhase = "Coordination";
@@ -161,7 +162,9 @@ const BountyStore = (props) => {
     props.hideOrRevealModale();
   };
 
-  const frontierCosts = [2, 3, 5];
+  // const frontierCosts = [2, 3, 5];
+  // frontier reworked
+  const frontierCosts = [4, 6, 10];
   const acquisitionCosts = [3, 3, 3];
   const coordinationCosts = [2, 2, 2];
   const tacticsCosts = [2, 2, 2, 2];
@@ -225,8 +228,20 @@ const BountyStore = (props) => {
       localGameState[self].bountyUpgrades.victory === 1,
   ];
 
-  // console.log(canFrontier);
-  // console.log(canAcquisition);
+  const canClick = (element1, element2) => {
+    switch (demoGuide) {
+      case "Learn1.10":
+        return element1 === "proceed";
+    }
+  };
+
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+      case "Learn1.10":
+        dispatch(updateDemo("Learn1.11"));
+        break;
+    }
+  };
 
   return (
     <div className="modal-backdrop">
@@ -257,7 +272,7 @@ const BountyStore = (props) => {
               >
                 <div className="bountyText">
                   <h4 className="bountyDescription">
-                    Expand your frontier to 3 rows.
+                    Expand your frontier to 4 rows.
                   </h4>
                   <h4 className="bpCost">
                     {localGameState[self].bountyUpgrades.frontier > 0
@@ -282,7 +297,7 @@ const BountyStore = (props) => {
               >
                 <div className="bountyText">
                   <h4 className="bountyDescription">
-                    Expand your frontier to 4 rows.
+                    Expand your frontier to 5 rows.
                   </h4>
                   <h4 className="bpCost">
                     {localGameState[self].bountyUpgrades.frontier > 1
@@ -307,7 +322,7 @@ const BountyStore = (props) => {
               >
                 <div className="bountyText">
                   <h4 className="bountyDescription">
-                    Expand your frontier to 5 rows.
+                    Expand your frontier to 6 rows.
                   </h4>
                   <h4 className="bpCost">
                     {localGameState[self].bountyUpgrades.frontier > 2
@@ -319,6 +334,7 @@ const BountyStore = (props) => {
             </div>
           </div>
 
+          <br />
           {/* space */}
 
           <h3>Improve your Acquisition Phase</h3>
@@ -336,7 +352,9 @@ const BountyStore = (props) => {
                 } `}
               >
                 <div className="bountyText">
-                  <h4 className="bountyDescription">Upgrade Appoint.</h4>
+                  <h4 className="bountyDescription">
+                    Upgrade Appoint: Grant the pawn Shield for 2 turns.
+                  </h4>
                   <h4 className="bpCost">
                     {localGameState[self].bountyUpgrades.acquisition > 0
                       ? "Purchased"
@@ -359,7 +377,9 @@ const BountyStore = (props) => {
                 } `}
               >
                 <div className="bountyText">
-                  <h4 className="bountyDescription">Upgrade Beseech.</h4>
+                  <h4 className="bountyDescription">
+                    Upgrade Beseech: Gain 1 FD.
+                  </h4>
                   <h4 className="bpCost">
                     {localGameState[self].bountyUpgrades.acquisition > 1
                       ? "Purchased"
@@ -382,7 +402,9 @@ const BountyStore = (props) => {
                 } `}
               >
                 <div className="bountyText">
-                  <h4 className="bountyDescription">Upgrade Cultivate.</h4>
+                  <h4 className="bountyDescription">
+                    Upgrade Cultivate: You may spend 1 skill to draw again.
+                  </h4>
                   <h4 className="bpCost">
                     {localGameState[self].bountyUpgrades.acquisition > 2
                       ? "Purchased"
@@ -393,6 +415,7 @@ const BountyStore = (props) => {
             </div>
           </div>
 
+          <br />
           {/* space */}
 
           <h3>Improve your Coordination Phase</h3>
@@ -469,6 +492,7 @@ const BountyStore = (props) => {
             </div>
           </div>
 
+          <br />
           {/* space */}
 
           <h3>Upgrade your Tactics</h3>
@@ -568,6 +592,7 @@ const BountyStore = (props) => {
             </div>
           </div>
 
+          <br />
           {/* space */}
 
           <h3>Enhance your Avelhems</h3>
@@ -681,81 +706,18 @@ const BountyStore = (props) => {
               </div>
             </div>
           </div>
-
-          {/* space */}
-
-          {/* <h3>March to victory</h3>
-          <div className="twoColumn">
-            <div
-              className={`customChoice customChoiceSmaller ${
-                selectedChoice === 18 ? "selectedChoice" : ""
-              } `}
-              style={{
-                backgroundImage: `url(${GoldFrame})`,
-                width: 384.65,
-              }}
-              onClick={() => handleSelect(18, canVictory[0])}
-            >
-              <div
-                className={`customChoiceFrame ${
-                  canVictory[0] ? "" : "disabledChoice"
-                } `}
-              >
-                <div className="bountyText">
-                  <h4 className="bountyDescription">
-                    Gain 6 FD, draw 4 Avelhems,
-                    <br /> draw 4 skills, and restore the Virtues of all ally
-                    units.
-                  </h4>
-                  <h4 className="bpCost">
-                    {localGameState[self].bountyUpgrades.victory > 0
-                      ? "Purchased"
-                      : `Cost: ${victoryCosts[0]} BP`}
-                  </h4>
-                </div>
-              </div>
-            </div>
-
-            <div
-              className={`customChoice customChoiceSmaller ${
-                selectedChoice === 19 ? "selectedChoice" : ""
-              } `}
-              style={{
-                backgroundImage: `url(${GoldFrame})`,
-                width: 384.65,
-              }}
-              onClick={() => handleSelect(19, canVictory[1])}
-            >
-              <div
-                className={`customChoiceFrame ${
-                  canVictory[1] ? "" : "disabledChoice"
-                } `}
-              >
-                <div className="bountyText">
-                  <h4 className="bountyDescription">
-                    Spend 6 FD to win the game. <br />
-                    <br />
-                    <i>
-                      Requirement:
-                      <br />
-                      You have scored twice.
-                    </i>
-                  </h4>
-                  <h4 className="bpCost">
-                    {localGameState[self].bountyUpgrades.victory > 1
-                      ? "Purchased"
-                      : `Cost: ${victoryCosts[1]} BP`}
-                  </h4>
-                </div>
-              </div>
-            </div>
-          </div> */}
-
-          {/* space */}
         </div>
         <div>
           {selectedChoice === null && (
-            <button className="choiceButton" onClick={() => handleSkip()}>
+            <button
+              className={`choiceButton ${
+                canClick("proceed") ? "demoClick" : ""
+              }`}
+              onClick={() => {
+                handleSkip();
+                handleUpdateDemoGuide();
+              }}
+            >
               Proceed
             </button>
           )}

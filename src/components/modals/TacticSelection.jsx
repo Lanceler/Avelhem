@@ -74,11 +74,39 @@ const TacticSelection = (props) => {
 
   const canClick = (element, element2) => {
     switch (demoGuide) {
+      case "Learn1.40":
+        return element2 === 0;
+
+      case "Learn1.49":
+      case "Learn1.55":
+      case "Learn1.60":
+        return element2 === 1;
+
       case "Fire1.23":
         switch (element) {
           case "Tactic":
             return element2 === 1;
         }
+        break;
+    }
+  };
+
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+      case "Learn1.40":
+        dispatch(updateDemo("Learn1.41"));
+        break;
+
+      case "Learn1.49":
+        dispatch(updateDemo("Learn1.50"));
+        break;
+
+      case "Learn1.55":
+        dispatch(updateDemo("Learn1.56"));
+        break;
+
+      case "Learn1.60":
+        dispatch(updateDemo("Learn1.61"));
         break;
     }
   };
@@ -115,6 +143,7 @@ const TacticSelection = (props) => {
                   }`}
                   onClick={() => {
                     handleClickTactic(index);
+                    handleUpdateDemoGuide();
                   }}
                 >
                   <img

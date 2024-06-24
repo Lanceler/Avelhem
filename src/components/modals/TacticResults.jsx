@@ -3,11 +3,15 @@ import "./Modal.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
+import { updateDemo } from "../../redux/demoGuide";
+
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 const TacticResults = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
+  const { demoGuide } = useSelector((state) => state.demoGuide);
+
   const dispatch = useDispatch();
 
   const { getTacticImage } = useRecurringEffects();
@@ -30,6 +34,21 @@ const TacticResults = (props) => {
 
   const handleViewBoard = () => {
     props.hideOrRevealModale();
+  };
+
+  const canClick = () => {
+    switch (demoGuide) {
+      case "Learn1.13":
+        return true;
+    }
+  };
+
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+      case "Learn1.13":
+        dispatch(updateDemo("Learn1.14"));
+        break;
+    }
   };
 
   return (
@@ -62,7 +81,13 @@ const TacticResults = (props) => {
         </div>
 
         {self === localGameState.turnPlayer && (
-          <button className="choiceButton" onClick={() => handleProceed()}>
+          <button
+            className={`choiceButton ${canClick() ? "demoClick" : ""}`}
+            onClick={() => {
+              handleProceed();
+              handleUpdateDemoGuide();
+            }}
+          >
             Proceed
           </button>
         )}

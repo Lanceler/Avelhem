@@ -50,7 +50,7 @@ export default function Demo() {
       })
     );
 
-    if (!id || !["game", "fire"].includes(id)) {
+    if (!id || !["game", "learn", "fire"].includes(id)) {
       // console.log(id);
       navigate("/demo/game");
     } else {
@@ -59,7 +59,29 @@ export default function Demo() {
       switch (id) {
         case "game":
           setInfoPopUp("game");
-          // dispatch(updateDemo(false));
+          break;
+
+        case "learn":
+          setInfoPopUp("learn");
+
+          //to remove
+          setInfoPopUp(null);
+
+          setDemoTitle("Gameplay Tutorial");
+          dispatch(updateDemo("Learn1.1"));
+
+          setCurrentPlayer("guest");
+
+          dispatch(
+            updatecontingencySettings({
+              Activation: false,
+              Ascension: false,
+              Elimination: false,
+              Motion: false,
+              Survival: false,
+              Target: false,
+            })
+          );
 
           break;
 
@@ -67,7 +89,6 @@ export default function Demo() {
           setInfoPopUp("fire");
           setDemoTitle("Fire Scion Demo");
           dispatch(updateDemo("Fire1.1"));
-
           break;
       }
     }
@@ -95,8 +116,118 @@ export default function Demo() {
     }
   };
 
+  const demoNextRevealed = () => {
+    switch (demoGuide) {
+      case "Learn1.1":
+      case "Learn1.3":
+      case "Learn1.5":
+      case "Learn1.6":
+      case "Learn1.9":
+      case "Learn1.14":
+      case "Learn1.16":
+      case "Learn1.17":
+      case "Learn1.24":
+      case "Learn1.27":
+      case "Learn1.30":
+      case "Learn1.31":
+      case "Learn1.37":
+      case "Learn1.41":
+      case "Learn1.45":
+      case "Learn1.47":
+      case "Learn1.53":
+      case "Learn1.64":
+      case "Learn1.65":
+      case "Learn1.66":
+        return true;
+    }
+  };
+
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
+      case "Learn1.1":
+        dispatch(updateDemo("Learn1.2"));
+        setCurrentPlayer("host");
+
+        break;
+
+      case "Learn1.3":
+        dispatch(updateDemo("Learn1.5"));
+        break;
+
+      case "Learn1.5":
+        dispatch(updateDemo("Learn1.6"));
+        break;
+
+      case "Learn1.6":
+        dispatch(updateDemo("Learn1.7"));
+        break;
+
+      case "Learn1.9":
+        dispatch(updateDemo("Learn1.10"));
+        break;
+
+      case "Learn1.14":
+        dispatch(updateDemo("Learn1.15"));
+        break;
+
+      case "Learn1.16":
+        dispatch(updateDemo("Learn1.17"));
+        break;
+
+      case "Learn1.17":
+        dispatch(updateDemo("Learn1.18"));
+        break;
+
+      case "Learn1.24":
+        dispatch(updateDemo("Learn1.25"));
+        break;
+
+      case "Learn1.27":
+        dispatch(updateDemo("Learn1.28"));
+        break;
+
+      case "Learn1.30":
+        dispatch(updateDemo("Learn1.31"));
+        break;
+
+      case "Learn1.31":
+        dispatch(updateDemo("Learn1.32"));
+        break;
+
+      case "Learn1.37":
+        dispatch(updateDemo("Learn1.38"));
+        break;
+
+      case "Learn1.41":
+        dispatch(updateDemo("Learn1.42"));
+        break;
+
+      case "Learn1.45":
+        dispatch(updateDemo("Learn1.46"));
+        break;
+
+      case "Learn1.47":
+        dispatch(updateDemo("Learn1.48"));
+        break;
+
+      case "Learn1.53":
+        dispatch(updateDemo("Learn1.54"));
+        break;
+
+      case "Learn1.64":
+        dispatch(updateDemo("Learn1.65"));
+        break;
+
+      case "Learn1.65":
+        dispatch(updateDemo("Learn1.66"));
+        break;
+
+      case "Learn1.66":
+        dispatch(updateDemo("Learn1.67"));
+        break;
+
+      ////////////////////////////////////////////
+
       case "Fire1.4":
         dispatch(updateDemo("Fire1.5"));
         break;
@@ -112,6 +243,76 @@ export default function Demo() {
       case "Fire1.41":
         dispatch(updateDemo("Fire1.42"));
         break;
+    }
+  };
+
+  useEffect(() => {
+    if (
+      ["Learn1.3", "Learn1.13", "Learn1.20.1", "Learn1.34"].includes(demoGuide)
+    ) {
+      scriptedDemo();
+    }
+  }, [demoGuide]);
+
+  const scriptedDemo = () => {
+    const duplicateDemoGameState = JSON.parse(JSON.stringify(demoGameState));
+
+    switch (demoGuide) {
+      case "Learn1.3":
+        duplicateDemoGameState.host.skillHand = [
+          "SC-04",
+          "08-01",
+          "06-03",
+          "01-02",
+          "SX-01",
+        ];
+
+        duplicateDemoGameState.guest.skillHand = [
+          "07-02",
+          "07-02",
+          "SB-01",
+          "SA-04",
+          "SX-01",
+          "SX-01",
+        ];
+
+        const a = duplicateDemoGameState.host.avelhemRepertoire.length;
+        duplicateDemoGameState.host.avelhemRepertoire[a - 1] = 4;
+        duplicateDemoGameState.host.avelhemRepertoire[a - 2] = 6;
+
+        const b = duplicateDemoGameState.host.skillRepertoire.length;
+        duplicateDemoGameState.host.skillRepertoire[b - 1] = "SB-05";
+        duplicateDemoGameState.host.skillRepertoire[b - 2] = "08-04";
+        duplicateDemoGameState.host.skillRepertoire[b - 3] = "04-01";
+        duplicateDemoGameState.host.skillRepertoire[b - 4] = "SB-02";
+        duplicateDemoGameState.host.skillRepertoire[b - 5] = "02-01";
+        duplicateDemoGameState.host.skillRepertoire[b - 6] = "05-01";
+        duplicateDemoGameState.host.skillRepertoire[b - 7] = "05-02";
+        duplicateDemoGameState.host.skillRepertoire[b - 8] = "04-03";
+
+        setDemoGameState(duplicateDemoGameState);
+        break;
+
+      case "Learn1.13":
+        duplicateDemoGameState.tactics = [
+          { face: "Advance", limit: 1, stock: 1 },
+          { face: "Mobilize", limit: 3, stock: 3 },
+        ];
+
+        setDemoGameState(duplicateDemoGameState);
+        break;
+
+      case "Learn1.20.1":
+      case "Learn1.34":
+        duplicateDemoGameState.currentResolution.pop();
+        duplicateDemoGameState.currentResolution.pop();
+        duplicateDemoGameState.activatingSkill.pop();
+        duplicateDemoGameState.activatingUnit = [];
+
+        setDemoGameState(duplicateDemoGameState);
+        break;
+
+      //////////////////////
     }
   };
 
@@ -138,20 +339,20 @@ export default function Demo() {
           <div className="demo-board">
             {currentPlayer === "host" && (
               <Board
-                gameState={demoGameState}
                 userRole={"host"}
                 demo={true}
                 demoGame={id === "game"}
+                gameState={demoGameState}
                 setDemoGameState={setDemoGameState}
               />
             )}
 
             {currentPlayer === "guest" && (
               <Board
-                gameState={demoGameState}
                 userRole={"guest"}
                 demo={true}
                 demoGame={id === "game"}
+                gameState={demoGameState}
                 setDemoGameState={setDemoGameState}
               />
             )}
@@ -169,9 +370,17 @@ export default function Demo() {
             </button>
 
             {demoGuide && (
-              <div className="demo-instructions">
-                <p> {getDemoInstructions()}</p>
-              </div>
+              <>
+                <div className="demo-instructions">{getDemoInstructions()}</div>
+                {demoNextRevealed() && (
+                  <button
+                    className="choiceButton demo-instructions-button demoClick"
+                    onClick={() => handleUpdateDemoGuide()}
+                  >
+                    Next
+                  </button>
+                )}
+              </>
             )}
           </div>
 
@@ -181,7 +390,7 @@ export default function Demo() {
 
           {/* display demoGuide for debugging */}
 
-          {/* {demoGuide && <h1>{demoGuide}</h1>} */}
+          {demoGuide && <h1>{demoGuide}</h1>}
         </div>
       )}
     </>

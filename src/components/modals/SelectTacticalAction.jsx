@@ -84,7 +84,7 @@ const SelectTacticalAction = (props) => {
           abilityText: (
             <>
               <div className="abilityText ">
-                ⬩Move to a vacant adjacent zone.
+                ⬩Use 1 instance to move to a vacant adjacent zone.
               </div>
             </>
           ),
@@ -347,24 +347,64 @@ const SelectTacticalAction = (props) => {
 
   const canClick = (element, element2) => {
     switch (demoGuide) {
+      case "Learn1.42":
+      case "Learn1.50":
+      case "Learn1.56":
+      case "Learn1.61":
+        return element === "Action" && element2 === 0;
+
+      case "Learn1.43":
+      case "Learn1.51":
+      case "Learn1.57":
+      case "Learn1.62":
+        return element === "Select Button";
+
+      ///////////////////////
+
       case "Fire1.23":
-        switch (element) {
-          case "Action":
-            return element2 === 0;
-        }
-        break;
+        return element === "Action" && element2 === 0;
 
       case "Fire1.24":
-        switch (element) {
-          case "Select Button":
-            return true;
-        }
-        break;
+        return element === "Select Button";
     }
   };
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
+      case "Learn1.42":
+        dispatch(updateDemo("Learn1.43"));
+        break;
+
+      case "Learn1.43":
+        dispatch(updateDemo("Learn1.44"));
+        break;
+
+      case "Learn1.50":
+        dispatch(updateDemo("Learn1.51"));
+        break;
+
+      case "Learn1.51":
+        dispatch(updateDemo("Learn1.52"));
+        break;
+
+      case "Learn1.56":
+        dispatch(updateDemo("Learn1.57"));
+        break;
+
+      case "Learn1.57":
+        dispatch(updateDemo("Learn1.58"));
+        break;
+
+      case "Learn1.61":
+        dispatch(updateDemo("Learn1.62"));
+        break;
+
+      case "Learn1.62":
+        dispatch(updateDemo("Learn1.63"));
+        break;
+
+      /////////////////////////
+
       case "Fire1.23":
         dispatch(updateDemo("Fire1.24"));
         break;

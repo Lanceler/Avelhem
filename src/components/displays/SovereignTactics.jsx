@@ -46,6 +46,24 @@ const SovereignTactics = () => {
 
   const canClick = (element, element2) => {
     switch (demoGuide) {
+      case "Learn1.34":
+      case "Learn1.35":
+        return element2 === 0;
+
+      case "Learn1.46":
+        return element2 === 1;
+    }
+  };
+
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+      case "Learn1.34":
+        dispatch(updateDemo("Learn1.35"));
+        break;
+
+      case "Learn1.46":
+        dispatch(updateDemo("Learn1.47"));
+        break;
     }
   };
 
@@ -72,7 +90,10 @@ const SovereignTactics = () => {
                 : ""
             } ${canClick("Tactic", index) ? "demoClick" : ""}
             `}
-            onClick={() => handleClick(tactic.face, index)}
+            onClick={() => {
+              handleClick(tactic.face, index);
+              handleUpdateDemoGuide();
+            }}
           >
             <div
               key={index}

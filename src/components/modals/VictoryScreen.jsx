@@ -7,6 +7,8 @@ import { updateState } from "../../redux/gameState";
 const VictoryScreen = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
+  const { demoGuide } = useSelector((state) => state.demoGuide);
+
   const dispatch = useDispatch();
 
   const handleViewBoard = () => {
@@ -54,6 +56,17 @@ const VictoryScreen = (props) => {
     } unit${localGameState[enemy].score > 1 ? "s" : ""}.`;
   }
 
+  const demoOverride = () => {
+    if (!demoGuide) {
+      return false;
+    }
+
+    switch (demoGuide) {
+      case "Fire1.46":
+        return "Demo over.";
+    }
+  };
+
   return (
     <div className="modal-backdrop">
       <div className="modal">
@@ -70,12 +83,16 @@ const VictoryScreen = (props) => {
         {/* <h3>{message3}</h3> */}
 
         <div className="FinalPhase-Button">
-          {self === props.player && localGameState[self].score < 5 && (
-            <button className="choiceButton" onClick={() => handleOffer()}>
-              {/* Offer to continue */}
-              {message3}
-            </button>
-          )}
+          {!demoOverride &&
+            self === props.player &&
+            localGameState[self].score < 5 && (
+              <button className="choiceButton" onClick={() => handleOffer()}>
+                {/* Offer to continue */}
+                {message3}
+              </button>
+            )}
+
+          {demoOverride && <div>{demoOverride()}</div>}
         </div>
       </div>
     </div>

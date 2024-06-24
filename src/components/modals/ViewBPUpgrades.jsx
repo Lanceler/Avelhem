@@ -58,7 +58,7 @@ const ViewBPUpgrades = (props) => {
               <>
                 <h3>Frontier:</h3>
                 <p className="unitInfo-text-desc">
-                  Frontier expanded to {upgrades.frontier + 2} rows.
+                  Frontier expanded to {upgrades.frontier + 3} rows.
                 </p>
                 <br />
               </>
