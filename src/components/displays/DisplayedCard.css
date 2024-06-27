@@ -181,8 +181,14 @@
 .tacticSovereignContainer{
     display: flex;
     position: relative;
-    /* background-color: brown; */
+    background-color: rgba(0, 0, 0, 0.55);
     width: 335px;
+    height: 155px;
+    padding: 1px;
+    border-radius: 10px;
+    border: 2.5px solid goldenrod;
+    box-shadow: 2px 2px 4px 4px rgba(0, 0, 0,0.5);
+    
 }
 
 .tacticSovereignContainer-info {

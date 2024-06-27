@@ -52,16 +52,21 @@ const PlayerAvelhemHand = (props) => {
 
   const canClick = (element1) => {
     switch (demoGuide) {
-      case "Learn1.18":
-      case "Learn1.21":
-      case "Fire1.1":
-        return true;
-
       case "Learn1.19":
         return element1 === 6;
 
       case "Learn1.22":
         return element1 === 4;
+
+      case "Learn1.95":
+        return element1 === 7;
+
+      ////////////////
+      case "Learn1.18":
+      case "Learn1.21":
+      case "Learn1.94":
+      case "Fire1.1":
+        return true;
     }
   };
 
@@ -81,6 +86,14 @@ const PlayerAvelhemHand = (props) => {
 
       case "Learn1.22":
         dispatch(updateDemo("Learn1.23"));
+        break;
+
+      case "Learn1.94":
+        dispatch(updateDemo("Learn1.95"));
+        break;
+
+      case "Learn1.95":
+        dispatch(updateDemo("Learn1.96"));
         break;
     }
   };

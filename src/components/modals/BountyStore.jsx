@@ -231,6 +231,7 @@ const BountyStore = (props) => {
   const canClick = (element1, element2) => {
     switch (demoGuide) {
       case "Learn1.10":
+      case "Learn1.85":
         return element1 === "proceed";
     }
   };
@@ -239,6 +240,10 @@ const BountyStore = (props) => {
     switch (demoGuide) {
       case "Learn1.10":
         dispatch(updateDemo("Learn1.11"));
+        break;
+
+      case "Learn1.85":
+        dispatch(updateDemo("Learn1.86"));
         break;
     }
   };

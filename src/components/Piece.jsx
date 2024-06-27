@@ -66,7 +66,7 @@ export const Piece = (props) => {
       switch (true) {
         case demoGuide.slice(0, 5) === "Learn":
           switch (demoGuide) {
-            case "Learn1.20":
+            case "Learn1.20.01":
             case "Learn1.39":
             case "Learn1.49":
               return (
@@ -75,9 +75,10 @@ export const Piece = (props) => {
                 element2.player === "host"
               );
 
-            case "Learn1.23":
+            case "Learn1.23.01":
             case "Learn1.59":
             case "Learn1.67":
+            case "Learn1.74":
               return (
                 element === "Unit" &&
                 element2.unitIndex === 2 &&
@@ -90,12 +91,22 @@ export const Piece = (props) => {
                 element2.unitIndex === 0 &&
                 element2.player === "host"
               );
+
+            case "Learn1.97":
+              return (
+                element === "Unit" &&
+                element2.unitIndex === 1 &&
+                element2.player === "guest"
+              );
           }
+
           break;
+
+        //////////////////////////////////////////////////
 
         case demoGuide.slice(0, 4) === "Fire":
           switch (demoGuide) {
-            case "Fire1.2":
+            case "Fire1.2.01":
             case "Fire1.8":
             case "Fire1.9":
             case "Fire1.13":
@@ -183,19 +194,23 @@ export const Piece = (props) => {
       switch (true) {
         case demoGuide.slice(0, 5) === "Learn":
           switch (demoGuide) {
-            case "Learn1.20":
+            case "Learn1.20.01":
               dispatch(updateDemo("Learn1.20.1"));
               break;
 
-            case "Learn1.23":
+            case "Learn1.23.01":
               dispatch(updateDemo("Learn1.24"));
+              break;
+
+            case "Learn1.97":
+              dispatch(updateDemo("Learn1.98"));
               break;
           }
           break;
 
         case demoGuide.slice(0, 4) === "Fire":
           switch (demoGuide) {
-            case "Fire1.2":
+            case "Fire1.2.01":
               dispatch(updateDemo("Fire1.2.1"));
               break;
 

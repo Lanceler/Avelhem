@@ -39,6 +39,8 @@ const TacticResults = (props) => {
   const canClick = () => {
     switch (demoGuide) {
       case "Learn1.13":
+      case "Learn1.88":
+      case "Learn1.93":
         return true;
     }
   };
@@ -47,6 +49,14 @@ const TacticResults = (props) => {
     switch (demoGuide) {
       case "Learn1.13":
         dispatch(updateDemo("Learn1.14"));
+        break;
+
+      case "Learn1.88":
+        dispatch(updateDemo("Learn1.89"));
+        break;
+
+      case "Learn1.93":
+        dispatch(updateDemo("Learn1.94"));
         break;
     }
   };

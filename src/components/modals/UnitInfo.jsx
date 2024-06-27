@@ -10,9 +10,13 @@ import MobilizeSmall from "../../assets/diceIcons/MobilizeSmall.png";
 import AssaultSmall from "../../assets/diceIcons/AssaultSmall.png";
 import InvokeSmall from "../../assets/diceIcons/InvokeSmall.png";
 
+import { updateDemo } from "../../redux/demoGuide";
+
 import { useSelector, useDispatch } from "react-redux";
 const UnitInfo = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
+  const { demoGuide } = useSelector((state) => state.demoGuide);
+
   const { self, enemy } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
@@ -383,6 +387,22 @@ const UnitInfo = (props) => {
     }
   };
 
+  const canClick = (element, element2) => {
+    switch (demoGuide) {
+      case "Learn1.76.1":
+        return element === "Collapse";
+    }
+  };
+
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+      case "Learn1.76.1":
+        dispatch(updateDemo("Learn1.77"));
+
+        break;
+    }
+  };
+
   return (
     <div className="modal-backdrop unitInfo-text">
       <div className="unitInfoModal">
@@ -393,8 +413,13 @@ const UnitInfo = (props) => {
           />
           <h2 className="unitInfo-name">{`${unit.unitClass} (${team})`}</h2>
           <button
-            className="collapseSelected unitInfo-close"
-            onClick={() => handleCollapse()}
+            className={`collapseSelected unitInfo-close ${
+              canClick("Collapse") ? "demoClick" : ""
+            }`}
+            onClick={() => {
+              handleCollapse();
+              handleUpdateDemoGuide();
+            }}
           >
             X
           </button>

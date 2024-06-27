@@ -3,11 +3,15 @@ import "./Modal.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
+import { updateDemo } from "../../redux/demoGuide";
+
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 const TacticResults3 = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
+  const { demoGuide } = useSelector((state) => state.demoGuide);
+
   const dispatch = useDispatch();
 
   const [selectedChoice, setSelectedChoice] = useState(null);
@@ -49,6 +53,28 @@ const TacticResults3 = (props) => {
     props.hideOrRevealModale();
   };
 
+  const canClick = (element, element2) => {
+    switch (demoGuide) {
+      case "Learn1.91":
+        return element === "tactic" && element2 === 2;
+
+      case "Learn1.92":
+        return element === "disregard";
+    }
+  };
+
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+      case "Learn1.91":
+        dispatch(updateDemo("Learn1.92"));
+        break;
+
+      case "Learn1.92":
+        dispatch(updateDemo("Learn1.93"));
+        break;
+    }
+  };
+
   return (
     <div className="modal-backdrop">
       <div className="modal">
@@ -66,13 +92,16 @@ const TacticResults3 = (props) => {
             <div
               className="center"
               key={index}
-              onClick={() => handleSelect(index)}
+              onClick={() => {
+                handleSelect(index);
+                handleUpdateDemoGuide();
+              }}
             >
               <div
                 // className="tacticBG"
                 className={`tacticBG ${
                   selectedChoice === index ? "selectedChoice" : ""
-                } `}
+                } ${canClick("tactic", index) ? "demoClick" : ""} `}
               >
                 <div
                   key={index}
@@ -90,7 +119,15 @@ const TacticResults3 = (props) => {
         <br />
 
         {selectedChoice !== null && (
-          <button className="choiceButton" onClick={() => handleProceed()}>
+          <button
+            className={`choiceButton ${
+              canClick("disregard") ? "demoClick" : ""
+            }`}
+            onClick={() => {
+              handleProceed();
+              handleUpdateDemoGuide();
+            }}
+          >
             {`Disregard ${props.reroll[selectedChoice].face}`}
           </button>
         )}

@@ -362,31 +362,35 @@ const YouMaySpend1Skill = (props) => {
 
   const canClick = (element, element2) => {
     switch (demoGuide) {
+      case "Learn1.72":
+        return element === "Skill Card" && element2.id === "08-01";
+
+      case "Learn1.73":
+        return element === "Select Button";
+
+      //////////////////////////
       case "Fire1.17.1":
-        switch (element) {
-          case "Skip Button":
-            return true;
-        }
-        break;
+        return element === "Skip Button";
 
       case "Fire1.43":
-        switch (element) {
-          case "Skill Card":
-            return element2.id === "05-01";
-        }
-        break;
+        return element === "Skill Card" && element2.id === "05-01";
 
       case "Fire1.44":
-        switch (element) {
-          case "Select Button":
-            return true;
-        }
-        break;
+        return element === "Select Button";
     }
   };
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
+      case "Learn1.72":
+        dispatch(updateDemo("Learn1.73"));
+        break;
+
+      case "Learn1.73":
+        dispatch(updateDemo("Learn1.74"));
+        break;
+
+      //////////////////////
       case "Fire1.17.1":
         dispatch(updateDemo("Fire1.18"));
         break;

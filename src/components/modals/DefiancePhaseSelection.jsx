@@ -201,6 +201,12 @@ const DefiancePhaseSelection = (props) => {
     switch (demoGuide) {
       case "Learn1.15":
         return element1 === "skip";
+
+      case "Learn1.89":
+        return element1 === "Curate";
+
+      case "Learn1.90":
+        return element1 === "select";
     }
   };
 
@@ -208,6 +214,14 @@ const DefiancePhaseSelection = (props) => {
     switch (demoGuide) {
       case "Learn1.15":
         dispatch(updateDemo("Learn1.16"));
+        break;
+
+      case "Learn1.89":
+        dispatch(updateDemo("Learn1.90"));
+        break;
+
+      case "Learn1.90":
+        dispatch(updateDemo("Learn1.91"));
         break;
     }
   };
@@ -274,9 +288,23 @@ const DefiancePhaseSelection = (props) => {
             <div
               className={`customChoice customChoiceSmaller ${
                 selectedChoice === 3 ? "selectedChoice" : ""
-              } `}
+              } 
+              
+              ${canClick("Curate") ? "demoClick" : ""}
+              
+              
+              
+              
+              
+              
+              
+              
+              `}
               style={{ backgroundImage: `url(${GoldFrame})`, width: 245.5 }}
-              onClick={() => handleSelect(3, canSelect[2])}
+              onClick={() => {
+                handleSelect(3, canSelect[2]);
+                handleUpdateDemoGuide();
+              }}
             >
               <div
                 className={`customChoiceFrame ${
@@ -299,7 +327,9 @@ const DefiancePhaseSelection = (props) => {
                 selectedChoice === 4 ? "selectedChoice" : ""
               } `}
               style={{ backgroundImage: `url(${GoldFrame})`, width: 245.5 }}
-              onClick={() => handleSelect(4, canSelect[3])}
+              onClick={() => {
+                handleSelect(4, canSelect[3]);
+              }}
             >
               <div
                 className={`customChoiceFrame ${
@@ -386,7 +416,15 @@ const DefiancePhaseSelection = (props) => {
           )}
 
           {selectedChoice !== null && (
-            <button className="choiceButton" onClick={() => handleProceed()}>
+            <button
+              className={`choiceButton ${
+                canClick("select") ? "demoClick" : ""
+              }`}
+              onClick={() => {
+                handleProceed();
+                handleUpdateDemoGuide();
+              }}
+            >
               Select
             </button>
           )}

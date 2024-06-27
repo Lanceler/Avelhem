@@ -186,9 +186,11 @@ const AcquisitionPhaseSelection = (props) => {
   const canClick = (element1, element2) => {
     switch (demoGuide) {
       case "Learn1.7":
+      case "Learn1.83":
         return element2 === 1;
 
       case "Learn1.8":
+      case "Learn1.84":
         return element1 === "button";
     }
   };
@@ -201,6 +203,14 @@ const AcquisitionPhaseSelection = (props) => {
 
       case "Learn1.8":
         dispatch(updateDemo("Learn1.9"));
+        break;
+
+      case "Learn1.83":
+        dispatch(updateDemo("Learn1.84"));
+        break;
+
+      case "Learn1.84":
+        dispatch(updateDemo("Learn1.85"));
         break;
     }
   };

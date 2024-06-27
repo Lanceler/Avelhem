@@ -214,7 +214,11 @@ const SearchSkill = (props) => {
       case "Learn1.32":
         return element3 === 2;
 
+      case "Learn1.102":
+        return element3 === 7;
+
       case "Learn1.33":
+      case "Learn1.103":
         return element1 === "Select Button";
     }
   };
@@ -227,6 +231,14 @@ const SearchSkill = (props) => {
 
       case "Learn1.33":
         dispatch(updateDemo("Learn1.34"));
+        break;
+
+      case "Learn1.102":
+        dispatch(updateDemo("Learn1.103"));
+        break;
+
+      case "Learn1.103":
+        dispatch(updateDemo("Learn1.104"));
         break;
     }
   };

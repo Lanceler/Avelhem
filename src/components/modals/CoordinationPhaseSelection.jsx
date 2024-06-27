@@ -192,9 +192,11 @@ const CoordinationPhaseSelection = (props) => {
   const canClick = (element1, element2) => {
     switch (demoGuide) {
       case "Learn1.11":
+      case "Learn1.86":
         return element1 === "choice" && element2 === 0;
 
       case "Learn1.12":
+      case "Learn1.87":
         return element1 === "select";
     }
   };
@@ -204,8 +206,17 @@ const CoordinationPhaseSelection = (props) => {
       case "Learn1.11":
         dispatch(updateDemo("Learn1.12"));
         break;
+
       case "Learn1.12":
         dispatch(updateDemo("Learn1.13"));
+        break;
+
+      case "Learn1.86":
+        dispatch(updateDemo("Learn1.87"));
+        break;
+
+      case "Learn1.87":
+        dispatch(updateDemo("Learn1.88"));
         break;
     }
   };

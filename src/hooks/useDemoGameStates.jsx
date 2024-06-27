@@ -732,9 +732,11 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 Sovereigns must designate the gold and silver pieces between
-                themselves (in this virtual simulator, the host takes gold).
-                Either can play the first turn as determined by any reasonable
-                means. For this demo, gold will play first.
+                themselves. Either can play the first turn as determined by any
+                reasonable means. For this demo, gold will play first.
+                <br />
+                <br />
+                In this virtual simulator, the host always takes gold.
               </div>
             );
 
@@ -743,7 +745,7 @@ export const useDemoGameStates = () => {
               <div>
                 At the start of the game, Sovereigns set their FD counters to 3
                 and deploy pawns on the first, third, and fifth columns on the
-                fourth row their side of the board. They then shuffle their
+                fourth row of their side of the board. They then shuffle their
                 repertoires and draw 4 skills.
               </div>
             );
@@ -751,11 +753,14 @@ export const useDemoGameStates = () => {
           case "Learn1.5":
             return (
               <div>
-                Furthermore, the first Sovereign adds 1 “Transcendence” to their
+                {/* Furthermore, the first Sovereign adds 1 “Transcendence” to their
                 hand and places the other copy in their vestige (discard pile),
                 while the second Sovereign adds both of their copies to their
                 hand. (“Transcendence” is a skill that is always part of the
-                opening hand, and it is never included in the repertoire.)
+                opening hand, and it is never included in the repertoire.) */}
+                Furthermore, they add 2 copies of the “Transcendence” skill to
+                their hands. The first Sovereign, however, immediately places
+                one of them in their vestige (discard pile).
               </div>
             );
 
@@ -778,8 +783,8 @@ export const useDemoGameStates = () => {
               <div>
                 There are 3 options available, and these can be upgraded to
                 provided additional effects. Since you already have pawns on the
-                board and skills in your hand, select the “Bequeath” option to
-                draw 2 Avelhems.
+                board and skills in your hand, select the Beseech option to draw
+                2 Avelhems.
               </div>
             );
 
@@ -798,7 +803,7 @@ export const useDemoGameStates = () => {
                 <strong>
                   BP is primarily earned by eliminating enemy units.
                 </strong>{" "}
-                As you have 0 BP at the moment, proceed to the next phase.
+                As you currently have 0 BP, proceed to the next phase.
               </div>
             );
 
@@ -809,8 +814,8 @@ export const useDemoGameStates = () => {
                 The third Phase is the <strong>Coordination Phase</strong>,
                 which provides the Initiator with tactics. Tactics are expended
                 to perform tactical actions. This phase also provides 3 options,
-                but players will find themselves opting to Assent virtually
-                every turn.
+                but players will more than often find themselves opting to
+                Assent.
               </div>
             );
 
@@ -843,9 +848,8 @@ export const useDemoGameStates = () => {
           case "Learn1.15":
             return (
               <div>
-                As previously mentioned, Sovereigns start the game with 3 FD.
-                That said, press Skip (at the bottom left corner of the prompt)
-                for now.
+                Sovereigns start the game with 3 FD. That said, press Skip for
+                now.
               </div>
             );
 
@@ -853,7 +857,7 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 And now comes the <strong>Execution Phase</strong>, where the
-                Initiator’s prerations from the previous phases come into
+                Initiator’s preparations from the previous phases come into
                 fruition!
               </div>
             );
@@ -884,14 +888,15 @@ export const useDemoGameStates = () => {
 
           case "Learn1.19":
           case "Learn1.20":
+          case "Learn1.20.01":
             return (
               <div>
-                Activate your Mana Avelhem and use it to ascend your center pawn
-                into a Mana Scion.
+                Activate your Mana Avelhem to ascend your center pawn into a
+                Mana Scion.
                 <br />
                 <br />
                 <strong>
-                  Note: The zones of eligible units will be highlighted in blue.
+                  Note: The zones of eligible units will be colored blue.
                 </strong>
               </div>
             );
@@ -912,21 +917,22 @@ export const useDemoGameStates = () => {
           case "Learn1.21":
           case "Learn1.22":
           case "Learn1.23":
+          case "Learn1.23.01":
             return (
               <div>
-                Activate your Land Avelhem and use it to ascend your right pawn
-                into a Land Scion.
+                Activate your Land Avelhem to ascend your right pawn into a Land
+                Scion.
               </div>
             );
 
           case "Learn1.24":
             return (
               <div>
-                Units have class-exclusive talents, which are passive effects
-                that automatically activate when applicable. In the case of Land
-                Scions, their <strong>“Mountain Stance”</strong> talent
-                activates upon their debut (as they enter play via ascension or
-                deployment).
+                Units possess <strong>class-exclusive talents</strong>, which
+                are passive effects that automatically activate when applicable.
+                In the case of Land Scions, their{" "}
+                <strong>“Mountain Stance”</strong> talent activates upon their
+                debut (as they enter play via ascension or deployment).
               </div>
             );
 
@@ -934,7 +940,7 @@ export const useDemoGameStates = () => {
           case "Learn1.26":
             return (
               <div>
-                Mountain Stance is a modular effect; pick the second option,
+                Mountain Stance is a modular effect; pick the second choice,
                 which allows you to spend 1 skill to search for
                 “Crystallization”.
               </div>
@@ -957,7 +963,8 @@ export const useDemoGameStates = () => {
           case "Learn1.29":
             return (
               <div>
-                Spend Transcendence. <br />
+                Spend Transcendence.
+                <br />
                 <br />
                 <strong>
                   Note: At any time during the demo, you can click on the
@@ -974,7 +981,7 @@ export const useDemoGameStates = () => {
                 contents of their repertoire in an attempt to locate a card and
                 add it to their hand (unless stated otherwise). Searches are
                 subject to restrictions; a search is considered successful if it
-                yields an eligible card.
+                yields an eligible card. (Ineligible cards will be greyed out.)
               </div>
             );
 
@@ -1052,7 +1059,7 @@ export const useDemoGameStates = () => {
                 the first of which enables them to move to an adjacent zone.
                 <br />
                 <br />
-                As the objective of the game is to manuever a unit to the
+                As the objective of the game is to maneuver a unit to the
                 opposite side of the board, it is important to manage resources
                 for movement.
               </div>
@@ -1067,8 +1074,7 @@ export const useDemoGameStates = () => {
                 <br />
                 <br />
                 <strong>
-                  Note: The zones of eligible destinations will be highlighted
-                  in blue.
+                  Note: The zones of eligible destinations will be colored blue.
                 </strong>
               </div>
             );
@@ -1088,8 +1094,8 @@ export const useDemoGameStates = () => {
           case "Learn1.46":
             return (
               <div>
-                Unlike other tactics, Mobilize comes with 3{" "}
-                <strong>“instances”</strong> that can be used either separately
+                Unlike other tactics, Mobilize comes with{" "}
+                <strong>3 instances</strong> that can be used either separately
                 or simultaneously.
                 <br />
                 <br />
@@ -1103,8 +1109,8 @@ export const useDemoGameStates = () => {
                 As a Sovereign, you can use 2 instances of a Mobilize tactic to
                 draw 1 skill.{" "}
                 <em>
-                  That said, using multiple instances simultaneously is
-                  permittable only via a single tactic
+                  Using multiple instances simultaneously is permittable only
+                  via a single tactic
                 </em>
                 : in the event you have 2 Mobilize tactics, you are not allowed
                 to draw by using 1 instance from each.
@@ -1144,12 +1150,15 @@ export const useDemoGameStates = () => {
           case "Learn1.53":
             return (
               <div>
-                Traversing via Mobilize only uses 1 instance. However, a unit
-                cannot use the same Mobilize tactic more than once. Therefore,
-                your Mana Scion cannot traverse again using the remaing
-                instances. That said, in the event you have 2 Mobilize tactics,
-                it would be possible for a unit to traverse twice, using 1
-                instance from each.
+                Traversing via Mobilize uses 1 instance.{" "}
+                <em>
+                  However, a unit cannot use the same Mobilize tactic more than
+                  once.
+                </em>{" "}
+                Therefore, your Mana Scion cannot traverse again using the
+                remaining instances. That said, in the event you have 2 Mobilize
+                tactics, it would be possible for a unit to traverse twice,
+                using 1 instance from each.
               </div>
             );
 
@@ -1195,13 +1204,13 @@ export const useDemoGameStates = () => {
           case "Learn1.66":
             return (
               <div>
-                The Crystallization skill you searched earlier is an example of
-                a standard (method) Land (aspect) skill.
+                The Crystallization skill you searched earlier is a standard
+                (method) Land (aspect) skill.
                 <br />
                 <br />
-                Represented by a circular sapphire, standard skills exhibit
-                rudimentary features. Simply put, they can be activated during
-                one’s Execution Phase.
+                Displaying a circular sapphire icon,{" "}
+                <strong>standard skills</strong> exhibit rudimentary features.
+                Simply put, they can be activated during one’s Execution Phase.
               </div>
             );
 
@@ -1214,12 +1223,262 @@ export const useDemoGameStates = () => {
             );
 
           case "Learn1.68":
+          case "Learn1.69":
             return (
               <div>
-                This display will filter out any non-Land skills.
+                This display will filter out any skills with aspects that do not
+                match the unit. Click on Crystallization and activate it.
                 <br />
                 <br />
-                Click on Crystallization and activate it.
+                <strong>
+                  Reminder: You can click on the magnifying glass icon at the
+                  top right corner of a card to view it up close.
+                </strong>
+              </div>
+            );
+
+          case "Learn1.70":
+            return (
+              <div>
+                Crystallization’s effect has 2 sub-effects, the first of which
+                increases the activator’s HP (Health Points) to 2.
+                <br />
+                <br />
+                Speaking of HP, <strong>units have 1 HP by default</strong>.
+                Thus, they are prone to elimination due to a single attack. The
+                extra HP of your Land Scion provides durability.
+              </div>
+            );
+
+          case "Learn1.71":
+            return (
+              <div>
+                Crystallization’s second sub-effect, is optional (as it was
+                qualified by the phrase “you may”). The activator may spend a
+                skill to gain <strong>Shield</strong>, which is an enhancement
+                (positive status) that protects the unit from the next attack
+                they would receive.
+              </div>
+            );
+
+          case "Learn1.72":
+          case "Learn1.73":
+            return <div>Spend “Sow and Reap”.</div>;
+
+          case "Learn1.74":
+            return (
+              <div>
+                There is nothing left to do in this Execution Phase. But before
+                we end it, let us go over another unit feature.
+                <br />
+                <br />
+                Click on your Land Scion to open their personal menu, then click
+                on the information button at the top left.
+              </div>
+            );
+
+          case "Learn1.75":
+            return (
+              <div>
+                This screen will display the details pertaining to the selected
+                unit, including their innate talents and abilities.
+                <br />
+                <br />
+                (Abilities will be demonstrated during the next turn.)
+              </div>
+            );
+
+          case "Learn1.76":
+            return (
+              <div>
+                You can also find their status conditions with their definitions
+                and durations.
+              </div>
+            );
+
+          case "Learn1.76.1":
+            return <div>Close it to proceed.</div>;
+
+          case "Learn1.77":
+            return (
+              <div>
+                As long as there are no ongoing activated effects, you can end
+                your Execution Phase by pressing the End Turn button by the top
+                left corner of the board.
+              </div>
+            );
+
+          case "Learn1.78":
+            return (
+              <div>
+                Doing so would trigger the procedures of the{" "}
+                <strong>Final Phase</strong>.
+              </div>
+            );
+
+          case "Learn1.79":
+            return (
+              <div>
+                During the Final Phase, all unused Avelhems are discarded.{" "}
+                <br />
+                <br />
+                If the Initiator’s hand has more than 8 skills, they must
+                selectively discard the excess. <br />
+                <br />
+                Unused tactics are also forfeited.
+              </div>
+            );
+
+          case "Learn1.79.1":
+            return (
+              <div>
+                Furthermore, the status durations of the Initiator’s units
+                decrease by 1 (unless the duration is indefinite). At present
+                circumstances, only this is applicable.
+              </div>
+            );
+
+          case "Learn1.80":
+            return <div>Click on End Turn.</div>;
+
+          case "Learn1.81":
+            return (
+              <div>
+                You may have noticed that the board has turned from red to
+                black. When the board is red, the game proceeds through your
+                inputs, primarily when it is your turn -- but there are
+                exceptions. Conversely, black corresponds to your opponent.
+              </div>
+            );
+
+          case "Learn1.82":
+            return (
+              <div>
+                Click on the Switch Player button by the bottom left corner of
+                the board to change to the perspective of the Silver Sovereign.
+              </div>
+            );
+
+          case "Learn1.83":
+          case "Learn1.84":
+            return (
+              <div>
+                The Silver Sovereign is now the Initiator. Likewise, they begin
+                with the Acquisition Phase. <br />
+                <br /> Select Beseech.
+              </div>
+            );
+
+          case "Learn1.85":
+            return <div>Proceed through the Bounty Phase.</div>;
+
+          case "Learn1.86":
+          case "Learn1.87":
+          case "Learn1.88":
+            return <div>Assent to roll.</div>;
+
+          case "Learn1.89":
+          case "Learn1.90":
+            return (
+              <div>
+                You can reroll undesirable tactics via Backtack and Curate. The
+                latter costs an additional FD, but it provides better odds. Give
+                it a try.
+              </div>
+            );
+
+          case "Learn1.91":
+          case "Learn1.92":
+          case "Learn1.93":
+            return (
+              <div>
+                Invoke and Assault each have a 1 of 6 chance to appear on a die
+                roll. As we have already discussed Advance, disregard it for
+                this turn.
+              </div>
+            );
+
+          case "Learn1.94":
+          case "Learn1.95":
+          case "Learn1.96":
+          case "Learn1.97":
+            return (
+              <div>
+                Use your Metal Avelhem to ascend your center pawn to a Metal
+                Scion.
+              </div>
+            );
+
+          case "Learn1.98":
+            return (
+              <div>
+                Conduction, the debut talent of Metal Scions, allows them to
+                search for then float Magnetic Shockwave, which is the standard
+                skill of their class. This is similar to the Mountain Stance
+                talent of Land Scions, but there are some differences. First,
+                Conduction is not modular; it has no alternative effect.
+              </div>
+            );
+
+          case "Learn1.99":
+            return (
+              <div>
+                Second, Conduction can search without the need to spend a skill.
+                Lastly, it will float the searched skill rather than add it to
+                the hand.
+              </div>
+            );
+
+          case "Learn1.100":
+            return (
+              <div>
+                Floating a card would place it on top of its repertoire and
+                rotate it by 90 degrees. Floating cards are still in the
+                repertoire, and they retain their positions after shuffles. (It
+                is impossible to have a non-floating card above a floating one).
+              </div>
+            );
+
+          case "Learn1.101":
+          case "Learn1.102":
+          case "Learn1.103":
+          case "Learn1.104":
+            return (
+              <div>Activate Conduction and search for Magnetic Shockwave.</div>
+            );
+
+          case "Learn1.105":
+            return (
+              <div>
+                Now let us go over another skill method: resonating skills.
+                <br /> <br />
+                Displaying a bichromatic alexandrite,{" "}
+                <strong>resonant skills</strong> synergize to provide additional
+                effects.
+              </div>
+            );
+
+          case "Learn1.106":
+            return (
+              <div>
+                Like standard skills, resonant skills can be activated only
+                during one’s own Execution Phase. Exclusive to these skills is
+                their
+                <strong>resonance</strong>, which is a secondary effect that
+                applies only when the skill is resonated. Activating a resonant
+                skill without resonating it would ignore its resonance.
+              </div>
+            );
+
+          case "Learn1.107":
+          case "Learn1.108":
+          case "Learn1.109":
+            return (
+              <div>
+                To resonate a skill, activate it with a resonator, which is
+                either an identical copy or valid substitute.
+                <br /> <br />
+                Make your Metal Scion resonate their “Reinforce” skill.
               </div>
             );
 
@@ -1231,6 +1490,7 @@ export const useDemoGameStates = () => {
         switch (demoGuide) {
           case "Fire1.1":
           case "Fire1.2":
+          case "Fire1.2.01":
             return (
               <div>
                 1. Click on your Avelhem hand to raise it, then click on a Fire

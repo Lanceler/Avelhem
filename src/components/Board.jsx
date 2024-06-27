@@ -4892,7 +4892,7 @@ const Board = (props) => {
       dispatch(updateState(newGameState));
 
       updateFirebase(newGameState);
-    }, 1000);
+    }, 250);
   };
 
   const skillResonanceConclusion = (
@@ -4965,7 +4965,7 @@ const Board = (props) => {
       dispatch(updateState(newGameState));
 
       updateFirebase(newGameState);
-    }, 1000);
+    }, 250);
   };
 
   const skillResonanceRetain = (resonator) => {
@@ -5042,7 +5042,7 @@ const Board = (props) => {
       dispatch(updateState(newGameState));
 
       updateFirebase(newGameState);
-    }, 1000);
+    }, 250);
   };
 
   //=========================
@@ -5143,6 +5143,14 @@ const Board = (props) => {
       case "Learn1.67":
         return element === "Skill Button";
 
+      case "Learn1.74":
+        return element === "Info Button";
+
+      case "Learn1.80":
+        return element === "End Button";
+
+      /////////////////////////////////////////
+
       case "Fire1.9":
       case "Fire1.13":
         return element === "Ability Button";
@@ -5157,7 +5165,7 @@ const Board = (props) => {
         return element === "Tactic Button";
 
       case "Fire1.45.1":
-        return element === "Wnd Button";
+        return element === "End Button";
     }
   };
 
@@ -5177,6 +5185,14 @@ const Board = (props) => {
 
       case "Learn1.67":
         dispatch(updateDemo("Learn1.68"));
+        break;
+
+      case "Learn1.74":
+        dispatch(updateDemo("Learn1.75"));
+        break;
+
+      case "Learn1.80":
+        dispatch(updateDemo("Learn1.81"));
         break;
     }
   };
@@ -5235,7 +5251,10 @@ const Board = (props) => {
                         className={`choiceButton ${
                           canClick("End Button") ? "demoClick" : ""
                         }`}
-                        onClick={() => endExecutionPhase()}
+                        onClick={() => {
+                          endExecutionPhase();
+                          handleUpdateDemoGuide();
+                        }}
                       >
                         End Turn
                       </button>
@@ -5294,9 +5313,14 @@ const Board = (props) => {
                 {expandedUnit !== null && (
                   <>
                     <div
-                      className="pieceOption"
+                      className={`pieceOption ${
+                        canClick("Info Button") ? "demoClick" : ""
+                      }`}
                       style={unitButtonPosition(expandedUnit)[0]}
-                      onClick={() => handleUnitOptions("Info")}
+                      onClick={() => {
+                        handleUnitOptions("Info");
+                        handleUpdateDemoGuide();
+                      }}
                     >
                       <div className="optionIcon">
                         <img src={UnitProfile} className="unitOptions" />
@@ -5346,7 +5370,10 @@ const Board = (props) => {
                                   canClick("Skill Button") ? "demoClick" : ""
                                 }`}
                                 style={unitButtonPosition(expandedUnit)[3]}
-                                onClick={() => handleUnitOptions("Skill")}
+                                onClick={() => {
+                                  handleUnitOptions("Skill");
+                                  handleUpdateDemoGuide();
+                                }}
                               >
                                 <div className="optionIcon">
                                   {/* Ski */}

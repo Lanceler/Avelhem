@@ -104,15 +104,12 @@ export default function Demo() {
 
   const canClick = (element) => {
     switch (demoGuide) {
+      case "Learn1.82":
       case "Fire1.4":
       case "Fire1.6":
       case "Fire1.33":
       case "Fire1.41":
-        switch (element) {
-          case "Switch Player Button":
-            return true;
-        }
-        break;
+        return element === "Switch Player Button";
     }
   };
 
@@ -138,6 +135,20 @@ export default function Demo() {
       case "Learn1.64":
       case "Learn1.65":
       case "Learn1.66":
+      case "Learn1.70":
+      case "Learn1.71":
+      case "Learn1.75":
+      case "Learn1.76":
+      case "Learn1.77":
+      case "Learn1.78":
+      case "Learn1.79":
+      case "Learn1.79.1":
+      case "Learn1.81":
+      case "Learn1.98":
+      case "Learn1.99":
+      case "Learn1.100":
+      case "Learn1.105":
+      case "Learn1.106":
         return true;
     }
   };
@@ -226,6 +237,65 @@ export default function Demo() {
         dispatch(updateDemo("Learn1.67"));
         break;
 
+      case "Learn1.70":
+        dispatch(updateDemo("Learn1.71"));
+        break;
+
+      case "Learn1.71":
+        dispatch(updateDemo("Learn1.72"));
+        break;
+
+      case "Learn1.75":
+        dispatch(updateDemo("Learn1.76"));
+        break;
+
+      case "Learn1.76":
+        dispatch(updateDemo("Learn1.76.1"));
+        break;
+
+      case "Learn1.77":
+        dispatch(updateDemo("Learn1.78"));
+        break;
+
+      case "Learn1.78":
+        dispatch(updateDemo("Learn1.79"));
+        break;
+
+      case "Learn1.79":
+        dispatch(updateDemo("Learn1.79.1"));
+        break;
+
+      case "Learn1.79.1":
+        dispatch(updateDemo("Learn1.80"));
+        break;
+
+      case "Learn1.81":
+        dispatch(updateDemo("Learn1.82"));
+        break;
+
+      case "Learn1.82":
+        dispatch(updateDemo("Learn1.83"));
+        break;
+
+      case "Learn1.98":
+        dispatch(updateDemo("Learn1.99"));
+        break;
+
+      case "Learn1.99":
+        dispatch(updateDemo("Learn1.100"));
+        break;
+
+      case "Learn1.100":
+        dispatch(updateDemo("Learn1.101"));
+        break;
+
+      case "Learn1.105":
+        dispatch(updateDemo("Learn1.106"));
+        break;
+
+      case "Learn1.106":
+        dispatch(updateDemo("Learn1.107"));
+        break;
       ////////////////////////////////////////////
 
       case "Fire1.4":
@@ -248,7 +318,15 @@ export default function Demo() {
 
   useEffect(() => {
     if (
-      ["Learn1.3", "Learn1.13", "Learn1.20.1", "Learn1.34"].includes(demoGuide)
+      [
+        "Learn1.3",
+        "Learn1.13",
+        "Learn1.20.1",
+        "Learn1.34",
+        "Learn1.88",
+        "Learn1.91",
+        "Learn1.105",
+      ].includes(demoGuide)
     ) {
       scriptedDemo();
     }
@@ -280,6 +358,9 @@ export default function Demo() {
         duplicateDemoGameState.host.avelhemRepertoire[a - 1] = 4;
         duplicateDemoGameState.host.avelhemRepertoire[a - 2] = 6;
 
+        duplicateDemoGameState.guest.avelhemRepertoire[a - 1] = 7;
+        duplicateDemoGameState.guest.avelhemRepertoire[a - 2] = 8;
+
         const b = duplicateDemoGameState.host.skillRepertoire.length;
         duplicateDemoGameState.host.skillRepertoire[b - 1] = "SB-05";
         duplicateDemoGameState.host.skillRepertoire[b - 2] = "08-04";
@@ -290,7 +371,15 @@ export default function Demo() {
         duplicateDemoGameState.host.skillRepertoire[b - 7] = "05-02";
         duplicateDemoGameState.host.skillRepertoire[b - 8] = "04-03";
 
-        setDemoGameState(duplicateDemoGameState);
+        duplicateDemoGameState.guest.skillRepertoire[b - 1] = "01-03";
+        duplicateDemoGameState.guest.skillRepertoire[b - 2] = "05-03";
+        duplicateDemoGameState.guest.skillRepertoire[b - 3] = "SB-05";
+        duplicateDemoGameState.guest.skillRepertoire[b - 4] = "SC-01";
+        duplicateDemoGameState.guest.skillRepertoire[b - 5] = "SC-04";
+        duplicateDemoGameState.guest.skillRepertoire[b - 6] = "08-03";
+        duplicateDemoGameState.guest.skillRepertoire[b - 7] = "03-03";
+        duplicateDemoGameState.guest.skillRepertoire[b - 8] = "07-01";
+
         break;
 
       case "Learn1.13":
@@ -298,22 +387,38 @@ export default function Demo() {
           { face: "Advance", limit: 1, stock: 1 },
           { face: "Mobilize", limit: 3, stock: 3 },
         ];
-
-        setDemoGameState(duplicateDemoGameState);
         break;
 
       case "Learn1.20.1":
       case "Learn1.34":
+      case "Learn1.105":
         duplicateDemoGameState.currentResolution.pop();
         duplicateDemoGameState.currentResolution.pop();
         duplicateDemoGameState.activatingSkill.pop();
         duplicateDemoGameState.activatingUnit = [];
+        break;
 
-        setDemoGameState(duplicateDemoGameState);
+      case "Learn1.88":
+        duplicateDemoGameState.tactics = [
+          { face: "Invoke", limit: 1, stock: 1 },
+          { face: "Invoke", limit: 1, stock: 1 },
+        ];
+        break;
+
+      case "Learn1.91":
+        duplicateDemoGameState.currentResolution[
+          duplicateDemoGameState.currentResolution.length - 1
+        ].reroll = [
+          { face: "Invoke", limit: 1, stock: 1 },
+          { face: "Assault", limit: 1, stock: 1 },
+          { face: "Advance", limit: 1, stock: 1 },
+        ];
         break;
 
       //////////////////////
     }
+
+    setDemoGameState(duplicateDemoGameState);
   };
 
   return (
@@ -371,7 +476,13 @@ export default function Demo() {
 
             {demoGuide && (
               <>
-                <div className="demo-instructions">{getDemoInstructions()}</div>
+                <div
+                  className={`demo-instructions ${
+                    demoGuide === "Learn1.76.1" ? "demo-short" : ""
+                  }`}
+                >
+                  {getDemoInstructions()}
+                </div>
                 {demoNextRevealed() && (
                   <button
                     className="choiceButton demo-instructions-button demoClick"

@@ -989,7 +989,7 @@ export const useSkillEffects = () => {
         unit: unit,
         details: {
           title: "Crystallization",
-          message: "You may spend 1 skill to gain shield for 2 turns.",
+          message: "You may spend 1 skill to gain Shield for 2 turns.",
           restriction: null,
           reason: "Crystallization1",
         },

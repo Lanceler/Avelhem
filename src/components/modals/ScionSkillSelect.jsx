@@ -102,6 +102,14 @@ const ScionSkillSelect = (props) => {
 
   const canClick = (element, element2) => {
     switch (demoGuide) {
+      case "Learn1.68":
+        return element2.id === "04-01";
+
+      case "Learn1.69":
+        return element === "Select Button";
+
+      //////////////////////
+
       case "Fire1.16":
         switch (element) {
           case "Skill Card":
@@ -150,6 +158,16 @@ const ScionSkillSelect = (props) => {
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
+      case "Learn1.68":
+        dispatch(updateDemo("Learn1.69"));
+        break;
+
+      case "Learn1.69":
+        dispatch(updateDemo("Learn1.70"));
+        break;
+
+      ////////////////////
+
       case "Fire1.16":
         dispatch(updateDemo("Fire1.17"));
         break;

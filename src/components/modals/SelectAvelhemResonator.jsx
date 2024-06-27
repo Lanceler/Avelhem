@@ -136,6 +136,10 @@ const SelectAvelhemResonator = (props) => {
     switch (demoGuide) {
       case "Fire1.1":
         dispatch(updateDemo("Fire1.2"));
+        break;
+
+      case "Fire1.2":
+        dispatch(updateDemo("Fire1.2.01"));
 
         break;
     }
@@ -203,7 +207,10 @@ const SelectAvelhemResonator = (props) => {
             className={`choiceButton ${
               canClick("Select Button") ? "demoClick" : ""
             }`}
-            onClick={() => handleSelect()}
+            onClick={() => {
+              handleSelect();
+              handleUpdateDemoGuide();
+            }}
           >
             Select
           </button>
