@@ -83,7 +83,7 @@ const VictoryScreen = (props) => {
         {/* <h3>{message3}</h3> */}
 
         <div className="FinalPhase-Button">
-          {!demoOverride &&
+          {!demoOverride() &&
             self === props.player &&
             localGameState[self].score < 5 && (
               <button className="choiceButton" onClick={() => handleOffer()}>
@@ -92,7 +92,7 @@ const VictoryScreen = (props) => {
               </button>
             )}
 
-          {demoOverride && <div>{demoOverride()}</div>}
+          {demoOverride() && <div>{demoOverride()}</div>}
         </div>
       </div>
     </div>
