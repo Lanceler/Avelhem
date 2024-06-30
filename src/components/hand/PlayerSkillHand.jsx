@@ -3,6 +3,7 @@ import "./Skill.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
+import { updateDemo } from "../../redux/demoGuide";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
@@ -15,6 +16,9 @@ import SelectedSkill from "./SelectedSkill";
 const PlayerSkillHand = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
+  const { demoGuide } = useSelector((state) => state.demoGuide);
+  const dispatch = useDispatch();
+
   const { getImage2 } = useCardImageSwitch();
   const { getSkillById } = useCardDatabase();
 
@@ -46,6 +50,28 @@ const PlayerSkillHand = (props) => {
     if (raise) {
       setSelectedSkill({ id: card, handIndex: index });
       //setRaise(false);
+    }
+  };
+
+  const canClick = (element1) => {
+    switch (demoGuide) {
+      case "Learn1.188":
+        return true;
+
+      case "Learn1.189":
+        return element1 === "SB-05";
+    }
+  };
+
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+      case "Learn1.188":
+        dispatch(updateDemo("Learn1.189"));
+        break;
+
+      case "Learn1.189":
+        dispatch(updateDemo("Learn1.190"));
+        break;
     }
   };
 
@@ -82,11 +108,16 @@ const PlayerSkillHand = (props) => {
         >
           {localGameState[self].skillHand.map((card, index) => (
             <div
-              onClick={() => handleCard(card, index)}
+              onClick={() => {
+                handleCard(card, index);
+                handleUpdateDemoGuide();
+              }}
               key={index}
               className={`player-hand-card indivSkill ${
                 raise ? "enlargable" : ""
-              }`}
+              }
+              ${canClick(card) ? "demoClick" : ""}
+              `}
               style={{
                 backgroundImage: `url(${getImage2(card)})`,
                 // top: Math.floor(index / 4) * -110,

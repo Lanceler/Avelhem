@@ -147,18 +147,14 @@ const SelectSkillDiscard = (props) => {
   const canClick = (element, element2) => {
     switch (demoGuide) {
       case "Learn1.28":
-        switch (element) {
-          case "Skill Card":
-            return element2.id === "SX-01";
-        }
-        break;
+      case "Learn1.111":
+      case "Learn1.151":
+        return element2.id === "SX-01";
 
       case "Learn1.29":
-        switch (element) {
-          case "Select Button":
-            return true;
-        }
-        break;
+      case "Learn1.112":
+      case "Learn1.152":
+        return element === "Select Button";
 
       //////////////////////
 
@@ -212,6 +208,24 @@ const SelectSkillDiscard = (props) => {
       case "Learn1.29":
         dispatch(updateDemo("Learn1.30"));
         break;
+
+      case "Learn1.111":
+        dispatch(updateDemo("Learn1.112"));
+        break;
+
+      case "Learn1.112":
+        dispatch(updateDemo("Learn1.113"));
+        break;
+
+      case "Learn1.151":
+        dispatch(updateDemo("Learn1.152"));
+        break;
+
+      case "Learn1.152":
+        dispatch(updateDemo("Learn1.153"));
+        break;
+
+      ////////////////////
 
       case "Fire1.10":
         dispatch(updateDemo("Fire1.11"));

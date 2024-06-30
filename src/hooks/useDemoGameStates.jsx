@@ -88,7 +88,7 @@ export const useDemoGameStates = () => {
             skillHand: [],
             units: [],
             skillShattered: [],
-            displayName: "Gold Player",
+            displayName: "Gold Sovereign",
             score: 0,
             avelhemRepertoire: [
               1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 7, 7, 7, 7,
@@ -105,7 +105,7 @@ export const useDemoGameStates = () => {
             avelhemFloat: 0,
             bountyPoints: 0,
             skillFloat: 0,
-            displayName: "Silver Player",
+            displayName: "Silver Sovereign",
             score: 0,
             avelhemRepertoire: [
               1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 7, 7, 7, 7,
@@ -225,7 +225,7 @@ export const useDemoGameStates = () => {
               "04-03",
               "04-03",
               "04-03",
-              "04-04",
+              "04-03",
               "06-03",
               "06-03",
               "06-03",
@@ -702,6 +702,382 @@ export const useDemoGameStates = () => {
           activatingResonator: [],
         };
 
+      case "latest test":
+        return {
+          winner: null,
+          activatingSkill: [],
+          winObjective: 1,
+          turnPlayer: "guest",
+          activatingTarget: [
+            {
+              player: "host",
+              unitIndex: 1,
+              row: 4,
+              column: 2,
+              unitClass: "Mana Scion",
+              hp: 1,
+              virtue: 1,
+              afflictions: {},
+              enhancements: {},
+              boosts: {},
+              temporary: {},
+            },
+          ],
+          activatingResonator: [],
+          zones:
+            '[[{"id":0,"row":0,"column":0},{"id":1,"row":0,"column":1},{"id":2,"row":0,"column":2},{"id":3,"row":0,"column":3},{"id":4,"row":0,"column":4}],[{"id":5,"row":1,"column":0},{"id":6,"row":1,"column":1},{"id":7,"row":1,"column":2},{"id":8,"row":1,"column":3},{"id":9,"row":1,"column":4}],[{"id":10,"row":2,"column":0},{"id":11,"row":2,"column":1},{"id":12,"row":2,"column":2},{"id":13,"row":2,"column":3},{"id":14,"row":2,"column":4}],[{"id":15,"row":3,"column":0,"player":"guest","unitIndex":2},{"id":16,"row":3,"column":1},{"id":17,"row":3,"column":2,"player":"guest","unitIndex":1},{"id":18,"row":3,"column":3},{"id":19,"row":3,"column":4,"player":"guest","unitIndex":0}],[{"id":20,"row":4,"column":0},{"id":21,"row":4,"column":1},{"id":22,"row":4,"column":2,"player":"host","unitIndex":1},{"id":23,"row":4,"column":3},{"id":24,"row":4,"column":4}],[{"id":25,"row":5,"column":0},{"id":26,"row":5,"column":1,"player":"host","unitIndex":0},{"id":27,"row":5,"column":2,"player":null,"unitIndex":null},{"id":28,"row":5,"column":3,"player":"host","unitIndex":2},{"id":29,"row":5,"column":4}],[{"id":30,"row":6,"column":0,"player":null,"unitIndex":null},{"id":31,"row":6,"column":1},{"id":32,"row":6,"column":2,"player":null,"unitIndex":null},{"id":33,"row":6,"column":3},{"id":34,"row":6,"column":4,"player":null,"unitIndex":null}],[{"id":35,"row":7,"column":0},{"id":36,"row":7,"column":1},{"id":37,"row":7,"column":2},{"id":38,"row":7,"column":3},{"id":39,"row":7,"column":4}],[{"id":40,"row":8,"column":0},{"id":41,"row":8,"column":1},{"id":42,"row":8,"column":2},{"id":43,"row":8,"column":3},{"id":44,"row":8,"column":4}],[{"id":45,"row":9,"column":0},{"id":46,"row":9,"column":1},{"id":47,"row":9,"column":2},{"id":48,"row":9,"column":3},{"id":49,"row":9,"column":4}]]',
+          host: {
+            skillRepertoire: [
+              "SA-04",
+              "08-03",
+              "SC-03",
+              "07-02",
+              "06-04",
+              "SC-05",
+              "07-02",
+              "04-04",
+              "08-03",
+              "02-01",
+              "04-03",
+              "SB-01",
+              "02-03",
+              "02-03",
+              "06-03",
+              "SA-01",
+              "06-03",
+              "08-02",
+              "04-03",
+              "02-01",
+              "05-02",
+              "02-01",
+              "07-03",
+              "SA-04",
+              "SB-05",
+              "08-01",
+              "08-04",
+              "08-01",
+              "02-03",
+              "07-04",
+              "04-01",
+              "05-01",
+              "06-03",
+              "08-03",
+              "08-01",
+              "08-03",
+              "SB-03",
+              "SC-03",
+              "02-01",
+              "SC-01",
+              "07-03",
+              "04-03",
+              "02-03",
+              "04-01",
+              "08-02",
+              "SB-03",
+              "07-03",
+              "08-02",
+              "SA-03",
+              "SA-01",
+              "SB-05",
+              "04-04",
+              "06-03",
+              "06-01",
+              "SA-02",
+            ],
+            skillFloat: 0,
+            score: 0,
+            avelhemVestige: [6, 4],
+            fateDefiances: 3,
+            avelhemFloat: 0,
+            avelhemHand: [],
+            bountyUpgrades: {
+              coordination: 0,
+              frontier: 0,
+              avelhem: 0,
+              acquisition: 0,
+              victory: 0,
+              tactics: 0,
+            },
+            units: [
+              {
+                player: "host",
+                unitIndex: 0,
+                row: 5,
+                column: 1,
+                unitClass: "Pawn",
+                hp: 1,
+                virtue: 1,
+                afflictions: {},
+                enhancements: {},
+                boosts: {},
+                temporary: {},
+              },
+              {
+                player: "host",
+                unitIndex: 1,
+                row: 4,
+                column: 2,
+                unitClass: "Mana Scion",
+                hp: 1,
+                virtue: 1,
+                afflictions: {},
+                enhancements: {},
+                boosts: {},
+                temporary: {},
+              },
+              {
+                player: "host",
+                unitIndex: 2,
+                row: 5,
+                column: 3,
+                unitClass: "Land Scion",
+                hp: 2,
+                virtue: 1,
+                afflictions: {},
+                enhancements: { shield: 1 },
+                boosts: {},
+                temporary: {},
+              },
+            ],
+            skillHand: ["SC-04", "06-03", "01-02"],
+            avelhemRepertoire: [
+              7, 2, 7, 8, 8, 6, 2, 8, 8, 6, 6, 4, 7, 4, 7, 4, 2, 6,
+            ],
+            skillVestige: ["SX-01", "SX-01", "08-01", "04-01"],
+            skillShattered: [],
+            bountyPoints: 0,
+            displayName: "Gold Player",
+          },
+          turnCount: 2,
+          tactics: [
+            { face: "Invoke", limit: 1, stock: 0 },
+            { face: "Assault", limit: 1, stock: 0 },
+          ],
+          guest: {
+            score: 0,
+            avelhemHand: [8],
+            avelhemRepertoire: [
+              2, 1, 7, 3, 3, 1, 4, 2, 3, 4, 7, 8, 4, 3, 1, 8, 2, 4,
+            ],
+            avelhemFloat: 0,
+            skillFloat: 0,
+            skillHand: ["SB-01", "SA-04", "SX-01", "07-02", "07-03", "07-01"],
+            skillRepertoire: [
+              "05-03",
+              "02-01",
+              "04-01",
+              "04-03",
+              "01-01",
+              "05-03",
+              "07-01",
+              "SB-04",
+              "SA-02",
+              "01-01",
+              "02-02",
+              "07-03",
+              "04-03",
+              "04-01",
+              "08-03",
+              "03-04",
+              "01-02",
+              "SB-05",
+              "07-02",
+              "01-01",
+              "02-03",
+              "SA-03",
+              "SB-03",
+              "02-03",
+              "02-01",
+              "01-01",
+              "02-01",
+              "SB-04",
+              "07-02",
+              "01-04",
+              "04-01",
+              "SB-01",
+              "SA-04",
+              "07-04",
+              "03-04",
+              "07-01",
+              "04-03",
+              "SB-03",
+              "02-04",
+              "01-03",
+              "SA-02",
+              "SB-05",
+              "02-01",
+              "07-01",
+              "02-03",
+              "07-01",
+              "SA-04",
+              "01-02",
+              "02-02",
+              "02-02",
+              "03-03",
+              "01-03",
+              "01-03",
+              "02-02",
+            ],
+            fateDefiances: 1,
+            bountyPoints: 0,
+            avelhemVestige: [7],
+            units: [
+              {
+                player: "guest",
+                unitIndex: 0,
+                row: 3,
+                column: 4,
+                unitClass: "Pawn",
+                hp: 1,
+                virtue: 1,
+                afflictions: {},
+                enhancements: {},
+                boosts: {},
+                temporary: {},
+              },
+              {
+                player: "guest",
+                unitIndex: 1,
+                row: 3,
+                column: 2,
+                unitClass: "Metal Scion",
+                hp: 2,
+                virtue: 1,
+                afflictions: {},
+                enhancements: {},
+                boosts: {},
+                temporary: { activation: 1 },
+                sharpness: 1,
+              },
+              {
+                player: "guest",
+                unitIndex: 2,
+                row: 3,
+                column: 0,
+                unitClass: "Pawn",
+                hp: 1,
+                virtue: 1,
+                afflictions: {},
+                enhancements: {},
+                boosts: {},
+                temporary: {},
+              },
+            ],
+            bountyUpgrades: {
+              tactics: 0,
+              victory: 0,
+              acquisition: 0,
+              coordination: 0,
+              frontier: 0,
+              avelhem: 0,
+            },
+            skillShattered: [],
+            skillVestige: ["SX-01", "07-02"],
+            displayName: "Silver Player",
+          },
+          activatingUnit: [
+            {
+              player: "guest",
+              unitIndex: 1,
+              row: 3,
+              column: 2,
+              unitClass: "Metal Scion",
+              hp: 2,
+              virtue: 1,
+              afflictions: {},
+              enhancements: {},
+              boosts: {},
+              temporary: { activation: 1 },
+              sharpness: 1,
+            },
+          ],
+          turnPhase: "Execution",
+          currentResolution: [
+            { resolution: "Execution Phase" },
+            {
+              resolution: "Tactic End",
+              unit: {
+                player: "guest",
+                unitIndex: 1,
+                row: 3,
+                column: 2,
+                unitClass: "Metal Scion",
+                hp: 2,
+                virtue: 1,
+                afflictions: {},
+                enhancements: {},
+                boosts: {},
+                temporary: { activation: 1 },
+                sharpness: 1,
+              },
+            },
+            {
+              resolution: "Apply Damage",
+              attacker: {
+                player: "guest",
+                unitIndex: 1,
+                row: 3,
+                column: 2,
+                unitClass: "Metal Scion",
+                hp: 2,
+                virtue: 1,
+                afflictions: {},
+                enhancements: {},
+                boosts: {},
+                temporary: { activation: 1 },
+                sharpness: 1,
+              },
+              victim: {
+                player: "host",
+                unitIndex: 1,
+                row: 4,
+                column: 2,
+                unitClass: "Mana Scion",
+                hp: 1,
+                virtue: 1,
+                afflictions: {},
+                enhancements: {},
+                boosts: {},
+                temporary: {},
+              },
+              special: null,
+              type: "strike",
+            },
+            {
+              resolution: "Triggering Contingent Skill",
+              resolution2: "Triggering Target",
+              attacker: {
+                player: "guest",
+                unitIndex: 1,
+                row: 3,
+                column: 2,
+                unitClass: "Metal Scion",
+                hp: 2,
+                virtue: 1,
+                afflictions: {},
+                enhancements: {},
+                boosts: {},
+                temporary: { activation: 1 },
+                sharpness: 1,
+              },
+              victim: {
+                player: "host",
+                unitIndex: 1,
+                row: 4,
+                column: 2,
+                unitClass: "Mana Scion",
+                hp: 1,
+                virtue: 1,
+                afflictions: {},
+                enhancements: {},
+                boosts: {},
+                temporary: {},
+              },
+              type: "strike",
+            },
+          ],
+        };
+
       default:
         return;
     }
@@ -753,11 +1129,6 @@ export const useDemoGameStates = () => {
           case "Learn1.5":
             return (
               <div>
-                {/* Furthermore, the first Sovereign adds 1 “Transcendence” to their
-                hand and places the other copy in their vestige (discard pile),
-                while the second Sovereign adds both of their copies to their
-                hand. (“Transcendence” is a skill that is always part of the
-                opening hand, and it is never included in the repertoire.) */}
                 Furthermore, they add 2 copies of the “Transcendence” skill to
                 their hands. The first Sovereign, however, immediately places
                 one of them in their vestige (discard pile).
@@ -772,7 +1143,7 @@ export const useDemoGameStates = () => {
                 <br />
                 <br />
                 The first is the <strong>Acquisition Phase</strong>, which
-                offers the Initiator the opportunity to bolsters their resources
+                offers the Initiator the opportunity to bolster their resources
                 by reinforcing their army or drawing cards.
               </div>
             );
@@ -782,9 +1153,11 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 There are 3 options available, and these can be upgraded to
-                provided additional effects. Since you already have pawns on the
-                board and skills in your hand, select the Beseech option to draw
-                2 Avelhems.
+                provided additional effects.
+                <br />
+                <br />
+                Since you already have pawns on the board and skills in your
+                hand, select the Beseech option to draw 2 Avelhems.
               </div>
             );
 
@@ -876,7 +1249,7 @@ export const useDemoGameStates = () => {
               <div>
                 Let’s start by activating an Avelhem. Avelhems are activated by
                 Sovereigns, and they are primarily used to ascend pawns into
-                Scions.
+                Scions of a specific class.
                 <br />
                 <br />
                 <strong>
@@ -1013,12 +1386,9 @@ export const useDemoGameStates = () => {
           case "Learn1.36":
             return (
               <div>
-                As a Sovereign, you have 3 options when utilizing an Advance
-                tactic. In most situations, deploying a pawn would be the only
-                available option.
-                <br />
-                <br />
-                (Feel free to take a moment to read the other options.)
+                As a Sovereign, you have these 3 options when utilizing an
+                Advance tactic. In most situations, deploying a pawn would be
+                the only available option.
               </div>
             );
 
@@ -1027,8 +1397,9 @@ export const useDemoGameStates = () => {
               <div>
                 The <strong>frontier</strong> refers to the set of zones (tiles)
                 where you can deploy your units. The frontier initially consists
-                of 3 rows. But, as you may have noticed during the Bounty Phase,
-                it can be expanded to 6 rows.{" "}
+                of 3 rows, starting from your side of the board. But, as you may
+                have noticed during the Bounty Phase, it can be expanded to 6
+                rows.{" "}
               </div>
             );
 
@@ -1107,13 +1478,10 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 As a Sovereign, you can use 2 instances of a Mobilize tactic to
-                draw 1 skill.{" "}
-                <em>
-                  Using multiple instances simultaneously is permittable only
-                  via a single tactic
-                </em>
-                : in the event you have 2 Mobilize tactics, you are not allowed
-                to draw by using 1 instance from each.
+                draw 1 skill. Using multiple instances simultaneously is
+                permittable only via a single tactic: in the event you have 2
+                Mobilize tactics, you are not allowed to draw by using 1
+                instance from each.
               </div>
             );
 
@@ -1128,8 +1496,9 @@ export const useDemoGameStates = () => {
           case "Learn1.49":
             return (
               <div>
-                Click on your Mana Scion to open a menu, then click on the
-                tactics button at the upper right. This time, click on Mobilize.
+                Click on your Mana Scion to open their personal menu, then click
+                on the tactics button at the upper right. This time, click on
+                Mobilize.
               </div>
             );
 
@@ -1182,7 +1551,7 @@ export const useDemoGameStates = () => {
           case "Learn1.64":
             return (
               <div>
-                Now let us go over skill cards.
+                You have depleted your tactics. Now let us go over skill cards.
                 <br />
                 <br />
                 Skill cards have 2 icons on their upper left corner: the aspect
@@ -1245,19 +1614,19 @@ export const useDemoGameStates = () => {
                 <br />
                 <br />
                 Speaking of HP, <strong>units have 1 HP by default</strong>.
-                Thus, they are prone to elimination due to a single attack. The
-                extra HP of your Land Scion provides durability.
+                Thus, they are prone to elimination due to a single attack.
+                (Attacks will be discussed at the next turn.)
               </div>
             );
 
           case "Learn1.71":
             return (
               <div>
-                Crystallization’s second sub-effect, is optional (as it was
-                qualified by the phrase “you may”). The activator may spend a
-                skill to gain <strong>Shield</strong>, which is an enhancement
-                (positive status) that protects the unit from the next attack
-                they would receive.
+                Crystallization’s second sub-effect is optional, as it was
+                qualified by the phrase “you may”. The activator can opt to
+                spend a skill to gain <strong>Shield</strong>, which is an
+                enhancement (positive status) that protects the unit from the
+                next attack they would receive.
               </div>
             );
 
@@ -1269,7 +1638,7 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 There is nothing left to do in this Execution Phase. But before
-                we end it, let us go over another unit feature.
+                moving on, let us go over another unit feature.
                 <br />
                 <br />
                 Click on your Land Scion to open their personal menu, then click
@@ -1293,6 +1662,11 @@ export const useDemoGameStates = () => {
               <div>
                 You can also find their status conditions with their definitions
                 and durations.
+                <br />
+                <br />
+                Speaking of statuses, visual indicators will be present on the
+                affected units; for example, a silver icon at the bottom right
+                corner of your Land Scion is representing their Shield.
               </div>
             );
 
@@ -1302,9 +1676,9 @@ export const useDemoGameStates = () => {
           case "Learn1.77":
             return (
               <div>
-                As long as there are no ongoing activated effects, you can end
-                your Execution Phase by pressing the End Turn button by the top
-                left corner of the board.
+                As long as there are no ongoing activated effects, you can
+                conclude your Execution Phase by pressing the End Turn button by
+                the top left corner of the board.
               </div>
             );
 
@@ -1333,8 +1707,8 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 Furthermore, the status durations of the Initiator’s units
-                decrease by 1 (unless the duration is indefinite). At present
-                circumstances, only this is applicable.
+                decrease by 1 (unless the duration is indefinite). At the
+                present circumstances, only this step is applicable.
               </div>
             );
 
@@ -1344,10 +1718,11 @@ export const useDemoGameStates = () => {
           case "Learn1.81":
             return (
               <div>
-                You may have noticed that the board has turned from red to
-                black. When the board is red, the game proceeds through your
-                inputs, primarily when it is your turn -- but there are
-                exceptions. Conversely, black corresponds to your opponent.
+                The board has turned from red to black. When the board is red,
+                the game proceeds through your inputs, primarily when it is your
+                turn -- but there are occasions when Sovereigns are prompted
+                during their opponent’s turn. Conversely, black corresponds to
+                your opponent.
               </div>
             );
 
@@ -1412,11 +1787,12 @@ export const useDemoGameStates = () => {
           case "Learn1.98":
             return (
               <div>
-                Conduction, the debut talent of Metal Scions, allows them to
-                search for then float Magnetic Shockwave, which is the standard
-                skill of their class. This is similar to the Mountain Stance
-                talent of Land Scions, but there are some differences. First,
-                Conduction is not modular; it has no alternative effect.
+                <strong>Conduction</strong>, the debut talent of Metal Scions,
+                allows them to search for then float Magnetic Shockwave, which
+                is the standard skill of their class. This is similar to the
+                Mountain Stance talent of Land Scions, but there are some
+                differences. First, Conduction is not modular; it has no
+                alternative effect.
               </div>
             );
 
@@ -1432,25 +1808,24 @@ export const useDemoGameStates = () => {
           case "Learn1.100":
             return (
               <div>
-                Floating a card would place it on top of its repertoire and
-                rotate it by 90 degrees. Floating cards are still in the
-                repertoire, and they retain their positions after shuffles. (It
-                is impossible to have a non-floating card above a floating one).
+                Floating a card places it on top of its repertoire and rotates
+                it by 90 degrees. When a repertoire is shuffled, its floating
+                cards retain their positions. (It is impossible to have a
+                non-floating card above a floating one).
               </div>
             );
 
           case "Learn1.101":
           case "Learn1.102":
           case "Learn1.103":
-          case "Learn1.104":
             return (
               <div>Activate Conduction and search for Magnetic Shockwave.</div>
             );
 
-          case "Learn1.105":
+          case "Learn1.104":
             return (
               <div>
-                Now let us go over another skill method: resonating skills.
+                Now let us go over the second skill method.
                 <br /> <br />
                 Displaying a bichromatic alexandrite,{" "}
                 <strong>resonant skills</strong> synergize to provide additional
@@ -1458,27 +1833,598 @@ export const useDemoGameStates = () => {
               </div>
             );
 
-          case "Learn1.106":
+          case "Learn1.105":
             return (
               <div>
                 Like standard skills, resonant skills can be activated only
                 during one’s own Execution Phase. Exclusive to these skills is
-                their
-                <strong>resonance</strong>, which is a secondary effect that
-                applies only when the skill is resonated. Activating a resonant
-                skill without resonating it would ignore its resonance.
+                their <strong>resonance</strong>, which is an additional effect
+                that applies only when the skill is resonated. Activating a
+                resonant skill without resonating it would apply only its
+                primary sub-effects.
               </div>
             );
 
+          case "Learn1.106":
           case "Learn1.107":
           case "Learn1.108":
-          case "Learn1.109":
             return (
               <div>
                 To resonate a skill, activate it with a resonator, which is
-                either an identical copy or valid substitute.
+                either an identical copy or a valid substitute.
                 <br /> <br />
                 Make your Metal Scion resonate their “Reinforce” skill.
+              </div>
+            );
+
+          case "Learn1.109":
+          case "Learn1.110":
+          case "Learn1.111":
+          case "Learn1.112":
+            return (
+              <div>
+                Reinforce has a modular primary effect; choose to spend 1 skill
+                (Transcendence) to gain 1 HP.
+              </div>
+            );
+
+          case "Learn1.113":
+            return (
+              <div>
+                Because Reinforce was resonated, its resonance was also applied:
+                your Metal Scion has gained 1 Sharpness (indicated by the grey
+                diamond hovering above its class icon). Sharpness is an
+                attribute exclusive to Metal Scions. It does nothing on its own,
+                but it interacts with their talents and skills.
+              </div>
+            );
+
+          case "Learn1.114":
+            return (
+              <div>
+                Furthermore, you retained (returned to hand) the Reinforce you
+                activated instead of discarding it. That said, the other
+                Reinforce used as the resonator was still discarded.
+              </div>
+            );
+
+          case "Learn1.115":
+            return (
+              <div>
+                Let’s revisit tactics. Click on the Invoke tactic below.
+              </div>
+            );
+
+          case "Learn1.116":
+            return (
+              <div>
+                As a Sovereign, you have these 3 options when utilizing an
+                Invoke tactic. But for now, press Return.
+              </div>
+            );
+
+          case "Learn1.117":
+            return (
+              <div>
+                By the way, you can consult the Tactics Guide by pressing the
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                  className="question-icon3"
+                >
+                  <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM169.8 165.3c7.9-22.3 29.1-37.3 52.8-37.3h58.3c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24V250.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1H222.6c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z" />
+                </svg>{" "}
+                icon at the top right corner of the tactics display. This will
+                list the set of actions they provided.
+              </div>
+            );
+
+          case "Learn1.118":
+            return <div>Close this to proceed.</div>;
+
+          case "Learn1.119":
+            return (
+              <div>
+                The Invoke tactic does not provide units with any actions. That
+                said, some Scion classes can utilize it. For example, Metal
+                Scions possess an ability that can be activated via Invoke.
+              </div>
+            );
+
+          case "Learn1.120":
+            return (
+              <div>
+                Speaking of which, click on your Metal Scion to open their
+                personal menu, then click on the ability button at the bottom
+                right.
+              </div>
+            );
+
+          case "Learn1.121":
+            return (
+              <div>
+                <strong>Abilities</strong> are class-exclusive effects that can
+                be activated during one’s Execution Phase. They are akin to
+                skills, but they do not rely on the possession of specific
+                cards.
+              </div>
+            );
+
+          case "Learn1.122":
+          case "Learn1.123":
+            return (
+              <div>
+                Some skills, such as Metal Scion’s Brandish, require the usage
+                of specific tactics. In such cases, the requirement is displayed
+                under its name.
+                <br /> <br />
+                Activate Brandish.
+              </div>
+            );
+
+          case "Learn1.124":
+          case "Learn1.125":
+            return (
+              <div>
+                Search for “Frenzy Blade”.
+                <br /> <br />
+                This will shuffle your repertoire. But as mentioned earlier, the
+                floating Magnetic Shockwave will retain its position.
+              </div>
+            );
+
+          case "Learn1.126":
+          case "Learn1.127":
+            return (
+              <div>
+                The second sub-effect of Brandish is modular; choose to draw 1
+                skill, which is guaranteed to be the floating Magnetic
+                Shockwave.
+              </div>
+            );
+
+          case "Learn1.128":
+          case "Learn1.129":
+            return (
+              <div>
+                Sovereigns cannot use the Assault tactic.
+                <br /> <br />
+                Click on your Metal Scion to open their personal menu, then
+                click on the tactics button at the upper right. This time, click
+                on Assault.
+              </div>
+            );
+
+          case "Learn1.130":
+            return (
+              <div>
+                Assault, like Advance and Mobilize, can be used to traverse. And
+                it provides the exclusive option to strike.
+                <br /> <br />
+                When a unit strikes, it attacks an adjacent enemy. If their
+                attack eliminates the enemy, they move to the zone the latter
+                was occupying.
+              </div>
+            );
+
+          case "Learn1.131":
+            return (
+              <div>
+                When a unit suffers an attack, they lose HP equal to its AP
+                (Attack Power). By default, attacks have 1 AP; thus, as
+                mentioned earlier, units tend to be eliminated by a single
+                attack. Your Metal Scion has a talent that increases the AP of
+                their attacks for every Sharpness they possess.
+              </div>
+            );
+
+          case "Learn1.132":
+          case "Learn1.133":
+          case "Learn1.134":
+            return <div>Strike the enemy Mana Scion.</div>;
+
+          case "Learn1.135":
+            return (
+              <div>
+                Although it’s the Silver Sovereign’s turn, the board has turned
+                black, which means the Gold Sovereign is being prompted to make
+                a decision. <br /> <br />
+                Switch to their perspective.
+              </div>
+            );
+
+          case "Learn1.136":
+            return (
+              <div>
+                By striking Gold’s Mana Scion, Silver’s Metal Scion has targeted
+                the latter. <strong>Targeting</strong> occurs when an enemy unit
+                is designated as the recipient of an attack or status
+                affliction. And it so happens that Mana Scions have a skill that
+                can be activated in response.
+              </div>
+            );
+
+          case "Learn1.137":
+            return (
+              <div>
+                Represented by a triangular ruby,{" "}
+                <strong>contingent skills</strong> enable timely reactions to
+                certain events.
+              </div>
+            );
+
+          case "Learn1.138":
+            return (
+              <div>
+                Exclusive to contingent skills is the{" "}
+                <strong>contingency</strong> property, which specifies
+                conditions for its activation. Unlike other skills, contingent
+                skills can be activated during any phase of either Sovereign’s
+                turn, but only if the contingency is satisfied.
+              </div>
+            );
+
+          case "Learn1.139":
+          case "Learn1.140":
+          case "Learn1.141":
+            return (
+              <div>
+                Aegis, the contingent skill of Mana Scions, can be activated
+                when they or an adjacent ally is targeted.
+                <br />
+                <br />
+                Activate it.
+              </div>
+            );
+
+          case "Learn1.142":
+            return (
+              <div>
+                Aegis has 2 sub-effects, the first of which draws a skill if the
+                activator is the targeted unit.
+                <br /> <br />
+                The second is modular, offering the choice to provide Shield or
+                Ward at the cost of 1 skill.
+              </div>
+            );
+
+          case "Learn1.143":
+          case "Learn1.144":
+            return (
+              <div>
+                <strong>Ward</strong> is another enhancement, functioning as an
+                improved version of Shield. It can negate the next attack{" "}
+                <strong>or affliction</strong> (negative status) that the unit
+                would receive.
+                <br /> <br />
+                In this situation, Shield suffices for protection.
+              </div>
+            );
+
+          case "Learn1.145":
+            return (
+              <div>
+                The Mana Scion enhanced themself with Shield, which was
+                immediately removed by the Metal Scion’s attack.
+                <br /> <br />
+                The board is black again, so return to the Silver Sovereign’s
+                perspective.
+              </div>
+            );
+
+          case "Learn1.146":
+          case "Learn1.147":
+          case "Learn1.148":
+            return (
+              <div>
+                Unfortunately for the Mana Scion, the Metal Scion also has a
+                contingent skill relevant to the situation: Frenzy Blade can be
+                activated when an adjacent enemy survives an attack.
+                <br /> <br />
+                Activate it.
+              </div>
+            );
+
+          case "Learn1.149":
+          case "Learn1.150":
+            return (
+              <div>
+                The first sub-effect of Frenzy Blade granted your Metal Scion
+                another Sharpness, evinced by the second grey diamond.
+                <br /> <br />
+                The second sub-effect offers the option to draw 1 skill or spend
+                1 skill to gain Shield. Choose the latter.
+              </div>
+            );
+
+          case "Learn1.151":
+          case "Learn1.152":
+            return <div>Spend Transcendence.</div>;
+
+          case "Learn1.153":
+          case "Learn1.154":
+            return (
+              <div>
+                Lastly, Frenzy Blade forces the activator to attack the
+                surviving enemy, either via strike or blast. Unlike strike,{" "}
+                <strong>
+                  blast does not make the unit move when dealing lethal damage.
+                </strong>
+                <br /> <br />
+                Choose to strike.
+              </div>
+            );
+
+          case "Learn1.155":
+            return (
+              <div>
+                The board is black again; switch to the other perspective.
+              </div>
+            );
+
+          case "Learn1.156":
+            return (
+              <div>
+                The Gold Sovereign does not possess another copy of Aegis nor
+                any other contingent skill that could be activated in response.
+                However, for the sake of bluffing, they still received this
+                prompt.
+                <br /> <br />
+                Press skip.
+              </div>
+            );
+
+          case "Learn1.157":
+            return (
+              <div>
+                The Metal Scion’s attack proceeds and connects, eliminating the
+                Mana Scion.
+                <br /> <br />
+                But before the Metal Scion moves as per their strike,{" "}
+                <strong>Ambiance Assimilation</strong>, the Mana Scion’s
+                elimination talent, activates.
+              </div>
+            );
+
+          case "Learn1.158":
+          case "Learn1.159":
+          case "Learn1.160":
+            return (
+              <div>
+                When they are eliminated, Mana Scions can search for a non-burst
+                Mana skill (burst is the fourth and final skill method). Search
+                for Aegis.
+              </div>
+            );
+
+          case "Learn1.161":
+            return (
+              <div>
+                Only 1 contingent skill can be activated in response to a
+                triggering event. In the event that both Sovereigns possess
+                eligible contingent skills, the Initiator yields priority to
+                their opponent.
+              </div>
+            );
+
+          case "Learn1.162":
+            return (
+              <div>
+                When an event triggers both a talent and a contingent skill, the
+                former activates first. The activation of a talent does not
+                hinder the activation of the latter.
+              </div>
+            );
+
+          case "Learn1.163":
+          case "Learn1.164":
+            return (
+              <div>
+                For example, now that Ambiance Assimilation has concluded, you
+                can activate Vengeful Legacy, a contingent Sovereign skill that
+                is triggered when an ally Scion is eliminated. It allows you to
+                ascend an ally pawn within 2 spaces from the eliminated Scion to
+                the same class.
+              </div>
+            );
+
+          case "Learn1.165":
+          case "Learn1.166":
+            return (
+              <div>
+                Vengeful Legacy’s second sub-effect gives you the option to
+                float a skill from your hand to grant the newly ascended Scion
+                the Ravager enhancement, which will be discussed a bit later.
+                For now, float “Tea For Two.”
+              </div>
+            );
+
+          case "Learn1.167":
+            return (
+              <div>
+                Ravager is visually represented by a rising red aura.
+                <br />
+                <br />
+                In any case, return to the Silver Sovereign’s perspective.
+              </div>
+            );
+
+          case "Learn1.168":
+            return (
+              <div>
+                Now that the chain of effects has concluded, the Metal Scion
+                finally moves into the zone occupied by the Mana Scion that was
+                eliminated.
+              </div>
+            );
+
+          case "Learn1.168.1":
+            return (
+              <div>
+                As mentioned earlier, BP is awarded when an enemy is eliminated.
+                The Silver Sovereign now has 1 BP. As consolation, the Gold
+                Sovereign received 2 FD.
+                <br />
+                <br />
+                BP and FD are capped at 10 and 6, respectively. Any excesses
+                gained are forfeit.
+              </div>
+            );
+
+          case "Learn1.169":
+            return (
+              <div>
+                It is important to note that when a Scion (not pawn) eliminates
+                another unit, they are afflicted with <strong>Anathema</strong>{" "}
+                for 2 turns. Anathema is an affliction (negative status) that
+                mutes units. Muted units are only allowed to traverse; they
+                cannot activate skills, abilities, and talents. They cannot
+                attack either.
+              </div>
+            );
+
+          case "Learn1.169.1":
+            return (
+              <div>
+                Anathema takes effect once the unit has finished performing all
+                effects they have activated. In this case, the Metal Scion
+                received Anathema after they moved rather than immediately after
+                eliminating the Mana Scion.
+              </div>
+            );
+
+          case "Learn1.170":
+            return (
+              <div>
+                <strong>
+                  <em>
+                    “To wield an Avelhem is to become a steward of creation. And
+                    what greater sin is there than slaying the Maker’s beloved?”
+                  </em>
+                </strong>
+                <br />
+                <br />
+                It is believed that Anathema is penance for using one’s Avelhem
+                to vanquish a fellow human...
+              </div>
+            );
+
+          case "Learn1.170.1":
+            return (
+              <div>
+                But that notion is challenged by another phenomenon:{" "}
+                <strong>
+                  those enhanced with the Ravager status are immune to the
+                  backlash of Anathema.
+                </strong>
+              </div>
+            );
+
+          case "Learn1.171":
+            return (
+              <div>
+                You still have an unused Plant Avelhem, but for the sake of the
+                demonstration, do not activate it. As mentioned earlier, unused
+                Avelhems are discarded during the Final Phase. Repertoires have
+                only 20 Avelhems, but fret not. When a repertoire is depleted,
+                its vestige is shuffled to form a new one.
+              </div>
+            );
+
+          case "Learn1.172":
+          case "Learn1.173":
+            return <div>Click on End Turn, then switch perspective.</div>;
+
+          case "Learn1.174":
+          case "Learn1.175":
+            return (
+              <div>
+                Cultivate to draw 1 skill, which is guaranteed to be the
+                floating Tea For Two.
+              </div>
+            );
+
+          case "Learn1.176":
+          case "Learn1.177":
+          case "Learn1.178":
+          case "Learn1.179":
+          case "Learn1.180":
+            return (
+              <div>
+                For the sake of the demo, you have been given 10 BP. Expand your
+                frontier twice.
+                <br />
+                <br />
+                Unlike the Defiance Phase, the Bounty Phase allows multiple
+                purchases, provided that BP is sufficient.
+              </div>
+            );
+
+          case "Learn1.181":
+          case "Learn1.182":
+          case "Learn1.183":
+            return <div>Assent to roll</div>;
+
+          case "Learn1.184":
+          case "Learn1.185":
+          case "Learn1.186":
+          case "Learn1.187":
+            return (
+              <div>
+                Spend 3 FD on Ex Machina, which allows you to search for any
+                Sovereign skill. Search for “Press The Attack”.
+              </div>
+            );
+
+          case "Learn1.188":
+          case "Learn1.189":
+            return (
+              <div>
+                Activate the skill you just searched for. Like Avelhems,
+                Sovereign skills are activated directly from your hand. Click on
+                any skill to raise your hand, then click on the specific card to
+                be activated.
+              </div>
+            );
+
+          case "Learn1.190":
+            return (
+              <div>
+                Press The Attack is a resonant Sovereign skill that converts 2
+                Advance tactics into 2 Assaults. This effect is mandatory; thus,
+                you must have 2 unused Advance tactics to activate it.
+              </div>
+            );
+
+          case "Learn1.191":
+          case "Learn1.192":
+            return (
+              <div>
+                You do not have a second copy of Press The Attack, but you can
+                still resonate it with a valid substitute.
+                <br />
+                <br />
+                Tea For Two is a standard Sovereign skill with a{" "}
+                <strong>substitute</strong>
+                property that allows it to serve as a resonator for any resonant
+                skill or Avelhem.
+              </div>
+            );
+
+          case "Learn1.193":
+            return (
+              <div>
+                As per the second sub-effect of Press The Attack, draw 2
+                Avelhems.
+              </div>
+            );
+
+          case "Learn1.194":
+          case "Learn1.195":
+            return (
+              <div>
+                As per the third sub-effect of Press The Attack, deploy a pawn.
+                Place them between your other Scions.
               </div>
             );
 

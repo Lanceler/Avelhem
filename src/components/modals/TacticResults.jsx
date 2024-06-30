@@ -41,6 +41,7 @@ const TacticResults = (props) => {
       case "Learn1.13":
       case "Learn1.88":
       case "Learn1.93":
+      case "Learn1.183":
         return true;
     }
   };
@@ -57,6 +58,10 @@ const TacticResults = (props) => {
 
       case "Learn1.93":
         dispatch(updateDemo("Learn1.94"));
+        break;
+
+      case "Learn1.183":
+        dispatch(updateDemo("Learn1.184"));
         break;
     }
   };

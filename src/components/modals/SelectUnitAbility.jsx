@@ -773,6 +773,13 @@ const SelectUnitAbility = (props) => {
 
   const canClick = (element, element2) => {
     switch (demoGuide) {
+      case "Learn1.122":
+        return element2 === 0;
+
+      case "Learn1.123":
+        return element === "Select Button";
+
+      ///////////////////////////////
       case "Fire1.9":
         switch (element) {
           case "Ability":
@@ -799,6 +806,11 @@ const SelectUnitAbility = (props) => {
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
+      case "Learn1.122":
+        dispatch(updateDemo("Learn1.123"));
+        break;
+
+      ////////////////////////
       case "Fire1.9":
         dispatch(updateDemo("Fire1.10"));
         break;
@@ -875,7 +887,9 @@ const SelectUnitAbility = (props) => {
             className={`choiceButton ${
               canClick("Select Button") ? "demoClick" : ""
             }`}
-            onClick={() => handleSelect()}
+            onClick={() => {
+              handleSelect();
+            }}
           >
             Select
           </button>

@@ -171,6 +171,17 @@ const ContingentTarget = (props) => {
 
   const canClick = (element, element2) => {
     switch (demoGuide) {
+      case "Learn1.139":
+        return element2 && element2.id === "06-03";
+
+      case "Learn1.140":
+        return element === "Select Button";
+
+      case "Learn1.156":
+        return element === "Skip Button";
+
+      ////////////////////////////
+
       case "Fire1.34":
         switch (element) {
           case "Skill Card":
@@ -189,6 +200,17 @@ const ContingentTarget = (props) => {
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
+      case "Learn1.139":
+        dispatch(updateDemo("Learn1.140"));
+        break;
+      case "Learn1.140":
+        dispatch(updateDemo("Learn1.141"));
+        break;
+      case "Learn1.156":
+        dispatch(updateDemo("Learn1.157"));
+        break;
+
+      ////////////////
       case "Fire1.34":
         dispatch(updateDemo("Fire1.35"));
         break;
@@ -244,15 +266,16 @@ const ContingentTarget = (props) => {
           </div>
         </div>
 
-        {/* {selectedSkill === null && (
-          <button onClick={() => handleSkip()}>Skip</button>
-        )}
-        {selectedSkill !== null && (
-          <button onClick={() => handleActivate()}>Activate</button>
-        )} */}
-
         {selectedSkill === null && (
-          <button className="choiceButton" onClick={() => handleSkip()}>
+          <button
+            className={`choiceButton ${
+              canClick("Skip Button") ? "demoClick" : ""
+            }`}
+            onClick={() => {
+              handleSkip();
+              handleUpdateDemoGuide();
+            }}
+          >
             Skip
           </button>
         )}
@@ -261,7 +284,10 @@ const ContingentTarget = (props) => {
             className={`choiceButton ${
               canClick("Select Button") ? "demoClick" : ""
             }`}
-            onClick={() => handleActivate()}
+            onClick={() => {
+              handleActivate();
+              handleUpdateDemoGuide();
+            }}
           >
             Activate
           </button>

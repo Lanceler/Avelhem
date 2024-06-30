@@ -69,6 +69,8 @@ export const Piece = (props) => {
             case "Learn1.20.01":
             case "Learn1.39":
             case "Learn1.49":
+            case "Learn1.134":
+            case "Learn1.141":
               return (
                 element === "Unit" &&
                 element2.unitIndex === 1 &&
@@ -93,10 +95,21 @@ export const Piece = (props) => {
               );
 
             case "Learn1.97":
+            case "Learn1.106":
+            case "Learn1.120":
+            case "Learn1.128":
+            case "Learn1.148":
               return (
                 element === "Unit" &&
                 element2.unitIndex === 1 &&
                 element2.player === "guest"
+              );
+
+            case "Learn1.164":
+              return (
+                element === "Unit" &&
+                element2.unitIndex === 0 &&
+                element2.player === "host"
               );
           }
 
@@ -204,6 +217,22 @@ export const Piece = (props) => {
 
             case "Learn1.97":
               dispatch(updateDemo("Learn1.98"));
+              break;
+
+            case "Learn1.134":
+              dispatch(updateDemo("Learn1.135"));
+              break;
+
+            case "Learn1.141":
+              dispatch(updateDemo("Learn1.142"));
+              break;
+
+            case "Learn1.148":
+              dispatch(updateDemo("Learn1.149"));
+              break;
+
+            case "Learn1.164":
+              dispatch(updateDemo("Learn1.165"));
               break;
           }
           break;

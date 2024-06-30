@@ -52,6 +52,11 @@ const PlayerAvelhemHand = (props) => {
 
   const canClick = (element1) => {
     switch (demoGuide) {
+      case "Learn1.18":
+      case "Learn1.21":
+      case "Learn1.94":
+        return true;
+
       case "Learn1.19":
         return element1 === 6;
 
@@ -62,9 +67,7 @@ const PlayerAvelhemHand = (props) => {
         return element1 === 7;
 
       ////////////////
-      case "Learn1.18":
-      case "Learn1.21":
-      case "Learn1.94":
+
       case "Fire1.1":
         return true;
     }
@@ -132,7 +135,6 @@ const PlayerAvelhemHand = (props) => {
             <div
               onClick={() => {
                 handleCard(card, index);
-
                 handleUpdateDemoGuide();
               }}
               key={index}

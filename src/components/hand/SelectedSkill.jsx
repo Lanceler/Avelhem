@@ -2,6 +2,8 @@ import React from "react";
 import "./Skill.css";
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
+import { updateDemo } from "../../redux/demoGuide";
+
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
@@ -10,6 +12,8 @@ import { useCardDatabase } from "../../hooks/useCardDatabase";
 const SelectedSkill = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
+  const { demoGuide } = useSelector((state) => state.demoGuide);
+
   const dispatch = useDispatch();
 
   const { getImage2 } = useCardImageSwitch();
@@ -67,6 +71,21 @@ const SelectedSkill = (props) => {
     dispatch(updateState(newGameState));
   };
 
+  const canClick = (element) => {
+    switch (demoGuide) {
+      case "Learn1.191":
+        return element === "Resonate Button";
+    }
+  };
+
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+      case "Learn1.191":
+        dispatch(updateDemo("Learn1.192"));
+        break;
+    }
+  };
+
   return (
     <div className="handModal-backdrop">
       <div className="handModal">
@@ -81,7 +100,7 @@ const SelectedSkill = (props) => {
             {canActivateSkill && (
               <>
                 <button
-                  className="activateButton"
+                  className="activateButton displayCardButton"
                   onClick={() => handleActivate()}
                 >
                   Activate
@@ -92,8 +111,13 @@ const SelectedSkill = (props) => {
             {canResonateSkill && (
               <>
                 <button
-                  className="activateButton"
-                  onClick={() => handleResonate()}
+                  className={`activateButton displayCardButton ${
+                    canClick("Resonate Button") ? "demoClick" : ""
+                  }`}
+                  onClick={() => {
+                    handleResonate();
+                    handleUpdateDemoGuide();
+                  }}
                 >
                   Resonate
                 </button>

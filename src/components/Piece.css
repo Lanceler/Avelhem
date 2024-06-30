@@ -768,15 +768,16 @@ animation: moveUpDownHP 1.0s ease-in-out infinite;
     width: 70px; */
     position: absolute;
     pointer-events: none;
-    top: -24.0px;
+    top: -20.0px;
     left: -17.5px;
     scale: 1.05;
     opacity: 0.55;
-    animation: scaleAnimation2 2.40s ease-in-out infinite alternate;
+    animation: scaleAnimation2 2.20s ease-in-out infinite alternate;
 
     /* filter: sepia(2.5) saturate(10000%) hue-rotate(-290deg); */
     /* filter: sepia(2.5) saturate(10000%) hue-rotate(-70deg) contrast(1.5); */
-    filter: sepia(1) saturate(10000%) hue-rotate(-35deg);
+    /* filter: sepia(1) saturate(10000%) hue-rotate(-35deg); */
+    filter: sepia(1) saturate(10000%) hue-rotate(-275deg);
 }
 
 @keyframes scaleAnimation2 {

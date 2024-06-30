@@ -1713,9 +1713,8 @@ export const useSkillEffects = () => {
       unit: unit,
       details: {
         title: "Diffusion",
-        message:
-          "Use an Assault or Invoke tactic to blast 1 or 2 adjacent enemies.",
-        restriction: ["Assault", "Invoke"],
+        message: "Use an Assault tactic to blast an adjacent enemy.",
+        restriction: ["Assault"],
         stock: 1,
         reason: "Diffusion",
         canSkip: false,
@@ -1802,9 +1801,8 @@ export const useSkillEffects = () => {
       unit: unit,
       details: {
         title: "Diffusion",
-        message:
-          "Use an Assault, Invoke, or Advance tactic to blast 1 or 2 adjacent enemies.",
-        restriction: ["Assault", "Invoke", "Advance"],
+        message: "Use an Assault or Invoke tactic to blast an enemy.",
+        restriction: ["Assault", "Invoke"],
         stock: 1,
         reason: "Diffusion",
         canSkip: false,

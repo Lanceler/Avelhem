@@ -456,6 +456,7 @@ const SelectSovereignTactic = (props) => {
 
       case "Learn1.38":
       case "Learn1.48":
+      case "Learn1.116":
         return element === "Return Button";
     }
   };
@@ -476,6 +477,10 @@ const SelectSovereignTactic = (props) => {
 
       case "Learn1.48":
         dispatch(updateDemo("Learn1.49"));
+        break;
+
+      case "Learn1.116":
+        dispatch(updateDemo("Learn1.117"));
         break;
     }
   };

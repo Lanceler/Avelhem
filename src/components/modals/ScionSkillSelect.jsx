@@ -108,6 +108,12 @@ const ScionSkillSelect = (props) => {
       case "Learn1.69":
         return element === "Select Button";
 
+      case "Learn1.107":
+        return element2.id === "07-02";
+
+      case "Learn1.108":
+        return element === "Resonate Button";
+
       //////////////////////
 
       case "Fire1.16":
@@ -164,6 +170,14 @@ const ScionSkillSelect = (props) => {
 
       case "Learn1.69":
         dispatch(updateDemo("Learn1.70"));
+        break;
+
+      case "Learn1.107":
+        dispatch(updateDemo("Learn1.108"));
+        break;
+
+      case "Learn1.108":
+        dispatch(updateDemo("Learn1.109"));
         break;
 
       ////////////////////

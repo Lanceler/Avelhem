@@ -189,8 +189,12 @@ const AcquisitionPhaseSelection = (props) => {
       case "Learn1.83":
         return element2 === 1;
 
+      case "Learn1.174":
+        return element2 === 2;
+
       case "Learn1.8":
       case "Learn1.84":
+      case "Learn1.175":
         return element1 === "button";
     }
   };
@@ -211,6 +215,14 @@ const AcquisitionPhaseSelection = (props) => {
 
       case "Learn1.84":
         dispatch(updateDemo("Learn1.85"));
+        break;
+
+      case "Learn1.174":
+        dispatch(updateDemo("Learn1.175"));
+        break;
+
+      case "Learn1.175":
+        dispatch(updateDemo("Learn1.176"));
         break;
     }
   };

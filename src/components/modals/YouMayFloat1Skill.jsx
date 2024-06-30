@@ -149,6 +149,13 @@ const YouMayFloat1Skill = (props) => {
 
   const canClick = (element, element2) => {
     switch (demoGuide) {
+      case "Learn1.165":
+        return element === "Skill Card" && element2 === 1;
+
+      case "Learn1.166":
+        return element === "Select Button";
+
+      //////////////////
       case "Fire1.40.1":
         switch (element) {
           case "Skip Button":
@@ -160,6 +167,15 @@ const YouMayFloat1Skill = (props) => {
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
+      case "Learn1.165":
+        dispatch(updateDemo("Learn1.166"));
+        break;
+
+      case "Learn1.166":
+        dispatch(updateDemo("Learn1.167"));
+        break;
+
+      //////////
       case "Fire1.40.1":
         dispatch(updateDemo("Fire1.41"));
         break;
@@ -184,10 +200,10 @@ const YouMayFloat1Skill = (props) => {
               key={i}
               className={`scionSkills ${
                 selectedSkill === i ? "selectedSkill" : ""
-              }`}
+              } ${canClick("Skill Card", i) ? "demoClick" : ""}`}
               onClick={() => {
                 handleClick(canBeFloated(usableSkill.id), i);
-                // handleUpdateDemoGuide();
+                handleUpdateDemoGuide();
               }}
             >
               <Skill
@@ -214,7 +230,15 @@ const YouMayFloat1Skill = (props) => {
         )}
 
         {selectedSkill !== null && (
-          <button className="choiceButton" onClick={() => handleSelect()}>
+          <button
+            className={`choiceButton ${
+              canClick("Select Button") ? "demoClick" : ""
+            }`}
+            onClick={() => {
+              handleSelect();
+              handleUpdateDemoGuide();
+            }}
+          >
             Select
           </button>
         )}

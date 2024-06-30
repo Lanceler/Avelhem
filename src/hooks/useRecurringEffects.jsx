@@ -2099,7 +2099,9 @@ export const useRecurringEffects = () => {
       // case victim.afflictions.anathema > 0:
       //   aP = 5;
       //   break;
-      case ["Geomancy", "Surge", "Particle Beam"].includes(special):
+      case ["Geomancy", "Surge", "Particle Beam", "Diffusion"].includes(
+        special
+      ):
         aP = 2;
         break;
       case special === "Fire Scion" &&
@@ -2687,9 +2689,7 @@ export const useRecurringEffects = () => {
       }
 
       if (
-        ["Assault", "Invoke", "Advance"].includes(
-          localGameState.tactics[0].face
-        ) &
+        ["Assault", "Invoke"].includes(localGameState.tactics[0].face) &
         (localGameState.tactics[0].stock > 0)
       ) {
         //to-do: maybe consider unit has used tactic? then again, it normally wont be an issue
@@ -2698,9 +2698,7 @@ export const useRecurringEffects = () => {
       }
 
       if (
-        ["Assault", "Invoke", "Advance"].includes(
-          localGameState.tactics[1].face
-        ) &
+        ["Assault", "Invoke"].includes(localGameState.tactics[1].face) &
         (localGameState.tactics[1].stock > 0)
       ) {
         return true;
@@ -2796,7 +2794,7 @@ export const useRecurringEffects = () => {
       }
 
       if (
-        ["Assault", "Invoke"].includes(localGameState.tactics[0].face) &
+        ["Assault"].includes(localGameState.tactics[0].face) &
         (localGameState.tactics[0].stock > 0)
       ) {
         //to-do: maybe consider unit has used tactic? then again, it normally wont be an issue
@@ -2805,7 +2803,7 @@ export const useRecurringEffects = () => {
       }
 
       if (
-        ["Assault", "Invoke"].includes(localGameState.tactics[1].face) &
+        ["Assault"].includes(localGameState.tactics[1].face) &
         (localGameState.tactics[1].stock > 0)
       ) {
         return true;

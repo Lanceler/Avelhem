@@ -360,7 +360,8 @@
     // left: 6px;
     cursor: help;
 
-    pointer-events: all;
+    // pointer-events: all;
+            border-radius: 100%;
 }
 
 .question-icon0 {
@@ -375,6 +376,13 @@
     fill: black;
 }
 
+.question-icon3 {
+    height: 17px;
+    fill: goldenrod;
+    cursor: default;
+
+}
+
 .question-icon:hover,
 .question-icon2:hover {
     fill: rgb(72, 209, 30);
@@ -385,6 +393,7 @@
     transform: rotate(-45deg);
     display: flex;
     overflow: hidden;
+
 }
 
 .unitOptions{

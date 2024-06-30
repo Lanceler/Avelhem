@@ -2,7 +2,7 @@ import React from "react";
 import "./Modal.css";
 
 import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
-
+import { updateDemo } from "../../redux/demoGuide";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import AdvanceSmall from "../../assets/diceIcons/AdvanceSmall.png";
@@ -14,6 +14,8 @@ import { useSelector, useDispatch } from "react-redux";
 const InfoPopUp = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
+  const { demoGuide } = useSelector((state) => state.demoGuide);
+
   const dispatch = useDispatch();
 
   const handleCollapse = () => {
@@ -421,14 +423,34 @@ const InfoPopUp = (props) => {
     }
   };
 
+  const canClick = (element) => {
+    switch (demoGuide) {
+      case "Learn1.118":
+        return element === "Close";
+    }
+  };
+
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+      case "Learn1.118":
+        dispatch(updateDemo("Learn1.119"));
+        break;
+    }
+  };
+
   return (
     <div className="modal-backdrop unitInfo-text">
       <div className="unitInfoModal ">
         <div className="unitInfoHeader">
           <h2 className="unitInfo-name">{infoTitle()}</h2>
           <button
-            className="collapseSelected unitInfo-close"
-            onClick={() => handleCollapse()}
+            className={`collapseSelected unitInfo-close ${
+              canClick("Close") ? "demoClick" : ""
+            }`}
+            onClick={() => {
+              handleCollapse();
+              handleUpdateDemoGuide();
+            }}
           >
             X
           </button>

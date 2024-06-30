@@ -406,11 +406,24 @@ const TacticSelectionViaEffect = (props) => {
 
   const canClick = (element, element2) => {
     switch (demoGuide) {
+      case "Learn1.123":
+        return element2 === 0;
+
+      ///////
+
       case "Fire1.14":
         switch (element) {
           case "Tactic":
             return element2 === 0;
         }
+        break;
+    }
+  };
+
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+      case "Learn1.123":
+        dispatch(updateDemo("Learn1.124"));
         break;
     }
   };
@@ -454,7 +467,10 @@ const TacticSelectionViaEffect = (props) => {
                   className={`tactic ${
                     !canUseTactic[index] ? "disabledTactic" : ""
                   }`}
-                  onClick={() => handleClickTactic(index)}
+                  onClick={() => {
+                    handleClickTactic(index);
+                    handleUpdateDemoGuide();
+                  }}
                 >
                   <img
                     src={getTacticImage(tactic.face)}

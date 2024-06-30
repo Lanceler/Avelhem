@@ -353,10 +353,14 @@ const SelectTacticalAction = (props) => {
       case "Learn1.61":
         return element === "Action" && element2 === 0;
 
+      case "Learn1.132":
+        return element === "Action" && element2 === 1;
+
       case "Learn1.43":
       case "Learn1.51":
       case "Learn1.57":
       case "Learn1.62":
+      case "Learn1.133":
         return element === "Select Button";
 
       ///////////////////////
@@ -401,6 +405,14 @@ const SelectTacticalAction = (props) => {
 
       case "Learn1.62":
         dispatch(updateDemo("Learn1.63"));
+        break;
+
+      case "Learn1.132":
+        dispatch(updateDemo("Learn1.133"));
+        break;
+
+      case "Learn1.133":
+        dispatch(updateDemo("Learn1.134"));
         break;
 
       /////////////////////////

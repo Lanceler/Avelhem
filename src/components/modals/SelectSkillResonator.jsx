@@ -106,6 +106,18 @@ const SelectSkillResonator = (props) => {
 
   const canClick = (element, element2) => {
     switch (demoGuide) {
+      case "Learn1.108":
+        return element2.id === "07-02";
+
+      case "Learn1.192":
+        return element2.id === "SA-02";
+
+      case "Learn1.109":
+      case "Learn1.193":
+        return element === "Select Button";
+
+      ///////////////////
+
       case "Fire1.27":
         switch (element) {
           case "Skill Card":
@@ -124,6 +136,23 @@ const SelectSkillResonator = (props) => {
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
+      case "Learn1.108":
+        dispatch(updateDemo("Learn1.109"));
+        break;
+
+      case "Learn1.109":
+        dispatch(updateDemo("Learn1.110"));
+        break;
+
+      case "Learn1.192":
+        dispatch(updateDemo("Learn1.193"));
+        break;
+
+      case "Learn1.193":
+        dispatch(updateDemo("Learn1.194"));
+        break;
+
+      ///////////////////////
       case "Fire1.27":
         dispatch(updateDemo("Fire1.28"));
         break;

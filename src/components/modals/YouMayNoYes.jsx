@@ -442,6 +442,9 @@ const YouMayNoYes = (props) => {
   const canClick = (element) => {
     switch (demoGuide) {
       case "Learn1.101":
+      case "Learn1.158":
+      case "Learn1.193":
+      case "Learn1.194":
         return element === "Yes Choice";
 
       ///////////////
@@ -469,6 +472,18 @@ const YouMayNoYes = (props) => {
     switch (demoGuide) {
       case "Learn1.101":
         dispatch(updateDemo("Learn1.102"));
+        break;
+
+      case "Learn1.158":
+        dispatch(updateDemo("Learn1.159"));
+        break;
+
+      case "Learn1.193":
+        dispatch(updateDemo("Learn1.194"));
+        break;
+
+      case "Learn1.194":
+        dispatch(updateDemo("Learn1.195"));
         break;
 
       ///////

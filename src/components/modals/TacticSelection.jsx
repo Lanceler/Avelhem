@@ -80,6 +80,7 @@ const TacticSelection = (props) => {
       case "Learn1.49":
       case "Learn1.55":
       case "Learn1.60":
+      case "Learn1.129":
         return element2 === 1;
 
       case "Fire1.23":
@@ -107,6 +108,10 @@ const TacticSelection = (props) => {
 
       case "Learn1.60":
         dispatch(updateDemo("Learn1.61"));
+        break;
+
+      case "Learn1.129":
+        dispatch(updateDemo("Learn1.130"));
         break;
     }
   };

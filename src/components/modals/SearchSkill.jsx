@@ -212,13 +212,21 @@ const SearchSkill = (props) => {
   const canClick = (element1, element2, element3) => {
     switch (demoGuide) {
       case "Learn1.32":
+      case "Learn1.124":
+      case "Learn1.186":
         return element3 === 2;
 
       case "Learn1.102":
         return element3 === 7;
 
+      case "Learn1.159":
+        return element3 === 1;
+
       case "Learn1.33":
       case "Learn1.103":
+      case "Learn1.125":
+      case "Learn1.160":
+      case "Learn1.187":
         return element1 === "Select Button";
     }
   };
@@ -239,6 +247,30 @@ const SearchSkill = (props) => {
 
       case "Learn1.103":
         dispatch(updateDemo("Learn1.104"));
+        break;
+
+      case "Learn1.124":
+        dispatch(updateDemo("Learn1.125"));
+        break;
+
+      case "Learn1.125":
+        dispatch(updateDemo("Learn1.126"));
+        break;
+
+      case "Learn1.159":
+        dispatch(updateDemo("Learn1.160"));
+        break;
+
+      case "Learn1.160":
+        dispatch(updateDemo("Learn1.161"));
+        break;
+
+      case "Learn1.186":
+        dispatch(updateDemo("Learn1.187"));
+        break;
+
+      case "Learn1.187":
+        dispatch(updateDemo("Learn1.188"));
         break;
     }
   };

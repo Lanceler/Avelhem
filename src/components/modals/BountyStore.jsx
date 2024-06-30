@@ -232,7 +232,18 @@ const BountyStore = (props) => {
     switch (demoGuide) {
       case "Learn1.10":
       case "Learn1.85":
+      case "Learn1.180":
         return element1 === "proceed";
+
+      case "Learn1.177":
+      case "Learn1.179":
+        return element1 === "purchase";
+
+      case "Learn1.176":
+        return element1 === "Frontier" && element2 === 0;
+
+      case "Learn1.178":
+        return element1 === "Frontier" && element2 === 1;
     }
   };
 
@@ -244,6 +255,26 @@ const BountyStore = (props) => {
 
       case "Learn1.85":
         dispatch(updateDemo("Learn1.86"));
+        break;
+
+      case "Learn1.176":
+        dispatch(updateDemo("Learn1.177"));
+        break;
+
+      case "Learn1.177":
+        dispatch(updateDemo("Learn1.178"));
+        break;
+
+      case "Learn1.178":
+        dispatch(updateDemo("Learn1.179"));
+        break;
+
+      case "Learn1.179":
+        dispatch(updateDemo("Learn1.180"));
+        break;
+
+      case "Learn1.180":
+        dispatch(updateDemo("Learn1.181"));
         break;
     }
   };
@@ -266,9 +297,12 @@ const BountyStore = (props) => {
             <div
               className={`customChoice customChoiceSmaller ${
                 selectedChoice === 1 ? "selectedChoice" : ""
-              } `}
+              } ${canClick("Frontier", 0) ? "demoClick" : ""}`}
               style={{ backgroundImage: `url(${GoldFrame})`, width: 245.5 }}
-              onClick={() => handleSelect(1, canFrontier[0])}
+              onClick={() => {
+                handleSelect(1, canFrontier[0]);
+                handleUpdateDemoGuide();
+              }}
             >
               <div
                 className={`customChoiceFrame ${
@@ -291,9 +325,12 @@ const BountyStore = (props) => {
             <div
               className={`customChoice customChoiceSmaller ${
                 selectedChoice === 2 ? "selectedChoice" : ""
-              } `}
+              } ${canClick("Frontier", 1) ? "demoClick" : ""}`}
               style={{ backgroundImage: `url(${GoldFrame})`, width: 245.5 }}
-              onClick={() => handleSelect(2, canFrontier[1])}
+              onClick={() => {
+                handleSelect(2, canFrontier[1]);
+                handleUpdateDemoGuide();
+              }}
             >
               <div
                 className={`customChoiceFrame ${
@@ -728,7 +765,15 @@ const BountyStore = (props) => {
           )}
 
           {selectedChoice !== null && (
-            <button className="choiceButton" onClick={() => handlePurchase()}>
+            <button
+              className={`choiceButton ${
+                canClick("purchase") ? "demoClick" : ""
+              }`}
+              onClick={() => {
+                handlePurchase();
+                handleUpdateDemoGuide();
+              }}
+            >
               Purchase
             </button>
           )}

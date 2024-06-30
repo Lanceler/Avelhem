@@ -828,33 +828,38 @@ const SelectCustomChoice = (props) => {
 
   const canClick = (element) => {
     switch (demoGuide) {
-      case "Fire1.2.1":
-      case "Fire1.44":
-        switch (element) {
-          case "1st Choice":
-            return true;
-        }
-        break;
+      case "Learn1.126":
+      case "Learn1.143":
+      case "Learn1.153":
+        return element === "1st Choice";
 
       case "Learn1.25":
-      case "Fire1.20":
-      case "Fire1.37":
-        switch (element) {
-          case "2nd Choice":
-            return true;
-        }
-        break;
+      case "Learn1.109":
+      case "Learn1.149":
+        return element === "2nd Choice";
 
       case "Learn1.26":
+      case "Learn1.110":
+      case "Learn1.127":
+      case "Learn1.144":
+      case "Learn1.150":
+      case "Learn1.154":
+        return element === "Select Button";
+
+      ///////////////////////
+      case "Fire1.2.1":
+      case "Fire1.44":
+        return element === "1st Choice";
+
+      case "Fire1.20":
+      case "Fire1.37":
+        return element === "2nd Choice";
+
       case "Fire1.3":
       case "Fire1.21":
       case "Fire1.38":
       case "Fire1.45":
-        switch (element) {
-          case "Select Button":
-            return true;
-        }
-        break;
+        return element === "Select Button";
     }
   };
 
@@ -866,6 +871,50 @@ const SelectCustomChoice = (props) => {
 
       case "Learn1.26":
         dispatch(updateDemo("Learn1.27"));
+        break;
+
+      case "Learn1.109":
+        dispatch(updateDemo("Learn1.110"));
+        break;
+
+      case "Learn1.110":
+        dispatch(updateDemo("Learn1.111"));
+        break;
+
+      case "Learn1.126":
+        dispatch(updateDemo("Learn1.127"));
+        break;
+
+      case "Learn1.127":
+        dispatch(updateDemo("Learn1.128"));
+        break;
+
+      case "Learn1.143":
+        dispatch(updateDemo("Learn1.144"));
+        break;
+
+      case "Learn1.144":
+        dispatch(updateDemo("Learn1.145"));
+        break;
+
+      case "Learn1.149":
+        dispatch(updateDemo("Learn1.150"));
+        break;
+
+      case "Learn1.150":
+        dispatch(updateDemo("Learn1.151"));
+        break;
+
+      case "Learn1.151":
+        dispatch(updateDemo("Learn1.152"));
+        break;
+
+      case "Learn1.153":
+        dispatch(updateDemo("Learn1.154"));
+        break;
+
+      case "Learn1.154":
+        dispatch(updateDemo("Learn1.155"));
         break;
 
       ///////////////////////

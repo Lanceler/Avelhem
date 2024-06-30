@@ -586,9 +586,25 @@ const Board = (props) => {
   }, [localGameState]);
 
   useEffect(() => {
-    if (["Learn1.3", "Learn1.9"].includes(demoGuide)) {
+    if (
+      [
+        "Learn1.3",
+        "Learn1.9",
+        "Learn1.136",
+        "Learn1.157",
+        "Learn1.161",
+      ].includes(demoGuide)
+    ) {
       setHideModal(true);
-    } else if (["Learn1.6", "Learn1.10"].includes(demoGuide)) {
+    } else if (
+      [
+        "Learn1.6",
+        "Learn1.10",
+        "Learn1.137",
+        "Learn1.158",
+        "Learn1.163",
+      ].includes(demoGuide)
+    ) {
       setHideModal(false);
     }
   }, [demoGuide]);
@@ -5138,15 +5154,21 @@ const Board = (props) => {
       case "Learn1.49":
       case "Learn1.54":
       case "Learn1.59":
+      case "Learn1.128":
         return element === "Tactic Button";
 
       case "Learn1.67":
+      case "Learn1.106":
         return element === "Skill Button";
 
       case "Learn1.74":
         return element === "Info Button";
 
+      case "Learn1.120":
+        return element === "Ability Button";
+
       case "Learn1.80":
+      case "Learn1.172":
         return element === "End Button";
 
       /////////////////////////////////////////
@@ -5193,6 +5215,22 @@ const Board = (props) => {
 
       case "Learn1.80":
         dispatch(updateDemo("Learn1.81"));
+        break;
+
+      case "Learn1.106":
+        dispatch(updateDemo("Learn1.107"));
+        break;
+
+      case "Learn1.120":
+        dispatch(updateDemo("Learn1.121"));
+        break;
+
+      case "Learn1.128":
+        dispatch(updateDemo("Learn1.129"));
+        break;
+
+      case "Learn1.172":
+        dispatch(updateDemo("Learn1.173"));
         break;
     }
   };
@@ -5355,7 +5393,10 @@ const Board = (props) => {
                                   canClick("Ability Button") ? "demoClick" : ""
                                 }`}
                                 style={unitButtonPosition(expandedUnit)[2]}
-                                onClick={() => handleUnitOptions("Ability")}
+                                onClick={() => {
+                                  handleUnitOptions("Ability");
+                                  handleUpdateDemoGuide();
+                                }}
                               >
                                 <div className="optionIcon">
                                   {" "}

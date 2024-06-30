@@ -202,11 +202,15 @@ const DefiancePhaseSelection = (props) => {
       case "Learn1.15":
         return element1 === "skip";
 
+      case "Learn1.185":
+      case "Learn1.90":
+        return element1 === "select";
+
       case "Learn1.89":
         return element1 === "Curate";
 
-      case "Learn1.90":
-        return element1 === "select";
+      case "Learn1.184":
+        return element1 === "Ex Machina";
     }
   };
 
@@ -222,6 +226,14 @@ const DefiancePhaseSelection = (props) => {
 
       case "Learn1.90":
         dispatch(updateDemo("Learn1.91"));
+        break;
+
+      case "Learn1.184":
+        dispatch(updateDemo("Learn1.185"));
+        break;
+
+      case "Learn1.185":
+        dispatch(updateDemo("Learn1.186"));
         break;
     }
   };
@@ -289,16 +301,7 @@ const DefiancePhaseSelection = (props) => {
               className={`customChoice customChoiceSmaller ${
                 selectedChoice === 3 ? "selectedChoice" : ""
               } 
-              
               ${canClick("Curate") ? "demoClick" : ""}
-              
-              
-              
-              
-              
-              
-              
-              
               `}
               style={{ backgroundImage: `url(${GoldFrame})`, width: 245.5 }}
               onClick={() => {
@@ -353,12 +356,16 @@ const DefiancePhaseSelection = (props) => {
                 selectedChoice === 5 ? "selectedChoice" : ""
               } `}
               style={{ backgroundImage: `url(${GoldFrame})`, width: 245.5 }}
-              onClick={() => handleSelect(5, canSelect[4])}
+              onClick={() => {
+                handleSelect(5, canSelect[4]);
+                handleUpdateDemoGuide();
+              }}
             >
               <div
                 className={`customChoiceFrame ${
                   canSelect[4] ? "" : "disabledChoice"
-                } `}
+                } 
+                ${canClick("Ex Machina") ? "demoClick" : ""}`}
               >
                 <div className="defianceText">
                   <h4 className="defianceTitle">Ex Machina</h4>
