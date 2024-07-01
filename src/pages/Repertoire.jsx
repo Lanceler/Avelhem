@@ -14,7 +14,7 @@ import { useCardDatabase } from "../hooks/useCardDatabase";
 import Loading from "../components/modals/Loading";
 
 import { useSelector, useDispatch } from "react-redux";
-import { updateMagnifiedSkill } from "../redux/magnifySkill";
+import { useCardImageSwitch } from "../hooks/useCardImageSwitch";
 
 import ZoomCard from "../components/displays/ZoomCard";
 
@@ -39,6 +39,7 @@ export default function Repertoire() {
   const { id } = useParams(); //note: id was entered as the parameter in the routes of App.jsx
   const { user } = useAuthContext();
   const [isLoading, setIsLoading] = useState(false);
+  const [loadingImages, setLoadingImages] = useState(true);
 
   const { magnifiedSkill } = useSelector((state) => state.magnifiedSkill);
   const dispatch = useDispatch();
@@ -54,7 +55,29 @@ export default function Repertoire() {
   const [repertoireDescription, setRepertoireDescription] = useState("");
   const [saveError, setSaveError] = useState("");
 
+  const { imagesLoadingList } = useCardImageSwitch();
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    let loadedImages = 0;
+    const imageElements = imagesLoadingList.map((src) => {
+      const img = new Image();
+      img.src = src;
+      img.onload = () => handleImageLoad();
+      img.onerror = () => handleImageLoad();
+      return img;
+    });
+
+    function handleImageLoad() {
+      loadedImages++;
+      if (loadedImages === imagesLoadingList.length) {
+        setLoadingImages(false);
+      }
+    }
+  }, [imagesLoadingList]);
+
+  ////////
 
   const addToAvelhemRepertoire = (cardPoolIndex) => {
     if (
@@ -352,164 +375,169 @@ export default function Repertoire() {
 
   return (
     <div>
-      <div className="repertoire-input-box">
-        <form>
-          <div className="repertoire-input">
-            <input
-              className="repertoire-input-name"
-              required
-              type="text"
-              onChange={(e) => setRepertoireName(e.target.value)}
-              value={repertoireName}
-              placeholder="Repertoire Name (Max. 30 characters)"
-            />
-
-            {/* <span>Repertoire Name</span> */}
-            <i></i>
-          </div>
-
-          <div className="repertoire-input">
-            <textarea
-              className="repertoire-input-desc"
-              required
-              type="text"
-              onChange={(e) => setRepertoireDescription(e.target.value)}
-              value={repertoireDescription}
-              placeholder="Description (Max. 200 characters)"
-            />
-          </div>
-
-          <button
-            className="repertoire-button repertoire-save"
-            // onClick={() => handleSave()}
-            onClick={handleSave}
-          >
-            Save
-          </button>
-
-          {saveError && (
-            <div className="repertoire-save-error">{saveError}</div>
-          )}
-        </form>
-      </div>
-
-      <br />
-
-      <div className="repertoire-body">
-        <div className="repertoire-main-division">
-          <div className="repertoire-division">
-            <div className="repertoire-header">
-              <div className="repertoire-text">
-                Avelhem Repertoire ({avelhemRepertoire.length} / 20)
-              </div>
-              <div className="repertoire-buttons">
-                <button
-                  className="repertoire-button"
-                  onClick={() => handleReloadAvelhem()}
-                >
-                  Reload
-                </button>
-                <button
-                  className="repertoire-button"
-                  onClick={() => handleClearAvelhem()}
-                >
-                  Clear
-                </button>
-              </div>
-            </div>
-
-            <div className="avelhem-repertoire">
-              <AnimatePresence
-
-              // mode={"popLayout"}
-              >
-                {avelhemRepertoire.map((card, index) => (
-                  <ARAvelhemCard
-                    key={JSON.stringify({ c: card })}
-                    index={index}
-                    cardInfo={card}
-                    returnToAvelhemCardPool={returnToAvelhemCardPool}
-                  />
-                ))}
-              </AnimatePresence>
-            </div>
-          </div>
-
-          <div className="repertoire-division">
-            <div className="repertoire-text">Avelhem Selection</div>
-
-            <div className="avelhem-selection">
-              {avelhemCardPool.map((card, index) => (
-                <CPAvelhemCard
-                  key={index}
-                  index={index}
-                  cardInfo={card}
-                  addToAvelhemRepertoire={addToAvelhemRepertoire}
+      {loadingImages && <Loading />}
+      {!loadingImages && (
+        <>
+          <div className="repertoire-input-box">
+            <form>
+              <div className="repertoire-input">
+                <input
+                  className="repertoire-input-name"
+                  required
+                  type="text"
+                  onChange={(e) => setRepertoireName(e.target.value)}
+                  value={repertoireName}
+                  placeholder="Repertoire Name (Max. 30 characters)"
                 />
-              ))}
-            </div>
-          </div>
-        </div>
 
-        <div className="repertoire-main-division">
-          <div className="repertoire-division">
-            <div className="repertoire-header">
-              <div className="repertoire-text">
-                Skill Repertoire ({skillRepertoire.length} / 60)
+                {/* <span>Repertoire Name</span> */}
+                <i></i>
               </div>
-              <div className="repertoire-buttons">
-                <button
-                  className="repertoire-button"
-                  onClick={() => handleReloadSkill()}
-                >
-                  Reload
-                </button>
-                <button
-                  className="repertoire-button"
-                  onClick={() => handleClearSkill()}
-                >
-                  Clear
-                </button>
-              </div>
-            </div>
 
-            <div className="skill-repertoire repertoire-scrollable">
-              <AnimatePresence
-              // mode={"popLayout"}
-              >
-                {skillRepertoire.map((card, index) => (
-                  <SRSkillCard
-                    key={JSON.stringify({ c: card })}
-                    index={index}
-                    cardInfo={card}
-                    returnToSkillCardPool={returnToSkillCardPool}
-                  />
-                ))}
-              </AnimatePresence>
-            </div>
-          </div>
-
-          <div className="repertoire-division">
-            <div className="repertoire-text">Skill Selection</div>
-
-            <div className="skill-selection repertoire-scrollable">
-              {skillCardPool.map((card, index) => (
-                <CPSkillCard
-                  key={index}
-                  index={index}
-                  cardInfo={card}
-                  addToSkillRepertoire={addToSkillRepertoire}
-                  //   selectViewCard={selectViewCard}
+              <div className="repertoire-input">
+                <textarea
+                  className="repertoire-input-desc"
+                  required
+                  type="text"
+                  onChange={(e) => setRepertoireDescription(e.target.value)}
+                  value={repertoireDescription}
+                  placeholder="Description (Max. 200 characters)"
                 />
-              ))}
+              </div>
+
+              <button
+                className="repertoire-button repertoire-save"
+                // onClick={() => handleSave()}
+                onClick={handleSave}
+              >
+                Save
+              </button>
+
+              {saveError && (
+                <div className="repertoire-save-error">{saveError}</div>
+              )}
+            </form>
+          </div>
+
+          <br />
+
+          <div className="repertoire-body">
+            <div className="repertoire-main-division">
+              <div className="repertoire-division">
+                <div className="repertoire-header">
+                  <div className="repertoire-text">
+                    Avelhem Repertoire ({avelhemRepertoire.length} / 20)
+                  </div>
+                  <div className="repertoire-buttons">
+                    <button
+                      className="repertoire-button"
+                      onClick={() => handleReloadAvelhem()}
+                    >
+                      Reload
+                    </button>
+                    <button
+                      className="repertoire-button"
+                      onClick={() => handleClearAvelhem()}
+                    >
+                      Clear
+                    </button>
+                  </div>
+                </div>
+
+                <div className="avelhem-repertoire">
+                  <AnimatePresence
+
+                  // mode={"popLayout"}
+                  >
+                    {avelhemRepertoire.map((card, index) => (
+                      <ARAvelhemCard
+                        key={JSON.stringify({ c: card })}
+                        index={index}
+                        cardInfo={card}
+                        returnToAvelhemCardPool={returnToAvelhemCardPool}
+                      />
+                    ))}
+                  </AnimatePresence>
+                </div>
+              </div>
+
+              <div className="repertoire-division">
+                <div className="repertoire-text">Avelhem Selection</div>
+
+                <div className="avelhem-selection">
+                  {avelhemCardPool.map((card, index) => (
+                    <CPAvelhemCard
+                      key={index}
+                      index={index}
+                      cardInfo={card}
+                      addToAvelhemRepertoire={addToAvelhemRepertoire}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="repertoire-main-division">
+              <div className="repertoire-division">
+                <div className="repertoire-header">
+                  <div className="repertoire-text">
+                    Skill Repertoire ({skillRepertoire.length} / 60)
+                  </div>
+                  <div className="repertoire-buttons">
+                    <button
+                      className="repertoire-button"
+                      onClick={() => handleReloadSkill()}
+                    >
+                      Reload
+                    </button>
+                    <button
+                      className="repertoire-button"
+                      onClick={() => handleClearSkill()}
+                    >
+                      Clear
+                    </button>
+                  </div>
+                </div>
+
+                <div className="skill-repertoire repertoire-scrollable">
+                  <AnimatePresence
+                  // mode={"popLayout"}
+                  >
+                    {skillRepertoire.map((card, index) => (
+                      <SRSkillCard
+                        key={JSON.stringify({ c: card })}
+                        index={index}
+                        cardInfo={card}
+                        returnToSkillCardPool={returnToSkillCardPool}
+                      />
+                    ))}
+                  </AnimatePresence>
+                </div>
+              </div>
+
+              <div className="repertoire-division">
+                <div className="repertoire-text">Skill Selection</div>
+
+                <div className="skill-selection repertoire-scrollable">
+                  {skillCardPool.map((card, index) => (
+                    <CPSkillCard
+                      key={index}
+                      index={index}
+                      cardInfo={card}
+                      addToSkillRepertoire={addToSkillRepertoire}
+                      //   selectViewCard={selectViewCard}
+                    />
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      {isLoading && <Loading />}
+          {isLoading && <Loading />}
 
-      {magnifiedSkill && <ZoomCard cardInfo={magnifiedSkill} />}
+          {magnifiedSkill && <ZoomCard cardInfo={magnifiedSkill} />}
+        </>
+      )}
     </div>
   );
 }
