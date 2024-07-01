@@ -55,6 +55,7 @@ const PlayerAvelhemHand = (props) => {
       case "Learn1.18":
       case "Learn1.21":
       case "Learn1.94":
+      case "Learn1.206":
         return true;
 
       case "Learn1.19":
@@ -65,6 +66,9 @@ const PlayerAvelhemHand = (props) => {
 
       case "Learn1.95":
         return element1 === 7;
+
+      case "Learn1.207":
+        return element1 === 2;
 
       ////////////////
 
@@ -97,6 +101,14 @@ const PlayerAvelhemHand = (props) => {
 
       case "Learn1.95":
         dispatch(updateDemo("Learn1.96"));
+        break;
+
+      case "Learn1.206":
+        dispatch(updateDemo("Learn1.207"));
+        break;
+
+      case "Learn1.207":
+        dispatch(updateDemo("Learn1.208"));
         break;
     }
   };

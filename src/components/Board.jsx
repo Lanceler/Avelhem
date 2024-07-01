@@ -1,15 +1,10 @@
 import "./Board.scss";
-
 import React, { useState, useEffect } from "react";
-
-import SelectFirstPlayer from "./modals/SelectFirstPlayer";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../redux/gameState";
 import { updateSelf, updateEnemy } from "../redux/teams";
 import { updateDemo } from "../redux/demoGuide";
-import { updateMagnifiedSkill } from "../redux/magnifySkill";
-import { updatecontingencySettings } from "../redux/contingencySettings";
 
 import { db } from "../config/firebaseConfig";
 import { updateDoc, doc } from "firebase/firestore";
@@ -23,6 +18,8 @@ import AcquisitionPhaseSelection from "./modals/AcquisitionPhaseSelection";
 import BountyStore from "./modals/BountyStore";
 import CoordinationPhaseSelection from "./modals/CoordinationPhaseSelection";
 import DefiancePhaseSelection from "./modals/DefiancePhaseSelection";
+
+import SelectFirstPlayer from "./modals/SelectFirstPlayer";
 
 import InspectSkill from "./modals/InspectSkill";
 import MessageToPlayer from "./modals/MessageToPlayer";
@@ -53,7 +50,6 @@ import ZoomCard from "./displays/ZoomCard";
 
 import TacticSelection from "./modals/TacticSelection";
 import TacticSelectionViaEffect from "./modals/TacticSelectionViaEffect";
-
 import SelectCustomChoice from "./modals/SelectCustomChoice";
 
 import GlacialTorrent from "./skillModals/GlacialTorrent";
@@ -158,7 +154,6 @@ const Board = (props) => {
     endDefiancePhase2,
     getVacant2SpaceZones,
     getVacantAdjacentZones,
-    getZonesInRange,
     grantRavager,
     freeze1,
     freeze2,
@@ -567,13 +562,11 @@ const Board = (props) => {
       dispatch(updateEnemy("host"));
     }
 
-    // console.log("STRINGED GAMESTATE");
+    // STRINGED GAMESTATE"
     // console.log(JSON.stringify(localGameState));
   }, []);
 
   useEffect(() => {
-    // console.log("local gamestate changed");
-
     setValidZones([]);
     setTileMode(null);
     setSelectUnitReason(null);
@@ -593,6 +586,8 @@ const Board = (props) => {
         "Learn1.136",
         "Learn1.157",
         "Learn1.161",
+        "Learn1.197",
+        "Learn1.220",
       ].includes(demoGuide)
     ) {
       setHideModal(true);
@@ -603,6 +598,8 @@ const Board = (props) => {
         "Learn1.137",
         "Learn1.158",
         "Learn1.163",
+        "Learn1.198",
+        "Learn1.223",
       ].includes(demoGuide)
     ) {
       setHideModal(false);
@@ -611,7 +608,6 @@ const Board = (props) => {
 
   //Gets data regarding zones and units
   useEffect(() => {
-    // console.log("Updated local from online");
     setZones(JSON.parse(props.gameState.zones));
     dispatch(updateState(props.gameState));
     // setHideModal(false);
@@ -809,7 +805,7 @@ const Board = (props) => {
         }
         break;
 
-      case "Blocking Virtue-Blast":
+      case "Mitigating Virtue-Blast":
         return (
           <>
             {self === lastResolution.unit.player && !hideModal && (
@@ -837,7 +833,6 @@ const Board = (props) => {
         break;
 
       case "Apply Damage":
-        console.log("APPLY DAMAGE");
         if (self === lastResolution.attacker.player) {
           resolutionUpdate(
             applyDamage(
@@ -4104,9 +4099,6 @@ const Board = (props) => {
 
     setValidZones([]);
     setTileMode(null);
-
-    console.log("newGameState.currentResolution");
-    console.log(newGameState.currentResolution);
   };
 
   const deployUnit = (r, c, unitClass) => {
@@ -5155,20 +5147,28 @@ const Board = (props) => {
       case "Learn1.54":
       case "Learn1.59":
       case "Learn1.128":
+      case "Learn1.250":
+      case "Learn1.258":
+      case "Learn1.269":
         return element === "Tactic Button";
 
       case "Learn1.67":
       case "Learn1.106":
+      case "Learn1.217":
+      case "Learn1.230":
         return element === "Skill Button";
 
       case "Learn1.74":
         return element === "Info Button";
 
       case "Learn1.120":
+      case "Learn1.235":
+      case "Learn1.242":
         return element === "Ability Button";
 
       case "Learn1.80":
       case "Learn1.172":
+      case "Learn1.274":
         return element === "End Button";
 
       /////////////////////////////////////////
@@ -5231,6 +5231,38 @@ const Board = (props) => {
 
       case "Learn1.172":
         dispatch(updateDemo("Learn1.173"));
+        break;
+
+      case "Learn1.217":
+        dispatch(updateDemo("Learn1.218"));
+        break;
+
+      case "Learn1.230":
+        dispatch(updateDemo("Learn1.231"));
+        break;
+
+      case "Learn1.235":
+        dispatch(updateDemo("Learn1.236"));
+        break;
+
+      case "Learn1.242":
+        dispatch(updateDemo("Learn1.243"));
+        break;
+
+      case "Learn1.250":
+        dispatch(updateDemo("Learn1.251"));
+        break;
+
+      case "Learn1.258":
+        dispatch(updateDemo("Learn1.259"));
+        break;
+
+      case "Learn1.269":
+        dispatch(updateDemo("Learn1.270"));
+        break;
+
+      case "Learn1.274":
+        dispatch(updateDemo("Learn1.275"));
         break;
     }
   };

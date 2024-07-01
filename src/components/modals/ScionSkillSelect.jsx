@@ -102,17 +102,25 @@ const ScionSkillSelect = (props) => {
 
   const canClick = (element, element2) => {
     switch (demoGuide) {
+      case "Learn1.69":
+      case "Learn1.219":
+      case "Learn1.232":
+        return element === "Select Button";
+
+      case "Learn1.108":
+        return element === "Resonate Button";
+
       case "Learn1.68":
         return element2.id === "04-01";
-
-      case "Learn1.69":
-        return element === "Select Button";
 
       case "Learn1.107":
         return element2.id === "07-02";
 
-      case "Learn1.108":
-        return element === "Resonate Button";
+      case "Learn1.218":
+        return element2.id === "02-04";
+
+      case "Learn1.231":
+        return element2.id === "02-02";
 
       //////////////////////
 
@@ -178,6 +186,22 @@ const ScionSkillSelect = (props) => {
 
       case "Learn1.108":
         dispatch(updateDemo("Learn1.109"));
+        break;
+
+      case "Learn1.218":
+        dispatch(updateDemo("Learn1.219"));
+        break;
+
+      case "Learn1.219":
+        dispatch(updateDemo("Learn1.220"));
+        break;
+
+      case "Learn1.231":
+        dispatch(updateDemo("Learn1.232"));
+        break;
+
+      case "Learn1.232":
+        dispatch(updateDemo("Learn1.233"));
         break;
 
       ////////////////////
@@ -248,31 +272,33 @@ const ScionSkillSelect = (props) => {
           </button>
         )}
 
-        {selectedSkill !== null &&
-          canActivateSkill(props.unit, usableSkills[selectedSkill].id) && (
+        <div className="scion-skill-buttons">
+          {selectedSkill !== null &&
+            canActivateSkill(props.unit, usableSkills[selectedSkill].id) && (
+              <button
+                className={`choiceButton ${
+                  canClick("Select Button") ? "demoClick" : ""
+                }`}
+                onClick={() => {
+                  handleSelect();
+                  handleUpdateDemoGuide();
+                }}
+              >
+                Select
+              </button>
+            )}
+
+          {canResonate && (
             <button
               className={`choiceButton ${
-                canClick("Select Button") ? "demoClick" : ""
+                canClick("Resonate Button") ? "demoClick" : ""
               }`}
-              onClick={() => {
-                handleSelect();
-                handleUpdateDemoGuide();
-              }}
+              onClick={() => handleResonate()}
             >
-              Select
+              Resonate
             </button>
           )}
-
-        {canResonate && (
-          <button
-            className={`choiceButton ${
-              canClick("Resonate Button") ? "demoClick" : ""
-            }`}
-            onClick={() => handleResonate()}
-          >
-            Resonate
-          </button>
-        )}
+        </div>
       </div>
     </div>
   );

@@ -29,7 +29,9 @@ const Navbar = () => {
           <div>
             <div className="navLinks">
               {/* {<Link to="/rules">Rules</Link>} */}
+              {<Link to="/demo/learn">Learn</Link>}
               {<Link to="/demo">Demo</Link>}
+
               {user && <Link to="/create-game">Create Game</Link>}
               {user && <Link to="/repertoires">Repertoires</Link>}
               {!user && <Link to="/login">Login</Link>}

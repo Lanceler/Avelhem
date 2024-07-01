@@ -65,10 +65,9 @@ const SelectTacticalAction = (props) => {
           abilityText: (
             <>
               <div className="abilityText ">
-                ⬩Spend your Virtue to blast an adjacent enemy. <br /> <br />{" "}
-                (When a unit is attacked via Virtue-blast, they may spend their
-                Virtue to reduce the attack’s AP by 1. Doing so restores the
-                attacker’s Virtue.)
+                ⬩Spend your Virtue to blast an adjacent enemy. <br /> <br />
+                (The enemy may spend their Virtue and transfer it to the
+                attacker to reduce the attack’s AP by 1.)
               </div>
             </>
           ),
@@ -351,9 +350,12 @@ const SelectTacticalAction = (props) => {
       case "Learn1.50":
       case "Learn1.56":
       case "Learn1.61":
+      case "Learn1.252":
+      case "Learn1.271":
         return element === "Action" && element2 === 0;
 
       case "Learn1.132":
+      case "Learn1.260":
         return element === "Action" && element2 === 1;
 
       case "Learn1.43":
@@ -361,6 +363,9 @@ const SelectTacticalAction = (props) => {
       case "Learn1.57":
       case "Learn1.62":
       case "Learn1.133":
+      case "Learn1.253":
+      case "Learn1.261":
+      case "Learn1.272":
         return element === "Select Button";
 
       ///////////////////////
@@ -413,6 +418,30 @@ const SelectTacticalAction = (props) => {
 
       case "Learn1.133":
         dispatch(updateDemo("Learn1.134"));
+        break;
+
+      case "Learn1.252":
+        dispatch(updateDemo("Learn1.253"));
+        break;
+
+      case "Learn1.253":
+        dispatch(updateDemo("Learn1.254"));
+        break;
+
+      case "Learn1.260":
+        dispatch(updateDemo("Learn1.261"));
+        break;
+
+      case "Learn1.261":
+        dispatch(updateDemo("Learn1.262"));
+        break;
+
+      case "Learn1.271":
+        dispatch(updateDemo("Learn1.272"));
+        break;
+
+      case "Learn1.272":
+        dispatch(updateDemo("Learn1.273"));
         break;
 
       /////////////////////////

@@ -702,97 +702,75 @@ export const useDemoGameStates = () => {
           activatingResonator: [],
         };
 
-      case "latest test":
         return {
           winner: null,
-          activatingSkill: [],
+          activatingSkill: ["ColdEmbrace"],
           winObjective: 1,
-          turnPlayer: "guest",
-          activatingTarget: [
-            {
-              player: "host",
-              unitIndex: 1,
-              row: 4,
-              column: 2,
-              unitClass: "Mana Scion",
-              hp: 1,
-              virtue: 1,
-              afflictions: {},
-              enhancements: {},
-              boosts: {},
-              temporary: {},
-            },
-          ],
+          turnPlayer: "host",
+          activatingTarget: [],
           activatingResonator: [],
           zones:
-            '[[{"id":0,"row":0,"column":0},{"id":1,"row":0,"column":1},{"id":2,"row":0,"column":2},{"id":3,"row":0,"column":3},{"id":4,"row":0,"column":4}],[{"id":5,"row":1,"column":0},{"id":6,"row":1,"column":1},{"id":7,"row":1,"column":2},{"id":8,"row":1,"column":3},{"id":9,"row":1,"column":4}],[{"id":10,"row":2,"column":0},{"id":11,"row":2,"column":1},{"id":12,"row":2,"column":2},{"id":13,"row":2,"column":3},{"id":14,"row":2,"column":4}],[{"id":15,"row":3,"column":0,"player":"guest","unitIndex":2},{"id":16,"row":3,"column":1},{"id":17,"row":3,"column":2,"player":"guest","unitIndex":1},{"id":18,"row":3,"column":3},{"id":19,"row":3,"column":4,"player":"guest","unitIndex":0}],[{"id":20,"row":4,"column":0},{"id":21,"row":4,"column":1},{"id":22,"row":4,"column":2,"player":"host","unitIndex":1},{"id":23,"row":4,"column":3},{"id":24,"row":4,"column":4}],[{"id":25,"row":5,"column":0},{"id":26,"row":5,"column":1,"player":"host","unitIndex":0},{"id":27,"row":5,"column":2,"player":null,"unitIndex":null},{"id":28,"row":5,"column":3,"player":"host","unitIndex":2},{"id":29,"row":5,"column":4}],[{"id":30,"row":6,"column":0,"player":null,"unitIndex":null},{"id":31,"row":6,"column":1},{"id":32,"row":6,"column":2,"player":null,"unitIndex":null},{"id":33,"row":6,"column":3},{"id":34,"row":6,"column":4,"player":null,"unitIndex":null}],[{"id":35,"row":7,"column":0},{"id":36,"row":7,"column":1},{"id":37,"row":7,"column":2},{"id":38,"row":7,"column":3},{"id":39,"row":7,"column":4}],[{"id":40,"row":8,"column":0},{"id":41,"row":8,"column":1},{"id":42,"row":8,"column":2},{"id":43,"row":8,"column":3},{"id":44,"row":8,"column":4}],[{"id":45,"row":9,"column":0},{"id":46,"row":9,"column":1},{"id":47,"row":9,"column":2},{"id":48,"row":9,"column":3},{"id":49,"row":9,"column":4}]]',
+            '[[{"id":0,"row":0,"column":0},{"id":1,"row":0,"column":1},{"id":2,"row":0,"column":2},{"id":3,"row":0,"column":3},{"id":4,"row":0,"column":4}],[{"id":5,"row":1,"column":0},{"id":6,"row":1,"column":1},{"id":7,"row":1,"column":2},{"id":8,"row":1,"column":3},{"id":9,"row":1,"column":4}],[{"id":10,"row":2,"column":0},{"id":11,"row":2,"column":1},{"id":12,"row":2,"column":2},{"id":13,"row":2,"column":3},{"id":14,"row":2,"column":4}],[{"id":15,"row":3,"column":0,"player":"guest","unitIndex":2},{"id":16,"row":3,"column":1},{"id":17,"row":3,"column":2,"player":null,"unitIndex":null},{"id":18,"row":3,"column":3},{"id":19,"row":3,"column":4,"player":"guest","unitIndex":0}],[{"id":20,"row":4,"column":0},{"id":21,"row":4,"column":1},{"id":22,"row":4,"column":2,"player":null,"unitIndex":null},{"id":23,"row":4,"column":3},{"id":24,"row":4,"column":4}],[{"id":25,"row":5,"column":0},{"id":26,"row":5,"column":1,"player":"host","unitIndex":0},{"id":27,"row":5,"column":2,"player":"host","unitIndex":1},{"id":28,"row":5,"column":3,"player":"host","unitIndex":2},{"id":29,"row":5,"column":4}],[{"id":30,"row":6,"column":0,"player":null,"unitIndex":null},{"id":31,"row":6,"column":1},{"id":32,"row":6,"column":2,"player":null,"unitIndex":null},{"id":33,"row":6,"column":3},{"id":34,"row":6,"column":4,"player":null,"unitIndex":null}],[{"id":35,"row":7,"column":0},{"id":36,"row":7,"column":1},{"id":37,"row":7,"column":2},{"id":38,"row":7,"column":3},{"id":39,"row":7,"column":4}],[{"id":40,"row":8,"column":0},{"id":41,"row":8,"column":1},{"id":42,"row":8,"column":2},{"id":43,"row":8,"column":3},{"id":44,"row":8,"column":4}],[{"id":45,"row":9,"column":0},{"id":46,"row":9,"column":1},{"id":47,"row":9,"column":2},{"id":48,"row":9,"column":3},{"id":49,"row":9,"column":4}]]',
           host: {
             skillRepertoire: [
-              "SA-04",
-              "08-03",
-              "SC-03",
-              "07-02",
-              "06-04",
-              "SC-05",
-              "07-02",
-              "04-04",
-              "08-03",
               "02-01",
-              "04-03",
-              "SB-01",
-              "02-03",
-              "02-03",
-              "06-03",
+              "SC-02",
               "SA-01",
-              "06-03",
-              "08-02",
-              "04-03",
-              "02-01",
-              "05-02",
-              "02-01",
-              "07-03",
-              "SA-04",
-              "SB-05",
-              "08-01",
-              "08-04",
-              "08-01",
-              "02-03",
-              "07-04",
-              "04-01",
+              "02-04",
               "05-01",
-              "06-03",
-              "08-03",
-              "08-01",
-              "08-03",
               "SB-03",
-              "SC-03",
-              "02-01",
               "SC-01",
-              "07-03",
-              "04-03",
-              "02-03",
+              "SC-05",
+              "SB-02",
+              "04-04",
               "04-01",
               "08-02",
-              "SB-03",
-              "07-03",
+              "04-01",
               "08-02",
               "SA-03",
-              "SA-01",
-              "SB-05",
-              "04-04",
               "06-03",
+              "04-03",
+              "SC-03",
+              "04-03",
+              "SC-01",
+              "06-03",
+              "08-01",
+              "08-03",
+              "SB-04",
+              "02-01",
+              "08-02",
+              "SA-01",
+              "SB-02",
+              "07-03",
+              "SC-03",
+              "02-01",
+              "02-03",
+              "SC-05",
+              "08-03",
+              "02-01",
+              "08-01",
+              "04-03",
+              "04-03",
+              "02-01",
+              "07-02",
+              "07-04",
+              "SA-04",
               "06-01",
-              "SA-02",
+              "02-03",
+              "08-03",
+              "05-04",
+              "SA-05",
+              "07-04",
             ],
             skillFloat: 0,
             score: 0,
-            avelhemVestige: [6, 4],
-            fateDefiances: 3,
+            avelhemVestige: [6, 4, 2, 2],
+            fateDefiances: 2,
             avelhemFloat: 0,
             avelhemHand: [],
             bountyUpgrades: {
               coordination: 0,
-              frontier: 0,
+              frontier: 2,
               avelhem: 0,
               acquisition: 0,
               victory: 0,
@@ -804,26 +782,26 @@ export const useDemoGameStates = () => {
                 unitIndex: 0,
                 row: 5,
                 column: 1,
-                unitClass: "Pawn",
+                unitClass: "Mana Scion",
                 hp: 1,
                 virtue: 1,
                 afflictions: {},
-                enhancements: {},
+                enhancements: { ravager: true },
                 boosts: {},
                 temporary: {},
               },
               {
                 player: "host",
                 unitIndex: 1,
-                row: 4,
+                row: 5,
                 column: 2,
-                unitClass: "Mana Scion",
+                unitClass: "Water Scion",
                 hp: 1,
                 virtue: 1,
                 afflictions: {},
-                enhancements: {},
-                boosts: {},
-                temporary: {},
+                enhancements: { ravager: true, ward: 3 },
+                boosts: { glacialTorrent: 0 },
+                temporary: { activation: 1 },
               },
               {
                 player: "host",
@@ -839,88 +817,96 @@ export const useDemoGameStates = () => {
                 temporary: {},
               },
             ],
-            skillHand: ["SC-04", "06-03", "01-02"],
-            avelhemRepertoire: [
-              7, 2, 7, 8, 8, 6, 2, 8, 8, 6, 6, 4, 7, 4, 7, 4, 2, 6,
+            skillHand: ["01-02", "06-03", "06-01", "02-01"],
+            avelhemRepertoire: [8, 8, 6, 8, 6, 2, 6, 6, 8, 4, 2, 7, 4, 4, 7, 2],
+            skillVestige: [
+              "SX-01",
+              "SX-01",
+              "08-01",
+              "04-01",
+              "06-03",
+              "SC-04",
+              "SB-05",
+              "SA-02",
+              "02-02",
             ],
-            skillVestige: ["SX-01", "SX-01", "08-01", "04-01"],
-            skillShattered: [],
-            bountyPoints: 0,
+            skillShattered: ["02-04"],
+            bountyPoints: 1,
             displayName: "Gold Player",
           },
-          turnCount: 2,
+          turnCount: 3,
           tactics: [
-            { face: "Invoke", limit: 1, stock: 0 },
-            { face: "Assault", limit: 1, stock: 0 },
+            { face: "Assault", limit: 1, stock: 1 },
+            { face: "Assault", limit: 1, stock: 1 },
           ],
           guest: {
             score: 0,
-            avelhemHand: [8],
+            avelhemHand: [],
             avelhemRepertoire: [
-              2, 1, 7, 3, 3, 1, 4, 2, 3, 4, 7, 8, 4, 3, 1, 8, 2, 4,
+              1, 4, 7, 3, 1, 1, 8, 4, 4, 7, 1, 3, 3, 2, 3, 2, 2, 4,
             ],
             avelhemFloat: 0,
             skillFloat: 0,
-            skillHand: ["SB-01", "SA-04", "SX-01", "07-02", "07-03", "07-01"],
+            skillHand: ["SB-01", "SA-04", "07-02", "07-01"],
             skillRepertoire: [
-              "05-03",
-              "02-01",
-              "04-01",
-              "04-03",
-              "01-01",
-              "05-03",
-              "07-01",
-              "SB-04",
-              "SA-02",
-              "01-01",
-              "02-02",
-              "07-03",
-              "04-03",
-              "04-01",
-              "08-03",
-              "03-04",
-              "01-02",
-              "SB-05",
-              "07-02",
-              "01-01",
-              "02-03",
+              "01-03",
               "SA-03",
-              "SB-03",
-              "02-03",
-              "02-01",
-              "01-01",
-              "02-01",
-              "SB-04",
-              "07-02",
-              "01-04",
-              "04-01",
-              "SB-01",
-              "SA-04",
-              "07-04",
-              "03-04",
-              "07-01",
-              "04-03",
-              "SB-03",
-              "02-04",
-              "01-03",
-              "SA-02",
-              "SB-05",
-              "02-01",
-              "07-01",
-              "02-03",
-              "07-01",
-              "SA-04",
+              "05-03",
               "01-02",
-              "02-02",
-              "02-02",
+              "07-02",
+              "SB-04",
+              "SA-04",
+              "07-01",
+              "01-01",
+              "SB-05",
+              "07-03",
+              "02-03",
+              "01-01",
+              "SA-02",
+              "03-04",
+              "04-03",
+              "SB-05",
               "03-03",
-              "01-03",
-              "01-03",
+              "SB-03",
               "02-02",
+              "SB-01",
+              "02-03",
+              "01-02",
+              "01-03",
+              "04-01",
+              "07-01",
+              "01-04",
+              "SA-02",
+              "02-01",
+              "01-02",
+              "04-01",
+              "02-04",
+              "04-04",
+              "07-02",
+              "SB-03",
+              "07-02",
+              "08-03",
+              "01-01",
+              "05-03",
+              "SB-05",
+              "SA-03",
+              "02-01",
+              "SB-01",
+              "04-01",
+              "01-03",
+              "02-01",
+              "04-03",
+              "02-03",
+              "07-03",
+              "01-02",
+              "SB-04",
+              "02-02",
+              "03-04",
+              "07-04",
             ],
-            fateDefiances: 1,
-            bountyPoints: 0,
-            avelhemVestige: [7],
+            fateDefiances: 3,
+            bountyPoints: 1,
+            avelhemVestige: [7, 8],
             units: [
               {
                 player: "guest",
@@ -935,20 +921,7 @@ export const useDemoGameStates = () => {
                 boosts: {},
                 temporary: {},
               },
-              {
-                player: "guest",
-                unitIndex: 1,
-                row: 3,
-                column: 2,
-                unitClass: "Metal Scion",
-                hp: 2,
-                virtue: 1,
-                afflictions: {},
-                enhancements: {},
-                boosts: {},
-                temporary: { activation: 1 },
-                sharpness: 1,
-              },
+              null,
               {
                 player: "guest",
                 unitIndex: 2,
@@ -972,23 +945,22 @@ export const useDemoGameStates = () => {
               avelhem: 0,
             },
             skillShattered: [],
-            skillVestige: ["SX-01", "07-02"],
+            skillVestige: ["SX-01", "07-02", "SX-01", "07-03"],
             displayName: "Silver Player",
           },
           activatingUnit: [
             {
-              player: "guest",
+              player: "host",
               unitIndex: 1,
-              row: 3,
+              row: 5,
               column: 2,
-              unitClass: "Metal Scion",
-              hp: 2,
+              unitClass: "Water Scion",
+              hp: 1,
               virtue: 1,
               afflictions: {},
-              enhancements: {},
-              boosts: {},
-              temporary: { activation: 1 },
-              sharpness: 1,
+              enhancements: { ravager: true, ward: 3 },
+              boosts: { glacialTorrent: 0 },
+              temporary: { activation: 0 },
             },
           ],
           turnPhase: "Execution",
@@ -997,83 +969,56 @@ export const useDemoGameStates = () => {
             {
               resolution: "Tactic End",
               unit: {
-                player: "guest",
-                unitIndex: 1,
-                row: 3,
-                column: 2,
-                unitClass: "Metal Scion",
-                hp: 2,
-                virtue: 1,
-                afflictions: {},
-                enhancements: {},
-                boosts: {},
-                temporary: { activation: 1 },
-                sharpness: 1,
-              },
-            },
-            {
-              resolution: "Apply Damage",
-              attacker: {
-                player: "guest",
-                unitIndex: 1,
-                row: 3,
-                column: 2,
-                unitClass: "Metal Scion",
-                hp: 2,
-                virtue: 1,
-                afflictions: {},
-                enhancements: {},
-                boosts: {},
-                temporary: { activation: 1 },
-                sharpness: 1,
-              },
-              victim: {
                 player: "host",
                 unitIndex: 1,
-                row: 4,
+                row: 5,
                 column: 2,
-                unitClass: "Mana Scion",
+                unitClass: "Water Scion",
                 hp: 1,
                 virtue: 1,
                 afflictions: {},
-                enhancements: {},
-                boosts: {},
-                temporary: {},
+                enhancements: { ravager: true, ward: 3 },
+                boosts: { glacialTorrent: 0 },
+                temporary: { activation: 0 },
               },
-              special: null,
-              type: "strike",
+              effect: true,
+            },
+            {
+              resolution: "Misc.",
+              resolution2: "Strike Movement",
+              attacker: {
+                player: "host",
+                unitIndex: 1,
+                row: 5,
+                column: 2,
+                unitClass: "Water Scion",
+                hp: 1,
+                virtue: 1,
+                afflictions: {},
+                enhancements: { ravager: true, ward: 3 },
+                boosts: { glacialTorrent: 0 },
+                temporary: { activation: 1 },
+              },
+              zone: 22,
             },
             {
               resolution: "Triggering Contingent Skill",
-              resolution2: "Triggering Target",
-              attacker: {
+              resolution2: "Triggering Elimination Ally",
+              player: "guest",
+              unit: {
                 player: "guest",
-                unitIndex: 1,
-                row: 3,
-                column: 2,
-                unitClass: "Metal Scion",
-                hp: 2,
-                virtue: 1,
-                afflictions: {},
-                enhancements: {},
-                boosts: {},
-                temporary: { activation: 1 },
-                sharpness: 1,
-              },
-              victim: {
-                player: "host",
                 unitIndex: 1,
                 row: 4,
                 column: 2,
-                unitClass: "Mana Scion",
-                hp: 1,
-                virtue: 1,
-                afflictions: {},
+                unitClass: "Metal Scion",
+                hp: 0,
+                virtue: 0,
+                afflictions: { anathema: 1, frostbite: 1 },
                 enhancements: {},
                 boosts: {},
                 temporary: {},
+                sharpness: 2,
               },
-              type: "strike",
             },
           ],
         };
@@ -1247,15 +1192,15 @@ export const useDemoGameStates = () => {
           case "Learn1.18":
             return (
               <div>
-                Let’s start by activating an Avelhem. Avelhems are activated by
-                Sovereigns, and they are primarily used to ascend pawns into
-                Scions of a specific class.
-                <br />
-                <br />
+                Let’s start by activating an Avelhem.{" "}
                 <strong>
-                  To activate an Avelhem, click on your hand to raise it. Then
-                  click on the specific card to be activated.
+                  Avelhems are activated by Sovereigns, and they are primarily
+                  used to ascend pawns into Scions of a specific class.
                 </strong>
+                <br />
+                <br />
+                To activate an Avelhem, click on your hand to raise it. Then
+                click on the specific card to be activated.
               </div>
             );
 
@@ -1378,7 +1323,7 @@ export const useDemoGameStates = () => {
                 Now let us go over the use of tactics, starting with Advance.
                 <br />
                 <br />
-                Click on the Advance Tactic below.
+                Click on the Advance tactic below.
               </div>
             );
 
@@ -1389,6 +1334,9 @@ export const useDemoGameStates = () => {
                 As a Sovereign, you have these 3 options when utilizing an
                 Advance tactic. In most situations, deploying a pawn would be
                 the only available option.
+                <br />
+                <br />
+                Note: Sovereigns can have up to 8 units on the board.
               </div>
             );
 
@@ -1399,7 +1347,7 @@ export const useDemoGameStates = () => {
                 where you can deploy your units. The frontier initially consists
                 of 3 rows, starting from your side of the board. But, as you may
                 have noticed during the Bounty Phase, it can be expanded to 6
-                rows.{" "}
+                rows.
               </div>
             );
 
@@ -1414,9 +1362,10 @@ export const useDemoGameStates = () => {
           case "Learn1.39":
             return (
               <div>
-                As mentioned earlier, units can also use tactics. Click on your
-                Mana Scion to open their personal menu, then click on the
-                tactics button at the upper right.
+                As mentioned earlier, units can also use tactics. <br />
+                <br />
+                Click on your Mana Scion to open their personal menu, then click
+                on the tactics button at the upper right.
               </div>
             );
 
@@ -1808,10 +1757,12 @@ export const useDemoGameStates = () => {
           case "Learn1.100":
             return (
               <div>
-                Floating a card places it on top of its repertoire and rotates
-                it by 90 degrees. When a repertoire is shuffled, its floating
-                cards retain their positions. (It is impossible to have a
-                non-floating card above a floating one).
+                <strong>
+                  Floating a card places it on top of its repertoire
+                </strong>{" "}
+                and rotates it by 90 degrees. When a repertoire is shuffled, its
+                floating cards retain their positions. (It is impossible to have
+                a non-floating card above a floating one).
               </div>
             );
 
@@ -1827,7 +1778,7 @@ export const useDemoGameStates = () => {
               <div>
                 Now let us go over the second skill method.
                 <br /> <br />
-                Displaying a bichromatic alexandrite,{" "}
+                Displaying a bichromatic alexandrite icon,{" "}
                 <strong>resonant skills</strong> synergize to provide additional
                 effects.
               </div>
@@ -1848,6 +1799,7 @@ export const useDemoGameStates = () => {
           case "Learn1.106":
           case "Learn1.107":
           case "Learn1.108":
+          case "Learn1.109":
             return (
               <div>
                 To resonate a skill, activate it with a resonator, which is
@@ -1857,7 +1809,7 @@ export const useDemoGameStates = () => {
               </div>
             );
 
-          case "Learn1.109":
+          case "Learn1.109.1":
           case "Learn1.110":
           case "Learn1.111":
           case "Learn1.112":
@@ -1906,7 +1858,7 @@ export const useDemoGameStates = () => {
           case "Learn1.117":
             return (
               <div>
-                By the way, you can consult the Tactics Guide by pressing the
+                On that note, you can consult the Tactics Guide by pressing the{" "}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 512 512"
@@ -1920,14 +1872,16 @@ export const useDemoGameStates = () => {
             );
 
           case "Learn1.118":
-            return <div>Close this to proceed.</div>;
+            return <div>Close it to proceed.</div>;
 
           case "Learn1.119":
             return (
               <div>
                 The Invoke tactic does not provide units with any actions. That
-                said, some Scion classes can utilize it. For example, Metal
-                Scions possess an ability that can be activated via Invoke.
+                said, some Scion classes can nonetheless utilize it.
+                <br /> <br />
+                For example, Metal Scions possess an ability that can be
+                activated via Invoke.
               </div>
             );
 
@@ -2013,7 +1967,7 @@ export const useDemoGameStates = () => {
                 When a unit suffers an attack, they lose HP equal to its AP
                 (Attack Power). By default, attacks have 1 AP; thus, as
                 mentioned earlier, units tend to be eliminated by a single
-                attack. Your Metal Scion has a talent that increases the AP of
+                attack. Metal Sciond have a talent that increases the AP of
                 their attacks for every Sharpness they possess.
               </div>
             );
@@ -2047,9 +2001,12 @@ export const useDemoGameStates = () => {
           case "Learn1.137":
             return (
               <div>
-                Represented by a triangular ruby,{" "}
+                Displaying a triangular ruby icon,{" "}
                 <strong>contingent skills</strong> enable timely reactions to
                 certain events.
+                <br /> <br />
+                (Reminder: You can view a card by clicking on its magnifying
+                glass icon.)
               </div>
             );
 
@@ -2081,7 +2038,8 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 Aegis has 2 sub-effects, the first of which draws a skill if the
-                activator is the targeted unit.
+                activator is the targeted unit. (This has been automatically
+                applied.)
                 <br /> <br />
                 The second is modular, offering the choice to provide Shield or
                 Ward at the cost of 1 skill.
@@ -2095,7 +2053,7 @@ export const useDemoGameStates = () => {
                 <strong>Ward</strong> is another enhancement, functioning as an
                 improved version of Shield. It can negate the next attack{" "}
                 <strong>or affliction</strong> (negative status) that the unit
-                would receive.
+                would receive from an enemy.
                 <br /> <br />
                 In this situation, Shield suffices for protection.
               </div>
@@ -2234,7 +2192,10 @@ export const useDemoGameStates = () => {
               <div>
                 Vengeful Legacy’s second sub-effect gives you the option to
                 float a skill from your hand to grant the newly ascended Scion
-                the Ravager enhancement, which will be discussed a bit later.
+                the <strong>Ravager</strong> enhancement, which will be
+                discussed a bit later.
+                <br />
+                <br />
                 For now, float “Tea For Two.”
               </div>
             );
@@ -2242,10 +2203,11 @@ export const useDemoGameStates = () => {
           case "Learn1.167":
             return (
               <div>
-                Ravager is visually represented by a rising red aura.
+                Ravager is visually represented by a rising red aura. Unlike
+                Shield and Ward, it has an indefinite duration.
                 <br />
                 <br />
-                In any case, return to the Silver Sovereign’s perspective.
+                Return to the Silver Sovereign’s perspective.
               </div>
             );
 
@@ -2253,8 +2215,11 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 Now that the chain of effects has concluded, the Metal Scion
-                finally moves into the zone occupied by the Mana Scion that was
-                eliminated.
+                finally moves into the zone occupied by the eliminated Mana
+                Scion.
+                <br />
+                <br />
+                Frenzy Blade is then discarded as per its conclusion.
               </div>
             );
 
@@ -2278,8 +2243,7 @@ export const useDemoGameStates = () => {
                 another unit, they are afflicted with <strong>Anathema</strong>{" "}
                 for 2 turns. Anathema is an affliction (negative status) that
                 mutes units. Muted units are only allowed to traverse; they
-                cannot activate skills, abilities, and talents. They cannot
-                attack either.
+                cannot attack nor activate skills, abilities, and talents.
               </div>
             );
 
@@ -2288,8 +2252,8 @@ export const useDemoGameStates = () => {
               <div>
                 Anathema takes effect once the unit has finished performing all
                 effects they have activated. In this case, the Metal Scion
-                received Anathema after they moved rather than immediately after
-                eliminating the Mana Scion.
+                received Anathema after Frenzy Blade concluded rather than
+                immediately after eliminating the Mana Scion.
               </div>
             );
 
@@ -2326,8 +2290,11 @@ export const useDemoGameStates = () => {
                 You still have an unused Plant Avelhem, but for the sake of the
                 demonstration, do not activate it. As mentioned earlier, unused
                 Avelhems are discarded during the Final Phase. Repertoires have
-                only 20 Avelhems, but fret not. When a repertoire is depleted,
-                its vestige is shuffled to form a new one.
+                only 20 Avelhems, but fret not.{" "}
+                <strong>
+                  Whenever a repertoire is depleted, its vestige is shuffled to
+                  form a new one.
+                </strong>
               </div>
             );
 
@@ -2397,21 +2364,28 @@ export const useDemoGameStates = () => {
             );
 
           case "Learn1.191":
-          case "Learn1.192":
             return (
               <div>
                 You do not have a second copy of Press The Attack, but you can
                 still resonate it with a valid substitute.
-                <br />
-                <br />
-                Tea For Two is a standard Sovereign skill with a{" "}
-                <strong>substitute</strong>
-                property that allows it to serve as a resonator for any resonant
-                skill or Avelhem.
               </div>
             );
 
+          case "Learn1.192":
           case "Learn1.193":
+            return (
+              <div>
+                Tea For Two is a standard Sovereign skill with a{" "}
+                <strong>substitute</strong> property that allows it to serve as
+                a resonator for any Avelhem or resonant skill instead.
+                <br />
+                <br />
+                (Reminder: You can click on the magnifying glass icon to view
+                the card.)
+              </div>
+            );
+
+          case "Learn1.194":
             return (
               <div>
                 As per the second sub-effect of Press The Attack, draw 2
@@ -2419,14 +2393,501 @@ export const useDemoGameStates = () => {
               </div>
             );
 
-          case "Learn1.194":
           case "Learn1.195":
+          case "Learn1.196":
             return (
               <div>
                 As per the third sub-effect of Press The Attack, deploy a pawn.
                 Place them between your other Scions.
               </div>
             );
+
+          case "Learn1.197":
+            return (
+              <div>
+                You have resolved the primary effect of Press The Attack.
+                Because it was resonated, the sub-effects of its resonance will
+                proceed.
+              </div>
+            );
+
+          case "Learn1.198":
+          case "Learn1.199":
+            return (
+              <div>
+                The resonance’s first sub-effect allows you to search for any
+                Scion skill that allows the activator to strike or blast. Search
+                for Surge, the standard skill of Mana Scions.
+              </div>
+            );
+
+          case "Learn1.200":
+            return (
+              <div>
+                To prove the legitimacy of the search, the skill in its entirety
+                is revealed the opponent. In most situations, the digital
+                simulator skips the revelation of searches (especially if it is
+                restricted to 1 particular skill), since it assumes the rules
+                are enforced.
+                <br />
+                <br />
+              </div>
+            );
+
+          case "Learn1.201":
+            return (
+              <div>
+                Some searches are restricted to an aspect (such as Ambiance
+                Assimilation being limited to Mana Skills), but this does not
+                require a full revelation either. The legitimacy of the search
+                can be proven by displaying the aspect icon at the corner of the
+                card, concealing the rest of the information. For the same
+                reason, the simulator skips this.
+                <br />
+                <br />
+              </div>
+            );
+
+          case "Learn1.202":
+            return (
+              <div>
+                Without further ado, switch perspective to see how a revelation
+                appears from the other end.
+                <br />
+                <br />
+              </div>
+            );
+
+          case "Learn1.203":
+          case "Learn1.204":
+            return <div>Press Proceed and switch back.</div>;
+
+          case "Learn1.205":
+            return (
+              <div>
+                The last sub-effect of a skill’s resonance either retains (such
+                as in the case of Metal Scions’ Reinforce) or gives the option
+                to float it. Resonating Press The Attack would normally retain
+                it; however, as per Tea For Two’s substitute property, the
+                retention was negated. Instead, you drew a skill.
+              </div>
+            );
+
+          case "Learn1.206":
+          case "Learn1.207":
+          case "Learn1.208":
+          case "Learn1.209":
+          case "Learn1.210":
+          case "Learn1.211":
+            return (
+              <div>
+                The skill you drew is “Glacial Torrent”, the burst skill of
+                Water Scions. Speaking of which, promote your pawn by resonating
+                your Water Avelhems.
+              </div>
+            );
+
+          case "Learn1.212":
+            return (
+              <div>
+                The debut talent of Water Scions allows them to either restore a
+                friendly unit’s Virtue or remove that of an enemy.
+                <br />
+                <br />
+                (When units are deployed, they are automatically granted Virtue,
+                the applications of which will be discussed later.)
+              </div>
+            );
+
+          case "Learn1.213":
+          case "Learn1.214":
+          case "Learn1.215":
+            return (
+              <div>
+                Since all your units still possess their Virtues, purge the
+                Virtue of the enemy Metal Scion.
+              </div>
+            );
+
+          case "Learn1.216":
+            return (
+              <div>
+                The visual indicator of a Virtue is found to the right of the
+                unit’s HP (heart-shaped) icon. As the Metal Scion no longer
+                possesses their Virtue, their icon is absent.
+              </div>
+            );
+
+          case "Learn1.216.1":
+            return (
+              <div>
+                All Avelhems have the same resonance: they grant the Scion the
+                Ravager enhancement, then they grant the Sovereign the option to
+                shuffle the card back into their repertoire instead of
+                discarding it. Opt to discard it.
+              </div>
+            );
+
+          case "Learn1.217":
+          case "Learn1.218":
+          case "Learn1.219":
+            return (
+              <div>
+                Click on your Water Scion and make them activate their burst
+                skill.
+              </div>
+            );
+
+          case "Learn1.220":
+            return (
+              <div>
+                Displaying a hexagonal amethyst icon,{" "}
+                <strong>burst skills</strong> unleash powerful effects. Like
+                standard and resonant skills, they can only be activated during
+                the Execution Phase. What distinguishes them is the fact that{" "}
+                <strong>
+                  burst skills are shattered (removed from play) rather than
+                  discarded upon the conclusion of their effects.
+                </strong>
+              </div>
+            );
+
+          case "Learn1.221":
+            return (
+              <div>
+                The first sub-effect of Glacial Torrent grants the activator
+                Ward (represented by the golden shield icon) for 3 turns and a
+                boost that allows them to activate their next 2 abilities
+                without using a tactic (each usage is indicated by a blue
+                diamond).
+              </div>
+            );
+
+          case "Learn1.222":
+            return (
+              <div>
+                <strong>Boosts</strong> are temporary benefits that expire upon
+                use or at the end of the turn; they are akin to enhancements,
+                albeit more fleeting. If a unit is muted, any boosts they
+                possess or would obtain are removed.
+              </div>
+            );
+
+          case "Learn1.223":
+            return (
+              <div>
+                The second sub-effect allows you to inspect 5 skills from your
+                hand and add up to 3 Water skills among them to your hand.
+                <br />
+                <br />
+                Inspections function similar to searches, but they are limited
+                to a specified number of cards, starting from the top of the
+                repertoire.
+              </div>
+            );
+
+          case "Learn1.224":
+            return (
+              <div>
+                When an inspection ends, cards are returned in their original
+                sequence; the repertoire is not shuffled (unless stated
+                otherwise).
+              </div>
+            );
+
+          case "Learn1.225":
+          case "Learn1.226":
+          case "Learn1.227":
+            return <div>Add the 2 Water skills to your hand.</div>;
+
+          case "Learn1.228":
+            return (
+              <div>
+                As mentioned earlier, burst skills are shattered rather than
+                discarded upon the conclusion of their effects. Nonetheless,
+                they can still be discarded via other means, such as being
+                spent. Shattered skills are excluded from effects that could
+                recover a card from the vestige, so burst skills are essentially
+                usable once.
+              </div>
+            );
+
+          case "Learn1.229":
+            return (
+              <div>
+                Burst skills are limited to a single copy in the repertoire,
+                making them all the more valuable. (Avelhems and non-burst Scion
+                skills are allowed up to 4 copies, while Sovereign skills are
+                allowed up to 2.)
+              </div>
+            );
+
+          case "Learn1.230":
+          case "Learn1.231":
+          case "Learn1.232":
+            return (
+              <div>
+                Before you put the Water Scion’s boost into action, activate
+                their “Frigid Breath” skill.
+              </div>
+            );
+
+          case "Learn1.233":
+            return (
+              <div>
+                Frigid Breath allows the activator to freeze an enemy (inflict
+                them with the Frostbite affliction). <strong>Frostbite</strong>{" "}
+                renders mutes a unit and renders them immobile.
+                <br />
+                <br />
+                Freeze the Metal Scion.
+              </div>
+            );
+
+          case "Learn1.234":
+            return (
+              <div>
+                Frigid Breath can freeze another unit at the cost of floating a
+                skill, but that will not necessary. Press Skip.
+              </div>
+            );
+
+          case "Learn1.235":
+            return (
+              <div>Click on your Water Scion and view their abilities.</div>
+            );
+
+          case "Learn1.236":
+          case "Learn1.237":
+            return (
+              <div>
+                Water Scions have 2 abilities, both of which require tactics.
+                But as per the boost obtained from Glacial Torrent, the next 2
+                abilities they activate will not use them.
+                <br />
+                <br />
+                Activate Cold Embrace.
+              </div>
+            );
+
+          case "Learn1.238":
+          case "Learn1.239":
+          case "Learn1.240":
+            return (
+              <div>
+                Cold Embrace allows Water Scions to strike a frostbitten enemy
+                or freeze one. Strike the frostbitten Metal Scion
+              </div>
+            );
+
+          case "Learn1.241":
+            return (
+              <div>
+                Water Scions have a talent that allows them to bypass Shield
+                when attacking frostbitten enemies. Therefore, even though the
+                Metal Scion had shield, their HP was still reduced.
+              </div>
+            );
+
+          case "Learn1.242":
+          case "Learn1.243":
+          case "Learn1.244":
+          case "Learn1.245":
+          case "Learn1.246":
+          case "Learn1.247":
+            return (
+              <div>
+                Activate Cold Embrace once more to finish off the Metal Scion!
+              </div>
+            );
+
+          case "Learn1.248":
+            return (
+              <div>
+                Due to the Metal Scion’s elimination, the Gold Sovereign gains 1
+                BP, while the Silver Sovereign gains 2 FD.
+                <br />
+                <br />
+                Because the Water Scion is enhanced with Ravager, they are not
+                punished with Anethema.
+              </div>
+            );
+
+          case "Learn1.249":
+            return (
+              <div>
+                As per strike, the Water Scion moves into the zone of their
+                victim.
+              </div>
+            );
+
+          case "Learn1.250":
+          case "Learn1.251":
+          case "Learn1.252":
+          case "Learn1.253":
+          case "Learn1.254":
+            return (
+              <div>
+                Up next is an explanation of Virtues.{" "}
+                <strong>
+                  For the sake of the demo, your tactics have been rerolled.
+                </strong>
+                <br />
+                <br />
+                Make your Water Scion traverse to beside the enemy pawn via
+                Mobilize.
+              </div>
+            );
+
+          case "Learn1.255":
+            return (
+              <div>
+                As mentioned earlier, units inherently possess a Virtue.
+                <br />
+                <br />
+                <strong>
+                  Virtues are primarily used to perform and mitigate
+                  Virtue-blasts.
+                </strong>{" "}
+                Scions (not pawns) can perform a Virtue-blast via the Advance
+                tactic.
+              </div>
+            );
+
+          case "Learn1.256":
+            return (
+              <div>
+                When a unit performs a <strong>Virtue-blast</strong>, they
+                expend their Virtue to blast an enemy. When the attack connects,
+                the victim is given the option to mitigate it.
+              </div>
+            );
+
+          case "Learn1.257":
+            return (
+              <div>
+                <strong>Mitigating a Virtue-blast reduces its AP by 1.</strong>
+                <br />
+                <br />
+                When a unit mitigates a Virtue-blast, they spend their Virtue
+                and transfer it to the attacker. (Muted units cannot spend their
+                Virtues; thus, they are most vulnerable to Virtue-blasts.)
+              </div>
+            );
+
+          case "Learn1.258":
+          case "Learn1.259":
+          case "Learn1.260":
+          case "Learn1.261":
+          case "Learn1.262":
+            return (
+              <div>
+                Let’s see it in action. Make your Water Scion Virtue-blast the
+                enemy pawn.
+              </div>
+            );
+
+          case "Learn1.263":
+            return <div>Switch player.</div>;
+
+          case "Learn1.264":
+            return <div>Opt to reduce the AP.</div>;
+
+          case "Learn1.265":
+            return (
+              <div>
+                Attacks have 1 AP by default; thus, the damage dealt by the
+                Virtue-blast was reduced to 0. <br />
+                <br />
+                Due to the mitigation, the Water Scion regained the Virtue they
+                spent on their attack.
+              </div>
+            );
+
+          case "Learn1.266":
+            return <div>Switch player.</div>;
+
+          case "Learn1.267":
+            return (
+              <div>
+                At that covers most basics of the game. All that is left is
+                scoring and winning.
+              </div>
+            );
+
+          case "Learn1.268":
+            return (
+              <div>
+                <strong>
+                  To score, a Sovereign must maneuver units to their opponent’s
+                  base
+                </strong>{" "}
+                (the furthest row on their side of the board). The score needed
+                to win is a predetermined number from 1 to 5. In this simulator,
+                the score objective is set to 1; whenever it is achieved, the
+                Sovereigns may opt to continue the game by raising it.
+              </div>
+            );
+
+          case "Learn1.269":
+          case "Learn1.270":
+          case "Learn1.271":
+          case "Learn1.272":
+          case "Learn1.273":
+            return (
+              <div>
+                For the sake of this demo, a pawn has been deployed a space away
+                from the enemy base. <br />
+                <br />
+                Make them move via Mobilize.
+              </div>
+            );
+
+          case "Learn1.274":
+            return (
+              <div>
+                Moving into the opponent’s base is not enough to score; the unit
+                must survive there by the end of the Final Phase. <br />
+                <br />
+                Click on End Turn.
+              </div>
+            );
+
+          case "Learn1.275":
+            return (
+              <div>
+                And that concludes the interactive portion of the tutorial.
+                <br />
+                <br />
+                It is worth noting that should the game proceed after a unit
+                scores, the Sovereign of the scoring unit gains 2 BP, while
+                their opponent gains 6 FD.
+              </div>
+            );
+
+          case "Learn1.276":
+            return (
+              <div>
+                Units that have scored stay on the board, but they cannot be
+                interacted with. Furthermore, they continue counting towards
+                their Sovereign’s unit limits. (Sovereigns can have up to 8
+                units on the board, and no more than 2 ally Scions can share a
+                class.)
+              </div>
+            );
+
+          case "Learn1.277":
+            return (
+              <div>
+                Lastly, there are some nuances in the rules that were not
+                discussed in this demo but still automatically applied by the
+                simulator. Nonetheless, they can be found in the rules
+                documentation.
+              </div>
+            );
+
+          case "Learn1.278":
+            return <div>Demo over.</div>;
 
           ////////////////////
         }

@@ -3,6 +3,7 @@ import "./Modal.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
+import { updateDemo } from "../../redux/demoGuide";
 
 import { useCardDatabase } from "../../hooks/useCardDatabase";
 import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
@@ -11,6 +12,8 @@ import Skill from "../hand/Skill";
 
 const ViewRevealedSkill = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
+  const { demoGuide } = useSelector((state) => state.demoGuide);
+
   const dispatch = useDispatch();
 
   // const { getSkillById } = useCardDatabase();
@@ -29,6 +32,21 @@ const ViewRevealedSkill = (props) => {
   };
 
   // const revealedCard = getSkillById(props.skill);
+
+  const canClick = (element1) => {
+    switch (demoGuide) {
+      case "Learn1.203":
+        return element1 === "Proceed Button";
+    }
+  };
+
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+      case "Learn1.203":
+        dispatch(updateDemo("Learn1.204"));
+        break;
+    }
+  };
 
   return (
     <div className="modal-backdrop">
@@ -62,7 +80,15 @@ const ViewRevealedSkill = (props) => {
           )}
         </div>
 
-        <button className="choiceButton" onClick={() => handleProceed()}>
+        <button
+          className={`choiceButton ${
+            canClick("Proceed Button") ? "demoClick" : ""
+          }`}
+          onClick={() => {
+            handleProceed();
+            handleUpdateDemoGuide();
+          }}
+        >
           Proceed
         </button>
       </div>

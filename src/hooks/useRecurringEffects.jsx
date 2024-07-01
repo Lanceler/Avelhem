@@ -5368,14 +5368,14 @@ export const useRecurringEffects = () => {
 
     if (victim.virtue && !isMuted(victim) && !isDisrupted(victim, 2)) {
       newGameState.currentResolution.push({
-        resolution: "Blocking Virtue-Blast",
+        resolution: "Mitigating Virtue-Blast",
 
         unit: victim,
         attacker: attacker,
         details: {
-          reason: "Block Virtue-Blast",
-          title: "Block Virtue-Blast",
-          message: `Enemy ${attacker.unitClass} is about to Virtue-blast your ${victim.unitClass}. Your unit may spend their Virtue to reduce the attack’s AP by
+          reason: "Mitigate Virtue-Blast",
+          title: "Mitigate Virtue-Blast",
+          message: `The enemy ${attacker.unitClass} is about to Virtue-blast your ${victim.unitClass}. Your unit may spend their Virtue to reduce the attack’s AP by
           1.`,
           no: "Skip",
           yes: "Reduce AP",

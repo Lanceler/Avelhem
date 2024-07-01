@@ -831,11 +831,14 @@ const SelectCustomChoice = (props) => {
       case "Learn1.126":
       case "Learn1.143":
       case "Learn1.153":
+      case "Learn1.238":
+      case "Learn1.245":
         return element === "1st Choice";
 
       case "Learn1.25":
-      case "Learn1.109":
+      case "Learn1.109.1":
       case "Learn1.149":
+      case "Learn1.213":
         return element === "2nd Choice";
 
       case "Learn1.26":
@@ -844,6 +847,9 @@ const SelectCustomChoice = (props) => {
       case "Learn1.144":
       case "Learn1.150":
       case "Learn1.154":
+      case "Learn1.214":
+      case "Learn1.239":
+      case "Learn1.246":
         return element === "Select Button";
 
       ///////////////////////
@@ -873,7 +879,7 @@ const SelectCustomChoice = (props) => {
         dispatch(updateDemo("Learn1.27"));
         break;
 
-      case "Learn1.109":
+      case "Learn1.109.1":
         dispatch(updateDemo("Learn1.110"));
         break;
 
@@ -915,6 +921,30 @@ const SelectCustomChoice = (props) => {
 
       case "Learn1.154":
         dispatch(updateDemo("Learn1.155"));
+        break;
+
+      case "Learn1.213":
+        dispatch(updateDemo("Learn1.214"));
+        break;
+
+      case "Learn1.214":
+        dispatch(updateDemo("Learn1.215"));
+        break;
+
+      case "Learn1.238":
+        dispatch(updateDemo("Learn1.239"));
+        break;
+
+      case "Learn1.239":
+        dispatch(updateDemo("Learn1.240"));
+        break;
+
+      case "Learn1.245":
+        dispatch(updateDemo("Learn1.246"));
+        break;
+
+      case "Learn1.246":
+        dispatch(updateDemo("Learn1.247"));
         break;
 
       ///////////////////////

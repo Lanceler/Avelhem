@@ -4,6 +4,7 @@ import "../modals/Modal.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
+import { updateDemo } from "../../redux/demoGuide";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import SkillMultiSelect from "../hand/SkillMultiSelect";
@@ -11,6 +12,8 @@ import SkillMultiSelect from "../hand/SkillMultiSelect";
 const GlacialTorrent1 = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
+  const { demoGuide } = useSelector((state) => state.demoGuide);
+
   const dispatch = useDispatch();
   const { refillRepertoireSkill } = useRecurringEffects();
 
@@ -122,6 +125,39 @@ const GlacialTorrent1 = (props) => {
     props.hideOrRevealModale();
   };
 
+  const canClick = (element, element2) => {
+    switch (demoGuide) {
+      case "Learn1.225":
+        return element2 === 1;
+
+      case "Learn1.226":
+        return element2 === 2;
+
+      case "Learn1.227":
+        return element === "Select Button";
+
+      //////////////////////
+    }
+  };
+
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+      case "Learn1.225":
+        dispatch(updateDemo("Learn1.226"));
+        break;
+
+      case "Learn1.226":
+        dispatch(updateDemo("Learn1.227"));
+        break;
+
+      case "Learn1.227":
+        dispatch(updateDemo("Learn1.228"));
+        break;
+
+      ////////////////////
+    }
+  };
+
   return (
     <div className="modal-backdrop">
       <div className="modal">
@@ -147,7 +183,7 @@ const GlacialTorrent1 = (props) => {
                     }`}
                     onClick={() => {
                       handleClick(canAdd(usableSkill.id), i);
-                      // handleUpdateDemoGuide();
+                      handleUpdateDemoGuide();
                     }}
                   >
                     <SkillMultiSelect
@@ -163,7 +199,7 @@ const GlacialTorrent1 = (props) => {
             </>
           )}
 
-          <h3>Non-floating skills</h3>
+          {localGameState[self].skillFloat > 0 && <h3>Non-floating skills</h3>}
           <div className="fourColumn">
             {inspectRerpertoire.map((usableSkill, i) => (
               <div
@@ -172,13 +208,16 @@ const GlacialTorrent1 = (props) => {
                   selectedSkills.includes(i + localGameState[self].skillFloat)
                     ? "selectedSkill"
                     : ""
-                }`}
+                }
+                ${canClick("Skill Card", i) ? "demoClick" : ""}
+
+                `}
                 onClick={() => {
                   handleClick(
                     canAdd(usableSkill.id),
                     i + localGameState[self].skillFloat
                   );
-                  // handleUpdateDemoGuide();
+                  handleUpdateDemoGuide();
                 }}
               >
                 <SkillMultiSelect
@@ -200,7 +239,15 @@ const GlacialTorrent1 = (props) => {
         )}
 
         {selectedSkills.length > 0 && (
-          <button className="choiceButton" onClick={() => handleSelect()}>
+          <button
+            className={`choiceButton ${
+              canClick("Select Button") ? "demoClick" : ""
+            }`}
+            onClick={() => {
+              handleSelect();
+              handleUpdateDemoGuide();
+            }}
+          >
             Select
           </button>
         )}

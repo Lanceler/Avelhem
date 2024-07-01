@@ -222,11 +222,15 @@ const SearchSkill = (props) => {
       case "Learn1.159":
         return element3 === 1;
 
+      case "Learn1.198":
+        return element3 === 5;
+
       case "Learn1.33":
       case "Learn1.103":
       case "Learn1.125":
       case "Learn1.160":
       case "Learn1.187":
+      case "Learn1.199":
         return element1 === "Select Button";
     }
   };
@@ -271,6 +275,13 @@ const SearchSkill = (props) => {
 
       case "Learn1.187":
         dispatch(updateDemo("Learn1.188"));
+        break;
+      case "Learn1.198":
+        dispatch(updateDemo("Learn1.199"));
+        break;
+
+      case "Learn1.199":
+        dispatch(updateDemo("Learn1.200"));
         break;
     }
   };

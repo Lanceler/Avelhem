@@ -75,12 +75,15 @@ const TacticSelection = (props) => {
   const canClick = (element, element2) => {
     switch (demoGuide) {
       case "Learn1.40":
+      case "Learn1.251":
+      case "Learn1.270":
         return element2 === 0;
 
       case "Learn1.49":
       case "Learn1.55":
       case "Learn1.60":
       case "Learn1.129":
+      case "Learn1.259":
         return element2 === 1;
 
       case "Fire1.23":
@@ -113,6 +116,18 @@ const TacticSelection = (props) => {
       case "Learn1.129":
         dispatch(updateDemo("Learn1.130"));
         break;
+
+      case "Learn1.251":
+        dispatch(updateDemo("Learn1.252"));
+        break;
+
+      case "Learn1.259":
+        dispatch(updateDemo("Learn1.260"));
+        break;
+
+      case "Learn1.270":
+        dispatch(updateDemo("Learn1.271"));
+        break;
     }
   };
 
@@ -120,7 +135,7 @@ const TacticSelection = (props) => {
     <div className="modal-backdrop">
       <div className="modal">
         <h2 className="choiceTitle">
-          Select Tactic
+          Select Tactic{" "}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 512 512"
@@ -165,7 +180,7 @@ const TacticSelection = (props) => {
         </div>
 
         {
-          <button button className="choiceButton" onClick={() => handleSkip()}>
+          <button className="choiceButton" onClick={() => handleSkip()}>
             {skipMessage}
           </button>
         }

@@ -37,7 +37,7 @@ const SelectedSkill = (props) => {
     canResonateSkill = canActivateSovereignResonance(props.selectedSkill.id);
   }
 
-  console.log(props.selectedSkill);
+  // console.log(props.selectedSkill);
 
   const handleActivate = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));

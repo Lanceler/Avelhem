@@ -776,7 +776,13 @@ const SelectUnitAbility = (props) => {
       case "Learn1.122":
         return element2 === 0;
 
+      case "Learn1.236":
+      case "Learn1.243":
+        return element2 === 1;
+
       case "Learn1.123":
+      case "Learn1.237":
+      case "Learn1.244":
         return element === "Select Button";
 
       ///////////////////////////////
@@ -808,6 +814,22 @@ const SelectUnitAbility = (props) => {
     switch (demoGuide) {
       case "Learn1.122":
         dispatch(updateDemo("Learn1.123"));
+        break;
+
+      case "Learn1.236":
+        dispatch(updateDemo("Learn1.237"));
+        break;
+
+      case "Learn1.237":
+        dispatch(updateDemo("Learn1.238"));
+        break;
+
+      case "Learn1.243":
+        dispatch(updateDemo("Learn1.244"));
+        break;
+
+      case "Learn1.244":
+        dispatch(updateDemo("Learn1.245"));
         break;
 
       ////////////////////////
@@ -888,7 +910,10 @@ const SelectUnitAbility = (props) => {
               canClick("Select Button") ? "demoClick" : ""
             }`}
             onClick={() => {
-              handleSelect();
+              {
+                handleSelect();
+                handleUpdateDemoGuide();
+              }
             }}
           >
             Select

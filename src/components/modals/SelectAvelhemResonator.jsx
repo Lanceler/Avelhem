@@ -116,6 +116,13 @@ const SelectAvelhemResonator = (props) => {
 
   const canClick = (element, element2) => {
     switch (demoGuide) {
+      case "Learn1.209":
+        return element2.id === 2;
+
+      case "Learn1.210":
+        return element === "Select Button";
+
+      ///////////////////
       case "Fire1.1":
         switch (element) {
           case "Resonator":
@@ -134,6 +141,15 @@ const SelectAvelhemResonator = (props) => {
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
+      case "Learn1.209":
+        dispatch(updateDemo("Learn1.210"));
+        break;
+
+      case "Learn1.210":
+        dispatch(updateDemo("Learn1.211"));
+        break;
+
+      /////////////////
       case "Fire1.1":
         dispatch(updateDemo("Fire1.2"));
         break;

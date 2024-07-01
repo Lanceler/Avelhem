@@ -64,17 +64,10 @@ export default function Demo() {
         case "learn":
           setInfoPopUp("learn");
 
+          setCurrentPlayer("guest");
+
           setDemoTitle("Gameplay Tutorial");
           dispatch(updateDemo("Learn1.1"));
-
-          //to remove
-          setInfoPopUp(null);
-          dispatch(updateDemo("Learn1.135"));
-          setDemoGameState(
-            JSON.parse(JSON.stringify(getDemoGameState("latest test")))
-          );
-
-          setCurrentPlayer("guest");
 
           dispatch(
             updatecontingencySettings({
@@ -114,6 +107,10 @@ export default function Demo() {
       case "Learn1.155":
       case "Learn1.167":
       case "Learn1.173":
+      case "Learn1.202":
+      case "Learn1.204":
+      case "Learn1.263":
+      case "Learn1.266":
         return element === "Switch Player Button";
 
       ///////////
@@ -182,6 +179,31 @@ export default function Demo() {
       case "Learn1.170.1":
       case "Learn1.171":
       case "Learn1.190":
+      case "Learn1.197":
+      case "Learn1.200":
+      case "Learn1.201":
+      case "Learn1.205":
+      case "Learn1.212":
+      case "Learn1.216":
+      case "Learn1.220":
+      case "Learn1.221":
+      case "Learn1.222":
+      case "Learn1.223":
+      case "Learn1.224":
+      case "Learn1.228":
+      case "Learn1.229":
+      case "Learn1.241":
+      case "Learn1.248":
+      case "Learn1.249":
+      case "Learn1.255":
+      case "Learn1.256":
+      case "Learn1.257":
+      case "Learn1.265":
+      case "Learn1.267":
+      case "Learn1.268":
+      case "Learn1.275":
+      case "Learn1.276":
+      case "Learn1.277":
         return true;
     }
   };
@@ -441,6 +463,122 @@ export default function Demo() {
         dispatch(updateDemo("Learn1.191"));
         break;
 
+      case "Learn1.197":
+        dispatch(updateDemo("Learn1.198"));
+        break;
+
+      case "Learn1.200":
+        dispatch(updateDemo("Learn1.201"));
+        break;
+
+      case "Learn1.201":
+        dispatch(updateDemo("Learn1.202"));
+        break;
+
+      case "Learn1.202":
+        dispatch(updateDemo("Learn1.203"));
+        break;
+
+      case "Learn1.204":
+        dispatch(updateDemo("Learn1.205"));
+        break;
+
+      case "Learn1.205":
+        dispatch(updateDemo("Learn1.206"));
+        break;
+
+      case "Learn1.212":
+        dispatch(updateDemo("Learn1.213"));
+        break;
+
+      case "Learn1.216":
+        dispatch(updateDemo("Learn1.216.1"));
+        break;
+
+      case "Learn1.220":
+        dispatch(updateDemo("Learn1.221"));
+        break;
+
+      case "Learn1.221":
+        dispatch(updateDemo("Learn1.222"));
+        break;
+
+      case "Learn1.222":
+        dispatch(updateDemo("Learn1.223"));
+        break;
+
+      case "Learn1.223":
+        dispatch(updateDemo("Learn1.224"));
+        break;
+
+      case "Learn1.224":
+        dispatch(updateDemo("Learn1.225"));
+        break;
+
+      case "Learn1.228":
+        dispatch(updateDemo("Learn1.229"));
+        break;
+
+      case "Learn1.229":
+        dispatch(updateDemo("Learn1.230"));
+        break;
+
+      case "Learn1.241":
+        dispatch(updateDemo("Learn1.242"));
+        break;
+
+      case "Learn1.248":
+        dispatch(updateDemo("Learn1.249"));
+        break;
+
+      case "Learn1.249":
+        dispatch(updateDemo("Learn1.250"));
+        break;
+
+      case "Learn1.255":
+        dispatch(updateDemo("Learn1.256"));
+        break;
+
+      case "Learn1.256":
+        dispatch(updateDemo("Learn1.257"));
+        break;
+
+      case "Learn1.257":
+        dispatch(updateDemo("Learn1.258"));
+        break;
+
+      case "Learn1.263":
+        dispatch(updateDemo("Learn1.264"));
+        break;
+
+      case "Learn1.265":
+        dispatch(updateDemo("Learn1.266"));
+        break;
+
+      case "Learn1.266":
+        dispatch(updateDemo("Learn1.267"));
+        break;
+
+      case "Learn1.267":
+        dispatch(updateDemo("Learn1.268"));
+        break;
+
+      case "Learn1.268":
+        dispatch(updateDemo("Learn1.269"));
+        break;
+
+      case "Learn1.275":
+        dispatch(updateDemo("Learn1.276"));
+        break;
+
+      case "Learn1.276":
+        dispatch(updateDemo("Learn1.277"));
+        break;
+
+      case "Learn1.277":
+        dispatch(updateDemo("Learn1.278"));
+        break;
+
       ////////////////////////////////////////////
 
       case "Fire1.4":
@@ -476,6 +614,12 @@ export default function Demo() {
         "Learn1.165",
         "Learn1.176",
         "Learn1.183",
+        "Learn1.198",
+        "Learn1.204",
+        "Learn1.216.1",
+        "Learn1.249",
+        "Learn1.250",
+        "Learn1.269",
       ].includes(demoGuide)
     ) {
       scriptedDemo();
@@ -604,9 +748,56 @@ export default function Demo() {
           { face: "Advance", limit: 1, stock: 1 },
         ];
 
-        duplicateDemoGameState.host.avelhemRepertoire[17] = 8;
+        duplicateDemoGameState.host.avelhemRepertoire[17] = 2;
+        duplicateDemoGameState.host.avelhemRepertoire[16] = 2;
+        break;
 
-        duplicateDemoGameState.host.avelhemRepertoire[16] = 8;
+      case "Learn1.198":
+        const f = duplicateDemoGameState.host.skillRepertoire.length;
+        duplicateDemoGameState.host.skillRepertoire[f - 6] = "06-01";
+        duplicateDemoGameState.host.skillRepertoire[f - 1] = "04-03";
+        break;
+
+      case "Learn1.204":
+        const g = duplicateDemoGameState.host.skillRepertoire.length;
+        duplicateDemoGameState.host.skillRepertoire[g - 1] = "02-04";
+        duplicateDemoGameState.host.skillRepertoire[g - 2] = "07-04";
+        duplicateDemoGameState.host.skillRepertoire[g - 3] = "02-01";
+        duplicateDemoGameState.host.skillRepertoire[g - 4] = "02-02";
+        duplicateDemoGameState.host.skillRepertoire[g - 5] = "SA-05";
+        duplicateDemoGameState.host.skillRepertoire[g - 6] = "05-04";
+        break;
+
+      case "Learn1.216.1":
+        duplicateDemoGameState.currentResolution.pop();
+        break;
+
+      case "Learn1.249":
+        duplicateDemoGameState.currentResolution.pop();
+        break;
+
+      case "Learn1.250":
+        duplicateDemoGameState.tactics = [
+          { face: "Mobilize", limit: 3, stock: 3 },
+          { face: "Advance", limit: 1, stock: 1 },
+        ];
+        break;
+
+      case "Learn1.269":
+        duplicateDemoGameState.host.units[3] = {
+          player: "host",
+          unitIndex: 3,
+          row: 1,
+          column: 3,
+          unitClass: "Pawn",
+          hp: 1,
+          virtue: 1,
+          afflictions: {},
+          enhancements: {},
+          boosts: {},
+          temporary: {},
+        };
+
         break;
 
       //////////////////////
@@ -698,7 +889,7 @@ export default function Demo() {
 
           {/* display demoGuide for debugging */}
 
-          {demoGuide && <h1>{demoGuide}</h1>}
+          {/* {demoGuide && <h1>{demoGuide}</h1>} */}
         </div>
       )}
     </>

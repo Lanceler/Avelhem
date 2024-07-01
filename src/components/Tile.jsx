@@ -50,8 +50,14 @@ const Tile = (props) => {
       case "Learn1.63":
         return element === "Tile" && [28].includes(element2);
 
-      case "Learn1.195":
+      case "Learn1.196":
         return element === "Tile" && [27].includes(element2);
+
+      case "Learn1.254":
+        return element === "Tile" && [18].includes(element2);
+
+      case "Learn1.273":
+        return element === "Tile" && [3].includes(element2);
 
       ////////////////////////////
       case "Fire1.25":
@@ -77,8 +83,16 @@ const Tile = (props) => {
         dispatch(updateDemo("Learn1.64"));
         break;
 
-      case "Learn1.195":
-        dispatch(updateDemo("Learn1.196"));
+      case "Learn1.196":
+        dispatch(updateDemo("Learn1.197"));
+        break;
+
+      case "Learn1.254":
+        dispatch(updateDemo("Learn1.255"));
+        break;
+
+      case "Learn1.273":
+        dispatch(updateDemo("Learn1.274"));
         break;
 
       /////////////////////////////

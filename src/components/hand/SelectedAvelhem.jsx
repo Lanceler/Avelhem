@@ -151,6 +151,7 @@ const SelectedAvelhem = (props) => {
       case "Learn1.96":
         return element === "Activate Button";
 
+      case "Learn1.208":
       case "Fire1.1":
         return element === "Resonate Button";
     }
@@ -168,6 +169,10 @@ const SelectedAvelhem = (props) => {
 
       case "Learn1.96":
         dispatch(updateDemo("Learn1.97"));
+        break;
+
+      case "Learn1.208":
+        dispatch(updateDemo("Learn1.209"));
         break;
     }
   };
@@ -225,7 +230,10 @@ const SelectedAvelhem = (props) => {
                   className={`activateButton displayCardButton ${
                     canClick("Resonate Button") ? "demoClick" : ""
                   }`}
-                  onClick={() => handleResonate()}
+                  onClick={() => {
+                    handleResonate();
+                    handleUpdateDemoGuide();
+                  }}
                 >
                   Resonate
                 </button>

@@ -443,7 +443,7 @@
     padding: 1px 10px 1px 15px;
     color: #e8e8e8;
     font-family: "Times New Roman", Times, serif;
-    font-size: 25px;
+    font-size: 24.5px;
     text-align: left;
     /* justify-content: left; */
 }
@@ -817,4 +817,10 @@ display: flex;
 
     font-size: 30px;
 
+}
+
+.scion-skill-buttons{
+
+    display: flex;
+    gap: 25px
 }

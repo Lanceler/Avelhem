@@ -141,7 +141,7 @@ const SelectSkillResonator = (props) => {
         break;
 
       case "Learn1.109":
-        dispatch(updateDemo("Learn1.110"));
+        dispatch(updateDemo("Learn1.109.1"));
         break;
 
       case "Learn1.192":
@@ -208,7 +208,10 @@ const SelectSkillResonator = (props) => {
             className={`choiceButton ${
               canClick("Select Button") ? "demoClick" : ""
             }`}
-            onClick={() => handleSelect()}
+            onClick={() => {
+              handleSelect();
+              handleUpdateDemoGuide();
+            }}
           >
             Select
           </button>

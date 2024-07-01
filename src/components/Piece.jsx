@@ -71,6 +71,13 @@ export const Piece = (props) => {
             case "Learn1.49":
             case "Learn1.134":
             case "Learn1.141":
+            case "Learn1.211":
+            case "Learn1.217":
+            case "Learn1.230":
+            case "Learn1.235":
+            case "Learn1.242":
+            case "Learn1.250":
+            case "Learn1.258":
               return (
                 element === "Unit" &&
                 element2.unitIndex === 1 &&
@@ -99,6 +106,10 @@ export const Piece = (props) => {
             case "Learn1.120":
             case "Learn1.128":
             case "Learn1.148":
+            case "Learn1.215":
+            case "Learn1.233":
+            case "Learn1.240":
+            case "Learn1.247":
               return (
                 element === "Unit" &&
                 element2.unitIndex === 1 &&
@@ -109,6 +120,20 @@ export const Piece = (props) => {
               return (
                 element === "Unit" &&
                 element2.unitIndex === 0 &&
+                element2.player === "host"
+              );
+
+            case "Learn1.262":
+              return (
+                element === "Unit" &&
+                element2.unitIndex === 0 &&
+                element2.player === "guest"
+              );
+
+            case "Learn1.269":
+              return (
+                element === "Unit" &&
+                element2.unitIndex === 3 &&
                 element2.player === "host"
               );
           }
@@ -233,6 +258,30 @@ export const Piece = (props) => {
 
             case "Learn1.164":
               dispatch(updateDemo("Learn1.165"));
+              break;
+
+            case "Learn1.211":
+              dispatch(updateDemo("Learn1.212"));
+              break;
+
+            case "Learn1.215":
+              dispatch(updateDemo("Learn1.216"));
+              break;
+
+            case "Learn1.233":
+              dispatch(updateDemo("Learn1.234"));
+              break;
+
+            case "Learn1.240":
+              dispatch(updateDemo("Learn1.241"));
+              break;
+
+            case "Learn1.247":
+              dispatch(updateDemo("Learn1.248"));
+              break;
+
+            case "Learn1.262":
+              dispatch(updateDemo("Learn1.263"));
               break;
           }
           break;

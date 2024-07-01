@@ -362,6 +362,7 @@ const InfoPopUp = (props) => {
                 </strong>
               </p>
               <br />
+              <p>Estimated time: 20 to 30 minutes.</p>
             </div>
           </div>
         );

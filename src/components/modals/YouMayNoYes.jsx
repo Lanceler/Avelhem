@@ -31,7 +31,7 @@ const YouMayNoYes = (props) => {
   let updateData = false;
   if (
     [
-      "Block Virtue-Blast",
+      "Mitigate Virtue-Blast",
       "Mana Restructure",
       "Fervent Prayer",
       "Press the Attack Avelhem",
@@ -45,7 +45,7 @@ const YouMayNoYes = (props) => {
 
     newGameState.currentResolution.pop();
 
-    if (props.details.reason === "Block Virtue-Blast") {
+    if (props.details.reason === "Mitigate Virtue-Blast") {
       newGameState.activatingTarget.pop();
     }
 
@@ -74,7 +74,7 @@ const YouMayNoYes = (props) => {
     }
 
     switch (props.details.reason) {
-      case "Block Virtue-Blast": //"Blocking Virtue-Blast"
+      case "Mitigate Virtue-Blast": //"Mitigating Virtue-Blast"
         newGameState.activatingTarget.pop();
         newGameState = virtueBlastYes(newGameState, props.attacker, unit);
         break;
@@ -445,7 +445,12 @@ const YouMayNoYes = (props) => {
       case "Learn1.158":
       case "Learn1.193":
       case "Learn1.194":
+      case "Learn1.195":
+      case "Learn1.264":
         return element === "Yes Choice";
+
+      case "Learn1.216.1":
+        return element === "No Choice";
 
       ///////////////
       case "Fire1.7":
@@ -484,6 +489,18 @@ const YouMayNoYes = (props) => {
 
       case "Learn1.194":
         dispatch(updateDemo("Learn1.195"));
+        break;
+
+      case "Learn1.195":
+        dispatch(updateDemo("Learn1.196"));
+        break;
+
+      case "Learn1.216.1":
+        dispatch(updateDemo("Learn1.217"));
+        break;
+
+      case "Learn1.264":
+        dispatch(updateDemo("Learn1.265"));
         break;
 
       ///////

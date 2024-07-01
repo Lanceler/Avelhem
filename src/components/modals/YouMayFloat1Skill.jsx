@@ -155,6 +155,9 @@ const YouMayFloat1Skill = (props) => {
       case "Learn1.166":
         return element === "Select Button";
 
+      case "Learn1.234":
+        return element === "Skip Button";
+
       //////////////////
       case "Fire1.40.1":
         switch (element) {
@@ -173,6 +176,10 @@ const YouMayFloat1Skill = (props) => {
 
       case "Learn1.166":
         dispatch(updateDemo("Learn1.167"));
+        break;
+
+      case "Learn1.234":
+        dispatch(updateDemo("Learn1.235"));
         break;
 
       //////////
