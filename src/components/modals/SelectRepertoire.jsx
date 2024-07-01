@@ -56,7 +56,7 @@ export default function SelectRepertoire(props) {
       unsubscribe = onSnapshot(documentRef, (docSnapshot) => {
         if (docSnapshot.exists()) {
           setRepertoireList(docSnapshot.data().repertoire);
-          console.log("Change!");
+          // console.log("Change!");
         } else {
           console.log("Document does not exist");
         }

@@ -265,7 +265,7 @@ export default function Repertoire() {
           }
         })
         .then(() => {
-          console.log("EDITED");
+          // console.log("EDITED");
           const updatedRepertoire = [...results.repertoire];
 
           updatedRepertoire[id].avelhemRepertoire = getAvelhemIndexes();

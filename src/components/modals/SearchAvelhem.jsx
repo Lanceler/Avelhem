@@ -23,7 +23,6 @@ const SearchAvelhem = (props) => {
   //reverse display, since last card is top of deck
   let searchRerpertoire = [];
   for (let c in repertoire) {
-    console.log();
     searchRerpertoire.unshift({ id: repertoire[c], repertoireIndex: c });
   }
 

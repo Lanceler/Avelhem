@@ -90,6 +90,9 @@
 .tactic-label{
     text-align: center;
     font-size: 25px;
+    padding-top: 8px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
 }
 
 .disabledTactic{

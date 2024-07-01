@@ -111,8 +111,8 @@ const SelectTacticalAction = (props) => {
             <>
               <div className="abilityText ">⬩Attack an adjacent enemy.</div>
               <div className="abilityText ">
-                ⬩If the attack was lethal, move to the zone they were occupying.
-                (This bypasses Motion contingent skills.)
+                ⬩If the attack was lethal, move to the zone they occupied.
+                (Bypass Motion contingent skills.)
               </div>
             </>
           ),

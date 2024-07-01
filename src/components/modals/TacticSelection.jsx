@@ -173,7 +173,6 @@ const TacticSelection = (props) => {
                 </div>
               </div>
               <div className="tactic-label">{tactic.face}</div>
-              <br />
               <div className="tactic-label">Instances: {tactic.stock}</div>
             </div>
           ))}

@@ -55,7 +55,6 @@ const SelectAvelhemHandMulti = (props) => {
         // console.log(avelhemsToDiscard);
 
         for (let i of sortedSelectedAvelhems) {
-          console.log(i);
           avelhemsToDiscard.splice(i, 1);
         }
 

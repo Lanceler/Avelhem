@@ -9,6 +9,7 @@ import AdvanceSmall from "../../assets/diceIcons/AdvanceSmall.png";
 import MobilizeSmall from "../../assets/diceIcons/MobilizeSmall.png";
 import AssaultSmall from "../../assets/diceIcons/AssaultSmall.png";
 import InvokeSmall from "../../assets/diceIcons/InvokeSmall.png";
+import RallySmall from "../../assets/diceIcons/RallySmall.png";
 
 import { useSelector, useDispatch } from "react-redux";
 const InfoPopUp = (props) => {
@@ -149,6 +150,9 @@ const InfoPopUp = (props) => {
 
             <div className="unitInfo-text-heading1">
               <strong>Rally </strong>
+              <span className="infoPopUp-tactic-group">
+                <img src={RallySmall} className="infoPopUp-tactic-icon" />
+              </span>
             </div>
             <div className="unitInfo-text-heading2">
               Sovereign Tactical Actions

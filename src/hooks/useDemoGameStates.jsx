@@ -1667,11 +1667,13 @@ export const useDemoGameStates = () => {
           case "Learn1.81":
             return (
               <div>
-                The board has turned from red to black. When the board is red,
-                the game proceeds through your inputs, primarily when it is your
-                turn -- but there are occasions when Sovereigns are prompted
-                during their opponent’s turn. Conversely, black corresponds to
-                your opponent.
+                The board has turned from red to black.{" "}
+                <strong>
+                  When the board is red, the game proceeds through your inputs
+                </strong>
+                , primarily when it is your turn -- but there are occasions when
+                Sovereigns are prompted during their opponent’s turn.
+                Conversely, <strong>black corresponds to your opponent.</strong>
               </div>
             );
 
@@ -1737,7 +1739,7 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 <strong>Conduction</strong>, the debut talent of Metal Scions,
-                allows them to search for then float Magnetic Shockwave, which
+                allows them to search for then float “Magnetic Shockwave”, which
                 is the standard skill of their class. This is similar to the
                 Mountain Stance talent of Land Scions, but there are some
                 differences. First, Conduction is not modular; it has no
@@ -1749,6 +1751,8 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 Second, Conduction can search without the need to spend a skill.
+                <br />
+                <br />
                 Lastly, it will float the searched skill rather than add it to
                 the hand.
               </div>
