@@ -32,12 +32,12 @@ function App() {
   const { user, authIsReady } = useAuthContext();
 
   const [loadingImages, setLoadingImages] = useState(true);
-  const [loadedImages, setLoadedImages] = useState(0);
+  const [percentLoaded, setPercentLoaded] = useState(0);
   const { imagesLoadingList } = useCardImageSwitch();
 
+  let loadedImages = 0;
+  const totalImages = imagesLoadingList.length;
   useEffect(() => {
-    const totalImages = imagesLoadingList.length;
-
     const imageElements = imagesLoadingList.map((src) => {
       const img = new Image();
       img.src = src;
@@ -46,27 +46,17 @@ function App() {
       return img;
     });
 
-    // function handleImageLoad() {
-    //   loadedImages++;
-    //   if (loadedImages === imagesLoadingList.length) {
-    //     setLoadingImages(false);
-    //   }
-    // }
-
     function handleImageLoad() {
-      setLoadedImages((prev) => {
-        const newLoadedImages = prev + 1;
-        if (newLoadedImages === totalImages) {
-          setLoadingImages(false);
-        }
-        return newLoadedImages;
-      });
+      loadedImages++;
+      if (loadedImages === totalImages) {
+        setLoadingImages(false);
+      }
     }
   }, [imagesLoadingList]);
 
-  const percentLoaded = Math.round(
-    (loadedImages / imagesLoadingList.length) * 100
-  );
+  useEffect(() => {
+    setPercentLoaded(Math.round(loadedImages / totalImages) * 100);
+  }, [loadedImages]);
 
   ////////
 
@@ -76,6 +66,8 @@ function App() {
         {authIsReady && (
           <BrowserRouter>
             <Navbar />
+
+            {/* <LoadingImage percentLoaded={50} /> */}
 
             {loadingImages && <LoadingImage percentLoaded={percentLoaded} />}
             {!loadingImages && (

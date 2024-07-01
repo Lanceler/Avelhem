@@ -1,6 +1,7 @@
 .loading-image-body{
     background-color: black;
     height: 100vh;
+    overflow: hidden;
 }
 
 .loading-image-container{
@@ -8,7 +9,7 @@
     display: flex;
     height: fit-content;
     justify-content: center;
-    align-items: end;
+    align-items: center;
 }
 
 .loading-text{
