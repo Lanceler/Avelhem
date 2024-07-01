@@ -48,7 +48,8 @@
 
     /* background-color: rgba(135, 0, 0, 0.9); */
 
-    background-color: rgba(148, 0, 0, 0.875);
+    background-color: rgba(148, 0, 0, 0.85);
+    backdrop-filter: blur(2px);
 
     /* color: #e8e8e8; */
     color: rgb(252, 199, 67);

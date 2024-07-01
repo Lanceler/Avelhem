@@ -4,9 +4,12 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.30);
+    background: rgba(0,0,0,0.75);
     z-index: 500;
-    backdrop-filter: blur(3px);
+
+    /* bugged outside Firefox */
+    /* backdrop-filter: blur(2px) */
+
 }
 
 .modal-backdrop2 {
