@@ -2,13 +2,11 @@ import React, { useState, useEffect } from "react";
 import "./DisplayedCard.css";
 
 import { useSelector, useDispatch } from "react-redux";
-import { updateState } from "../../redux/gameState";
-import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 import { useCardDatabase } from "../../hooks/useCardDatabase";
 
-import DisplayedCard from "./DisplayedCard";
+import LoadingBanner from "../../assets/others/LoadingBanner.png";
 
 import { AnimatePresence, motion } from "framer-motion";
 

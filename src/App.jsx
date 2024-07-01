@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from "react";
+
 import {
   BrowserRouter,
   HashRouter,
@@ -5,14 +7,10 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+
 import { useAuthContext } from "./hooks/useAuthContext";
 
-import { useState } from "react";
-
 import "./App.css";
-
-import Board from "./components/Board";
-import Piece from "./components/Piece";
 
 import Navbar from "./navigation/Navbar";
 
@@ -26,8 +24,51 @@ import Game from "./pages/Game";
 import Demo from "./pages/Demo";
 import Rules from "./pages/Rules";
 
+import LoadingImage from "./components/displays/LoadingImage";
+
+import { useCardImageSwitch } from "./hooks/useCardImageSwitch";
+
 function App() {
   const { user, authIsReady } = useAuthContext();
+
+  const [loadingImages, setLoadingImages] = useState(true);
+  const [loadedImages, setLoadedImages] = useState(0);
+  const { imagesLoadingList } = useCardImageSwitch();
+
+  useEffect(() => {
+    const totalImages = imagesLoadingList.length;
+
+    const imageElements = imagesLoadingList.map((src) => {
+      const img = new Image();
+      img.src = src;
+      img.onload = () => handleImageLoad();
+      img.onerror = () => handleImageLoad();
+      return img;
+    });
+
+    // function handleImageLoad() {
+    //   loadedImages++;
+    //   if (loadedImages === imagesLoadingList.length) {
+    //     setLoadingImages(false);
+    //   }
+    // }
+
+    function handleImageLoad() {
+      setLoadedImages((prev) => {
+        const newLoadedImages = prev + 1;
+        if (newLoadedImages === totalImages) {
+          setLoadingImages(false);
+        }
+        return newLoadedImages;
+      });
+    }
+  }, [imagesLoadingList]);
+
+  const percentLoaded = Math.round(
+    (loadedImages / imagesLoadingList.length) * 100
+  );
+
+  ////////
 
   return (
     <div className="App-body">
@@ -35,48 +76,56 @@ function App() {
         {authIsReady && (
           <BrowserRouter>
             <Navbar />
-            <Routes>
-              <Route
-                exact
-                path="/"
-                element={user ? <Home /> : <Navigate to="/login" />}
-              />
 
-              <Route
-                path="/login"
-                element={!user ? <LogIn /> : <Navigate to="/" />}
-              />
-              <Route
-                path="/signup"
-                element={!user ? <SignUp /> : <Navigate to="/" />}
-              />
+            {loadingImages && <LoadingImage percentLoaded={percentLoaded} />}
+            {!loadingImages && (
+              <>
+                <Routes>
+                  <Route
+                    exact
+                    path="/"
+                    element={user ? <Home /> : <Navigate to="/login" />}
+                  />
 
-              <Route
-                path="/repertoires"
-                element={user ? <MyRepertoires /> : <Navigate to="/login" />}
-              />
+                  <Route
+                    path="/login"
+                    element={!user ? <LogIn /> : <Navigate to="/" />}
+                  />
+                  <Route
+                    path="/signup"
+                    element={!user ? <SignUp /> : <Navigate to="/" />}
+                  />
 
-              <Route
-                path="/repertoire/:id"
-                element={user ? <Repertoire /> : <Navigate to="/login" />}
-              />
+                  <Route
+                    path="/repertoires"
+                    element={
+                      user ? <MyRepertoires /> : <Navigate to="/login" />
+                    }
+                  />
 
-              <Route
-                path="/create-game"
-                element={user ? <CreateGame /> : <Navigate to="/login" />}
-              />
+                  <Route
+                    path="/repertoire/:id"
+                    element={user ? <Repertoire /> : <Navigate to="/login" />}
+                  />
 
-              <Route
-                path="/game"
-                element={user ? <Game /> : <Navigate to="/login" />}
-              />
+                  <Route
+                    path="/create-game"
+                    element={user ? <CreateGame /> : <Navigate to="/login" />}
+                  />
 
-              <Route path="/rules" element={<Rules />} />
+                  <Route
+                    path="/game"
+                    element={user ? <Game /> : <Navigate to="/login" />}
+                  />
 
-              <Route path="/demo/" element={<Demo />} />
+                  <Route path="/rules" element={<Rules />} />
 
-              <Route path="/demo/:id" element={<Demo />} />
-            </Routes>
+                  <Route path="/demo/" element={<Demo />} />
+
+                  <Route path="/demo/:id" element={<Demo />} />
+                </Routes>
+              </>
+            )}
           </BrowserRouter>
         )}
       </div>

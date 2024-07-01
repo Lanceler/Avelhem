@@ -1,0 +1,33 @@
+.loading-image-body{
+    background-color: black;
+    height: 100vh;
+}
+
+.loading-image-container{
+    position: relative;
+    display: flex;
+    height: fit-content;
+    justify-content: center;
+    align-items: end;
+}
+
+.loading-text{
+    color: white;
+    z-index: 100;
+    text-shadow:
+            -3px -3px 0 #000,
+            /* Top left */
+            3px -3px 0 #000,
+            /* Top right */
+            -3px 3px 0 #000,
+            /* Bottom left */
+            3px 3px 0 #000;
+        /* Bottom right */
+
+    font-size: 130px;
+    position: absolute;
+    
+    /* left: 50%;
+    transform: translateX(-50%); */
+
+}
