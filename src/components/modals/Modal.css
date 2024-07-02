@@ -34,7 +34,7 @@
     top: 50%;
     transform: translateY(-50%);
 
-    overflow-y: scroll;
+    overflow-y: auto;
     scrollbar-width: thin;
 
 }
@@ -570,17 +570,6 @@
     margin: 0;
     grid-row: 3;
 }
-
-
-.loading-body {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-}
-
 
 
 .unitInfoModal {

@@ -72,6 +72,8 @@ function App() {
 
   ////////
 
+  const animateDuration = 3;
+
   return (
     <div className="App-body">
       <div className="App">
@@ -80,74 +82,89 @@ function App() {
             <Navbar />
 
             <div className="content">
-              {showContent && (
-                <>
-                  <Routes>
-                    <Route
-                      exact
-                      path="/"
-                      element={user ? <Home /> : <Navigate to="/login" />}
-                    />
-
-                    <Route
-                      path="/login"
-                      element={!user ? <LogIn /> : <Navigate to="/" />}
-                    />
-                    <Route
-                      path="/signup"
-                      element={!user ? <SignUp /> : <Navigate to="/" />}
-                    />
-
-                    <Route
-                      path="/repertoires"
-                      element={
-                        user ? <MyRepertoires /> : <Navigate to="/login" />
-                      }
-                    />
-
-                    <Route
-                      path="/repertoire/:id"
-                      element={user ? <Repertoire /> : <Navigate to="/login" />}
-                    />
-
-                    <Route
-                      path="/create-game"
-                      element={user ? <CreateGame /> : <Navigate to="/login" />}
-                    />
-
-                    <Route
-                      path="/game"
-                      element={user ? <Game /> : <Navigate to="/login" />}
-                    />
-
-                    <Route path="/rules" element={<Rules />} />
-
-                    <Route path="/demo/" element={<Demo />} />
-
-                    <Route path="/demo/:id" element={<Demo />} />
-                  </Routes>
-                </>
-              )}
-
-              <div style={{ position: "absolute", top: 0, zIndex: 1000 }}>
+              <div
+              // style={{ position: "absolute", top: 0, zIndex: 1000 }}
+              >
                 <AnimatePresence>
-                  {!showContent && (
-                    <>
-                      <motion.div
-                        layout={true}
-                        initial={{ opacity: 1, scale: 1 }}
-                        // transition={{ duration: 1.5, scale: 0.5 }}
-                        exit={{ opacity: 0, transition: { duration: 1.5 } }}
-                        className="loading-image"
-                        key={1}
-                      >
-                        <LoadingImage
-                          percentLoaded={Math.round(
-                            (imagesLoaded / totalImages) * 100
-                          )}
+                  {showContent && (
+                    <motion.div
+                      layout={true}
+                      initial={{ opacity: 0 }}
+                      animate={{
+                        opacity: 1,
+                        transition: { duration: animateDuration + 1 },
+                      }}
+                      key={0}
+                    >
+                      <Routes>
+                        <Route
+                          exact
+                          path="/"
+                          element={user ? <Home /> : <Navigate to="/login" />}
                         />
-                      </motion.div>
-                    </>
+
+                        <Route
+                          path="/login"
+                          element={!user ? <LogIn /> : <Navigate to="/" />}
+                        />
+                        <Route
+                          path="/signup"
+                          element={!user ? <SignUp /> : <Navigate to="/" />}
+                        />
+
+                        <Route
+                          path="/repertoires"
+                          element={
+                            user ? <MyRepertoires /> : <Navigate to="/login" />
+                          }
+                        />
+
+                        <Route
+                          path="/repertoire/:id"
+                          element={
+                            user ? <Repertoire /> : <Navigate to="/login" />
+                          }
+                        />
+
+                        <Route
+                          path="/create-game"
+                          element={
+                            user ? <CreateGame /> : <Navigate to="/login" />
+                          }
+                        />
+
+                        <Route
+                          path="/game"
+                          element={user ? <Game /> : <Navigate to="/login" />}
+                        />
+
+                        <Route path="/rules" element={<Rules />} />
+
+                        <Route path="/demo/" element={<Demo />} />
+
+                        <Route path="/demo/:id" element={<Demo />} />
+                      </Routes>
+                    </motion.div>
+                  )}
+
+                  {!showContent && (
+                    <motion.div
+                      layout={true}
+                      initial={{ opacity: 1, scale: 1 }}
+                      // transition={{ duration: 1.5, scale: 0.5 }}
+                      exit={{
+                        opacity: 0,
+                        transition: { duration: animateDuration },
+                      }}
+                      className="loading-image"
+                      key={1}
+                    >
+                      <LoadingImage
+                        percentLoaded={Math.round(
+                          (imagesLoaded / totalImages) * 100
+                        )}
+                      />
+                    </motion.div>
                   )}
                 </AnimatePresence>
               </div>

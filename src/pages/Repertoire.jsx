@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-import "./MyRepertoires.css";
+import "./MyRepertoires.scss";
 import "./Repertoire.css";
 
 import { useAuthContext } from "../hooks/useAuthContext";
@@ -38,7 +38,6 @@ export default function Repertoire() {
   const { id } = useParams(); //note: id was entered as the parameter in the routes of App.jsx
   const { user } = useAuthContext();
   const [isLoading, setIsLoading] = useState(false);
-  const [loadingImages, setLoadingImages] = useState(true);
 
   const { magnifiedSkill } = useSelector((state) => state.magnifiedSkill);
   const dispatch = useDispatch();

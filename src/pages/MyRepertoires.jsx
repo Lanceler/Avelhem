@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import "./MyRepertoires.css";
+import "./MyRepertoires.scss";
 
 import GoldFrame from "../assets/others/GoldFrame.png";
 
