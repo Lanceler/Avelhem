@@ -4,12 +4,17 @@
     overflow: hidden;
 }
 
+.loading-image{
+    transition: transform 0.9s;
+}
+
 .loading-image-container{
     position: relative;
     display: flex;
     height: fit-content;
     justify-content: center;
     align-items: center;
+
 }
 
 .loading-text{
