@@ -25,7 +25,7 @@
 
 .demo-switch-button {
     position: absolute;
-    top: 1035px;
+    top: 1015px;
     left: 156px;
     /* margin-bottom: 300px; */
     margin: 0px;
@@ -33,7 +33,7 @@
 
 .demo-instructions{
     position: absolute;
-    top: 365px;
+    top: 345px;
     left: 750px;
 
     margin: 0px;
@@ -67,7 +67,7 @@
 .demo-instructions-button{
 
     position: absolute;
-    top: 550px;
+    top: 530px;
     left: 1279px;
     margin: 0px;
 

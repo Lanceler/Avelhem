@@ -53,7 +53,7 @@ function App() {
       setImagesLoaded((prev) => {
         const loaded = prev + 1;
 
-        if (loaded === totalImages) {
+        if (loaded >= totalImages) {
           setImagesLoaded(totalImages);
           setLoadingImages(false);
           return loaded;
@@ -82,10 +82,25 @@ function App() {
             <Navbar />
 
             <div className="content">
-              <div
-              // style={{ position: "absolute", top: 0, zIndex: 1000 }}
-              >
+              <div>
                 <AnimatePresence>
+                  {/* <motion.div
+                    layout={true}
+                    initial={{ opacity: 1, scale: 1 }}
+                    exit={{
+                      opacity: 0,
+                      transition: { duration: animateDuration },
+                    }}
+                    className="loading-image"
+                    key={1}
+                  >
+                    <LoadingImage
+                      percentLoaded={Math.round(
+                        (imagesLoaded / totalImages) * 100
+                      )}
+                    />
+                  </motion.div> */}
+
                   {showContent && (
                     <motion.div
                       layout={true}
