@@ -59,14 +59,17 @@ export default function Demo() {
       switch (id) {
         case "game":
           setInfoPopUp("game");
+          setCurrentPlayer("host");
+          setDemoTitle("Gameplay Demo");
+          dispatch(updateDemo(null));
+
           break;
 
         case "learn":
           setInfoPopUp("learn");
-
           setCurrentPlayer("guest");
-
           setDemoTitle("Gameplay Tutorial");
+
           dispatch(updateDemo("Learn1.1"));
 
           dispatch(
@@ -86,6 +89,7 @@ export default function Demo() {
           setInfoPopUp("fire");
           setDemoTitle("Fire Scion Demo");
           dispatch(updateDemo("Fire1.1"));
+          setCurrentPlayer("host");
           break;
       }
     }
