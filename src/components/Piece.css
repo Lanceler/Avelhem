@@ -342,7 +342,7 @@ animation: moveUpDownHP 1.0s ease-in-out infinite;
     ;
     /* transition: all 1.5s ease; */
     position: absolute;
-    z-index: 600;
+    z-index: 200;
 
     top: 10%;
     left: 10%;
@@ -357,7 +357,7 @@ animation: moveUpDownHP 1.0s ease-in-out infinite;
 .disruption2{
     background-color: #00000000;
     position: absolute;
-    z-index: 600;
+    z-index: 200;
     width: 70px;
     height: 70px;
     border-radius: 100%;

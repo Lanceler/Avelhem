@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../redux/gameState";
 import { updateSelf, updateEnemy } from "../redux/teams";
 import { updateDemo } from "../redux/demoGuide";
+import { updateMagnifiedSkill } from "../redux/magnifySkill";
 
 import { db } from "../config/firebaseConfig";
 import { updateDoc, doc } from "firebase/firestore";
@@ -554,6 +555,8 @@ const Board = (props) => {
   //====================================================================
   //UseEffects below
   useEffect(() => {
+    dispatch(updateMagnifiedSkill(null));
+
     if (props.userRole === "host") {
       dispatch(updateSelf("host"));
       dispatch(updateEnemy("guest"));

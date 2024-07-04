@@ -12,6 +12,8 @@ const PileOfCards = (props) => {
   const { self, enemy } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
 
+  const [floatingCards, setFloatingCards] = useState(0);
+
   const dispatch = useDispatch();
 
   const { getImage2 } = useCardImageSwitch();
@@ -25,26 +27,31 @@ const PileOfCards = (props) => {
 
   const cardBack = pile[0] === "a" ? "AvelhemCardBack" : "SkillCardBack";
 
-  let floatingCards = 0;
+  // let floatingCards = 0;
   let isVestige = false;
-  switch (pile) {
-    case "avelhemRepertoire":
-      floatingCards = localGameState[team].avelhemFloat;
-      break;
-    case "skillRepertoire":
-      floatingCards = localGameState[team].skillFloat;
-      break;
 
-    case "skillVestige":
-      stack.push(...localGameState[team].skillShattered);
-    //   break; DO NOT break
-    case "avelhemVestige":
-      isVestige = true;
-      break;
+  useEffect(() => {
+    switch (pile) {
+      case "avelhemRepertoire":
+        // floatingCards = localGameState[team].avelhemFloat;
+        setFloatingCards(localGameState[team].avelhemFloat);
+        break;
+      case "skillRepertoire":
+        // floatingCards = localGameState[team].skillFloat;
+        setFloatingCards(localGameState[team].skillFloat);
+        break;
 
-    default:
-      break;
-  }
+      case "skillVestige":
+        stack.push(...localGameState[team].skillShattered);
+      //   break; DO NOT break
+      case "avelhemVestige":
+        isVestige = true;
+        break;
+
+      default:
+        break;
+    }
+  }, []);
 
   const isFloating = (i) => {
     return i >= stack.length - floatingCards;
@@ -107,7 +114,13 @@ const PileOfCards = (props) => {
         ))}
 
         {stack.length > 0 && (
-          <div className={`pile-label`}>Cards: {stack.length}</div>
+          <div
+            className={`pile-label ${floatingCards > 0 ? "with-float" : ""}`}
+          >
+            {`Cards: ${stack.length}  ${
+              floatingCards > 0 ? "(" + floatingCards.toString() + ")" : ""
+            }`}
+          </div>
         )}
       </div>
 

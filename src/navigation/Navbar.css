@@ -111,6 +111,8 @@
     background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
 }
 
+
+
 .dropdown-menu.clicked {
     display: none;
 }
@@ -148,35 +150,43 @@
     }
 
     .nav-menu {
+        padding-top: 30px;
         display: flex;
         flex-direction: column;
+        justify-content: start;
         width: 100%;
         height: 90vh;
         position: absolute;
-        top: 80px;
-        left: -100%;
+        top: 41px;
+        left: -150%;
         opacity: 1;
         transition: all 0.5s ease;
+        padding-left: 0px;
     }
 
     .nav-menu.active {
-        background: #242222;
+        /* background: #242222; */
+        background: #333;
         left: 0;
         opacity: 1;
         transition: all 0.5s ease;
         z-index: 1;
+
     }
 
     .nav-links {
         text-align: center;
-        padding: 2rem;
+        padding: 1rem;
         width: 100%;
         display: table;
+        font-size: 1.65rem;
+        border-radius: 0;
     }
 
     .nav-links:hover {
-        background-color: #1888ff;
+        background-color: #f3f3f3;
         border-radius: 0;
+        
     }
 
     .navbar-logo {
@@ -193,9 +203,11 @@
         position: absolute;
         top: 10px;
         right: 25px;
+        cursor: pointer;
+    }
 
-
-
+    .menu-icon:hover{
+        fill: #f3f3f3
     }
 
     .nav-links-mobile {
@@ -205,17 +217,34 @@
         margin: 2rem auto;
         border-radius: 4px;
         width: 80%;
-        background: #1888ff;
         text-decoration: none;
-        color: #fff;
+        color: #f3f3f3;
         font-size: 1.5rem;
     }
 
     .nav-links-mobile:hover {
-        background: #fff;
-        color: #1888ff;
+        background: #f3f3f3;
         transition: 250ms;
     }
 
 
+    .dropdown-menu {
+        /* background: red; */
+        width: 215px;
+        position: absolute;
+        z-index: 9999;
+        top: 131.4px;
+        transform: translateX(-20px);
+        list-style: none;
+        text-align: start;
+        font-size: 1.4rem;
+}
+
+
+}
+
+.more-to-add {
+    background-color: #0c0c0c;
+    color: goldenrod;
+    cursor: default;
 }

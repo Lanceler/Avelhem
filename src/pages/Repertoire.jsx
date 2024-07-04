@@ -8,14 +8,13 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import { db } from "../config/firebaseConfig";
 
 import { AnimatePresence } from "framer-motion";
-
 import { useCardDatabase } from "../hooks/useCardDatabase";
 
 import Loading from "../components/modals/Loading";
-
 import { useSelector, useDispatch } from "react-redux";
-
 import ZoomCard from "../components/displays/ZoomCard";
+
+import { updateMagnifiedSkill } from "../redux/magnifySkill";
 
 import {
   collection,
@@ -295,6 +294,7 @@ export default function Repertoire() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    dispatch(updateMagnifiedSkill(null));
     setIsLoading(true);
     getDocs(userInfoRef)
       .then((snapshot) => {

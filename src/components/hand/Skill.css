@@ -361,7 +361,7 @@ Selected:hover {
 
     /* background-color: rgba(0, 0, 0, 0.65); */
     color: #e8e8e8;
-    font-size: 17px;
+    font-size: 15px;
 
     position: absolute;
     /* box-shadow: -0px 2px 12px 3px rgba(5, 9, 20, 0.7); */
@@ -373,6 +373,11 @@ Selected:hover {
     
     width: 94px;
     height: 35px;
+}
+
+.with-float{
+    font-size: 12px;
+    font-weight: 600;
 }
 
 

@@ -3,9 +3,12 @@ import { Link } from "react-router-dom";
 
 import "./Navbar.css";
 
-const DemoDropdown = () => {
+const DemoDropdown = (props) => {
   const [openDropdown, setOpenDropdown] = useState(false);
-  const handleClick = () => setOpenDropdown(!openDropdown);
+  const handleClick = () => {
+    setOpenDropdown(!openDropdown);
+    props.closeMobileMenu();
+  };
 
   const demoItems = [
     {
@@ -37,6 +40,9 @@ const DemoDropdown = () => {
             </li>
           );
         })}
+        <li>
+          <Link className="dropdown-link more-to-add">More to be added</Link>
+        </li>
       </ul>
     </>
   );
