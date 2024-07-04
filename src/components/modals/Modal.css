@@ -21,22 +21,17 @@
 .modal{
     padding: 20px ;
     max-height: 1000px;
-    /* max-height: 80vh; */
-
     width: fit-content;
     min-width: 50%;
     max-width: 950px;
-
     margin: 0px auto;
     background: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
     position: relative;
     top: 50%;
     transform: translateY(-50%);
-
     overflow-y: auto;
     scrollbar-width: thin;
-
 }
 
 
@@ -818,4 +813,18 @@ display: flex;
 
     display: flex;
     gap: 25px
+}
+
+
+@media screen and (max-width: 850px){
+    .modal, .unitInfoModal {
+        padding: 4px;
+        max-width: 87.5vw;
+    }
+
+    .unitInfo-name {
+        font-size: 35px;
+        line-height: 135%;
+        margin-left: 10px;
+    }
 }

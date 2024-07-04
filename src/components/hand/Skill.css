@@ -313,10 +313,7 @@
     color: #e8e8e8;
     font-size: 45px;
     /* margin-left: auto; */
-
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.95);
-    
-
 }
 
 Selected:hover {
@@ -416,3 +413,20 @@ Selected:hover {
     position: relative;
 }
 
+
+
+@media screen and (max-width: 850px) {
+
+.collapseSelected {
+        
+        height: 40px;
+        width: 40px;
+        position: relative;
+        font-size: 25px;
+        /* right: 4px; */
+        margin-left: auto;
+        margin-top: 10px;        
+        margin-right: 10px
+    }
+
+}

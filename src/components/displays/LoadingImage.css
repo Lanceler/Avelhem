@@ -1,10 +1,7 @@
 .loading-image-body{
-    background-color: rgb(25, 105, 0);
-    
-
+    background-color: rgb(0, 0, 0);
     overflow: hidden;
     position: absolute;
-    
     height: fit-content;
     pointer-events: none;
 }
@@ -18,10 +15,14 @@
     position: relative;
     display: flex;
     height: calc(100vh - 65px);
-    width: 1500px;
+    width: 100vw;
+    max-width: 1500px;
     justify-content: center;
     align-items: center;
     overflow: hidden;
+
+    background-size: cover;
+    background-position: center;
 
 }
 
@@ -37,12 +38,41 @@
             /* Bottom left */
             3px 3px 0 #000;
         /* Bottom right */
-
     font-size: 130px;
     position: absolute;
     
     /* left: 50%;
     transform: translateX(-50%); */
+}
 
+@media screen and (max-width: 1030px) {
 
+    .loading-text {
+        font-size: 90px;
+            text-shadow:
+                    -1.5px -1.5px 0 #000,
+                    /* Top left */
+                    1.5px -1.5px 0 #000,
+                    /* Top right */
+                    -1.5px 1.5px 0 #000,
+                    /* Bottom left */
+                    1.5px 1.5px 0 #000;
+                /* Bottom right */
+    }
+}
+
+@media screen and (max-width: 850px) {
+
+    .loading-text {
+        font-size: 45px;
+        text-shadow:
+            -1.5px -1.5px 0 #000,
+            /* Top left */
+            1.5px -1.5px 0 #000,
+            /* Top right */
+            -1.5px 1.5px 0 #000,
+            /* Bottom left */
+            1.5px 1.5px 0 #000;
+        /* Bottom right */
+    }
 }
