@@ -16,7 +16,7 @@ const SelectedSkill = (props) => {
 
   const dispatch = useDispatch();
 
-  const { getImage2 } = useCardImageSwitch();
+  const { getCardImage } = useCardImageSwitch();
 
   const {
     activateSovereignSkill,
@@ -93,7 +93,7 @@ const SelectedSkill = (props) => {
           <div
             className="displayedAvelhem"
             style={{
-              backgroundImage: `url(${getImage2(props.selectedSkill.id)})`,
+              backgroundImage: `url(${getCardImage(props.selectedSkill.id)})`,
             }}
           ></div>
           <div className="displayedCardOptions">

@@ -17,7 +17,7 @@ const ViewRevealedSkill = (props) => {
   const dispatch = useDispatch();
 
   // const { getSkillById } = useCardDatabase();
-  const { getImage2 } = useCardImageSwitch();
+  const { getCardImage } = useCardImageSwitch();
 
   const handleProceed = () => {
     const newGameState = JSON.parse(JSON.stringify(localGameState));
@@ -72,7 +72,7 @@ const ViewRevealedSkill = (props) => {
                   key={i}
                   className="revealed-skill"
                   style={{
-                    backgroundImage: `url(${getImage2(avelhem)})`,
+                    backgroundImage: `url(${getCardImage(avelhem)})`,
                   }}
                 ></div>
               ))}

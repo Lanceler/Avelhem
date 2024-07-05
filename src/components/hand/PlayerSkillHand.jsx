@@ -19,7 +19,7 @@ const PlayerSkillHand = (props) => {
   const { demoGuide } = useSelector((state) => state.demoGuide);
   const dispatch = useDispatch();
 
-  const { getImage2 } = useCardImageSwitch();
+  const { getCardImage } = useCardImageSwitch();
   const { getSkillById } = useCardDatabase();
 
   const [raise, setRaise] = useState(false);
@@ -119,7 +119,7 @@ const PlayerSkillHand = (props) => {
               ${canClick(card) ? "demoClick" : ""}
               `}
               style={{
-                backgroundImage: `url(${getImage2(card)})`,
+                backgroundImage: `url(${getCardImage(card)})`,
                 // top: Math.floor(index / 4) * -110,
                 top:
                   Math.floor(index / 4) * -110 -

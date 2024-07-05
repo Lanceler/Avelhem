@@ -395,11 +395,11 @@ Selected:hover {
 
 .pile-vestige{
     /* scale: 0.85; */
-    filter: grayscale(0.85);
+    filter: grayscale(0.85) brightness(90%)
 }
 
 .pile-vestige:hover {
-    filter: grayscale(0.85) brightness(120%);
+    filter: grayscale(0.85) brightness(110%);
     cursor: pointer;
 }
 

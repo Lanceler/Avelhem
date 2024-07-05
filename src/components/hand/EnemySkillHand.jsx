@@ -8,7 +8,7 @@ import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 const EnemySkillHand = () => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { enemy } = useSelector((state) => state.teams);
-  const { getImage2 } = useCardImageSwitch();
+  const { getCardImage } = useCardImageSwitch();
 
   let handNum = localGameState[enemy].skillHand.length;
 
@@ -23,28 +23,28 @@ const EnemySkillHand = () => {
   const cardImage = (position) => {
     switch (transcendenceCount) {
       case 0:
-        return `url(${getImage2("SkillCardBack")})`;
+        return `url(${getCardImage("SkillCardBack")})`;
 
       case 1:
         if (handNum === 1) {
-          return `url(${getImage2("SX-01")})`;
+          return `url(${getCardImage("SX-01")})`;
         }
         if (handNum < 4 && position === 2) {
-          return `url(${getImage2("SX-01")})`;
+          return `url(${getCardImage("SX-01")})`;
         }
         if (position === 3) {
-          return `url(${getImage2("SX-01")})`;
+          return `url(${getCardImage("SX-01")})`;
         }
-        return `url(${getImage2("SkillCardBack")})`;
+        return `url(${getCardImage("SkillCardBack")})`;
 
       case 2:
         if (handNum < 4) {
-          return `url(${getImage2("SX-01")})`;
+          return `url(${getCardImage("SX-01")})`;
         }
         if (position > 1) {
-          return `url(${getImage2("SX-01")})`;
+          return `url(${getCardImage("SX-01")})`;
         }
-        return `url(${getImage2("SkillCardBack")})`;
+        return `url(${getCardImage("SkillCardBack")})`;
     }
   };
 
@@ -55,7 +55,7 @@ const EnemySkillHand = () => {
           <div
             className={`enemy-hand-card`}
             style={{
-              // backgroundImage: `url(${getImage2("SkillCardBack")})`,
+              // backgroundImage: `url(${getCardImage("SkillCardBack")})`,
               backgroundImage: cardImage(1),
               //   top: -131,
               top: handNum < 5 && handNum % 2 === 0 ? -123 : -131,
@@ -73,7 +73,7 @@ const EnemySkillHand = () => {
           <div
             className={`enemy-hand-card`}
             style={{
-              // backgroundImage: `url(${getImage2("SkillCardBack")})`,
+              // backgroundImage: `url(${getCardImage("SkillCardBack")})`,
               backgroundImage: cardImage(2),
               top: -123,
               //   left: 220,
@@ -89,7 +89,7 @@ const EnemySkillHand = () => {
           <div
             className={`enemy-hand-card`}
             style={{
-              backgroundImage: `url(${getImage2("SkillCardBack")})`,
+              backgroundImage: `url(${getCardImage("SkillCardBack")})`,
               //   top: -123,
               top: handNum < 5 && handNum % 2 === 0 ? -110 : -123,
               //   left: 100,
@@ -124,7 +124,7 @@ const EnemySkillHand = () => {
           <div
             className={`enemy-hand-card`}
             style={{
-              backgroundImage: `url(${getImage2("SkillCardBack")})`,
+              backgroundImage: `url(${getCardImage("SkillCardBack")})`,
               top: -110,
               left: 55,
               //   background: "azure",

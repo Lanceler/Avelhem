@@ -10,12 +10,10 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 
 const CPSkillCard = (props) => {
-  const { magnifiedSkill } = useSelector((state) => state.magnifiedSkill);
   const dispatch = useDispatch();
 
-  const { getImage } = useCardImageSwitch();
-  let image = "";
-  image = getImage(props.cardInfo.Name);
+  const { getCardImage } = useCardImageSwitch();
+  const image = getCardImage(props.cardInfo.CardId);
 
   return (
     <div>

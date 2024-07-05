@@ -4,8 +4,8 @@ import "./DisplayedCard.css";
 import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 
 const DisplayedCard = (props) => {
-  const { getImage2 } = useCardImageSwitch();
-  let image = getImage2(props.cardInfo);
+  const { getCardImage } = useCardImageSwitch();
+  let image = getCardImage(props.cardInfo);
 
   return (
     <div

@@ -13,7 +13,7 @@ import { AnimatePresence, motion } from "framer-motion";
 const ActivatedSkills = () => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
-  const { getImage2 } = useCardImageSwitch();
+  const { getCardImage } = useCardImageSwitch();
   const { getSkillById } = useCardDatabase();
 
   return (
@@ -49,7 +49,7 @@ const ActivatedSkills = () => {
                   transform: `rotate(${
                     (localGameState.activatingSkill.length - (i + 1)) * -10
                   }deg)`,
-                  backgroundImage: `url(${getImage2(
+                  backgroundImage: `url(${getCardImage(
                     card
                     // localGameState.activatingSkill[i]
                   )})`,
@@ -80,7 +80,7 @@ const ActivatedSkills = () => {
                       : "grayscale(65%)"
                   }`,
 
-                  backgroundImage: `url(${getImage2(
+                  backgroundImage: `url(${getCardImage(
                     localGameState.activatingResonator[0]
                   )})`,
                 }}

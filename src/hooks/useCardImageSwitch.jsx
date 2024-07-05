@@ -103,6 +103,22 @@ import Everblooming from "../assets/abilities/Everblooming.png";
 import SkillCardBack from "../assets/skillcards/SkillCardBack.png";
 import AvelhemCardBack from "../assets/avelhemcards/AvelhemCardBack.png";
 
+import Shield from "../assets/attributeIcons/Shield.png";
+import Ward from "../assets/attributeIcons/Ward.png";
+import Virtue from "../assets/attributeIcons/Virtue.png";
+import HP from "../assets/attributeIcons/HP.png";
+import BurnGif from "../assets/attributeIcons/BurnGif.gif";
+import FrostbiteGif from "../assets/attributeIcons/FrostbiteGif.gif";
+import ParalysisGif from "../assets/attributeIcons/ParalysisGif.gif";
+import RootGif from "../assets/attributeIcons/RootGif.gif";
+import AmbidexterityIcon from "../assets/others/AmbidexterityIcon.png";
+
+import Crosshair from "../assets/others/Crosshair.png";
+import UnitAbility from "../assets/others/UnitAbility.png";
+import UnitProfile from "../assets/others/UnitProfile.png";
+import UnitSkill from "../assets/others/UnitSkill.png";
+import UnitTactic from "../assets/others/UnitTactic.png";
+
 export const useCardImageSwitch = () => {
   const imagesLoadingList = [
     FireAvelhem,
@@ -196,10 +212,26 @@ export const useCardImageSwitch = () => {
     Everblooming,
     SkillCardBack,
     AvelhemCardBack,
+    //statuses
+    Shield,
+    Ward,
+    Virtue,
+    HP,
+    BurnGif,
+    FrostbiteGif,
+    ParalysisGif,
+    RootGif,
+    AmbidexterityIcon,
+    //other icons
+    Crosshair,
+    UnitAbility,
+    UnitProfile,
+    UnitSkill,
+    UnitTactic,
   ];
 
-  const getElementImage = (scionClass) => {
-    switch (scionClass) {
+  const getElementImage = (element) => {
+    switch (element) {
       case "Pawn":
         return Pawn;
 
@@ -232,8 +264,8 @@ export const useCardImageSwitch = () => {
     }
   };
 
-  const getImage2 = (id) => {
-    switch (id) {
+  const getCardImage = (card) => {
+    switch (card) {
       case "SkillCardBack":
         return SkillCardBack;
       case "AvelhemCardBack":
@@ -415,137 +447,29 @@ export const useCardImageSwitch = () => {
     }
   };
 
-  const getImage = (cardName) => {
-    switch (cardName) {
-      case "Fire Avelhem":
-        return FireAvelhem;
-      case "Ignition Propulsion":
-        return IgnitionPropulsion;
-      case "Conflagration":
-        return Conflagration;
-      case "Blaze Of Glory":
-        return BlazeOfGlory;
-      case "Resplendence":
-        return Resplendence;
+  const getMiscImage = (misc) => {
+    switch (misc) {
+      case "Crosshair":
+        return Crosshair;
 
-      case "Water Avelhem":
-        return WaterAvelhem;
-      case "Purification":
-        return Purification;
-      case "Frigid Breath":
-        return FrigidBreath;
-      case "Healing Rain":
-        return HealingRain;
-      case "Glacial Torrent":
-        return GlacialTorrent;
+      case "UnitAbility":
+        return UnitAbility;
 
-      case "Wind Avelhem":
-        return WindAvelhem;
-      case "Aerial Impetus":
-        return AerialImpetus;
-      case "Gale Conjuration":
-        return GaleConjuration;
-      case "Symphonic Screech":
-        return SymphonicScreech;
-      case "Cataclysmic Tempest":
-        return CataclysmicTempest;
+      case "UnitProfile":
+        return UnitProfile;
 
-      case "Land Avelhem":
-        return LandAvelhem;
-      case "Crystallization":
-        return Crystallization;
-      case "Upheaval":
-        return Upheaval;
-      case "Pitfall Trap":
-        return PitfallTrap;
-      case "Geomancy":
-        return Geomancy;
+      case "UnitSkill":
+        return UnitSkill;
 
-      case "Lightning Avelhem":
-        return LightningAvelhem;
-      case "Chain Lightning":
-        return ChainLightning;
-      case "Zip And Zap":
-        return ZipAndZap;
-      case "Thunder Thaumaturge":
-        return ThunderThaumaturge;
-      case "Valiant Spark":
-        return ValiantSpark;
-
-      case "Mana Avelhem":
-        return ManaAvelhem;
-      case "Surge":
-        return Surge;
-      case "Diffusion":
-        return Diffusion;
-      case "Aegis":
-        return Aegis;
-      case "Disruption Field":
-        return DisruptionField;
-
-      case "Metal Avelhem":
-        return MetalAvelhem;
-      case "Magnetic Shockwave":
-        return MagneticShockwave;
-      case "Reinforce":
-        return Reinforce;
-      case "Frenzy Blade":
-        return FrenzyBlade;
-      case "Arsenal Onslaught":
-        return ArsenalOnslaught;
-
-      case "Plant Avelhem":
-        return PlantAvelhem;
-      case "Sow And Reap":
-        return SowAndReap;
-      case "Efflorescence":
-        return Efflorescence;
-      case "Viridian Grave":
-        return ViridianGrave;
-      case "Castle Of Thorns":
-        return CastleOfThorns;
-
-      case "Heir’s Endeavor":
-        return HeirsEndeavor;
-      case "Tea For Two":
-        return TeaForTwo;
-      // case "Unbridled Power":
-      //   return UnbridledPower;
-      case "Dark Halo":
-        return DarkHalo;
-      case "Reminiscence":
-        return Reminiscence;
-      case "Foreshadow":
-        return Foreshadow;
-
-      case "Transmute":
-        return Transmute;
-      case "Ambidexterity":
-        return Ambidexterity;
-      case "Providence":
-        return Providence;
-      case "Fervent Prayer":
-        return FerventPrayer;
-      case "Press The Attack":
-        return PressTheAttack;
-      case "Power At The Final Hour":
-        return PowerAtTheFinalHour;
-      case "Fated Rivalry":
-        return FatedRivalry;
-      case "Match Made In Heaven":
-        return MatchMadeInHeaven;
-      case "Vengeful Legacy":
-        return VengefulLegacy;
-      case "Black Business Card":
-        return BlackBusinessCard;
-
-      case "Coalescence":
-        return Coalescence;
-
-      default:
-        return "";
+      case "UnitTactic":
+        return UnitTactic;
     }
   };
 
-  return { getElementImage, getImage, getImage2, imagesLoadingList };
+  return {
+    getElementImage,
+    getCardImage,
+    getMiscImage,
+    imagesLoadingList,
+  };
 };

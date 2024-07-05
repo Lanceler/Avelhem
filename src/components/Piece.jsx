@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateState } from "../redux/gameState";
 import { updateDemo } from "../redux/demoGuide";
 
 import "./Piece.css";
@@ -13,8 +12,7 @@ import BurnGif from "../assets/attributeIcons/BurnGif.gif";
 import FrostbiteGif from "../assets/attributeIcons/FrostbiteGif.gif";
 import ParalysisGif from "../assets/attributeIcons/ParalysisGif.gif";
 import RootGif from "../assets/attributeIcons/RootGif.gif";
-
-import Ambidexterity from "../assets/others/Ambidexterity.png";
+import AmbidexterityIcon from "../assets/others/AmbidexterityIcon.png";
 
 import { useRecurringEffects } from "../hooks/useRecurringEffects";
 
@@ -605,7 +603,7 @@ export const Piece = (props) => {
 
           {props.unit.boosts.ambidexterity === true && (
             <>
-              <img src={Ambidexterity} className="ambidexterity" />
+              <img src={AmbidexterityIcon} className="ambidexterity" />
             </>
           )}
 

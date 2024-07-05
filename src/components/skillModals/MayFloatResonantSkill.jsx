@@ -16,9 +16,6 @@ const MayFloatResonantSkill = (props) => {
   const { self, enemy } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const { getSkillById } = useCardDatabase();
-  const { getImage } = useCardImageSwitch();
-
   const handleDiscard = () => {
     const newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -89,13 +86,6 @@ const MayFloatResonantSkill = (props) => {
         )}
 
         <br />
-
-        {/* <div
-          className="revealed-skill"
-          style={{
-            backgroundImage: `url(${getImage(revealedCard.Name)})`,
-          }}
-        ></div> */}
 
         <div className="view-revealed-skill">
           {props.skill && (

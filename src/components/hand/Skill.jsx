@@ -13,9 +13,9 @@ const Skill = (props) => {
   const { magnifiedSkill } = useSelector((state) => state.magnifiedSkill);
   const dispatch = useDispatch();
 
-  const { getImage2 } = useCardImageSwitch();
+  const { getCardImage } = useCardImageSwitch();
 
-  const image = getImage2(props.usableSkill.id);
+  const image = getCardImage(props.usableSkill.id);
 
   return (
     <>

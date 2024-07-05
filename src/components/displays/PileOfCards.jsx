@@ -13,10 +13,11 @@ const PileOfCards = (props) => {
   const { demoGuide } = useSelector((state) => state.demoGuide);
 
   const [floatingCards, setFloatingCards] = useState(0);
+  const [isVestige, setIsVestige] = useState(false);
 
   const dispatch = useDispatch();
 
-  const { getImage2 } = useCardImageSwitch();
+  const { getCardImage } = useCardImageSwitch();
 
   const [showPile, setShowPile] = useState(null);
 
@@ -26,9 +27,6 @@ const PileOfCards = (props) => {
   let stack = [...localGameState[team][pile]];
 
   const cardBack = pile[0] === "a" ? "AvelhemCardBack" : "SkillCardBack";
-
-  // let floatingCards = 0;
-  let isVestige = false;
 
   useEffect(() => {
     switch (pile) {
@@ -45,7 +43,8 @@ const PileOfCards = (props) => {
         stack.push(...localGameState[team].skillShattered);
       //   break; DO NOT break
       case "avelhemVestige":
-        isVestige = true;
+        setIsVestige(true);
+        console.log("VESTIGE");
         break;
 
       default:
@@ -100,14 +99,14 @@ const PileOfCards = (props) => {
         {stack.map((card, i) => (
           <div
             key={i}
-            className={`pile-card ${isFloating(i) ? "pile-floating" : ""} ${
-              isVestige ? "pile-vestige" : ""
-            } ${team === enemy ? "pile-enemy" : ""}
-            
-            
+            className={`
+              pile-card 
+              ${isFloating(i) ? "pile-floating" : ""} 
+              ${isVestige ? "pile-vestige" : ""} 
+              ${team === enemy ? "pile-enemy" : ""}                       
             `}
             style={{
-              backgroundImage: `url(${getImage2(cardBack)})`,
+              backgroundImage: `url(${getCardImage(cardBack)})`,
               top: -i * 0.3,
             }}
           ></div>

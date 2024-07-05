@@ -6,9 +6,8 @@ import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 import { motion, useMotionValue, useScroll } from "framer-motion";
 
 const ARAvelhemCard = (props) => {
-  const { getImage } = useCardImageSwitch();
-  let image = "";
-  image = getImage(props.cardInfo.Name);
+  const { getCardImage } = useCardImageSwitch();
+  const image = getCardImage(props.cardInfo.CardId);
 
   const [isClicked, setIsClicked] = useState(false);
 

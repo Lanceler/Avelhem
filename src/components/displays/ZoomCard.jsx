@@ -11,8 +11,8 @@ const ZoomCard = (props) => {
   const { magnifiedSkill } = useSelector((state) => state.magnifiedSkill);
   const dispatch = useDispatch();
 
-  const { getImage2 } = useCardImageSwitch();
-  let image = getImage2(props.cardInfo);
+  const { getCardImage } = useCardImageSwitch();
+  let image = getCardImage(props.cardInfo);
 
   return (
     <>

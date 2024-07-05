@@ -17,8 +17,7 @@ const PlayerAvelhemHand = (props) => {
 
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
-  const { getImage } = useCardImageSwitch();
-  const { getAvelhemById } = useCardDatabase();
+  const { getCardImage } = useCardImageSwitch();
 
   const [raise, setRaise] = useState(false);
   const [raiseHeight, setRaiseHeight] = useState(0);
@@ -157,7 +156,7 @@ const PlayerAvelhemHand = (props) => {
                 raise ? "enlargable" : ""
               } ${canClick(card) ? "demoClick" : ""}`}
               style={{
-                backgroundImage: `url(${getImage(getAvelhemById(card).Name)})`,
+                backgroundImage: `url(${getCardImage(card)})`,
                 top: Math.floor(index / 2) * -110,
                 left: 5 + (index % 2) * -60,
                 // left: (index % 5) * -30,

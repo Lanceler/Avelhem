@@ -6,9 +6,8 @@ import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 import { motion, useMotionValue } from "framer-motion";
 
 const SRSkillCard = (props) => {
-  const { getImage } = useCardImageSwitch();
-  let image = "";
-  image = getImage(props.cardInfo.Name);
+  const { getCardImage } = useCardImageSwitch();
+  const image = getCardImage(props.cardInfo.CardId);
 
   // console.log("key: " + props.key1)
   const [isLoading, setIsLoading] = useState(false);

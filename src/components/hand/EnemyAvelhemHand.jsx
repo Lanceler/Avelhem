@@ -8,7 +8,7 @@ import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 const EnemyAvelhemHand = () => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { enemy } = useSelector((state) => state.teams);
-  const { getImage2 } = useCardImageSwitch();
+  const { getCardImage } = useCardImageSwitch();
 
   let handNum = localGameState[enemy].avelhemHand.length;
 
@@ -19,7 +19,7 @@ const EnemyAvelhemHand = () => {
           <div
             className={`enemy-hand-card`}
             style={{
-              backgroundImage: `url(${getImage2("AvelhemCardBack")})`,
+              backgroundImage: `url(${getCardImage("AvelhemCardBack")})`,
               //   top: -131,
               top: handNum < 3 && handNum % 2 === 0 ? -103 : -111,
               //   left: 70,
@@ -36,7 +36,7 @@ const EnemyAvelhemHand = () => {
           <div
             className={`enemy-hand-card`}
             style={{
-              backgroundImage: `url(${getImage2("AvelhemCardBack")})`,
+              backgroundImage: `url(${getCardImage("AvelhemCardBack")})`,
               top: -103,
               //   left: 110,
               left: handNum < 3 && handNum % 2 === 0 ? 105 : 130,
@@ -51,7 +51,7 @@ const EnemyAvelhemHand = () => {
           <div
             className={`enemy-hand-card`}
             style={{
-              backgroundImage: `url(${getImage2("AvelhemCardBack")})`,
+              backgroundImage: `url(${getCardImage("AvelhemCardBack")})`,
               //   top: -123,
               top: handNum < 3 && handNum % 2 === 0 ? -90 : -103,
               //   left: 10,

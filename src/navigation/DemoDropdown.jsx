@@ -8,6 +8,7 @@ const DemoDropdown = (props) => {
   const handleClick = () => {
     setOpenDropdown(!openDropdown);
     props.closeMobileMenu();
+    props.setDropdown(false);
   };
 
   const demoItems = [
@@ -30,11 +31,7 @@ const DemoDropdown = (props) => {
         {demoItems.map((item, index) => {
           return (
             <li key={index}>
-              <Link
-                className="dropdown-link"
-                to={item.path}
-                onClick={() => setOpenDropdown(false)}
-              >
+              <Link className="dropdown-link" to={item.path}>
                 {item.title}
               </Link>
             </li>

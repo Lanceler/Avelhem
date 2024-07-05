@@ -21,7 +21,7 @@ const ViewSkillVestige = (props) => {
 
   const dispatch = useDispatch();
 
-  const { getImage2 } = useCardImageSwitch();
+  const { getCardImage } = useCardImageSwitch();
 
   let vestige = [];
   let shattered = [];
@@ -93,7 +93,7 @@ const ViewSkillVestige = (props) => {
                     key={i}
                     className="scionSkills pile-view-skill"
                     style={{
-                      backgroundImage: `url(${getImage2(usableSkill.id)})`,
+                      backgroundImage: `url(${getCardImage(usableSkill.id)})`,
                     }}
                   >
                     <button
@@ -118,7 +118,7 @@ const ViewSkillVestige = (props) => {
                       key={i}
                       className="scionSkills pile-view-skill"
                       style={{
-                        backgroundImage: `url(${getImage2(usableSkill.id)})`,
+                        backgroundImage: `url(${getCardImage(usableSkill.id)})`,
                       }}
                     >
                       <button

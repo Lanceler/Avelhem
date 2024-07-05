@@ -91,7 +91,12 @@ const Navbar = () => {
             </Link>
 
             <>
-              {dropdown && <DemoDropdown closeMobileMenu={closeMobileMenu} />}
+              {dropdown && (
+                <DemoDropdown
+                  closeMobileMenu={closeMobileMenu}
+                  setDropdown={setDropdown}
+                />
+              )}
             </>
             {/* <DemoDropdown /> */}
           </li>

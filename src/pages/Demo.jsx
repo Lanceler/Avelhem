@@ -128,7 +128,7 @@ export default function Demo() {
 
   const demoNextRevealed = () => {
     switch (demoGuide) {
-      case "Learn1.1":
+      case "Learn1.1.1":
       case "Learn1.3":
       case "Learn1.5":
       case "Learn1.6":
@@ -214,7 +214,7 @@ export default function Demo() {
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
-      case "Learn1.1":
+      case "Learn1.1.1":
         dispatch(updateDemo("Learn1.2"));
         setCurrentPlayer("host");
         break;

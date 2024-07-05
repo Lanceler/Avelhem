@@ -86,12 +86,7 @@ import Tile from "./Tile";
 import Piece from "./Piece";
 
 import PileOfCards from "./displays/PileOfCards";
-
-import Crosshair from "../assets/others/Crosshair.png";
-import UnitAbility from "../assets/others/UnitAbility.png";
-import UnitProfile from "../assets/others/UnitProfile.png";
-import UnitSkill from "../assets/others/UnitSkill.png";
-import UnitTactic from "../assets/others/UnitTactic.png";
+import { useCardImageSwitch } from "../hooks/useCardImageSwitch";
 
 const Board = (props) => {
   let gameDoc = null;
@@ -130,6 +125,8 @@ const Board = (props) => {
   const [viewBP, setViewBP] = useState(null);
   const [infoPopUp, setInfoPopUp] = useState(null);
   const [openContingencySettings, setOpenContingencySettings] = useState(false);
+
+  const { getMiscImage } = useCardImageSwitch();
 
   const {
     activateAegis,
@@ -5396,7 +5393,10 @@ const Board = (props) => {
                       }}
                     >
                       <div className="optionIcon">
-                        <img src={UnitProfile} className="unitOptions" />
+                        <img
+                          src={getMiscImage("UnitProfile")}
+                          className="unitOptions"
+                        />
                       </div>
                     </div>
 
@@ -5418,7 +5418,10 @@ const Board = (props) => {
                             }}
                           >
                             <div className="optionIcon">
-                              <img src={UnitTactic} className="unitOptions" />
+                              <img
+                                src={getMiscImage("UnitTactic")}
+                                className="unitOptions"
+                              />
                             </div>
                           </div>
                           {expandedUnit.unitClass !== "Pawn" && (
@@ -5436,7 +5439,7 @@ const Board = (props) => {
                                 <div className="optionIcon">
                                   {" "}
                                   <img
-                                    src={UnitAbility}
+                                    src={getMiscImage("UnitAbility")}
                                     className="unitOptions"
                                   />
                                 </div>
@@ -5455,7 +5458,7 @@ const Board = (props) => {
                                   {/* Ski */}
 
                                   <img
-                                    src={UnitSkill}
+                                    src={getMiscImage("UnitSkill")}
                                     className="unitOptions"
                                   />
                                 </div>
@@ -5482,7 +5485,10 @@ const Board = (props) => {
                     localGameState.activatingTarget.length - 1
                   ] !== null && (
                     <div className="board-piece" style={activatingTarget()}>
-                      <img src={Crosshair} className="crosshair" />
+                      <img
+                        src={getMiscImage("Crosshair")}
+                        className="crosshair"
+                      />
                     </div>
                   )}
 

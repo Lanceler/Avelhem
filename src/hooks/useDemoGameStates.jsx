@@ -711,7 +711,7 @@ export const useDemoGameStates = () => {
     switch (true) {
       case demoGuide.slice(0, 5) === "Learn":
         switch (demoGuide) {
-          case "Learn1.1":
+          case "Learn1.1.1":
             return (
               <div>
                 The game unfolds on a board with 10 rows and 5 columns.

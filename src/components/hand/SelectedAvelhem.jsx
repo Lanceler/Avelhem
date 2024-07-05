@@ -15,7 +15,7 @@ const SelectedAvelhem = (props) => {
 
   const dispatch = useDispatch();
 
-  const { getImage2 } = useCardImageSwitch();
+  const { getCardImage } = useCardImageSwitch();
   const { getScionSet } = useCardDatabase();
 
   const { activateAvelhem, avelhemToScion, canAscend, isMuted } =
@@ -184,7 +184,7 @@ const SelectedAvelhem = (props) => {
           <div
             className="displayedAvelhem"
             style={{
-              backgroundImage: `url(${getImage2(
+              backgroundImage: `url(${getCardImage(
                 props.selectedAvelhem.avelhem
               )})`,
             }}
