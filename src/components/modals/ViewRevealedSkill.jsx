@@ -51,14 +51,17 @@ const ViewRevealedSkill = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <div className="twoColumn3-1">
-          <h2 className="choiceTitle">{props.title}</h2>
-          <button className="choiceButton" onClick={() => handleViewBoard()}>
-            View Board
-          </button>
+        <div className="modalHeader">
+          <div className="modalTitle">{props.title}</div>
+          <div className="modalButton">
+            <button className="choiceButton" onClick={() => handleViewBoard()}>
+              View Board
+            </button>
+          </div>
         </div>
 
         <h3>{props.message}</h3>
+        <br />
 
         <div className="view-revealed-skill">
           {props.skill && (
@@ -80,17 +83,19 @@ const ViewRevealedSkill = (props) => {
           )}
         </div>
 
-        <button
-          className={`choiceButton ${
-            canClick("Proceed Button") ? "demoClick" : ""
-          }`}
-          onClick={() => {
-            handleProceed();
-            handleUpdateDemoGuide();
-          }}
-        >
-          Proceed
-        </button>
+        <div className="modalBottomButton">
+          <button
+            className={`choiceButton ${
+              canClick("Proceed Button") ? "demoClick" : ""
+            }`}
+            onClick={() => {
+              handleProceed();
+              handleUpdateDemoGuide();
+            }}
+          >
+            Proceed
+          </button>
+        </div>
       </div>
     </div>
   );

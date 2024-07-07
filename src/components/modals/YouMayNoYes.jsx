@@ -521,38 +521,44 @@ const YouMayNoYes = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <div className="twoColumn">
-          <h2 className="choiceTitle">{props.details.title}</h2>
-          <button className="choiceButton" onClick={() => handleViewBoard()}>
-            View Board
-          </button>
+        <div className="modalHeader">
+          <div className="modalTitle">{props.details.title}</div>
+          <div className="modalButton">
+            <button className="choiceButton" onClick={() => handleViewBoard()}>
+              View Board
+            </button>
+          </div>
         </div>
 
-        <h3 className="noYesMessage">{props.details.message}</h3>
+        <h3>{props.details.message}</h3>
+        <br />
 
-        <div className="twoColumn bottomAnchor">
-          <button
-            className={`choiceButton ${
-              canClick("No Choice") ? "demoClick" : ""
-            }`}
-            onClick={() => {
-              handleNo();
-              handleUpdateDemoGuide();
-            }}
-          >
-            {props.details.no}
-          </button>
-          <button
-            className={`choiceButton ${
-              canClick("Yes Choice") ? "demoClick" : ""
-            }`}
-            onClick={() => {
-              handleYes();
-              handleUpdateDemoGuide();
-            }}
-          >
-            {props.details.yes}
-          </button>
+        <div className="modalBottomButton">
+          <div className="multi-option-buttons">
+            <button
+              className={`choiceButton ${
+                canClick("No Choice") ? "demoClick" : ""
+              }`}
+              onClick={() => {
+                handleNo();
+                handleUpdateDemoGuide();
+              }}
+            >
+              {props.details.no}
+            </button>
+
+            <button
+              className={`choiceButton ${
+                canClick("Yes Choice") ? "demoClick" : ""
+              }`}
+              onClick={() => {
+                handleYes();
+                handleUpdateDemoGuide();
+              }}
+            >
+              {props.details.yes}
+            </button>
+          </div>
         </div>
       </div>
     </div>

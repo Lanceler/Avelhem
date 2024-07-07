@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
 import "./Modal.css";
 
-import GoldFrame from "../../assets/others/GoldFrame.png";
-
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
 import { updateDemo } from "../../redux/demoGuide";
 
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 import { useCardDatabase } from "../../hooks/useCardDatabase";
+import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 
 const SelectCustomChoice = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
+  const { getMiscImage } = useCardImageSwitch();
 
   const dispatch = useDispatch();
 
@@ -976,19 +976,21 @@ const SelectCustomChoice = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <div className="twoColumn">
-          <h2 className="choiceTitle">{props.details.title}</h2>
-          <button className="choiceButton" onClick={() => handleViewBoard()}>
-            View Board
-          </button>
+        <div className="modalHeader">
+          <div className="modalTitle">{props.details.title}</div>
+          <div className="modalButton">
+            <button className="choiceButton" onClick={() => handleViewBoard()}>
+              View Board
+            </button>
+          </div>
         </div>
 
-        <div className="twoColumn column-centered">
+        <div className="modalContent">
           <div
-            className={`customChoice ${
-              selectedChoice === 1 ? "selectedChoice" : ""
+            className={`modalChoice1 ${
+              selectedChoice === 1 ? "selectedModalChoice" : ""
             } ${canClick("1st Choice") ? "demoClick" : ""} `}
-            style={{ backgroundImage: `url(${GoldFrame})` }}
+            style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
             onClick={() => {
               handleFirstChoice();
               handleUpdateDemoGuide();
@@ -1004,10 +1006,10 @@ const SelectCustomChoice = (props) => {
           </div>
 
           <div
-            className={`customChoice ${
-              selectedChoice === 2 ? "selectedChoice" : ""
+            className={`modalChoice1 ${
+              selectedChoice === 2 ? "selectedModalChoice" : ""
             } ${canClick("2nd Choice") ? "demoClick" : ""} `}
-            style={{ backgroundImage: `url(${GoldFrame})` }}
+            style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
             onClick={() => {
               handleSecondChoice();
               handleUpdateDemoGuide();
@@ -1023,26 +1025,28 @@ const SelectCustomChoice = (props) => {
           </div>
         </div>
 
-        {selectedChoice === null && canSkip && (
-          <button className="choiceButton" onClick={() => handleSkip()}>
-            Skip
-          </button>
-        )}
+        <div className="modalBottomButton">
+          {selectedChoice === null && canSkip && (
+            <button className="choiceButton" onClick={() => handleSkip()}>
+              Skip
+            </button>
+          )}
 
-        {selectedChoice !== null && (
-          // <button className="choiceButton" onClick={() => handleSelect()}>
-          <button
-            className={`choiceButton ${
-              canClick("Select Button") ? "demoClick" : ""
-            }`}
-            onClick={() => {
-              handleSelect();
-              handleUpdateDemoGuide();
-            }}
-          >
-            Select
-          </button>
-        )}
+          {selectedChoice !== null && (
+            // <button className="choiceButton" onClick={() => handleSelect()}>
+            <button
+              className={`choiceButton ${
+                canClick("Select Button") ? "demoClick" : ""
+              }`}
+              onClick={() => {
+                handleSelect();
+                handleUpdateDemoGuide();
+              }}
+            >
+              Select
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

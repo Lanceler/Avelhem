@@ -49,7 +49,7 @@ const PileOfCards = (props) => {
       default:
         break;
     }
-  }, []);
+  }, [localGameState]);
 
   const isFloating = (i) => {
     return i >= stack.length - floatingCards;

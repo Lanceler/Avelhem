@@ -26,11 +26,11 @@ import InspectSkill from "./modals/InspectSkill";
 import MessageToPlayer from "./modals/MessageToPlayer";
 import RecoverAvelhem from "./modals/RecoverAvelhem";
 import RecoverSkill from "./modals/RecoverSkill";
-import ScionSkillSelect from "./modals/ScionSkillSelect";
+import SelectScionSkill from "./modals/SelectScionSkill";
 import SearchAvelhem from "./modals/SearchAvelhem";
 import SearchSkill from "./modals/SearchSkill";
 import SelectElement from "./modals/SelectElement";
-import SelectSkillResonator from "./modals/SelectSkillResonator";
+import SelectResonatorSkill from "./modals/SelectResonatorSkill";
 import SelectAvelhemHandMulti from "./modals/SelectAvelhemHandMulti";
 import SelectAvelhemResonator from "./modals/SelectAvelhemResonator";
 import SelectSkillDiscard from "./modals/SelectSkillDiscard";
@@ -49,8 +49,8 @@ import YouMayNoYes from "./modals/YouMayNoYes";
 import VictoryScreen from "./modals/VictoryScreen";
 import ZoomCard from "./displays/ZoomCard";
 
-import UseTactic from "./modals/UseTactic";
-import UseTacticViaEffect from "./modals/UseTacticViaEffect";
+import SelectTactic from "./modals/SelectTactic";
+import SelectTacticViaEffect from "./modals/SelectTacticViaEffect";
 import SelectCustomChoice from "./modals/SelectCustomChoice";
 
 import GlacialTorrent from "./skillModals/GlacialTorrent";
@@ -881,7 +881,7 @@ const Board = (props) => {
         return (
           <>
             {self === lastResolution.player && (
-              <SelectSkillResonator
+              <SelectResonatorSkill
                 unit={lastResolution.unit}
                 skill={lastResolution.skill}
                 hideOrRevealModale={hideOrRevealModale}
@@ -1077,7 +1077,7 @@ const Board = (props) => {
             return (
               <>
                 {self === lastResolution.unit.player && (
-                  <ScionSkillSelect
+                  <SelectScionSkill
                     updateFirebase={updateFirebase}
                     unit={lastResolution.unit}
                   />
@@ -1114,7 +1114,7 @@ const Board = (props) => {
             return (
               <>
                 {self === localGameState.turnPlayer && !hideModal && (
-                  <UseTactic
+                  <SelectTactic
                     updateFirebase={updateFirebase}
                     unit={lastResolution.unit}
                     enterMoveMode={enterMoveMode}
@@ -1359,7 +1359,7 @@ const Board = (props) => {
             return (
               <>
                 {self === localGameState.turnPlayer && !hideModal && (
-                  <UseTacticViaEffect
+                  <SelectTacticViaEffect
                     unit={lastResolution.unit}
                     details={lastResolution.details}
                     updateFirebase={updateFirebase}
@@ -2725,7 +2725,7 @@ const Board = (props) => {
             return (
               <>
                 {self === localGameState.turnPlayer && !hideModal && (
-                  <UseTacticViaEffect
+                  <SelectTacticViaEffect
                     unit={lastResolution.unit}
                     details={lastResolution.details}
                     updateFirebase={updateFirebase}
@@ -2777,7 +2777,7 @@ const Board = (props) => {
             return (
               <>
                 {self === localGameState.turnPlayer && !hideModal && (
-                  <UseTacticViaEffect
+                  <SelectTacticViaEffect
                     unit={lastResolution.unit}
                     details={lastResolution.details}
                     updateFirebase={updateFirebase}
@@ -3338,7 +3338,7 @@ const Board = (props) => {
             return (
               <>
                 {self === localGameState.turnPlayer && !hideModal && (
-                  <UseTacticViaEffect
+                  <SelectTacticViaEffect
                     details={lastResolution.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
@@ -3458,7 +3458,7 @@ const Board = (props) => {
             return (
               <>
                 {self === localGameState.turnPlayer && !hideModal && (
-                  <UseTacticViaEffect
+                  <SelectTacticViaEffect
                     details={lastResolution.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
@@ -3487,7 +3487,7 @@ const Board = (props) => {
             return (
               <>
                 {self === localGameState.turnPlayer && !hideModal && (
-                  <UseTacticViaEffect
+                  <SelectTacticViaEffect
                     details={lastResolution.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}

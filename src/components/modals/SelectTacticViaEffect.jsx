@@ -10,7 +10,7 @@ import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 
 import InfoPopUp from "./InfoPopUp";
 
-const UseTacticViaEffect = (props) => {
+const SelectTacticViaEffect = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
@@ -498,4 +498,4 @@ const UseTacticViaEffect = (props) => {
   );
 };
 
-export default UseTacticViaEffect;
+export default SelectTacticViaEffect;

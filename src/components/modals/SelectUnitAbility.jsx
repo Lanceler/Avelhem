@@ -14,10 +14,13 @@ import { updateDemo } from "../../redux/demoGuide";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 import { useCardDatabase } from "../../hooks/useCardDatabase";
 
+import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
+
 const SelectUnitAbility = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
+  const { getMiscImage } = useCardImageSwitch();
 
   const dispatch = useDispatch();
 
@@ -64,8 +67,9 @@ const SelectUnitAbility = (props) => {
           abilityName: "Fiery Heart",
           abilityQualifier: (
             <div className="abilityQualifier">
-              {" "}
-              <span className="abilityQualifier">One-shot</span>{" "}
+              <span className="abilityQualifier">
+                <em>One-shot</em>
+              </span>
             </div>
           ),
           abilityText: (
@@ -136,12 +140,18 @@ const SelectUnitAbility = (props) => {
         {
           abilityName: "Air Dash",
           abilityQualifier: (
-            <div className="abilityQualifier">
-              <span className="abilityQualifier">One-shot{"\u00A0"}</span>
-              <img src={MobilizeSmall} style={{ height: 30 }} />
-              <img src={MobilizeSmall} style={{ height: 30 }} />
-              <img src={MobilizeSmall} style={{ height: 30 }} />
-            </div>
+            <>
+              <div className="abilityQualifier">
+                <span className="">
+                  <em>One-shot</em>
+                </span>
+              </div>
+              <div className="abilityQualifier">
+                <img src={MobilizeSmall} style={{ height: 30 }} />
+                <img src={MobilizeSmall} style={{ height: 30 }} />
+                <img src={MobilizeSmall} style={{ height: 30 }} />
+              </div>
+            </>
           ),
           abilityText: (
             <>
@@ -212,11 +222,17 @@ const SelectUnitAbility = (props) => {
         {
           abilityName: "Galvanize",
           abilityQualifier: (
-            <div className="abilityQualifier">
-              <span className="abilityQualifier">One-shot</span>{" "}
-              <img src={MobilizeSmall} style={{ height: 35 }} />
-              <img src={MobilizeSmall} style={{ height: 35 }} />
-            </div>
+            <>
+              <div className="abilityQualifier">
+                <span className="">
+                  <em>One-shot</em>
+                </span>
+              </div>
+              <div className="abilityQualifier">
+                <img src={MobilizeSmall} style={{ height: 30 }} />
+                <img src={MobilizeSmall} style={{ height: 30 }} />
+              </div>
+            </>
           ),
           abilityText: (
             <>
@@ -292,7 +308,9 @@ const SelectUnitAbility = (props) => {
           abilityName: "Flourish",
           abilityQualifier: (
             <div className="abilityQualifier">
-              <span className="abilityQualifier">One-shot</span>
+              <span className="abilityQualifier">
+                <em>One-shot</em>
+              </span>
             </div>
           ),
           abilityText: (
@@ -850,17 +868,19 @@ const SelectUnitAbility = (props) => {
   return (
     <div className="modal-backdrop">
       <div
-        className={`modal ${
-          abilityDetails.length === 1
-            ? "singleAbilityModal"
-            : "dualAbilityModal"
-        }`}
+        className="modal"
+        // className={`modal ${
+        //   abilityDetails.length === 1
+        //     ? "singleAbilityModal"
+        //     : "dualAbilityModal"
+        // }`}
       >
-        <div className="">
-          <h2 className="choiceTitle">{unit.unitClass} Abilities</h2>
+        <div className="modalHeader">
+          <div className="modalTitle">{unit.unitClass} Abilities</div>
         </div>
 
         {message && <h4>{message}</h4>}
+        <br />
 
         <div
           className={`${
@@ -871,9 +891,9 @@ const SelectUnitAbility = (props) => {
             <div
               key={i}
               className={`customChoice ${
-                selectedChoice === i ? "selectedChoice" : ""
+                selectedChoice === i ? "selectedModalChoice" : ""
               } ${canClick("Ability", i) ? "demoClick" : ""}`}
-              style={{ backgroundImage: `url(${GoldFrame})` }}
+              style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
               onClick={() => {
                 handleChoice(i);
                 handleUpdateDemoGuide();
@@ -886,7 +906,7 @@ const SelectUnitAbility = (props) => {
                 } `}
               >
                 <div className="abilityHeader">
-                  <h3 className="abilityName ">{detail.abilityName}</h3>
+                  <h3 className="modalChoiceName ">{detail.abilityName}</h3>
 
                   <div>{detail.abilityQualifier}</div>
                 </div>
@@ -898,27 +918,29 @@ const SelectUnitAbility = (props) => {
           ))}
         </div>
 
-        {selectedChoice === null && (
-          <button className="choiceButton" onClick={() => handleReturn()}>
-            Return
-          </button>
-        )}
+        <div className="modalBottomButton">
+          {selectedChoice === null && (
+            <button className="choiceButton" onClick={() => handleReturn()}>
+              Return
+            </button>
+          )}
 
-        {selectedChoice !== null && (
-          <button
-            className={`choiceButton ${
-              canClick("Select Button") ? "demoClick" : ""
-            }`}
-            onClick={() => {
-              {
-                handleSelect();
-                handleUpdateDemoGuide();
-              }
-            }}
-          >
-            Select
-          </button>
-        )}
+          {selectedChoice !== null && (
+            <button
+              className={`choiceButton ${
+                canClick("Select Button") ? "demoClick" : ""
+              }`}
+              onClick={() => {
+                {
+                  handleSelect();
+                  handleUpdateDemoGuide();
+                }
+              }}
+            >
+              Select
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
