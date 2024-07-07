@@ -1870,6 +1870,7 @@ export const useDemoGameStates = () => {
               </div>
             );
 
+          case "Learn1.164.1":
           case "Learn1.165":
           case "Learn1.166":
             return (

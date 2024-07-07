@@ -114,7 +114,7 @@ export const Piece = (props) => {
                 element2.player === "guest"
               );
 
-            case "Learn1.164":
+            case "Learn1.164.1":
               return (
                 element === "Unit" &&
                 element2.unitIndex === 0 &&
@@ -254,7 +254,7 @@ export const Piece = (props) => {
               dispatch(updateDemo("Learn1.149"));
               break;
 
-            case "Learn1.164":
+            case "Learn1.164.1":
               dispatch(updateDemo("Learn1.165"));
               break;
 

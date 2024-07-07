@@ -478,7 +478,7 @@ const ContingentTriggered = (props) => {
         break;
 
       case "Learn1.164":
-        dispatch(updateDemo("Learn1.165"));
+        dispatch(updateDemo("Learn1.164.1"));
         break;
       /////////////////////////
 
@@ -555,7 +555,10 @@ const ContingentTriggered = (props) => {
               className={`choiceButton ${
                 canClick("Select Button") ? "demoClick" : ""
               }`}
-              onClick={() => handleActivate()}
+              onClick={() => {
+                handleActivate();
+                handleUpdateDemoGuide();
+              }}
             >
               Activate
             </button>
