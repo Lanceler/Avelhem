@@ -446,7 +446,7 @@ const SelectTacticViaEffect = (props) => {
             </svg>
           </h2>
           <button className="choiceButton" onClick={() => handleViewBoard()}>
-            View Board
+            View
           </button>
         </div>
 

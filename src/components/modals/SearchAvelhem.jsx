@@ -154,83 +154,89 @@ const SearchAvelhem = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <div className="twoColumn3-1">
-          <h2 className="choiceTitle">{props.message}</h2>
-          <button className="choiceButton" onClick={() => handleViewBoard()}>
-            View Board
-          </button>
-        </div>
-
-        <div className="scrollable scrollable-y-only">
-          {localGameState[self].avelhemFloat > 0 && (
-            <>
-              <h3>Floating Avelhems</h3>
-              <div className="fourColumn">
-                {floatingRepertoire.map((usableAvelhem, i) => (
-                  <div
-                    key={i}
-                    className={`scionSkills ${
-                      selectedAvelhem === i ? "selectedSkill" : ""
-                    }`}
-                    onClick={() => {
-                      handleClick(canSearch(usableAvelhem.id), i);
-                      // handleUpdateDemoGuide();
-                    }}
-                  >
-                    <Skill
-                      i={i}
-                      usableSkill={usableAvelhem}
-                      canActivateSkill={canSearch(usableAvelhem.id)}
-                    />
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
-
-          <h3>Non-floating Avelhems</h3>
-          <div
-            className={`fourColumn  ${
-              localGameState[self].usableAvelhem > 0 ? "decreased-height" : ""
-            } `}
-          >
-            {searchRerpertoire.map((usableAvelhem, i) => (
-              <div
-                key={i + localGameState[self].avelhemFloat}
-                className={`scionSkills ${
-                  selectedAvelhem === i + localGameState[self].avelhemFloat
-                    ? "selectedSkill"
-                    : ""
-                }`}
-                onClick={() => {
-                  handleClick(
-                    canSearch(usableAvelhem.id),
-                    i + localGameState[self].avelhemFloat
-                  );
-                  // handleUpdateDemoGuide();
-                }}
-              >
-                <Skill
-                  i={i + localGameState[self].avelhemFloat}
-                  usableSkill={usableAvelhem}
-                  canActivateSkill={canSearch(usableAvelhem.id)}
-                />
-              </div>
-            ))}
+        <div className="modalHeader">
+          <div className="modalTitle">{props.message}</div>
+          <div className="modalButton">
+            <button className="choiceButton" onClick={() => handleViewBoard()}>
+              View
+            </button>
           </div>
         </div>
 
-        {selectedAvelhem === null && (
-          <button className="choiceButton" onClick={() => handleSkip()}>
-            Skip
-          </button>
-        )}
+        <div className="modalContent">
+          <div className="scrollable scrollable-y-only">
+            {localGameState[self].avelhemFloat > 0 && (
+              <>
+                <h3>Floating Avelhems</h3>
+                <div className="fourColumn">
+                  {floatingRepertoire.map((usableAvelhem, i) => (
+                    <div
+                      key={i}
+                      className={`scionSkills ${
+                        selectedAvelhem === i ? "selectedSkill" : ""
+                      }`}
+                      onClick={() => {
+                        handleClick(canSearch(usableAvelhem.id), i);
+                        // handleUpdateDemoGuide();
+                      }}
+                    >
+                      <Skill
+                        i={i}
+                        usableSkill={usableAvelhem}
+                        canActivateSkill={canSearch(usableAvelhem.id)}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
 
-        {selectedAvelhem !== null && (
-          <button className="choiceButton" onClick={() => handleSelect()}>
-            Select
-          </button>
-        )}
+            <h3>Non-floating Avelhems</h3>
+            <div
+              className={`fourColumn  ${
+                localGameState[self].usableAvelhem > 0 ? "decreased-height" : ""
+              } `}
+            >
+              {searchRerpertoire.map((usableAvelhem, i) => (
+                <div
+                  key={i + localGameState[self].avelhemFloat}
+                  className={`scionSkills ${
+                    selectedAvelhem === i + localGameState[self].avelhemFloat
+                      ? "selectedSkill"
+                      : ""
+                  }`}
+                  onClick={() => {
+                    handleClick(
+                      canSearch(usableAvelhem.id),
+                      i + localGameState[self].avelhemFloat
+                    );
+                    // handleUpdateDemoGuide();
+                  }}
+                >
+                  <Skill
+                    i={i + localGameState[self].avelhemFloat}
+                    usableSkill={usableAvelhem}
+                    canActivateSkill={canSearch(usableAvelhem.id)}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="modalBottomButton">
+          {selectedAvelhem === null && (
+            <button className="choiceButton" onClick={() => handleSkip()}>
+              Skip
+            </button>
+          )}
+
+          {selectedAvelhem !== null && (
+            <button className="choiceButton" onClick={() => handleSelect()}>
+              Select
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

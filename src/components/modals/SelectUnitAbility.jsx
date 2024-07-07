@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Modal.css";
 
-import GoldFrame from "../../assets/others/GoldFrame.png";
 import AdvanceSmall from "../../assets/diceIcons/AdvanceSmall.png";
 import MobilizeSmall from "../../assets/diceIcons/MobilizeSmall.png";
 import AssaultSmall from "../../assets/diceIcons/AssaultSmall.png";

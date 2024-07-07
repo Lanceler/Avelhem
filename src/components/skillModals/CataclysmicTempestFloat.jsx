@@ -89,7 +89,7 @@ const CataclysmicTempestFloat = (props) => {
         <div className="twoColumn">
           <h2 className="choiceTitle">Cataclysmic Tempest</h2>
           <button className="choiceButton" onClick={() => handleViewBoard()}>
-            View Board
+            View
           </button>
         </div>
 

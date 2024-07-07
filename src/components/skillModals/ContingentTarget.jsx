@@ -235,7 +235,7 @@ const ContingentTarget = (props) => {
         <div className="twoColumn3-1">
           <h2 className="choiceTitle">Contigency: Target Triggered</h2>
           <button className="choiceButton" onClick={() => handleViewBoard()}>
-            View Board
+            View
           </button>
         </div>
 

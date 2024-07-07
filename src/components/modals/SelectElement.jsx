@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import "./Modal.css";
 
-import GoldFrame from "../../assets/others/GoldFrame.png";
-
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
@@ -15,7 +13,7 @@ const SelectElement = (props) => {
 
   const [selectedChoice, setSelectedChoice] = useState(null);
   const { ascendPawn, canAscend, getZonesWithEnemies } = useRecurringEffects();
-  const { getElementImage } = useCardImageSwitch();
+  const { getElementImage, getMiscImage } = useCardImageSwitch();
 
   const aspects = [
     "Fire Scion",
@@ -174,29 +172,33 @@ const SelectElement = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <div className="twoColumn">
-          <h2 className="choiceTitle">{props.details.title}</h2>
-          <button className="choiceButton" onClick={() => handleViewBoard()}>
-            View Board
-          </button>
+        <div className="modalHeader">
+          <div className="modalTitle">{props.details.title}</div>
+          <div className="modalButton">
+            <button className="choiceButton" onClick={() => handleViewBoard()}>
+              View
+            </button>
+          </div>
         </div>
 
         <h3>{props.details.message}</h3>
 
-        <div className="scrollable scrollable-y-only">
+        <br />
+
+        <div className="modalContent">
           <div className="fourColumn">
             {aspects.map((aspect, i) => (
               <div
                 key={i}
                 onClick={() => handleSelect(aspect)}
-                style={{ backgroundImage: `url(${GoldFrame})` }}
-                className={` customChoice customChoiceElement ${
-                  selectedChoice === aspect ? "selectedChoice" : ""
+                style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
+                className={` modalChoice1 modalChoiceE ${
+                  selectedChoice === aspect ? "selectedModalChoice" : ""
                 } `}
               >
                 <div
                   className={`customChoiceFrameElement  ${
-                    canSelect(aspect) ? "" : "disabledChoice"
+                    canSelect(aspect) ? "" : "disabledModalChoice"
                   }`}
                 >
                   <div>
@@ -214,18 +216,20 @@ const SelectElement = (props) => {
           </div>
         </div>
 
-        <div>
-          {canSkip && selectedChoice === null && (
-            <button className="choiceButton" onClick={() => handleSkip()}>
-              Return
-            </button>
-          )}
+        <div className="modalBottomButton">
+          <div>
+            {canSkip && selectedChoice === null && (
+              <button className="choiceButton" onClick={() => handleSkip()}>
+                Return
+              </button>
+            )}
 
-          {selectedChoice !== null && (
-            <button className="choiceButton" onClick={() => handleProceed()}>
-              Select
-            </button>
-          )}
+            {selectedChoice !== null && (
+              <button className="choiceButton" onClick={() => handleProceed()}>
+                Select
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>

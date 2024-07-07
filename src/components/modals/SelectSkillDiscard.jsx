@@ -256,11 +256,13 @@ const SelectSkillDiscard = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <div className="twoColumn3-1">
-          <h2 className="choiceTitle">{props.message}</h2>
-          <button className="choiceButton" onClick={() => handleViewBoard()}>
-            View Board
-          </button>
+        <div className="modalHeader">
+          <div className="modalTitle">{props.message}</div>
+          <div className="modalButton">
+            <button className="choiceButton" onClick={() => handleViewBoard()}>
+              View
+            </button>
+          </div>
         </div>
 
         <div className="scrollable scrollable-y-only">
@@ -286,44 +288,50 @@ const SelectSkillDiscard = (props) => {
           </div>
         </div>
 
-        {selectedSkill === null && unit && unit.blossom > 0 && (
-          <button
-            className={`choiceButton ${
-              canClick("Select Button") ? "demoClick" : ""
-            }`}
-            onClick={() => handleBlossom()}
-          >
-            Spend 1 Blossom
-          </button>
-        )}
+        <div className="modalBottomButton">
+          <div className="multi-option-buttons">
+            {selectedSkill === null && unit && unit.blossom > 0 && (
+              <button
+                className={`choiceButton ${
+                  canClick("Select Button") ? "demoClick" : ""
+                }`}
+                onClick={() => handleBlossom()}
+              >
+                Spend 1 Blossom
+              </button>
+            )}
 
-        {selectedSkill === null && props.fever && unit.fever >= props.fever && (
-          <button
-            className={`choiceButton ${
-              canClick("Select Fever Button") ? "demoClick" : ""
-            }`}
-            onClick={() => {
-              handleFever();
-              handleUpdateDemoGuide();
-            }}
-          >
-            {`Spend ${props.fever === 1 ? "1 Fever" : "2 Fevers"}`}
-          </button>
-        )}
+            {selectedSkill === null &&
+              props.fever &&
+              unit.fever >= props.fever && (
+                <button
+                  className={`choiceButton ${
+                    canClick("Select Fever Button") ? "demoClick" : ""
+                  }`}
+                  onClick={() => {
+                    handleFever();
+                    handleUpdateDemoGuide();
+                  }}
+                >
+                  {`Spend ${props.fever === 1 ? "1 Fever" : "2 Fevers"}`}
+                </button>
+              )}
 
-        {selectedSkill !== null && (
-          <button
-            className={`choiceButton ${
-              canClick("Select Button") ? "demoClick" : ""
-            }`}
-            onClick={() => {
-              handleSelect();
-              handleUpdateDemoGuide();
-            }}
-          >
-            Select
-          </button>
-        )}
+            {selectedSkill !== null && (
+              <button
+                className={`choiceButton ${
+                  canClick("Select Button") ? "demoClick" : ""
+                }`}
+                onClick={() => {
+                  handleSelect();
+                  handleUpdateDemoGuide();
+                }}
+              >
+                Select
+              </button>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

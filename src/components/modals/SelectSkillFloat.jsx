@@ -83,7 +83,7 @@ const SelectSkillFloat = (props) => {
         <div className="twoColumn">
           <h2 className="choiceTitle">{props.title}</h2>
           <button className="choiceButton" onClick={() => handleViewBoard()}>
-            View Board
+            View
           </button>
         </div>
         <h3>{props.message}</h3>

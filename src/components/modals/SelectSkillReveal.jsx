@@ -167,13 +167,13 @@ const SelectSkillReveal = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        {/* <button onClick={() => handleViewBoard()}>View Board</button>
+        {/* <button onClick={() => handleViewBoard()}>View</button>
         <h2>{props.details.title}</h2> */}
 
         <div className="twoColumn3-1">
           <h2 className="choiceTitle">{props.details.title}</h2>
           <button className="choiceButton" onClick={() => handleViewBoard()}>
-            View Board
+            View
           </button>
         </div>
 

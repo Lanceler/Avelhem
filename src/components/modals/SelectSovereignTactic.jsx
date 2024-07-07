@@ -427,20 +427,20 @@ const SelectSovereignTactic = (props) => {
     dispatch(updateState(newGameState));
   };
 
-  let modalColumn = "oneAbility";
-  let modalClass = "singleAbilityModal";
+  // let modalColumn = "oneAbility";
+  // let modalClass = "singleAbilityModal";
 
-  switch (abilityDetails.length) {
-    case 2:
-      modalColumn = "twoColumn";
-      modalClass = "dualAbilityModal";
-      break;
+  // switch (abilityDetails.length) {
+  //   case 2:
+  //     modalColumn = "twoColumn";
+  //     modalClass = "dualAbilityModal";
+  //     break;
 
-    case 3:
-      modalColumn = "threeColumn";
-      modalClass = "";
-      break;
-  }
+  //   case 3:
+  //     modalColumn = "threeColumn";
+  //     modalClass = "";
+  //     break;
+  // }
 
   const canClick = (element, element2) => {
     switch (demoGuide) {
@@ -483,14 +483,15 @@ const SelectSovereignTactic = (props) => {
 
   return (
     <div className="modal-backdrop">
-      <div className={`modal ${modalClass}`}>
-        <div className="">
-          <h2 className="choiceTitle">Tactical Action: {props.face}</h2>
+      <div className="modal">
+        <div className="modalHeader">
+          <div className="modalTitle">Tactical Action: {props.face}</div>
         </div>
 
         {message && <h4>{message}</h4>}
+        <br />
 
-        <div className={modalColumn}>
+        <div className="modalContent">
           {abilityDetails.map((detail, i) => (
             <div
               key={i}
@@ -522,33 +523,35 @@ const SelectSovereignTactic = (props) => {
           ))}
         </div>
 
-        {selectedChoice === null && (
-          <button
-            className={`choiceButton ${
-              canClick("Return Button") ? "demoClick" : ""
-            }`}
-            onClick={() => {
-              handleReturn();
-              handleUpdateDemoGuide();
-            }}
-          >
-            Return
-          </button>
-        )}
+        <div className="modalBottomButton">
+          {selectedChoice === null && (
+            <button
+              className={`choiceButton ${
+                canClick("Return Button") ? "demoClick" : ""
+              }`}
+              onClick={() => {
+                handleReturn();
+                handleUpdateDemoGuide();
+              }}
+            >
+              Return
+            </button>
+          )}
 
-        {selectedChoice !== null && (
-          <button
-            className={`choiceButton ${
-              canClick("Select Button") ? "demoClick" : ""
-            }`}
-            onClick={() => {
-              handleSelect();
-              handleUpdateDemoGuide();
-            }}
-          >
-            Select
-          </button>
-        )}
+          {selectedChoice !== null && (
+            <button
+              className={`choiceButton ${
+                canClick("Select Button") ? "demoClick" : ""
+              }`}
+              onClick={() => {
+                handleSelect();
+                handleUpdateDemoGuide();
+              }}
+            >
+              Select
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

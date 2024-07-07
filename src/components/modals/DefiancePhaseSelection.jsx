@@ -248,7 +248,7 @@ const DefiancePhaseSelection = (props) => {
           </div>
           <div className="modalButton">
             <button className="choiceButton" onClick={() => handleViewBoard()}>
-              View Board
+              View
             </button>
           </div>
         </div>

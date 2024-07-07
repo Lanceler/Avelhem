@@ -141,49 +141,55 @@ const SelectAvelhemHandMulti = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <div className="twoColumn">
-          <h2 className="choiceTitle">{props.details.title}</h2>
-          <button className="choiceButton" onClick={() => handleViewBoard()}>
-            View Board
-          </button>
+        <div className="modalHeader">
+          <div className="choiceTitle">{props.details.title}</div>
+          <div className="modalButton">
+            <button className="choiceButton" onClick={() => handleViewBoard()}>
+              View
+            </button>
+          </div>
         </div>
 
         <h3>{props.details.message}</h3>
 
-        <div className="fourColumn  scrollable scrollable-y-only">
-          {avelhemHand.map((usableSkill, i) => (
-            <div
-              key={i}
-              className={`scionSkills ${
-                selectedAvelhems.includes(i) ? "selectedSkill" : ""
-              }`}
-              onClick={() => {
-                handleClick(true, i);
-                // handleUpdateDemoGuide();
-              }}
-            >
-              <SkillMultiSelect
-                i={i}
-                usableSkill={usableSkill}
-                canAdd={true}
-                selectedSkills={selectedAvelhems}
-                addLimit={selectLimit}
-              />
-            </div>
-          ))}
+        <div className="modalContent">
+          <div className="fourColumn  scrollable scrollable-y-only">
+            {avelhemHand.map((usableSkill, i) => (
+              <div
+                key={i}
+                className={`scionSkills ${
+                  selectedAvelhems.includes(i) ? "selectedSkill" : ""
+                }`}
+                onClick={() => {
+                  handleClick(true, i);
+                  // handleUpdateDemoGuide();
+                }}
+              >
+                <SkillMultiSelect
+                  i={i}
+                  usableSkill={usableSkill}
+                  canAdd={true}
+                  selectedSkills={selectedAvelhems}
+                  addLimit={selectLimit}
+                />
+              </div>
+            ))}
+          </div>
         </div>
 
-        {canSkip && selectedAvelhems.length === 0 && (
-          <button className="choiceButton" onClick={() => handleSkip()}>
-            {skipMessage}
-          </button>
-        )}
+        <div className="modalBottomButton">
+          {canSkip && selectedAvelhems.length === 0 && (
+            <button className="choiceButton" onClick={() => handleSkip()}>
+              {skipMessage}
+            </button>
+          )}
 
-        {selectedAvelhems.length > 0 && (
-          <button className="choiceButton" onClick={() => handleSelect()}>
-            {selectMessage}
-          </button>
-        )}
+          {selectedAvelhems.length > 0 && (
+            <button className="choiceButton" onClick={() => handleSelect()}>
+              {selectMessage}
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

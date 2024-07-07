@@ -230,7 +230,7 @@ const AcquisitionPhase = (props) => {
           <div className="modalTitle">Acquisition Phase</div>
           <div className="modalButton">
             <button className="choiceButton" onClick={() => handleViewBoard()}>
-              View Board
+              View
             </button>
           </div>
         </div>

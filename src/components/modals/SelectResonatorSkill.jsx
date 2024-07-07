@@ -170,7 +170,7 @@ const SelectResonatorSkill = (props) => {
           <div className="modalTitle">Select resonator</div>
           <div className="modalButton">
             <button className="choiceButton" onClick={() => handleViewBoard()}>
-              View Board
+              View
             </button>
           </div>
         </div>

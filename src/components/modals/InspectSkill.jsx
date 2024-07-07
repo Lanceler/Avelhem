@@ -156,7 +156,7 @@ const InspectSkill = (props) => {
         <div className="twoColumn3-1">
           <h2 className="choiceTitle">{props.details.title}</h2>
           <button className="choiceButton" onClick={() => handleViewBoard()}>
-            View Board
+            View
           </button>
         </div>
         <h3>{props.details.message}</h3>

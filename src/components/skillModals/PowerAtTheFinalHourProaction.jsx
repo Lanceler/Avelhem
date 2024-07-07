@@ -119,7 +119,7 @@ const PowerAtTheFinalHourProaction = (props) => {
         <div className="twoColumn3-1">
           <h2 className="choiceTitle">{props.reason}</h2>
           <button className="choiceButton" onClick={() => handleViewBoard()}>
-            View Board
+            View
           </button>
         </div>
 

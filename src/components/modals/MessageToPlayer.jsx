@@ -41,20 +41,27 @@ const MessageToPlayer = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <h2 className="choiceTitle">{props.title}</h2>
-        <h3>{props.message}</h3>
+        <div className="modalHeader">
+          <div className="modalTitle">{props.title}</div>
+        </div>
 
-        <button
-          className={`choiceButton ${
-            canClick("Proceed Button") ? "demoClick" : ""
-          }`}
-          onClick={() => {
-            handleProceed();
-            handleUpdateDemoGuide();
-          }}
-        >
-          Proceed
-        </button>
+        <div className="modalContent">
+          <h3>{props.message}</h3>
+        </div>
+
+        <div className="modalBottomButton">
+          <button
+            className={`choiceButton ${
+              canClick("Proceed Button") ? "demoClick" : ""
+            }`}
+            onClick={() => {
+              handleProceed();
+              handleUpdateDemoGuide();
+            }}
+          >
+            Proceed
+          </button>
+        </div>
       </div>
     </div>
   );

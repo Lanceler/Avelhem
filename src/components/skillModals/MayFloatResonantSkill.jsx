@@ -69,7 +69,7 @@ const MayFloatResonantSkill = (props) => {
           <div className="modalTitle">Resonance sub-effect</div>
           <div className="modalButton">
             <button className="choiceButton" onClick={() => handleViewBoard()}>
-              View Board
+              View
             </button>
           </div>
         </div>

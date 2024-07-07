@@ -50,7 +50,7 @@ export const useUnitAbilityEffects = () => {
       resolution: "Discard Skill",
       unit: unit,
       player: self,
-      message: "Spend 2 fevers or 1 skill.",
+      message: "Spend 2 Fevers or 1 skill",
       restriction: null,
       fever: 2,
     });
@@ -103,7 +103,7 @@ export const useUnitAbilityEffects = () => {
       resolution: "Discard Skill",
       unit: unit,
       player: self,
-      message: "Spend 1 fever or 1 skill.",
+      message: "Spend 1 Fever or 1 skill",
       restriction: null,
       fever: 1,
     });
@@ -473,7 +473,7 @@ export const useUnitAbilityEffects = () => {
       resolution: "Discard Skill",
       unit: unit,
       player: self,
-      message: "Spend 1 skill.",
+      message: "Spend 1 skill",
       restriction: null,
     });
 
@@ -574,7 +574,7 @@ export const useUnitAbilityEffects = () => {
       resolution: "Discard Skill",
       unit: unit,
       player: self,
-      message: "Spend 1 skill.",
+      message: "Spend 1 skill",
     });
 
     return newGameState;

@@ -57,7 +57,7 @@ export const useSkillEffects = () => {
       resolution: "Discard Skill",
       unit: unit,
       player: self,
-      message: "Spend 1 skill.",
+      message: "Spend 1 skill",
       restriction: null,
     });
 
@@ -92,7 +92,7 @@ export const useSkillEffects = () => {
       resolution: "Discard Skill",
       unit: unit,
       player: self,
-      message: "Spend 1 skill.",
+      message: "Spend 1 skill",
       restriction: null,
     });
 
@@ -145,7 +145,7 @@ export const useSkillEffects = () => {
       resolution: "Discard Skill",
       unit: unit,
       player: self,
-      message: "Spend 1 skill.",
+      message: "Spend 1 skill",
       restriction: null,
     });
 
@@ -216,7 +216,7 @@ export const useSkillEffects = () => {
     //   resolution: "Discard Skill",
     //   unit: unit,
     //   player: self,
-    //   message: "Spend 1 skill.",
+    //   message: "Spend 1 skill",
     //   restriction: null,
     // });
 
@@ -1927,7 +1927,7 @@ export const useSkillEffects = () => {
       resolution: "Discard Skill",
       unit: unit,
       player: self,
-      message: "Spend 1 skill.",
+      message: "Spend 1 skill",
       restriction: null,
     });
 

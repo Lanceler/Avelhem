@@ -321,7 +321,7 @@ const SelectCustomChoice = (props) => {
             resolution: "Discard Skill",
             unit: unit,
             player: unit.player,
-            message: "Spend 1 skill.",
+            message: "Spend 1 skill",
             restriction: null,
           });
         }
@@ -444,7 +444,7 @@ const SelectCustomChoice = (props) => {
           //   resolution: "Discard Skill",
           //   unit: unit,
           //   player: self,
-          //   message: "Spend 1 skill.",
+          //   message: "Spend 1 skill",
           //   restriction: null,
           // });
 
@@ -502,7 +502,7 @@ const SelectCustomChoice = (props) => {
             resolution: "Discard Skill",
             unit: unit,
             player: unit.player,
-            message: "Spend 1 skill.",
+            message: "Spend 1 skill",
             restriction: null,
           });
         }
@@ -646,7 +646,7 @@ const SelectCustomChoice = (props) => {
             resolution: "Discard Skill",
             unit: props.unit,
             player: self,
-            message: "Spend 1 skill.",
+            message: "Spend 1 skill",
             restriction: null,
           });
         }
@@ -670,7 +670,7 @@ const SelectCustomChoice = (props) => {
             resolution: "Discard Skill",
             unit: unit,
             player: unit.player,
-            message: "Spend 1 skill.",
+            message: "Spend 1 skill",
             restriction: null,
           });
         }
@@ -689,7 +689,7 @@ const SelectCustomChoice = (props) => {
             resolution: "Discard Skill",
             unit: unit,
             player: self,
-            message: "Spend 1 skill.",
+            message: "Spend 1 skill",
             restriction: null,
           });
         }
@@ -980,7 +980,7 @@ const SelectCustomChoice = (props) => {
           <div className="modalTitle">{props.details.title}</div>
           <div className="modalButton">
             <button className="choiceButton" onClick={() => handleViewBoard()}>
-              View Board
+              View
             </button>
           </div>
         </div>

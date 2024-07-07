@@ -160,17 +160,16 @@ const RecoverSkill = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <div className="twoColumn3-1">
-          <h2 className="choiceTitle">{props.message}</h2>
-          <button className="choiceButton" onClick={() => handleViewBoard()}>
-            View Board
-          </button>
+        <div className="modalHeader">
+          <div className="modalTitle">{props.message}</div>
+          <div className="modalButton">
+            <button className="choiceButton" onClick={() => handleViewBoard()}>
+              View
+            </button>
+          </div>
         </div>
 
-        <div
-        // className="scrollable scrollable-y-only"
-        // className="scrollable"
-        >
+        <div className="modalContent">
           <div className="fourColumn scrollable scrollable-y-only">
             {recoverVestige.map((usableSkill, i) => (
               <div
@@ -193,25 +192,27 @@ const RecoverSkill = (props) => {
           </div>
         </div>
 
-        {props.canSkip && selectedSkill === null && (
-          <button className="choiceButton" onClick={() => handleSkip()}>
-            Skip
-          </button>
-        )}
+        <div className="modalBottomButton">
+          {props.canSkip && selectedSkill === null && (
+            <button className="choiceButton" onClick={() => handleSkip()}>
+              Skip
+            </button>
+          )}
 
-        {selectedSkill !== null && (
-          <button
-            className={`choiceButton ${
-              canClick("Select Button") ? "demoClick" : ""
-            }`}
-            onClick={() => {
-              handleSelect();
-              handleUpdateDemoGuide();
-            }}
-          >
-            Select
-          </button>
-        )}
+          {selectedSkill !== null && (
+            <button
+              className={`choiceButton ${
+                canClick("Select Button") ? "demoClick" : ""
+              }`}
+              onClick={() => {
+                handleSelect();
+                handleUpdateDemoGuide();
+              }}
+            >
+              Select
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

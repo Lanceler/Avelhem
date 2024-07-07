@@ -164,73 +164,77 @@ const SelectAvelhemResonator = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <div className="twoColumn3-1">
-          <h2 className="choiceTitle">Select resonator.</h2>
+        <div className="modalHeader">
+          <div className="modalTitle">Select resonator.</div>
         </div>
 
-        <div className="fourColumn scrollable scrollable-y-only">
-          {usableAvelhems.map((usableAvelhem, i) => (
-            <div
-              key={i}
-              className={`scionSkills ${
-                selectedSkill === i ? "selectedSkill" : ""
-              }        
+        <div className="modalContent">
+          <div className="fourColumn scrollable scrollable-y-only">
+            {usableAvelhems.map((usableAvelhem, i) => (
+              <div
+                key={i}
+                className={`scionSkills ${
+                  selectedSkill === i ? "selectedSkill" : ""
+                }        
               ${canClick("Resonator", usableAvelhem) ? "demoClick" : ""}
               `}
-              onClick={() => {
-                handleClick(true, i);
-                handleUpdateDemoGuide();
-              }}
-            >
-              <Skill
-                i={i}
-                usableSkill={usableAvelhem}
-                canActivateSkill={true}
-              />
-            </div>
-          ))}
+                onClick={() => {
+                  handleClick(true, i);
+                  handleUpdateDemoGuide();
+                }}
+              >
+                <Skill
+                  i={i}
+                  usableSkill={usableAvelhem}
+                  canActivateSkill={true}
+                />
+              </div>
+            ))}
 
-          {usableSkills.map((usableSkill, i) => (
-            <div
-              key={i + usableAvelhems.length}
-              className={`scionSkills ${
-                selectedSkill === i + usableAvelhems.length
-                  ? "selectedSkill"
-                  : ""
-              }`}
-              onClick={() => {
-                handleClick(true, i + usableAvelhems.length);
-                handleUpdateDemoGuide();
-              }}
-            >
-              <Skill
-                i={i + usableAvelhems.length}
-                usableSkill={usableSkill}
-                canActivateSkill={true}
-              />
-            </div>
-          ))}
+            {usableSkills.map((usableSkill, i) => (
+              <div
+                key={i + usableAvelhems.length}
+                className={`scionSkills ${
+                  selectedSkill === i + usableAvelhems.length
+                    ? "selectedSkill"
+                    : ""
+                }`}
+                onClick={() => {
+                  handleClick(true, i + usableAvelhems.length);
+                  handleUpdateDemoGuide();
+                }}
+              >
+                <Skill
+                  i={i + usableAvelhems.length}
+                  usableSkill={usableSkill}
+                  canActivateSkill={true}
+                />
+              </div>
+            ))}
+          </div>
         </div>
 
-        {selectedSkill === null && (
-          <button className="choiceButton" onClick={() => handleCancel()}>
-            Cancel
-          </button>
-        )}
+        <div className="modalBottomButton">
+          {selectedSkill === null && (
+            <button className="choiceButton" onClick={() => handleCancel()}>
+              Cancel
+            </button>
+          )}
 
-        {selectedSkill !== null && (
-          <button
-            className={`choiceButton ${
-              canClick("Select Button") ? "demoClick" : ""
-            }`}
-            onClick={() => {
-              handleSelect();
-              handleUpdateDemoGuide();
-            }}
-          >
-            Select
-          </button>
-        )}
+          {selectedSkill !== null && (
+            <button
+              className={`choiceButton ${
+                canClick("Select Button") ? "demoClick" : ""
+              }`}
+              onClick={() => {
+                handleSelect();
+                handleUpdateDemoGuide();
+              }}
+            >
+              Select
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

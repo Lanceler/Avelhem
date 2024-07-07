@@ -73,7 +73,7 @@ const TacticResults = (props) => {
           <div className="modalTitle">Dice Results</div>
           <div className="modalButton">
             <button className="choiceButton" onClick={() => handleViewBoard()}>
-              View Board
+              View
             </button>
           </div>
         </div>
