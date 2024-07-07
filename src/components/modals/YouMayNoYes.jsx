@@ -463,7 +463,7 @@ const YouMayNoYes = (props) => {
         }
         break;
 
-      case "Fire1.29":
+      case "Fire1.29.1":
       case "Fire1.36":
         switch (element) {
           case "Yes Choice":
@@ -508,7 +508,7 @@ const YouMayNoYes = (props) => {
         dispatch(updateDemo("Fire1.8"));
         break;
 
-      case "Fire1.29":
+      case "Fire1.29.1":
         dispatch(updateDemo("Fire1.30"));
         break;
 

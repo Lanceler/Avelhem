@@ -15,8 +15,8 @@ import { useSkillEffects } from "../hooks/useSkillEffects";
 import { useSovereignSkillEffects } from "../hooks/useSovereignSkillEffects";
 import { useUnitAbilityEffects } from "../hooks/useUnitAbilityEffects";
 
-import AcquisitionPhaseSelection from "./modals/AcquisitionPhaseSelection";
-import BountyStore from "./modals/BountyStore";
+import AcquisitionPhase from "./modals/AcquisitionPhase";
+import BountyPhase from "./modals/BountyPhase";
 import CoordinationPhaseSelection from "./modals/CoordinationPhaseSelection";
 import DefiancePhaseSelection from "./modals/DefiancePhaseSelection";
 
@@ -49,8 +49,8 @@ import YouMayNoYes from "./modals/YouMayNoYes";
 import VictoryScreen from "./modals/VictoryScreen";
 import ZoomCard from "./displays/ZoomCard";
 
-import TacticSelection from "./modals/TacticSelection";
-import TacticSelectionViaEffect from "./modals/TacticSelectionViaEffect";
+import UseTactic from "./modals/UseTactic";
+import UseTacticViaEffect from "./modals/UseTacticViaEffect";
 import SelectCustomChoice from "./modals/SelectCustomChoice";
 
 import GlacialTorrent from "./skillModals/GlacialTorrent";
@@ -58,13 +58,14 @@ import CataclysmicTempestFloat from "./skillModals/CataclysmicTempestFloat";
 import FerventPrayerResonance from "./skillModals/FerventPrayerResonance";
 import PowerAtTheFinalHourProaction from "./skillModals/PowerAtTheFinalHourProaction";
 
-import ContingentAscension from "./skillModals/ContingentAscension";
-import ContingentElimination from "./skillModals/ContingentElimination";
-import ContingentMotion from "./skillModals/ContingentMotion";
-import ContingentSurvivalAlly from "./skillModals/ContingentSurvivalAlly";
-import ContingentSurvivalEnemy from "./skillModals/ContingentSurvivalEnemy";
-import ContingentActivation from "./skillModals/ContingentActivation";
-import ContingentTarget from "./skillModals/ContingentTarget";
+import ContingentTriggered from "./modals/ContingentTriggered";
+// import ContingentAscension from "./skillModals/ContingentAscension";
+// import ContingentElimination from "./skillModals/ContingentElimination";
+// import ContingentMotion from "./skillModals/ContingentMotion";
+// import ContingentSurvivalAlly from "./skillModals/ContingentSurvivalAlly";
+// import ContingentSurvivalEnemy from "./skillModals/ContingentSurvivalEnemy";
+// import ContingentActivation from "./skillModals/ContingentActivation";
+// import ContingentTarget from "./skillModals/ContingentTarget";
 
 import MayFloatResonantSkill from "./skillModals/MayFloatResonantSkill";
 
@@ -179,6 +180,7 @@ const Board = (props) => {
     selectPowerAtTheFinalHour,
     selectPitfallTrapActivator,
     selectSowAndReapStriker,
+    selectSymphonicScreechActivator,
     selectVengefulLegacy,
     selectViridianGraveActivator,
     shuffleCards,
@@ -640,7 +642,7 @@ const Board = (props) => {
         return (
           <>
             {self === localGameState.turnPlayer && !hideModal && (
-              <AcquisitionPhaseSelection
+              <AcquisitionPhase
                 updateFirebase={updateFirebase}
                 hideOrRevealModale={hideOrRevealModale}
               />
@@ -652,7 +654,7 @@ const Board = (props) => {
         return (
           <>
             {self === localGameState.turnPlayer && !hideModal && (
-              <BountyStore
+              <BountyPhase
                 updateFirebase={updateFirebase}
                 hideOrRevealModale={hideOrRevealModale}
               />
@@ -1112,7 +1114,7 @@ const Board = (props) => {
             return (
               <>
                 {self === localGameState.turnPlayer && !hideModal && (
-                  <TacticSelection
+                  <UseTactic
                     updateFirebase={updateFirebase}
                     unit={lastResolution.unit}
                     enterMoveMode={enterMoveMode}
@@ -1357,7 +1359,7 @@ const Board = (props) => {
             return (
               <>
                 {self === localGameState.turnPlayer && !hideModal && (
-                  <TacticSelectionViaEffect
+                  <UseTacticViaEffect
                     unit={lastResolution.unit}
                     details={lastResolution.details}
                     updateFirebase={updateFirebase}
@@ -2143,6 +2145,12 @@ const Board = (props) => {
               </>
             );
 
+          case "Select Symphonic Screech Activator":
+            if (self === lastResolution.player) {
+              selectSymphonicScreechActivator(lastResolution.activator);
+            }
+            break;
+
           case "Activating Symphonic Screech":
             if (self === lastResolution.unit.player) {
               //Do not use UpdateGameStateOnly
@@ -2717,7 +2725,7 @@ const Board = (props) => {
             return (
               <>
                 {self === localGameState.turnPlayer && !hideModal && (
-                  <TacticSelectionViaEffect
+                  <UseTacticViaEffect
                     unit={lastResolution.unit}
                     details={lastResolution.details}
                     updateFirebase={updateFirebase}
@@ -2769,7 +2777,7 @@ const Board = (props) => {
             return (
               <>
                 {self === localGameState.turnPlayer && !hideModal && (
-                  <TacticSelectionViaEffect
+                  <UseTacticViaEffect
                     unit={lastResolution.unit}
                     details={lastResolution.details}
                     updateFirebase={updateFirebase}
@@ -3330,7 +3338,7 @@ const Board = (props) => {
             return (
               <>
                 {self === localGameState.turnPlayer && !hideModal && (
-                  <TacticSelectionViaEffect
+                  <UseTacticViaEffect
                     details={lastResolution.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
@@ -3450,7 +3458,7 @@ const Board = (props) => {
             return (
               <>
                 {self === localGameState.turnPlayer && !hideModal && (
-                  <TacticSelectionViaEffect
+                  <UseTacticViaEffect
                     details={lastResolution.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
@@ -3479,7 +3487,7 @@ const Board = (props) => {
             return (
               <>
                 {self === localGameState.turnPlayer && !hideModal && (
-                  <TacticSelectionViaEffect
+                  <UseTacticViaEffect
                     details={lastResolution.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
@@ -3825,7 +3833,8 @@ const Board = (props) => {
             return (
               <>
                 {self === lastResolution.player && !hideModal && (
-                  <ContingentElimination
+                  <ContingentTriggered
+                    contingencyType="Elimination"
                     player={lastResolution.player}
                     unit={lastResolution.unit}
                     team="ally"
@@ -3840,7 +3849,8 @@ const Board = (props) => {
             return (
               <>
                 {self === lastResolution.player && !hideModal && (
-                  <ContingentAscension
+                  <ContingentTriggered
+                    contingencyType="Ascension"
                     player={lastResolution.player}
                     unit={lastResolution.unit}
                     team="ally"
@@ -3857,7 +3867,8 @@ const Board = (props) => {
             return (
               <>
                 {self === lastResolution.player && !hideModal && (
-                  <ContingentAscension
+                  <ContingentTriggered
+                    contingencyType="Ascension"
                     player={lastResolution.player}
                     unit={lastResolution.unit}
                     team="enemy"
@@ -3874,7 +3885,8 @@ const Board = (props) => {
             return (
               <>
                 {self === lastResolution.player && !hideModal && (
-                  <ContingentElimination
+                  <ContingentTriggered
+                    contingencyType="Elimination"
                     player={lastResolution.player}
                     unit={lastResolution.unit}
                     team="enemy"
@@ -3889,7 +3901,8 @@ const Board = (props) => {
             return (
               <>
                 {self === lastResolution.player && !hideModal && (
-                  <ContingentMotion
+                  <ContingentTriggered
+                    contingencyType="Motion"
                     mover={lastResolution.mover}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
@@ -3902,9 +3915,11 @@ const Board = (props) => {
             return (
               <>
                 {self === lastResolution.player && !hideModal && (
-                  <ContingentSurvivalAlly
+                  <ContingentTriggered
+                    contingencyType="Survival"
                     attacker={lastResolution.attacker}
                     victim={lastResolution.victim}
+                    team="ally"
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3916,9 +3931,11 @@ const Board = (props) => {
             return (
               <>
                 {self === lastResolution.player && !hideModal && (
-                  <ContingentSurvivalEnemy
+                  <ContingentTriggered
+                    contingencyType="Survival"
                     attacker={lastResolution.attacker}
                     victim={lastResolution.victim}
+                    team="enemy"
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3930,7 +3947,8 @@ const Board = (props) => {
             return (
               <>
                 {self === lastResolution.victim.player && !hideModal && (
-                  <ContingentTarget
+                  <ContingentTriggered
+                    contingencyType="Target"
                     updateFirebase={updateFirebase}
                     attacker={lastResolution.attacker}
                     victim={lastResolution.victim}
@@ -3947,9 +3965,11 @@ const Board = (props) => {
         return (
           <>
             {self === lastResolution.player && !hideModal && (
-              <ContingentActivation
+              <ContingentTriggered
+                contingencyType="Activation"
                 updateFirebase={updateFirebase}
                 activator={lastResolution.activator}
+                screech={lastResolution.screech}
                 hideOrRevealModale={hideOrRevealModale}
               />
             )}

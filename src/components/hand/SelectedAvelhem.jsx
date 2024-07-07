@@ -152,7 +152,7 @@ const SelectedAvelhem = (props) => {
         return element === "Activate Button";
 
       case "Learn1.208":
-      case "Fire1.1":
+      case "Fire1.1.3":
         return element === "Resonate Button";
     }
   };

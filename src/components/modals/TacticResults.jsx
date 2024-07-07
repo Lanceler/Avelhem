@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
 import { updateDemo } from "../../redux/demoGuide";
 
-import { useRecurringEffects } from "../../hooks/useRecurringEffects";
+import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 
 const TacticResults = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
@@ -14,7 +14,7 @@ const TacticResults = (props) => {
 
   const dispatch = useDispatch();
 
-  const { getTacticImage } = useRecurringEffects();
+  const { getTacticImage } = useCardImageSwitch();
 
   const handleProceed = () => {
     const newGameState = JSON.parse(JSON.stringify(localGameState));
@@ -69,11 +69,13 @@ const TacticResults = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <div className="twoColumn">
-          <h2 className="choiceTitle">Dice Results</h2>
-          <button className="choiceButton" onClick={() => handleViewBoard()}>
-            View Board
-          </button>
+        <div className="modalHeader">
+          <div className="modalTitle">Dice Results</div>
+          <div className="modalButton">
+            <button className="choiceButton" onClick={() => handleViewBoard()}>
+              View Board
+            </button>
+          </div>
         </div>
 
         {message()}
@@ -87,25 +89,28 @@ const TacticResults = (props) => {
                   className="tactic"
                   style={{
                     backgroundImage: `url(${getTacticImage(tactic.face)})`,
+                    cursor: "default",
                   }}
                 ></div>
               </div>
-              <h2>{tactic.face}</h2>
+              <h2 style={{ marginTop: 10 }}>{tactic.face}</h2>
             </div>
           ))}
         </div>
 
-        {self === localGameState.turnPlayer && (
-          <button
-            className={`choiceButton ${canClick() ? "demoClick" : ""}`}
-            onClick={() => {
-              handleProceed();
-              handleUpdateDemoGuide();
-            }}
-          >
-            Proceed
-          </button>
-        )}
+        <div className="modalBottomButton">
+          {self === localGameState.turnPlayer && (
+            <button
+              className={`choiceButton ${canClick() ? "demoClick" : ""}`}
+              onClick={() => {
+                handleProceed();
+                handleUpdateDemoGuide();
+              }}
+            >
+              Proceed
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

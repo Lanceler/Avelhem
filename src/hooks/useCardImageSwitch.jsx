@@ -119,8 +119,24 @@ import UnitProfile from "../assets/others/UnitProfile.png";
 import UnitSkill from "../assets/others/UnitSkill.png";
 import UnitTactic from "../assets/others/UnitTactic.png";
 
+import GoldFrame from "../assets/others/GoldFrame.png";
+import AdvanceSmall from "../assets/diceIcons/AdvanceSmall.png";
+import MobilizeSmall from "../assets/diceIcons/MobilizeSmall.png";
+import AssaultSmall from "../assets/diceIcons/AssaultSmall.png";
+import InvokeSmall from "../assets/diceIcons/InvokeSmall.png";
+import RallySmall from "../assets/diceIcons/RallySmall.png";
+import Advance from "../assets/diceIcons/Advance.png";
+import Assault from "../assets/diceIcons/Assault.png";
+import Invoke from "../assets/diceIcons/Invoke.png";
+import Mobilize from "../assets/diceIcons/Mobilize.png";
+import Rally from "../assets/diceIcons/Rally.png";
+
+import LoadingBanner from "../assets/others/LoadingBanner.png";
+
 export const useCardImageSwitch = () => {
   const imagesLoadingList = [
+    LoadingBanner,
+    //////////
     FireAvelhem,
     IgnitionPropulsion,
     Conflagration,
@@ -222,12 +238,23 @@ export const useCardImageSwitch = () => {
     ParalysisGif,
     RootGif,
     AmbidexterityIcon,
-    //other icons
+    //others
     Crosshair,
     UnitAbility,
     UnitProfile,
     UnitSkill,
     UnitTactic,
+    GoldFrame,
+    AdvanceSmall,
+    MobilizeSmall,
+    AssaultSmall,
+    InvokeSmall,
+    RallySmall,
+    Advance,
+    Mobilize,
+    Assault,
+    Invoke,
+    Rally,
   ];
 
   const getElementImage = (element) => {
@@ -449,20 +476,40 @@ export const useCardImageSwitch = () => {
 
   const getMiscImage = (misc) => {
     switch (misc) {
+      case "LoadingBanner":
+        return LoadingBanner;
+
       case "Crosshair":
         return Crosshair;
 
+      case "GoldFrame":
+        return GoldFrame;
+
       case "UnitAbility":
         return UnitAbility;
-
       case "UnitProfile":
         return UnitProfile;
-
       case "UnitSkill":
         return UnitSkill;
-
       case "UnitTactic":
         return UnitTactic;
+    }
+  };
+
+  const getTacticImage = (face) => {
+    switch (face) {
+      case "Advance":
+        return Advance;
+      case "Mobilize":
+        return Mobilize;
+      case "Assault":
+        return Assault;
+      case "Invoke":
+        return Invoke;
+      case "Rally":
+        return Rally;
+      default:
+        return;
     }
   };
 
@@ -470,6 +517,7 @@ export const useCardImageSwitch = () => {
     getElementImage,
     getCardImage,
     getMiscImage,
+    getTacticImage,
     imagesLoadingList,
   };
 };

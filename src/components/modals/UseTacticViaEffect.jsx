@@ -6,10 +6,11 @@ import { updateState } from "../../redux/gameState";
 import { updateDemo } from "../../redux/demoGuide";
 
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
+import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 
 import InfoPopUp from "./InfoPopUp";
 
-const TacticSelectionViaEffect = (props) => {
+const UseTacticViaEffect = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
@@ -18,8 +19,9 @@ const TacticSelectionViaEffect = (props) => {
 
   const [infoPopUp, setInfoPopUp] = useState(null);
 
-  const { canMove, canStrike, drawAvelhem, drawSkill, getTacticImage } =
-    useRecurringEffects();
+  const { canMove, canStrike, drawAvelhem, drawSkill } = useRecurringEffects();
+
+  const { getTacticImage } = useCardImageSwitch();
 
   let canUseTactic = [false, false];
 
@@ -496,4 +498,4 @@ const TacticSelectionViaEffect = (props) => {
   );
 };
 
-export default TacticSelectionViaEffect;
+export default UseTacticViaEffect;

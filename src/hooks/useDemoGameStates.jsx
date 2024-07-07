@@ -1571,9 +1571,10 @@ export const useDemoGameStates = () => {
           case "Learn1.120":
             return (
               <div>
-                Speaking of which, click on your Metal Scion to open their
-                personal menu, then click on the ability button at the bottom
-                right.
+                Speaking of which, let us go over abilities.
+                <br /> <br />
+                Click on your Metal Scion to open their personal menu, then
+                click on the ability button at the bottom right.
               </div>
             );
 
@@ -1648,10 +1649,10 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 When a unit suffers an attack, they lose HP equal to its AP
-                (Attack Power). By default, attacks have 1 AP; thus, as
-                mentioned earlier, units tend to be eliminated by a single
-                attack. Metal Sciond have a talent that increases the AP of
-                their attacks for every Sharpness they possess.
+                (Attack Power). By default, attacks have 1 AP; thus, units tend
+                to be eliminated by a single attack. Metal Sciond have a talent
+                that increases the AP of their attacks for every Sharpness they
+                possess.
               </div>
             );
 
@@ -1934,9 +1935,12 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 Anathema takes effect once the unit has finished performing all
-                effects they have activated. In this case, the Metal Scion
-                received Anathema after Frenzy Blade concluded rather than
-                immediately after eliminating the Mana Scion.
+                effects they have activated.
+                <br />
+                <br />
+                In this case, the Metal Scion received Anathema after Frenzy
+                Blade concluded rather than immediately after eliminating the
+                Mana Scion.
               </div>
             );
 
@@ -1989,8 +1993,8 @@ export const useDemoGameStates = () => {
           case "Learn1.175":
             return (
               <div>
-                Cultivate to draw 1 skill, which is guaranteed to be the
-                floating Tea For Two.
+                Cultivate to draw 1 skill, which is guaranteed to be the Tea For
+                Two that was floated vua Vengeful Legacy.
               </div>
             );
 
@@ -2099,8 +2103,10 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 The resonance’s first sub-effect allows you to search for any
-                Scion skill that allows the activator to strike or blast. Search
-                for Surge, the standard skill of Mana Scions.
+                Scion skill that allows the activator to strike or blast.
+                <br />
+                <br />
+                Search for Surge, the standard skill of Mana Scions.
               </div>
             );
 
@@ -2112,8 +2118,6 @@ export const useDemoGameStates = () => {
                 simulator skips the revelation of searches (especially if it is
                 restricted to 1 particular skill), since it assumes the rules
                 are enforced.
-                <br />
-                <br />
               </div>
             );
 
@@ -2579,6 +2583,9 @@ export const useDemoGameStates = () => {
       case demoGuide.slice(0, 4) === "Fire":
         switch (demoGuide) {
           case "Fire1.1":
+          case "Fire1.1.1":
+          case "Fire1.1.2":
+          case "Fire1.1.3":
           case "Fire1.2":
           case "Fire1.2.01":
             return (
@@ -2612,6 +2619,7 @@ export const useDemoGameStates = () => {
           case "Fire1.9":
           case "Fire1.10":
           case "Fire1.11":
+          case "Fire1.11.1":
             return "5. Click on the Fire Scion that just ascended and view their abilities (bottom right). Activate “Fiery Heart”, which can cure the Frostbite and Burn of an adjacent ally. This will require you to spend 1 Fever or skill; spend the latter by selecting “Transcendence”.";
 
           case "Fire1.12":
@@ -2659,6 +2667,7 @@ export const useDemoGameStates = () => {
           case "Fire1.27":
           case "Fire1.28":
           case "Fire1.29":
+          case "Fire1.29.1":
           case "Fire1.30":
             return "13. Select your other Fire Scion and prompt them to resonate their resonant skill: Conflagration. When selecting a resonator, use “Tea For Two”. You must spend a skill; select “Healing Rain.” Click on either Land Scion to attack them. Likewise, this consumes 1 Fever.";
 

@@ -76,16 +76,7 @@ const PlayerSkillHand = (props) => {
   };
 
   return (
-    <div className="mainSkillHand">
-      {selectedSkill && (
-        <SelectedSkill
-          selectedSkill={selectedSkill}
-          setSelectedSkill={setSelectedSkill}
-          updateFirebase={props.updateFirebase}
-          setRaise={setRaise}
-        />
-      )}
-
+    <>
       {raise === true && (
         <button
           className="collapse"
@@ -94,43 +85,64 @@ const PlayerSkillHand = (props) => {
             top: `${-raiseHeight + 45}px`,
           }}
         >
-          <img src={Collapse} className="collapseIcon" />
+          {/* <img src={Collapse} className="collapseIcon" /> */}
+
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 384 512"
+            className="collapseIcon"
+            styl
+          >
+            <path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" />
+          </svg>
         </button>
       )}
-      {localGameState[self] && (
-        <div
-          className="player-skillhand-container"
-          style={{
-            // top: `${raise ? -raiseHeight : 55}px`,
-            transform: `translateY(${raise ? -raiseHeight : 55}px)`,
-          }}
-          onClick={(e) => handleRaise(e)}
-        >
-          {localGameState[self].skillHand.map((card, index) => (
-            <div
-              onClick={() => {
-                handleCard(card, index);
-                handleUpdateDemoGuide();
-              }}
-              key={index}
-              className={`player-hand-card indivSkill ${
-                raise ? "enlargable" : ""
-              }
+
+      <div className="mainSkillHand">
+        {selectedSkill && (
+          <SelectedSkill
+            selectedSkill={selectedSkill}
+            setSelectedSkill={setSelectedSkill}
+            updateFirebase={props.updateFirebase}
+            setRaise={setRaise}
+          />
+        )}
+
+        {localGameState[self] && (
+          <div
+            className="player-skillhand-container"
+            style={{
+              // top: `${raise ? -raiseHeight : 55}px`,
+              transform: `translateY(${raise ? -raiseHeight : 55}px)`,
+            }}
+            onClick={(e) => handleRaise(e)}
+          >
+            {localGameState[self].skillHand.map((card, index) => (
+              <div
+                onClick={() => {
+                  handleCard(card, index);
+                  handleUpdateDemoGuide();
+                }}
+                key={index}
+                className={`player-hand-card indivSkill ${
+                  raise ? "enlargable" : ""
+                }
               ${canClick(card) ? "demoClick" : ""}
               `}
-              style={{
-                backgroundImage: `url(${getCardImage(card)})`,
-                // top: Math.floor(index / 4) * -110,
-                top:
-                  Math.floor(index / 4) * -110 -
-                  Math.floor(((index + 1) % 4) / 2) * 10,
-                left: (index % 4) * -60,
-              }}
-            ></div>
-          ))}
-        </div>
-      )}
-    </div>
+                style={{
+                  backgroundImage: `url(${getCardImage(card)})`,
+                  // top: Math.floor(index / 4) * -110,
+                  top:
+                    Math.floor(index / 4) * -110 -
+                    Math.floor(((index + 1) % 4) / 2) * 10,
+                  left: (index % 4) * -60,
+                }}
+              ></div>
+            ))}
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 

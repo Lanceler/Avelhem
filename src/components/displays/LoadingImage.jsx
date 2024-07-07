@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import "./LoadingImage.css";
 
-import LoadingBanner from "../../assets/others/LoadingBanner.png";
+import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 
 const LoadingImage = (props) => {
+  const { getMiscImage } = useCardImageSwitch();
+
   return (
     <div className="loading-image-body">
       <div
         className="loading-image-container"
         style={{
-          backgroundImage: `url(${LoadingBanner})`,
+          backgroundImage: `url(${getMiscImage("LoadingBanner")})`,
         }}
       >
         <div className="loading-text">

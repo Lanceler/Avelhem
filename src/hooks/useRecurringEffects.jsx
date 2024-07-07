@@ -2,13 +2,6 @@ import React, { useState, useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../redux/gameState";
-import gameState from "../redux/gameState";
-
-import Advance from "../assets/diceIcons/Advance.png";
-import Assault from "../assets/diceIcons/Assault.png";
-import Invoke from "../assets/diceIcons/Invoke.png";
-import Mobilize from "../assets/diceIcons/Mobilize.png";
-import Rally from "../assets/diceIcons/Rally.png";
 
 export const useRecurringEffects = () => {
   const { localGameState } = useSelector((state) => state.gameState);
@@ -53,6 +46,7 @@ export const useRecurringEffects = () => {
         resolution: "Triggering Activation",
         player: enemy,
         activator: unit,
+        screech: true,
       });
 
       newGameState.currentResolution.push({
@@ -224,6 +218,7 @@ export const useRecurringEffects = () => {
         resolution: "Triggering Activation",
         player: enemy,
         activator: unit,
+        screech: true,
       });
 
       newGameState.currentResolution.push({
@@ -331,6 +326,7 @@ export const useRecurringEffects = () => {
         resolution: "Triggering Activation",
         player: enemy,
         activator: unit,
+        screech: true,
       });
 
       newGameState.currentResolution.push({
@@ -447,6 +443,7 @@ export const useRecurringEffects = () => {
         resolution: "Triggering Activation",
         player: enemy,
         activator: unit,
+        screech: true,
       });
 
       newGameState.currentResolution.push({
@@ -674,6 +671,7 @@ export const useRecurringEffects = () => {
         resolution: "Triggering Activation",
         player: enemy,
         activator: unit,
+        screech: true,
       });
 
       newGameState.currentResolution.push({
@@ -909,6 +907,7 @@ export const useRecurringEffects = () => {
         resolution: "Triggering Activation",
         player: enemy,
         activator: unit,
+        screech: true,
       });
 
       newGameState.currentResolution.push({
@@ -959,6 +958,7 @@ export const useRecurringEffects = () => {
         resolution: "Triggering Activation",
         player: enemy,
         activator: unit,
+        screech: true,
       });
 
       newGameState.currentResolution.push({
@@ -1008,6 +1008,7 @@ export const useRecurringEffects = () => {
         resolution: "Triggering Activation",
         player: enemy,
         activator: unit,
+        screech: true,
       });
 
       newGameState.currentResolution.push({
@@ -1101,6 +1102,7 @@ export const useRecurringEffects = () => {
         resolution: "Triggering Activation",
         player: enemy,
         activator: unit,
+        screech: true,
       });
 
       newGameState.currentResolution.push({
@@ -1150,6 +1152,7 @@ export const useRecurringEffects = () => {
         resolution: "Triggering Activation",
         player: enemy,
         activator: unit,
+        screech: true,
       });
       newGameState.currentResolution.push({
         resolution: "Animation Delay",
@@ -1417,6 +1420,7 @@ export const useRecurringEffects = () => {
         resolution: "Triggering Activation",
         player: enemy,
         activator: unit,
+        screech: true,
       });
 
       newGameState.currentResolution.push({
@@ -1720,6 +1724,7 @@ export const useRecurringEffects = () => {
         resolution: "Triggering Activation",
         player: enemy,
         activator: unit,
+        screech: true,
       });
 
       newGameState.currentResolution.push({
@@ -1763,6 +1768,7 @@ export const useRecurringEffects = () => {
         resolution: "Triggering Activation",
         player: enemy,
         activator: unit,
+        screech: true,
       });
 
       newGameState.currentResolution.push({
@@ -1929,6 +1935,7 @@ export const useRecurringEffects = () => {
         resolution: "Triggering Activation",
         player: enemy,
         activator: unit,
+        screech: true,
       });
 
       newGameState.currentResolution.push({
@@ -3674,22 +3681,22 @@ export const useRecurringEffects = () => {
   //   }
   // };
 
-  const getTacticImage = (face) => {
-    switch (face) {
-      case "Advance":
-        return Advance;
-      case "Mobilize":
-        return Mobilize;
-      case "Assault":
-        return Assault;
-      case "Invoke":
-        return Invoke;
-      case "Rally":
-        return Rally;
-      default:
-        return;
-    }
-  };
+  // const getTacticImage = (face) => {
+  //   switch (face) {
+  //     case "Advance":
+  //       return Advance;
+  //     case "Mobilize":
+  //       return Mobilize;
+  //     case "Assault":
+  //       return Assault;
+  //     case "Invoke":
+  //       return Invoke;
+  //     case "Rally":
+  //       return Rally;
+  //     default:
+  //       return;
+  //   }
+  // };
 
   const getVacant2SpaceZones = (unit) => {
     const zones = JSON.parse(localGameState.zones);
@@ -4770,6 +4777,38 @@ export const useRecurringEffects = () => {
     );
   };
 
+  const selectSymphonicScreechActivator = (activator) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Select Symphonic Screech Activator"
+    newGameState.currentResolution.pop();
+
+    const zonesWithEnemies = getZonesWithEnemies(activator, 2);
+    let zonesWithWindScions = [];
+
+    for (let z of zonesWithEnemies) {
+      const zone = zones[Math.floor(z / 5)][z % 5];
+      const unit = newGameState[zone.player].units[zone.unitIndex];
+
+      if (
+        unit.unitClass === "Wind Scion" &&
+        !isMuted(unit) &&
+        !isDisrupted(unit, 1)
+      ) {
+        zonesWithWindScions.push(z);
+      }
+    }
+
+    enterSelectUnitMode(
+      zonesWithWindScions,
+      activator,
+      newGameState,
+      null,
+      "symphonic screech",
+      null
+    );
+  };
+
   const selectVengefulLegacy = (victim) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -5486,7 +5525,7 @@ export const useRecurringEffects = () => {
     floatSkill,
     freeze1,
     freeze2,
-    getTacticImage,
+    // getTacticImage,
     getVacant2SpaceZones,
     getVacantAdjacentZones,
     getVacantFrontier,
@@ -5529,6 +5568,7 @@ export const useRecurringEffects = () => {
     selectPowerAtTheFinalHour,
     selectPitfallTrapActivator,
     selectSowAndReapStriker,
+    selectSymphonicScreechActivator,
     selectVengefulLegacy,
     selectViridianGraveActivator,
     shuffleCards,

@@ -44,7 +44,6 @@ const PileOfCards = (props) => {
       //   break; DO NOT break
       case "avelhemVestige":
         setIsVestige(true);
-        console.log("VESTIGE");
         break;
 
       default:

@@ -40,16 +40,20 @@ function App() {
 
   const totalImages = imagesLoadingList.length;
 
+  const maxRetries = 3;
+
   useEffect(() => {
     const imageElements = imagesLoadingList.map((src) => {
       const img = new Image();
       img.src = src;
-      img.onload = () => handleImageLoad();
-      img.onerror = () => handleImageLoad();
+      img.onload = () => handleImageLoad(src, true);
+      img.onerror = () => handleImageLoad(src, false);
       return img;
     });
 
-    const handleImageLoad = () => {
+    const retryCounts = new Map();
+
+    const handleImageLoad = (src, success) => {
       setImagesLoaded((prev) => {
         const loaded = prev + 1;
 
@@ -61,7 +65,28 @@ function App() {
 
         return loaded;
       });
+
+      if (
+        !success &&
+        (!retryCounts.has(src) || retryCounts.get(src) < maxRetries)
+      ) {
+        const retryCount = (retryCounts.get(src) || 0) + 1;
+        retryCounts.set(src, retryCount);
+        loadImage(src); // Retry loading the image
+      }
     };
+
+    const loadImage = (src) => {
+      const img = new Image();
+      img.src = src;
+      img.onload = () => handleImageLoad(src, true);
+      img.onerror = () => handleImageLoad(src, false);
+    };
+
+    imagesLoadingList.forEach((src) => {
+      retryCounts.set(src, 0); // Initialize retry count
+      loadImage(src);
+    });
   }, []);
 
   useEffect(() => {

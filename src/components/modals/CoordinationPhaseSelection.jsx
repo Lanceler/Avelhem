@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from "react";
 import "./Modal.css";
 
-import GoldFrame from "../../assets/others/GoldFrame.png";
 import AdvanceSmall from "../../assets/diceIcons/AdvanceSmall.png";
 import MobilizeSmall from "../../assets/diceIcons/MobilizeSmall.png";
 import AssaultSmall from "../../assets/diceIcons/AssaultSmall.png";
 import InvokeSmall from "../../assets/diceIcons/InvokeSmall.png";
+import RallySmall from "../../assets/diceIcons/RallySmall.png";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
 import { updateDemo } from "../../redux/demoGuide";
 
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
+import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 
 const CoordinationPhaseSelection = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
-  const { self, enemy } = useSelector((state) => state.teams);
+  const { self } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
 
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ const CoordinationPhaseSelection = (props) => {
   const [selectedChoice, setSelectedChoice] = useState(null);
 
   const { assignTactics, drawAvelhem, rollTactic } = useRecurringEffects();
+  const { getMiscImage } = useCardImageSwitch();
 
   let newGameState = JSON.parse(JSON.stringify(localGameState));
   const upgrade = newGameState[self].bountyUpgrades.coordination;
@@ -51,7 +53,7 @@ const CoordinationPhaseSelection = (props) => {
       abilityQualifier: <div className="abilityQualifier"></div>,
       abilityText: (
         <>
-          <div className="abilityText">⬩Roll 2 tactical dice.</div>
+          <div className="">⬩Roll 2 tactical dice.</div>
         </>
       ),
     },
@@ -69,11 +71,11 @@ const CoordinationPhaseSelection = (props) => {
       ),
       abilityText: (
         <>
-          <div className="abilityText ">
+          <div className=" ">
             ⬩Spend 3 skills to gain 1{" "}
             <img src={AssaultSmall} style={{ height: 21 }} />.
           </div>
-          <div className="abilityText ">
+          <div className=" ">
             ⬩{upgrade < 3 && <>If upgraded: </>}
             Roll 1 tactical die.
           </div>
@@ -90,11 +92,11 @@ const CoordinationPhaseSelection = (props) => {
       ),
       abilityText: (
         <>
-          <div className="abilityText ">
-            ⬩Gain 1 Rally tactic with 2 instances; each instance can deploy a
-            pawn in your frontier.
+          <div className=" ">
+            ⬩Gain 1 <img src={RallySmall} style={{ height: 21 }} /> with 2
+            instances.
           </div>
-          <div className="abilityText ">
+          <div className=" ">
             ⬩{upgrade < 3 && <>If upgraded: </>}
             Gain 1 <img src={AdvanceSmall} style={{ height: 21 }} /> and draw 1
             Avelhem.
@@ -155,7 +157,7 @@ const CoordinationPhaseSelection = (props) => {
           player: self,
           details: {
             reason: "Battle Cry",
-            title: "Coordination: Battle Cry",
+            title: "Battle Cry",
             message: "Spend 3 skills to gain an Assault tactic.",
             count: 3,
           },
@@ -234,38 +236,46 @@ const CoordinationPhaseSelection = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <div className="twoColumn">
-          <h2 className="choiceTitle">Coordination Phase</h2>
-          <button className="choiceButton" onClick={() => handleViewBoard()}>
-            View Board
-          </button>
+        <div className="modalHeader">
+          <div className="modalTitle">Coordination Phase</div>
+          <div className="modalButton">
+            <button className="choiceButton" onClick={() => handleViewBoard()}>
+              View Board
+            </button>
+          </div>
         </div>
 
-        <div className="threeColumn">
+        <div className="modalContent">
           {abilityDetails.map((detail, i) => (
             <div
               key={i}
-              className={`customChoice ${
-                selectedChoice === i ? "selectedChoice" : ""
+              className={`modalChoice1 ${
+                selectedChoice === i ? "selectedModalChoice" : ""
               } ${canClick("choice", i) ? "demoClick" : ""}`}
-              style={{ backgroundImage: `url(${GoldFrame})` }}
+              style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
               onClick={() => {
                 handleChoice(i);
                 handleUpdateDemoGuide();
               }}
             >
               <div
-                // className="abilityFrame"
-                className={`abilityFrame ${
-                  canChoice(i) ? "" : "disabledAbility"
+                className={`modalChoiceContent ${
+                  canChoice(i) ? "" : "disabledModalChoice"
                 } `}
               >
-                <div className="abilityHeader">
-                  <h3 className="abilityName ">{detail.abilityName}</h3>
+                <div className="modalChoiceHeader">
+                  <h3 className="modalChoiceName ">{detail.abilityName}</h3>
 
-                  <div>{detail.abilityQualifier}</div>
+                  {/* <div className="modalChoiceQualifier">
+                    {detail.abilityQualifier}
+                  </div> */}
+                  {i === 2 && (
+                    <span style={{ color: "#e8e8e8", fontSize: 18 }}>
+                      <em>Must be unlocked.</em>
+                    </span>
+                  )}
                 </div>
-                <div className="abilityContent scroll">
+                <div className="modalChoiceText scroll">
                   {detail.abilityText}
                 </div>
               </div>
@@ -277,6 +287,7 @@ const CoordinationPhaseSelection = (props) => {
           style={{
             marginTop: "5px",
             marginBottom: "10px",
+            textAlign: "center",
           }}
         >
           Tactical dice have the following faces:{"  "}
@@ -309,17 +320,21 @@ const CoordinationPhaseSelection = (props) => {
           </span>
         </h3>
 
-        {selectedChoice !== null && (
-          <button
-            className={`choiceButton ${canClick("select") ? "demoClick" : ""}`}
-            onClick={() => {
-              handleSelect();
-              handleUpdateDemoGuide();
-            }}
-          >
-            Select
-          </button>
-        )}
+        <div className="modalBottomButton">
+          {selectedChoice !== null && (
+            <button
+              className={`choiceButton ${
+                canClick("select") ? "demoClick" : ""
+              }`}
+              onClick={() => {
+                handleSelect();
+                handleUpdateDemoGuide();
+              }}
+            >
+              Select
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

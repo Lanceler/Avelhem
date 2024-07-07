@@ -1,22 +1,18 @@
 import React, { useState, useEffect } from "react";
 import "./Modal.css";
 
-import GoldFrame from "../../assets/others/GoldFrame.png";
-import AdvanceSmall from "../../assets/diceIcons/AdvanceSmall.png";
-import MobilizeSmall from "../../assets/diceIcons/MobilizeSmall.png";
-import AssaultSmall from "../../assets/diceIcons/AssaultSmall.png";
-import InvokeSmall from "../../assets/diceIcons/InvokeSmall.png";
-
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
 import { updateDemo } from "../../redux/demoGuide";
 
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
+import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 
-const AcquisitionPhaseSelection = (props) => {
+const AcquisitionPhase = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
-  const { self, enemy } = useSelector((state) => state.teams);
+  const { self } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
+  const { getMiscImage } = useCardImageSwitch();
 
   const dispatch = useDispatch();
 
@@ -32,9 +28,9 @@ const AcquisitionPhaseSelection = (props) => {
     {
       abilityName: "Appoint",
       abilityQualifier: (
-        <div className="abilityQualifier">
+        <div className="">
           {upgrade < 1 && (
-            <div style={{ fontSize: 18 }}>
+            <div>
               Can be upgraded <br /> via Bounty Phase <br /> (1st Acquisition).
             </div>
           )}
@@ -42,8 +38,8 @@ const AcquisitionPhaseSelection = (props) => {
       ),
       abilityText: (
         <>
-          <div className="choiceText ">⬩Deploy a pawn in your frontier.</div>
-          <div className="choiceText ">
+          <div className=" ">⬩Deploy a pawn in your frontier.</div>
+          <div className=" ">
             ⬩{upgrade < 1 && <>If upgraded: </>}
             Grant them Shield for 2 turns.
           </div>
@@ -53,7 +49,7 @@ const AcquisitionPhaseSelection = (props) => {
     {
       abilityName: "Beseech",
       abilityQualifier: (
-        <div className="abilityQualifier">
+        <div className="">
           {upgrade < 2 && (
             <div style={{ fontSize: 18 }}>
               Can be upgraded <br /> via Bounty Phase <br /> (2nd Acquisition).
@@ -63,8 +59,8 @@ const AcquisitionPhaseSelection = (props) => {
       ),
       abilityText: (
         <>
-          <div className="choiceText ">⬩Draw 2 Avelhems.</div>
-          <div className="choiceText ">
+          <div className=" ">⬩Draw 2 Avelhems.</div>
+          <div className=" ">
             ⬩{upgrade < 2 && <>If upgraded: </>}
             Gain 1 FD.
           </div>
@@ -74,7 +70,7 @@ const AcquisitionPhaseSelection = (props) => {
     {
       abilityName: "Cultivate",
       abilityQualifier: (
-        <div className="abilityQualifier">
+        <div className="">
           {upgrade < 3 && (
             <div style={{ fontSize: 18 }}>
               Can be upgraded <br /> via Bounty Phase <br /> (3rd Acquisition).
@@ -84,8 +80,8 @@ const AcquisitionPhaseSelection = (props) => {
       ),
       abilityText: (
         <>
-          <div className="choiceText ">⬩Draw 1 skill.</div>
-          <div className="choiceText ">
+          <div className=" ">⬩Draw 1 skill.</div>
+          <div className=" ">
             ⬩{upgrade < 3 && <>If upgraded: </>}
             You may spend 1 skill to draw again.
           </div>
@@ -230,37 +226,41 @@ const AcquisitionPhaseSelection = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <div className="twoColumn">
-          <h2 className="choiceTitle">Acquisition Phase</h2>
-          <button className="choiceButton" onClick={() => handleViewBoard()}>
-            View Board
-          </button>
+        <div className="modalHeader">
+          <div className="modalTitle">Acquisition Phase</div>
+          <div className="modalButton">
+            <button className="choiceButton" onClick={() => handleViewBoard()}>
+              View Board
+            </button>
+          </div>
         </div>
 
-        <div className="threeColumn">
+        <div className="modalContent">
           {abilityDetails.map((detail, i) => (
             <div
               key={i}
-              className={`customChoice ${
-                selectedChoice === i ? "selectedChoice" : ""
+              className={`modalChoice1 ${
+                selectedChoice === i ? "selectedModalChoice" : ""
               } ${canClick("choice", i) ? "demoClick" : ""}`}
-              style={{ backgroundImage: `url(${GoldFrame})` }}
+              style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
               onClick={() => {
                 handleChoice(i);
                 handleUpdateDemoGuide();
               }}
             >
               <div
-                className={`abilityFrame ${
-                  canChoice(i) ? "" : "disabledAbility"
+                className={`modalChoiceContent ${
+                  canChoice(i) ? "" : "disabledModalChoice"
                 } `}
               >
-                <div className="abilityHeader">
-                  <h3 className="abilityName ">{detail.abilityName}</h3>
+                <div className="modalChoiceHeader">
+                  <h3 className="modalChoiceName">{detail.abilityName}</h3>
 
-                  <div>{detail.abilityQualifier}</div>
+                  {/* <div className="modalChoiceQualifier">
+                    {detail.abilityQualifier}
+                  </div> */}
                 </div>
-                <div className="abilityContent scroll">
+                <div className="modalChoiceText scroll">
                   {detail.abilityText}
                 </div>
               </div>
@@ -268,20 +268,24 @@ const AcquisitionPhaseSelection = (props) => {
           ))}
         </div>
 
-        {selectedChoice !== null && (
-          <button
-            className={`choiceButton ${canClick("button") ? "demoClick" : ""}`}
-            onClick={() => {
-              handleSelect();
-              handleUpdateDemoGuide();
-            }}
-          >
-            Select
-          </button>
-        )}
+        <div className="modalBottomButton">
+          {selectedChoice !== null && (
+            <button
+              className={`choiceButton ${
+                canClick("button") ? "demoClick" : ""
+              }`}
+              onClick={() => {
+                handleSelect();
+                handleUpdateDemoGuide();
+              }}
+            >
+              Select
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
 };
 
-export default AcquisitionPhaseSelection;
+export default AcquisitionPhase;

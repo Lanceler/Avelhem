@@ -10,11 +10,13 @@ import { updateDemo } from "../../redux/demoGuide";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import { useCardDatabase } from "../../hooks/useCardDatabase";
+import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 
 const DefiancePhaseSelection = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
+  const { getMiscImage } = useCardImageSwitch();
 
   const dispatch = useDispatch();
 
@@ -240,167 +242,176 @@ const DefiancePhaseSelection = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal ">
-        <div className="twoColumn">
-          <h2 className="choiceTitle">
+        <div className="modalHeader">
+          <div className="modalTitle">
             Defiance Phase (FD: {localGameState[self].fateDefiances})
-          </h2>
-          <button className="choiceButton" onClick={() => handleViewBoard()}>
-            View Board
-          </button>
+          </div>
+          <div className="modalButton">
+            <button className="choiceButton" onClick={() => handleViewBoard()}>
+              View Board
+            </button>
+          </div>
         </div>
 
-        <div className="scrollable scrollable-y-only">
-          {/* <h3>Defy Fate</h3> */}
+        <div className="modalContent">
           <div className="threeColumn">
             <div
-              className={`customChoice customChoiceSmaller ${
-                selectedChoice === 1 ? "selectedChoice" : ""
+              className={`modalChoice1 modalChoice2 ${
+                selectedChoice === 1 ? "selectedModalChoice" : ""
               } `}
-              style={{ backgroundImage: `url(${GoldFrame})`, width: 245.5 }}
+              style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
               onClick={() => handleSelect(1, canSelect[0])}
             >
               <div
-                className={`customChoiceFrame ${
-                  canSelect[0] ? "" : "disabledChoice"
+                className={`modalChoiceContent ${
+                  canSelect[0] ? "" : "disabledModalChoice"
                 } `}
               >
-                <div className="defianceText">
-                  <h4 className="defianceTitle">Arcana</h4>
-                  <h3 className="defianceDescription defianceDescriptionSmall">
-                    Select up to 4 skills from your hand; place them at the
-                    bottom of your repertoire, then draw the same number.
-                  </h3>
+                <div className="modalDefianceContents">
+                  <h3 className="modalChoiceName">Arcana</h3>
 
-                  <h4 className="fdCost">{`Cost: ${defianceCosts[0]} FD`}</h4>
+                  <div
+                    className="modalChoiceText modalDefianceText"
+                    style={{ fontSize: 18.5 }}
+                  >
+                    {/* Select up to 4 skills from your hand; place them at the
+                    bottom of your repertoire, then draw the same number. */}
+                    Place up to 4 skills at the bottom of your repertoire, then
+                    draw the same number.
+                  </div>
+
+                  <h4 className="modalChoiceText modalDefianceText modalCost">{`Cost: ${defianceCosts[0]} FD`}</h4>
                 </div>
               </div>
             </div>
 
             <div
-              className={`customChoice customChoiceSmaller ${
-                selectedChoice === 2 ? "selectedChoice" : ""
+              className={`modalChoice1 modalChoice2 ${
+                selectedChoice === 2 ? "selectedModalChoice" : ""
               } `}
-              style={{ backgroundImage: `url(${GoldFrame})`, width: 245.5 }}
+              style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
               onClick={() => handleSelect(2, canSelect[1])}
             >
               <div
-                className={`customChoiceFrame ${
-                  canSelect[1] ? "" : "disabledChoice"
+                className={`modalChoiceContent ${
+                  canSelect[1] ? "" : "disabledModalChoice"
                 } `}
               >
-                <div className="defianceText">
-                  <h4 className="defianceTitle">Backtrack</h4>
-                  <h3 className="defianceDescription">Reroll your tactics.</h3>
+                <div className="modalDefianceContents">
+                  <h3 className="modalChoiceName">Backtrack</h3>
+                  <div className="modalChoiceText modalDefianceText">
+                    Reroll your tactics.
+                  </div>
 
-                  <h4 className="fdCost">{`Cost: ${defianceCosts[1]} FD`}</h4>
+                  <h4 className="modalChoiceText modalDefianceText modalCost">{`Cost: ${defianceCosts[1]} FD`}</h4>
                 </div>
               </div>
             </div>
 
             <div
-              className={`customChoice customChoiceSmaller ${
-                selectedChoice === 3 ? "selectedChoice" : ""
+              className={`modalChoice1 modalChoice2 ${
+                selectedChoice === 3 ? "selectedModalChoice" : ""
               } 
-              ${canClick("Curate") ? "demoClick" : ""}
-              `}
-              style={{ backgroundImage: `url(${GoldFrame})`, width: 245.5 }}
+              ${canClick("Curate") ? "demoClick" : ""}           `}
+              style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
               onClick={() => {
                 handleSelect(3, canSelect[2]);
                 handleUpdateDemoGuide();
               }}
             >
               <div
-                className={`customChoiceFrame ${
-                  canSelect[2] ? "" : "disabledChoice"
+                className={`modalChoiceContent ${
+                  canSelect[2] ? "" : "disabledModalChoice"
                 } `}
               >
-                <div className="defianceText">
-                  <h4 className="defianceTitle">Curate</h4>
-                  <h3 className="defianceDescription">
+                <div className="modalDefianceContents">
+                  <h3 className="modalChoiceName">Curate</h3>
+                  <div className="modalChoiceText modalDefianceText">
                     Reroll your tactics with 3 dice; disregard 1.
-                  </h3>
+                  </div>
 
-                  <h4 className="fdCost">{`Cost: ${defianceCosts[2]} FD`}</h4>
+                  <h4 className="modalChoiceText modalDefianceText modalCost">{`Cost: ${defianceCosts[2]} FD`}</h4>
                 </div>
               </div>
             </div>
 
             <div
-              className={`customChoice customChoiceSmaller ${
-                selectedChoice === 4 ? "selectedChoice" : ""
+              className={`modalChoice1 modalChoice2 ${
+                selectedChoice === 4 ? "selectedModalChoice" : ""
               } `}
-              style={{ backgroundImage: `url(${GoldFrame})`, width: 245.5 }}
+              style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
               onClick={() => {
                 handleSelect(4, canSelect[3]);
               }}
             >
               <div
-                className={`customChoiceFrame ${
-                  canSelect[3] ? "" : "disabledChoice"
+                className={`modalChoiceContent ${
+                  canSelect[3] ? "" : "disabledModalChoice"
                 } `}
               >
-                <div className="defianceText">
-                  <h4 className="defianceTitle">Destine</h4>
-                  <h3 className="defianceDescription ">
+                <div className="modalDefianceContents">
+                  <h3 className="modalChoiceName">Destine</h3>
+                  <div className="modalChoiceText modalDefianceText ">
                     Spend 1 Scion skill to ascend an ally pawn to the matching
                     class.
-                  </h3>
+                  </div>
 
-                  <h4 className="fdCost">{`Cost: ${defianceCosts[3]} FD`}</h4>
+                  <h4 className="modalChoiceText modalDefianceText modalCost">{`Cost: ${defianceCosts[3]} FD`}</h4>
                 </div>
               </div>
             </div>
 
             <div
-              className={`customChoice customChoiceSmaller ${
-                selectedChoice === 5 ? "selectedChoice" : ""
+              className={`modalChoice1 modalChoice2 ${
+                selectedChoice === 5 ? "selectedModalChoice" : ""
               } `}
-              style={{ backgroundImage: `url(${GoldFrame})`, width: 245.5 }}
+              style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
               onClick={() => {
                 handleSelect(5, canSelect[4]);
                 handleUpdateDemoGuide();
               }}
             >
               <div
-                className={`customChoiceFrame ${
-                  canSelect[4] ? "" : "disabledChoice"
+                className={`modalChoiceContent ${
+                  canSelect[4] ? "" : "disabledModalChoice"
                 } 
                 ${canClick("Ex Machina") ? "demoClick" : ""}`}
               >
-                <div className="defianceText">
-                  <h4 className="defianceTitle">Ex Machina</h4>
-                  <h3 className="defianceDescription ">
+                <div className="modalDefianceContents">
+                  <h3 className="modalChoiceName">Ex Machina</h3>
+                  <div className="modalChoiceText modalDefianceText ">
                     <span>Search for 1</span>
-                    <br />
-                    <span>Sovereign skill.</span>
-                  </h3>
 
-                  <h4 className="fdCost">{`Cost: ${defianceCosts[4]} FD`}</h4>
+                    <span>Sovereign skill.</span>
+                  </div>
+
+                  <h4 className="modalChoiceText modalDefianceText modalCost">{`Cost: ${defianceCosts[4]} FD`}</h4>
                 </div>
               </div>
             </div>
 
             <div
-              className={`customChoice customChoiceSmaller ${
-                selectedChoice === 6 ? "selectedChoice" : ""
+              className={`modalChoice1 modalChoice2 ${
+                selectedChoice === 6 ? "selectedModalChoice" : ""
               } `}
-              style={{ backgroundImage: `url(${GoldFrame})`, width: 245.5 }}
+              style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
               onClick={() => handleSelect(6, canSelect[5])}
             >
               <div
-                className={`customChoiceFrame ${
-                  canSelect[5] ? "" : "disabledChoice"
+                className={`modalChoiceContent ${
+                  canSelect[5] ? "" : "disabledModalChoice"
                 } `}
               >
-                <div className="defianceText">
-                  <h4 className="defianceTitle">Finesse</h4>
-                  <h3 className="defianceDescription ">
+                <div className="modalDefianceContents">
+                  <h3 className="modalChoiceName">Finesse</h3>
+                  <div className="modalChoiceText modalDefianceText ">
                     <span>Draw 1 skill.</span>
-                    <br />
-                    <span>You may recover 1 “Transcendence”.</span>
-                  </h3>
 
-                  <h4 className="fdCost">{`Cost: ${defianceCosts[5]} FD`}</h4>
+                    <span>You may recover 1 “Transcendence”.</span>
+                    {/* Draw 1 skill and recover up to 1 “Transcendence”. */}
+                  </div>
+
+                  <h4 className="modalChoiceText modalDefianceText modalCost">{`Cost: ${defianceCosts[5]} FD`}</h4>
                 </div>
               </div>
             </div>
@@ -409,7 +420,7 @@ const DefiancePhaseSelection = (props) => {
           </div>
         </div>
 
-        <div>
+        <div className="modalBottomButton">
           {selectedChoice === null && (
             <button
               className={`choiceButton ${canClick("skip") ? "demoClick" : ""}`}

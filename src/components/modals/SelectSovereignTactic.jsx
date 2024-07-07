@@ -40,7 +40,7 @@ const SelectSovereignTactic = (props) => {
             <div className="abilityQualifier">
               {newGameState[self].bountyUpgrades.tactics < 2 && (
                 <div style={{ fontSize: 18 }}>
-                  Can be upgraded <br /> via Bounty Phase <br /> (2nd Tactics).
+                  {/* Can be upgraded <br /> via Bounty Phase <br /> (2nd Tactics). */}
                 </div>
               )}
             </div>
@@ -76,9 +76,7 @@ const SelectSovereignTactic = (props) => {
           abilityQualifier: (
             <div className="abilityQualifier">
               {newGameState[self].bountyUpgrades.tactics < 4 && (
-                <div style={{ fontSize: 18 }}>
-                  Available after 4th Tactics upgrade via Bounty Phase.
-                </div>
+                <div style={{ fontSize: 18 }}>Available after upgrade.</div>
               )}
             </div>
           ),
@@ -153,9 +151,7 @@ const SelectSovereignTactic = (props) => {
           abilityQualifier: (
             <div className="abilityQualifier">
               {newGameState[self].bountyUpgrades.tactics < 1 && (
-                <div style={{ fontSize: 18 }}>
-                  Available after 1st Tactics upgrade via Bounty Phase.
-                </div>
+                <div style={{ fontSize: 18 }}>Available after upgrade.</div>
               )}
             </div>
           ),

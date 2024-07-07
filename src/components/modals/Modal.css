@@ -6,10 +6,8 @@
     height: 100%;
     background: rgba(0,0,0,0.75);
     z-index: 500;
-
     /* bugged outside Firefox */
     /* backdrop-filter: blur(2px) */
-
 }
 
 .modal-backdrop2 {
@@ -33,6 +31,192 @@
     overflow-y: auto;
     scrollbar-width: thin;
 }
+
+.modalHeader{
+    /* background-color: red; */
+    display: flex;
+    height: fit-content;
+    padding: 0px;
+}
+
+.modalTitle{
+    color: #333333;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 42.50px;
+    font-weight: 600;
+    line-height: 110%;
+    display: flex;
+    align-items: center;
+}
+
+.modalButton{
+    /* background-color: aqua; */
+    margin-left: auto;
+}
+
+.modalContent{
+    /* background-color: aquamarine; */
+    display: flex;
+    justify-content: center;
+}
+
+.modalChoice1{
+    border: 4px solid rgba(0, 0, 0, 1);
+    text-align: center;
+    margin: 8px;
+     padding: 6px;
+    height: 280px;
+    width: 250px;
+    cursor: pointer;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    /* background-position: center; */
+    box-shadow: 2px 2px 6px 2px rgba(0, 0, 0, 0.75);
+    position: relative;   
+}
+
+.modalChoice2 {
+    height: 170px;
+    width: 245.5px;
+    padding: 4px 4.5px
+}
+
+.modalChoice3 {
+    height: 170px;
+    width: 175.75px;
+    padding: 4px 4.5px
+}
+
+.selectedModalChoice {
+    border: 4px solid rgba(255, 251, 0, 0.65);
+    animation: selectedOptionGlow 2.0s infinite;
+}
+
+@keyframes selectedOptionGlow {
+    0% {
+        box-shadow: 0px 0px 4px 4px rgba(255, 251, 0, 0.25);
+    }
+
+    35%,
+    50%,
+    65% {
+        box-shadow: 0px 0px 7px 7px rgba(255, 251, 0, 0.65);
+    }
+
+    100% {
+        box-shadow: 0px 0px 4px 4px rgb(255, 251, 0, 0.25);
+    }
+}
+
+
+.modalChoiceContent {
+    /* position: absolute; */
+    background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
+    width: 100%;
+    height: 100%;
+    
+    display: flex;
+    flex-direction: column;
+}
+
+.modalChoiceContent:not(.disabledModalChoice):hover {
+    filter: brightness(1.2)
+}
+
+.disabledModalChoice {
+    background: linear-gradient(to bottom, rgb(0, 0, 0), rgb(19, 15, 15) 60%, rgb(44, 43, 43) 100%);
+    cursor: not-allowed
+}
+
+
+.modalChoiceHeader {
+    height: 100px;
+    /* background-color: blue; */
+}
+
+.modalChoiceName {
+    padding: 6px 15px;
+    color: #e8e8e8;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 32.5px;
+    /* background-color: aquamarine; */
+}
+
+.modalChoiceName2 {
+    padding: 6px 0px 2px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.5rem
+}
+
+.modalChoiceText {
+    /* background-color: aqua; */
+    display: flex;
+    flex-direction: column;
+    color: #e8e8e8;
+    text-align: left;
+
+
+    padding: 6px 10px 0px;
+    color: #e8e8e8;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 22px;
+
+
+    /* overflow-y: auto;
+    scrollbar-color: rgb(255, 168, 7) rgba(92, 63, 52, 0);
+    scrollbar-width: thin; */
+}
+
+.bountySection{
+    /* background-color: #b30000; */
+    margin-bottom: 10px;
+}
+
+.modalBountyContents{
+    display: flex;
+    flex-direction: column;
+    height: 170px
+    /* padding: 0px 10px; */
+    /* background-color: #b30000; */
+}
+
+.modalBountyText {
+    text-align: center;
+    font-size: 1.35rem;
+    margin: 10px 5px;
+}
+
+
+
+.modalDefianceContents {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    /* padding: 0px 10px; */
+    /* background-color: #b30000; */
+}
+
+.modalDefianceText {
+    text-align: center;
+    font-size: 1.35rem;
+    margin: 0px 5px 5px;
+}
+
+
+.modalCost {
+    /* background-color: aqua; */
+    margin-top: auto;
+}
+
+.modalBottomButton{
+    /* background-color: #b30000; */
+    height: 60px;
+    display: flex;
+    justify-content: center;
+}
+
+
+/* ///////////////////////////////////////////////// */
 
 
 .bountyHeader {
@@ -106,7 +290,7 @@
     height: fit-content;
     border: 4px solid goldenrod;
     background-image: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
-    box-shadow: 0px 0px 8px 3px rgba(0, 0, 0, 0.55);
+    box-shadow: 2px 2px 6px 2px rgba(0, 0, 0, 0.75);
 }
 
 .tacticBG:not(.disabledTacticBG):hover {
@@ -226,7 +410,7 @@
 }
 
 .customChoice {
-    border: 4px solid rgba(0, 0, 0, 1.0);
+    border: 4px solid rgba(0, 0, 0, 1);
     text-align: center;
     margin: 10px;
     padding: 8px ;
@@ -236,8 +420,6 @@
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-position: center;  
-
-
     box-shadow: 0px 0px 10px 4px rgba(6, 21, 61, 0.75);
 
 }
@@ -339,11 +521,7 @@
 }
 
 .selectedChoice{
-    /* border: 4px solid rgba(52, 185, 35, 0.65); */
-
-    /* border: 4px solid  rgb(72, 209, 30); */
     border: 4px solid rgba(255, 251, 0, 0.65);
-
     animation: selectedOptionGlow 2.0s infinite;
 }
 
@@ -389,7 +567,7 @@
     width: fit-content;
     /* margin: 4px; */
     /* margin-bottom: 15px; */
-    margin: 15px 0;
+    margin: 5px 0;
     padding: 4px 6px;
     justify-self: end;
     font-family: Arial, sans-serif;
@@ -479,7 +657,6 @@
 .abilityHeader{
     height: 180px;
     /* background-color: blue; */
-
 }
 
 .disabledAbility {
@@ -795,22 +972,14 @@ display: flex;
 
 .check-box-list{
 
-    /* background-color: rgb(175, 238, 133); */
-    
-
 }
 
 .check-box-label {
-
-    /* background-color: rgb(127, 138, 235); */
     margin: 4px;
-
     font-size: 30px;
-
 }
 
 .scion-skill-buttons{
-
     display: flex;
     gap: 25px
 }

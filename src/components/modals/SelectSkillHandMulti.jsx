@@ -329,16 +329,16 @@ const SelectSkillHandMulti = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <div className="twoColumn">
-          <h2 className="choiceTitle">{props.details.title}</h2>
-          <button className="choiceButton" onClick={() => handleViewBoard()}>
-            View Board
-          </button>
+        <div className="modalHeader">
+          <div className="modalTitle">{props.details.title}</div>
+          <div className="modalButton">
+            <button className="choiceButton" onClick={() => handleViewBoard()}>
+              View Board
+            </button>
+          </div>
         </div>
 
         <h3>{props.details.message}</h3>
-
-        <br />
 
         <div className="fourColumn  scrollable scrollable-y-only">
           {skillHand.map((usableSkill, i) => (
@@ -363,7 +363,7 @@ const SelectSkillHandMulti = (props) => {
           ))}
         </div>
 
-        <div>
+        <div className="modalBottomButton">
           {canSkip && selectedSkills.length === 0 && (
             <button className="choiceButton" onClick={() => handleSkip()}>
               {skipMessage}

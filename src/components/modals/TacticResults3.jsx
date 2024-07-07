@@ -6,6 +6,7 @@ import { updateState } from "../../redux/gameState";
 import { updateDemo } from "../../redux/demoGuide";
 
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
+import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
 
 const TacticResults3 = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
@@ -16,8 +17,9 @@ const TacticResults3 = (props) => {
 
   const [selectedChoice, setSelectedChoice] = useState(null);
 
-  const { assignTactics, endDefiancePhase, getTacticImage } =
-    useRecurringEffects();
+  const { assignTactics, endDefiancePhase } = useRecurringEffects();
+
+  const { getTacticImage } = useCardImageSwitch();
 
   const handleProceed = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
@@ -78,16 +80,18 @@ const TacticResults3 = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <div className="twoColumn">
-          <h2 className="choiceTitle">Dice Results</h2>
-          <button className="choiceButton" onClick={() => handleViewBoard()}>
-            View Board
-          </button>
+        <div className="modalHeader">
+          <div className="modalTitle">Dice Results</div>
+          <div className="modalButton">
+            <button className="choiceButton" onClick={() => handleViewBoard()}>
+              View Board
+            </button>
+          </div>
         </div>
 
         <h3>Disregard 1 tactic.</h3>
         <br />
-        <div className="threeColumn">
+        <div className="modalContent">
           {props.reroll.map((tactic, index) => (
             <div
               className="center"
@@ -111,26 +115,28 @@ const TacticResults3 = (props) => {
                   }}
                 ></div>
               </div>
-              <h2>{tactic.face}</h2>
+              <h2 style={{ marginTop: 10 }}>{tactic.face}</h2>
             </div>
           ))}
         </div>
 
         <br />
 
-        {selectedChoice !== null && (
-          <button
-            className={`choiceButton ${
-              canClick("disregard") ? "demoClick" : ""
-            }`}
-            onClick={() => {
-              handleProceed();
-              handleUpdateDemoGuide();
-            }}
-          >
-            {`Disregard ${props.reroll[selectedChoice].face}`}
-          </button>
-        )}
+        <div className="modalBottomButton">
+          {selectedChoice !== null && (
+            <button
+              className={`choiceButton ${
+                canClick("disregard") ? "demoClick" : ""
+              }`}
+              onClick={() => {
+                handleProceed();
+                handleUpdateDemoGuide();
+              }}
+            >
+              {`Disregard ${props.reroll[selectedChoice].face}`}
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

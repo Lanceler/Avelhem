@@ -260,6 +260,7 @@ const YouMaySpend1Skill = (props) => {
         newGameState[props.details.unit2.player].units[
           props.details.unit2.unitIndex
         ] = unit2;
+        break;
 
       case "Rooted Traverse":
         newGameState.currentResolution.push({

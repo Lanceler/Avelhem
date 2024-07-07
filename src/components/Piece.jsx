@@ -190,7 +190,7 @@ export const Piece = (props) => {
               }
               break;
 
-            case "Fire1.29":
+            case "Fire1.29.1":
             case "Fire1.30":
               switch (element) {
                 case "Unit":

@@ -199,6 +199,8 @@
 .collapseIcon{
     object-fit: cover;
     height: 25px;
+    fill: white;
+    margin: auto;
 }
 
 .collapse:hover{
@@ -207,7 +209,8 @@
 
 .mainSkillHand{
     display: grid;
-    height: 0px;
+    /* height: 0px; */
+    /* background-color: aqua; */
 
     
 }
@@ -316,7 +319,7 @@
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.95);
 }
 
-Selected:hover {
+.collapseSelected:hover {
     filter: brightness(1.2)
 }
 

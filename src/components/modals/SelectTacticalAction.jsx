@@ -1,26 +1,26 @@
 import React, { useState, useEffect } from "react";
 import "./Modal.css";
 
-import GoldFrame from "../../assets/others/GoldFrame.png";
-import AdvanceSmall from "../../assets/diceIcons/AdvanceSmall.png";
-import MobilizeSmall from "../../assets/diceIcons/MobilizeSmall.png";
-import AssaultSmall from "../../assets/diceIcons/AssaultSmall.png";
-import InvokeSmall from "../../assets/diceIcons/InvokeSmall.png";
-
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
 import { updateDemo } from "../../redux/demoGuide";
 
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
+import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
+
+import InfoPopUp from "./InfoPopUp";
 
 const SelectTacticalAction = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
+  const { getMiscImage } = useCardImageSwitch();
 
   const dispatch = useDispatch();
 
   const [selectedChoice, setSelectedChoice] = useState(null);
+
+  const [infoPopUp, setInfoPopUp] = useState(null);
 
   const {
     canBlast,
@@ -50,24 +50,33 @@ const SelectTacticalAction = (props) => {
       abilityDetails = [
         {
           abilityName: "Traverse",
-          abilityQualifier: <div className="abilityQualifier"></div>,
+          abilityQualifier: <div className=""></div>,
           abilityText: (
             <>
-              <div className="abilityText ">
-                ⬩Move to a vacant adjacent zone.
-              </div>
+              <div className=" ">⬩Move to a vacant adjacent zone.</div>
             </>
           ),
         },
         {
           abilityName: "Virtue-blast",
-          abilityQualifier: <div className="abilityQualifier"></div>,
+          abilityQualifier: <div className=""></div>,
           abilityText: (
             <>
-              <div className="abilityText ">
-                ⬩Spend your Virtue to blast an adjacent enemy. <br /> <br />
-                (The enemy may spend their Virtue and transfer it to the
-                attacker to reduce the attack’s AP by 1.)
+              <div className="">
+                {/* ⬩Spend your Virtue to blast an adjacent enemy. <br /> <br /> */}
+                {/* (The enemy may spend their Virtue and transfer it to the
+                attacker to reduce the attack’s AP by 1.) */}
+                ⬩Spend your Virtue to blast an adjacent enemy. The enemy may
+                mitigate it.{" "}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                  className="question-icon"
+                  onClick={() => setInfoPopUp("Virtue-Blast Mitigation")}
+                  style={{ height: 17 }}
+                >
+                  <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM169.8 165.3c7.9-22.3 29.1-37.3 52.8-37.3h58.3c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24V250.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1H222.6c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z" />
+                </svg>
               </div>
             </>
           ),
@@ -79,10 +88,10 @@ const SelectTacticalAction = (props) => {
       abilityDetails = [
         {
           abilityName: "Traverse",
-          abilityQualifier: <div className="abilityQualifier"></div>,
+          abilityQualifier: <div className=""></div>,
           abilityText: (
             <>
-              <div className="abilityText ">
+              <div className="">
                 ⬩Use 1 instance to move to a vacant adjacent zone.
               </div>
             </>
@@ -95,22 +104,20 @@ const SelectTacticalAction = (props) => {
       abilityDetails = [
         {
           abilityName: "Traverse",
-          abilityQualifier: <div className="abilityQualifier"></div>,
+          abilityQualifier: <div className=""></div>,
           abilityText: (
             <>
-              <div className="abilityText ">
-                ⬩Move to a vacant adjacent zone.
-              </div>
+              <div className="">⬩Move to a vacant adjacent zone.</div>
             </>
           ),
         },
         {
           abilityName: "Strike",
-          abilityQualifier: <div className="abilityQualifier"></div>,
+          abilityQualifier: <div className=""></div>,
           abilityText: (
             <>
-              <div className="abilityText ">⬩Attack an adjacent enemy.</div>
-              <div className="abilityText ">
+              <div className=" ">⬩Attack an adjacent enemy.</div>
+              <div className=" ">
                 ⬩If the attack was lethal, move to the zone they occupied.
                 (Bypass Motion contingent skills.)
               </div>
@@ -459,74 +466,78 @@ const SelectTacticalAction = (props) => {
   return (
     <div className="modal-backdrop">
       <div
-        className={`modal ${
-          abilityDetails.length === 1
-            ? "singleAbilityModal"
-            : "dualAbilityModal"
-        }`}
+        className="modal"
+        //   className={`modal
+        //     ${
+        //     abilityDetails.length === 1
+        //       ? "singleAbilityModal"
+        //       : "dualAbilityModal"
+        //   }`
+        // }
       >
-        <div className="">
-          <h2 className="choiceTitle">Tactical Action: {face}</h2>
+        <div className="modalHeader">
+          <div className="modalTitle">Tactical Action: {face}</div>
         </div>
 
         {message && <h4>{message}</h4>}
 
         <div
-          className={`${
-            abilityDetails.length === 2 ? "twoColumn" : "oneAbility"
-          } column-centered`}
+          className="modalContent"
+          // className={`${
+          //   abilityDetails.length === 2 ? "twoColumn" : "oneAbility"
+          // } column-centered`}
         >
           {abilityDetails.map((detail, i) => (
             <div
               key={i}
-              className={`customChoice ${
-                selectedChoice === i ? "selectedChoice" : ""
+              className={`modalChoice1 ${
+                selectedChoice === i ? "selectedModalChoice" : ""
               } ${canClick("Action", i) ? "demoClick" : ""}    `}
-              style={{ backgroundImage: `url(${GoldFrame})` }}
+              style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
               onClick={() => {
                 handleChoice(i);
                 handleUpdateDemoGuide();
               }}
             >
               <div
-                // className="abilityFrame"
-                className={`abilityFrame ${
-                  canChoice(i) ? "" : "disabledAbility"
+                className={`modalChoiceContent ${
+                  canChoice(i) ? "" : "disabledModalChoice"
                 } `}
               >
-                <div className="abilityHeader">
-                  <h3 className="abilityName ">{detail.abilityName}</h3>
+                <div className="modalChoiceHeader">
+                  <h3 className="modalChoiceName ">{detail.abilityName}</h3>
 
                   <div>{detail.abilityQualifier}</div>
                 </div>
-                <div className="abilityContent scrollable">
-                  {detail.abilityText}
-                </div>
+                <div className="modalChoiceText">{detail.abilityText}</div>
               </div>
             </div>
           ))}
         </div>
 
-        {selectedChoice === null && (
-          <button className="choiceButton" onClick={() => handleReturn()}>
-            Return
-          </button>
-        )}
+        <div className="modalBottomButton">
+          {selectedChoice === null && (
+            <button className="choiceButton" onClick={() => handleReturn()}>
+              Return
+            </button>
+          )}
 
-        {selectedChoice !== null && (
-          <button
-            className={`choiceButton ${
-              canClick("Select Button") ? "demoClick" : ""
-            }`}
-            onClick={() => {
-              handleSelect();
-              handleUpdateDemoGuide();
-            }}
-          >
-            Select
-          </button>
-        )}
+          {selectedChoice !== null && (
+            <button
+              className={`choiceButton ${
+                canClick("Select Button") ? "demoClick" : ""
+              }`}
+              onClick={() => {
+                handleSelect();
+                handleUpdateDemoGuide();
+              }}
+            >
+              Select
+            </button>
+          )}
+        </div>
       </div>
+      {infoPopUp && <InfoPopUp info={infoPopUp} setInfoPopUp={setInfoPopUp} />}
     </div>
   );
 };

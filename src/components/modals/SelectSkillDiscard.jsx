@@ -158,7 +158,7 @@ const SelectSkillDiscard = (props) => {
 
       //////////////////////
 
-      case "Fire1.10":
+      case "Fire1.11":
       case "Fire1.19":
         switch (element) {
           case "Skill Card":
@@ -166,7 +166,7 @@ const SelectSkillDiscard = (props) => {
         }
         break;
 
-      case "Fire1.28":
+      case "Fire1.29":
         switch (element) {
           case "Skill Card":
             return element2.id === "02-03";
@@ -180,9 +180,9 @@ const SelectSkillDiscard = (props) => {
         }
         break;
 
-      case "Fire1.11":
+      case "Fire1.11.1":
       case "Fire1.20":
-      case "Fire1.29":
+      case "Fire1.29.1":
       case "Fire1.39":
         switch (element) {
           case "Select Button":
@@ -227,11 +227,11 @@ const SelectSkillDiscard = (props) => {
 
       ////////////////////
 
-      case "Fire1.10":
-        dispatch(updateDemo("Fire1.11"));
+      case "Fire1.11":
+        dispatch(updateDemo("Fire1.11.1"));
         break;
 
-      case "Fire1.11":
+      case "Fire1.11.1":
         dispatch(updateDemo("Fire1.12"));
         break;
 
@@ -243,8 +243,8 @@ const SelectSkillDiscard = (props) => {
         dispatch(updateDemo("Fire1.20"));
         break;
 
-      case "Fire1.28":
-        dispatch(updateDemo("Fire1.29"));
+      case "Fire1.29":
+        dispatch(updateDemo("Fire1.29.1"));
         break;
 
       case "Fire1.38":
