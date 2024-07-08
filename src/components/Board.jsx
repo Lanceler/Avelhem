@@ -2563,8 +2563,16 @@ const Board = (props) => {
           case "Chain Lightning3":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {/* {self === lastResolution.unit.player && !hideModal && (
                   <YouMayNoYes
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )} */}
+                {self === lastResolution.unit.player && !hideModal && (
+                  <SelectSkillReveal
                     unit={lastResolution.unit}
                     details={lastResolution.details}
                     updateFirebase={updateFirebase}
@@ -4886,6 +4894,8 @@ const Board = (props) => {
         newGameState[player].skillFloat = newGameState[player].skillFloat + 1;
       } else if (conclusion === "shatter") {
         newGameState[player].skillShattered.push(skill);
+      } else if (conclusion === "retain") {
+        newGameState[player].skillHand.push(skill);
       }
 
       if (unitInfo) {

@@ -1359,7 +1359,29 @@ export const useSkillEffects = () => {
     //end "Chain Lightning2" resolution
     newGameState.currentResolution.pop();
 
-    if (unit !== null && !isMuted(unit) && unit.charge > 0) {
+    // if (unit !== null && !isMuted(unit) && unit.charge > 0) {
+    //   //allies of victim
+    //   let adjacentEnemies = getZonesWithAllies(victim, 1);
+
+    //   if (adjacentEnemies.length > 0) {
+    //     newGameState.currentResolution.push({
+    //       resolution: "Lightning Skill",
+    //       resolution2: "Chain Lightning3",
+    //       unit: unit,
+    //       details: {
+    //         reason: "Chain Lightning Blast",
+    //         title: "Chain Lightning",
+    //         message:
+    //           "You may spend 1 Charge to blast an enemy adjacent to the previous one.",
+    //         no: "Skip",
+    //         yes: "Blast",
+    //         adjacentEnemies: adjacentEnemies,
+    //       },
+    //     });
+    //   }
+    // }
+
+    if (unit !== null && !isMuted(unit)) {
       //allies of victim
       let adjacentEnemies = getZonesWithAllies(victim, 1);
 
@@ -1369,12 +1391,11 @@ export const useSkillEffects = () => {
           resolution2: "Chain Lightning3",
           unit: unit,
           details: {
-            reason: "Chain Lightning Blast",
             title: "Chain Lightning",
             message:
-              "You may spend 1 Charge to blast an enemy adjacent to the previous one.",
-            no: "Skip",
-            yes: "Blast",
+              "You may reveal 1 Lightning skill or spend 1 Charge to blast an enemy adjacent to the previous one.",
+            restriction: ["05-01", "05-02", "05-03", "05-04"],
+            reason: "Chain Lightning Blast",
             adjacentEnemies: adjacentEnemies,
           },
         });
@@ -1391,8 +1412,8 @@ export const useSkillEffects = () => {
     //end "Chain Lightning4" resolution
     newGameState.currentResolution.pop();
 
-    //consume charge
-    unit.charge -= 1;
+    //consume charge --- no longer assumed
+    // unit.charge -= 1;
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 

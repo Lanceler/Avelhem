@@ -442,39 +442,41 @@ const YouMaySpend1Skill = (props) => {
         </div>
 
         <div className="modalBottomButton">
-          {selectedSkill === null && (
-            <button
-              className={`choiceButton ${
-                canClick("Skip Button") ? "demoClick" : ""
-              }`}
-              onClick={() => {
-                handleSkip();
-                handleUpdateDemoGuide();
-              }}
-            >
-              Skip
-            </button>
-          )}
+          <div className="multi-option-buttons">
+            {selectedSkill === null && (
+              <button
+                className={`choiceButton ${
+                  canClick("Skip Button") ? "demoClick" : ""
+                }`}
+                onClick={() => {
+                  handleSkip();
+                  handleUpdateDemoGuide();
+                }}
+              >
+                Skip
+              </button>
+            )}
 
-          {selectedSkill === null && props.unit && props.unit.blossom > 0 && (
-            <button className="choiceButton" onClick={() => handleBlossom()}>
-              Spend 1 Blossom
-            </button>
-          )}
+            {selectedSkill === null && props.unit && props.unit.blossom > 0 && (
+              <button className="choiceButton" onClick={() => handleBlossom()}>
+                Spend 1 Blossom
+              </button>
+            )}
 
-          {selectedSkill !== null && (
-            <button
-              className={`choiceButton ${
-                canClick("Select Button") ? "demoClick" : ""
-              }`}
-              onClick={() => {
-                handleSelect();
-                handleUpdateDemoGuide();
-              }}
-            >
-              Select
-            </button>
-          )}
+            {selectedSkill !== null && (
+              <button
+                className={`choiceButton ${
+                  canClick("Select Button") ? "demoClick" : ""
+                }`}
+                onClick={() => {
+                  handleSelect();
+                  handleUpdateDemoGuide();
+                }}
+              >
+                Select
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>

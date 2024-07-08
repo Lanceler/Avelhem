@@ -558,21 +558,6 @@
     font-size: 23px;
 }
 
-.choiceTitle {
-    color: #333333;
-    font-family: "Times New Roman", Times, serif;
-    /* font-size: 40px; */
-    font-size: 45px;
-    line-height: 135%;
-    position: relative;
-    align-self: left;
-    padding: 0px 0px 10px;
-}
-
-.smallerTitle{
-    font-size: 30px;
-}
-
 .choiceButton{
     width: fit-content;
     /* margin: 4px; */

@@ -35,6 +35,26 @@ const SelectSkillReveal = (props) => {
     );
   }
 
+  const handleCharge = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[props.unit.player].units[props.unit.unitIndex];
+
+    //end
+    newGameState.currentResolution.pop();
+
+    unit.charge -= 1;
+
+    newGameState.currentResolution.push({
+      resolution: "Lightning Skill",
+      resolution2: "Chain Lightning4",
+      unit: props.unit,
+      adjacentEnemies: props.details.adjacentEnemies,
+    });
+
+    dispatch(updateState(newGameState));
+    props.updateFirebase(newGameState);
+  };
+
   const handleSelect = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[props.unit.player].units[props.unit.unitIndex];
@@ -86,6 +106,19 @@ const SelectSkillReveal = (props) => {
 
         revealTitle = "Upheaval";
         revealMessage = "Your opponent has revealed 1 Land Skill";
+        break;
+
+      case "Chain Lightning Blast":
+        newGameState.currentResolution.push({
+          resolution: "Lightning Skill",
+          resolution2: "Chain Lightning4",
+          unit: props.unit,
+          adjacentEnemies: props.details.adjacentEnemies,
+        });
+
+        revealTitle = "Chain Lightning";
+        revealMessage = "Your opponent has revealed 1 Lightning Skill";
+
         break;
 
       case "Valiant Spark":
@@ -204,25 +237,35 @@ const SelectSkillReveal = (props) => {
         </div>
 
         <div className="modalBottomButton">
-          {selectedSkill === null && (
-            <button
-              className={`choiceButton ${
-                canClick("Skip Button") ? "demoClick" : ""
-              }`}
-              onClick={() => {
-                handleSkip();
-                handleUpdateDemoGuide();
-              }}
-            >
-              Skip
-            </button>
-          )}
+          <div className="multi-option-buttons">
+            {selectedSkill === null && (
+              <button
+                className={`choiceButton ${
+                  canClick("Skip Button") ? "demoClick" : ""
+                }`}
+                onClick={() => {
+                  handleSkip();
+                  handleUpdateDemoGuide();
+                }}
+              >
+                Skip
+              </button>
+            )}
 
-          {selectedSkill !== null && (
-            <button className="choiceButton" onClick={() => handleSelect()}>
-              Select
-            </button>
-          )}
+            {selectedSkill === null &&
+              props.details.reason === "Chain Lightning Blast" &&
+              props.unit.charge > 0 && (
+                <button className="choiceButton" onClick={() => handleCharge()}>
+                  Spend 1 Charge
+                </button>
+              )}
+
+            {selectedSkill !== null && (
+              <button className="choiceButton" onClick={() => handleSelect()}>
+                Select
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>

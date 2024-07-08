@@ -104,7 +104,7 @@ export const useRecurringEffects = () => {
 
     let conclusion = "discard";
     if (unit.boosts.ambidexterity) {
-      conclusion = "float";
+      conclusion = "retain";
       delete newGameState[unit.player].units[unit.unitIndex].boosts
         .ambidexterity;
     }
@@ -299,7 +299,7 @@ export const useRecurringEffects = () => {
 
     let conclusion = "discard";
     if (unit.boosts.ambidexterity) {
-      conclusion = "float";
+      conclusion = "retain";
       delete newGameState[unit.player].units[unit.unitIndex].boosts
         .ambidexterity;
     }
@@ -416,7 +416,7 @@ export const useRecurringEffects = () => {
 
     let conclusion = "discard";
     if (unit.boosts.ambidexterity) {
-      conclusion = "float";
+      conclusion = "retain";
       delete newGameState[unit.player].units[unit.unitIndex].boosts
         .ambidexterity;
     }
@@ -930,7 +930,7 @@ export const useRecurringEffects = () => {
 
     let conclusion = "discard";
     if (unit.boosts.ambidexterity) {
-      conclusion = "float";
+      conclusion = "retain";
       delete newGameState[unit.player].units[unit.unitIndex].boosts
         .ambidexterity;
     }
@@ -981,7 +981,7 @@ export const useRecurringEffects = () => {
 
     let conclusion = "discard";
     if (unit.boosts.ambidexterity) {
-      conclusion = "float";
+      conclusion = "retain";
       delete newGameState[unit.player].units[unit.unitIndex].boosts
         .ambidexterity;
     }
@@ -1125,7 +1125,7 @@ export const useRecurringEffects = () => {
 
     let conclusion = "discard";
     if (unit.boosts.ambidexterity) {
-      conclusion = "float";
+      conclusion = "retain";
       delete newGameState[unit.player].units[unit.unitIndex].boosts
         .ambidexterity;
     }
@@ -1393,7 +1393,7 @@ export const useRecurringEffects = () => {
 
     let conclusion = "discard";
     if (unit.boosts.ambidexterity) {
-      conclusion = "float";
+      conclusion = "retain";
       delete newGameState[unit.player].units[unit.unitIndex].boosts
         .ambidexterity;
     }
@@ -1653,7 +1653,7 @@ export const useRecurringEffects = () => {
           "Sovereign Resonant Skill",
           "Activating Ambidexterity",
           resonator,
-          "retain"
+          "float"
         );
 
       case "SB-03":
@@ -1697,7 +1697,7 @@ export const useRecurringEffects = () => {
 
     let conclusion = "discard";
     if (unit.boosts.ambidexterity) {
-      conclusion = "float";
+      conclusion = "retain";
       delete newGameState[unit.player].units[unit.unitIndex].boosts
         .ambidexterity;
     }
