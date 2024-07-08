@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+import "./CreateGame.css";
+
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useNavigate } from "react-router-dom";
 
@@ -15,6 +17,8 @@ import {
   onSnapshot,
 } from "firebase/firestore";
 
+import { useCardImageSwitch } from "../hooks/useCardImageSwitch";
+
 export default function MyGames() {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -23,6 +27,8 @@ export default function MyGames() {
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useAuthContext();
   const navigate = useNavigate();
+
+  const { getMiscImage } = useCardImageSwitch();
 
   const onCreateGame = async () => {
     if (!isLoading) {
@@ -117,16 +123,48 @@ export default function MyGames() {
   };
 
   return (
-    <>
-      <div className="abilityText">
-        This page is under construction. For the time being, press the button
-        below to start a new game.
-        <br />
-        <br />
-        <button className="choiceButton" onClick={() => onCreateGame()}>
-          Create Game
-        </button>
+    <div className="create-game-body">
+      <div className="create-game-content">
+        <div
+          className="create-game-elemental"
+          style={{
+            marginRight: 5,
+            backgroundImage: `url(${getMiscImage("LoadingBanner")})`,
+          }}
+          onClick={() => onCreateGame()}
+        >
+          <div
+            className="create-game-frame"
+            style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
+          ></div>
+
+          <div className="create-game-title">Elemental Entrée</div>
+          <div className="create-game-desc">
+            <strong>Base Set Featuring:</strong> <br />
+            Fire, Water, Wind, Land, Lightning, Mana, Metal, & Plant
+          </div>
+        </div>
+
+        <div
+          className="create-game-soon"
+          style={{
+            marginLeft: 5,
+          }}
+        >
+          <div
+            className="create-game-frame"
+            style={{
+              backgroundImage: `url(${getMiscImage("GoldFrame")})`,
+            }}
+          ></div>
+          <div className="create-game-title">???</div>
+          <div className="create-game-desc">
+            <strong>Expansion:</strong>
+            <br />
+            Coming soon
+          </div>
+        </div>
       </div>
-    </>
+    </div>
   );
 }
