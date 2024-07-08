@@ -405,17 +405,18 @@ const YouMaySpend1Skill = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        {/* <button onClick={() => handleViewBoard()}>View</button>
-        <h2>{props.details.title}</h2> */}
-
-        <div className="twoColumn">
-          <h2 className="choiceTitle">{props.details.title}</h2>
-          <button className="choiceButton" onClick={() => handleViewBoard()}>
-            View
-          </button>
+        <div className="modalHeader">
+          <div className="modalTitle">{props.details.title}</div>
+          <div className="modalButton">
+            <button className="choiceButton" onClick={() => handleViewBoard()}>
+              View
+            </button>
+          </div>
         </div>
 
         <h3>{props.details.message}</h3>
+
+        <br />
 
         <div className="scrollable scrollable-y-only">
           <div className="fourColumn">
@@ -440,39 +441,41 @@ const YouMaySpend1Skill = (props) => {
           </div>
         </div>
 
-        {selectedSkill === null && (
-          <button
-            className={`choiceButton ${
-              canClick("Skip Button") ? "demoClick" : ""
-            }`}
-            onClick={() => {
-              handleSkip();
-              handleUpdateDemoGuide();
-            }}
-          >
-            Skip
-          </button>
-        )}
+        <div className="modalBottomButton">
+          {selectedSkill === null && (
+            <button
+              className={`choiceButton ${
+                canClick("Skip Button") ? "demoClick" : ""
+              }`}
+              onClick={() => {
+                handleSkip();
+                handleUpdateDemoGuide();
+              }}
+            >
+              Skip
+            </button>
+          )}
 
-        {selectedSkill === null && props.unit && props.unit.blossom > 0 && (
-          <button className="choiceButton" onClick={() => handleBlossom()}>
-            Spend 1 Blossom
-          </button>
-        )}
+          {selectedSkill === null && props.unit && props.unit.blossom > 0 && (
+            <button className="choiceButton" onClick={() => handleBlossom()}>
+              Spend 1 Blossom
+            </button>
+          )}
 
-        {selectedSkill !== null && (
-          <button
-            className={`choiceButton ${
-              canClick("Select Button") ? "demoClick" : ""
-            }`}
-            onClick={() => {
-              handleSelect();
-              handleUpdateDemoGuide();
-            }}
-          >
-            Select
-          </button>
-        )}
+          {selectedSkill !== null && (
+            <button
+              className={`choiceButton ${
+                canClick("Select Button") ? "demoClick" : ""
+              }`}
+              onClick={() => {
+                handleSelect();
+                handleUpdateDemoGuide();
+              }}
+            >
+              Select
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

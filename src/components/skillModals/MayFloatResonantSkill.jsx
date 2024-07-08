@@ -75,6 +75,9 @@ const MayFloatResonantSkill = (props) => {
         </div>
 
         <h3>You may float this skill.</h3>
+
+        <br />
+
         {props.resonator === "SA-03" && (
           <p style={{ maxWidth: "700px" }}>
             <em>

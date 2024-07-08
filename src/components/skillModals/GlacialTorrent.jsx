@@ -161,96 +161,106 @@ const GlacialTorrent1 = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <div className="twoColumn">
-          <h2 className="choiceTitle">Glacial Torrent</h2>
-          <button className="choiceButton" onClick={() => handleViewBoard()}>
-            View
-          </button>
+        <div className="modalHeader">
+          <div className="modalTitle">Glacial Torrent</div>
+          <div className="modalButton">
+            <button className="choiceButton" onClick={() => handleViewBoard()}>
+              View
+            </button>
+          </div>
         </div>
 
         <h3>You may add up to 3 Water skills to your hand.</h3>
 
-        <div className="scrollable scrollable-y-only">
-          {localGameState[self].skillFloat > 0 && (
-            <>
-              <h3>Floating skills</h3>
-              <div className="fourColumn">
-                {floatingRepertoire.map((usableSkill, i) => (
-                  <div
-                    key={i}
-                    className={`scionSkills ${
-                      selectedSkills.includes(i) ? "selectedSkill" : ""
-                    }`}
-                    onClick={() => {
-                      handleClick(canAdd(usableSkill.id), i);
-                      handleUpdateDemoGuide();
-                    }}
-                  >
-                    <SkillMultiSelect
-                      i={i}
-                      usableSkill={usableSkill.id}
-                      canAdd={canAdd(usableSkill.id)}
-                      selectedSkills={selectedSkills}
-                      addLimit={addLimit}
-                    />
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
+        <br />
 
-          {localGameState[self].skillFloat > 0 && <h3>Non-floating skills</h3>}
-          <div className="fourColumn">
-            {inspectRerpertoire.map((usableSkill, i) => (
-              <div
-                key={i + localGameState[self].skillFloat}
-                className={`scionSkills ${
-                  selectedSkills.includes(i + localGameState[self].skillFloat)
-                    ? "selectedSkill"
-                    : ""
-                }
+        <div className="modalContent">
+          <div className="scrollable scrollable-y-only">
+            {localGameState[self].skillFloat > 0 && (
+              <>
+                <h3>Floating skills</h3>
+                <div className="fourColumn">
+                  {floatingRepertoire.map((usableSkill, i) => (
+                    <div
+                      key={i}
+                      className={`scionSkills ${
+                        selectedSkills.includes(i) ? "selectedSkill" : ""
+                      }`}
+                      onClick={() => {
+                        handleClick(canAdd(usableSkill.id), i);
+                        handleUpdateDemoGuide();
+                      }}
+                    >
+                      <SkillMultiSelect
+                        i={i}
+                        usableSkill={usableSkill.id}
+                        canAdd={canAdd(usableSkill.id)}
+                        selectedSkills={selectedSkills}
+                        addLimit={addLimit}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+
+            {localGameState[self].skillFloat > 0 && (
+              <h3>Non-floating skills</h3>
+            )}
+            <div className="fourColumn">
+              {inspectRerpertoire.map((usableSkill, i) => (
+                <div
+                  key={i + localGameState[self].skillFloat}
+                  className={`scionSkills ${
+                    selectedSkills.includes(i + localGameState[self].skillFloat)
+                      ? "selectedSkill"
+                      : ""
+                  }
                 ${canClick("Skill Card", i) ? "demoClick" : ""}
 
                 `}
-                onClick={() => {
-                  handleClick(
-                    canAdd(usableSkill.id),
-                    i + localGameState[self].skillFloat
-                  );
-                  handleUpdateDemoGuide();
-                }}
-              >
-                <SkillMultiSelect
-                  i={i + localGameState[self].skillFloat}
-                  usableSkill={usableSkill.id}
-                  canAdd={canAdd(usableSkill.id)}
-                  selectedSkills={selectedSkills}
-                  addLimit={addLimit}
-                />
-              </div>
-            ))}
+                  onClick={() => {
+                    handleClick(
+                      canAdd(usableSkill.id),
+                      i + localGameState[self].skillFloat
+                    );
+                    handleUpdateDemoGuide();
+                  }}
+                >
+                  <SkillMultiSelect
+                    i={i + localGameState[self].skillFloat}
+                    usableSkill={usableSkill.id}
+                    canAdd={canAdd(usableSkill.id)}
+                    selectedSkills={selectedSkills}
+                    addLimit={addLimit}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
-        {selectedSkills.length === 0 && (
-          <button className="choiceButton" onClick={() => handleSkip()}>
-            Skip
-          </button>
-        )}
+        <div className="modalBottomButton">
+          {selectedSkills.length === 0 && (
+            <button className="choiceButton" onClick={() => handleSkip()}>
+              Skip
+            </button>
+          )}
 
-        {selectedSkills.length > 0 && (
-          <button
-            className={`choiceButton ${
-              canClick("Select Button") ? "demoClick" : ""
-            }`}
-            onClick={() => {
-              handleSelect();
-              handleUpdateDemoGuide();
-            }}
-          >
-            Select
-          </button>
-        )}
+          {selectedSkills.length > 0 && (
+            <button
+              className={`choiceButton ${
+                canClick("Select Button") ? "demoClick" : ""
+              }`}
+              onClick={() => {
+                handleSelect();
+                handleUpdateDemoGuide();
+              }}
+            >
+              Select
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

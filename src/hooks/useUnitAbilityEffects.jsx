@@ -548,7 +548,7 @@ export const useUnitAbilityEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    unit.temporary.usedFieryHeart = true;
+    unit.temporary.usedFlourish = true;
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
@@ -562,7 +562,7 @@ export const useUnitAbilityEffects = () => {
       resolution: "Discard Skill",
       unit: unit,
       player: self,
-      message: "Spend 2nd skill.",
+      message: "Spend 2nd skill",
     });
 
     newGameState.currentResolution.push({
@@ -613,7 +613,6 @@ export const useUnitAbilityEffects = () => {
 
     //Spend 1 Blossom
     unit.blossom -= 1;
-    unit.temporary.usedFlourish = true;
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 

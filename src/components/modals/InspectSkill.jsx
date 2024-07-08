@@ -153,88 +153,98 @@ const InspectSkill = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <div className="twoColumn3-1">
-          <h2 className="choiceTitle">{props.details.title}</h2>
-          <button className="choiceButton" onClick={() => handleViewBoard()}>
-            View
-          </button>
+        <div className="modalHeader">
+          <div className="modalTitle">{props.details.title}</div>
+          <div className="modalButton">
+            <button className="choiceButton" onClick={() => handleViewBoard()}>
+              View
+            </button>
+          </div>
         </div>
         <h3>{props.details.message}</h3>
 
-        <div className="scrollable scrollable-y-only">
-          {localGameState[self].skillFloat > 0 && (
-            <>
-              <h3>Floating skills</h3>
-              <div className="fourColumn">
-                {floatingRepertoire.map((usableSkill, i) => (
-                  <div
-                    key={i}
-                    className={`scionSkills ${
-                      selectedSkill === i ? "selectedSkill" : ""
-                    }`}
-                    onClick={() => {
-                      handleClick(canSelect(usableSkill.id), i);
-                      // handleUpdateDemoGuide();
-                    }}
-                  >
-                    <Skill
-                      i={i}
-                      usableSkill={usableSkill}
-                      canActivateSkill={canSelect(usableSkill.id)}
-                    />
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
+        <br />
 
-          {inspectRerpertoire.length > 0 && (
-            <>
-              <h3>Non-floating skills</h3>
-              <div
-                className={`fourColumn  ${
-                  localGameState[self].skillFloat > 0 ? "decreased-height" : ""
-                } `}
-              >
-                {inspectRerpertoire.map((usableSkill, i) => (
-                  <div
-                    key={i + localGameState[self].skillFloat}
-                    className={`scionSkills ${
-                      selectedSkill === i + localGameState[self].skillFloat
-                        ? "selectedSkill"
-                        : ""
-                    }`}
-                    onClick={() => {
-                      handleClick(
-                        canSelect(usableSkill.id),
-                        +localGameState[self].skillFloat
-                      );
-                      // handleUpdateDemoGuide();
-                    }}
-                  >
-                    <Skill
-                      i={i + localGameState[self].skillFloat}
-                      usableSkill={usableSkill}
-                      canActivateSkill={canSelect(usableSkill.id)}
-                    />
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
+        <div className="modalContent">
+          <div className="scrollable scrollable-y-only">
+            {localGameState[self].skillFloat > 0 && (
+              <>
+                <h3>Floating skills</h3>
+                <div className="fourColumn">
+                  {floatingRepertoire.map((usableSkill, i) => (
+                    <div
+                      key={i}
+                      className={`scionSkills ${
+                        selectedSkill === i ? "selectedSkill" : ""
+                      }`}
+                      onClick={() => {
+                        handleClick(canSelect(usableSkill.id), i);
+                        // handleUpdateDemoGuide();
+                      }}
+                    >
+                      <Skill
+                        i={i}
+                        usableSkill={usableSkill}
+                        canActivateSkill={canSelect(usableSkill.id)}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+
+            {inspectRerpertoire.length > 0 && (
+              <>
+                <h3>Non-floating skills</h3>
+                <div
+                  className={`fourColumn  ${
+                    localGameState[self].skillFloat > 0
+                      ? "decreased-height"
+                      : ""
+                  } `}
+                >
+                  {inspectRerpertoire.map((usableSkill, i) => (
+                    <div
+                      key={i + localGameState[self].skillFloat}
+                      className={`scionSkills ${
+                        selectedSkill === i + localGameState[self].skillFloat
+                          ? "selectedSkill"
+                          : ""
+                      }`}
+                      onClick={() => {
+                        handleClick(
+                          canSelect(usableSkill.id),
+                          +localGameState[self].skillFloat
+                        );
+                        // handleUpdateDemoGuide();
+                      }}
+                    >
+                      <Skill
+                        i={i + localGameState[self].skillFloat}
+                        usableSkill={usableSkill}
+                        canActivateSkill={canSelect(usableSkill.id)}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
         </div>
 
-        {selectedSkill === null && (
-          <button className="choiceButton" onClick={() => handleSkip()}>
-            Skip
-          </button>
-        )}
+        <div className="modalBottomButton">
+          {selectedSkill === null && (
+            <button className="choiceButton" onClick={() => handleSkip()}>
+              Skip
+            </button>
+          )}
 
-        {selectedSkill !== null && (
-          <button className="choiceButton" onClick={() => handleSelect()}>
-            Select
-          </button>
-        )}
+          {selectedSkill !== null && (
+            <button className="choiceButton" onClick={() => handleSelect()}>
+              Select
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

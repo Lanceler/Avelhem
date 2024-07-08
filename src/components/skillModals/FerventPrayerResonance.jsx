@@ -78,6 +78,7 @@ const FerventPrayerResonance = (props) => {
       resolution2: "Fervent Prayer Reveal",
       player: enemy,
       avelhems: [...avelhemsToFloat].reverse(),
+      title: "Fervent Prayer",
       message: "Your opponent has floated the following:",
     });
 
@@ -111,11 +112,13 @@ const FerventPrayerResonance = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <div className="twoColumn">
-          <h2 className="choiceTitle">Fervent Prayer</h2>
-          <button className="choiceButton" onClick={() => handleViewBoard()}>
-            View
-          </button>
+        <div className="modalHeader">
+          <div className="modalTitle">Fervent Prayer</div>
+          <div className="modalButton">
+            <button className="choiceButton" onClick={() => handleViewBoard()}>
+              View
+            </button>
+          </div>
         </div>
 
         <h3>
@@ -123,47 +126,54 @@ const FerventPrayerResonance = (props) => {
           selected earlier will float above subsequent ones.
         </h3>
 
-        <div className="fourColumn scrollable scrollable-y-only">
-          {avelhemVestige.map((usableSkill, i) => (
-            <div
-              key={i}
-              className={`scionSkills ${
-                selectedAvelhems.includes(i) ? "selectedSkill" : ""
-              }`}
-              onClick={() => {
-                handleClick(
-                  selectedAvelhems.includes(i) ||
-                    !selectedAvelhemIds.includes(avelhemVestige[i]),
-                  i
-                );
-                // handleUpdateDemoGuide();
-              }}
-            >
-              <SkillMultiSelect
-                i={i}
-                usableSkill={usableSkill}
-                canAdd={
-                  selectedAvelhems.includes(i) ||
-                  !selectedAvelhemIds.includes(avelhemVestige[i])
-                }
-                selectedSkills={selectedAvelhems}
-                addLimit={selectLimit}
-              />
-            </div>
-          ))}
+        <br />
+
+        <div className="modalContent">
+          {" "}
+          <div className="fourColumn scrollable scrollable-y-only">
+            {avelhemVestige.map((usableSkill, i) => (
+              <div
+                key={i}
+                className={`scionSkills ${
+                  selectedAvelhems.includes(i) ? "selectedSkill" : ""
+                }`}
+                onClick={() => {
+                  handleClick(
+                    selectedAvelhems.includes(i) ||
+                      !selectedAvelhemIds.includes(avelhemVestige[i]),
+                    i
+                  );
+                  // handleUpdateDemoGuide();
+                }}
+              >
+                <SkillMultiSelect
+                  i={i}
+                  usableSkill={usableSkill}
+                  canAdd={
+                    selectedAvelhems.includes(i) ||
+                    !selectedAvelhemIds.includes(avelhemVestige[i])
+                  }
+                  selectedSkills={selectedAvelhems}
+                  addLimit={selectLimit}
+                />
+              </div>
+            ))}
+          </div>
         </div>
 
-        {selectedAvelhems.length === 0 && (
-          <button className="choiceButton" onClick={() => handleSkip()}>
-            {skipMessage}
-          </button>
-        )}
+        <div className="modalBottomButton">
+          {selectedAvelhems.length === 0 && (
+            <button className="choiceButton" onClick={() => handleSkip()}>
+              {skipMessage}
+            </button>
+          )}
 
-        {selectedAvelhems.length > 0 && (
-          <button className="choiceButton" onClick={() => handleSelect()}>
-            {selectMessage}
-          </button>
-        )}
+          {selectedAvelhems.length > 0 && (
+            <button className="choiceButton" onClick={() => handleSelect()}>
+              {selectMessage}
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

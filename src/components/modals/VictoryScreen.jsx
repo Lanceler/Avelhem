@@ -70,11 +70,13 @@ const VictoryScreen = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <div className="twoColumn">
-          <h2 className="choiceTitle">Game Over</h2>
-          <button className="choiceButton" onClick={() => handleViewBoard()}>
-            View
-          </button>
+        <div className="modalHeader">
+          <div className="modalTitle">Game Over</div>
+          <div className="modalButton">
+            <button className="choiceButton" onClick={() => handleViewBoard()}>
+              View
+            </button>
+          </div>
         </div>
 
         <h3>{message1}</h3>

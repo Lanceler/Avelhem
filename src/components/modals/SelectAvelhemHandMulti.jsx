@@ -142,7 +142,7 @@ const SelectAvelhemHandMulti = (props) => {
     <div className="modal-backdrop">
       <div className="modal">
         <div className="modalHeader">
-          <div className="choiceTitle">{props.details.title}</div>
+          <div className="modalTitle">{props.details.title}</div>
           <div className="modalButton">
             <button className="choiceButton" onClick={() => handleViewBoard()}>
               View

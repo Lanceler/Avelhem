@@ -416,7 +416,7 @@ const SelectUnitAbility = (props) => {
       case "Plant Scion":
         switch (i) {
           case 0:
-            return unit.blossom
+            return !unit.temporary.usedFlourish && unit.blossom
               ? unit.blossom + newGameState[unit.player].skillHand.length >= 2
               : newGameState[unit.player].skillHand.length >= 2;
           case 1:

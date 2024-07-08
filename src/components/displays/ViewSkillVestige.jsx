@@ -70,19 +70,21 @@ const ViewSkillVestige = (props) => {
     <>
       <div className="modal-backdrop">
         <div className="modal">
-          <div className="twoColumn3-1">
-            <h2 className="choiceTitle">{`${props.vestige} Vestige`}</h2>
-            <button
-              className={`collapseSelected unitInfo-close ${
-                canClick() ? "demoClick" : ""
-              }`}
-              onClick={() => {
-                handleSkip();
-                handleUpdateDemoGuide();
-              }}
-            >
-              X
-            </button>
+          <div className="modalHeader">
+            <div className="modalTitle">{`${props.vestige} Vestige`}</div>
+            <div className="modalButton">
+              <button
+                className={`collapseSelected unitInfo-close ${
+                  canClick() ? "demoClick" : ""
+                }`}
+                onClick={() => {
+                  handleSkip();
+                  handleUpdateDemoGuide();
+                }}
+              >
+                X
+              </button>
+            </div>
           </div>
 
           <div className="scrollable scrollable-y-only">
@@ -141,10 +143,6 @@ const ViewSkillVestige = (props) => {
               </>
             )}
           </div>
-
-          {/* <button className="choiceButton" onClick={() => handleSkip()}>
-            Close
-          </button> */}
         </div>
       </div>
     </>

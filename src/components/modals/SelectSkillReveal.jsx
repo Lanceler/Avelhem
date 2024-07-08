@@ -17,7 +17,7 @@ const SelectSkillReveal = (props) => {
 
   const dispatch = useDispatch();
 
-  const { drawSkill, enterSelectUnitMode } = useRecurringEffects();
+  const { drawSkill } = useRecurringEffects();
 
   const [selectedSkill, setSelectedSkill] = useState(null);
 
@@ -167,17 +167,18 @@ const SelectSkillReveal = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        {/* <button onClick={() => handleViewBoard()}>View</button>
-        <h2>{props.details.title}</h2> */}
-
-        <div className="twoColumn3-1">
-          <h2 className="choiceTitle">{props.details.title}</h2>
-          <button className="choiceButton" onClick={() => handleViewBoard()}>
-            View
-          </button>
+        <div className="modalHeader">
+          <div className="modalTitle">{props.details.title}</div>
+          <div className="modalButton">
+            <button className="choiceButton" onClick={() => handleViewBoard()}>
+              View
+            </button>
+          </div>
         </div>
 
         <h3>{props.details.message}</h3>
+
+        <br />
 
         <div className="scrollable scrollable-y-only">
           <div className="fourColumn">
@@ -202,25 +203,27 @@ const SelectSkillReveal = (props) => {
           </div>
         </div>
 
-        {selectedSkill === null && (
-          <button
-            className={`choiceButton ${
-              canClick("Skip Button") ? "demoClick" : ""
-            }`}
-            onClick={() => {
-              handleSkip();
-              handleUpdateDemoGuide();
-            }}
-          >
-            Skip
-          </button>
-        )}
+        <div className="modalBottomButton">
+          {selectedSkill === null && (
+            <button
+              className={`choiceButton ${
+                canClick("Skip Button") ? "demoClick" : ""
+              }`}
+              onClick={() => {
+                handleSkip();
+                handleUpdateDemoGuide();
+              }}
+            >
+              Skip
+            </button>
+          )}
 
-        {selectedSkill !== null && (
-          <button className="choiceButton" onClick={() => handleSelect()}>
-            Select
-          </button>
-        )}
+          {selectedSkill !== null && (
+            <button className="choiceButton" onClick={() => handleSelect()}>
+              Select
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

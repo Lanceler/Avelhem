@@ -86,47 +86,53 @@ const CataclysmicTempestFloat = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <div className="twoColumn">
-          <h2 className="choiceTitle">Cataclysmic Tempest</h2>
-          <button className="choiceButton" onClick={() => handleViewBoard()}>
-            View
-          </button>
+        <div className="modalHeader">
+          <div className="modalTitle">Cataclysmic Tempest</div>
+          <div className="modalButton">
+            <button className="choiceButton" onClick={() => handleViewBoard()}>
+              View
+            </button>
+          </div>
         </div>
 
         {message()}
 
-        <div
-          className={`fourColumn scrollable scrollable-y-only ${
-            localGameState[self].skillFloat > 0 ? "decreased-height" : ""
-          } `}
-        >
-          {hand.map((usableSkill, i) => (
-            <div
-              key={i}
-              className={`scionSkills ${
-                selectedSkills.includes(i) ? "selectedSkill" : ""
-              }`}
-              onClick={() => {
-                handleClick(true, i);
-                // handleUpdateDemoGuide();
-              }}
-            >
-              <SkillMultiSelect
-                i={i}
-                usableSkill={usableSkill.id}
-                canAdd={true}
-                selectedSkills={selectedSkills}
-                addLimit={selectAmount}
-              />
-            </div>
-          ))}
+        <div className="modalContent">
+          <div
+            className={`fourColumn scrollable scrollable-y-only ${
+              localGameState[self].skillFloat > 0 ? "decreased-height" : ""
+            } `}
+          >
+            {hand.map((usableSkill, i) => (
+              <div
+                key={i}
+                className={`scionSkills ${
+                  selectedSkills.includes(i) ? "selectedSkill" : ""
+                }`}
+                onClick={() => {
+                  handleClick(true, i);
+                  // handleUpdateDemoGuide();
+                }}
+              >
+                <SkillMultiSelect
+                  i={i}
+                  usableSkill={usableSkill.id}
+                  canAdd={true}
+                  selectedSkills={selectedSkills}
+                  addLimit={selectAmount}
+                />
+              </div>
+            ))}
+          </div>
         </div>
 
-        {selectedSkills.length === selectAmount && (
-          <button className="choiceButton" onClick={() => handleProceed()}>
-            Select
-          </button>
-        )}
+        <div className="modalBottomButton">
+          {selectedSkills.length === selectAmount && (
+            <button className="choiceButton" onClick={() => handleProceed()}>
+              Select
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

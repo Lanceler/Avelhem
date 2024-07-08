@@ -550,7 +550,7 @@ export const useSovereignSkillEffects = () => {
       details: {
         reason: "Power at the Final Hour",
         title: "Power at the Final Hour",
-        message: "Ascend the pawn to any class. (Game rules still apply)",
+        message: "Ascend the pawn to any eligible class.",
       },
     });
 

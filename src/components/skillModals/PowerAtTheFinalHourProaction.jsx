@@ -116,49 +116,57 @@ const PowerAtTheFinalHourProaction = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <div className="twoColumn3-1">
-          <h2 className="choiceTitle">{props.reason}</h2>
-          <button className="choiceButton" onClick={() => handleViewBoard()}>
-            View
-          </button>
+        <div className="modalHeader">
+          <div className="modalTitle">{props.reason}</div>
+          <div className="modalButton">
+            <button className="choiceButton" onClick={() => handleViewBoard()}>
+              View
+            </button>
+          </div>
         </div>
 
         <h3>{message}</h3>
 
-        <div className="scrollable scrollable-y-only">
-          <div className="fourColumn">
-            {usableSkills.map((usableSkill, i) => (
-              <div
-                key={i}
-                className={`scionSkills ${
-                  selectedSkill === i ? "selectedSkill" : ""
-                }`}
-                onClick={() => {
-                  handleClick(canBeRevealed(usableSkill.id), i);
-                  // handleUpdateDemoGuide();
-                }}
-              >
-                <Skill
-                  i={i}
-                  usableSkill={usableSkill}
-                  canActivateSkill={canBeRevealed(usableSkill.id)}
-                />
-              </div>
-            ))}
+        <br />
+
+        <div className="modalContent">
+          <div className="scrollable scrollable-y-only">
+            <div className="fourColumn">
+              {usableSkills.map((usableSkill, i) => (
+                <div
+                  key={i}
+                  className={`scionSkills ${
+                    selectedSkill === i ? "selectedSkill" : ""
+                  }`}
+                  onClick={() => {
+                    handleClick(canBeRevealed(usableSkill.id), i);
+                    // handleUpdateDemoGuide();
+                  }}
+                >
+                  <Skill
+                    i={i}
+                    usableSkill={usableSkill}
+                    canActivateSkill={canBeRevealed(usableSkill.id)}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
-        {canSkip && selectedSkill === null && (
-          <button className="choiceButton" onClick={() => handleSkip()}>
-            {SkipMessage}
-          </button>
-        )}
+        <div className="modalBottomButton">
+          {canSkip && selectedSkill === null && (
+            <button className="choiceButton" onClick={() => handleSkip()}>
+              {SkipMessage}
+            </button>
+          )}
 
-        {selectedSkill !== null && (
-          <button className="choiceButton" onClick={() => handleSelect()}>
-            Select
-          </button>
-        )}
+          {selectedSkill !== null && (
+            <button className="choiceButton" onClick={() => handleSelect()}>
+              Select
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

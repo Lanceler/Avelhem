@@ -80,11 +80,13 @@ const SelectSkillFloat = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <div className="twoColumn">
-          <h2 className="choiceTitle">{props.title}</h2>
-          <button className="choiceButton" onClick={() => handleViewBoard()}>
-            View
-          </button>
+        <div className="modalHeader">
+          <div className="modalTitle">{props.title}</div>
+          <div className="modalButton">
+            <button className="choiceButton" onClick={() => handleViewBoard()}>
+              View
+            </button>
+          </div>
         </div>
         <h3>{props.message}</h3>
 
@@ -109,11 +111,13 @@ const SelectSkillFloat = (props) => {
           ))}
         </div>
 
-        {selectedSkill !== null && (
-          <button className="choiceButton" onClick={() => handleSelect()}>
-            Select
-          </button>
-        )}
+        <div className="modalBottomButton">
+          {selectedSkill !== null && (
+            <button className="choiceButton" onClick={() => handleSelect()}>
+              Select
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

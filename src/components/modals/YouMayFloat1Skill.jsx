@@ -192,14 +192,18 @@ const YouMayFloat1Skill = (props) => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <div className="twoColumn">
-          <h2 className="choiceTitle">{props.title}</h2>
-          <button className="choiceButton" onClick={() => handleViewBoard()}>
-            View
-          </button>
+        <div className="modalHeader">
+          <div className="modalTitle">{props.title}</div>
+          <div className="modalButton">
+            <button className="choiceButton" onClick={() => handleViewBoard()}>
+              View
+            </button>
+          </div>
         </div>
 
         <h3>{props.message}</h3>
+
+        <br />
 
         <div className="fourColumn scrollable scrollable-y-only">
           {usableSkills.map((usableSkill, i) => (
@@ -222,33 +226,35 @@ const YouMayFloat1Skill = (props) => {
           ))}
         </div>
 
-        {selectedSkill === null && (
-          <button
-            className={`choiceButton ${
-              canClick("Skip Button") ? "demoClick" : ""
-            }`}
-            onClick={() => {
-              handleSkip();
-              handleUpdateDemoGuide();
-            }}
-          >
-            Skip
-          </button>
-        )}
+        <div className="modalBottomButton">
+          {selectedSkill === null && (
+            <button
+              className={`choiceButton ${
+                canClick("Skip Button") ? "demoClick" : ""
+              }`}
+              onClick={() => {
+                handleSkip();
+                handleUpdateDemoGuide();
+              }}
+            >
+              Skip
+            </button>
+          )}
 
-        {selectedSkill !== null && (
-          <button
-            className={`choiceButton ${
-              canClick("Select Button") ? "demoClick" : ""
-            }`}
-            onClick={() => {
-              handleSelect();
-              handleUpdateDemoGuide();
-            }}
-          >
-            Select
-          </button>
-        )}
+          {selectedSkill !== null && (
+            <button
+              className={`choiceButton ${
+                canClick("Select Button") ? "demoClick" : ""
+              }`}
+              onClick={() => {
+                handleSelect();
+                handleUpdateDemoGuide();
+              }}
+            >
+              Select
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
