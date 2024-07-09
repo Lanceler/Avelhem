@@ -10,13 +10,13 @@ import { updateDemo } from "../../redux/demoGuide";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import { useCardDatabase } from "../../hooks/useCardDatabase";
-import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
+import { useGetImages } from "../../hooks/useGetImages";
 
 const DefiancePhaseSelection = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
-  const { getMiscImage } = useCardImageSwitch();
+  const { getMiscImage } = useGetImages();
 
   const dispatch = useDispatch();
 

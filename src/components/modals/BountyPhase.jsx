@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
 import { updateDemo } from "../../redux/demoGuide";
 
-import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
+import { useGetImages } from "../../hooks/useGetImages";
 
 import InfoPopUp from "./InfoPopUp";
 
@@ -18,7 +18,7 @@ const BountyPhase = (props) => {
 
   const [selectedChoice, setSelectedChoice] = useState(null);
 
-  const { getMiscImage } = useCardImageSwitch();
+  const { getMiscImage } = useGetImages();
 
   const [infoPopUp, setInfoPopUp] = useState(null);
 

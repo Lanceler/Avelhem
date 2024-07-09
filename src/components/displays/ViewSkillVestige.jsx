@@ -11,7 +11,7 @@ import { updateDemo } from "../../redux/demoGuide";
 
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
-import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
+import { useGetImages } from "../../hooks/useGetImages";
 
 const ViewSkillVestige = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
@@ -21,7 +21,7 @@ const ViewSkillVestige = (props) => {
 
   const dispatch = useDispatch();
 
-  const { getCardImage } = useCardImageSwitch();
+  const { getCardImage } = useGetImages();
 
   let vestige = [];
   let shattered = [];

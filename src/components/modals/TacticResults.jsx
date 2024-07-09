@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
 import { updateDemo } from "../../redux/demoGuide";
 
-import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
+import { useGetImages } from "../../hooks/useGetImages";
 
 const TacticResults = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
@@ -14,7 +14,7 @@ const TacticResults = (props) => {
 
   const dispatch = useDispatch();
 
-  const { getTacticImage } = useCardImageSwitch();
+  const { getTacticImage } = useGetImages();
 
   const handleProceed = () => {
     const newGameState = JSON.parse(JSON.stringify(localGameState));

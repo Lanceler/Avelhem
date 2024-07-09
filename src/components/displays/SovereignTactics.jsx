@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
 import { updateDemo } from "../../redux/demoGuide";
 
-import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
+import { useGetImages } from "../../hooks/useGetImages";
 
 import InfoPopUp from "../modals/InfoPopUp";
 
@@ -18,7 +18,7 @@ const SovereignTactics = () => {
 
   const [infoPopUp, setInfoPopUp] = useState(null);
 
-  const { getTacticImage } = useCardImageSwitch();
+  const { getTacticImage } = useGetImages();
 
   const handleClick = (face, dice) => {
     if (

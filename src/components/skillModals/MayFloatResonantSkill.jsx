@@ -7,7 +7,7 @@ import { updateState } from "../../redux/gameState";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import { useCardDatabase } from "../../hooks/useCardDatabase";
-import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
+import { useGetImages } from "../../hooks/useGetImages";
 
 import Skill from "../hand/Skill";
 

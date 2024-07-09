@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
 import { updateDemo } from "../../redux/demoGuide";
 
-import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
+import { useGetImages } from "../../hooks/useGetImages";
 
 import InfoPopUp from "./InfoPopUp";
 
@@ -16,7 +16,7 @@ const SelectTactic = (props) => {
 
   const dispatch = useDispatch();
 
-  const { getTacticImage } = useCardImageSwitch();
+  const { getTacticImage } = useGetImages();
 
   let canUseTactic = [false, false];
 

@@ -7,13 +7,13 @@ import { updateMagnifiedSkill } from "../../redux/magnifySkill";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
-import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
+import { useGetImages } from "../../hooks/useGetImages";
 
 const SkillMultiSelect = (props) => {
   const { magnifiedSkill } = useSelector((state) => state.magnifiedSkill);
   const dispatch = useDispatch();
 
-  const { getCardImage } = useCardImageSwitch();
+  const { getCardImage } = useGetImages();
 
   const image = getCardImage(props.usableSkill);
 

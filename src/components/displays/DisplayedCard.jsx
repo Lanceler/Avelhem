@@ -1,10 +1,10 @@
 import React from "react";
 import "./DisplayedCard.css";
 
-import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
+import { useGetImages } from "../../hooks/useGetImages";
 
 const DisplayedCard = (props) => {
-  const { getCardImage } = useCardImageSwitch();
+  const { getCardImage } = useGetImages();
   let image = getCardImage(props.cardInfo);
 
   return (

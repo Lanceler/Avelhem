@@ -6,7 +6,7 @@ import { updateState } from "../../redux/gameState";
 import { updateDemo } from "../../redux/demoGuide";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
-import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
+import { useGetImages } from "../../hooks/useGetImages";
 import { useCardDatabase } from "../../hooks/useCardDatabase";
 
 import Collapse from "../../assets/others/Collapse.png";
@@ -19,7 +19,7 @@ const PlayerSkillHand = (props) => {
   const { demoGuide } = useSelector((state) => state.demoGuide);
   const dispatch = useDispatch();
 
-  const { getCardImage } = useCardImageSwitch();
+  const { getCardImage } = useGetImages();
   const { getSkillById } = useCardDatabase();
 
   const [raise, setRaise] = useState(false);

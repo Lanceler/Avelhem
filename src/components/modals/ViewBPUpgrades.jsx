@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Modal.css";
 
-import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
+import { useGetImages } from "../../hooks/useGetImages";
 
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 

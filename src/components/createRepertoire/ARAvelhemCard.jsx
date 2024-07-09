@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./AvelhemCard.css";
 
-import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
+import { useGetImages } from "../../hooks/useGetImages";
 
 import { motion, useMotionValue, useScroll } from "framer-motion";
 
 const ARAvelhemCard = (props) => {
-  const { getCardImage } = useCardImageSwitch();
+  const { getCardImage } = useGetImages();
   const image = getCardImage(props.cardInfo.CardId);
 
   const [isClicked, setIsClicked] = useState(false);

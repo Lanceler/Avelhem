@@ -4,7 +4,7 @@ import "../hand/Skill.css";
 import { useSelector, useDispatch } from "react-redux";
 import { updateDemo } from "../../redux/demoGuide";
 
-import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
+import { useGetImages } from "../../hooks/useGetImages";
 import ViewSkillVestige from "./ViewSkillVestige";
 
 const PileOfCards = (props) => {
@@ -17,7 +17,7 @@ const PileOfCards = (props) => {
 
   const dispatch = useDispatch();
 
-  const { getCardImage } = useCardImageSwitch();
+  const { getCardImage } = useGetImages();
 
   const [showPile, setShowPile] = useState(null);
 

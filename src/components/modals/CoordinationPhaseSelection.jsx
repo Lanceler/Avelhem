@@ -12,7 +12,7 @@ import { updateState } from "../../redux/gameState";
 import { updateDemo } from "../../redux/demoGuide";
 
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
-import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
+import { useGetImages } from "../../hooks/useGetImages";
 
 const CoordinationPhaseSelection = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
@@ -24,7 +24,7 @@ const CoordinationPhaseSelection = (props) => {
   const [selectedChoice, setSelectedChoice] = useState(null);
 
   const { assignTactics, drawAvelhem, rollTactic } = useRecurringEffects();
-  const { getMiscImage } = useCardImageSwitch();
+  const { getMiscImage } = useGetImages();
 
   let newGameState = JSON.parse(JSON.stringify(localGameState));
   const upgrade = newGameState[self].bountyUpgrades.coordination;

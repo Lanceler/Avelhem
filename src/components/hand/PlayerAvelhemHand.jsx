@@ -4,7 +4,7 @@ import "./Skill.css";
 import { useSelector, useDispatch } from "react-redux";
 import { updateDemo } from "../../redux/demoGuide";
 
-import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
+import { useGetImages } from "../../hooks/useGetImages";
 import { useCardDatabase } from "../../hooks/useCardDatabase";
 
 import Collapse from "../../assets/others/Collapse.png";
@@ -17,7 +17,7 @@ const PlayerAvelhemHand = (props) => {
 
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
-  const { getCardImage } = useCardImageSwitch();
+  const { getCardImage } = useGetImages();
 
   const [raise, setRaise] = useState(false);
   const [raiseHeight, setRaiseHeight] = useState(0);

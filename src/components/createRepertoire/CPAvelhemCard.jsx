@@ -7,12 +7,12 @@ import { updateMagnifiedSkill } from "../../redux/magnifySkill";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
-import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
+import { useGetImages } from "../../hooks/useGetImages";
 
 const CPAvelhemCard = (props) => {
   const dispatch = useDispatch();
 
-  const { getCardImage } = useCardImageSwitch();
+  const { getCardImage } = useGetImages();
   const image = getCardImage(props.cardInfo.CardId);
 
   const element = props.cardInfo.Name.replace(" Avelhem", "");

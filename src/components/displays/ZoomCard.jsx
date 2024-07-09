@@ -5,13 +5,13 @@ import "../hand/Skill.css";
 import { useSelector, useDispatch } from "react-redux";
 import { updateMagnifiedSkill } from "../../redux/magnifySkill";
 
-import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
+import { useGetImages } from "../../hooks/useGetImages";
 
 const ZoomCard = (props) => {
   const { magnifiedSkill } = useSelector((state) => state.magnifiedSkill);
   const dispatch = useDispatch();
 
-  const { getCardImage } = useCardImageSwitch();
+  const { getCardImage } = useGetImages();
   let image = getCardImage(props.cardInfo);
 
   return (

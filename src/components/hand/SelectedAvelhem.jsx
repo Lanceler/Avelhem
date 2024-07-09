@@ -5,7 +5,7 @@ import { updateState } from "../../redux/gameState";
 import { updateDemo } from "../../redux/demoGuide";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
-import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
+import { useGetImages } from "../../hooks/useGetImages";
 import { useCardDatabase } from "../../hooks/useCardDatabase";
 
 const SelectedAvelhem = (props) => {
@@ -15,7 +15,7 @@ const SelectedAvelhem = (props) => {
 
   const dispatch = useDispatch();
 
-  const { getCardImage } = useCardImageSwitch();
+  const { getCardImage } = useGetImages();
   const { getScionSet } = useCardDatabase();
 
   const { activateAvelhem, avelhemToScion, canAscend, isMuted } =

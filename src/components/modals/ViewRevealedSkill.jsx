@@ -6,7 +6,7 @@ import { updateState } from "../../redux/gameState";
 import { updateDemo } from "../../redux/demoGuide";
 
 import { useCardDatabase } from "../../hooks/useCardDatabase";
-import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
+import { useGetImages } from "../../hooks/useGetImages";
 
 import Skill from "../hand/Skill";
 
@@ -17,7 +17,7 @@ const ViewRevealedSkill = (props) => {
   const dispatch = useDispatch();
 
   // const { getSkillById } = useCardDatabase();
-  const { getCardImage } = useCardImageSwitch();
+  const { getCardImage } = useGetImages();
 
   const handleProceed = () => {
     const newGameState = JSON.parse(JSON.stringify(localGameState));

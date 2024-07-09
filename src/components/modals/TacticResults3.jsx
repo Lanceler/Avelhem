@@ -6,7 +6,7 @@ import { updateState } from "../../redux/gameState";
 import { updateDemo } from "../../redux/demoGuide";
 
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
-import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
+import { useGetImages } from "../../hooks/useGetImages";
 
 const TacticResults3 = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
@@ -19,7 +19,7 @@ const TacticResults3 = (props) => {
 
   const { assignTactics, endDefiancePhase } = useRecurringEffects();
 
-  const { getTacticImage } = useCardImageSwitch();
+  const { getTacticImage } = useGetImages();
 
   const handleProceed = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));

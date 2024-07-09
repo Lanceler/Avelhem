@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./LoadingImage.css";
 
-import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
+import { useGetImages } from "../../hooks/useGetImages";
 
 const LoadingImage = (props) => {
-  const { getMiscImage } = useCardImageSwitch();
+  const { getMiscImage } = useGetImages();
 
   return (
     <div className="loading-image-body">

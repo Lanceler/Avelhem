@@ -1,7 +1,7 @@
 import React from "react";
 import "./Modal.css";
 
-import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
+import { useGetImages } from "../../hooks/useGetImages";
 
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
@@ -20,7 +20,7 @@ const UnitInfo = (props) => {
   const { self, enemy } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const { getElementImage } = useCardImageSwitch();
+  const { getElementImage } = useGetImages();
 
   const { isRooted } = useRecurringEffects();
 

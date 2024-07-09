@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import "./SkillCard.css";
 
-import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
+import { useGetImages } from "../../hooks/useGetImages";
 
 import { motion, useMotionValue } from "framer-motion";
 
 const SRSkillCard = (props) => {
-  const { getCardImage } = useCardImageSwitch();
+  const { getCardImage } = useGetImages();
   const image = getCardImage(props.cardInfo.CardId);
 
   // console.log("key: " + props.key1)

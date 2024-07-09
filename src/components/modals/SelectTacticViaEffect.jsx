@@ -6,7 +6,7 @@ import { updateState } from "../../redux/gameState";
 import { updateDemo } from "../../redux/demoGuide";
 
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
-import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
+import { useGetImages } from "../../hooks/useGetImages";
 
 import InfoPopUp from "./InfoPopUp";
 
@@ -21,7 +21,7 @@ const SelectTacticViaEffect = (props) => {
 
   const { canMove, canStrike, drawAvelhem, drawSkill } = useRecurringEffects();
 
-  const { getTacticImage } = useCardImageSwitch();
+  const { getTacticImage } = useGetImages();
 
   let canUseTactic = [false, false];
 

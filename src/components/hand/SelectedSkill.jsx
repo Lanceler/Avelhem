@@ -6,7 +6,7 @@ import { updateDemo } from "../../redux/demoGuide";
 
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
-import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
+import { useGetImages } from "../../hooks/useGetImages";
 import { useCardDatabase } from "../../hooks/useCardDatabase";
 
 const SelectedSkill = (props) => {
@@ -16,7 +16,7 @@ const SelectedSkill = (props) => {
 
   const dispatch = useDispatch();
 
-  const { getCardImage } = useCardImageSwitch();
+  const { getCardImage } = useGetImages();
 
   const {
     activateSovereignSkill,

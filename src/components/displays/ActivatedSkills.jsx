@@ -3,7 +3,7 @@ import "./DisplayedCard.css";
 
 import { useSelector, useDispatch } from "react-redux";
 
-import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
+import { useGetImages } from "../../hooks/useGetImages";
 import { useCardDatabase } from "../../hooks/useCardDatabase";
 
 import LoadingBanner from "../../assets/others/LoadingBanner.png";
@@ -13,7 +13,7 @@ import { AnimatePresence, motion } from "framer-motion";
 const ActivatedSkills = () => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
-  const { getCardImage } = useCardImageSwitch();
+  const { getCardImage } = useGetImages();
   const { getSkillById } = useCardDatabase();
 
   return (

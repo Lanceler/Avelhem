@@ -4,7 +4,7 @@ import "./Modal.css";
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
-import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
+import { useGetImages } from "../../hooks/useGetImages";
 
 const SelectElement = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
@@ -13,7 +13,7 @@ const SelectElement = (props) => {
 
   const [selectedChoice, setSelectedChoice] = useState(null);
   const { ascendPawn, canAscend, getZonesWithEnemies } = useRecurringEffects();
-  const { getElementImage, getMiscImage } = useCardImageSwitch();
+  const { getElementImage, getMiscImage } = useGetImages();
 
   const aspects = [
     "Fire Scion",

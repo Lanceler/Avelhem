@@ -26,7 +26,7 @@ import Rules from "./pages/Rules";
 
 import LoadingImage from "./components/displays/LoadingImage";
 
-import { useCardImageSwitch } from "./hooks/useCardImageSwitch";
+import { useGetImages } from "./hooks/useGetImages";
 
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -36,7 +36,7 @@ function App() {
   const [loadingImages, setLoadingImages] = useState(true);
   const [showContent, setShowContent] = useState(false);
   const [imagesLoaded, setImagesLoaded] = useState(0);
-  const { imagesLoadingList } = useCardImageSwitch();
+  const { imagesLoadingList } = useGetImages();
 
   const totalImages = imagesLoadingList.length;
 

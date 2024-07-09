@@ -87,7 +87,7 @@ import Tile from "./Tile";
 import Piece from "./Piece";
 
 import PileOfCards from "./displays/PileOfCards";
-import { useCardImageSwitch } from "../hooks/useCardImageSwitch";
+import { useGetImages } from "../hooks/useGetImages";
 
 const Board = (props) => {
   let gameDoc = null;
@@ -127,7 +127,7 @@ const Board = (props) => {
   const [infoPopUp, setInfoPopUp] = useState(null);
   const [openContingencySettings, setOpenContingencySettings] = useState(false);
 
-  const { getMiscImage } = useCardImageSwitch();
+  const { getMiscImage } = useGetImages();
 
   const {
     activateAegis,

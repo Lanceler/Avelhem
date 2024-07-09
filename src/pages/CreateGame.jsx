@@ -17,7 +17,7 @@ import {
   onSnapshot,
 } from "firebase/firestore";
 
-import { useCardImageSwitch } from "../hooks/useCardImageSwitch";
+import { useGetImages } from "../hooks/useGetImages";
 
 export default function MyGames() {
   useEffect(() => {
@@ -28,7 +28,28 @@ export default function MyGames() {
   const { user } = useAuthContext();
   const navigate = useNavigate();
 
-  const { getMiscImage } = useCardImageSwitch();
+  const { getBannerImage, getMiscImage } = useGetImages();
+  const [bannerIndex, setBannerIndex] = useState(0);
+
+  const bannerImages = [
+    getBannerImage("Sovereign"),
+    getBannerImage("Fire"),
+    getBannerImage("Water"),
+    getBannerImage("Wind"),
+    getBannerImage("Land"),
+    getBannerImage("Lightning"),
+    getBannerImage("Mana"),
+    getBannerImage("Metal"),
+    getBannerImage("Plant"),
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setBannerIndex((prevIndex) => (prevIndex + 1) % bannerImages.length);
+    }, 7500); // Change image every 5 seconds
+
+    return () => clearInterval(interval); // Cleanup the interval on component unmount
+  }, [bannerImages.length]);
 
   const onCreateGame = async () => {
     if (!isLoading) {
@@ -129,20 +150,40 @@ export default function MyGames() {
           className="create-game-elemental"
           style={{
             marginRight: 5,
-            backgroundImage: `url(${getMiscImage("LoadingBanner")})`,
+            backgroundImage: `url(${
+              bannerImages[
+                bannerIndex >= bannerImages.length - 1 ? 0 : bannerIndex + 1
+              ]
+            })`,
           }}
           onClick={() => onCreateGame()}
         >
           <div
+            className="create-game-faddingbanners"
+            // style={{ backgroundImage: `url(${bannerImages[bannerIndex]})` }}
+          >
+            {bannerImages.map((url, z) => (
+              <img
+                key={url}
+                src={url}
+                className="banner-slide"
+                style={{ zIndex: z, opacity: `${z <= bannerIndex ? 1 : 0}` }}
+              />
+            ))}
+          </div>
+
+          <div className="create-game-banner-text">
+            <div className="create-game-title">Elemental Entrée</div>
+            <div className="create-game-desc">
+              <strong>Base Set Featuring:</strong> <br />
+              Fire, Water, Wind, Land, Lightning, Mana, Metal, & Plant
+            </div>
+          </div>
+
+          <div
             className="create-game-frame"
             style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
           ></div>
-
-          <div className="create-game-title">Elemental Entrée</div>
-          <div className="create-game-desc">
-            <strong>Base Set Featuring:</strong> <br />
-            Fire, Water, Wind, Land, Lightning, Mana, Metal, & Plant
-          </div>
         </div>
 
         <div

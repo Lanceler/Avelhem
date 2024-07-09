@@ -3,12 +3,12 @@ import "./Skill.css";
 
 import { useSelector, useDispatch } from "react-redux";
 
-import { useCardImageSwitch } from "../../hooks/useCardImageSwitch";
+import { useGetImages } from "../../hooks/useGetImages";
 
 const EnemySkillHand = () => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { enemy } = useSelector((state) => state.teams);
-  const { getCardImage } = useCardImageSwitch();
+  const { getCardImage } = useGetImages();
 
   let handNum = localGameState[enemy].skillHand.length;
 

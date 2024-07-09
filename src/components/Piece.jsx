@@ -16,7 +16,7 @@ import AmbidexterityIcon from "../assets/others/AmbidexterityIcon.png";
 
 import { useRecurringEffects } from "../hooks/useRecurringEffects";
 
-import { useCardImageSwitch } from "../hooks/useCardImageSwitch";
+import { useGetImages } from "../hooks/useGetImages";
 
 export const Piece = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
@@ -25,7 +25,7 @@ export const Piece = (props) => {
 
   const dispatch = useDispatch();
 
-  const { getElementImage } = useCardImageSwitch();
+  const { getElementImage } = useGetImages();
 
   const { isRooted } = useRecurringEffects();
 
