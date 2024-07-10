@@ -46,7 +46,7 @@ export default function MyGames() {
   useEffect(() => {
     const interval = setInterval(() => {
       setBannerIndex((prevIndex) => (prevIndex + 1) % bannerImages.length);
-    }, 7500); // Change image every 5 seconds
+    }, 6000);
 
     return () => clearInterval(interval); // Cleanup the interval on component unmount
   }, [bannerImages.length]);
@@ -150,11 +150,7 @@ export default function MyGames() {
           className="create-game-elemental"
           style={{
             marginRight: 5,
-            backgroundImage: `url(${
-              bannerImages[
-                bannerIndex >= bannerImages.length - 1 ? 0 : bannerIndex + 1
-              ]
-            })`,
+            backgroundImage: `url(${bannerImages[bannerIndex]})`,
           }}
           onClick={() => onCreateGame()}
         >
@@ -167,7 +163,7 @@ export default function MyGames() {
                 key={url}
                 src={url}
                 className="banner-slide"
-                style={{ zIndex: z, opacity: `${z <= bannerIndex ? 1 : 0}` }}
+                style={{ zIndex: z, opacity: `${z === bannerIndex ? 1 : 0}` }}
               />
             ))}
           </div>
