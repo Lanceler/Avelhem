@@ -1,4 +1,4 @@
-.App-body{
+.app-body{
   display: flex;
   background-color: #070707;
   justify-content: center;
@@ -11,7 +11,7 @@
 
 }
 
-.App {
+.app {
   /* min-height: 100%; */
 
   min-height: 100vh;
@@ -21,6 +21,8 @@
   max-width: 1500px;
   background-color: rgb(90, 84, 84);
 
+  /* background-color: bisque; */
+
   /* align-self: center; */
 
   /* overflow-x: scroll; */
@@ -29,4 +31,9 @@
   transform: translateX(-50%); */
   position: relative;
 
+}
+
+.app-content{
+  /* background-color: aqua; */
+  height: calc(100% - 65px)
 }

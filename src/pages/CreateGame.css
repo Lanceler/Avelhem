@@ -7,7 +7,7 @@
 .create-game-content {
     display: flex;
     height: calc(100% - 40px);
-    background-color: #333;
+    /* background-color: #333; */
     /* background-color: goldenrod; */
     padding: 20px;
 }

@@ -29,15 +29,10 @@
 .loading-text{
     color: white;
     z-index: 100;
-    text-shadow:
-            -3px -3px 0 #000,
-            /* Top left */
-            3px -3px 0 #000,
-            /* Top right */
-            -3px 3px 0 #000,
-            /* Bottom left */
-            3px 3px 0 #000;
-        /* Bottom right */
+
+        -webkit-text-stroke: 1px #000000;
+
+
     font-size: 130px;
     position: absolute;
     

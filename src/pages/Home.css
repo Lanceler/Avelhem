@@ -1,0 +1,38 @@
+.home-body{
+    height: 100%;
+    width: 100%;
+
+    /* background-color: rgb(94, 0, 0); */
+}
+
+.home-content{
+    display: flex;
+    flex-direction: column;
+
+    background-color: bisque;
+}
+
+.home-banner{
+    margin: 20px auto;
+    background-color: aqua;
+    height: 650px;
+    width: 1040px;
+
+    border: 8px groove rgb(236, 180, 36);
+
+        background-size: cover;
+            background-position: center;
+}
+
+.home-banner-backdrop{
+    height: 100%;
+    width: 50%;
+    /* background-color: rgba(0, 0, 0, 0.50); */
+    background: linear-gradient(to right, rgba(0, 0, 0,0.0),
+        rgba(0, 0, 0,0.75) 50%, rgb(0, 0, 0) 100%);
+    margin-left: auto;
+
+    color: white;
+
+
+}

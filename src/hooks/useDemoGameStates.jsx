@@ -987,8 +987,11 @@ export const useDemoGameStates = () => {
               <div>
                 Sovereigns are allowed to intentionally fail searches despite
                 the existence of a valid card; however, resources spent on
-                unsuccessful searches are not refunded. Regardless, repertoires
-                are shuffled after every search.
+                unsuccessful searches are not refunded.
+                <br />
+                <br />
+                Regardless,{" "}
+                <strong>repertoires are shuffled after every search</strong>.
               </div>
             );
 
@@ -1015,7 +1018,9 @@ export const useDemoGameStates = () => {
                 the only available option.
                 <br />
                 <br />
-                Note: Sovereigns can have up to 8 units on the board.
+                <strong>
+                  Note: Sovereigns can have up to 8 units on the board.
+                </strong>
               </div>
             );
 
@@ -1243,7 +1248,7 @@ export const useDemoGameStates = () => {
                 <br />
                 Speaking of HP, <strong>units have 1 HP by default</strong>.
                 Thus, they are prone to elimination due to a single attack.
-                (Attacks will be discussed at the next turn.)
+                (Attacks will be discussed next turn.)
               </div>
             );
 
@@ -1281,7 +1286,7 @@ export const useDemoGameStates = () => {
                 unit, including their innate talents and abilities.
                 <br />
                 <br />
-                (Abilities will be demonstrated during the next turn.)
+                (Abilities will be demonstrated next turn.)
               </div>
             );
 
@@ -1336,7 +1341,9 @@ export const useDemoGameStates = () => {
               <div>
                 Furthermore, the status durations of the Initiator’s units
                 decrease by 1 (unless the duration is indefinite). At the
-                present circumstances, only this step is applicable.
+                present circumstances, only this step is applicable: the
+                duration of your Land Scion’s Shield will decrement from 2 turns
+                to 1.
               </div>
             );
 
@@ -1508,9 +1515,12 @@ export const useDemoGameStates = () => {
               <div>
                 Because Reinforce was resonated, its resonance was also applied:
                 your Metal Scion has gained 1 Sharpness (indicated by the grey
-                diamond hovering above its class icon). Sharpness is an
-                attribute exclusive to Metal Scions. It does nothing on its own,
-                but it interacts with their talents and skills.
+                diamond hovering above its class icon).
+                <br /> <br />
+                <strong>
+                  Sharpness is an attribute exclusive to Metal Scions
+                </strong>
+                ; its quantity affects their talents and skills.
               </div>
             );
 
@@ -1650,7 +1660,7 @@ export const useDemoGameStates = () => {
               <div>
                 When a unit suffers an attack, they lose HP equal to its AP
                 (Attack Power). By default, attacks have 1 AP; thus, units tend
-                to be eliminated by a single attack. Metal Sciond have a talent
+                to be eliminated by a single attack. Metal Scions have a talent
                 that increases the AP of their attacks for every Sharpness they
                 possess.
               </div>
@@ -1710,7 +1720,7 @@ export const useDemoGameStates = () => {
           case "Learn1.141":
             return (
               <div>
-                Aegis, the contingent skill of Mana Scions, can be activated
+                “Aegis”, the contingent skill of Mana Scions, can be activated
                 when they or an adjacent ally is targeted.
                 <br />
                 <br />
@@ -1723,7 +1733,7 @@ export const useDemoGameStates = () => {
               <div>
                 Aegis has 2 sub-effects, the first of which draws a skill if the
                 activator is the targeted unit. (This has been automatically
-                applied.)
+                applied: you have drawn “Tea For Two”)
                 <br /> <br />
                 The second is modular, offering the choice to provide Shield or
                 Ward at the cost of 1 skill.
@@ -1834,8 +1844,9 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 When they are eliminated, Mana Scions can search for a non-burst
-                Mana skill (burst is the fourth and final skill method). Search
-                for Aegis.
+                Mana skill (burst is the fourth and final skill method).
+                <br /> <br />
+                Search for Aegis.
               </div>
             );
 
@@ -1854,7 +1865,7 @@ export const useDemoGameStates = () => {
               <div>
                 When an event triggers both a talent and a contingent skill, the
                 former activates first. The activation of a talent does not
-                hinder the activation of the latter.
+                hinder the activation of a contingent skill.
               </div>
             );
 
@@ -1863,10 +1874,10 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 For example, now that Ambiance Assimilation has concluded, you
-                can activate Vengeful Legacy, a contingent Sovereign skill that
-                is triggered when an ally Scion is eliminated. It allows you to
-                ascend an ally pawn within 2 spaces from the eliminated Scion to
-                the same class.
+                can activate “Vengeful Legacy”, a contingent Sovereign skill
+                that is triggered when an ally Scion is eliminated. It allows
+                you to ascend an ally pawn within 2 spaces from the eliminated
+                Scion to the same class.
               </div>
             );
 
@@ -1927,7 +1938,8 @@ export const useDemoGameStates = () => {
                 It is important to note that when a Scion (not pawn) eliminates
                 another unit, they are afflicted with <strong>Anathema</strong>{" "}
                 for 2 turns. Anathema is an affliction (negative status) that
-                mutes units. Muted units are only allowed to traverse; they
+                mutes units.{" "}
+                <strong>Muted units are only allowed to traverse</strong>; they
                 cannot attack nor activate skills, abilities, and talents.
               </div>
             );
@@ -1995,7 +2007,7 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 Cultivate to draw 1 skill, which is guaranteed to be the Tea For
-                Two that was floated vua Vengeful Legacy.
+                Two that was floated via Vengeful Legacy.
               </div>
             );
 
@@ -2006,8 +2018,8 @@ export const useDemoGameStates = () => {
           case "Learn1.180":
             return (
               <div>
-                For the sake of the demo, you have been given 10 BP. Expand your
-                frontier twice.
+                For the sake of the demonstration, you have been given 10 BP.
+                Expand your frontier twice.
                 <br />
                 <br />
                 Unlike the Defiance Phase, the Bounty Phase allows multiple
@@ -2086,7 +2098,7 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 As per the third sub-effect of Press The Attack, deploy a pawn.
-                Place them between your other Scions.
+                Place them between your Scions.
               </div>
             );
 
@@ -2200,9 +2212,10 @@ export const useDemoGameStates = () => {
           case "Learn1.216":
             return (
               <div>
-                The visual indicator of a Virtue is found to the right of the
-                unit’s HP (heart-shaped) icon. As the Metal Scion no longer
-                possesses their Virtue, their icon is absent.
+                The visual indicator of a Virtue is found at the bottom center
+                of a unit (to the right of the heart-shaped HP icon). As the
+                Metal Scion no longer possesses their Virtue, their icon is
+                absent.
               </div>
             );
 
@@ -2210,9 +2223,10 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 All Avelhems have the same resonance: they grant the Scion the
-                Ravager enhancement, then they grant the Sovereign the option to
+                Ravager enhancement, then they give the Sovereign the option to
                 shuffle the card back into their repertoire instead of
-                discarding it. Opt to discard it.
+                discarding it (regardless, the resonator is still discarded).
+                Opt to discard it.
               </div>
             );
 
@@ -2325,7 +2339,8 @@ export const useDemoGameStates = () => {
               <div>
                 Frigid Breath allows the activator to freeze an enemy (inflict
                 them with the Frostbite affliction). <strong>Frostbite</strong>{" "}
-                renders mutes a unit and renders them immobile.
+                mutes a unit and renders them immobile, preventing them from
+                even traversing.
                 <br />
                 <br />
                 Freeze the Metal Scion.
@@ -2335,14 +2350,18 @@ export const useDemoGameStates = () => {
           case "Learn1.234":
             return (
               <div>
-                Frigid Breath can freeze another unit at the cost of floating a
-                skill, but that will not necessary. Press Skip.
+                Frigid Breath can freeze another unit (or even the same one) at
+                the cost of floating a skill, but that will not necessary. Press
+                Skip.
               </div>
             );
 
           case "Learn1.235":
             return (
-              <div>Click on your Water Scion and view their abilities.</div>
+              <div>
+                Put the Water Scion’s boost to use. Click on them and view their
+                abilities.
+              </div>
             );
 
           case "Learn1.236":

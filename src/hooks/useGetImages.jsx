@@ -143,6 +143,9 @@ import ManaBanner from "../assets/banners/ManaBanner.png";
 import MetalBanner from "../assets/banners/MetalBanner.png";
 import PlantBanner from "../assets/banners/PlantBanner.png";
 
+import LearnBanner from "../assets/banners/LearnBanner.png";
+import ChallengeBanner from "../assets/banners/ChallengeBanner.png";
+
 export const useGetImages = () => {
   const imagesLoadingList = [
     LoadingBanner,
@@ -266,6 +269,8 @@ export const useGetImages = () => {
     Invoke,
     Rally,
     //banners
+    LearnBanner,
+    ChallengeBanner,
     SovereignBanner,
     FireBanner,
     WaterBanner,
@@ -305,6 +310,14 @@ export const useGetImages = () => {
 
       case "Plant":
         return PlantBanner;
+
+      //
+
+      case "Learn":
+        return LearnBanner;
+
+      case "Challenge":
+        return ChallengeBanner;
     }
   };
 
