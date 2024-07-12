@@ -26,7 +26,7 @@ export default function Home() {
         >
           <div className="home-banner-backdrop">
             <div className="home-banner-title">LEARN TO PLAY</div>
-            <div>
+            <div className="home-banner-text-body">
               <div className="home-banner-text">
                 <Link to="/demo/learn">
                   <button className="home-banner-button">
@@ -35,10 +35,9 @@ export default function Home() {
                 </Link>
               </div>
               <div className="home-banner-text">
-                {/* TO DO */}
                 <Link to="/">
                   <button className="home-banner-button">
-                    Rulebook (To-do)
+                    Rulebook (To do)
                   </button>
                 </Link>
               </div>
@@ -52,7 +51,7 @@ export default function Home() {
         >
           <div className="home-banner-backdrop">
             <div className="home-banner-title">ENTER THE FRAY</div>
-            <div>
+            <div className="home-banner-text-body">
               <div className="home-banner-text">
                 {!user && (
                   <Link to="/login">
@@ -60,10 +59,8 @@ export default function Home() {
                   </Link>
                 )}
                 {user && (
-                  <Link to="/repertoires">
-                    <button className="home-banner-button">
-                      View Repertoires
-                    </button>
+                  <Link to="/create-game">
+                    <button className="home-banner-button">Host A Game</button>
                   </Link>
                 )}
               </div>
@@ -76,8 +73,10 @@ export default function Home() {
                   </Link>
                 )}
                 {user && (
-                  <Link to="/create-game">
-                    <button className="home-banner-button">Host A Game</button>
+                  <Link to="/repertoires">
+                    <button className="home-banner-button">
+                      View Repertoires
+                    </button>
                   </Link>
                 )}
               </div>

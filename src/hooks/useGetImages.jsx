@@ -131,7 +131,7 @@ import Invoke from "../assets/diceIcons/Invoke.png";
 import Mobilize from "../assets/diceIcons/Mobilize.png";
 import Rally from "../assets/diceIcons/Rally.png";
 
-import LoadingBanner from "../assets/banners/LoadingBanner.png";
+import LoadingBanner from "../assets/banners/LoadingBanner.jpg";
 
 import SovereignBanner from "../assets/banners/SovereignBanner.png";
 import FireBanner from "../assets/banners/FireBanner.png";
