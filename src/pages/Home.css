@@ -19,7 +19,7 @@
     height: 650px;
     width: 1040px;
 
-    border: 8px groove rgb(236, 180, 36);
+    border: 7px groove rgb(236, 180, 36);
 
         background-size: cover;
             background-position: center;
@@ -43,8 +43,8 @@
 .home-banner-title{
     /* background-color: aqua; */
 
-    width: 400px;
-    font-size: 3.1rem;
+    width: 425px;
+    font-size: 50px;
     /* font-family: 'Arial', sans-serif; */
     font-family: Alegreya, Geogia, Times New Roman, "serif";
     text-align: center;
@@ -62,7 +62,7 @@
 .home-banner-text{
     /* background-color: aqua; */
     height: 100%;
-    width: 400px;
+    width: 425px;
     display: flex;
     align-items: center;
     justify-content: center;
