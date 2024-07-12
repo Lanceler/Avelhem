@@ -10,7 +10,18 @@
     display: flex;
     flex-direction: column;
 
-    background-color: bisque;
+    /* background-color: bisque; */
+
+
+    background: linear-gradient(135deg,
+                #e3d9ca 0%,
+                #f5e6d0 20%,
+                #e3d9ca 40%,
+                bisque 60%,
+                #e3d9ca 80%,
+                #f5e6d0 100%);
+
+
 }
 
 .home-banner{

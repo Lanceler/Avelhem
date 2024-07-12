@@ -108,7 +108,7 @@ function App() {
 
             <div className="app-content">
               <AnimatePresence>
-                <motion.div
+                {/* <motion.div
                   layout={true}
                   initial={{ opacity: 1, scale: 1 }}
                   exit={{
@@ -123,9 +123,9 @@ function App() {
                       (imagesLoaded / totalImages) * 100
                     )}
                   />
-                </motion.div>
+                </motion.div> */}
 
-                {/* {showContent && (
+                {showContent && (
                   <motion.div
                     layout={true}
                     initial={{ opacity: 0 }}
@@ -201,7 +201,7 @@ function App() {
                       )}
                     />
                   </motion.div>
-                )} */}
+                )}
               </AnimatePresence>
             </div>
           </BrowserRouter>
