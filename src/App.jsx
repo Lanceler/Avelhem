@@ -108,24 +108,24 @@ function App() {
 
             <div className="app-content">
               <AnimatePresence>
-                {/* <motion.div
-                    layout={true}
-                    initial={{ opacity: 1, scale: 1 }}
-                    exit={{
-                      opacity: 0,
-                      transition: { duration: animateDuration },
-                    }}
-                    className="loading-image"
-                    key={1}
-                  >
-                    <LoadingImage
-                      percentLoaded={Math.round(
-                        (imagesLoaded / totalImages) * 100
-                      )}
-                    />
-                  </motion.div> */}
+                <motion.div
+                  layout={true}
+                  initial={{ opacity: 1, scale: 1 }}
+                  exit={{
+                    opacity: 0,
+                    transition: { duration: animateDuration },
+                  }}
+                  className="loading-image"
+                  key={1}
+                >
+                  <LoadingImage
+                    percentLoaded={Math.round(
+                      (imagesLoaded / totalImages) * 100
+                    )}
+                  />
+                </motion.div>
 
-                {showContent && (
+                {/* {showContent && (
                   <motion.div
                     layout={true}
                     initial={{ opacity: 0 }}
@@ -201,7 +201,7 @@ function App() {
                       )}
                     />
                   </motion.div>
-                )}
+                )} */}
               </AnimatePresence>
             </div>
           </BrowserRouter>

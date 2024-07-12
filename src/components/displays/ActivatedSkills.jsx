@@ -6,8 +6,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useGetImages } from "../../hooks/useGetImages";
 import { useCardDatabase } from "../../hooks/useCardDatabase";
 
-import LoadingBanner from "../../assets/others/LoadingBanner.png";
-
 import { AnimatePresence, motion } from "framer-motion";
 
 const ActivatedSkills = () => {

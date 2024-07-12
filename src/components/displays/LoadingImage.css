@@ -3,6 +3,7 @@
     overflow: hidden;
     position: absolute;
     height: fit-content;
+    width: 1500px;
     pointer-events: none;
 }
 
@@ -15,7 +16,8 @@
     position: relative;
     display: flex;
     height: calc(100vh - 65px);
-    width: 100vw;
+    /* width: 100vw; */
+    width: 100%;
     max-width: 1500px;
     justify-content: center;
     align-items: center;
@@ -44,15 +46,7 @@
 
     .loading-text {
         font-size: 90px;
-            text-shadow:
-                    -1.5px -1.5px 0 #000,
-                    /* Top left */
-                    1.5px -1.5px 0 #000,
-                    /* Top right */
-                    -1.5px 1.5px 0 #000,
-                    /* Bottom left */
-                    1.5px 1.5px 0 #000;
-                /* Bottom right */
+
     }
 }
 
@@ -60,14 +54,6 @@
 
     .loading-text {
         font-size: 45px;
-        text-shadow:
-            -1.5px -1.5px 0 #000,
-            /* Top left */
-            1.5px -1.5px 0 #000,
-            /* Top right */
-            -1.5px 1.5px 0 #000,
-            /* Bottom left */
-            1.5px 1.5px 0 #000;
-        /* Bottom right */
+       
     }
 }

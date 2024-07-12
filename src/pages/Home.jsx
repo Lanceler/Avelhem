@@ -55,40 +55,30 @@ export default function Home() {
             <div>
               <div className="home-banner-text">
                 {!user && (
-                  <>
-                    <Link to="/login">
-                      <button className="home-banner-button">Sign In</button>
-                    </Link>
-                  </>
+                  <Link to="/login">
+                    <button className="home-banner-button">Sign In</button>
+                  </Link>
                 )}
                 {user && (
-                  <>
-                    <Link to="/create-game">
-                      <button className="home-banner-button">
-                        Host A Game
-                      </button>
-                    </Link>
-                  </>
+                  <Link to="/repertoires">
+                    <button className="home-banner-button">
+                      View Repertoires
+                    </button>
+                  </Link>
                 )}
               </div>
               <div className="home-banner-text">
                 {!user && (
-                  <>
-                    <Link to="/SignUp">
-                      <button className="home-banner-button">
-                        Create Account
-                      </button>
-                    </Link>
-                  </>
+                  <Link to="/SignUp">
+                    <button className="home-banner-button">
+                      Create Account
+                    </button>
+                  </Link>
                 )}
                 {user && (
-                  <>
-                    <Link to="/repertoires">
-                      <button className="home-banner-button">
-                        View Repertoires
-                      </button>
-                    </Link>
-                  </>
+                  <Link to="/create-game">
+                    <button className="home-banner-button">Host A Game</button>
+                  </Link>
                 )}
               </div>
             </div>

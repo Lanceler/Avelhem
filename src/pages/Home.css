@@ -15,14 +15,13 @@
 
 .home-banner{
     margin: 20px auto;
-    background-color: aqua;
+    background-color: #333;
     height: 650px;
     width: 1040px;
-
     border: 7px groove rgb(236, 180, 36);
-
-        background-size: cover;
-            background-position: center;
+    background-size: cover;
+    background-position: center;
+    box-shadow: 4px 4px 15px 4px rgba(0, 0, 0, 0.45);
 }
 
 .home-banner-backdrop{
