@@ -3,7 +3,7 @@
     overflow: hidden;
     position: absolute;
     height: fit-content;
-    width: 1500px;
+    max-width: 1500px;
     pointer-events: none;
 }
 
@@ -16,8 +16,7 @@
     position: relative;
     display: flex;
     height: calc(100vh - 65px);
-    /* width: 100vw; */
-    width: 100%;
+    width: 100vw;
     max-width: 1500px;
     justify-content: center;
     align-items: center;
@@ -50,7 +49,7 @@
     }
 }
 
-@media screen and (max-width: 850px) {
+@media screen and (max-width: 875px) {
 
     .loading-text {
         font-size: 45px;

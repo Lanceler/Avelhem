@@ -144,8 +144,8 @@ import MetalBanner from "../assets/banners/MetalBanner.png";
 import PlantBanner from "../assets/banners/PlantBanner.png";
 
 import LearnBanner from "../assets/banners/LearnBanner.png";
-import ChallengeBanner from "../assets/banners/ChallengeBanner.png";
-import TeaBanner from "../assets/banners/TeaBanner.png";
+import ChallengeBanner from "../assets/banners/ChallengeBanner.jpg";
+import TeaBanner from "../assets/banners/TeaBanner.jpg";
 
 export const useGetImages = () => {
   const imagesLoadingList = [
