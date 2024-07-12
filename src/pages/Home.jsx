@@ -1,5 +1,8 @@
 import "./Home.css";
 
+import React from "react";
+import { Link } from "react-router-dom";
+
 import { useAuthContext } from "../hooks/useAuthContext";
 
 import { useEffect } from "react";
@@ -16,17 +19,29 @@ export default function Home() {
 
   return (
     <div className="home-body">
-      {user && <div className="abilityText">Hello, {user.displayName}</div>}
-
       <div className="home-content">
         <div
           className="home-banner"
-          style={{ backgroundImage: `url(${getBannerImage("Learn")})` }}
+          style={{ backgroundImage: `url(${getBannerImage("Tea")})` }}
         >
           <div className="home-banner-backdrop">
             <div className="home-banner-title">LEARN TO PLAY</div>
-            <div className="home-banner-title">
-              Try our interactive tutorial.
+            <div>
+              <div className="home-banner-text">
+                <Link to="/demo/learn">
+                  <button className="home-banner-button">
+                    Interactive Tutorial
+                  </button>
+                </Link>
+              </div>
+              <div className="home-banner-text">
+                {/* TO DO */}
+                <Link to="/">
+                  <button className="home-banner-button">
+                    Rulebook (To-do)
+                  </button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -36,7 +51,47 @@ export default function Home() {
           style={{ backgroundImage: `url(${getBannerImage("Challenge")})` }}
         >
           <div className="home-banner-backdrop">
-            Create a free account to play against a friend.
+            <div className="home-banner-title">ENTER THE FRAY</div>
+            <div>
+              <div className="home-banner-text">
+                {!user && (
+                  <>
+                    <Link to="/login">
+                      <button className="home-banner-button">Sign In</button>
+                    </Link>
+                  </>
+                )}
+                {user && (
+                  <>
+                    <Link to="/create-game">
+                      <button className="home-banner-button">
+                        Host A Game
+                      </button>
+                    </Link>
+                  </>
+                )}
+              </div>
+              <div className="home-banner-text">
+                {!user && (
+                  <>
+                    <Link to="/SignUp">
+                      <button className="home-banner-button">
+                        Create Account
+                      </button>
+                    </Link>
+                  </>
+                )}
+                {user && (
+                  <>
+                    <Link to="/repertoires">
+                      <button className="home-banner-button">
+                        View Repertoires
+                      </button>
+                    </Link>
+                  </>
+                )}
+              </div>
+            </div>
           </div>
         </div>
         {/* <div className="home-banner"></div> */}

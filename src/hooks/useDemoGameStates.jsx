@@ -800,6 +800,8 @@ export const useDemoGameStates = () => {
                 <strong>
                   BP is primarily earned by eliminating enemy units.
                 </strong>{" "}
+                <br />
+                <br />
                 As you currently have 0 BP, proceed to the next phase.
               </div>
             );
@@ -809,10 +811,12 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 The third Phase is the <strong>Coordination Phase</strong>,
-                which provides the Initiator with tactics. Tactics are expended
-                to perform tactical actions. This phase also provides 3 options,
-                but players will more than often find themselves opting to
-                Assent.
+                which provides the Initiator with tactics. Sovereigns and units
+                expend tactics to perform tactical actions.
+                <br />
+                <br />
+                This phase offers 3 options, varying in control and cost. As it
+                is free, Sovereigns will more than often opt to Assent.
               </div>
             );
 

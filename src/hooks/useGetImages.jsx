@@ -145,6 +145,7 @@ import PlantBanner from "../assets/banners/PlantBanner.png";
 
 import LearnBanner from "../assets/banners/LearnBanner.png";
 import ChallengeBanner from "../assets/banners/ChallengeBanner.png";
+import TeaBanner from "../assets/banners/TeaBanner.png";
 
 export const useGetImages = () => {
   const imagesLoadingList = [
@@ -271,6 +272,7 @@ export const useGetImages = () => {
     //banners
     LearnBanner,
     ChallengeBanner,
+    TeaBanner,
     SovereignBanner,
     FireBanner,
     WaterBanner,
@@ -313,11 +315,14 @@ export const useGetImages = () => {
 
       //
 
+      case "Challenge":
+        return ChallengeBanner;
+
       case "Learn":
         return LearnBanner;
 
-      case "Challenge":
-        return ChallengeBanner;
+      case "Tea":
+        return TeaBanner;
     }
   };
 
