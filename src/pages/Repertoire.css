@@ -192,7 +192,7 @@
 
 .repertoire-button:hover{
     background-color: rgba(255, 217, 0, 0.8);
-        color: #fefefe;
+    color: #fefefe;
     
 }
 
@@ -301,6 +301,7 @@
     .repertoire-header {
         flex-direction: column;
         align-items: center;
+        font-size: 1.3rem;
     }
 
     .repertoire-buttons {
@@ -312,9 +313,9 @@
 
 
 
-    .avelhem-repertoire, .avelhem-selection {
+    .avelhem-repertoire, .avelhem-selection, .skill-repertoire, .skill-selection {
         width: 100%;
-        height: 500px;
+        height: 450px;
         padding: 0px;
         margin-right: 10px;
 
@@ -342,10 +343,21 @@
 
 
 
+    .repertoire-button {
+        margin: 4px 2px;
+        padding: 2x 6px;
+        font-size: 12px;
+        font-weight: 600;
+
+    }
+
+
+
     .repertoire-show-selection {
         position: relative;
         visibility: visible;
-        margin-left: 120px;
+        margin-left: 20px;
+        
     }
     
 

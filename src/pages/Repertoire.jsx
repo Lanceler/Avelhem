@@ -496,6 +496,13 @@ export default function Repertoire() {
                 >
                   Clear
                 </button>
+
+                <button
+                  className="repertoire-button repertoire-show-selection"
+                  onClick={() => setShowSkillSelection(true)}
+                >
+                  View Selection
+                </button>
               </div>
             </div>
 
@@ -515,9 +522,22 @@ export default function Repertoire() {
             </div>
           </div>
 
-          <div className="repertoire-division">
+          <div
+            className={`repertoire-division repertoire-selection ${
+              showSkillSelection ? "selection-shown" : "selection-hidden"
+            }`}
+          >
             <div className="repertoire-header">
               <div className="">Skill Selection</div>
+              <div className="repertoire-buttons">
+                <button
+                  className="repertoire-button repertoire-show-selection"
+                  onClick={() => setShowSkillSelection(false)}
+                  style={{ marginLeft: 0 }}
+                >
+                  View Repertoire
+                </button>
+              </div>
             </div>
 
             <div className="skill-selection">
