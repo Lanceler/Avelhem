@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 
 import "./MyRepertoires.scss";
 
-import GoldFrame from "../assets/others/GoldFrame.png";
-
 import { useAuthContext } from "../hooks/useAuthContext";
 
 import { db } from "../config/firebaseConfig";
@@ -74,33 +72,23 @@ export default function MyRepertoires() {
 
   return (
     <div className="repertoires-body">
-      <div className="repertoires-body2">
-        <div className="threeColumn">
-          {userData &&
-            userData.repertoire.map((rep, index) => (
-              <Link
-                to={`/repertoire/${index}`}
-                className="repertoire-link"
-                key={index}
-              >
-                <div
-                  // key={index}
-                  className="customChoice"
-                  style={{ backgroundImage: `url(${GoldFrame})` }}
-                >
-                  <div className="repertoire-frame">
-                    <div className="repertoire-text repertoire-name">
-                      <h3>{rep.name}</h3>
-                    </div>
+      <div className="repertoires-content">
+        {userData &&
+          userData.repertoire.map((rep, index) => (
+            <Link
+              to={`/repertoire/${index}`}
+              className="repertoire-link"
+              key={index}
+            >
+              <div className="black-border">
+                <div className="repertoire-frame">
+                  <div className="repertoire-name">{rep.name}</div>
 
-                    <div className="repertoire-text repertoire-desc repertoire-scrollable">
-                      {rep.description}
-                    </div>
-                  </div>
+                  <div className="repertoire-desc">{rep.description}</div>
                 </div>
-              </Link>
-            ))}
-        </div>
+              </div>
+            </Link>
+          ))}
       </div>
 
       {isLoading && <Loading />}

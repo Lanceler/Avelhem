@@ -45,7 +45,7 @@ const Navbar = () => {
         </div>
 
         <div className="leftContainer">
-          <Link to="/">
+          <Link to="/" onClick={closeMobileMenu}>
             <img src={AvelhemLogo} className="avelhem-logo" />
           </Link>
           <span></span>

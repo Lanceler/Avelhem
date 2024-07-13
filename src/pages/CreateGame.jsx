@@ -178,7 +178,7 @@ export default function MyGames() {
           <div className="create-game-desc">
             <strong>Expansion:</strong>
             <br />
-            Coming soon
+            Coming Soon
           </div>
         </div>
       </div>

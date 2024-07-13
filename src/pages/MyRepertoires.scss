@@ -1,22 +1,90 @@
 .repertoires-body {
-    margin: 0;
-    padding: 0;
+    min-height: calc(100vh - 65px);
+
     display: flex;
     align-items: center;
-    min-height: calc(100vh - 65px);
-    // background-color: rgb(90, 0, 0);
-    min-width: fit-content;
-}
+    justify-content: center;
 
-.repertoires-body2 {
-    /* background-color: blue; */
-    left: 50%;
-    /* top: 50%; */
-    transform: translateX( -50%); 
-    position: relative;
+    // background-color: rgb(90, 0, 0);
+
+    background: linear-gradient(to bottom,
+        rgb(190, 189, 189) 0%,
+        rgb(224, 217, 217) 20%,
+        rgb(211, 205, 205) 40%,
+        rgb(187, 184, 184) 60%,
+        rgb(160, 157, 157) 80%,
+        rgb(114, 111, 111) 100%);
     
 }
 
+.repertoires-content {
+    // background-color: blue;
+    display: flex;
+}
+
+
+.black-border{
+    border: 4px solid rgba(0, 0, 0, 1);
+    margin: 10px;
+    padding: 0;
+}
+
+
+.repertoire-frame {
+    height: 400px;
+    width: 250px;
+    margin: 0;
+    
+    display: flex;
+    flex-direction: column;
+
+    text-align: center;
+    color: #e8e8e8;
+
+    background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
+    border: 7px groove rgb(236, 180, 36);
+    box-shadow: 2px 2px 6px 2px rgba(0, 0, 0, 0.75);
+}
+
+.repertoire-frame:hover {
+    filter:brightness(1.2)
+}
+
+.repertoire-text {
+    padding: 10px 15px;
+    font-family: Arial, sans-serif;
+}
+
+.repertoire-name{
+    padding: 10px 15px;
+    font-size: 35px;
+    height: 25%;
+
+    font-family: "Times New Roman", Times, serif;
+        
+    text-overflow: ellipsis;
+    overflow: hidden;
+    // margin-bottom: 25px;
+
+    // background-color: rgb(52, 136, 136);
+}
+
+.repertoire-desc {
+    height: 60%;
+    font-size: 24px;
+
+    padding: 0px 10px 10px;
+    
+    overflow-wrap: break-word;
+    scrollbar-color: rgb(255, 168, 7) rgba(92, 63, 52, 0);
+    scrollbar-width: thin;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.repertoire-link{
+    text-decoration: none;
+}
 
 .repertoire-box {
     background: #fff;
@@ -30,46 +98,37 @@
 }
 
 
-.repertoire-frame {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
-    display: flex;
-    flex-direction: column;
-}
-
-.repertoire-frame:hover {
-    filter:brightness(1.2)
-}
 
 
-.repertoire-text {
-    padding: 10px 15px;
-    color: #e8e8e8;
-    font-family: Arial, sans-serif;
-    /* pointer-events: none; */
-}
+/* /////////////////////////////////////////////////////////////////// */
 
-.repertoire-name h3{
-    padding: 5px;
-    font-size: 30px;
-    height: 68px;
-    max-width: 220px;
-    width: auto;
-    /* overflow-wrap: break-word; */
-    text-overflow: ellipsis;
-    overflow: hidden;
-    margin-bottom: 25px;
-}
+@media screen and (max-width: 1030px) {
 
-.repertoire-desc {
-    font-size: 24px;
-    flex-grow: 1;
-    overflow-wrap: break-word;
-    scrollbar-color: rgb(255, 168, 7) rgba(92, 63, 52, 0);
-    scrollbar-width: thin
-}
+    .repertoires-content {
+        flex-direction: column;
+    }
+    
 
-.repertoire-link{
-    text-decoration: none;
+    .repertoire-frame{
+        width: 80vw;
+        height: 200px;
+        border: 5px groove rgb(236, 180, 36);
+    }
+
+    .repertoire-text {
+        padding: 5px 10px;
+    }
+
+    .repertoire-name {
+        height: 45%;
+        
+        font-size: 30px;
+    }
+
+    .repertoire-desc{
+        font-size: 22px;
+
+        // display: none;
+    }
+
 }
