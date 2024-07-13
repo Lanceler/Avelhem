@@ -1,33 +1,52 @@
 .create-game-body{
-    /* background-color: rgb(105, 166, 219); */
-    height: calc(100vh - 65px);
+    min-height: calc(100vh - 65px);
+    height: 100%;
+
+    background: linear-gradient(to bottom,
+        rgb(190, 189, 189) 0%,
+        rgb(224, 217, 217) 20%,
+        rgb(211, 205, 205) 40%,
+        rgb(187, 184, 184) 60%,
+        rgb(160, 157, 157) 80%,
+        rgb(114, 111, 111) 100%);
+
+    /* background-color: aqua; */
     
 }
 
 .create-game-content {
     display: flex;
-    height: calc(100% - 40px);
+    height: calc(100% - 60px);
     /* background-color: #333; */
     /* background-color: goldenrod; */
-    padding: 20px;
+    padding: 30px;
+
+    /* background-color: aqua */
 }
 
 
 
 .create-game-elemental, .create-game-soon{
-    background-color: brown;
-    height: calc(100% - 20px);
+    height: calc(100% - 30px);
     width: 50%;
+
+    position: relative;
     display: flex;
+
     flex-direction: column;
-
-    /* border: 10px solid goldenrod; */
-
 
     background-size: cover;
     background-position: center;
-    position: relative;
 
+
+    border: 12px groove rgb(247, 195, 63);
+    box-shadow: 4px 4px 15px 4px rgba(0, 0, 0, 0.45);
+
+    /* background-color: brown; */
+}
+
+.create-game-elemental{
+    margin-right: 15px;
 }
 
 .create-game-elemental:hover{
@@ -37,24 +56,22 @@
 
 .create-game-soon {
     background-color: rgb(0, 0, 0);
-
+    margin-left: 15px;
 }
 
-.create-game-faddingbanners{
+.create-game-fadingbanners{
     position: absolute;
     z-index: 1;
     height: 100%;
     width: 100%;
     background-size: cover;
     background-position: center; 
-    
-    
 }
 
 .banner-slide{
-        height: 100%;
-            width: 100%;
-            object-fit: cover;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
     position: absolute;
 
     transition: opacity 1.75s ease-out;
@@ -70,15 +87,6 @@
     flex-direction: column;
 }
 
-.create-game-frame {
-    position: absolute;
-    z-index: 3;
-    height: 100%;
-    width: 100%;
-    background-size: 100% 100%;    
-    filter: saturate(0.95) brightness(1.15);
-    box-shadow: 2px 2px 10px 4px rgba(0, 0, 0, 0.75);
-}
 
 .create-game-title{
     text-align: center;
@@ -88,8 +96,7 @@
     padding-top: 20px;
     user-select: none;
 
-    
-    -webkit-text-stroke: 1px #000000;
+    -webkit-text-stroke: 1.25px #000000;
 
 /* background-color: aqua; */
 
@@ -103,10 +110,76 @@
     padding-top: 20px;
     user-select: none;
 
-
     height: 220px;
     
-
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.75) 30%,
-        rgb(0, 0, 0) 90%);
+        rgba(0, 0, 0, 0.95) 100%);
+}
+
+
+/* ////////////////////////////////////// */
+
+
+@media screen and (max-width: 1030px) {
+    .create-game-content {
+        flex-direction: column;
+        align-items: center;
+        height: fit-content;
+        /* background-color: aqua; */
+    }
+
+    .create-game-elemental, .create-game-soon {
+        margin-left: 0;
+        margin-right: 0;
+        width: 80%;
+        height: 500px;
+        border: 10px groove rgb(247, 195, 63);
+    }
+
+    .create-game-elemental{
+        margin-bottom: 20px;
+    }
+
+    .create-game-title {
+        font-size: 3.15rem;
+        padding-top: 5px;
+        -webkit-text-stroke: 1.0px #000000;
+    }
+
+
+    .create-game-desc {
+        font-size: 1.8rem;
+        padding-top: 5px;
+        user-select: none;
+        height: 150px;
+    }
+
+}
+
+@media screen and (max-width: 550px) {
+    .create-game-elemental,
+    .create-game-soon {
+        width: 100%;
+        height: 275px;
+        border: 8px groove rgb(247, 195, 63);
+    }
+
+    .create-game-elemental {
+        margin-bottom: 10px;
+    }
+
+    .create-game-title {
+        font-size: 2.1rem;
+        -webkit-text-stroke: 0.8px #000000;
+    }
+
+
+    .create-game-desc {
+        font-size: 1.2rem;
+        padding: 5px;
+        user-select: none;
+        height: 75px;
+        
+    }
+
 }

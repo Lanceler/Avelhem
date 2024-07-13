@@ -145,6 +145,7 @@ import PlantBanner from "../assets/banners/PlantBanner.png";
 
 import LearnBanner from "../assets/banners/LearnBanner.png";
 import ChallengeBanner from "../assets/banners/ChallengeBanner.jpg";
+import ForeshadowBanner from "../assets/banners/ForeshadowBanner.jpg";
 import TeaBanner from "../assets/banners/TeaBanner.jpg";
 
 export const useGetImages = () => {
@@ -272,6 +273,7 @@ export const useGetImages = () => {
     //banners
     LearnBanner,
     ChallengeBanner,
+    ForeshadowBanner,
     TeaBanner,
     SovereignBanner,
     FireBanner,
@@ -317,6 +319,9 @@ export const useGetImages = () => {
 
       case "Challenge":
         return ChallengeBanner;
+
+      case "Foreshadow":
+        return ForeshadowBanner;
 
       case "Learn":
         return LearnBanner;

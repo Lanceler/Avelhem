@@ -149,15 +149,11 @@ export default function MyGames() {
         <div
           className="create-game-elemental"
           style={{
-            marginRight: 5,
             backgroundImage: `url(${bannerImages[bannerIndex]})`,
           }}
           onClick={() => onCreateGame()}
         >
-          <div
-            className="create-game-faddingbanners"
-            // style={{ backgroundImage: `url(${bannerImages[bannerIndex]})` }}
-          >
+          <div className="create-game-fadingbanners">
             {bannerImages.map((url, z) => (
               <img
                 key={url}
@@ -175,25 +171,9 @@ export default function MyGames() {
               Fire, Water, Wind, Land, Lightning, Mana, Metal, & Plant
             </div>
           </div>
-
-          <div
-            className="create-game-frame"
-            style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
-          ></div>
         </div>
 
-        <div
-          className="create-game-soon"
-          style={{
-            marginLeft: 5,
-          }}
-        >
-          <div
-            className="create-game-frame"
-            style={{
-              backgroundImage: `url(${getMiscImage("GoldFrame")})`,
-            }}
-          ></div>
+        <div className="create-game-soon">
           <div className="create-game-title">???</div>
           <div className="create-game-desc">
             <strong>Expansion:</strong>

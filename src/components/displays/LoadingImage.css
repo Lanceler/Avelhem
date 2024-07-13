@@ -41,7 +41,7 @@
     transform: translateX(-50%); */
 }
 
-@media screen and (max-width: 1030px) {
+@media screen and (min-width: 501px) and (max-width: 1030px) {
 
     .loading-text {
         font-size: 90px;

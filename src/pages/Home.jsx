@@ -22,7 +22,7 @@ export default function Home() {
       <div className="home-content">
         <div
           className="home-banner"
-          style={{ backgroundImage: `url(${getBannerImage("Tea")})` }}
+          style={{ backgroundImage: `url(${getBannerImage("Foreshadow")})` }}
         >
           <div className="home-banner-backdrop">
             <div className="home-banner-title">LEARN TO PLAY</div>
@@ -55,7 +55,7 @@ export default function Home() {
               <div className="home-banner-text">
                 {!user && (
                   <Link to="/login">
-                    <button className="home-banner-button">Sign In</button>
+                    <button className="home-banner-button">Log In</button>
                   </Link>
                 )}
                 {user && (
