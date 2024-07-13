@@ -52,6 +52,9 @@ export default function Repertoire() {
   const [repertoireDescription, setRepertoireDescription] = useState("");
   const [saveError, setSaveError] = useState("");
 
+  const [showAvelhemSelection, setShowAvelhemSelection] = useState(false);
+  const [showSkillSelection, setShowSkillSelection] = useState(false);
+
   const navigate = useNavigate();
 
   const addToAvelhemRepertoire = (cardPoolIndex) => {
@@ -350,7 +353,7 @@ export default function Repertoire() {
   //---Realtime data functionality above
 
   return (
-    <div>
+    <div className="repertoire-body">
       <div className="repertoire-input-box">
         <form>
           <div className="repertoire-input">
@@ -380,25 +383,26 @@ export default function Repertoire() {
 
           <button
             className="repertoire-button repertoire-save"
-            // onClick={() => handleSave()}
             onClick={handleSave}
           >
             Save
           </button>
 
           {saveError && (
-            <div className="repertoire-save-error">{saveError}</div>
+            <div className="repertoire-save-error">
+              <strong>{saveError}</strong>
+            </div>
           )}
         </form>
       </div>
 
       <br />
 
-      <div className="repertoire-body">
+      <div className="repertoire-content">
         <div className="repertoire-main-division">
           <div className="repertoire-division">
             <div className="repertoire-header">
-              <div className="repertoire-text">
+              <div className="">
                 Avelhem Repertoire ({avelhemRepertoire.length} / 20)
               </div>
               <div className="repertoire-buttons">
@@ -408,19 +412,27 @@ export default function Repertoire() {
                 >
                   Reload
                 </button>
+
                 <button
                   className="repertoire-button"
                   onClick={() => handleClearAvelhem()}
                 >
                   Clear
                 </button>
+
+                <button
+                  className="repertoire-button repertoire-show-selection"
+                  onClick={() => setShowAvelhemSelection(true)}
+                >
+                  View Selection
+                </button>
               </div>
             </div>
 
             <div className="avelhem-repertoire">
               <AnimatePresence
-
-              // mode={"popLayout"}
+                className="repertoire-selection-card"
+                // mode={"popLayout"}
               >
                 {avelhemRepertoire.map((card, index) => (
                   <ARAvelhemCard
@@ -434,8 +446,23 @@ export default function Repertoire() {
             </div>
           </div>
 
-          <div className="repertoire-division">
-            <div className="repertoire-text">Avelhem Selection</div>
+          <div
+            className={`repertoire-division repertoire-selection ${
+              showAvelhemSelection ? "selection-shown" : "selection-hidden"
+            }`}
+          >
+            <div className="repertoire-header">
+              <div className="">Avelhem Selection</div>
+              <div className="repertoire-buttons">
+                <button
+                  className="repertoire-button repertoire-show-selection"
+                  onClick={() => setShowAvelhemSelection(false)}
+                  style={{ marginLeft: 0 }}
+                >
+                  View Repertoire
+                </button>
+              </div>
+            </div>
 
             <div className="avelhem-selection">
               {avelhemCardPool.map((card, index) => (
@@ -453,7 +480,7 @@ export default function Repertoire() {
         <div className="repertoire-main-division">
           <div className="repertoire-division">
             <div className="repertoire-header">
-              <div className="repertoire-text">
+              <div className="">
                 Skill Repertoire ({skillRepertoire.length} / 60)
               </div>
               <div className="repertoire-buttons">
@@ -472,7 +499,7 @@ export default function Repertoire() {
               </div>
             </div>
 
-            <div className="skill-repertoire repertoire-scrollable">
+            <div className="skill-repertoire">
               <AnimatePresence
               // mode={"popLayout"}
               >
@@ -489,9 +516,11 @@ export default function Repertoire() {
           </div>
 
           <div className="repertoire-division">
-            <div className="repertoire-text">Skill Selection</div>
+            <div className="repertoire-header">
+              <div className="">Skill Selection</div>
+            </div>
 
-            <div className="skill-selection repertoire-scrollable">
+            <div className="skill-selection">
               {skillCardPool.map((card, index) => (
                 <CPSkillCard
                   key={index}

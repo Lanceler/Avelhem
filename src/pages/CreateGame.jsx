@@ -28,11 +28,10 @@ export default function MyGames() {
   const { user } = useAuthContext();
   const navigate = useNavigate();
 
-  const { getBannerImage, getMiscImage } = useGetImages();
+  const { getBannerImage } = useGetImages();
   const [bannerIndex, setBannerIndex] = useState(0);
 
   const bannerImages = [
-    getBannerImage("Sovereign"),
     getBannerImage("Fire"),
     getBannerImage("Water"),
     getBannerImage("Wind"),
@@ -41,6 +40,7 @@ export default function MyGames() {
     getBannerImage("Mana"),
     getBannerImage("Metal"),
     getBannerImage("Plant"),
+    getBannerImage("Sovereign"),
   ];
 
   useEffect(() => {

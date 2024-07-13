@@ -40,8 +40,10 @@ const CPAvelhemCard = (props) => {
           className="skill-card"
           onClick={() => props.addToAvelhemRepertoire(props.index)}
         >
-          <div className="remaining">{element}</div>
-          <div className="remaining">Remaining: {props.cardInfo.Stock}</div>
+          <div className="avelhem-card-remaining ">{element}</div>
+          <div className="avelhem-card-remaining ">
+            Remaining: {props.cardInfo.Stock}
+          </div>
         </div>
       </div>
     </div>

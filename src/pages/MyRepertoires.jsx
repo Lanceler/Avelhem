@@ -9,6 +9,8 @@ import { db } from "../config/firebaseConfig";
 
 import Loading from "../components/modals/Loading";
 
+import { useGetImages } from "../hooks/useGetImages";
+
 import {
   collection,
   doc,
@@ -21,6 +23,8 @@ import {
 export default function MyRepertoires() {
   const { user } = useAuthContext();
   const [isLoading, setIsLoading] = useState(false);
+
+  const { getBannerImage } = useGetImages();
 
   //---Realtime data functionality below
   const userInfoRef = query(

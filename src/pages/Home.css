@@ -115,9 +115,12 @@
 @media screen and (min-width: 501px) and (max-width: 1030px) {
 
     .home-banner {
-        margin: 0px;
-        scale: 0.75;
+        /* margin: 0px;
+        scale: 0.75; */
+
+        width: 90vw;
     }
+    
 }
 
 

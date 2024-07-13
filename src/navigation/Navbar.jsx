@@ -37,7 +37,8 @@ const Navbar = () => {
             viewBox="0 0 448 512"
             className="menu-icon"
             onClick={() => {
-              setClick(!click), setDropdown(false);
+              setClick(!click);
+              setDropdown(false);
             }}
           >
             <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z" />
@@ -45,7 +46,13 @@ const Navbar = () => {
         </div>
 
         <div className="leftContainer">
-          <Link to="/" onClick={closeMobileMenu}>
+          <Link
+            to="/"
+            onClick={() => {
+              closeMobileMenu();
+              setDropdown(false);
+            }}
+          >
             <img src={AvelhemLogo} className="avelhem-logo" />
           </Link>
           <span></span>
@@ -57,7 +64,10 @@ const Navbar = () => {
             <Link
               to="/demo/learn"
               className="nav-links"
-              onClick={closeMobileMenu}
+              onClick={() => {
+                closeMobileMenu();
+                setDropdown(false);
+              }}
             >
               Tutorial{" "}
             </Link>
@@ -106,7 +116,10 @@ const Navbar = () => {
               <Link
                 to="/create-game"
                 className="nav-links"
-                onClick={closeMobileMenu}
+                onClick={() => {
+                  closeMobileMenu();
+                  setDropdown(false);
+                }}
               >
                 Create Game
               </Link>
@@ -118,7 +131,10 @@ const Navbar = () => {
               <Link
                 to="/repertoires"
                 className="nav-links"
-                onClick={closeMobileMenu}
+                onClick={() => {
+                  closeMobileMenu();
+                  setDropdown(false);
+                }}
               >
                 Repertoires
               </Link>
@@ -127,7 +143,14 @@ const Navbar = () => {
 
           {!user && (
             <li className="nav-item">
-              <Link to="/login" className="nav-links" onClick={closeMobileMenu}>
+              <Link
+                to="/login"
+                className="nav-links"
+                onClick={() => {
+                  closeMobileMenu();
+                  setDropdown(false);
+                }}
+              >
                 Login
               </Link>
             </li>
@@ -138,7 +161,10 @@ const Navbar = () => {
               <Link
                 to="/signup"
                 className="nav-links"
-                onClick={closeMobileMenu}
+                onClick={() => {
+                  closeMobileMenu();
+                  setDropdown(false);
+                }}
               >
                 Sign Up
               </Link>
@@ -150,8 +176,11 @@ const Navbar = () => {
               <Link
                 // to="/"
                 className="nav-links"
-                // onClick={closeMobileMenu}
-                onClick={logOut}
+                onClick={() => {
+                  closeMobileMenu();
+                  setDropdown(false);
+                  logOut();
+                }}
               >
                 Log Out
               </Link>

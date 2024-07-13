@@ -39,3 +39,19 @@
     color: #e8e8e8;
     filter: grayscale(100%)
 }
+
+
+
+
+/* ////////////////////////////////// */
+
+
+@media screen and (max-width: 500px) {
+
+    .skill-card {
+        width: 80px;
+        height: 112px;
+    }
+
+
+}
