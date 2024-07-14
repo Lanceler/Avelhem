@@ -547,7 +547,6 @@ export default function Repertoire() {
                   index={index}
                   cardInfo={card}
                   addToSkillRepertoire={addToSkillRepertoire}
-                  //   selectViewCard={selectViewCard}
                 />
               ))}
             </div>
