@@ -1,7 +1,9 @@
 .demo-body {
     /* background-color: rgb(252, 163, 163); */
     /* height: 1050px; */
-    min-height: fit-content;
+    /* min-height: fit-content; */
+
+    
 
 
     background: linear-gradient(to bottom,
@@ -11,6 +13,9 @@
         rgb(187, 184, 184) 60%,
         rgb(160, 157, 157) 80%,
         rgb(114, 111, 111) 100%);
+
+/* background-color: aqua; */
+
 
 }
 
@@ -48,7 +53,7 @@
 .demo-instructions{
     position: absolute;
     z-index: 5;
-    top: 360px;
+    top: 375px;
     left: 750px;
 
     margin: 0px;
@@ -83,7 +88,7 @@
 
     position: absolute;
     z-index: 5;
-    top: 545px;
+    top: 560px;
     left: 1279px;
     margin: 0px;
 
