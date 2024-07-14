@@ -229,7 +229,7 @@ const AcquisitionPhase = (props) => {
         <div className="modalHeader">
           <div className="modalTitle">Acquisition Phase</div>
           <div className="modalButton">
-            <button className="choiceButton" onClick={() => handleViewBoard()}>
+            <button className="redButton" onClick={() => handleViewBoard()}>
               View
             </button>
           </div>
@@ -271,9 +271,7 @@ const AcquisitionPhase = (props) => {
         <div className="modalBottomButton">
           {selectedChoice !== null && (
             <button
-              className={`choiceButton ${
-                canClick("button") ? "demoClick" : ""
-              }`}
+              className={`redButton ${canClick("button") ? "demoClick" : ""}`}
               onClick={() => {
                 handleSelect();
                 handleUpdateDemoGuide();

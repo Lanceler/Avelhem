@@ -115,7 +115,7 @@ const FerventPrayerResonance = (props) => {
         <div className="modalHeader">
           <div className="modalTitle">Fervent Prayer</div>
           <div className="modalButton">
-            <button className="choiceButton" onClick={() => handleViewBoard()}>
+            <button className="redButton" onClick={() => handleViewBoard()}>
               View
             </button>
           </div>
@@ -163,13 +163,13 @@ const FerventPrayerResonance = (props) => {
 
         <div className="modalBottomButton">
           {selectedAvelhems.length === 0 && (
-            <button className="choiceButton" onClick={() => handleSkip()}>
+            <button className="redButton" onClick={() => handleSkip()}>
               {skipMessage}
             </button>
           )}
 
           {selectedAvelhems.length > 0 && (
-            <button className="choiceButton" onClick={() => handleSelect()}>
+            <button className="redButton" onClick={() => handleSelect()}>
               {selectMessage}
             </button>
           )}

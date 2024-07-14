@@ -408,7 +408,7 @@ const YouMaySpend1Skill = (props) => {
         <div className="modalHeader">
           <div className="modalTitle">{props.details.title}</div>
           <div className="modalButton">
-            <button className="choiceButton" onClick={() => handleViewBoard()}>
+            <button className="redButton" onClick={() => handleViewBoard()}>
               View
             </button>
           </div>
@@ -445,7 +445,7 @@ const YouMaySpend1Skill = (props) => {
           <div className="multi-option-buttons">
             {selectedSkill === null && (
               <button
-                className={`choiceButton ${
+                className={`redButton ${
                   canClick("Skip Button") ? "demoClick" : ""
                 }`}
                 onClick={() => {
@@ -458,14 +458,14 @@ const YouMaySpend1Skill = (props) => {
             )}
 
             {selectedSkill === null && props.unit && props.unit.blossom > 0 && (
-              <button className="choiceButton" onClick={() => handleBlossom()}>
+              <button className="redButton" onClick={() => handleBlossom()}>
                 Spend 1 Blossom
               </button>
             )}
 
             {selectedSkill !== null && (
               <button
-                className={`choiceButton ${
+                className={`redButton ${
                   canClick("Select Button") ? "demoClick" : ""
                 }`}
                 onClick={() => {

@@ -83,7 +83,7 @@ const TacticResults3 = (props) => {
         <div className="modalHeader">
           <div className="modalTitle">Dice Results</div>
           <div className="modalButton">
-            <button className="choiceButton" onClick={() => handleViewBoard()}>
+            <button className="redButton" onClick={() => handleViewBoard()}>
               View
             </button>
           </div>
@@ -125,7 +125,7 @@ const TacticResults3 = (props) => {
         <div className="modalBottomButton">
           {selectedChoice !== null && (
             <button
-              className={`choiceButton ${
+              className={`redButton ${
                 canClick("disregard") ? "demoClick" : ""
               }`}
               onClick={() => {

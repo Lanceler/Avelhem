@@ -526,7 +526,7 @@ const SelectSovereignTactic = (props) => {
         <div className="modalBottomButton">
           {selectedChoice === null && (
             <button
-              className={`choiceButton ${
+              className={`redButton ${
                 canClick("Return Button") ? "demoClick" : ""
               }`}
               onClick={() => {
@@ -540,7 +540,7 @@ const SelectSovereignTactic = (props) => {
 
           {selectedChoice !== null && (
             <button
-              className={`choiceButton ${
+              className={`redButton ${
                 canClick("Select Button") ? "demoClick" : ""
               }`}
               onClick={() => {

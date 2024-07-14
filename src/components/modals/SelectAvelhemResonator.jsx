@@ -216,14 +216,14 @@ const SelectAvelhemResonator = (props) => {
 
         <div className="modalBottomButton">
           {selectedSkill === null && (
-            <button className="choiceButton" onClick={() => handleCancel()}>
+            <button className="redButton" onClick={() => handleCancel()}>
               Cancel
             </button>
           )}
 
           {selectedSkill !== null && (
             <button
-              className={`choiceButton ${
+              className={`redButton ${
                 canClick("Select Button") ? "demoClick" : ""
               }`}
               onClick={() => {

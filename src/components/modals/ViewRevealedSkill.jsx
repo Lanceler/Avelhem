@@ -54,7 +54,7 @@ const ViewRevealedSkill = (props) => {
         <div className="modalHeader">
           <div className="modalTitle">{props.title}</div>
           <div className="modalButton">
-            <button className="choiceButton" onClick={() => handleViewBoard()}>
+            <button className="redButton" onClick={() => handleViewBoard()}>
               View
             </button>
           </div>
@@ -85,7 +85,7 @@ const ViewRevealedSkill = (props) => {
 
         <div className="modalBottomButton">
           <button
-            className={`choiceButton ${
+            className={`redButton ${
               canClick("Proceed Button") ? "demoClick" : ""
             }`}
             onClick={() => {

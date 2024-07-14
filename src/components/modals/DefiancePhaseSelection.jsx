@@ -247,7 +247,7 @@ const DefiancePhaseSelection = (props) => {
             Defiance Phase (FD: {localGameState[self].fateDefiances})
           </div>
           <div className="modalButton">
-            <button className="choiceButton" onClick={() => handleViewBoard()}>
+            <button className="redButton" onClick={() => handleViewBoard()}>
               View
             </button>
           </div>
@@ -423,7 +423,7 @@ const DefiancePhaseSelection = (props) => {
         <div className="modalBottomButton">
           {selectedChoice === null && (
             <button
-              className={`choiceButton ${canClick("skip") ? "demoClick" : ""}`}
+              className={`redButton ${canClick("skip") ? "demoClick" : ""}`}
               onClick={() => {
                 handleSkip();
                 handleUpdateDemoGuide();
@@ -435,9 +435,7 @@ const DefiancePhaseSelection = (props) => {
 
           {selectedChoice !== null && (
             <button
-              className={`choiceButton ${
-                canClick("select") ? "demoClick" : ""
-              }`}
+              className={`redButton ${canClick("select") ? "demoClick" : ""}`}
               onClick={() => {
                 handleProceed();
                 handleUpdateDemoGuide();

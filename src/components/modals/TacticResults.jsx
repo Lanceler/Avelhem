@@ -72,7 +72,7 @@ const TacticResults = (props) => {
         <div className="modalHeader">
           <div className="modalTitle">Dice Results</div>
           <div className="modalButton">
-            <button className="choiceButton" onClick={() => handleViewBoard()}>
+            <button className="redButton" onClick={() => handleViewBoard()}>
               View
             </button>
           </div>
@@ -101,7 +101,7 @@ const TacticResults = (props) => {
         <div className="modalBottomButton">
           {self === localGameState.turnPlayer && (
             <button
-              className={`choiceButton ${canClick() ? "demoClick" : ""}`}
+              className={`redButton ${canClick() ? "demoClick" : ""}`}
               onClick={() => {
                 handleProceed();
                 handleUpdateDemoGuide();

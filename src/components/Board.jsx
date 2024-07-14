@@ -59,13 +59,6 @@ import FerventPrayerResonance from "./skillModals/FerventPrayerResonance";
 import PowerAtTheFinalHourProaction from "./skillModals/PowerAtTheFinalHourProaction";
 
 import ContingentTriggered from "./modals/ContingentTriggered";
-// import ContingentAscension from "./skillModals/ContingentAscension";
-// import ContingentElimination from "./skillModals/ContingentElimination";
-// import ContingentMotion from "./skillModals/ContingentMotion";
-// import ContingentSurvivalAlly from "./skillModals/ContingentSurvivalAlly";
-// import ContingentSurvivalEnemy from "./skillModals/ContingentSurvivalEnemy";
-// import ContingentActivation from "./skillModals/ContingentActivation";
-// import ContingentTarget from "./skillModals/ContingentTarget";
 
 import MayFloatResonantSkill from "./skillModals/MayFloatResonantSkill";
 
@@ -3998,6 +3991,16 @@ const Board = (props) => {
           </>
         );
 
+      case "":
+        if (self === "host" && !lastResolution.resolution2) {
+          return (
+            <>
+              <SelectFirstPlayer handleSetFirstPlayer={handleSetFirstPlayer} />
+            </>
+          );
+        }
+        break;
+
       case "Game Over":
         return (
           <>
@@ -5304,8 +5307,8 @@ const Board = (props) => {
     <div className="board-body">
       {zones && localGameState && (
         <div>
-          <div className="abilityText">
-            Turn Player:{" "}
+          <div className="board-data">
+            Initiator:{" "}
             {localGameState.turnPlayer !== null &&
               localGameState[localGameState.turnPlayer].displayName}
             <br />
@@ -5348,7 +5351,7 @@ const Board = (props) => {
                       localGameState.currentResolution.length - 1
                     ].resolution === "Execution Phase" && (
                       <button
-                        className={`choiceButton ${
+                        className={`redButton ${
                           canClick("End Button") ? "demoClick" : ""
                         }`}
                         onClick={() => {
@@ -5366,7 +5369,7 @@ const Board = (props) => {
                       localGameState.currentResolution.length - 1
                     ].resolution === "Deploying Pawn" && (
                       <button
-                        className={`choiceButton ${
+                        className={`redButton ${
                           canClick("Cancel Button") ? "demoClick" : ""
                         }`}
                         onClick={() => {
@@ -5380,7 +5383,7 @@ const Board = (props) => {
 
                   {hideModal && (
                     <button
-                      className="choiceButton"
+                      className="redButton"
                       onClick={() => hideOrRevealModale()}
                     >
                       Return to Message
@@ -5390,7 +5393,7 @@ const Board = (props) => {
                   {(!props.demo || props.demoGame) && (
                     <div className="contingency-settings">
                       <button
-                        className="choiceButton"
+                        className="redButton"
                         onClick={() => {
                           setOpenContingencySettings(true);
                         }}
@@ -5714,12 +5717,6 @@ const Board = (props) => {
 
               {infoPopUp && (
                 <InfoPopUp info={infoPopUp} setInfoPopUp={setInfoPopUp} />
-              )}
-
-              {!localGameState.turnPlayer && self === "host" && (
-                <SelectFirstPlayer
-                  handleSetFirstPlayer={handleSetFirstPlayer}
-                />
               )}
             </div>
           </div>

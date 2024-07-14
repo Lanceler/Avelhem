@@ -239,7 +239,7 @@ const CoordinationPhaseSelection = (props) => {
         <div className="modalHeader">
           <div className="modalTitle">Coordination Phase</div>
           <div className="modalButton">
-            <button className="choiceButton" onClick={() => handleViewBoard()}>
+            <button className="redButton" onClick={() => handleViewBoard()}>
               View
             </button>
           </div>
@@ -323,9 +323,7 @@ const CoordinationPhaseSelection = (props) => {
         <div className="modalBottomButton">
           {selectedChoice !== null && (
             <button
-              className={`choiceButton ${
-                canClick("select") ? "demoClick" : ""
-              }`}
+              className={`redButton ${canClick("select") ? "demoClick" : ""}`}
               onClick={() => {
                 handleSelect();
                 handleUpdateDemoGuide();

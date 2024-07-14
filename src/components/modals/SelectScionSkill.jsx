@@ -267,10 +267,7 @@ const SelectScionSkill = (props) => {
 
         <div className="modalBottomButton">
           {selectedSkill === null && (
-            <button
-              className="choiceButton noYes "
-              onClick={() => handleReturn()}
-            >
+            <button className="redButton noYes " onClick={() => handleReturn()}>
               Return
             </button>
           )}
@@ -279,7 +276,7 @@ const SelectScionSkill = (props) => {
             {selectedSkill !== null &&
               canActivateSkill(props.unit, usableSkills[selectedSkill].id) && (
                 <button
-                  className={`choiceButton ${
+                  className={`redButton ${
                     canClick("Select Button") ? "demoClick" : ""
                   }`}
                   onClick={() => {
@@ -293,7 +290,7 @@ const SelectScionSkill = (props) => {
 
             {canResonate && (
               <button
-                className={`choiceButton ${
+                className={`redButton ${
                   canClick("Resonate Button") ? "demoClick" : ""
                 }`}
                 onClick={() => handleResonate()}

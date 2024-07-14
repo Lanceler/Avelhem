@@ -183,7 +183,7 @@ const SelectTactic = (props) => {
 
         <div className="modalBottomButton">
           {
-            <button className="choiceButton" onClick={() => handleSkip()}>
+            <button className="redButton" onClick={() => handleSkip()}>
               {skipMessage}
             </button>
           }

@@ -175,7 +175,7 @@ const SelectElement = (props) => {
         <div className="modalHeader">
           <div className="modalTitle">{props.details.title}</div>
           <div className="modalButton">
-            <button className="choiceButton" onClick={() => handleViewBoard()}>
+            <button className="redButton" onClick={() => handleViewBoard()}>
               View
             </button>
           </div>
@@ -219,13 +219,13 @@ const SelectElement = (props) => {
         <div className="modalBottomButton">
           <div>
             {canSkip && selectedChoice === null && (
-              <button className="choiceButton" onClick={() => handleSkip()}>
+              <button className="redButton" onClick={() => handleSkip()}>
                 Return
               </button>
             )}
 
             {selectedChoice !== null && (
-              <button className="choiceButton" onClick={() => handleProceed()}>
+              <button className="redButton" onClick={() => handleProceed()}>
                 Select
               </button>
             )}

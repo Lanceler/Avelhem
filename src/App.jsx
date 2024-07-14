@@ -119,6 +119,7 @@ function App() {
                   key={1}
                 >
                   <LoadingImage
+                    setShowContent={setShowContent}
                     percentLoaded={Math.round(
                       (imagesLoaded / totalImages) * 100
                     )}
@@ -131,7 +132,7 @@ function App() {
                     initial={{ opacity: 0 }}
                     animate={{
                       opacity: 1,
-                      transition: { duration: animateDuration + 1 },
+                      transition: { duration: animateDuration },
                     }}
                     key={0}
                     style={{ height: "100%" }}
@@ -196,6 +197,7 @@ function App() {
                     key={1}
                   >
                     <LoadingImage
+                      setShowContent={setShowContent}
                       percentLoaded={Math.round(
                         (imagesLoaded / totalImages) * 100
                       )}

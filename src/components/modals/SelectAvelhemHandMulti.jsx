@@ -144,7 +144,7 @@ const SelectAvelhemHandMulti = (props) => {
         <div className="modalHeader">
           <div className="modalTitle">{props.details.title}</div>
           <div className="modalButton">
-            <button className="choiceButton" onClick={() => handleViewBoard()}>
+            <button className="redButton" onClick={() => handleViewBoard()}>
               View
             </button>
           </div>
@@ -179,13 +179,13 @@ const SelectAvelhemHandMulti = (props) => {
 
         <div className="modalBottomButton">
           {canSkip && selectedAvelhems.length === 0 && (
-            <button className="choiceButton" onClick={() => handleSkip()}>
+            <button className="redButton" onClick={() => handleSkip()}>
               {skipMessage}
             </button>
           )}
 
           {selectedAvelhems.length > 0 && (
-            <button className="choiceButton" onClick={() => handleSelect()}>
+            <button className="redButton" onClick={() => handleSelect()}>
               {selectMessage}
             </button>
           )}

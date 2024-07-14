@@ -332,7 +332,7 @@ const SelectSkillHandMulti = (props) => {
         <div className="modalHeader">
           <div className="modalTitle">{props.details.title}</div>
           <div className="modalButton">
-            <button className="choiceButton" onClick={() => handleViewBoard()}>
+            <button className="redButton" onClick={() => handleViewBoard()}>
               View
             </button>
           </div>
@@ -365,7 +365,7 @@ const SelectSkillHandMulti = (props) => {
 
         <div className="modalBottomButton">
           {canSkip && selectedSkills.length === 0 && (
-            <button className="choiceButton" onClick={() => handleSkip()}>
+            <button className="redButton" onClick={() => handleSkip()}>
               {skipMessage}
             </button>
           )}
@@ -374,14 +374,14 @@ const SelectSkillHandMulti = (props) => {
             !["Skill Hand Limit", "Battle Cry"].includes(
               props.details.reason
             ) && (
-              <button className="choiceButton" onClick={() => handleSelect()}>
+              <button className="redButton" onClick={() => handleSelect()}>
                 {selectMessage}
               </button>
             )}
 
           {["Skill Hand Limit", "Battle Cry"].includes(props.details.reason) &&
             selectedSkills.length === props.details.count && (
-              <button className="choiceButton" onClick={() => handleSelect()}>
+              <button className="redButton" onClick={() => handleSelect()}>
                 {selectMessage}
               </button>
             )}

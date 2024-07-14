@@ -169,7 +169,7 @@ const SelectResonatorSkill = (props) => {
         <div className="modalHeader">
           <div className="modalTitle">Select resonator</div>
           <div className="modalButton">
-            <button className="choiceButton" onClick={() => handleViewBoard()}>
+            <button className="redButton" onClick={() => handleViewBoard()}>
               View
             </button>
           </div>
@@ -198,14 +198,14 @@ const SelectResonatorSkill = (props) => {
 
         <div className="modalBottomButton">
           {selectedSkill === null && (
-            <button className="choiceButton" onClick={() => handleCancel()}>
+            <button className="redButton" onClick={() => handleCancel()}>
               Cancel
             </button>
           )}
 
           {selectedSkill !== null && (
             <button
-              className={`choiceButton ${
+              className={`redButton ${
                 canClick("Select Button") ? "demoClick" : ""
               }`}
               onClick={() => {

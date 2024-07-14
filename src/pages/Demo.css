@@ -3,15 +3,28 @@
     /* height: 1050px; */
     min-height: fit-content;
 
+
+    background: linear-gradient(to bottom,
+        rgb(190, 189, 189) 0%,
+        rgb(224, 217, 217) 20%,
+        rgb(211, 205, 205) 40%,
+        rgb(187, 184, 184) 60%,
+        rgb(160, 157, 157) 80%,
+        rgb(114, 111, 111) 100%);
+
 }
 
 
 .demo-header{
-    color: #e8e8e8;
+    color: #333;
     position: relative;
     width: fit-content;
     left: 50%;
     transform: translateX(-50%);
+    
+    font-weight: 600;
+    font-size: 3rem;
+    font-family: Alegreya, Geogia, Times New Roman, "serif";
 }
 
 .demo-board{
@@ -29,11 +42,13 @@
     left: 156px;
     /* margin-bottom: 300px; */
     margin: 0px;
+    z-index: 4;
 }
 
 .demo-instructions{
     position: absolute;
-    top: 345px;
+    z-index: 5;
+    top: 360px;
     left: 750px;
 
     margin: 0px;
@@ -67,7 +82,8 @@
 .demo-instructions-button{
 
     position: absolute;
-    top: 530px;
+    z-index: 5;
+    top: 545px;
     left: 1279px;
     margin: 0px;
 

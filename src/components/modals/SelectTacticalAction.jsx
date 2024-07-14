@@ -119,7 +119,6 @@ const SelectTacticalAction = (props) => {
               <div className=" ">⬩Attack an adjacent enemy.</div>
               <div className=" ">
                 ⬩If the attack was lethal, move to the zone they occupied.
-                (Bypass Motion contingent skills.)
               </div>
             </>
           ),
@@ -517,14 +516,14 @@ const SelectTacticalAction = (props) => {
 
         <div className="modalBottomButton">
           {selectedChoice === null && (
-            <button className="choiceButton" onClick={() => handleReturn()}>
+            <button className="redButton" onClick={() => handleReturn()}>
               Return
             </button>
           )}
 
           {selectedChoice !== null && (
             <button
-              className={`choiceButton ${
+              className={`redButton ${
                 canClick("Select Button") ? "demoClick" : ""
               }`}
               onClick={() => {

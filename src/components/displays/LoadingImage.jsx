@@ -38,8 +38,20 @@ const LoadingImage = (props) => {
           />
         )}
 
-        <div className="loading-text">
-          {`Loading... ${props.percentLoaded}%  `}
+        <div className="loading-message">
+          <div className="loading-text">
+            {`Loading... ${props.percentLoaded}%  `}
+          </div>
+          <div>
+            <button
+              className="loading-button"
+              onClick={() => {
+                props.setShowContent(true);
+              }}
+            >
+              Proceed
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -73,7 +73,7 @@ const VictoryScreen = (props) => {
         <div className="modalHeader">
           <div className="modalTitle">Game Over</div>
           <div className="modalButton">
-            <button className="choiceButton" onClick={() => handleViewBoard()}>
+            <button className="redButton" onClick={() => handleViewBoard()}>
               View
             </button>
           </div>
@@ -88,7 +88,7 @@ const VictoryScreen = (props) => {
           {!demoOverride() &&
             self === props.player &&
             localGameState[self].score < 5 && (
-              <button className="choiceButton" onClick={() => handleOffer()}>
+              <button className="redButton" onClick={() => handleOffer()}>
                 {/* Offer to continue */}
                 {message3}
               </button>

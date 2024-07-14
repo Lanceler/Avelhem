@@ -246,8 +246,8 @@ export const useUnitAbilityEffects = () => {
       resolution: "Search Skill",
       player: self,
       restriction: ["03-02"],
-      message: "Search for then float 1 “Gale Conjuration”.",
-      outcome: "Float",
+      message: "Search for 1 “Gale Conjuration”.",
+      outcome: "Add",
     });
 
     return newGameState;

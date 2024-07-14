@@ -39,7 +39,7 @@
     background-position: center;
 
 
-    border: 12px groove rgb(247, 195, 63);
+    border: 12px groove rgb(236, 180, 36);
     box-shadow: 4px 4px 15px 4px rgba(0, 0, 0, 0.45);
 
     /* background-color: brown; */
@@ -133,7 +133,7 @@
         margin-right: 0;
         width: 80%;
         height: 500px;
-        border: 10px groove rgb(247, 195, 63);
+        border: 6px groove rgb(236, 180, 36);
     }
 
     .create-game-elemental{
@@ -157,11 +157,19 @@
 }
 
 @media screen and (max-width: 550px) {
+
+    .create-game-content {
+        padding: 0;
+    }
+
+
+
     .create-game-elemental,
     .create-game-soon {
-        width: 100%;
+        margin: 10px auto;
         height: 275px;
-        border: 8px groove rgb(247, 195, 63);
+        width: 90vw;
+        border: 6px groove rgb(247, 195, 63);
     }
 
     .create-game-elemental {
@@ -170,7 +178,9 @@
 
     .create-game-title {
         font-size: 2.1rem;
-        -webkit-text-stroke: 0.8px #000000;
+        color: rgb(236, 236, 236);
+        -webkit-text-stroke: 0.75px rgb(0, 0, 0);
+        text-shadow: #000000;
     }
 
 

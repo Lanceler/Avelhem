@@ -109,7 +109,7 @@ const UnitInfo = (props) => {
               </span>
             </p>
             <p className="unitInfo-text-desc">
-              ⬩Search for then float 1 “Gale Conjuration”.
+              ⬩Search for 1 “Gale Conjuration”.
             </p>
             <p className="unitInfo-text-desc">
               ⬩You may traverse or blast an adjacent enemy.

@@ -36,7 +36,7 @@ export default function SelectFirstPlayer(props) {
     <div className="modal-backdrop">
       <div className="modal column-centered">
         <button
-          className={`choiceButton ${canClick() ? "demoClick" : ""}`}
+          className={`redButton ${canClick() ? "demoClick" : ""}`}
           onClick={() => {
             props.handleSetFirstPlayer("host");
             handleUpdateDemoGuide();
@@ -45,13 +45,13 @@ export default function SelectFirstPlayer(props) {
           Go First
         </button>
         <button
-          className="choiceButton"
+          className="redButton"
           onClick={() => props.handleSetFirstPlayer("guest")}
         >
           Go Second
         </button>
         <button
-          className="choiceButton"
+          className="redButton"
           onClick={() =>
             props.handleSetFirstPlayer(getRandomFromArray(randomChoices))
           }

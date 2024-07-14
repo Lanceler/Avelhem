@@ -446,7 +446,7 @@ const SelectTacticViaEffect = (props) => {
             </svg>
           </div>
           <div className="modalButton">
-            <button className="choiceButton" onClick={() => handleViewBoard()}>
+            <button className="redButton" onClick={() => handleViewBoard()}>
               View
             </button>
           </div>
@@ -491,7 +491,7 @@ const SelectTacticViaEffect = (props) => {
 
         <div className="modalBottomButton">
           {props.details.canSkip && (
-            <button className="choiceButton" onClick={() => handleSkip()}>
+            <button className="redButton" onClick={() => handleSkip()}>
               {skipMessage}
             </button>
           )}

@@ -292,7 +292,7 @@ const SearchSkill = (props) => {
         <div className="modalHeader">
           <div className="modalTitle">{props.message}</div>
           <div className="modalButton">
-            <button className="choiceButton" onClick={() => handleViewBoard()}>
+            <button className="redButton" onClick={() => handleViewBoard()}>
               View
             </button>
           </div>
@@ -369,14 +369,14 @@ const SearchSkill = (props) => {
 
         <div className="modalBottomButton">
           {selectedSkill === null && (
-            <button className="choiceButton" onClick={() => handleSkip()}>
+            <button className="redButton" onClick={() => handleSkip()}>
               Skip
             </button>
           )}
 
           {selectedSkill !== null && (
             <button
-              className={`choiceButton ${
+              className={`redButton ${
                 canClick("Select Button") ? "demoClick" : ""
               }`}
               onClick={() => {

@@ -83,7 +83,7 @@ const SelectSkillFloat = (props) => {
         <div className="modalHeader">
           <div className="modalTitle">{props.title}</div>
           <div className="modalButton">
-            <button className="choiceButton" onClick={() => handleViewBoard()}>
+            <button className="redButton" onClick={() => handleViewBoard()}>
               View
             </button>
           </div>
@@ -113,7 +113,7 @@ const SelectSkillFloat = (props) => {
 
         <div className="modalBottomButton">
           {selectedSkill !== null && (
-            <button className="choiceButton" onClick={() => handleSelect()}>
+            <button className="redButton" onClick={() => handleSelect()}>
               Select
             </button>
           )}

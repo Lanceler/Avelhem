@@ -979,7 +979,7 @@ const SelectCustomChoice = (props) => {
         <div className="modalHeader">
           <div className="modalTitle">{props.details.title}</div>
           <div className="modalButton">
-            <button className="choiceButton" onClick={() => handleViewBoard()}>
+            <button className="redButton" onClick={() => handleViewBoard()}>
               View
             </button>
           </div>
@@ -1027,15 +1027,15 @@ const SelectCustomChoice = (props) => {
 
         <div className="modalBottomButton">
           {selectedChoice === null && canSkip && (
-            <button className="choiceButton" onClick={() => handleSkip()}>
+            <button className="redButton" onClick={() => handleSkip()}>
               Skip
             </button>
           )}
 
           {selectedChoice !== null && (
-            // <button className="choiceButton" onClick={() => handleSelect()}>
+            // <button className="redButton" onClick={() => handleSelect()}>
             <button
-              className={`choiceButton ${
+              className={`redButton ${
                 canClick("Select Button") ? "demoClick" : ""
               }`}
               onClick={() => {

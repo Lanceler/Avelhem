@@ -259,7 +259,7 @@ const SelectSkillDiscard = (props) => {
         <div className="modalHeader">
           <div className="modalTitle">{props.message}</div>
           <div className="modalButton">
-            <button className="choiceButton" onClick={() => handleViewBoard()}>
+            <button className="redButton" onClick={() => handleViewBoard()}>
               View
             </button>
           </div>
@@ -292,7 +292,7 @@ const SelectSkillDiscard = (props) => {
           <div className="multi-option-buttons">
             {selectedSkill === null && unit && unit.blossom > 0 && (
               <button
-                className={`choiceButton ${
+                className={`redButton ${
                   canClick("Select Button") ? "demoClick" : ""
                 }`}
                 onClick={() => handleBlossom()}
@@ -305,7 +305,7 @@ const SelectSkillDiscard = (props) => {
               props.fever &&
               unit.fever >= props.fever && (
                 <button
-                  className={`choiceButton ${
+                  className={`redButton ${
                     canClick("Select Fever Button") ? "demoClick" : ""
                   }`}
                   onClick={() => {
@@ -319,7 +319,7 @@ const SelectSkillDiscard = (props) => {
 
             {selectedSkill !== null && (
               <button
-                className={`choiceButton ${
+                className={`redButton ${
                   canClick("Select Button") ? "demoClick" : ""
                 }`}
                 onClick={() => {

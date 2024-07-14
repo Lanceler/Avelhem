@@ -504,7 +504,7 @@ const ContingentTriggered = (props) => {
             Contigency Triggered: {props.contingencyType}{" "}
           </div>
           <div className="modalButton">
-            <button className="choiceButton" onClick={() => handleViewBoard()}>
+            <button className="redButton" onClick={() => handleViewBoard()}>
               View
             </button>
           </div>
@@ -539,7 +539,7 @@ const ContingentTriggered = (props) => {
         <div className="modalBottomButton">
           {selectedSkill === null && (
             <button
-              className={`choiceButton ${
+              className={`redButton ${
                 canClick("Skip Button") ? "demoClick" : ""
               }`}
               onClick={() => {
@@ -552,7 +552,7 @@ const ContingentTriggered = (props) => {
           )}
           {selectedSkill !== null && (
             <button
-              className={`choiceButton ${
+              className={`redButton ${
                 canClick("Select Button") ? "demoClick" : ""
               }`}
               onClick={() => {

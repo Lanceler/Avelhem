@@ -217,7 +217,7 @@ export default function Game() {
             <br />
             Send the URL to a friend to play with them.
             <br />
-            <button className="choiceButton" onClick={handleCopyUrl}>
+            <button className="redButton" onClick={handleCopyUrl}>
               Copy URL to Clipboard
             </button>
           </div>
@@ -249,7 +249,7 @@ export default function Game() {
       case 2:
         return (
           <div className="abilityText">
-            <button className="choiceButton" onClick={() => onJoinGame()}>
+            <button className="redButton" onClick={() => onJoinGame()}>
               Join Game
             </button>
           </div>
@@ -264,13 +264,12 @@ export default function Game() {
   //---Player situations functionality above
 
   return (
-    <>
-      {/* <div>Game</div> */}
-      {/* {gameId && <div>Game Id: {gameId}</div>} */}
-      {gameData && <div className="abilityText">Host: {gameData.hostName}</div>}
-      {error && <div className="abilityText">Error: {error}</div>}
+    <div className="demo-body">
+      <br />
+      {gameData && <div className="board-data">Host: {gameData.hostName}</div>}
+      {error && <div className="board-data">Error: {error}</div>}
       {readgameState()}
       {isLoading && <Loading />}
-    </>
+    </div>
   );
 }

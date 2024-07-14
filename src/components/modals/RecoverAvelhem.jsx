@@ -89,7 +89,7 @@ const RecoverAvelhem = (props) => {
         <div className="modalHeader">
           <div className="modalTitle">{props.message}</div>
           <div className="modalButton">
-            <button className="choiceButton" onClick={() => handleViewBoard()}>
+            <button className="redButton" onClick={() => handleViewBoard()}>
               View
             </button>
           </div>
@@ -120,7 +120,7 @@ const RecoverAvelhem = (props) => {
 
         <div className="modalBottomButton">
           {selectedAvelhem !== null && (
-            <button className="choiceButton" onClick={() => handleSelect()}>
+            <button className="redButton" onClick={() => handleSelect()}>
               Select
             </button>
           )}

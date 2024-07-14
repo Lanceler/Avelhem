@@ -89,7 +89,7 @@ const CataclysmicTempestFloat = (props) => {
         <div className="modalHeader">
           <div className="modalTitle">Cataclysmic Tempest</div>
           <div className="modalButton">
-            <button className="choiceButton" onClick={() => handleViewBoard()}>
+            <button className="redButton" onClick={() => handleViewBoard()}>
               View
             </button>
           </div>
@@ -128,7 +128,7 @@ const CataclysmicTempestFloat = (props) => {
 
         <div className="modalBottomButton">
           {selectedSkills.length === selectAmount && (
-            <button className="choiceButton" onClick={() => handleProceed()}>
+            <button className="redButton" onClick={() => handleProceed()}>
               Select
             </button>
           )}

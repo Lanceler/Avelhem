@@ -234,7 +234,7 @@ const ContingentTarget = (props) => {
       <div className="modal">
         <div className="twoColumn3-1">
           <h2 className="choiceTitle">Contigency: Target Triggered</h2>
-          <button className="choiceButton" onClick={() => handleViewBoard()}>
+          <button className="redButton" onClick={() => handleViewBoard()}>
             View
           </button>
         </div>
@@ -268,7 +268,7 @@ const ContingentTarget = (props) => {
 
         {selectedSkill === null && (
           <button
-            className={`choiceButton ${
+            className={`redButton ${
               canClick("Skip Button") ? "demoClick" : ""
             }`}
             onClick={() => {
@@ -281,7 +281,7 @@ const ContingentTarget = (props) => {
         )}
         {selectedSkill !== null && (
           <button
-            className={`choiceButton ${
+            className={`redButton ${
               canClick("Select Button") ? "demoClick" : ""
             }`}
             onClick={() => {

@@ -51,7 +51,7 @@ const MessageToPlayer = (props) => {
 
         <div className="modalBottomButton">
           <button
-            className={`choiceButton ${
+            className={`redButton ${
               canClick("Proceed Button") ? "demoClick" : ""
             }`}
             onClick={() => {

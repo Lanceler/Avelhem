@@ -524,7 +524,7 @@ const YouMayNoYes = (props) => {
         <div className="modalHeader">
           <div className="modalTitle">{props.details.title}</div>
           <div className="modalButton">
-            <button className="choiceButton" onClick={() => handleViewBoard()}>
+            <button className="redButton" onClick={() => handleViewBoard()}>
               View
             </button>
           </div>
@@ -536,7 +536,7 @@ const YouMayNoYes = (props) => {
         <div className="modalBottomButton">
           <div className="multi-option-buttons">
             <button
-              className={`choiceButton ${
+              className={`redButton ${
                 canClick("No Choice") ? "demoClick" : ""
               }`}
               onClick={() => {
@@ -548,7 +548,7 @@ const YouMayNoYes = (props) => {
             </button>
 
             <button
-              className={`choiceButton ${
+              className={`redButton ${
                 canClick("Yes Choice") ? "demoClick" : ""
               }`}
               onClick={() => {

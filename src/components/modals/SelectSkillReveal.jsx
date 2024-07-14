@@ -203,7 +203,7 @@ const SelectSkillReveal = (props) => {
         <div className="modalHeader">
           <div className="modalTitle">{props.details.title}</div>
           <div className="modalButton">
-            <button className="choiceButton" onClick={() => handleViewBoard()}>
+            <button className="redButton" onClick={() => handleViewBoard()}>
               View
             </button>
           </div>
@@ -240,7 +240,7 @@ const SelectSkillReveal = (props) => {
           <div className="multi-option-buttons">
             {selectedSkill === null && (
               <button
-                className={`choiceButton ${
+                className={`redButton ${
                   canClick("Skip Button") ? "demoClick" : ""
                 }`}
                 onClick={() => {
@@ -255,13 +255,13 @@ const SelectSkillReveal = (props) => {
             {selectedSkill === null &&
               props.details.reason === "Chain Lightning Blast" &&
               props.unit.charge > 0 && (
-                <button className="choiceButton" onClick={() => handleCharge()}>
+                <button className="redButton" onClick={() => handleCharge()}>
                   Spend 1 Charge
                 </button>
               )}
 
             {selectedSkill !== null && (
-              <button className="choiceButton" onClick={() => handleSelect()}>
+              <button className="redButton" onClick={() => handleSelect()}>
                 Select
               </button>
             )}

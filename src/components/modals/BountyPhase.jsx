@@ -293,7 +293,7 @@ const BountyPhase = (props) => {
             Bounty Phase (BP: {localGameState[self].bountyPoints})
           </div>
           <div className="modalButton">
-            <button className="choiceButton" onClick={() => handleViewBoard()}>
+            <button className="redButton" onClick={() => handleViewBoard()}>
               View
             </button>
           </div>
@@ -794,9 +794,7 @@ const BountyPhase = (props) => {
         <div className="modalBottomButton">
           {selectedChoice === null && (
             <button
-              className={`choiceButton ${
-                canClick("proceed") ? "demoClick" : ""
-              }`}
+              className={`redButton ${canClick("proceed") ? "demoClick" : ""}`}
               onClick={() => {
                 handleSkip();
                 handleUpdateDemoGuide();
@@ -808,9 +806,7 @@ const BountyPhase = (props) => {
 
           {selectedChoice !== null && (
             <button
-              className={`choiceButton ${
-                canClick("purchase") ? "demoClick" : ""
-              }`}
+              className={`redButton ${canClick("purchase") ? "demoClick" : ""}`}
               onClick={() => {
                 handlePurchase();
                 handleUpdateDemoGuide();

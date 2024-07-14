@@ -919,14 +919,14 @@ const SelectUnitAbility = (props) => {
 
         <div className="modalBottomButton">
           {selectedChoice === null && (
-            <button className="choiceButton" onClick={() => handleReturn()}>
+            <button className="redButton" onClick={() => handleReturn()}>
               Return
             </button>
           )}
 
           {selectedChoice !== null && (
             <button
-              className={`choiceButton ${
+              className={`redButton ${
                 canClick("Select Button") ? "demoClick" : ""
               }`}
               onClick={() => {

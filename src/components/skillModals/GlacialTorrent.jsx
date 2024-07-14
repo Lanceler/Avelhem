@@ -164,7 +164,7 @@ const GlacialTorrent1 = (props) => {
         <div className="modalHeader">
           <div className="modalTitle">Glacial Torrent</div>
           <div className="modalButton">
-            <button className="choiceButton" onClick={() => handleViewBoard()}>
+            <button className="redButton" onClick={() => handleViewBoard()}>
               View
             </button>
           </div>
@@ -242,14 +242,14 @@ const GlacialTorrent1 = (props) => {
 
         <div className="modalBottomButton">
           {selectedSkills.length === 0 && (
-            <button className="choiceButton" onClick={() => handleSkip()}>
+            <button className="redButton" onClick={() => handleSkip()}>
               Skip
             </button>
           )}
 
           {selectedSkills.length > 0 && (
             <button
-              className={`choiceButton ${
+              className={`redButton ${
                 canClick("Select Button") ? "demoClick" : ""
               }`}
               onClick={() => {
