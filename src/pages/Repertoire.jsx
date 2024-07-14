@@ -234,7 +234,7 @@ export default function Repertoire() {
 
     if (repertoireName.length > 30 || hasSpecialCharacter(repertoireName)) {
       setSaveError(
-        "Repertoire name must have a length of 30 characters or less and contain no special characters."
+        "Name must have a length of 30 characters or less and contain no special characters."
       );
     } else if (repertoireDescription.length > 200) {
       setSaveError("Description must have a length of 200 characters or less.");
@@ -363,7 +363,7 @@ export default function Repertoire() {
               type="text"
               onChange={(e) => setRepertoireName(e.target.value)}
               value={repertoireName}
-              placeholder="Repertoire Name (Max. 30 characters)"
+              placeholder="Name (Max. 30 chars.)"
             />
 
             {/* <span>Repertoire Name</span> */}
@@ -377,7 +377,7 @@ export default function Repertoire() {
               type="text"
               onChange={(e) => setRepertoireDescription(e.target.value)}
               value={repertoireDescription}
-              placeholder="Description (Max. 200 characters)"
+              placeholder="Description (Max. 200 chars.)"
             />
           </div>
 
@@ -400,7 +400,14 @@ export default function Repertoire() {
 
       <div className="repertoire-content">
         <div className="repertoire-main-division">
-          <div className="repertoire-division">
+          <div
+            // className="repertoire-division"
+
+            className={`repertoire-division 
+              ${
+                !showAvelhemSelection ? "selection-shown" : "selection-hidden"
+              }`}
+          >
             <div className="repertoire-header">
               <div className="">
                 Avelhem Repertoire ({avelhemRepertoire.length} / 20)
@@ -478,7 +485,12 @@ export default function Repertoire() {
         </div>
 
         <div className="repertoire-main-division">
-          <div className="repertoire-division">
+          <div
+            // className="repertoire-division"
+
+            className={`repertoire-division 
+              ${!showSkillSelection ? "selection-shown" : "selection-hidden"}`}
+          >
             <div className="repertoire-header">
               <div className="">
                 Skill Repertoire ({skillRepertoire.length} / 60)

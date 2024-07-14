@@ -8,7 +8,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
+    align-items: center;
     /* justify-content: center; */
     
     background: linear-gradient(to bottom,
@@ -70,6 +70,8 @@
     letter-spacing: 0.06em;
     transition: 0.5s;
     z-index: 10;
+
+
 }
 
 
@@ -103,9 +105,12 @@
 
 .repertoire-save-error {
     margin: 3px;
+    padding: 1px;
     color: #e8e8e8;
     font-size: 0.65em;
     /* letter-spacing: 0.02em; */
+
+    
 
 }
 
@@ -121,7 +126,11 @@
 
 .repertoire-main-division {
     display: flex;
-    justify-content: center;
+    position: relative;
+
+    width: 100%;
+    
+    /* background-color: aqua; */
 }
 
 
@@ -137,6 +146,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    
 
 }
 
@@ -267,10 +278,8 @@
 /* //////////////////////////////////// */
 
 
-@media screen and (max-width: 500px) {
-    .repertoire-body {
-        width: 100vw
-    }
+@media screen and (max-width: 800px) {
+    
 
     .repertoire-input-box {
         padding: 20px 0px;
@@ -280,9 +289,13 @@
     .repertoire-input-box form {
         width: 70%;
         margin: 1px;
-        padding: 10px 30px 5px;
+        padding: 10px 30px 15px;
         border-radius: 0px;
         border: 4px groove rgb(236, 180, 36);
+    }
+
+    .repertoire-input-name{
+        font-size: 1.25rem;
     }
 
 
@@ -292,12 +305,14 @@
 
     .repertoire-division {
         border: 4px groove rgb(236, 180, 36);
-        margin: 8px;
-        width: 90%;
+        width: 90vw;
 
+        margin: 8px;
+        margin-bottom: 15px;
         padding: 0px 5px;
 
-        left: 0;
+        transition: all 0.5s ease;
+
         
     }
 
@@ -322,12 +337,9 @@
         padding: 0;
         margin: 0;
         margin-right: 10px;
-
-        
-
         /* background:aqua; */
-        
     }
+    
 
 
 
@@ -336,40 +348,32 @@
         box-shadow: none;
 
         z-index: 2;
-        transition: all 0.5s ease-in-out
+        
     }
 
     .selection-shown{
-        left: 1px;
-        visibility: visible;
+        left: 0;
+        /* visibility: visible; */
         opacity: 1;
     }
 
     .selection-hidden {
         left: 110%;
-        visibility: hidden;
+        /* visibility: hidden; */
         opacity: 0.1;
     }
-
-
 
     .repertoire-button {
         margin: 4px 2px;
         padding: 2x 6px;
         font-size: 12px;
-        font-weight: 600;
+
 
     }
-
-
 
     .repertoire-show-selection {
         position: relative;
-        visibility: visible;
-        /* margin-left: 20px; */
-        
+        visibility: visible;        
     }
-    
-
 
 }
