@@ -4,7 +4,7 @@
     /* min-height: fit-content; */
 
     
-
+    user-select: none;
 
     background: linear-gradient(to bottom,
         rgb(190, 189, 189) 0%,
@@ -33,17 +33,17 @@
 }
 
 .demo-board{
-    /* background-color: rgb(255, 202, 202); */
-    /* min-height: 1000px; */
-    height: 1060px;
-    /* min-height: 1000px; */
+    height: 100%;
+        
+    position: relative;
 
+    /* background-color: aqua; */
 
 }
 
 .demo-switch-button {
     position: absolute;
-    top: 1015px;
+    top: 845px;
     left: 160px;
     /* margin-bottom: 300px; */
     margin: 0px;
@@ -53,7 +53,7 @@
 .demo-instructions{
     position: absolute;
     z-index: 5;
-    top: 375px;
+    top: 205px;
     left: 750px;
 
     margin: 0px;
@@ -88,7 +88,7 @@
 
     position: absolute;
     z-index: 5;
-    top: 560px;
+    top: 390px;
     left: 1279px;
     margin: 0px;
 

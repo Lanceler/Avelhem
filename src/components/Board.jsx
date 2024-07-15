@@ -595,6 +595,7 @@ const Board = (props) => {
         "Learn1.163",
         "Learn1.198",
         "Learn1.223",
+        "Fire1.1",
       ].includes(demoGuide)
     ) {
       setHideModal(false);
@@ -5316,7 +5317,7 @@ const Board = (props) => {
             <br />
             Phase: {localGameState.turnPhase}
             <br />
-            Resolution:{" "}
+            {/* Resolution: */}{" "}
             {localGameState.currentResolution.length > 0 && (
               <>
                 {
@@ -5327,7 +5328,7 @@ const Board = (props) => {
               </>
             )}
             <br />
-            Resolution2:{" "}
+            {/* Resolution2: */}{" "}
             {localGameState.currentResolution.length > 0 && (
               <>
                 {

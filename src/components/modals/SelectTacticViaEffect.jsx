@@ -435,7 +435,8 @@ const SelectTacticViaEffect = (props) => {
       <div className="modal">
         <div className="modalHeader">
           <div className="modalTitle">
-            {props.details.title}{" "}
+            {props.details.title}
+            <span style={{ opacity: 0 }}>.</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 512 512"
@@ -482,9 +483,8 @@ const SelectTacticViaEffect = (props) => {
                   ></img>
                 </div>
               </div>
-              {tactic.face}
-              <br />
-              Instances: {tactic.stock}
+              <h2 style={{ marginTop: 10 }}>{tactic.face}</h2>
+              <div className="tactic-label">Instances: {tactic.stock}</div>
             </div>
           ))}
         </div>
