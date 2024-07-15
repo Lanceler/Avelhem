@@ -153,29 +153,22 @@
     }
 }
 
-.activatedCardDisplay{
-    /* display: flex;
-    flex-direction: column; */
-    display: grid;
-    grid-column: 1fr;
-    position: relative;
-}
 
-.resonatorChain{
-    position: relative;
-    background-color: rgb(43, 226, 58);
-}
+.skillChain, .resonatorChain {
+    height: 50%;
 
-.skillChain{
-    height: 350px;
-    position: relative;
+    display: flex;
+    align-items: center;
+    
     /* background-color: blueviolet; */
 }
 
-.topmostDisplay:hover{
+
+
+/* .topmostDisplay:hover{
     scale: 1.25;
     z-index: 2;
-}
+} */
 
 
 .tacticSovereignContainer{

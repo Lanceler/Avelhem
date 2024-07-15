@@ -40,7 +40,7 @@ const LoadingImage = (props) => {
 
         <div className="loading-message">
           <div className="loading-text">
-            {`Loading... ${props.percentLoaded}%  `}
+            {`Preloading... ${props.percentLoaded}%  `}
           </div>
           <div>
             <button

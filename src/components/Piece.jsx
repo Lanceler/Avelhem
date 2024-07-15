@@ -384,11 +384,9 @@ export const Piece = (props) => {
                 <div className="overgrowth animating"></div>
               )}
 
-              <div className="piece-icon-shadow"></div>
-
               <img
                 src={getElementImage(props.unit.unitClass)}
-                className="scionClass"
+                className="piece-scionClass"
               />
 
               {props.unit.unitClass !== "Pawn" && (

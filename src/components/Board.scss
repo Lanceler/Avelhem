@@ -1,93 +1,49 @@
 .board-body{
     width: 100%;
-    
-    margin: 0;
-    padding: 0;
-
-
     // background-color: aqua;
 }
 
-
-.board-physical{
-    position: relative;
-    display: flex;
-    justify-content: center;
-
-    user-select: none;
-}
-
-
-.board-data{
+.board-data {
     color: #333;
     margin: 5px 75px;
     font-family: "Times New Roman", Times, serif;
     font-size: 1.5rem;
 }
 
-.board-piece{
-    transition: top 0.5s ease, left 0.5s ease;
-    animation: deploy 0.75s ease-in-out;
+.board-physical{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    user-select: none;
+
+    // background-color: aqua;
 }
-
-@keyframes deploy {
-    0% {
-        scale: 1.5;
-    }
-    100% {
-        scale: 1;
-    }
-}
-
-.activated-card {
-    transition: top 0.5s ease, left 0.5s ease;
-    animation: activate 0.5s ease-in-out;
-}
-
-@keyframes activate {
-    0% {
-        filter: brightness(300%);
-        opacity: 0.05;
-        scale: 1.2;
-    }
-
-    100% {
-        filter: brightness(100%);
-        opacity: 1;
-        scale: 1;
-    }
-}
-
-
-
-
 
 .board-space {
-    background: linear-gradient(to bottom, rgb(61, 61, 61), rgb(116, 116, 116) 60%, rgb(173, 173, 173) 100%);
-    // height: 100vh;
-    padding: 45px 0px;
     display: flex;
     align-items: center;
+    
+    border: goldenrod 8px groove;
+    height: 890px;
+    width: 1450px;
+    // padding: 0px;
+    padding-top: 10px;
+    transform: scale(.9);
+
     overflow: hidden;
+
+    background: linear-gradient(to bottom, rgb(61, 61, 61), rgb(116, 116, 116) 60%, rgb(173, 173, 173) 100%);
+    box-shadow: 4px 4px 8px 4px rgba(0, 0, 0, 0.5);
 
     scrollbar-color: rgb(255, 168, 7) rgba(92, 63, 52, 0);
     scrollbar-width: thin;
-    border: goldenrod 8px groove;
-    height: 800px;
-
-    width: 1450px;
-    
-
-    box-shadow: 4px 4px 8px 4px rgba(0, 0, 0, 0.5);
-
-    transform: scale(.9);
-
 }
 
-.board-left{
+.board-left {
     height: 100%;
-    width: 290px;
-    // background-color: green;
+    width: 20%;
+
+    // background-color: aqua;
 
     .board-left-buttons {
         height: 10%;
@@ -96,159 +52,155 @@
         align-items: center;
     }
 
-    .contingency-settings{
-        // background-color: red;
+    .contingency-settings {
+        height: 10%;
         position: absolute;
         bottom: 0px;
-        // align-self: end;
-
-        // top: 100px
-
     }
 
-
-
+    .activated-card-display {
+        height: 80%;
+    }
 }
 
-.activated-card-display {
-    height: 80%;
-}
-
-.board-frame {
-    // background-color: rgb(51, 46, 38);
-    background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
-    border: 2.5px solid goldenrod;
-    width: 25%;
-    // height: 70%;
-    height: fit-content;
-    width: fit-content;
-    position: relative;
-    // overflow: hidden;
-    justify-self: start;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 1);
-    
-}
-
-.board-frame-enemy {
-    background: linear-gradient(to bottom, rgb(0, 0, 0), rgb(19, 15, 15) 60%, rgb(44, 43, 43) 100%);
-}
-
-.board-right {
-    // background-color: rgb(255, 0, 0);
-    // width: 700px;\
-    width: fit-content;
-    height: 80%;
+.board-center{
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 30%;
+    // background-color: aqua;
 
-    .skill-used {
-        background-color: #cfcfcf;
-        // height: 50%;
-        // width: 100%;
+    .board-frame {
+        border: 4px groove goldenrod;
         height: fit-content;
         width: fit-content;
-        padding: 5px
+        position: relative;
+
+        // overflow: hidden;
+
+        background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
+        box-shadow: 2px 2px 3px 3px rgba(0, 0, 0, 0.5);
     }
 
-    .avel-used {
-        background-color: #7cc07c;
-        height: 50%;
-        width: 100%;
+    .board-frame-enemy {
+        background: linear-gradient(to bottom, rgb(0, 0, 0), rgb(19, 15, 15) 60%, rgb(44, 43, 43) 100%);
     }
+}
+
+
+
+
+
+.board-right {
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    // justify-content: 
+
+    // background-color: aqua;
+
+    .hands-player {
+        // background-color: #00640d;
+
+        width: 100%;
+        height: 20%;
+        display: flex;
+        grid-template-columns: 1fr 1fr;
+
+        .skill-hand {
+            height: 100%;
+            width: 430px;
+            display: grid;
+            // margin: 0px 10px 0px 15px;
+
+            // background-color: #5e0056;
+        }
+
+        .avel-hand {
+            height: 100%;
+            width: 290px;
+            display: grid;
+            // margin: 0px 10px 0px 15px;
+
+            // background-color: #00470f;
+        }
+
+    }
+
 
     .deck-and-dice-container {
-        height: 100%;
-        // background-color: #fff;
+        height: 60%;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
 
+        // background-color: #5e0056;
+
         .deck-container{
             height: 33%;
-            // background-color: rgb(201, 201, 189);
+            
             display: flex;
             justify-content: space-between;
 
-            .skill-container {
+            // background-color: rgb(201, 201, 189);
+
+            .skill-container, .avel-container {
                 display: flex;
-                justify-content: space-around;
+                justify-content: center;
                 align-items: center;
-                width: 33%;
+                width: 35%;
                 // background-color: #fa0e5d;
 
-                .skill-container-item {
-                    height: 100px;
-                    width: 50px;
-                    margin: 2px;
+                .skill-container-item, .avel-container-item {
+                    display: flex;
+                    align-items: end;
+
+                    height: 100%;
+                    
+                    margin: 0px 10px;
                     // background-color: #333;
                 }
             }
 
             .resource-points {
-                    // background-color: red;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: space-around;
-                    align-items: center;
-                    width: 33%;
-                    // background-color: red;
-
-                    .fd-counter {
-                        // background-color: #333;
-                        background-image: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
-                        width: 150px;
-                        height: 30px;
-                        margin-top: 2px;
-                        color: #e8e8e8;
-                        padding: 5px;
-                        border: goldenrod 3px solid;
-                        border-radius: 8px;
-                        // text-align: center;
-                        box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, .35);
-                        display: flex;
-                        justify-content: space-around;
-                        align-items: center;
-                    }
-
-                    .bp-counter {
-                        // background-color: #333;
-                        background-image: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
-                        width: 150px;
-                        height: 30px;
-                        margin-bottom: 2px;
-                        color: #e8e8e8;
-                        cursor: pointer;
-                        padding: 5px;
-                        border: goldenrod 3px solid;
-                        border-radius: 8px;
-                        // text-align: center;
-                        box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, .35);
-                        
-                        display: flex;
-                        justify-content: space-around;
-                        align-items: center;
-                    }
-
-                    .bp-counter:hover {
-                        filter: brightness(120%);
-                    }
-
-                }
-
-            .avel-container{
                 display: flex;
+                flex-direction: column;
                 justify-content: space-around;
                 align-items: center;
-                width: 33%;
+                width: 30%;
+                // background-color: red;
 
-                .avel-container-item{
-                    height: 100px;
-                    width: 50px;
-                    margin: 2px;
-                    // background-color: #e8e8e8;
+                .fd-counter, .bp-counter {
+                    width: 150px;
+                    height: 30px;
+                    padding: 5px;
+                    
+                    display: flex;
+                    justify-content: space-around;
+                    align-items: center;
+                    
+                    color: #e8e8e8;
+                                        
+                    border: goldenrod 3px solid;
+                    border-radius: 8px;                    
+
+                    background-image: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
+                    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, .5);
+                }
+
+                .bp-counter{
+                    cursor: pointer;
+                }
+
+                .bp-counter:hover {
+                    filter: brightness(120%);
                 }
             }
+
+
         }
 
         .dice-container {
@@ -257,35 +209,7 @@
             // background-color: rgb(34, 31, 31);
             padding: 10px 5px 10px 15px
         }
-
-       
     }
-
-    .hands-player {
-        // background-color: #fff679;
-        // width: 100%;
-        width: 700px;
-        height: 75px;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        
-        
-        .avel-hand {
-            height: 75px;
-            width: 260px;
-        }
-
-        .skill-hand {
-            // height: 75px;
-            width: 440px;
-            display: grid;
-            margin: 0 10px 0 15px;
-            // background-color: red;
-            // position: absolute;
-        }
-    }
-
-
 }
 
 .eye-icon{
@@ -345,4 +269,20 @@
 position: relative;
 height: 20px;
 // background-color: #7cc07c;
+}
+
+
+.board-piece {
+    transition: top 0.5s ease, left 0.5s ease;
+    animation: deploy 0.75s ease-in-out;
+}
+
+@keyframes deploy {
+    0% {
+        scale: 1.5;
+    }
+
+    100% {
+        scale: 1;
+    }
 }

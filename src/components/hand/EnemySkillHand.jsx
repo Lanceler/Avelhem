@@ -21,133 +21,62 @@ const EnemySkillHand = () => {
   }
 
   const cardImage = (position) => {
-    switch (transcendenceCount) {
-      case 0:
-        return `url(${getCardImage("SkillCardBack")})`;
-
-      case 1:
-        if (handNum === 1) {
-          return `url(${getCardImage("SX-01")})`;
-        }
-        if (handNum < 4 && position === 2) {
-          return `url(${getCardImage("SX-01")})`;
-        }
-        if (position === 3) {
-          return `url(${getCardImage("SX-01")})`;
-        }
-        return `url(${getCardImage("SkillCardBack")})`;
-
-      case 2:
-        if (handNum < 4) {
-          return `url(${getCardImage("SX-01")})`;
-        }
-        if (position > 1) {
-          return `url(${getCardImage("SX-01")})`;
-        }
-        return `url(${getCardImage("SkillCardBack")})`;
+    if (transcendenceCount > Math.min(5, handNum) - position) {
+      return `url(${getCardImage("SX-01")})`;
+    } else {
+      return `url(${getCardImage("SkillCardBack")})`;
     }
+  };
+
+  const cards = [1, 2, 3, 4, 5];
+
+  const getMarginBottom = (i) => {
+    if (i === 2 && handNum >= 3) {
+      return 15;
+    }
+
+    if (i === 4 && handNum >= 5) {
+      return 15;
+    }
+
+    if (i === 3) {
+      if (handNum === 4) {
+        return 15;
+      }
+      if (handNum >= 5) {
+        return 27;
+      }
+    }
+
+    return 0;
   };
 
   return (
     <div className="mainSkillHand">
       <div className="enemy-skillhand-container">
-        {handNum > 0 && (
+        {cards.map((i) => (
           <div
             className={`enemy-hand-card`}
             style={{
-              // backgroundImage: `url(${getCardImage("SkillCardBack")})`,
-              backgroundImage: cardImage(1),
-              //   top: -131,
-              top: handNum < 5 && handNum % 2 === 0 ? -123 : -131,
-              //   left: 160,
-              left: handNum < 5 && handNum % 2 === 0 ? 135 : 160,
+              backgroundImage: cardImage(i),
+              marginRight: 40 * (Math.min(5, handNum) - (2 * i - 1)),
+              marginBottom: getMarginBottom(i),
               transform: `rotate(${
-                handNum < 5 && handNum % 2 === 0 ? -7 : 0
+                -3.5 * (Math.min(5, handNum) - (2 * i - 1))
               }deg)`,
-              zIndex: 10,
+              transformOrigin:
+                i === 1 || (i === 2 && handNum >= 3)
+                  ? "bottom left"
+                  : "bottom right",
+              zIndex: i,
+              opacity: handNum >= i ? 1 : 0,
             }}
           ></div>
-        )}
-
-        {handNum > 1 && (
-          <div
-            className={`enemy-hand-card`}
-            style={{
-              // backgroundImage: `url(${getCardImage("SkillCardBack")})`,
-              backgroundImage: cardImage(2),
-              top: -123,
-              //   left: 220,
-              left: handNum < 5 && handNum % 2 === 0 ? 195 : 220,
-              //   background: "green",
-              transform: `rotate(${7}deg)`,
-              zIndex: 11,
-            }}
-          ></div>
-        )}
-
-        {handNum > 2 && (
-          <div
-            className={`enemy-hand-card`}
-            style={{
-              backgroundImage: `url(${getCardImage("SkillCardBack")})`,
-              //   top: -123,
-              top: handNum < 5 && handNum % 2 === 0 ? -110 : -123,
-              //   left: 100,
-              left: handNum < 5 && handNum % 2 === 0 ? 75 : 100,
-              //   background: "red",
-              //   transform: "rotate(-7deg)",
-              transform: `rotate(${
-                handNum < 5 && handNum % 2 === 0 ? -17 : -7
-              }deg)`,
-
-              zIndex: 9,
-            }}
-          ></div>
-        )}
-
-        {handNum > 3 && (
-          <div
-            className={`enemy-hand-card`}
-            style={{
-              backgroundImage: cardImage(3),
-              top: -110,
-              //   left: 265,
-              left: handNum < 5 && handNum % 2 === 0 ? 240 : 265,
-              //   background: "orange",
-              transform: "rotate(17deg)",
-              zIndex: 12,
-            }}
-          ></div>
-        )}
-
-        {handNum > 4 && (
-          <div
-            className={`enemy-hand-card`}
-            style={{
-              backgroundImage: `url(${getCardImage("SkillCardBack")})`,
-              top: -110,
-              left: 55,
-              //   background: "azure",
-              transform: "rotate(-17deg)",
-              zIndex: 8,
-            }}
-          ></div>
-        )}
+        ))}
 
         {handNum > 5 && (
-          <div
-            className={`enemy-hand-label`}
-            style={{
-              top: 10,
-              left: 90,
-              zIndex: 22,
-            }}
-          >
-            Skills in hand: {handNum}
-          </div>
+          <div className={`enemy-hand-label`}>Skills in hand: {handNum}</div>
         )}
-
-        {/* line */}
       </div>
     </div>
   );

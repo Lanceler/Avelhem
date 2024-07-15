@@ -5306,7 +5306,7 @@ const Board = (props) => {
   return (
     <div className="board-body">
       {zones && localGameState && (
-        <div>
+        <>
           <div className="board-data">
             Initiator:{" "}
             {localGameState.turnPlayer !== null &&
@@ -5403,191 +5403,196 @@ const Board = (props) => {
                     </div>
                   )}
                 </div>
+
                 <div className="activated-card-display">
                   <ActivatedSkills />
                 </div>
               </div>
 
-              <div
-                className={`board-frame ${
-                  !isYourTurn() ? "board-frame-enemy" : ""
-                }`}
-              >
-                {expandedUnit !== null && (
-                  <>
-                    <div
-                      className={`pieceOption ${
-                        canClick("Info Button") ? "demoClick" : ""
-                      }`}
-                      style={unitButtonPosition(expandedUnit)[0]}
-                      onClick={() => {
-                        handleUnitOptions("Info");
-                        handleUpdateDemoGuide();
-                      }}
-                    >
-                      <div className="optionIcon">
-                        <img
-                          src={getMiscImage("UnitProfile")}
-                          className="unitOptions"
-                        />
-                      </div>
-                    </div>
-
-                    {localGameState.currentResolution.length > 0 &&
-                      localGameState.currentResolution[
-                        localGameState.currentResolution.length - 1
-                      ].resolution === "Execution Phase" &&
-                      self === expandedUnit.player &&
-                      self === localGameState.turnPlayer && (
-                        <>
-                          <div
-                            className={`pieceOption ${
-                              canClick("Tactic Button") ? "demoClick" : ""
-                            }`}
-                            style={unitButtonPosition(expandedUnit)[1]}
-                            onClick={() => {
-                              handleUnitOptions("Tactic");
-                              handleUpdateDemoGuide();
-                            }}
-                          >
-                            <div className="optionIcon">
-                              <img
-                                src={getMiscImage("UnitTactic")}
-                                className="unitOptions"
-                              />
-                            </div>
-                          </div>
-                          {expandedUnit.unitClass !== "Pawn" && (
-                            <>
-                              <div
-                                className={`pieceOption ${
-                                  canClick("Ability Button") ? "demoClick" : ""
-                                }`}
-                                style={unitButtonPosition(expandedUnit)[2]}
-                                onClick={() => {
-                                  handleUnitOptions("Ability");
-                                  handleUpdateDemoGuide();
-                                }}
-                              >
-                                <div className="optionIcon">
-                                  {" "}
-                                  <img
-                                    src={getMiscImage("UnitAbility")}
-                                    className="unitOptions"
-                                  />
-                                </div>
-                              </div>
-                              <div
-                                className={`pieceOption ${
-                                  canClick("Skill Button") ? "demoClick" : ""
-                                }`}
-                                style={unitButtonPosition(expandedUnit)[3]}
-                                onClick={() => {
-                                  handleUnitOptions("Skill");
-                                  handleUpdateDemoGuide();
-                                }}
-                              >
-                                <div className="optionIcon">
-                                  {/* Ski */}
-
-                                  <img
-                                    src={getMiscImage("UnitSkill")}
-                                    className="unitOptions"
-                                  />
-                                </div>
-                              </div>
-                            </>
-                          )}
-                        </>
-                      )}
-                  </>
-                )}
-
-                {localGameState.activatingUnit.length > 0 &&
-                  localGameState.activatingUnit[
-                    localGameState.activatingUnit.length - 1
-                  ] !== null && (
-                    <div
-                      className="glow animating board-piece"
-                      style={activatingUnit()}
-                    ></div>
-                  )}
-
-                {localGameState.activatingTarget.length > 0 &&
-                  localGameState.activatingTarget[
-                    localGameState.activatingTarget.length - 1
-                  ] !== null && (
-                    <div className="board-piece" style={activatingTarget()}>
-                      <img
-                        src={getMiscImage("Crosshair")}
-                        className="crosshair"
-                      />
-                    </div>
-                  )}
-
-                {localGameState.host.units.map((unit, i) => (
-                  <div key={i}>
-                    {unit && (
-                      <div className="board-piece" style={unitPosition(unit)}>
-                        <Piece
-                          unit={unit}
-                          movingUnit={movingUnit}
-                          tileMode={tileMode}
-                          selectUnitReason={selectUnitReason}
-                          selectUnitSpecial={selectUnitSpecial}
-                          expandedUnit={expandedUnit}
-                          setExpandedUnit={setExpandedUnit}
-                          validZones={validZones}
-                          selectUnit={selectUnit}
-                        />
-                      </div>
-                    )}
-                  </div>
-                ))}
-
-                {localGameState.guest.units.map((unit, i) => (
-                  <div key={-i - 1}>
-                    {unit && (
-                      <div className="board-piece" style={unitPosition(unit)}>
-                        <Piece
-                          unit={unit}
-                          movingUnit={movingUnit}
-                          tileMode={tileMode}
-                          selectUnitReason={selectUnitReason}
-                          selectUnitSpecial={selectUnitSpecial}
-                          expandedUnit={expandedUnit}
-                          setExpandedUnit={setExpandedUnit}
-                          validZones={validZones}
-                          selectUnit={selectUnit}
-                        />
-                      </div>
-                    )}
-                  </div>
-                ))}
-
+              <div className="board-center">
                 <div
-                  className={
-                    self !== "guest"
-                      ? "tile-grid"
-                      : "tile-grid reversed-tile-grid"
-                  }
+                  className={`board-frame ${
+                    !isYourTurn() ? "board-frame-enemy" : ""
+                  }`}
                 >
-                  {zones.map((row, r) =>
-                    row.map((zone, c) => (
-                      <Tile
-                        key={zone.id}
-                        zone={zone}
-                        validZones={validZones}
-                        deployUnit={deployUnit}
-                        movingUnit={movingUnit}
-                        movingSpecial={movingSpecial}
-                        setMovingSpecial={setMovingSpecial}
-                        moveUnit={moveUnit}
-                        tileMode={tileMode}
-                        deployClass={deployClass}
-                      />
-                    ))
+                  {expandedUnit !== null && (
+                    <>
+                      <div
+                        className={`pieceOption ${
+                          canClick("Info Button") ? "demoClick" : ""
+                        }`}
+                        style={unitButtonPosition(expandedUnit)[0]}
+                        onClick={() => {
+                          handleUnitOptions("Info");
+                          handleUpdateDemoGuide();
+                        }}
+                      >
+                        <div className="optionIcon">
+                          <img
+                            src={getMiscImage("UnitProfile")}
+                            className="unitOptions"
+                          />
+                        </div>
+                      </div>
+
+                      {localGameState.currentResolution.length > 0 &&
+                        localGameState.currentResolution[
+                          localGameState.currentResolution.length - 1
+                        ].resolution === "Execution Phase" &&
+                        self === expandedUnit.player &&
+                        self === localGameState.turnPlayer && (
+                          <>
+                            <div
+                              className={`pieceOption ${
+                                canClick("Tactic Button") ? "demoClick" : ""
+                              }`}
+                              style={unitButtonPosition(expandedUnit)[1]}
+                              onClick={() => {
+                                handleUnitOptions("Tactic");
+                                handleUpdateDemoGuide();
+                              }}
+                            >
+                              <div className="optionIcon">
+                                <img
+                                  src={getMiscImage("UnitTactic")}
+                                  className="unitOptions"
+                                />
+                              </div>
+                            </div>
+                            {expandedUnit.unitClass !== "Pawn" && (
+                              <>
+                                <div
+                                  className={`pieceOption ${
+                                    canClick("Ability Button")
+                                      ? "demoClick"
+                                      : ""
+                                  }`}
+                                  style={unitButtonPosition(expandedUnit)[2]}
+                                  onClick={() => {
+                                    handleUnitOptions("Ability");
+                                    handleUpdateDemoGuide();
+                                  }}
+                                >
+                                  <div className="optionIcon">
+                                    {" "}
+                                    <img
+                                      src={getMiscImage("UnitAbility")}
+                                      className="unitOptions"
+                                    />
+                                  </div>
+                                </div>
+                                <div
+                                  className={`pieceOption ${
+                                    canClick("Skill Button") ? "demoClick" : ""
+                                  }`}
+                                  style={unitButtonPosition(expandedUnit)[3]}
+                                  onClick={() => {
+                                    handleUnitOptions("Skill");
+                                    handleUpdateDemoGuide();
+                                  }}
+                                >
+                                  <div className="optionIcon">
+                                    {/* Ski */}
+
+                                    <img
+                                      src={getMiscImage("UnitSkill")}
+                                      className="unitOptions"
+                                    />
+                                  </div>
+                                </div>
+                              </>
+                            )}
+                          </>
+                        )}
+                    </>
                   )}
+
+                  {localGameState.activatingUnit.length > 0 &&
+                    localGameState.activatingUnit[
+                      localGameState.activatingUnit.length - 1
+                    ] !== null && (
+                      <div
+                        className="glow animating board-piece"
+                        style={activatingUnit()}
+                      ></div>
+                    )}
+
+                  {localGameState.activatingTarget.length > 0 &&
+                    localGameState.activatingTarget[
+                      localGameState.activatingTarget.length - 1
+                    ] !== null && (
+                      <div className="board-piece" style={activatingTarget()}>
+                        <img
+                          src={getMiscImage("Crosshair")}
+                          className="crosshair"
+                        />
+                      </div>
+                    )}
+
+                  {localGameState.host.units.map((unit, i) => (
+                    <div key={i}>
+                      {unit && (
+                        <div className="board-piece" style={unitPosition(unit)}>
+                          <Piece
+                            unit={unit}
+                            movingUnit={movingUnit}
+                            tileMode={tileMode}
+                            selectUnitReason={selectUnitReason}
+                            selectUnitSpecial={selectUnitSpecial}
+                            expandedUnit={expandedUnit}
+                            setExpandedUnit={setExpandedUnit}
+                            validZones={validZones}
+                            selectUnit={selectUnit}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  ))}
+
+                  {localGameState.guest.units.map((unit, i) => (
+                    <div key={-i - 1}>
+                      {unit && (
+                        <div className="board-piece" style={unitPosition(unit)}>
+                          <Piece
+                            unit={unit}
+                            movingUnit={movingUnit}
+                            tileMode={tileMode}
+                            selectUnitReason={selectUnitReason}
+                            selectUnitSpecial={selectUnitSpecial}
+                            expandedUnit={expandedUnit}
+                            setExpandedUnit={setExpandedUnit}
+                            validZones={validZones}
+                            selectUnit={selectUnit}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  ))}
+
+                  <div
+                    className={
+                      self !== "guest"
+                        ? "tile-grid"
+                        : "tile-grid reversed-tile-grid"
+                    }
+                  >
+                    {zones.map((row, r) =>
+                      row.map((zone, c) => (
+                        <Tile
+                          key={zone.id}
+                          zone={zone}
+                          validZones={validZones}
+                          deployUnit={deployUnit}
+                          movingUnit={movingUnit}
+                          movingSpecial={movingSpecial}
+                          setMovingSpecial={setMovingSpecial}
+                          moveUnit={moveUnit}
+                          tileMode={tileMode}
+                          deployClass={deployClass}
+                        />
+                      ))
+                    )}
+                  </div>
                 </div>
               </div>
 
@@ -5604,10 +5609,10 @@ const Board = (props) => {
                 <div className="deck-and-dice-container">
                   <div className="deck-container">
                     <div className="skill-container">
-                      <div className="skill-deck skill-container-item">
+                      <div className="skill-container-item">
                         <PileOfCards team={enemy} pile={"skillRepertoire"} />
                       </div>
-                      <div className="skill-discard skill-container-item">
+                      <div className=" skill-container-item">
                         <PileOfCards team={enemy} pile={"skillVestige"} />
                       </div>
                     </div>
@@ -5653,10 +5658,10 @@ const Board = (props) => {
                   </div>
                   <div className="deck-container">
                     <div className="skill-container">
-                      <div className="skill-deck skill-container-item">
+                      <div className="skill-container-item">
                         <PileOfCards team={self} pile={"skillRepertoire"} />
                       </div>
-                      <div className="skill-discard skill-container-item">
+                      <div className="skill-container-item">
                         <PileOfCards team={self} pile={"skillVestige"} />
                       </div>
                     </div>
@@ -5720,7 +5725,7 @@ const Board = (props) => {
               )}
             </div>
           </div>
-        </div>
+        </>
       )}
 
       {magnifiedSkill && <ZoomCard cardInfo={magnifiedSkill} />}
