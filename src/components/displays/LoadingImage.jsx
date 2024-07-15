@@ -17,6 +17,9 @@ const LoadingImage = (props) => {
     img.onload = () => {
       setImageLoaded(true);
     };
+    img.onerror = () => {
+      setImageLoaded(true);
+    };
   }, [getMiscImage]);
 
   return (
