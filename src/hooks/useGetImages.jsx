@@ -148,6 +148,8 @@ import ChallengeBanner from "../assets/banners/ChallengeBanner.jpg";
 import ForeshadowBanner from "../assets/banners/ForeshadowBanner.jpg";
 import TeaBanner from "../assets/banners/TeaBanner.jpg";
 
+import NightSky from "../assets/banners/NightSky.jpg";
+
 export const useGetImages = () => {
   const imagesLoadingList = [
     LoadingBanner,
@@ -328,6 +330,11 @@ export const useGetImages = () => {
 
       case "Tea":
         return TeaBanner;
+
+      //
+
+      case "NightSky":
+        return NightSky;
     }
   };
 

@@ -345,8 +345,6 @@
 
     .repertoire-selection {
         position: absolute;
-        box-shadow: none;
-
         z-index: 2;
         
     }
