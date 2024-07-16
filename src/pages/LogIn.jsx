@@ -11,7 +11,6 @@ export default function LogIn() {
   const [password, setPassword] = useState("");
 
   const { error, logIn } = useLogIn();
-
   const { getBannerImage } = useGetImages();
 
   useEffect(() => {
