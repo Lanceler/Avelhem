@@ -149,10 +149,13 @@ import ForeshadowBanner from "../assets/banners/ForeshadowBanner.jpg";
 import TeaBanner from "../assets/banners/TeaBanner.jpg";
 
 import NightSky from "../assets/banners/NightSky.jpg";
+import MountainFields from "../assets/banners/MountainFields.jpg";
 
 export const useGetImages = () => {
   const imagesLoadingList = [
     LoadingBanner,
+    NightSky,
+    MountainFields,
     //////////
     FireAvelhem,
     IgnitionPropulsion,
@@ -335,6 +338,9 @@ export const useGetImages = () => {
 
       case "NightSky":
         return NightSky;
+
+      case "MountainFields":
+        return MountainFields;
     }
   };
 
