@@ -1231,6 +1231,21 @@ const Board = (props) => {
               </>
             );
 
+          case "Rooted Virtue-blast":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <YouMaySpend1Skill
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                    // enterMoveMode={enterMoveMode}
+                  />
+                )}
+              </>
+            );
+
           case "Rooted Traverse Movement":
             if (self === lastResolution.unit.player) {
               enterMoveMode(

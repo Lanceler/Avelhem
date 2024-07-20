@@ -71,20 +71,24 @@ export default function SelectRepertoire(props) {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <h1>Select your repertoire.</h1>
+        <div className="modalHeader">
+          <div className="modalTitle">Select your repertoire</div>
+        </div>
+
+        <br />
 
         <div className="threeColumn column-centered">
           {repertoireList &&
             repertoireList.map((rep, index) => (
               <div
                 key={index}
-                className="customChoice"
-                style={{ backgroundImage: `url(${GoldFrame})` }}
+                className="modal-option-outline"
+                // style={{ backgroundImage: `url(${GoldFrame})` }}
                 onClick={() => props.onSelectRepertoire(rep)}
               >
                 <div className="repertoire-frame">
-                  <div className="repertoire-text repertoire-name">
-                    <h3>{rep.name}</h3>
+                  <div className="modal-option-header">
+                    <div className="modal-option-title ">{rep.name}</div>
                   </div>
 
                   <div className="repertoire-text repertoire-desc repertoire-scrollable">

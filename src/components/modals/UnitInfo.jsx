@@ -660,10 +660,11 @@ const UnitInfo = (props) => {
                   <>
                     <p className="unitInfo-text-heading2">Root</p>
                     <p className="unitInfo-text-desc  ">
-                      ⬩<em>Rooted</em>; cannot strike nor Virtue-blast.
+                      ⬩<em>Rooted</em>; cannot strike.
                     </p>
                     <p className="unitInfo-text-desc unitInfo-text-last">
-                      ⬩Must spend 1 skill when traversing via tactical action.
+                      ⬩Must spend 1 skill to traverse or Virtue-blast via
+                      tactical action.
                     </p>
                   </>
                 )}

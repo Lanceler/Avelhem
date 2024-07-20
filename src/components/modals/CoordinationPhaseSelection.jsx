@@ -29,28 +29,9 @@ const CoordinationPhaseSelection = (props) => {
   let newGameState = JSON.parse(JSON.stringify(localGameState));
   const upgrade = newGameState[self].bountyUpgrades.coordination;
 
-  let conveneQualifier = "";
-  switch (upgrade) {
-    case 0:
-      conveneQualifier = (
-        <>
-          Can be unlocked <br /> via Bounty Phase <br /> (1st Coordination).
-        </>
-      );
-      break;
-    case 1:
-      conveneQualifier = (
-        <>
-          Can be upgraded <br /> via Bounty Phase <br /> (3rd Coordination).
-        </>
-      );
-      break;
-  }
-
   let abilityDetails = [
     {
       abilityName: "Assent",
-      abilityQualifier: <div className="abilityQualifier"></div>,
       abilityText: (
         <>
           <div className="">⬩Roll 2 tactical dice.</div>
@@ -60,15 +41,6 @@ const CoordinationPhaseSelection = (props) => {
 
     {
       abilityName: "Battle Cry",
-      abilityQualifier: (
-        <div className="abilityQualifier">
-          {upgrade < 3 && (
-            <>
-              Can be upgraded <br /> via Bounty Phase <br /> (3rd Coordination).
-            </>
-          )}
-        </div>
-      ),
       abilityText: (
         <>
           <div className=" ">
@@ -76,7 +48,7 @@ const CoordinationPhaseSelection = (props) => {
             <img src={AssaultSmall} style={{ height: 21 }} />.
           </div>
           <div className=" ">
-            ⬩{upgrade < 3 && <>If upgraded: </>}
+            ⬩{upgrade < 1 && <>If upgraded: </>}
             Roll 1 tactical die.
           </div>
         </>
@@ -85,11 +57,6 @@ const CoordinationPhaseSelection = (props) => {
 
     {
       abilityName: "Convene",
-      abilityQualifier: (
-        <div className="abilityQualifier">
-          {upgrade < 2 && conveneQualifier}
-        </div>
-      ),
       abilityText: (
         <>
           <div className=" ">
@@ -97,7 +64,7 @@ const CoordinationPhaseSelection = (props) => {
             instances.
           </div>
           <div className=" ">
-            ⬩{upgrade < 3 && <>If upgraded: </>}
+            ⬩{upgrade < 2 && <>If upgraded: </>}
             Gain 1 <img src={AdvanceSmall} style={{ height: 21 }} /> and draw 1
             Avelhem.
           </div>
@@ -123,7 +90,7 @@ const CoordinationPhaseSelection = (props) => {
       case 1:
         return newGameState[self].skillHand.length > 2;
       case 2:
-        return upgrade > 0;
+        return true;
     }
   };
 
@@ -146,6 +113,7 @@ const CoordinationPhaseSelection = (props) => {
           resolution: "Misc.",
           resolution2: "Tactic Results",
         });
+
         dispatch(updateState(newGameState));
         props.updateFirebase(newGameState);
 
@@ -245,44 +213,36 @@ const CoordinationPhaseSelection = (props) => {
           </div>
         </div>
 
+        <br />
+
         <div className="modalContent">
           {abilityDetails.map((detail, i) => (
             <div
               key={i}
-              className={`modalChoice1 ${
-                selectedChoice === i ? "selectedModalChoice" : ""
+              className={`modal-option-outline ${
+                selectedChoice === i ? "selected-modal-option" : ""
               } ${canClick("choice", i) ? "demoClick" : ""}`}
-              style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
               onClick={() => {
                 handleChoice(i);
                 handleUpdateDemoGuide();
               }}
             >
               <div
-                className={`modalChoiceContent ${
-                  canChoice(i) ? "" : "disabledModalChoice"
+                className={`modal-option-content ${
+                  canChoice(i) ? "" : "disabled-modal-option-content"
                 } `}
               >
-                <div className="modalChoiceHeader">
-                  <h3 className="modalChoiceName ">{detail.abilityName}</h3>
-
-                  {/* <div className="modalChoiceQualifier">
-                    {detail.abilityQualifier}
-                  </div> */}
-                  {i === 2 && (
-                    <span style={{ color: "#e8e8e8", fontSize: 18 }}>
-                      <em>Must be unlocked.</em>
-                    </span>
-                  )}
+                <div className="modal-option-header">
+                  <div className="modal-option-title ">
+                    {detail.abilityName}
+                  </div>
                 </div>
-                <div className="modalChoiceText scroll">
-                  {detail.abilityText}
-                </div>
+                <div className="modal-option-text">{detail.abilityText}</div>
               </div>
             </div>
           ))}
         </div>
-
+        <br />
         <h3
           style={{
             marginTop: "5px",

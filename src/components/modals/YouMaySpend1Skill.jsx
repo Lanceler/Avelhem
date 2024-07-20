@@ -17,8 +17,13 @@ const YouMaySpend1Skill = (props) => {
 
   const dispatch = useDispatch();
 
-  const { drawSkill, getZonesWithAllies, getVacantAdjacentZones, isMuted } =
-    useRecurringEffects();
+  const {
+    drawSkill,
+    enterSelectUnitMode,
+    getZonesWithAllies,
+    getZonesWithEnemies,
+    isMuted,
+  } = useRecurringEffects();
 
   const [selectedSkill, setSelectedSkill] = useState(null);
 
@@ -270,6 +275,36 @@ const YouMaySpend1Skill = (props) => {
           tactic: props.details.tactic,
         });
 
+      case "Rooted Virtue-blast":
+        // newGameState.currentResolution.push({
+        //   resolution: "Misc.",
+        //   resolution2: "Rooted Traverse Movement",
+        //   unit: unit,
+        //   tactic: props.details.tactic,
+        // });
+
+        //give unit activationCounter
+        unit.temporary.activation
+          ? (unit.temporary.activation += 1)
+          : (unit.temporary.activation = 1);
+
+        newGameState[unit.player].units[unit.unitIndex] = unit;
+        newGameState.activatingUnit.push(unit);
+
+        newGameState.currentResolution.push({
+          resolution: "Tactic End",
+          unit: unit,
+        });
+
+        enterSelectUnitMode(
+          getZonesWithEnemies(unit, 1),
+          unit,
+          newGameState,
+          props.details.tactic,
+          "virtue-blast",
+          null
+        );
+
         break;
 
       default:
@@ -414,9 +449,15 @@ const YouMaySpend1Skill = (props) => {
           </div>
         </div>
 
-        <h3>{props.details.message}</h3>
+        {/* <h3>{props.details.message}</h3> */}
 
-        <br />
+        {props.details.message && (
+          <>
+            <h4 style={{ maxWidth: 700 }}>{props.details.message}</h4>
+          </>
+        )}
+
+        {!props.details.message && <br />}
 
         <div className="scrollable scrollable-y-only">
           <div className="fourColumn">

@@ -172,7 +172,7 @@ const BountyPhase = (props) => {
   // frontier reworked
   const frontierCosts = [4, 6, 10];
   const acquisitionCosts = [3, 3, 3];
-  const coordinationCosts = [2, 2, 2];
+  const coordinationCosts = [3, 3];
   const tacticsCosts = [2, 2, 2, 2];
   const avelhemCosts = [3, 3, 3, 3];
   const victoryCosts = [10, 5];
@@ -200,8 +200,8 @@ const BountyPhase = (props) => {
       localGameState[self].bountyUpgrades.coordination === 0,
     localGameState[self].bountyPoints >= coordinationCosts[1] &&
       localGameState[self].bountyUpgrades.coordination === 1,
-    localGameState[self].bountyPoints >= coordinationCosts[2] &&
-      localGameState[self].bountyUpgrades.coordination === 2,
+    // localGameState[self].bountyPoints >= coordinationCosts[2] &&
+    //   localGameState[self].bountyUpgrades.coordination === 2,
   ];
 
   const canTactics = [
@@ -299,9 +299,11 @@ const BountyPhase = (props) => {
           </div>
         </div>
 
+        <br />
+
         <div className="scrollable scrollable-y-only ">
           <div className="bountySection">
-            <h3 className="modalChoiceName2">Expand your frontier</h3>
+            <h3 className="modalChoiceName2">Frontier</h3>
             <div className="modalContent">
               <div
                 className={`modalChoice1  modalChoice2 ${
@@ -389,7 +391,7 @@ const BountyPhase = (props) => {
           {/* space */}
 
           <div className="bountySection">
-            <h3 className="modalChoiceName2">Upgrade your Acquisition Phase</h3>
+            <h3 className="modalChoiceName2">Acquisition Phase</h3>
             <div className="modalContent">
               <div
                 className={`modalChoice1  modalChoice2 ${
@@ -475,9 +477,7 @@ const BountyPhase = (props) => {
           {/* space */}
 
           <div className="bountySection">
-            <h3 className="modalChoiceName2">
-              Upgrade your Coordination Phase
-            </h3>
+            <h3 className="modalChoiceName2">Coordination Phase</h3>
             <div className="modalContent">
               <div
                 className={`modalChoice1 modalChoice2 ${
@@ -493,7 +493,7 @@ const BountyPhase = (props) => {
                 >
                   <div className="modalBountyContents">
                     <h4 className="modalChoiceText modalBountyText">
-                      Unlock Convene.
+                      Upgrade Battle Cry: Roll 1 tactical die.
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
                       {localGameState[self].bountyUpgrades.coordination > 0
@@ -518,7 +518,7 @@ const BountyPhase = (props) => {
                 >
                   <div className="modalBountyContents">
                     <h4 className="modalChoiceText modalBountyText">
-                      Upgrade Convene.
+                      Upgrade Convene: Gain 1 Advance tactic and draw 1 Avelhem.
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
                       {localGameState[self].bountyUpgrades.coordination > 1
@@ -529,7 +529,7 @@ const BountyPhase = (props) => {
                 </div>
               </div>
 
-              <div
+              {/* <div
                 className={`modalChoice1 modalChoice2 ${
                   selectedChoice === 9 ? "selectedModalChoice" : ""
                 } `}
@@ -543,7 +543,7 @@ const BountyPhase = (props) => {
                 >
                   <div className="modalBountyContents">
                     <h4 className="modalChoiceText modalBountyText">
-                      Upgrade Battle Cry.
+                      Upgrade Convene.
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
                       {localGameState[self].bountyUpgrades.coordination > 2
@@ -552,7 +552,7 @@ const BountyPhase = (props) => {
                     </h4>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
 
@@ -560,7 +560,7 @@ const BountyPhase = (props) => {
 
           <div className="bountySection">
             <h3 className="modalChoiceName2">
-              Upgrade your Tactics{" "}
+              Tactics{" "}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 512 512"
@@ -677,7 +677,7 @@ const BountyPhase = (props) => {
           {/* space */}
 
           <div className="bountySection">
-            <h3 className="modalChoiceName2">Enhance your Avelhems</h3>
+            <h3 className="modalChoiceName2">Avelhem</h3>
             <div className="modalContent">
               <div
                 className={`modalChoice1 modalChoice3 ${

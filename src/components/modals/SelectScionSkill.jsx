@@ -233,6 +233,7 @@ const SelectScionSkill = (props) => {
       <div className="modal">
         <div className="modalHeader">
           <div className="modalTitle">Activate Scion Skill</div>
+          <div className="modalButton"></div>
         </div>
 
         {usableSkills.length === 0 && <h3>No valid skills in hand.</h3>}

@@ -235,12 +235,14 @@ const AcquisitionPhase = (props) => {
           </div>
         </div>
 
+        <br />
+
         <div className="modalContent">
           {abilityDetails.map((detail, i) => (
             <div
               key={i}
-              className={`modalChoice1 ${
-                selectedChoice === i ? "selectedModalChoice" : ""
+              className={`modal-option-outline ${
+                selectedChoice === i ? "selected-modal-option" : ""
               } ${canClick("choice", i) ? "demoClick" : ""}`}
               style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
               onClick={() => {
@@ -249,20 +251,14 @@ const AcquisitionPhase = (props) => {
               }}
             >
               <div
-                className={`modalChoiceContent ${
-                  canChoice(i) ? "" : "disabledModalChoice"
+                className={`modal-option-content ${
+                  canChoice(i) ? "" : "disabled-modal-option-content"
                 } `}
               >
-                <div className="modalChoiceHeader">
-                  <h3 className="modalChoiceName">{detail.abilityName}</h3>
-
-                  {/* <div className="modalChoiceQualifier">
-                    {detail.abilityQualifier}
-                  </div> */}
+                <div className="modal-option-header">
+                  <div className="modal-option-title">{detail.abilityName}</div>
                 </div>
-                <div className="modalChoiceText scroll">
-                  {detail.abilityText}
-                </div>
+                <div className="modal-option-text">{detail.abilityText}</div>
               </div>
             </div>
           ))}

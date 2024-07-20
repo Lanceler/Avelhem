@@ -212,7 +212,7 @@ export default function Game() {
     switch (playerSituation) {
       case 0:
         return (
-          <div className="abilityText">
+          <div className="">
             Status: Waiting for opponent.
             <br />
             Send the URL to a friend to play with them.
@@ -240,9 +240,7 @@ export default function Game() {
       case 1.6:
         return (
           <>
-            <div className="abilityText">
-              Waiting for opponent to select repertoire
-            </div>
+            <div className="">Waiting for opponent to select repertoire</div>
           </>
         );
 

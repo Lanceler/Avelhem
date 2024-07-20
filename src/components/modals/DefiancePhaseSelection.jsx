@@ -199,6 +199,42 @@ const DefiancePhaseSelection = (props) => {
     localGameState[self].fateDefiances >= defianceCosts[5],
   ];
 
+  const defianceOptions = [
+    {
+      title: "Arcana",
+      desc: "Place up to 4 skills at the bottom of your repertoire, then draw the same number.",
+    },
+    {
+      title: "Backtrack",
+      desc: "Reroll your tactics.",
+    },
+    {
+      title: "Curate",
+      desc: "Reroll your tactics with 3 dice; disregard 1.",
+    },
+    {
+      title: "Destine",
+      desc: "Spend 1 Scion skill to ascend an ally pawn to the matching class",
+    },
+    {
+      title: "Ex Machina",
+      desc: (
+        <>
+          Search for <br />1 Sovereign skill.
+        </>
+      ),
+    },
+    {
+      title: "Finesse",
+      desc: (
+        <>
+          Draw 1 skill. <br />
+          You may recover 1 “Transcendence”
+        </>
+      ),
+    },
+  ];
+
   const canClick = (element1, element2) => {
     switch (demoGuide) {
       case "Learn1.15":
@@ -253,170 +289,42 @@ const DefiancePhaseSelection = (props) => {
           </div>
         </div>
 
+        <br />
+
         <div className="modalContent">
           <div className="threeColumn">
-            <div
-              className={`modalChoice1 modalChoice2 ${
-                selectedChoice === 1 ? "selectedModalChoice" : ""
-              } `}
-              style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
-              onClick={() => handleSelect(1, canSelect[0])}
-            >
+            {" "}
+            {defianceOptions.map((d, i) => (
               <div
-                className={`modalChoiceContent ${
-                  canSelect[0] ? "" : "disabledModalChoice"
-                } `}
+                key={i}
+                className={`modal-option-outline
+                  ${selectedChoice === 1 + i ? "selected-modal-option" : ""} 
+                  ${canClick(d.title) ? "demoClick" : ""}                     
+              
+              `}
+                onClick={() => {
+                  handleSelect(i + 1, canSelect[i]);
+                  handleUpdateDemoGuide();
+                }}
               >
-                <div className="modalDefianceContents">
-                  <h3 className="modalChoiceName">Arcana</h3>
-
-                  <div
-                    className="modalChoiceText modalDefianceText"
-                    style={{ fontSize: 18.5 }}
-                  >
-                    {/* Select up to 4 skills from your hand; place them at the
-                    bottom of your repertoire, then draw the same number. */}
-                    Place up to 4 skills at the bottom of your repertoire, then
-                    draw the same number.
+                <div
+                  className={`modal-option-content modal-option-content-2 ${
+                    canSelect[i] ? "" : "disabled-modal-option-content"
+                  } `}
+                >
+                  <div className="modalDefianceContents">
+                    <div className="modal-option-title">{d.title}</div>
+                    <div
+                      className="modal-defiance-text"
+                      style={i === 0 ? { fontSize: 17.5 } : {}}
+                    >
+                      {d.desc}
+                    </div>
+                    <div className="modalChoiceText modalDefianceText modalCost">{`Cost: ${defianceCosts[i]} FD`}</div>
                   </div>
-
-                  <h4 className="modalChoiceText modalDefianceText modalCost">{`Cost: ${defianceCosts[0]} FD`}</h4>
                 </div>
               </div>
-            </div>
-
-            <div
-              className={`modalChoice1 modalChoice2 ${
-                selectedChoice === 2 ? "selectedModalChoice" : ""
-              } `}
-              style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
-              onClick={() => handleSelect(2, canSelect[1])}
-            >
-              <div
-                className={`modalChoiceContent ${
-                  canSelect[1] ? "" : "disabledModalChoice"
-                } `}
-              >
-                <div className="modalDefianceContents">
-                  <h3 className="modalChoiceName">Backtrack</h3>
-                  <div className="modalChoiceText modalDefianceText">
-                    Reroll your tactics.
-                  </div>
-
-                  <h4 className="modalChoiceText modalDefianceText modalCost">{`Cost: ${defianceCosts[1]} FD`}</h4>
-                </div>
-              </div>
-            </div>
-
-            <div
-              className={`modalChoice1 modalChoice2 ${
-                selectedChoice === 3 ? "selectedModalChoice" : ""
-              } 
-              ${canClick("Curate") ? "demoClick" : ""}           `}
-              style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
-              onClick={() => {
-                handleSelect(3, canSelect[2]);
-                handleUpdateDemoGuide();
-              }}
-            >
-              <div
-                className={`modalChoiceContent ${
-                  canSelect[2] ? "" : "disabledModalChoice"
-                } `}
-              >
-                <div className="modalDefianceContents">
-                  <h3 className="modalChoiceName">Curate</h3>
-                  <div className="modalChoiceText modalDefianceText">
-                    Reroll your tactics with 3 dice; disregard 1.
-                  </div>
-
-                  <h4 className="modalChoiceText modalDefianceText modalCost">{`Cost: ${defianceCosts[2]} FD`}</h4>
-                </div>
-              </div>
-            </div>
-
-            <div
-              className={`modalChoice1 modalChoice2 ${
-                selectedChoice === 4 ? "selectedModalChoice" : ""
-              } `}
-              style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
-              onClick={() => {
-                handleSelect(4, canSelect[3]);
-              }}
-            >
-              <div
-                className={`modalChoiceContent ${
-                  canSelect[3] ? "" : "disabledModalChoice"
-                } `}
-              >
-                <div className="modalDefianceContents">
-                  <h3 className="modalChoiceName">Destine</h3>
-                  <div className="modalChoiceText modalDefianceText ">
-                    Spend 1 Scion skill to ascend an ally pawn to the matching
-                    class.
-                  </div>
-
-                  <h4 className="modalChoiceText modalDefianceText modalCost">{`Cost: ${defianceCosts[3]} FD`}</h4>
-                </div>
-              </div>
-            </div>
-
-            <div
-              className={`modalChoice1 modalChoice2 ${
-                selectedChoice === 5 ? "selectedModalChoice" : ""
-              } `}
-              style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
-              onClick={() => {
-                handleSelect(5, canSelect[4]);
-                handleUpdateDemoGuide();
-              }}
-            >
-              <div
-                className={`modalChoiceContent ${
-                  canSelect[4] ? "" : "disabledModalChoice"
-                } 
-                ${canClick("Ex Machina") ? "demoClick" : ""}`}
-              >
-                <div className="modalDefianceContents">
-                  <h3 className="modalChoiceName">Ex Machina</h3>
-                  <div className="modalChoiceText modalDefianceText ">
-                    <span>Search for 1</span>
-
-                    <span>Sovereign skill.</span>
-                  </div>
-
-                  <h4 className="modalChoiceText modalDefianceText modalCost">{`Cost: ${defianceCosts[4]} FD`}</h4>
-                </div>
-              </div>
-            </div>
-
-            <div
-              className={`modalChoice1 modalChoice2 ${
-                selectedChoice === 6 ? "selectedModalChoice" : ""
-              } `}
-              style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
-              onClick={() => handleSelect(6, canSelect[5])}
-            >
-              <div
-                className={`modalChoiceContent ${
-                  canSelect[5] ? "" : "disabledModalChoice"
-                } `}
-              >
-                <div className="modalDefianceContents">
-                  <h3 className="modalChoiceName">Finesse</h3>
-                  <div className="modalChoiceText modalDefianceText ">
-                    <span>Draw 1 skill.</span>
-
-                    <span>You may recover 1 “Transcendence”.</span>
-                    {/* Draw 1 skill and recover up to 1 “Transcendence”. */}
-                  </div>
-
-                  <h4 className="modalChoiceText modalDefianceText modalCost">{`Cost: ${defianceCosts[5]} FD`}</h4>
-                </div>
-              </div>
-            </div>
-
-            {/* end */}
+            ))}
           </div>
         </div>
 

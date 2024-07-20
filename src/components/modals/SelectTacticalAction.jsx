@@ -41,7 +41,7 @@ const SelectTacticalAction = (props) => {
   let message = null;
   if (isRooted(unit)) {
     message =
-      "You are rooted: You cannot strike nor Virtue-blast, and you must spend 1 skill to traverse via tactical action.";
+      "You are rooted: You cannot strike, and you must spend 1 skill to traverse or Virtue-blast via tactical action.";
   }
 
   let abilityDetails = [];
@@ -146,12 +146,12 @@ const SelectTacticalAction = (props) => {
             }
 
           case 1:
-            return (
-              unit.virtue &&
+            return unit.virtue &&
               canBlast(unit) &&
-              !isRooted(unit) &&
-              unit.unitClass !== "Pawn"
-            );
+              unit.unitClass !== "Pawn" &&
+              isRooted(unit)
+              ? localGameState[unit.player].skillHand.length > 0
+              : true;
         }
         break;
 
@@ -235,30 +235,71 @@ const SelectTacticalAction = (props) => {
             dispatch(updateState(newGameState));
           }
         } else if (selectedChoice === 1) {
-          //give unit activationCounter
-          unit.temporary.activation
-            ? (unit.temporary.activation += 1)
-            : (unit.temporary.activation = 1);
+          // //give unit activationCounter
+          // unit.temporary.activation
+          //   ? (unit.temporary.activation += 1)
+          //   : (unit.temporary.activation = 1);
 
-          newGameState[unit.player].units[unit.unitIndex] = unit;
+          // newGameState[unit.player].units[unit.unitIndex] = unit;
 
-          //newGameState.activatingSkill.push("Advance") <-- to do?
-          newGameState.activatingUnit.push(unit);
+          // //newGameState.activatingSkill.push("Advance") <-- to do?
+          // newGameState.activatingUnit.push(unit);
 
-          newGameState.currentResolution.push({
-            resolution: "Tactic End",
-            unit: unit,
-          });
+          // newGameState.currentResolution.push({
+          //   resolution: "Tactic End",
+          //   unit: unit,
+          // });
 
-          enterSelectUnitMode(
-            getZonesWithEnemies(props.unit, 1),
-            props.unit,
-            newGameState,
-            props.dice,
-            "virtue-blast",
-            null
-          );
+          // enterSelectUnitMode(
+          //   getZonesWithEnemies(props.unit, 1),
+          //   props.unit,
+          //   newGameState,
+          //   props.dice,
+          //   "virtue-blast",
+          //   null
+          // );
+
+          if (!isRooted(unit)) {
+            //give unit activationCounter
+            unit.temporary.activation
+              ? (unit.temporary.activation += 1)
+              : (unit.temporary.activation = 1);
+
+            newGameState[unit.player].units[unit.unitIndex] = unit;
+            newGameState.activatingUnit.push(unit);
+
+            newGameState.currentResolution.push({
+              resolution: "Tactic End",
+              unit: unit,
+            });
+
+            enterSelectUnitMode(
+              getZonesWithEnemies(props.unit, 1),
+              props.unit,
+              newGameState,
+              props.dice,
+              "virtue-blast",
+              null
+            );
+          } else {
+            newGameState.currentResolution.push({
+              resolution: "Misc.",
+              resolution2: "Rooted Virtue-blast",
+              unit: unit,
+              details: {
+                title: "Tactical Action",
+                message:
+                  "You are rooted. You must spend 1 skill to Virtue-blast.",
+                restriction: null,
+                reason: "Rooted Virtue-blast",
+                tactic: props.dice,
+              },
+            });
+
+            dispatch(updateState(newGameState));
+          }
         }
+
         break;
 
       case "Mobilize":
@@ -464,28 +505,20 @@ const SelectTacticalAction = (props) => {
 
   return (
     <div className="modal-backdrop">
-      <div
-        className="modal"
-        //   className={`modal
-        //     ${
-        //     abilityDetails.length === 1
-        //       ? "singleAbilityModal"
-        //       : "dualAbilityModal"
-        //   }`
-        // }
-      >
+      <div className="modal">
         <div className="modalHeader">
           <div className="modalTitle">Tactical Action: {face}</div>
         </div>
 
-        {message && <h4>{message}</h4>}
+        {message && (
+          <>
+            <h4 style={{ maxWidth: 700 }}>{message}</h4>
+          </>
+        )}
 
-        <div
-          className="modalContent"
-          // className={`${
-          //   abilityDetails.length === 2 ? "twoColumn" : "oneAbility"
-          // } column-centered`}
-        >
+        {!message && <br />}
+
+        <div className="modalContent">
           {abilityDetails.map((detail, i) => (
             <div
               key={i}
