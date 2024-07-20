@@ -232,7 +232,7 @@ const CoordinationPhaseSelection = (props) => {
                   canChoice(i) ? "" : "disabled-modal-option-content"
                 } `}
               >
-                <div className="modal-option-header">
+                <div className="modal-option-header ">
                   <div className="modal-option-title ">
                     {detail.abilityName}
                   </div>

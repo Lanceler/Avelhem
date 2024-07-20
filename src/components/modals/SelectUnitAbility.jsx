@@ -140,10 +140,8 @@ const SelectUnitAbility = (props) => {
           abilityName: "Air Dash",
           abilityQualifier: (
             <>
-              <div className="abilityQualifier">
-                <span className="">
-                  <em>One-shot</em>
-                </span>
+              <div className="modal-option-oneshot">
+                <em>One-shot</em>
               </div>
               <div className="abilityQualifier">
                 <img src={MobilizeSmall} style={{ height: 30 }} />
@@ -889,27 +887,34 @@ const SelectUnitAbility = (props) => {
           {abilityDetails.map((detail, i) => (
             <div
               key={i}
-              className={`customChoice ${
-                selectedChoice === i ? "selectedModalChoice" : ""
+              className={`modal-option-outline ${
+                selectedChoice === i ? "selected-modal-option" : ""
               } ${canClick("Ability", i) ? "demoClick" : ""}`}
-              style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
               onClick={() => {
                 handleChoice(i);
                 handleUpdateDemoGuide();
               }}
             >
               <div
-                // className="abilityFrame"
-                className={`abilityFrame ${
-                  canChoice(i) ? "" : "disabledAbility"
+                className={`modal-option-content ${
+                  canChoice(i) ? "" : "disabled-modal-option-content"
                 } `}
               >
-                <div className="abilityHeader">
-                  <h3 className="modalChoiceName ">{detail.abilityName}</h3>
+                <div className="modal-option-header modal-option-header-ability">
+                  <div
+                    className="modal-option-title"
+                    style={
+                      detail.abilityName === "Reap the Whirlwind"
+                        ? { fontSize: 30 }
+                        : {}
+                    }
+                  >
+                    {detail.abilityName}
+                  </div>
 
                   <div>{detail.abilityQualifier}</div>
                 </div>
-                <div className="abilityContent scroll">
+                <div className="modal-option-text scroll">
                   {detail.abilityText}
                 </div>
               </div>

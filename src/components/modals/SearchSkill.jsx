@@ -298,6 +298,8 @@ const SearchSkill = (props) => {
           </div>
         </div>
 
+        <br />
+
         <div className="modalContent">
           <div className="scrollable scrollable-y-only">
             {localGameState[self].skillFloat > 0 && (

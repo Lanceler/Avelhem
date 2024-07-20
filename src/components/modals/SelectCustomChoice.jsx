@@ -985,42 +985,52 @@ const SelectCustomChoice = (props) => {
           </div>
         </div>
 
+        <br />
+
         <div className="modalContent">
           <div
-            className={`modalChoice1 ${
-              selectedChoice === 1 ? "selectedModalChoice" : ""
+            className={`modal-option-outline ${
+              selectedChoice === 1 ? "selected-modal-option" : ""
             } ${canClick("1st Choice") ? "demoClick" : ""} `}
-            style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
             onClick={() => {
               handleFirstChoice();
               handleUpdateDemoGuide();
             }}
           >
             <div
-              className={`customChoiceFrame ${
-                canFirstChoice ? "" : "disabledChoice"
+              className={`modal-option-content modal-custom-choice ${
+                canFirstChoice ? "" : "disabled-modal-option-content"
               } `}
             >
-              <h3 className="choiceText ">{ChoiceFirstMessage}</h3>
+              <div
+                className="modal-option-text "
+                style={{ textAlign: "center" }}
+              >
+                {ChoiceFirstMessage}
+              </div>
             </div>
           </div>
 
           <div
-            className={`modalChoice1 ${
-              selectedChoice === 2 ? "selectedModalChoice" : ""
+            className={`modal-option-outline ${
+              selectedChoice === 2 ? "selected-modal-option" : ""
             } ${canClick("2nd Choice") ? "demoClick" : ""} `}
-            style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
             onClick={() => {
               handleSecondChoice();
               handleUpdateDemoGuide();
             }}
           >
             <div
-              className={`customChoiceFrame ${
-                canSecondChoice ? "" : "disabledChoice"
+              className={`modal-option-content modal-custom-choice ${
+                canSecondChoice ? "" : "disabled-modal-option-content"
               } `}
             >
-              <h3 className="choiceText ">{ChoiceSecondMessage}</h3>
+              <div
+                className="modal-option-text "
+                style={{ textAlign: "center" }}
+              >
+                {ChoiceSecondMessage}
+              </div>
             </div>
           </div>
         </div>

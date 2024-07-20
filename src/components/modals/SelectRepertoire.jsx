@@ -83,7 +83,6 @@ export default function SelectRepertoire(props) {
               <div
                 key={index}
                 className="modal-option-outline"
-                // style={{ backgroundImage: `url(${GoldFrame})` }}
                 onClick={() => props.onSelectRepertoire(rep)}
               >
                 <div className="repertoire-frame">

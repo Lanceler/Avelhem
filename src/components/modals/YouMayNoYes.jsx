@@ -530,6 +530,7 @@ const YouMayNoYes = (props) => {
           </div>
         </div>
 
+        <br />
         <h3>{props.details.message}</h3>
         <br />
 
