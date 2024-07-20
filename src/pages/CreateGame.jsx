@@ -28,7 +28,7 @@ export default function MyGames() {
   const { user } = useAuthContext();
   const navigate = useNavigate();
 
-  const { getBannerImage } = useGetImages();
+  const { getBannerImage, getMiscImage } = useGetImages();
   const [bannerIndex, setBannerIndex] = useState(0);
 
   const bannerImages = [
@@ -40,7 +40,7 @@ export default function MyGames() {
     getBannerImage("Mana"),
     getBannerImage("Metal"),
     getBannerImage("Plant"),
-    getBannerImage("Sovereign"),
+    // getBannerImage("Sovereign"),
   ];
 
   useEffect(() => {
@@ -145,6 +145,7 @@ export default function MyGames() {
 
   return (
     <div className="create-game-body">
+      <div className="create-game-header">CREATE GAME</div>
       <div className="create-game-content">
         <div
           className="create-game-elemental"
@@ -165,7 +166,12 @@ export default function MyGames() {
           </div>
 
           <div className="create-game-banner-text">
-            <div className="create-game-title">Elemental Entrée</div>
+            <div className="create-game-title">
+              {/* {"Elemental Entrée".toUpperCase()}*/}
+              <>ELEMENTAL</>
+              <br />
+              <>ENTRÉE</>
+            </div>
             <div className="create-game-desc">
               <strong>Base Set Featuring:</strong> <br />
               Fire, Water, Wind, Land, Lightning, Mana, Metal, & Plant
@@ -173,8 +179,15 @@ export default function MyGames() {
           </div>
         </div>
 
-        <div className="create-game-soon">
-          <div className="create-game-title">???</div>
+        <div
+          className="create-game-soon"
+          style={{
+            filter: "grayscale(0.8)",
+            // backgroundImage: `url(${[getMiscImage("LoadingBanner")]})`,
+            backgroundImage: `url(${[getBannerImage("Sovereign")]})`,
+          }}
+        >
+          {/* <div className="create-game-title">???</div> */}
           <div className="create-game-desc">
             <strong>Expansion:</strong>
             <br />
