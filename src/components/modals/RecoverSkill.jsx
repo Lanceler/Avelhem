@@ -169,6 +169,8 @@ const RecoverSkill = (props) => {
           </div>
         </div>
 
+        <br />
+
         <div className="modalContent">
           <div className="fourColumn scrollable scrollable-y-only">
             {recoverVestige.map((usableSkill, i) => (

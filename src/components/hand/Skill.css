@@ -190,17 +190,16 @@
     height: 40px;
     width: 40px;
     cursor: pointer;
-    /* margin-left: auto; */
     position: relative;
     z-index: 3;
-    /* pointer-events: all; */
+    padding: 0;
+    margin: 0;
 }
 
 .collapseIcon{
     object-fit: cover;
-    height: 25px;
+    height: 80%;
     fill: white;
-    margin: auto;
 }
 
 .collapse:hover{
@@ -208,9 +207,7 @@
 }
 
 .mainSkillHand{
-    
     padding-bottom: 4px;
-
 }
 
 
@@ -279,50 +276,62 @@
 
 
 .handModal {
-    padding: 30px;
-        height: 650px;
-        width: 740px;
-        /* max-width: 850px; */
-        margin: 100px auto;
-        background: rgba(255, 255, 255, 0.8);
-        border-radius: 10px;
+    height: fit-content;
+    width: 850px;
+    margin: 100px auto;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
     display: flex;
-    justify-content: flex-end;
 }
 
 
 .selectedCardModal{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    /* display: flex; */
-
+    display: flex;
+    position: relative;
 }
 
-.collapseSelected {
-    background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
-    border-radius: 100%;
-    height: 60px;
-    width: 60px;
-    cursor: pointer;
+.selectedCardModal-top{
     position: absolute;
-    z-index: 3;
-    color: #e8e8e8;
-    font-size: 45px;
-    /* margin-left: auto; */
-    box-shadow: 0 0 6px rgba(0, 0, 0, 0.95);
+    width: 100%;
+    padding: 30px;
+    display: flex;
+    justify-content: end;
+
+    /* background-color: aqua; */
 }
 
-.collapseSelected:hover {
-    filter: brightness(1.2)
+.selectedCardModal-left{
+    /* height: 100%; */
+    /* width: 70%; */
+    padding: 30px;
+    /* background-color: aqua; */
 }
 
-.displayedAvelhem{
+.selectedCardModal-right {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+    /* background-color: rgba(133, 16, 104, 0.404); */
+}
+
+.selectedCardModal-buttons{
+    width: 230px;
+    height: fit-content;
+
+    padding: 5px 10px;
+    margin-bottom: 20px;
+
+    font-size: 30px;
+}
+
+.displayed-card{
     background-size: cover;
     width: 450px;
     height: 630px;
     border-radius: 20px;
 }
-
 
 .pile-card-container{
     position: relative;
@@ -416,18 +425,3 @@
 
 
 
-@media screen and (max-width: 875px) {
-
-.collapseSelected {
-        
-        height: 40px;
-        width: 40px;
-        position: relative;
-        font-size: 25px;
-        /* right: 4px; */
-        margin-left: auto;
-        margin-top: 10px;        
-        margin-right: 10px
-    }
-
-}

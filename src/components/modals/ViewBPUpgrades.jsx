@@ -44,12 +44,16 @@ const ViewBPUpgrades = (props) => {
               <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM169.8 165.3c7.9-22.3 29.1-37.3 52.8-37.3h58.3c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24V250.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1H222.6c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z" />
             </svg>
           </h2>
-          <button
-            className="collapseSelected unitInfo-close"
-            onClick={() => handleCollapse()}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 512 512"
+            className="close-modal-button unitInfo-close"
+            onClick={() => {
+              handleCollapse();
+            }}
           >
-            X
-          </button>
+            <path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm121.6 313.1c4.7 4.7 4.7 12.3 0 17L338 377.6c-4.7 4.7-12.3 4.7-17 0L256 312l-65.1 65.6c-4.7 4.7-12.3 4.7-17 0L134.4 338c-4.7-4.7-4.7-12.3 0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3 0-17l39.6-39.6c4.7-4.7 12.3-4.7 17 0l65 65.7 65.1-65.6c4.7-4.7 12.3-4.7 17 0l39.6 39.6c4.7 4.7 4.7 12.3 0 17L312 256l65.6 65.1z" />
+          </svg>
         </div>
 
         <div className="scrollable">
@@ -94,16 +98,13 @@ const ViewBPUpgrades = (props) => {
                 <h3>Cordination:</h3>
 
                 {upgrades.coordination >= 1 && (
-                  <p className="unitInfo-text-desc">Convene unlocked.</p>
+                  <p className="unitInfo-text-desc">
+                    Battle Cry upgraded: roll 1 tactical die.
+                  </p>
                 )}
                 {upgrades.coordination >= 2 && (
                   <p className="unitInfo-text-desc">
                     Convene upgraded: gain 1 Advance tactic and draw 1 Avelhem.
-                  </p>
-                )}
-                {upgrades.coordination >= 3 && (
-                  <p className="unitInfo-text-desc">
-                    Battle Cry upgraded: roll 1 tactical die.
                   </p>
                 )}
                 <br />

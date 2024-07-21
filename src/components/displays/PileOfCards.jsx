@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateDemo } from "../../redux/demoGuide";
 
 import { useGetImages } from "../../hooks/useGetImages";
-import ViewSkillVestige from "./ViewSkillVestige";
+import ViewVestige from "./ViewVestige";
 
 const PileOfCards = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
@@ -123,11 +123,7 @@ const PileOfCards = (props) => {
       </div>
 
       {showPile !== null && (
-        <ViewSkillVestige
-          setShowPile={setShowPile}
-          team={team}
-          vestige={showPile}
-        />
+        <ViewVestige setShowPile={setShowPile} team={team} vestige={showPile} />
       )}
     </div>
   );
