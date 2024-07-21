@@ -57,11 +57,11 @@ const DefiancePhaseSelection = (props) => {
 
         newGameState.currentResolution.push({
           resolution: "Defiance Options",
-          resolution2: "Arcana",
+          resolution2: "Artifice",
           player: self,
           details: {
-            reason: "Arcana",
-            title: "Defiance: Arcana",
+            reason: "Artifice",
+            title: "Defiance: Artifice",
             message:
               "Place up to 4 skills from your hand at the bottom of your repertoire, then draw the same number. Skills selected earlier will be placed below subsequent ones.",
             // "Test.",
@@ -181,7 +181,7 @@ const DefiancePhaseSelection = (props) => {
   const defianceCosts = [1, 1, 2, 3, 3, 4];
 
   const canSelect = [
-    //Arcana
+    //Artifice
     localGameState[self].fateDefiances >= defianceCosts[0] &&
       localGameState[self].skillHand.length > 0,
     //Backtrack
@@ -201,7 +201,7 @@ const DefiancePhaseSelection = (props) => {
 
   const defianceOptions = [
     {
-      title: "Arcana",
+      title: "Artifice",
       desc: "Place up to 4 skills at the bottom of your repertoire, then draw the same number.",
     },
     {

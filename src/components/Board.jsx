@@ -682,7 +682,7 @@ const Board = (props) => {
 
       case "Defiance Options":
         switch (lastResolution.resolution2) {
-          case "Arcana":
+          case "Artifice":
             return (
               <>
                 {self === lastResolution.player && !hideModal && (

@@ -29,7 +29,7 @@ const SelectSkillHandMulti = (props) => {
   let selectMessage = "Select";
 
   switch (props.details.reason) {
-    case "Arcana":
+    case "Artifice":
     case "Battle Cry":
       skipMessage = "Return";
       break;
@@ -126,7 +126,7 @@ const SelectSkillHandMulti = (props) => {
 
         break;
 
-      case "Arcana":
+      case "Artifice":
         //do an extra pop
         newGameState.currentResolution.pop();
 
@@ -187,7 +187,7 @@ const SelectSkillHandMulti = (props) => {
           resolution: "Misc.",
           resolution2: "Message To Player",
           player: enemy,
-          title: "Defiance: Arcana",
+          title: "Defiance: Artifice",
           message: `Your opponent has returned ${skillsToReturn.length} skills to their repertoire and drawn the same number.`,
         });
 

@@ -224,14 +224,11 @@ export default function Game() {
         );
       case 1:
         return (
-          <>
-            {/* <div className="abilityText">Role: {userRole}</div> */}
-            <Board
-              gameState={gameData.gameState}
-              gameId={gameData.id}
-              userRole={userRole}
-            />
-          </>
+          <Board
+            gameState={gameData.gameState}
+            gameId={gameData.id}
+            userRole={userRole}
+          />
         );
 
       case 1.5:
