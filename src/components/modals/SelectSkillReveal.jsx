@@ -21,6 +21,8 @@ const SelectSkillReveal = (props) => {
 
   const [selectedSkill, setSelectedSkill] = useState(null);
 
+  let canSkip = true;
+
   let usableSkills = [];
   for (let i in localGameState[self].skillHand) {
     usableSkills.push({
@@ -76,6 +78,19 @@ const SelectSkillReveal = (props) => {
         });
 
         revealTitle = "Purification";
+        revealMessage = "Your opponent has revealed 1 Water Skill";
+
+        break;
+
+      case "Healing Rain":
+        let healingRainUnit =
+          newGameState[props.details.victim.player].units[
+            props.details.victim.unitIndex
+          ];
+
+        healingRainUnit.hp = Math.max(2, healingRainUnit.hp);
+
+        revealTitle = "Healing Rain";
         revealMessage = "Your opponent has revealed 1 Water Skill";
 
         break;
@@ -238,7 +253,7 @@ const SelectSkillReveal = (props) => {
 
         <div className="modalBottomButton">
           <div className="multi-option-buttons">
-            {selectedSkill === null && (
+            {canSkip && selectedSkill === null && (
               <button
                 className={`redButton ${
                   canClick("Skip Button") ? "demoClick" : ""

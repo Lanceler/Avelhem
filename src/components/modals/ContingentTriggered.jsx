@@ -511,6 +511,8 @@ const ContingentTriggered = (props) => {
         </div>
         <h3>{contingencyMessage}</h3>
 
+        <br />
+
         <div className="scrollable scrollable-y-only">
           <div className="fourColumn">
             {usableSkills.map((usableSkill, i) => (

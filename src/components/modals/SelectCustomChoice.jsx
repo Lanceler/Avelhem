@@ -85,6 +85,20 @@ const SelectCustomChoice = (props) => {
         "Purge the Paralysis, Frostbite, and Burn of an ally within 2 spaces; if they are adjacent, grant them Ward for 2 turns.";
       break;
 
+    case "Healing Rain":
+      canFirstChoice = true;
+      canSecondChoice = ["02-01", "02-02", "02-03", "02-04"].some((s) =>
+        localGameState[self].skillHand.includes(s)
+      );
+      ChoiceFirstMessage =
+        "Restore their Virtue and grant them Ward for 2 turns.";
+      ChoiceSecondMessage = (
+        <>
+          Reveal 1 Water skill <br /> to grant them 1 HP (Max. 2).
+        </>
+      );
+      break;
+
     case "Kleptothermy":
       canFirstChoice = true;
       canSecondChoice = getZonesWithEnemies(unit, 1).length > 0;
@@ -335,12 +349,43 @@ const SelectCustomChoice = (props) => {
             unit.enhancements.ward = 2;
           }
         } else {
-          // updateData = true;
-
           newGameState.currentResolution.push({
             resolution: "Water Skill",
             resolution2: "Purification1.5",
             unit: unit,
+          });
+        }
+        break;
+
+      case "Healing Rain":
+        let healingRainUnit =
+          newGameState[props.details.victim.player].units[
+            props.details.victim.unitIndex
+          ];
+
+        if (selectedChoice === 1) {
+          healingRainUnit.virtue = 1;
+
+          if (healingRainUnit.enhancements.ward > 0) {
+            healingRainUnit.enhancements.ward = Math.max(
+              healingRainUnit.enhancements.ward,
+              2
+            );
+          } else {
+            healingRainUnit.enhancements.ward = 2;
+          }
+        } else {
+          newGameState.currentResolution.push({
+            resolution: "Water Skill",
+            resolution2: "Healing Rain2",
+            unit: unit,
+            details: {
+              title: "Healing Rain",
+              message: "Reveal 1 Water skill to grant them 1 HP.",
+              restriction: ["02-01", "02-02", "02-03", "02-04"],
+              reason: "Healing Rain",
+              victim: healingRainUnit,
+            },
           });
         }
         break;

@@ -493,7 +493,6 @@ export const useSkillEffects = () => {
   const healingRain1 = (unitInfo, victimInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-    let victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
 
     //end "Activating Healing Rain" resolution
     newGameState.currentResolution.pop();
@@ -503,13 +502,18 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    //heal victim
-    victim.hp = Math.max(2, victim.hp);
-    victim.virtue = 1;
+    newGameState.currentResolution.push({
+      resolution: "Water Skill",
+      resolution2: "Healing Rain1",
+      unit: unit,
+      details: {
+        title: "Healing Rain",
+        reason: "Healing Rain",
+        victim: newGameState[victimInfo.player].units[victimInfo.unitIndex],
+      },
+    });
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-    newGameState[victimInfo.player].units[victimInfo.unitIndex] = victim;
-
     return newGameState;
   };
 

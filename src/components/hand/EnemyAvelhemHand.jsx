@@ -19,6 +19,7 @@ const EnemyAvelhemHand = () => {
       <div className="enemy-skillhand-container">
         {cards.map((i) => (
           <div
+            key={i}
             className={`enemy-hand-card`}
             style={{
               backgroundImage: `url(${getCardImage("AvelhemCardBack")})`,

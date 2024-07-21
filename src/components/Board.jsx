@@ -2002,6 +2002,34 @@ const Board = (props) => {
             }
             break;
 
+          case "Healing Rain1":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <SelectCustomChoice
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Healing Rain2":
+            return (
+              <>
+                {self === lastResolution.unit.player && !hideModal && (
+                  <SelectSkillReveal
+                    unit={lastResolution.unit}
+                    details={lastResolution.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
           case "Activating Glacial Torrent":
             if (self === lastResolution.unit.player) {
               resolutionUpdateGameStateOnly(
@@ -2572,14 +2600,6 @@ const Board = (props) => {
           case "Chain Lightning3":
             return (
               <>
-                {/* {self === lastResolution.unit.player && !hideModal && (
-                  <YouMayNoYes
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
-                    updateFirebase={updateFirebase}
-                    hideOrRevealModale={hideOrRevealModale}
-                  />
-                )} */}
                 {self === lastResolution.unit.player && !hideModal && (
                   <SelectSkillReveal
                     unit={lastResolution.unit}
