@@ -146,12 +146,14 @@ const SelectTacticalAction = (props) => {
             }
 
           case 1:
-            return unit.virtue &&
+            return (
+              unit.virtue &&
               canBlast(unit) &&
               unit.unitClass !== "Pawn" &&
-              isRooted(unit)
-              ? localGameState[unit.player].skillHand.length > 0
-              : true;
+              (isRooted(unit)
+                ? localGameState[unit.player].skillHand.length > 0
+                : true)
+            );
         }
         break;
 

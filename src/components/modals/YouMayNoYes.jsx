@@ -116,7 +116,6 @@ const YouMayNoYes = (props) => {
           player: props.player,
           victim: props.unit,
         });
-
         break;
 
       case "Gale Conjuration Purge": // "Gale ConjurationR2"
@@ -147,7 +146,6 @@ const YouMayNoYes = (props) => {
         newGameState.currentResolution[
           newGameState.currentResolution.length - backtrack
         ].conclusion = "float";
-
         break;
 
       case "Cataclysmic Tempest 2nd Paralyze": // "Cataclysmic Tempest3"
@@ -160,17 +158,6 @@ const YouMayNoYes = (props) => {
           "Cataclysmic Tempest"
         );
         break;
-
-      // case "Cataclysmic Tempest Blast": // "Cataclysmic Tempest6"
-      //   enterSelectUnitMode(
-      //     props.details.adjacentEnemies,
-      //     props.unit,
-      //     newGameState,
-      //     null,
-      //     "blast",
-      //     null
-      //   );
-      //   break;
 
       case "Reap the Whirlwind": //Reap the Whirlwind1
         newGameState.currentResolution.push({
@@ -216,15 +203,6 @@ const YouMayNoYes = (props) => {
           "Geomancy"
         );
         break;
-
-      // case "Chain Lightning Blast": // "ChainLightning3"
-      //   newGameState.currentResolution.push({
-      //     resolution: "Lightning Skill",
-      //     resolution2: "Chain Lightning4",
-      //     unit: props.unit,
-      //     adjacentEnemies: props.details.adjacentEnemies,
-      //   });
-      //   break;
 
       case "Zip and Zap Shield": // "Zip And Zap3"
         unit.charge -= 1;
@@ -340,7 +318,6 @@ const YouMayNoYes = (props) => {
         newGameState.currentResolution[
           newGameState.currentResolution.length - 1
         ].conclusion = "shuffle";
-
         break;
 
       case "Foreshadow Draw": //"Foreshadow Draw"
@@ -360,6 +337,7 @@ const YouMayNoYes = (props) => {
             canSkip: false,
           },
         });
+        break;
 
       case "Providence Recovery":
         newGameState.currentResolution.push({
@@ -369,6 +347,7 @@ const YouMayNoYes = (props) => {
           message: "Recover 1 “Transcendence”",
           outcome: "Add",
         });
+        break;
 
       case "Fervent Prayer":
         newGameState = drawAvelhem(newGameState);
@@ -398,7 +377,6 @@ const YouMayNoYes = (props) => {
             },
           });
         }
-
         break;
 
       case "Press the Attack Avelhem":
@@ -425,7 +403,6 @@ const YouMayNoYes = (props) => {
         newGameState.currentResolution.push({
           resolution: "Acquisition Phase Selection",
         });
-
         break;
 
       default:

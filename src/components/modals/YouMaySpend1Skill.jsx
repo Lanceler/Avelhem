@@ -277,13 +277,6 @@ const YouMaySpend1Skill = (props) => {
         break;
 
       case "Rooted Virtue-blast":
-        // newGameState.currentResolution.push({
-        //   resolution: "Misc.",
-        //   resolution2: "Rooted Traverse Movement",
-        //   unit: unit,
-        //   tactic: props.details.tactic,
-        // });
-
         //give unit activationCounter
         unit.temporary.activation
           ? (unit.temporary.activation += 1)
@@ -305,7 +298,6 @@ const YouMaySpend1Skill = (props) => {
           "virtue-blast",
           null
         );
-
         break;
 
       default:
