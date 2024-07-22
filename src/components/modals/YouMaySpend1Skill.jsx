@@ -274,6 +274,7 @@ const YouMaySpend1Skill = (props) => {
           unit: unit,
           tactic: props.details.tactic,
         });
+        break;
 
       case "Rooted Virtue-blast":
         // newGameState.currentResolution.push({

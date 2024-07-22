@@ -143,6 +143,15 @@ import ManaBanner from "../assets/banners/ManaBanner.png";
 import MetalBanner from "../assets/banners/MetalBanner.png";
 import PlantBanner from "../assets/banners/PlantBanner.png";
 
+import FireBG from "../assets/banners/FireBG.jpg";
+import WaterBG from "../assets/banners/WaterBG.jpg";
+import WindBG from "../assets/banners/WindBG.jpg";
+import LandBG from "../assets/banners/LandBG.jpg";
+import LightningBG from "../assets/banners/LightningBG.jpg";
+import ManaBG from "../assets/banners/ManaBG.jpg";
+import MetalBG from "../assets/banners/MetalBG.jpg";
+import PlantBG from "../assets/banners/PlantBG.jpg";
+
 import LearnBanner from "../assets/banners/LearnBanner.png";
 import ChallengeBanner from "../assets/banners/ChallengeBanner.jpg";
 import ForeshadowBanner from "../assets/banners/ForeshadowBanner.jpg";
@@ -299,26 +308,50 @@ export const useGetImages = () => {
       case "Fire":
         return FireBanner;
 
+      case "FireBG":
+        return FireBG;
+
       case "Water":
         return WaterBanner;
+
+      case "WaterBG":
+        return WaterBG;
 
       case "Wind":
         return WindBanner;
 
+      case "WindBG":
+        return WindBG;
+
       case "Land":
         return LandBanner;
+
+      case "LandBG":
+        return LandBG;
 
       case "Lightning":
         return LightningBanner;
 
+      case "LightningBG":
+        return LightningBG;
+
       case "Mana":
         return ManaBanner;
+
+      case "ManaBG":
+        return ManaBG;
 
       case "Metal":
         return MetalBanner;
 
+      case "MetalBG":
+        return MetalBG;
+
       case "Plant":
         return PlantBanner;
+
+      case "PlantBG":
+        return PlantBG;
 
       //
 

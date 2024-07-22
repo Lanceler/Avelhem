@@ -606,7 +606,10 @@ const Board = (props) => {
   useEffect(() => {
     setZones(JSON.parse(props.gameState.zones));
     dispatch(updateState(props.gameState));
-    // setHideModal(false);
+
+    if (!props.demo) {
+      setHideModal(false);
+    }
   }, [props.gameState]);
 
   //====================================================================
