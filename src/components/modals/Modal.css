@@ -219,6 +219,7 @@
 
 .modalBottomButton{
     /* background-color: #b30000; */
+    margin-top: 20px;
     height: 60px;
     display: flex;
     justify-content: center;

@@ -19,14 +19,6 @@ const Navbar = () => {
 
   const closeMobileMenu = () => setClick(false);
 
-  // const onMouseEnter = () => {
-  //   setDropdown(true);
-  // };
-
-  // const onMouseLeave = () => {
-  //   setDropdown(false);
-  // };
-
   return (
     <>
       <div className="pushDown"></div>
@@ -56,7 +48,6 @@ const Navbar = () => {
             <img src={AvelhemLogo} className="avelhem-logo" />
           </Link>
           <span></span>
-          {/* <div className="nav-user">{user && user.displayName}</div> */}
         </div>
 
         <ul className={`nav-menu ${click ? "active" : ""}`}>
@@ -72,21 +63,16 @@ const Navbar = () => {
               Tutorial{" "}
             </Link>
           </li>
-          <li
-            className="nav-item"
-            // onMouseEnter={onMouseEnter}
-            // onMouseLeave={onMouseLeave}
-          >
-            <Link
-              // to="/demo"
+          <li className="nav-item">
+            <span
               className={`nav-links ${
                 dropdown ? "nav-links-dropExpanded" : ""
               }`}
-              // className="nav-links-dropExpanded"
               onClick={() => {
                 // closeMobileMenu();
                 setDropdown(!dropdown);
               }}
+              style={{ cursor: "pointer" }}
             >
               <>
                 Demonstrations{" "}
@@ -98,7 +84,7 @@ const Navbar = () => {
                   <path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z" />
                 </svg>
               </>
-            </Link>
+            </span>
 
             <>
               {dropdown && (
