@@ -7,13 +7,11 @@ import { updateDemo } from "../../redux/demoGuide";
 
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 import { useCardDatabase } from "../../hooks/useCardDatabase";
-import { useGetImages } from "../../hooks/useGetImages";
 
 const SelectCustomChoice = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
-  const { getMiscImage } = useGetImages();
 
   const dispatch = useDispatch();
 
@@ -119,8 +117,7 @@ const SelectCustomChoice = (props) => {
     case "Aerial Impetus":
       canFirstChoice = getZonesAerialImpetusAlly(unit).length > 0;
       canSecondChoice = getZonesWithEnemies(unit, 1).length > 0;
-      ChoiceFirstMessage =
-        "Prompt an adjacent ally in the row behind you to traverse.";
+      ChoiceFirstMessage = "Prompt an adjacent ally to traverse.";
       ChoiceSecondMessage = "Purge an adjacent enemy’s Virtue and Shield.";
       break;
 

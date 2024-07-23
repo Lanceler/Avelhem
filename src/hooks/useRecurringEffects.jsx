@@ -3772,12 +3772,16 @@ export const useRecurringEffects = () => {
       const ally = localGameState[zone.player].units[zone.unitIndex];
 
       if (canMove(ally) && !isImmobilized(ally)) {
-        if (ally.player === "host" && unit.row < ally.row) {
-          AerialImpetusAllyZones.push(ally.row * 5 + ally.column);
-        }
-        if (ally.player === "guest" && unit.row > ally.row) {
-          AerialImpetusAllyZones.push(ally.row * 5 + ally.column);
-        }
+        AerialImpetusAllyZones.push(ally.row * 5 + ally.column);
+
+        // Aerial Impetus has been buffed to affect any adjacent ally
+
+        // if (ally.player === "host" && unit.row < ally.row) {
+        //   AerialImpetusAllyZones.push(ally.row * 5 + ally.column);
+        // }
+        // if (ally.player === "guest" && unit.row > ally.row) {
+        //   AerialImpetusAllyZones.push(ally.row * 5 + ally.column);
+        // }
       }
     }
 

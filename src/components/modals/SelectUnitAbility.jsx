@@ -13,13 +13,10 @@ import { updateDemo } from "../../redux/demoGuide";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 import { useCardDatabase } from "../../hooks/useCardDatabase";
 
-import { useGetImages } from "../../hooks/useGetImages";
-
 const SelectUnitAbility = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
-  const { getMiscImage } = useGetImages();
 
   const dispatch = useDispatch();
 
