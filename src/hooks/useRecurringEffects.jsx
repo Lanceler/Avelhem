@@ -2316,9 +2316,8 @@ export const useRecurringEffects = () => {
     }
 
     switch (true) {
-      case victim.enhancements.ward > 0 || victim.temporary.adamantArmor:
+      case victim.enhancements.ward > 0:
         delete victim.enhancements.ward;
-        delete victim.temporary.adamantArmor;
         break;
       case victim.unitClass === "Land Scion" &&
         victim.hp > 1 &&
@@ -4209,20 +4208,21 @@ export const useRecurringEffects = () => {
       newGameState.activatingTarget.push(victim);
     }
 
-    if (triggerAdamantArmor(victim)) {
-      newGameState.currentResolution.push({
-        resolution: "Unit Talent",
-        resolution2: "Triggering Adamant Armor",
-        unit: victim,
-        details: {
-          title: "Adamant Armor",
-          message:
-            "Your Metal Scion was targeted via paralyze (1 turn). They may spend 1 skill to negate the affliction.",
-          restriction: null,
-          reason: "Adamant Armor",
-        },
-      });
-    }
+    //Adamant Armor nerfed; no longer blocks paralysis
+    // if (triggerAdamantArmor(victim)) {
+    //   newGameState.currentResolution.push({
+    //     resolution: "Unit Talent",
+    //     resolution2: "Triggering Adamant Armor",
+    //     unit: victim,
+    //     details: {
+    //       title: "Adamant Armor",
+    //       message:
+    //         "Your Metal Scion was targeted via paralyze (1 turn). They may spend 1 skill to negate the affliction.",
+    //       restriction: null,
+    //       reason: "Adamant Armor",
+    //     },
+    //   });
+    // }
 
     return newGameState;
   };
@@ -4250,20 +4250,21 @@ export const useRecurringEffects = () => {
       newGameState.activatingTarget.push(victim);
     }
 
-    if (triggerAdamantArmor(victim)) {
-      newGameState.currentResolution.push({
-        resolution: "Unit Talent",
-        resolution2: "Triggering Adamant Armor",
-        unit: victim,
-        details: {
-          title: "Adamant Armor",
-          message:
-            "Your Metal Scion was targeted via paralyze (2 turns). They may spend 1 skill to negate the affliction.",
-          restriction: null,
-          reason: "Adamant Armor",
-        },
-      });
-    }
+    //Adamant Armor nerfed; no longer blocks paralysis
+    // if (triggerAdamantArmor(victim)) {
+    //   newGameState.currentResolution.push({
+    //     resolution: "Unit Talent",
+    //     resolution2: "Triggering Adamant Armor",
+    //     unit: victim,
+    //     details: {
+    //       title: "Adamant Armor",
+    //       message:
+    //         "Your Metal Scion was targeted via paralyze (2 turns). They may spend 1 skill to negate the affliction.",
+    //       restriction: null,
+    //       reason: "Adamant Armor",
+    //     },
+    //   });
+    // }
 
     return newGameState;
   };
@@ -4948,7 +4949,6 @@ export const useRecurringEffects = () => {
       !isMuted(victim) &&
       localGameState[victim.player].skillHand.length > 0 &&
       !victim.temporary.usedAdamantArmor
-      // && ["strike", "virtue-blast", "paralyze1", "paralyze2"].includes(method)
     );
   };
 

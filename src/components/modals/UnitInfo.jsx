@@ -350,11 +350,9 @@ const UnitInfo = (props) => {
             <p className="unitInfo-text-desc unitInfo-text-last">
               ⬩
               <em>
-                You may activate when targeted via Virtue-blast, strike, or
-                paralyze.
+                You may activate when targeted via Virtue-blast or strike.
               </em>{" "}
-              Spend 1 skill to reduce the attack’s AP by 1 or negate the
-              affliction.
+              Spend 1 skill to reduce the attack’s AP by 1.
             </p>
 
             <p className="unitInfo-text-heading2">3. Penetrator</p>
