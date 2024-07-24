@@ -27,6 +27,7 @@
 }
 
 .app-content{
-  /* background-color: aqua; */
-  height: calc(100% - 65px)
+ 
+  height: calc(100% - 65px);
+  background-color: #070707;
 }

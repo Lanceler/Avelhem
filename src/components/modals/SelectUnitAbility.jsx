@@ -861,19 +861,12 @@ const SelectUnitAbility = (props) => {
 
   return (
     <div className="modal-backdrop">
-      <div
-        className="modal"
-        // className={`modal ${
-        //   abilityDetails.length === 1
-        //     ? "singleAbilityModal"
-        //     : "dualAbilityModal"
-        // }`}
-      >
+      <div className="modal">
         <div className="modalHeader">
           <div className="modalTitle">{unit.unitClass} Abilities</div>
         </div>
 
-        {message && <h4>{message}</h4>}
+        {message && <h3 style={{ maxWidth: 700 }}>{message}</h3>}
         <br />
 
         <div

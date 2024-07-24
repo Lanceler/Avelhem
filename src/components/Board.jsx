@@ -33,9 +33,9 @@ import SelectElement from "./modals/SelectElement";
 import SelectResonatorSkill from "./modals/SelectResonatorSkill";
 import SelectAvelhemHandMulti from "./modals/SelectAvelhemHandMulti";
 import SelectAvelhemResonator from "./modals/SelectAvelhemResonator";
-import SelectSkillDiscard from "./modals/SelectSkillDiscard";
+import SpendSkill from "./modals/SpendSkill";
 import SelectSkillHandMulti from "./modals/SelectSkillHandMulti";
-import SelectSkillFloat from "./modals/SelectSkillFloat";
+import FloatSkill from "./modals/FloatSkill";
 import SelectSkillReveal from "./modals/SelectSkillReveal";
 import SelectUnitAbility from "./modals/SelectUnitAbility";
 import SelectTacticalAction from "./modals/SelectTacticalAction";
@@ -994,7 +994,7 @@ const Board = (props) => {
         return (
           <>
             {self === lastResolution.player && !hideModal && (
-              <SelectSkillDiscard
+              <SpendSkill
                 updateFirebase={updateFirebase}
                 unit={lastResolution.unit}
                 player={lastResolution.player}
@@ -3333,7 +3333,7 @@ const Board = (props) => {
             return (
               <>
                 {self === lastResolution.player && !hideModal && (
-                  <SelectSkillFloat
+                  <FloatSkill
                     title="Tea for Two"
                     message={lastResolution.message}
                     updateFirebase={updateFirebase}

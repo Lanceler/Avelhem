@@ -340,6 +340,8 @@ const SelectSkillHandMulti = (props) => {
 
         <h3>{props.details.message}</h3>
 
+        <br />
+
         <div className="fourColumn  scrollable scrollable-y-only">
           {skillHand.map((usableSkill, i) => (
             <div

@@ -60,7 +60,7 @@ const ViewRevealedSkill = (props) => {
           </div>
         </div>
 
-        <h3>{props.message}</h3>
+        <h3 style={{ maxWidth: 700 }}>{props.message}</h3>
         <br />
 
         <div className="view-revealed-skill">

@@ -514,11 +514,11 @@ const SelectTacticalAction = (props) => {
 
         {message && (
           <>
-            <h4 style={{ maxWidth: 700 }}>{message}</h4>
+            <h3 style={{ maxWidth: 700 }}>{message}</h3>
           </>
         )}
 
-        {!message && <br />}
+        <br />
 
         <div className="modalContent">
           {abilityDetails.map((detail, i) => (

@@ -442,15 +442,13 @@ const YouMaySpend1Skill = (props) => {
           </div>
         </div>
 
-        {/* <h3>{props.details.message}</h3> */}
-
         {props.details.message && (
           <>
-            <h4 style={{ maxWidth: 700 }}>{props.details.message}</h4>
+            <h3 style={{ maxWidth: 700 }}>{props.details.message}</h3>
           </>
         )}
 
-        {!props.details.message && <br />}
+        <br />
 
         <div className="scrollable scrollable-y-only">
           <div className="fourColumn">

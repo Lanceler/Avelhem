@@ -7,7 +7,7 @@ import { updateState } from "../../redux/gameState";
 
 import Skill from "../hand/Skill";
 
-const SelectSkillFloat = (props) => {
+const FloatSkill = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
@@ -90,6 +90,8 @@ const SelectSkillFloat = (props) => {
         </div>
         <h3>{props.message}</h3>
 
+        <br />
+
         <div className="fourColumn scrollable scrollable-y-only">
           {usableSkills.map((usableSkill, i) => (
             <div
@@ -123,4 +125,4 @@ const SelectSkillFloat = (props) => {
   );
 };
 
-export default SelectSkillFloat;
+export default FloatSkill;

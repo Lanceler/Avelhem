@@ -238,6 +238,8 @@ const SelectScionSkill = (props) => {
 
         {usableSkills.length === 0 && <h3>No valid skills in hand.</h3>}
 
+        <br />
+
         <div className="fourColumn scrollable scrollable-y-only">
           {usableSkills.map((usableSkill, i) => (
             <div

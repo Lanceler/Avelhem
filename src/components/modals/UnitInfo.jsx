@@ -277,7 +277,8 @@ const UnitInfo = (props) => {
 
             <p className="unitInfo-text-heading2">2. Soundproof</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Your and your adjacent allies’ skills bypass “Symphonic Screech”.
+              ⬩Your and your adjacent allies’ activations bypass “Symphonic
+              Screech”.
             </p>
           </>
         );
@@ -374,11 +375,9 @@ const UnitInfo = (props) => {
             </p>
 
             <p className="unitInfo-text-heading2">2. Flora’s Reverence</p>
-            <p className="unitInfo-text-desc ">
-              ⬩You can spend Blossoms in lieu of skills.
-            </p>
+            <p className="unitInfo-text-desc ">⬩You are immune to Root.</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩You are immune to Root.
+              ⬩You can spend Blossoms in lieu of skills.
             </p>
           </>
         );
@@ -402,14 +401,16 @@ const UnitInfo = (props) => {
   };
 
   return (
-    <div className="modal-backdrop unitInfo-text">
-      <div className="unitInfoModal">
-        <div className="unitInfoHeader">
+    <div className="modal-backdrop">
+      <div className="info-modal">
+        <div className="info-modal-header">
           <img
             src={getElementImage(unit.unitClass)}
-            className="unitInfo-icon"
+            className="unit-info-icon "
           />
-          <h2 className="unitInfo-name">{`${unit.unitClass} (${team})`}</h2>
+          <div className="info-modal-title">
+            {`${unit.unitClass} (${team})`}
+          </div>
 
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -426,322 +427,324 @@ const UnitInfo = (props) => {
           </svg>
         </div>
 
-        <div className="unitInfo-Abilities-Attributes">
-          <div className="unitInfo-Abilities  ">
-            <p className="unitInfo-text-heading1">
-              <u>
-                <strong>Abilities</strong>
-              </u>
-            </p>
-            <div className="unitInfo-scroll scrollable">{abilities()}</div>
+        <div className="info-modal-contents">
+          <div className="unitInfo-Abilities-Attributes">
+            <div className="unitInfo-Abilities  ">
+              <p className="unitInfo-text-heading1">
+                <u>
+                  <strong>Abilities</strong>
+                </u>
+              </p>
+              <div className="unitInfo-scroll scrollable">{abilities()}</div>
+            </div>
+
+            <div className="unitInfo-Attributes">
+              <p className="unitInfo-text-heading1">
+                <u>
+                  <strong>Attributes</strong>
+                </u>
+              </p>
+
+              <div className="unitInfo-scroll scrollable">
+                {!unit.enhancements.score && (
+                  <>
+                    <p className="unitInfo-text-heading2">HP: {unit.hp}</p>
+                    <p className="unitInfo-text-heading2">
+                      Virtue: {unit.virtue ? "Present" : "Absent"}
+                    </p>
+                    {unit.fever && (
+                      <p className="unitInfo-text-heading2">
+                        Fever: {unit.fever}
+                      </p>
+                    )}
+                    {unit.charge && (
+                      <p className="unitInfo-text-heading2">
+                        Charge: {unit.charge}
+                      </p>
+                    )}
+                    {unit.sharpness && (
+                      <p className="unitInfo-text-heading2">
+                        Sharpness: {unit.sharpness}
+                      </p>
+                    )}
+                    {unit.blossom && (
+                      <p className="unitInfo-text-heading2">
+                        Blossom: {unit.blossom}
+                      </p>
+                    )}
+                  </>
+                )}
+
+                {unit.enhancements.score && (
+                  <>
+                    <p className="unitInfo-text-heading2">
+                      This unit has scored.
+                    </p>
+                  </>
+                )}
+              </div>
+            </div>
           </div>
 
-          <div className="unitInfo-Attributes">
-            <p className="unitInfo-text-heading1">
-              <u>
-                <strong>Attributes</strong>
-              </u>
-            </p>
-
-            <div className="unitInfo-scroll scrollable">
-              {!unit.enhancements.score && (
+          <div className="unitInfo-Talents-Statuses">
+            <div className="unitInfo-Talents ">
+              <p className="unitInfo-text-heading1">
+                <u>
+                  <strong>Talents</strong>
+                </u>
+              </p>
+              <div className="unitInfo-scroll scrollable">{talents()}</div>
+            </div>
+            <div className="unitInfo-Statuses scrollable">
+              {(unit.enhancements.ravager ||
+                unit.enhancements.ward ||
+                unit.enhancements.shield ||
+                unit.enhancements.disruption ||
+                unit.enhancements.overgrowth ||
+                unit.enhancements.proliferation) && (
                 <>
-                  <p className="unitInfo-text-heading2">HP: {unit.hp}</p>
-                  <p className="unitInfo-text-heading2">
-                    Virtue: {unit.virtue ? "Present" : "Absent"}
+                  <p className="unitInfo-text-heading1">
+                    <u>
+                      <strong>Enhancements</strong>
+                    </u>
                   </p>
-                  {unit.fever && (
-                    <p className="unitInfo-text-heading2">
-                      Fever: {unit.fever}
-                    </p>
+
+                  {unit.enhancements.ravager && (
+                    <>
+                      <p className="unitInfo-text-heading2">Ravager</p>
+                      <p className="unitInfo-text-desc unitInfo-text-last">
+                        ⬩Immune to Anathema.
+                      </p>
+                    </>
                   )}
-                  {unit.charge && (
-                    <p className="unitInfo-text-heading2">
-                      Charge: {unit.charge}
-                    </p>
+
+                  {unit.enhancements.ward && (
+                    <>
+                      <p className="unitInfo-text-heading2">
+                        Ward ({unit.enhancements.ward} turn
+                        {unit.enhancements.ward > 1 ? "s" : ""})
+                      </p>
+                      <p className="unitInfo-text-desc unitInfo-text-last">
+                        ⬩Negates the next attack or targeting affliction.
+                        (Applies before Shield.)
+                      </p>
+                    </>
                   )}
-                  {unit.sharpness && (
-                    <p className="unitInfo-text-heading2">
-                      Sharpness: {unit.sharpness}
-                    </p>
+
+                  {unit.enhancements.shield && (
+                    <>
+                      <p className="unitInfo-text-heading2">
+                        Shield ({unit.enhancements.shield} turn
+                        {unit.enhancements.shield > 1 ? "s" : ""})
+                      </p>
+                      <p className="unitInfo-text-desc unitInfo-text-last">
+                        ⬩Negates the next attack. (Does not apply if unit is
+                        enhanced with Ward.)
+                      </p>
+                    </>
                   )}
-                  {unit.blossom && (
-                    <p className="unitInfo-text-heading2">
-                      Blossom: {unit.blossom}
-                    </p>
+
+                  {unit.enhancements.disruption && (
+                    <>
+                      <p className="unitInfo-text-heading2">
+                        Disruption ({unit.enhancements.disruption} turn
+                        {unit.enhancements.disruption > 1 ? "s" : ""})
+                      </p>
+                      <p className="unitInfo-text-desc">
+                        ⬩Prevents enemies within 2 spaces from spending their
+                        Virtues and activating abilities.
+                      </p>
+                      <p className="unitInfo-text-desc">
+                        ⬩Prevents adjacent enemies from activating non-burst
+                        skills.
+                      </p>
+                      <p className="unitInfo-text-desc unitInfo-text-last">
+                        ⬩This enhancement is purged if the unit is muted or if
+                        their Shield is purged.
+                      </p>
+                    </>
+                  )}
+
+                  {unit.enhancements.overgrowth && (
+                    <>
+                      <p className="unitInfo-text-heading2">Overgrowth</p>
+                      <p className="unitInfo-text-desc ">
+                        ⬩Afflicts adjacent enemies with Root.
+                      </p>
+                      <p className="unitInfo-text-desc unitInfo-text-last">
+                        ⬩This enhancement is purged if the unit moves or has an
+                        affliction.
+                      </p>
+                    </>
+                  )}
+
+                  {unit.enhancements.proliferation && (
+                    <>
+                      <p className="unitInfo-text-heading2">
+                        Proliferation ({unit.enhancements.proliferation} turn
+                        {unit.enhancements.proliferation > 1 ? "s" : ""})
+                      </p>
+                      <p className="unitInfo-text-desc ">
+                        ⬩Afflicts enemies within 2 spaces with Root.
+                      </p>
+                      <p className="unitInfo-text-desc unitInfo-text-last">
+                        ⬩This enhancement is purged if the unit’s Overgrowth is
+                        purged.
+                      </p>
+                    </>
                   )}
                 </>
               )}
 
-              {unit.enhancements.score && (
+              {(unit.afflictions.anathema ||
+                unit.afflictions.paralysis ||
+                unit.afflictions.frostbite ||
+                unit.afflictions.burn ||
+                isRooted(unit)) && (
                 <>
-                  <p className="unitInfo-text-heading2">
-                    This unit has scored.
+                  <p className="unitInfo-text-heading1">
+                    <u>
+                      <strong>Afflictions</strong>
+                    </u>
                   </p>
+
+                  {unit.afflictions.anathema && (
+                    <>
+                      <p className="unitInfo-text-heading2">
+                        Anathema ({unit.afflictions.anathema} turn
+                        {unit.afflictions.anathema > 1 ? "s" : ""})
+                      </p>
+                      <p className="unitInfo-text-desc unitInfo-text-last">
+                        ⬩<em>Punished</em> and muted.
+                      </p>
+                    </>
+                  )}
+
+                  {unit.afflictions.paralysis && (
+                    <>
+                      <p className="unitInfo-text-heading2">
+                        Paralysis ({unit.afflictions.paralysis} turn
+                        {unit.afflictions.paralysis > 1 ? "s" : ""})
+                      </p>
+                      <p className="unitInfo-text-desc unitInfo-text-last">
+                        ⬩<em>Paralyzed</em>, muted, and immobilized.
+                      </p>
+                    </>
+                  )}
+
+                  {unit.afflictions.frostbite && (
+                    <>
+                      <p className="unitInfo-text-heading2">
+                        Frostbite ({unit.afflictions.frostbite} turn
+                        {unit.afflictions.frostbite > 1 ? "s" : ""})
+                      </p>
+                      <p className="unitInfo-text-desc unitInfo-text-last">
+                        ⬩<em>Frostbitten</em>, muted, and immobilized.
+                      </p>
+                    </>
+                  )}
+
+                  {unit.afflictions.burn && (
+                    <>
+                      <p className="unitInfo-text-heading2">
+                        Burn ({unit.afflictions.burn} turn
+                        {unit.afflictions.burn > 1 ? "s" : ""})
+                      </p>
+                      <p className="unitInfo-text-desc  ">
+                        ⬩<em>Burning</em>; immune to Frostbite.
+                      </p>
+                      <p className="unitInfo-text-desc unitInfo-text-last">
+                        ⬩When Burn expires at the end of the turn, lose 1 HP.
+                      </p>
+                    </>
+                  )}
+
+                  {isRooted(unit) && (
+                    <>
+                      <p className="unitInfo-text-heading2">Root</p>
+                      <p className="unitInfo-text-desc  ">
+                        ⬩<em>Rooted</em>; cannot strike.
+                      </p>
+                      <p className="unitInfo-text-desc unitInfo-text-last">
+                        ⬩Must spend 1 skill to traverse or Virtue-blast via
+                        tactical action.
+                      </p>
+                    </>
+                  )}
+                </>
+              )}
+
+              {(unit.boosts.ambidexterity ||
+                unit.boosts.glacialTorrent ||
+                unit.boosts.galeConjuration ||
+                unit.boosts.mountainStance ||
+                unit.boosts.valiantSpark) && (
+                <>
+                  <p className="unitInfo-text-heading1">
+                    <u>
+                      <strong>Boosts</strong>
+                    </u>
+                  </p>
+
+                  {unit.boosts.ambidexterity && (
+                    <>
+                      <p className="unitInfo-text-heading2">Ambidexterity</p>
+                      <p className="unitInfo-text-desc unitInfo-text-last">
+                        ⬩The next standard skill activated will float upon
+                        conclusion.
+                      </p>
+                    </>
+                  )}
+
+                  {unit.boosts.glacialTorrent && (
+                    <>
+                      <p className="unitInfo-text-heading2">Glacial Torrent</p>
+                      <p className="unitInfo-text-desc unitInfo-text-last">
+                        ⬩Can activate the next{" "}
+                        {unit.boosts.glacialTorrent > 1
+                          ? "2 abilties"
+                          : "ability"}{" "}
+                        without using a tactic.
+                      </p>
+                    </>
+                  )}
+
+                  {unit.boosts.galeConjuration && (
+                    <>
+                      <p className="unitInfo-text-heading2">Gale Conjuration</p>
+                      <p className="unitInfo-text-desc unitInfo-text-last">
+                        ⬩Next attack has 2 AP.
+                      </p>
+                    </>
+                  )}
+
+                  {unit.boosts.mountainStance && (
+                    <>
+                      <p className="unitInfo-text-heading2">Mountain Stance</p>
+                      <p className="unitInfo-text-desc unitInfo-text-last">
+                        ⬩Can activate “Fortify” by using{" "}
+                        <span className="unitInfo-tactic-group2">
+                          <img
+                            src={InvokeSmall}
+                            className="unitInfo-tactic-icon2"
+                          />
+                        </span>
+                        .
+                      </p>
+                    </>
+                  )}
+
+                  {unit.boosts.valiantSpark && (
+                    <>
+                      <p className="unitInfo-text-heading2">Valiant Spark</p>
+                      <p className="unitInfo-text-desc unitInfo-text-last">
+                        ⬩Can activate “Arc Flash” without using a tactic.
+                      </p>
+                    </>
+                  )}
                 </>
               )}
             </div>
-          </div>
-        </div>
-
-        <div className="unitInfo-Talents-Statuses">
-          <div className="unitInfo-Talents ">
-            <p className="unitInfo-text-heading1">
-              <u>
-                <strong>Talents</strong>
-              </u>
-            </p>
-            <div className="unitInfo-scroll scrollable">{talents()}</div>
-          </div>
-          <div className="unitInfo-Statuses scrollable">
-            {(unit.enhancements.ravager ||
-              unit.enhancements.ward ||
-              unit.enhancements.shield ||
-              unit.enhancements.disruption ||
-              unit.enhancements.overgrowth ||
-              unit.enhancements.proliferation) && (
-              <>
-                <p className="unitInfo-text-heading1">
-                  <u>
-                    <strong>Enhancements</strong>
-                  </u>
-                </p>
-
-                {unit.enhancements.ravager && (
-                  <>
-                    <p className="unitInfo-text-heading2">Ravager</p>
-                    <p className="unitInfo-text-desc unitInfo-text-last">
-                      ⬩Immune to Anathema.
-                    </p>
-                  </>
-                )}
-
-                {unit.enhancements.ward && (
-                  <>
-                    <p className="unitInfo-text-heading2">
-                      Ward ({unit.enhancements.ward} turn
-                      {unit.enhancements.ward > 1 ? "s" : ""})
-                    </p>
-                    <p className="unitInfo-text-desc unitInfo-text-last">
-                      ⬩Negates the next attack or targeting affliction. (Applies
-                      before Shield.)
-                    </p>
-                  </>
-                )}
-
-                {unit.enhancements.shield && (
-                  <>
-                    <p className="unitInfo-text-heading2">
-                      Shield ({unit.enhancements.shield} turn
-                      {unit.enhancements.shield > 1 ? "s" : ""})
-                    </p>
-                    <p className="unitInfo-text-desc unitInfo-text-last">
-                      ⬩Negates the next attack. (Does not apply if unit is
-                      enhanced with Ward.)
-                    </p>
-                  </>
-                )}
-
-                {unit.enhancements.disruption && (
-                  <>
-                    <p className="unitInfo-text-heading2">
-                      Disruption ({unit.enhancements.disruption} turn
-                      {unit.enhancements.disruption > 1 ? "s" : ""})
-                    </p>
-                    <p className="unitInfo-text-desc">
-                      ⬩Prevents enemies within 2 spaces from spending their
-                      Virtues and activating abilities.
-                    </p>
-                    <p className="unitInfo-text-desc">
-                      ⬩Prevents adjacent enemies from activating non-burst
-                      skills.
-                    </p>
-                    <p className="unitInfo-text-desc unitInfo-text-last">
-                      ⬩This enhancement is purged if the unit is muted or if
-                      their Shield is purged.
-                    </p>
-                  </>
-                )}
-
-                {unit.enhancements.overgrowth && (
-                  <>
-                    <p className="unitInfo-text-heading2">Overgrowth</p>
-                    <p className="unitInfo-text-desc ">
-                      ⬩Afflicts adjacent enemies with Root.
-                    </p>
-                    <p className="unitInfo-text-desc unitInfo-text-last">
-                      ⬩This enhancement is purged if the unit moves or has an
-                      affliction.
-                    </p>
-                  </>
-                )}
-
-                {unit.enhancements.proliferation && (
-                  <>
-                    <p className="unitInfo-text-heading2">
-                      Proliferation ({unit.enhancements.proliferation} turn
-                      {unit.enhancements.proliferation > 1 ? "s" : ""})
-                    </p>
-                    <p className="unitInfo-text-desc ">
-                      ⬩Afflicts enemies within 2 spaces with Root.
-                    </p>
-                    <p className="unitInfo-text-desc unitInfo-text-last">
-                      ⬩This enhancement is purged if the unit’s Overgrowth is
-                      purged.
-                    </p>
-                  </>
-                )}
-              </>
-            )}
-
-            {(unit.afflictions.anathema ||
-              unit.afflictions.paralysis ||
-              unit.afflictions.frostbite ||
-              unit.afflictions.burn ||
-              isRooted(unit)) && (
-              <>
-                <p className="unitInfo-text-heading1">
-                  <u>
-                    <strong>Afflictions</strong>
-                  </u>
-                </p>
-
-                {unit.afflictions.anathema && (
-                  <>
-                    <p className="unitInfo-text-heading2">
-                      Anathema ({unit.afflictions.anathema} turn
-                      {unit.afflictions.anathema > 1 ? "s" : ""})
-                    </p>
-                    <p className="unitInfo-text-desc unitInfo-text-last">
-                      ⬩<em>Punished</em> and muted.
-                    </p>
-                  </>
-                )}
-
-                {unit.afflictions.paralysis && (
-                  <>
-                    <p className="unitInfo-text-heading2">
-                      Paralysis ({unit.afflictions.paralysis} turn
-                      {unit.afflictions.paralysis > 1 ? "s" : ""})
-                    </p>
-                    <p className="unitInfo-text-desc unitInfo-text-last">
-                      ⬩<em>Paralyzed</em>, muted, and immobilized.
-                    </p>
-                  </>
-                )}
-
-                {unit.afflictions.frostbite && (
-                  <>
-                    <p className="unitInfo-text-heading2">
-                      Frostbite ({unit.afflictions.frostbite} turn
-                      {unit.afflictions.frostbite > 1 ? "s" : ""})
-                    </p>
-                    <p className="unitInfo-text-desc unitInfo-text-last">
-                      ⬩<em>Frostbitten</em>, muted, and immobilized.
-                    </p>
-                  </>
-                )}
-
-                {unit.afflictions.burn && (
-                  <>
-                    <p className="unitInfo-text-heading2">
-                      Burn ({unit.afflictions.burn} turn
-                      {unit.afflictions.burn > 1 ? "s" : ""})
-                    </p>
-                    <p className="unitInfo-text-desc  ">
-                      ⬩<em>Burning</em>; immune to Frostbite.
-                    </p>
-                    <p className="unitInfo-text-desc unitInfo-text-last">
-                      ⬩When Burn expires at the end of the turn, lose 1 HP.
-                    </p>
-                  </>
-                )}
-
-                {isRooted(unit) && (
-                  <>
-                    <p className="unitInfo-text-heading2">Root</p>
-                    <p className="unitInfo-text-desc  ">
-                      ⬩<em>Rooted</em>; cannot strike.
-                    </p>
-                    <p className="unitInfo-text-desc unitInfo-text-last">
-                      ⬩Must spend 1 skill to traverse or Virtue-blast via
-                      tactical action.
-                    </p>
-                  </>
-                )}
-              </>
-            )}
-
-            {(unit.boosts.ambidexterity ||
-              unit.boosts.glacialTorrent ||
-              unit.boosts.galeConjuration ||
-              unit.boosts.mountainStance ||
-              unit.boosts.valiantSpark) && (
-              <>
-                <p className="unitInfo-text-heading1">
-                  <u>
-                    <strong>Boosts</strong>
-                  </u>
-                </p>
-
-                {unit.boosts.ambidexterity && (
-                  <>
-                    <p className="unitInfo-text-heading2">Ambidexterity</p>
-                    <p className="unitInfo-text-desc unitInfo-text-last">
-                      ⬩The next standard skill activated will float upon
-                      conclusion.
-                    </p>
-                  </>
-                )}
-
-                {unit.boosts.glacialTorrent && (
-                  <>
-                    <p className="unitInfo-text-heading2">Glacial Torrent</p>
-                    <p className="unitInfo-text-desc unitInfo-text-last">
-                      ⬩Can activate the next{" "}
-                      {unit.boosts.glacialTorrent > 1
-                        ? "2 abilties"
-                        : "ability"}{" "}
-                      without using a tactic.
-                    </p>
-                  </>
-                )}
-
-                {unit.boosts.galeConjuration && (
-                  <>
-                    <p className="unitInfo-text-heading2">Gale Conjuration</p>
-                    <p className="unitInfo-text-desc unitInfo-text-last">
-                      ⬩Next attack has 2 AP.
-                    </p>
-                  </>
-                )}
-
-                {unit.boosts.mountainStance && (
-                  <>
-                    <p className="unitInfo-text-heading2">Mountain Stance</p>
-                    <p className="unitInfo-text-desc unitInfo-text-last">
-                      ⬩Can activate “Fortify” by using{" "}
-                      <span className="unitInfo-tactic-group2">
-                        <img
-                          src={InvokeSmall}
-                          className="unitInfo-tactic-icon2"
-                        />
-                      </span>
-                      .
-                    </p>
-                  </>
-                )}
-
-                {unit.boosts.valiantSpark && (
-                  <>
-                    <p className="unitInfo-text-heading2">Valiant Spark</p>
-                    <p className="unitInfo-text-desc unitInfo-text-last">
-                      ⬩Can activate “Arc Flash” without using a tactic.
-                    </p>
-                  </>
-                )}
-              </>
-            )}
           </div>
         </div>
       </div>

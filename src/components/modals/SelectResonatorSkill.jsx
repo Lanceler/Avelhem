@@ -175,6 +175,8 @@ const SelectResonatorSkill = (props) => {
           </div>
         </div>
 
+        <br />
+
         <div className="fourColumn scrollable scrollable-y-only">
           {usableSkills.map((usableSkill, i) => (
             <div
