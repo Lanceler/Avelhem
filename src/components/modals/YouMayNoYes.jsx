@@ -507,8 +507,7 @@ const YouMayNoYes = (props) => {
           </div>
         </div>
 
-        <br />
-        <h3>{props.details.message}</h3>
+        <h3 style={{ maxWidth: 700 }}>{props.details.message}</h3>
         <br />
 
         <div className="modalBottomButton">
