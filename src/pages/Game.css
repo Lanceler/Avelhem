@@ -1,0 +1,124 @@
+.game-banner {
+    margin: 20px auto;
+    background-color: #333;
+    height: 650px;
+    width: 1040px;
+    border: 7px groove rgb(236, 180, 36);
+    background-size: cover;
+    background-position: center;
+    box-shadow: 4px 4px 15px 4px rgba(0, 0, 0, 0.45);
+}
+
+.game-banner-backdrop {
+    height: 100%;
+    width: 50%;
+    background: linear-gradient(to left, rgba(0, 0, 0, 0.0),
+            rgba(0, 0, 0, 0.40) 50%, rgba(0, 0, 0, 0.90) 100%);
+    margin-right: auto;
+    color: white;
+    display: flex;
+    flex-direction: column;
+
+    /* background-color: rgb(0, 255, 128); */
+}
+
+.game-banner-title {
+    font-size: 50px;
+    font-family: Alegreya, Geogia, Times New Roman, "serif";
+    text-align: center;
+
+    padding-top: 20px;
+    
+    text-shadow: rgb(0, 0, 0) 1px 0 10px;
+    -webkit-text-stroke: 1.5px rgba(0, 0, 0, 0.75);  
+}
+
+.game-banner-text-body{
+    margin-top: auto;
+    margin-bottom: 20%;
+    /* background-color: aqua; */
+}
+
+.game-banner-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* background-color: rgb(0, 255, 128); */
+}
+
+/* /////////////////////////////////////////////////////////////////// */
+
+@media screen and (min-width: 501px) and (max-width: 1030px) {
+
+    .game-banner {
+        width: 90vw;
+    }
+
+    .game-banner-backdrop{
+        width: 75%;
+    }
+
+}
+
+@media screen and (max-width: 500px) {
+
+
+    .game-banner {
+        margin: 10px auto;
+        height: 275px;
+        width: 90vw;
+        border: 6px groove rgb(236, 180, 36);
+
+    }
+
+    .game-banner-backdrop {
+        width: 100%;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0),
+                rgba(0, 0, 0, 0.15) 65%, rgba(0, 0, 0, 0.70) 110%);
+    }
+
+
+    .game-banner-title {
+        width: 100%;
+        font-size: 30px;
+        text-align: center;
+        padding-top: 10px;
+        margin-bottom: 10px;
+        text-shadow: rgb(0, 0, 0) 1px 1px 4px;
+        
+        -webkit-text-stroke: 1.0px rgb(0, 0, 0);
+
+        /* background-color: aqua; */
+
+    }
+
+    .home-banner-text-body {
+        margin-top: 35%;
+        height: 30%;
+        padding-left: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        /* background-color: aqua; */
+    }
+
+    .home-banner-text {
+        /* height: 100%; */
+        width: 100%;
+        justify-content: start;
+        align-items: end;
+
+        /* background-color: aqua; */
+    }
+
+    .home-banner-button {
+        font-size: 12px;
+        padding: 4px;
+        border-radius: 6px;
+        border: 2px solid rgb(247, 200, 84);
+        min-width: 135px;
+    }
+
+
+}

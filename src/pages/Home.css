@@ -44,7 +44,6 @@
     background-size: cover;
     background-position: center;
     box-shadow: 4px 4px 15px 4px rgba(0, 0, 0, 0.45);
-    
 }
 
 .home-banner-backdrop{
@@ -68,7 +67,6 @@
     font-size: 50px;
     font-family: Alegreya, Geogia, Times New Roman, "serif";
     text-align: center;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     
     padding-top: 20px;
     margin-bottom: 20px;
@@ -95,6 +93,7 @@
 
     width: 455px;
     display: flex;
+    flex-shrink: 0;
     align-items: center;
     justify-content: center;
 

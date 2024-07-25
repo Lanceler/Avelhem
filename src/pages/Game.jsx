@@ -9,6 +9,10 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { updateDemo } from "../redux/demoGuide";
 
+import { useGetImages } from "../hooks/useGetImages";
+
+import "./Game.css";
+
 import {
   getDocs,
   collection,
@@ -27,6 +31,7 @@ import { updatecontingencySettings } from "../redux/contingencySettings";
 
 export default function Game() {
   const dispatch = useDispatch();
+  const { getBannerImage } = useGetImages();
 
   const { user } = useAuthContext();
   const navigate = useNavigate();
@@ -55,7 +60,6 @@ export default function Game() {
       });
   };
 
-  //---Realtime data functionality below
   useEffect(() => {
     window.scrollTo(0, 0);
 
@@ -71,6 +75,8 @@ export default function Game() {
     );
     updateDemo(null);
   }, []);
+
+  //---Realtime data functionality below
 
   useEffect(() => {
     setIsLoading(true);
@@ -183,6 +189,7 @@ export default function Game() {
     let playerSituation = 0;
 
     if (gameData && userRole === "host") {
+      //host
       if (!gameData.guestId) {
       } else {
         playerSituation = 1;
@@ -194,6 +201,7 @@ export default function Game() {
         }
       }
     } else if (gameData && userRole === "guest") {
+      //guest
       playerSituation = 1;
 
       if (!gameData.gameState.guest.skillRepertoire) {
@@ -203,8 +211,9 @@ export default function Game() {
       }
     } else if (gameData) {
       if (!gameData.guestId) {
-        playerSituation = 2;
+        playerSituation = 2; //potential guest
       } else {
+        //spectator
         playerSituation = 3;
       }
     }
@@ -213,13 +222,31 @@ export default function Game() {
       case 0:
         return (
           <div className="">
-            Status: Waiting for opponent.
-            <br />
-            Send the URL to a friend to play with them.
-            <br />
-            <button className="redButton" onClick={handleCopyUrl}>
-              Copy URL to Clipboard
-            </button>
+            <div
+              className="game-banner"
+              style={{
+                backgroundImage: `url(${getBannerImage("Invite")})`,
+              }}
+            >
+              <div className="game-banner-backdrop">
+                <div className="game-banner-title">WAITING FOR OPPONENT</div>
+                <div className="game-banner-text-body">
+                  <div className="game-banner-text">
+                    <button
+                      className="home-banner-button"
+                      onClick={handleCopyUrl}
+                    >
+                      Send the URL to a friend
+                      <br />
+                      to play with them.
+                      <br />
+                      <br />
+                      Click to copy to clipboard.
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         );
       case 1:
@@ -243,12 +270,38 @@ export default function Game() {
 
       case 2:
         return (
-          <div className="abilityText">
-            <button className="redButton" onClick={() => onJoinGame()}>
-              Join Game
-            </button>
+          <div className="">
+            <div
+              className="game-banner"
+              style={{
+                backgroundImage: `url(${getBannerImage("Invite")})`,
+              }}
+            >
+              <div className="game-banner-backdrop">
+                <div className="game-banner-title">ACCEPT CHALLENGE</div>
+                <div className="game-banner-text-body">
+                  <div className="game-banner-text">
+                    <button
+                      className="home-banner-button"
+                      onClick={() => onJoinGame()}
+                    >
+                      Join Game
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         );
+
+      // return (
+      //   <div className="abilityText">
+      //     <button className="redButton" onClick={() => onJoinGame()}>
+      //       Join Game
+      //     </button>
+      //   </div>
+      // );
+
       case 3:
         return <div className="abilityText">Spectate?</div>;
       default:
@@ -261,7 +314,7 @@ export default function Game() {
   return (
     <div className="demo-body">
       <br />
-      {gameData && <div className="board-data">Host: {gameData.hostName}</div>}
+      {/* {gameData && <div className="board-data">Host: {gameData.hostName}</div>} */}
       {error && <div className="board-data">Error: {error}</div>}
       {readgameState()}
       {isLoading && <Loading />}

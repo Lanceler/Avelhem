@@ -153,6 +153,7 @@ import MetalBG from "../assets/banners/MetalBG.jpg";
 import PlantBG from "../assets/banners/PlantBG.jpg";
 
 import LearnBanner from "../assets/banners/LearnBanner.png";
+import InviteBanner from "../assets/banners/InviteBanner.jpg";
 import ChallengeBanner from "../assets/banners/ChallengeBanner.jpg";
 import ForeshadowBanner from "../assets/banners/ForeshadowBanner.jpg";
 import TeaBanner from "../assets/banners/TeaBanner.jpg";
@@ -366,6 +367,9 @@ export const useGetImages = () => {
 
       case "Tea":
         return TeaBanner;
+
+      case "Invite":
+        return InviteBanner;
 
       //
 
