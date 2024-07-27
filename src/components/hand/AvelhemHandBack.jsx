@@ -5,22 +5,22 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { useGetImages } from "../../hooks/useGetImages";
 
-const EnemyAvelhemHand = () => {
+const AvelhemHandBack = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
-  const { enemy } = useSelector((state) => state.teams);
+  const { self } = useSelector((state) => state.teams);
   const { getCardImage } = useGetImages();
 
-  let handNum = localGameState[enemy].avelhemHand.length;
+  let handNum = localGameState[props.team].avelhemHand.length;
 
   const cards = [1, 2, 3];
 
   return (
     <div className="mainSkillHand">
-      <div className="enemy-skillhand-container">
+      <div className="skill-hand-back-container">
         {cards.map((i) => (
           <div
             key={i}
-            className={`enemy-hand-card`}
+            className={`hand-back-card`}
             style={{
               backgroundImage: `url(${getCardImage("AvelhemCardBack")})`,
               marginRight: 40 * (Math.min(3, handNum) - (2 * i - 1)),
@@ -39,11 +39,17 @@ const EnemyAvelhemHand = () => {
         ))}
 
         {handNum > 3 && (
-          <div className={`enemy-hand-label`}>Avelhems in hand: {handNum}</div>
+          <div
+            className={`hand-back-label ${
+              props.team === self ? "hand-back-label-top" : ""
+            }  `}
+          >
+            Avelhems in hand: {handNum}
+          </div>
         )}
       </div>
     </div>
   );
 };
 
-export default EnemyAvelhemHand;
+export default AvelhemHandBack;

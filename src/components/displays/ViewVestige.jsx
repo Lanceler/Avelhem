@@ -92,7 +92,7 @@ const ViewVestige = (props) => {
           <br />
 
           <div className="scrollable scrollable-y-only">
-            {props.team === self && (
+            {props.team === self && !props.spectator && (
               <div className="fourColumn">
                 {reverseVestige.map((usableSkill, i) => (
                   <div
@@ -141,7 +141,8 @@ const ViewVestige = (props) => {
               </>
             )}
 
-            {(props.team !== self && shattered.length) === 0 && (
+            {((props.team !== self || props.spectator) && shattered.length) ===
+              0 && (
               <>
                 <h3>No cards available for viewing.</h3>
               </>

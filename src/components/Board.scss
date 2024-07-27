@@ -61,6 +61,14 @@
     .activated-card-display {
         height: 80%;
     }
+
+    .board-spectating-label{
+        color: goldenrod;
+        -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.75);
+
+        font-size: 2.3rem;
+        font-family: Alegreya, Geogia, Times New Roman, "serif";
+    }
 }
 
 .board-center{

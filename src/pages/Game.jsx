@@ -37,12 +37,12 @@ export default function Game() {
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [gameError, setGameError] = useState(null);
 
   const [gameId, setGameId] = useState(null);
   const [gameData, setGameData] = useState(null);
 
-  const [userRole, SetUserRole] = useState("");
+  const [userRole, setUserRole] = useState("");
 
   const queryString = useLocation().search;
   const queryParams = new URLSearchParams(queryString);
@@ -80,7 +80,7 @@ export default function Game() {
 
   useEffect(() => {
     setIsLoading(true);
-    setError(null);
+    setGameError(null);
 
     let createdGamesCollectionRef = collection(db, "gameInfo");
 
@@ -96,7 +96,7 @@ export default function Game() {
     getDocs(createdGamesCollectionRef)
       .then((snapshot) => {
         if (snapshot.empty) {
-          setError("No game found.");
+          setGameError("Game not found");
           setIsLoading(false);
         } else {
           const GameDoc = snapshot.docs[0];
@@ -106,7 +106,7 @@ export default function Game() {
         }
       })
       .catch((err) => {
-        setError(err.message);
+        setGameError(err.message);
         setIsLoading(false);
       });
   }, [queryGame]);
@@ -132,22 +132,25 @@ export default function Game() {
     return () => unsubscribe?.();
   }, [gameId]);
 
-  useEffect(() => {
-    if (gameData && user.uid === gameData.hostId) {
-      SetUserRole("host");
-    } else if (gameData && user.uid === gameData.guestId) {
-      SetUserRole("guest");
-    } else {
-      SetUserRole("");
-    }
-    // console.log("Role identified: " + userRole);
-  }, [gameData && gameData.hostId, gameData && gameData.guestId]);
+  useEffect(
+    () => {
+      if (gameData && user.uid === gameData.hostId) {
+        setUserRole("host");
+      } else if (gameData && user.uid === gameData.guestId) {
+        setUserRole("guest");
+      } else {
+        setUserRole("spectator");
+      }
+    },
+    [gameData, gameData && gameData.guestId]
+    // [gameData && gameData.hostId, gameData && gameData.guestId]
+  );
 
   //---Realtime data functionality above
 
   //---Player situation functionality below
 
-  const onJoinGame = async () => {
+  const handleJoinGame = async () => {
     setIsLoading(true);
 
     try {
@@ -158,9 +161,9 @@ export default function Game() {
         guestName: user.displayName,
       });
       setIsLoading(false);
-      SetUserRole("guest");
+      setUserRole("guest");
     } catch (err) {
-      setError(err.message);
+      setGameError(err.message);
       setIsLoading(false);
     }
   };
@@ -180,132 +183,83 @@ export default function Game() {
 
       setIsLoading(false);
     } catch (err) {
-      setError(err.message);
+      setGameError(err.message);
       setIsLoading(false);
     }
   };
 
-  const readgameState = () => {
-    let playerSituation = 0;
+  const [playerStatus, setPlayerStatus] = useState("");
+  const [banner, setBanner] = useState({ title: "", buttonText: "" });
 
-    if (gameData && userRole === "host") {
-      //host
-      if (!gameData.guestId) {
-      } else {
-        playerSituation = 1;
-
-        if (!gameData.gameState.host.skillRepertoire) {
-          playerSituation = 1.5;
-        } else if (!gameData.gameState.guest.skillRepertoire) {
-          playerSituation = 1.6;
-        }
-      }
-    } else if (gameData && userRole === "guest") {
-      //guest
-      playerSituation = 1;
-
-      if (!gameData.gameState.guest.skillRepertoire) {
-        playerSituation = 1.5;
-      } else if (!gameData.gameState.host.skillRepertoire) {
-        playerSituation = 1.6;
-      }
+  useEffect(() => {
+    if (gameError) {
+      setPlayerStatus("error");
+      setBanner({
+        title: gameError.toUpperCase(),
+        buttonText: "Return to homepage",
+      });
     } else if (gameData) {
-      if (!gameData.guestId) {
-        playerSituation = 2; //potential guest
+      if (userRole === "host") {
+        if (!gameData.guestId) {
+          setPlayerStatus("waiting");
+          setBanner({
+            title: "WAITING FOR OPPONENT",
+            buttonText: (
+              <>
+                Send the URL to a friend
+                <br />
+                to play with them.
+                <br />
+                <br />
+                Click to copy to clipboard.
+              </>
+            ),
+          });
+        } else if (!gameData.gameState.host.skillRepertoire) {
+          setPlayerStatus("pick repertoire");
+        } else if (!gameData.gameState.guest.skillRepertoire) {
+          setPlayerStatus("wait enemy repertoire");
+          setBanner({
+            title: "Waiting for opponent to select repertoire",
+            buttonText: null,
+          });
+        } else {
+          setPlayerStatus("ready");
+        }
+      } else if (userRole === "guest") {
+        if (!gameData.gameState.guest.skillRepertoire) {
+          setPlayerStatus("pick repertoire");
+        } else if (!gameData.gameState.host.skillRepertoire) {
+          setPlayerStatus("wait enemy repertoire");
+          setBanner({
+            title: "Waiting for opponent to select repertoire",
+            buttonText: null,
+          });
+        } else {
+          setPlayerStatus("ready");
+        }
+      } else if (!gameData.guestId) {
+        setPlayerStatus("join");
+
+        setBanner({
+          title: "ACCEPT CHALLENGE",
+          buttonText: "Join",
+        });
       } else {
         //spectator
-        playerSituation = 3;
+        setPlayerStatus("spectate");
       }
     }
+  }, [gameData, userRole, gameError]);
 
-    switch (playerSituation) {
-      case 0:
-        return (
-          <div className="">
-            <div
-              className="game-banner"
-              style={{
-                backgroundImage: `url(${getBannerImage("Invite")})`,
-              }}
-            >
-              <div className="game-banner-backdrop">
-                <div className="game-banner-title">WAITING FOR OPPONENT</div>
-                <div className="game-banner-text-body">
-                  <div className="game-banner-text">
-                    <button
-                      className="home-banner-button"
-                      onClick={handleCopyUrl}
-                    >
-                      Send the URL to a friend
-                      <br />
-                      to play with them.
-                      <br />
-                      <br />
-                      Click to copy to clipboard.
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-      case 1:
-        return (
-          <Board
-            gameState={gameData.gameState}
-            gameId={gameData.id}
-            userRole={userRole}
-          />
-        );
-
-      case 1.5:
-        return <SelectRepertoire onSelectRepertoire={onSelectRepertoire} />;
-
-      case 1.6:
-        return (
-          <>
-            <div className="">Waiting for opponent to select repertoire</div>
-          </>
-        );
-
-      case 2:
-        return (
-          <div className="">
-            <div
-              className="game-banner"
-              style={{
-                backgroundImage: `url(${getBannerImage("Invite")})`,
-              }}
-            >
-              <div className="game-banner-backdrop">
-                <div className="game-banner-title">ACCEPT CHALLENGE</div>
-                <div className="game-banner-text-body">
-                  <div className="game-banner-text">
-                    <button
-                      className="home-banner-button"
-                      onClick={() => onJoinGame()}
-                    >
-                      Join Game
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-
-      // return (
-      //   <div className="abilityText">
-      //     <button className="redButton" onClick={() => onJoinGame()}>
-      //       Join Game
-      //     </button>
-      //   </div>
-      // );
-
-      case 3:
-        return <div className="abilityText">Spectate?</div>;
-      default:
-        return <div className="abilityText">Spectate?</div>;
+  const bannerButton = () => {
+    switch (playerStatus) {
+      case "waiting":
+        return handleCopyUrl();
+      case "join":
+        return handleJoinGame();
+      case "error":
+        return navigate("/");
     }
   };
 
@@ -314,9 +268,50 @@ export default function Game() {
   return (
     <div className="demo-body">
       <br />
-      {/* {gameData && <div className="board-data">Host: {gameData.hostName}</div>} */}
-      {error && <div className="board-data">Error: {error}</div>}
-      {readgameState()}
+
+      {["ready", "spectate"].includes(playerStatus) && (
+        <Board
+          gameState={gameData.gameState}
+          gameId={gameData.id}
+          userRole={userRole}
+        />
+      )}
+
+      {[
+        "waiting",
+        "join",
+        "error",
+        "pick repertoire",
+        "wait enemy repertoire",
+      ].includes(playerStatus) && (
+        <div
+          className="game-banner"
+          style={{
+            backgroundImage: `url(${getBannerImage("Invite")})`,
+          }}
+        >
+          <div className="game-banner-backdrop">
+            <div className="game-banner-title">{banner.title}</div>
+            <div className="game-banner-text-body">
+              <div className="game-banner-text">
+                {banner.buttonText && (
+                  <button
+                    className="home-banner-button"
+                    onClick={() => bannerButton()}
+                  >
+                    {banner.buttonText}
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {playerStatus === "pick repertoire" && (
+        <SelectRepertoire onSelectRepertoire={onSelectRepertoire} />
+      )}
+
       {isLoading && <Loading />}
     </div>
   );

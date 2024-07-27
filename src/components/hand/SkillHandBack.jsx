@@ -5,16 +5,16 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { useGetImages } from "../../hooks/useGetImages";
 
-const EnemySkillHand = () => {
+const SkillHandBack = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
-  const { enemy } = useSelector((state) => state.teams);
+  const { self } = useSelector((state) => state.teams);
   const { getCardImage } = useGetImages();
 
-  let handNum = localGameState[enemy].skillHand.length;
+  let handNum = localGameState[props.team].skillHand.length;
 
   let transcendenceCount = 0;
 
-  for (let i of localGameState[enemy].skillHand) {
+  for (let i of localGameState[props.team].skillHand) {
     if (i === "SX-01") {
       transcendenceCount += 1;
     }
@@ -47,17 +47,16 @@ const EnemySkillHand = () => {
         return 27;
       }
     }
-
     return 0;
   };
 
   return (
     <div className="mainSkillHand">
-      <div className="enemy-skillhand-container">
+      <div className="skill-hand-back-container">
         {cards.map((i) => (
           <div
             key={i}
-            className={`enemy-hand-card`}
+            className={`hand-back-card`}
             style={{
               backgroundImage: cardImage(i),
               marginRight: 40 * (Math.min(5, handNum) - (2 * i - 1)),
@@ -76,11 +75,17 @@ const EnemySkillHand = () => {
         ))}
 
         {handNum > 5 && (
-          <div className={`enemy-hand-label`}>Skills in hand: {handNum}</div>
+          <div
+            className={`hand-back-label ${
+              props.team === self ? "hand-back-label-top" : ""
+            }  `}
+          >
+            Skills in hand: {handNum}
+          </div>
         )}
       </div>
     </div>
   );
 };
 
-export default EnemySkillHand;
+export default SkillHandBack;

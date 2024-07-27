@@ -123,7 +123,12 @@ const PileOfCards = (props) => {
       </div>
 
       {showPile !== null && (
-        <ViewVestige setShowPile={setShowPile} team={team} vestige={showPile} />
+        <ViewVestige
+          setShowPile={setShowPile}
+          team={team}
+          vestige={showPile}
+          spectator={props.spectator}
+        />
       )}
     </div>
   );

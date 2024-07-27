@@ -66,8 +66,9 @@ import ActivatedSkills from "./displays/ActivatedSkills";
 
 import PlayerAvelhemHand from "./hand/PlayerAvelhemHand";
 import PlayerSkillHand from "./hand/PlayerSkillHand";
-import EnemySkillHand from "./hand/EnemySkillHand";
-import EnemyAvelhemHand from "./hand/EnemyAvelhemHand";
+
+import SkillHandBack from "./hand/SkillHandBack";
+import AvelhemHandBack from "./hand/AvelhemHandBack";
 
 import SovereignTactics from "./displays/SovereignTactics";
 
@@ -531,6 +532,10 @@ const Board = (props) => {
   };
 
   const updateFirebase = (newGameState) => {
+    if (props.userRole === "spectator") {
+      return;
+    }
+
     if (props.demo) {
       props.setDemoGameState(newGameState);
     } else {
@@ -555,6 +560,9 @@ const Board = (props) => {
     } else if (props.userRole === "guest") {
       dispatch(updateSelf("guest"));
       dispatch(updateEnemy("host"));
+    } else {
+      dispatch(updateSelf("host"));
+      dispatch(updateEnemy("guest"));
     }
 
     // STRINGED GAMESTATE"
@@ -619,6 +627,10 @@ const Board = (props) => {
   //Current Resolution Prompt below
 
   const currentResolutionPrompt = () => {
+    if (props.userRole === "spectator") {
+      return;
+    }
+
     let lastResolution = { resolution: "" };
 
     if (localGameState.currentResolution.length > 0) {
@@ -5384,62 +5396,73 @@ const Board = (props) => {
             <div className="board-space">
               <div className="board-left">
                 <div className="board-left-buttons">
-                  {self === localGameState.turnPlayer &&
-                    localGameState.currentResolution.length > 0 &&
-                    localGameState.currentResolution[
-                      localGameState.currentResolution.length - 1
-                    ].resolution === "Execution Phase" && (
-                      <button
-                        className={`redButton ${
-                          canClick("End Button") ? "demoClick" : ""
-                        }`}
-                        onClick={() => {
-                          endExecutionPhase();
-                          handleUpdateDemoGuide();
-                        }}
-                      >
-                        End Turn
-                      </button>
-                    )}
-
-                  {self === localGameState.turnPlayer &&
-                    localGameState.currentResolution.length > 0 &&
-                    localGameState.currentResolution[
-                      localGameState.currentResolution.length - 1
-                    ].resolution === "Deploying Pawn" && (
-                      <button
-                        className={`redButton ${
-                          canClick("Cancel Button") ? "demoClick" : ""
-                        }`}
-                        onClick={() => {
-                          cancelDeploy();
-                          handleUpdateDemoGuide();
-                        }}
-                      >
-                        Cancel
-                      </button>
-                    )}
-
-                  {hideModal && (
-                    <button
-                      className="redButton"
-                      onClick={() => hideOrRevealModale()}
-                    >
-                      Return to Message
-                    </button>
+                  {props.userRole === "spectator" && (
+                    <>
+                      <div className="board-spectating-label">
+                        Spectating Game
+                      </div>
+                    </>
                   )}
+                  {props.userRole !== "spectator" && (
+                    <>
+                      {self === localGameState.turnPlayer &&
+                        localGameState.currentResolution.length > 0 &&
+                        localGameState.currentResolution[
+                          localGameState.currentResolution.length - 1
+                        ].resolution === "Execution Phase" && (
+                          <button
+                            className={`redButton ${
+                              canClick("End Button") ? "demoClick" : ""
+                            }`}
+                            onClick={() => {
+                              endExecutionPhase();
+                              handleUpdateDemoGuide();
+                            }}
+                          >
+                            End Turn
+                          </button>
+                        )}
 
-                  {(!props.demo || props.demoGame) && (
-                    <div className="contingency-settings">
-                      <button
-                        className="redButton"
-                        onClick={() => {
-                          setOpenContingencySettings(true);
-                        }}
-                      >
-                        Contingency Settings
-                      </button>
-                    </div>
+                      {self === localGameState.turnPlayer &&
+                        localGameState.currentResolution.length > 0 &&
+                        localGameState.currentResolution[
+                          localGameState.currentResolution.length - 1
+                        ].resolution === "Deploying Pawn" && (
+                          <button
+                            className={`redButton ${
+                              canClick("Cancel Button") ? "demoClick" : ""
+                            }`}
+                            onClick={() => {
+                              cancelDeploy();
+                              handleUpdateDemoGuide();
+                            }}
+                          >
+                            Cancel
+                          </button>
+                        )}
+
+                      {hideModal && (
+                        <button
+                          className="redButton"
+                          onClick={() => hideOrRevealModale()}
+                        >
+                          Return to Message
+                        </button>
+                      )}
+
+                      {(!props.demo || props.demoGame) && (
+                        <div className="contingency-settings">
+                          <button
+                            className="redButton"
+                            onClick={() => {
+                              setOpenContingencySettings(true);
+                            }}
+                          >
+                            Contingency Settings
+                          </button>
+                        </div>
+                      )}
+                    </>
                   )}
                 </div>
 
@@ -5479,7 +5502,8 @@ const Board = (props) => {
                           localGameState.currentResolution.length - 1
                         ].resolution === "Execution Phase" &&
                         self === expandedUnit.player &&
-                        self === localGameState.turnPlayer && (
+                        self === localGameState.turnPlayer &&
+                        props.userRole !== "spectator" && (
                           <>
                             <div
                               className={`pieceOption ${
@@ -5638,10 +5662,10 @@ const Board = (props) => {
               <div className="board-right">
                 <div className="hands-player">
                   <div className="skill-hand">
-                    <EnemySkillHand />
+                    <SkillHandBack team={enemy} />
                   </div>
                   <div className="avel-hand">
-                    <EnemyAvelhemHand />
+                    <AvelhemHandBack team={enemy} />
                   </div>
                 </div>
 
@@ -5692,8 +5716,14 @@ const Board = (props) => {
                       </div>
                     </div>
                   </div>
-                  <div className="dice-container">
-                    <SovereignTactics />
+                  <div
+                    className="dice-container"
+                    style={{
+                      pointerEvents:
+                        props.userRole === "spectator" ? "none" : "",
+                    }}
+                  >
+                    <SovereignTactics userRole={props.userRole} />
                   </div>
                   <div className="deck-container">
                     <div className="skill-container">
@@ -5701,7 +5731,11 @@ const Board = (props) => {
                         <PileOfCards team={self} pile={"skillRepertoire"} />
                       </div>
                       <div className="skill-container-item">
-                        <PileOfCards team={self} pile={"skillVestige"} />
+                        <PileOfCards
+                          team={self}
+                          pile={"skillVestige"}
+                          spectator={props.userRole === "spectator"}
+                        />
                       </div>
                     </div>
                     <div className="resource-points">
@@ -5735,7 +5769,11 @@ const Board = (props) => {
                         <PileOfCards team={self} pile={"avelhemRepertoire"} />
                       </div>
                       <div className="avel-discard avel-container-item">
-                        <PileOfCards team={self} pile={"avelhemVestige"} />
+                        <PileOfCards
+                          team={self}
+                          pile={"avelhemVestige"}
+                          spectator={props.userRole === "spectator"}
+                        />
                       </div>
                     </div>
                   </div>
@@ -5743,10 +5781,20 @@ const Board = (props) => {
 
                 <div className="hands-player">
                   <div className="skill-hand">
-                    <PlayerSkillHand updateFirebase={updateFirebase} />
+                    {props.userRole !== "spectator" && (
+                      <PlayerSkillHand updateFirebase={updateFirebase} />
+                    )}
+                    {props.userRole === "spectator" && (
+                      <SkillHandBack team={self} />
+                    )}
                   </div>
                   <div className="avel-hand">
-                    <PlayerAvelhemHand updateFirebase={updateFirebase} />
+                    {props.userRole !== "spectator" && (
+                      <PlayerAvelhemHand updateFirebase={updateFirebase} />
+                    )}
+                    {props.userRole === "spectator" && (
+                      <AvelhemHandBack team={self} />
+                    )}
                   </div>
                 </div>
               </div>
