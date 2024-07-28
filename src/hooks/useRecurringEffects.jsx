@@ -3560,6 +3560,127 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const endExecutionPhase = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    newGameState.turnPhase = "Final";
+    newGameState.currentResolution.pop();
+
+    //7. If at least 3 of your units have scored, you win. Otherwise, your opponent commences the next turn as the initiator.
+    //6. If an ally is occupying a zone in the enemy base, grant them Score and purge all their other statuses.
+    newGameState.currentResolution.push({
+      resolution: "Final Phase",
+      resolution2: "Scoring",
+      player: self,
+    });
+
+    //5. Decrement the durations of your units’ other statuses simultaneously.
+    newGameState.currentResolution.push({
+      resolution: "Final Phase",
+      resolution2: "Status Decrement",
+      player: self,
+    });
+
+    //4. Decrement the duration of your units’ Burn affliction in your desired sequence sequence.
+    newGameState.currentResolution.push({
+      resolution: "Final Phase",
+      resolution2: "Burn Decrement",
+      player: self,
+    });
+
+    //3.5 reset Avelhem Search/Recover usage
+    delete newGameState[self].hasAvelhemSearch;
+    delete newGameState[self].hasAvelhemRecover;
+
+    //3. Forfeit unused tactics and remove your units’ boosts.
+    newGameState.tactics = [];
+
+    let playerUnits = newGameState[self].units;
+    for (let u in playerUnits) {
+      let unit = playerUnits[u];
+      if (unit) {
+        unit.temporary = {};
+        unit.boosts = {};
+        playerUnits[u] = unit;
+      }
+    }
+    newGameState[self].units = playerUnits;
+
+    let enemyUnits = newGameState[enemy].units;
+    for (let u in enemyUnits) {
+      let unit = enemyUnits[u];
+      if (unit) {
+        unit.temporary = {};
+        enemyUnits[u] = unit;
+      }
+    }
+    newGameState[enemy].units = enemyUnits;
+
+    //2. Selectively discard skills in excess of your hand limit (8).
+    if (newGameState[self].skillHand.length > 8) {
+      const excessSkills = newGameState[self].skillHand.length - 8;
+
+      newGameState.currentResolution.push({
+        resolution: "Final Phase",
+        resolution2: "Skill Hand Limit",
+        player: self,
+        details: {
+          reason: "Skill Hand Limit",
+          title: "Final Phase",
+          message: `Skill hand limit is 8 cards. Discard ${excessSkills} excess skill${
+            excessSkills === 1 ? "" : "s"
+          }.`,
+          count: newGameState[self].skillHand.length - 8,
+        },
+      });
+    }
+
+    //1. Discard all Avelhems from your hand.
+    //However, you can retain 1 if purchased the Avelhem upgrade.
+    if (
+      newGameState[self].avelhemHand.length > 0 &&
+      newGameState[self].bountyUpgrades.avelhem > 0
+    ) {
+      newGameState.currentResolution.push({
+        resolution: "Final Phase",
+        resolution2: "Avelhem Retention",
+        player: self,
+        details: {
+          reason: "Avelhem Hand Limit",
+          title: "Final Phase",
+          message: `You may retain up to 1 Avelhem; discard the rest.`,
+          count: 1,
+        },
+      });
+    } else {
+      //discard all Avelhems
+      newGameState[self].avelhemVestige.push(...newGameState[self].avelhemHand);
+      newGameState[self].avelhemHand = [];
+    }
+
+    return newGameState;
+  };
+
+  const enterMoveMode = (zoneIds, unit, gameState, tactic, pop) => {
+    let newGameState = gameState
+      ? gameState
+      : JSON.parse(JSON.stringify(localGameState));
+
+    if (pop) {
+      newGameState.currentResolution.pop();
+    }
+
+    newGameState.currentResolution.push({
+      resolution: "Misc.",
+      resolution2: "Moving Unit",
+      zoneIds: zoneIds,
+      unit: unit,
+      tactic: tactic,
+    });
+
+    return newGameState;
+  };
+
   const enterSelectUnitMode = (
     zoneIds,
     unit,
@@ -3662,40 +3783,6 @@ export const useRecurringEffects = () => {
 
     return newGameState;
   };
-
-  // const getTacticImage = (i) => {
-  //   if (localGameState && localGameState.tactics[i]) {
-  //     switch (localGameState.tactics[i].face) {
-  //       case "Advance":
-  //         return Advance;
-  //       case "Mobilize":
-  //         return Mobilize;
-  //       case "Assault":
-  //         return Assault;
-  //       case "Invoke":
-  //         return Invoke;
-  //       default:
-  //         return;
-  //     }
-  //   }
-  // };
-
-  // const getTacticImage = (face) => {
-  //   switch (face) {
-  //     case "Advance":
-  //       return Advance;
-  //     case "Mobilize":
-  //       return Mobilize;
-  //     case "Assault":
-  //       return Assault;
-  //     case "Invoke":
-  //       return Invoke;
-  //     case "Rally":
-  //       return Rally;
-  //     default:
-  //       return;
-  //   }
-  // };
 
   const getVacant2SpaceZones = (unit) => {
     const zones = JSON.parse(localGameState.zones);
@@ -4179,6 +4266,22 @@ export const useRecurringEffects = () => {
     }
 
     return newGameState;
+  };
+
+  const newUnitStats = (player, index, row, column, unitClass) => {
+    return {
+      player: player,
+      unitIndex: index,
+      row: row,
+      column: column,
+      unitClass: unitClass,
+      hp: 1,
+      virtue: 1,
+      afflictions: {},
+      enhancements: {},
+      boosts: {},
+      temporary: {},
+    };
   };
 
   const paralyze1 = (newGameState, attacker, victim, special) => {
@@ -5524,12 +5627,13 @@ export const useRecurringEffects = () => {
     drawSkill,
     endDefiancePhase,
     endDefiancePhase2,
+    endExecutionPhase,
+    enterMoveMode,
     enterSelectUnitMode,
     floatAvelhem,
     floatSkill,
     freeze1,
     freeze2,
-    // getTacticImage,
     getVacant2SpaceZones,
     getVacantAdjacentZones,
     getVacantFrontier,
@@ -5549,6 +5653,7 @@ export const useRecurringEffects = () => {
     isMuted,
     isRooted,
     move,
+    newUnitStats,
     paralyze1,
     paralyze2,
     refillRepertoireAvelhem,

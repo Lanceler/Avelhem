@@ -84,13 +84,7 @@ import PileOfCards from "./displays/PileOfCards";
 import { useGetImages } from "../hooks/useGetImages";
 
 const Board = (props) => {
-  let gameDoc = null;
-
-  if (props.demo) {
-    // to do
-  } else {
-    gameDoc = doc(db, "gameInfo", props.gameId);
-  }
+  let gameDoc = props.demo ? null : doc(db, "gameInfo", props.gameId);
 
   const dispatch = useDispatch();
 
@@ -99,6 +93,8 @@ const Board = (props) => {
   const { enemy } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
   const { magnifiedSkill } = useSelector((state) => state.magnifiedSkill);
+
+  const [error, setError] = useState(false);
 
   const [zones, setZones] = useState(null);
 
@@ -145,8 +141,11 @@ const Board = (props) => {
     decrementStatus,
     drawSkill,
     endDefiancePhase2,
+    endExecutionPhase,
+    enterMoveMode,
     getVacant2SpaceZones,
     getVacantAdjacentZones,
+    getZonesInRange, // needed for quick movement testing
     grantRavager,
     freeze1,
     freeze2,
@@ -154,6 +153,7 @@ const Board = (props) => {
     isAdjacent,
     isMuted,
     move,
+    newUnitStats,
     paralyze1,
     paralyze2,
     selectAegisActivator,
@@ -316,22 +316,6 @@ const Board = (props) => {
     ambrosia1,
   } = useUnitAbilityEffects();
 
-  const newUnitStats = (player, index, row, column, unitClass) => {
-    return {
-      player: player,
-      unitIndex: index,
-      row: row,
-      column: column,
-      unitClass: unitClass,
-      hp: 1,
-      virtue: 1,
-      afflictions: {},
-      enhancements: {},
-      boosts: {},
-      temporary: {},
-    };
-  };
-
   const activatingTarget = () => {
     if (
       localGameState.activatingTarget.length > 0 &&
@@ -493,11 +477,13 @@ const Board = (props) => {
 
         // //for testing: quick movement
 
-        // enterMoveMode(
-        //   getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
-        //   expandedUnit,
-        //   newGameState,
-        //   null
+        // resolutionUpdateGameStateOnly(
+        //   enterMoveMode(
+        //     getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
+        //     expandedUnit,
+        //     newGameState,
+        //     null
+        //   )
         // );
 
         // //for testing: quick movement
@@ -541,14 +527,15 @@ const Board = (props) => {
     } else {
       try {
         updateDoc(gameDoc, { gameState: newGameState });
+        console.log("TRY");
       } catch (err) {
         console.log(err);
+        console.log("ERR");
         // console.log(newGameState);
       }
     }
   };
 
-  //====================================================================
   //====================================================================
   //UseEffects below
   useEffect(() => {
@@ -621,9 +608,6 @@ const Board = (props) => {
   }, [props.gameState]);
 
   //====================================================================
-  //====================================================================
-  //Current Resolution Prompt below
-
   //Current Resolution Prompt below
 
   const currentResolutionPrompt = () => {
@@ -1142,7 +1126,6 @@ const Board = (props) => {
                   <SelectTactic
                     updateFirebase={updateFirebase}
                     unit={lastResolution.unit}
-                    enterMoveMode={enterMoveMode}
                   />
                 )}
               </>
@@ -1156,7 +1139,6 @@ const Board = (props) => {
                     unit={lastResolution.unit}
                     dice={lastResolution.dice}
                     face={lastResolution.face}
-                    enterMoveMode={enterMoveMode}
                     updateFirebase={updateFirebase}
                   />
                 )}
@@ -1256,7 +1238,6 @@ const Board = (props) => {
                     details={lastResolution.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
-                    enterMoveMode={enterMoveMode}
                   />
                 )}
               </>
@@ -1271,7 +1252,6 @@ const Board = (props) => {
                     details={lastResolution.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
-                    // enterMoveMode={enterMoveMode}
                   />
                 )}
               </>
@@ -1279,12 +1259,14 @@ const Board = (props) => {
 
           case "Rooted Traverse Movement":
             if (self === lastResolution.unit.player) {
-              enterMoveMode(
-                getVacantAdjacentZones(lastResolution.unit),
-                lastResolution.unit,
-                null,
-                lastResolution.tactic,
-                true
+              resolutionUpdateGameStateOnly(
+                enterMoveMode(
+                  getVacantAdjacentZones(lastResolution.unit),
+                  lastResolution.unit,
+                  null,
+                  lastResolution.tactic,
+                  true
+                )
               );
             }
             break;
@@ -1504,7 +1486,6 @@ const Board = (props) => {
                   <SelectCustomChoice
                     unit={lastResolution.unit}
                     details={lastResolution.details}
-                    enterMoveMode={enterMoveMode}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1542,7 +1523,6 @@ const Board = (props) => {
                   <SelectCustomChoice
                     unit={lastResolution.unit}
                     details={lastResolution.details}
-                    enterMoveMode={enterMoveMode}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1565,7 +1545,6 @@ const Board = (props) => {
                     details={lastResolution.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
-                    enterMoveMode={enterMoveMode}
                   />
                 )}
               </>
@@ -1586,7 +1565,6 @@ const Board = (props) => {
                     details={lastResolution.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
-                    enterMoveMode={enterMoveMode}
                   />
                 )}
               </>
@@ -1605,7 +1583,6 @@ const Board = (props) => {
                   <SelectCustomChoice
                     unit={lastResolution.unit}
                     details={lastResolution.details}
-                    enterMoveMode={enterMoveMode}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1678,7 +1655,6 @@ const Board = (props) => {
                   <SelectCustomChoice
                     unit={lastResolution.unit}
                     details={lastResolution.details}
-                    enterMoveMode={enterMoveMode}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1761,7 +1737,6 @@ const Board = (props) => {
                   <SelectCustomChoice
                     unit={lastResolution.unit}
                     details={lastResolution.details}
-                    enterMoveMode={enterMoveMode}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1920,20 +1895,6 @@ const Board = (props) => {
                 )}
               </>
             );
-
-          // case "Purification2":
-          //   return (
-          //     <>
-          //       {self === lastResolution.unit.player && !hideModal && (
-          //         <SelectCustomChoice
-          //           unit={lastResolution.unit}
-          //           details={lastResolution.details}
-          //           updateFirebase={updateFirebase}
-          //           hideOrRevealModale={hideOrRevealModale}
-          //         />
-          //       )}
-          //     </>
-          //   );
 
           case "Activating Frigid Breath":
             if (self === lastResolution.unit.player) {
@@ -2342,8 +2303,6 @@ const Board = (props) => {
 
           case "Cataclysmic Tempest6.5":
             if (self === lastResolution.unit.player) {
-              // selectEnemiesAfflicted(lastResolution.unit, 1, null, "paralyze1", null);
-
               selectEnemiesAfflicted(
                 lastResolution.unit,
                 1,
@@ -2354,20 +2313,6 @@ const Board = (props) => {
               );
             }
             break;
-
-          // case "Cataclysmic Tempest6":
-          //   return (
-          //     <>
-          //       {self === lastResolution.unit.player && !hideModal && (
-          //         <YouMayNoYes
-          //           unit={lastResolution.unit}
-          //           details={lastResolution.details}
-          //           updateFirebase={updateFirebase}
-          //           hideOrRevealModale={hideOrRevealModale}
-          //         />
-          //       )}
-          //     </>
-          //   );
         }
         break;
 
@@ -2810,7 +2755,6 @@ const Board = (props) => {
                   <SelectCustomChoice
                     unit={lastResolution.unit}
                     details={lastResolution.details}
-                    enterMoveMode={enterMoveMode}
                     setMovingSpecial={setMovingSpecial}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
@@ -2826,7 +2770,6 @@ const Board = (props) => {
                   <SelectCustomChoice
                     unit={lastResolution.unit}
                     details={lastResolution.details}
-                    enterMoveMode={enterMoveMode}
                     setMovingSpecial={setMovingSpecial}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
@@ -4100,7 +4043,6 @@ const Board = (props) => {
   };
 
   //====================================================================
-  //====================================================================
   //Helper functions below
 
   const animationDelay = () => {
@@ -4262,140 +4204,15 @@ const Board = (props) => {
     updateFirebase(newGameState);
   };
 
-  const endExecutionPhase = () => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    newGameState.turnPhase = "Final";
-    newGameState.currentResolution.pop();
-
-    //7. If at least 3 of your units have scored, you win. Otherwise, your opponent commences the next turn as the initiator.
-    //6. If an ally is occupying a zone in the enemy base, grant them Score and purge all their other statuses.
-    newGameState.currentResolution.push({
-      resolution: "Final Phase",
-      resolution2: "Scoring",
-      player: self,
-    });
-
-    //5. Decrement the durations of your units’ other statuses simultaneously.
-    newGameState.currentResolution.push({
-      resolution: "Final Phase",
-      resolution2: "Status Decrement",
-      player: self,
-    });
-
-    //4. Decrement the duration of your units’ Burn affliction in your desired sequence sequence.
-    newGameState.currentResolution.push({
-      resolution: "Final Phase",
-      resolution2: "Burn Decrement",
-      player: self,
-    });
-
-    //3.5 reset Avelhem Search/Recover usage
-    delete newGameState[self].hasAvelhemSearch;
-    delete newGameState[self].hasAvelhemRecover;
-
-    //3. Forfeit unused tactics and remove your units’ boosts.
-    newGameState.tactics = [];
-
-    let playerUnits = newGameState[self].units;
-    for (let u in playerUnits) {
-      let unit = playerUnits[u];
-      if (unit) {
-        unit.temporary = {};
-        unit.boosts = {};
-        playerUnits[u] = unit;
-      }
-    }
-    newGameState[self].units = playerUnits;
-
-    let enemyUnits = newGameState[enemy].units;
-    for (let u in enemyUnits) {
-      let unit = enemyUnits[u];
-      if (unit) {
-        unit.temporary = {};
-        //unit.boosts = {}; only clear temporary
-        enemyUnits[u] = unit;
-      }
-    }
-    newGameState[enemy].units = enemyUnits;
-
-    //2. Selectively discard skills in excess of your hand limit (8 + ???).
-    if (newGameState[self].skillHand.length > 8) {
-      const excessSkills = newGameState[self].skillHand.length - 8;
-
-      newGameState.currentResolution.push({
-        resolution: "Final Phase",
-        resolution2: "Skill Hand Limit",
-        player: self,
-        details: {
-          reason: "Skill Hand Limit",
-          title: "Final Phase",
-          message: `Skill hand limit is 8 cards. Discard ${excessSkills} excess skill${
-            excessSkills === 1 ? "" : "s"
-          }.`,
-          count: newGameState[self].skillHand.length - 8,
-        },
-      });
-    }
-
-    //1. Discard all Avelhems from your hand.
-    //However, you can retain 1 if purchased the Avelhem upgrade.
-    if (
-      newGameState[self].avelhemHand.length > 0 &&
-      newGameState[self].bountyUpgrades.avelhem > 0
-    ) {
-      newGameState.currentResolution.push({
-        resolution: "Final Phase",
-        resolution2: "Avelhem Retention",
-        player: self,
-        details: {
-          reason: "Avelhem Hand Limit",
-          title: "Final Phase",
-          message: `You may retain up to 1 Avelhem; discard the rest.`,
-          count: 1,
-        },
-      });
-    } else {
-      //discard all Avelhems
-      newGameState[self].avelhemVestige.push(...newGameState[self].avelhemHand);
-      newGameState[self].avelhemHand = [];
-    }
-
-    dispatch(updateState(newGameState));
-    updateFirebase(newGameState);
-  };
-
-  const enterMoveMode = (zoneIds, unit, gameState, tactic, pop) => {
-    let newGameState = gameState
-      ? gameState
-      : JSON.parse(JSON.stringify(localGameState));
-
-    if (pop) {
-      newGameState.currentResolution.pop();
-    }
-
-    newGameState.currentResolution.push({
-      resolution: "Misc.",
-      resolution2: "Moving Unit",
-      zoneIds: zoneIds,
-      unit: unit,
-      tactic: tactic,
-    });
-
-    dispatch(updateState(newGameState));
-
-    // updateFirebase(newGameState);
-  };
-
   const enterMoveModeViaSkill = (zoneIds, unit) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     newGameState.currentResolution.pop();
 
-    enterMoveMode(zoneIds, unit, newGameState, null);
+    resolutionUpdateGameStateOnly(
+      enterMoveMode(zoneIds, unit, newGameState, null)
+    );
 
     dispatch(updateState(newGameState));
-
-    // updateFirebase(newGameState);
   };
 
   const hideOrRevealModale = () => {
@@ -4534,7 +4351,9 @@ const Board = (props) => {
     //end "Aerial Impetus Prompt" or "Aerial Impetus Purge Move2"
     newGameState.currentResolution.pop();
 
-    enterMoveMode(getVacantAdjacentZones(unit), unit, newGameState, null);
+    resolutionUpdateGameStateOnly(
+      enterMoveMode(getVacantAdjacentZones(unit), unit, newGameState, null)
+    );
 
     if (ally === "Ally") {
       setMovingSpecial("AerialImpetusAlly");
@@ -4964,10 +4783,8 @@ const Board = (props) => {
         let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
         if (unit) {
-          //decrease activation counter
           unit.temporary.activation -= 1;
 
-          //apply anathema
           if (
             unit.temporary.activation === 0 &&
             unit.temporary.anathemaDelay === true
@@ -4975,7 +4792,6 @@ const Board = (props) => {
             delete unit.temporary.anathemaDelay;
             unit.afflictions.anathema = 2;
 
-            //anathema purges boosts, disruption, overgrowth, & proliferation
             unit.boosts = {};
             delete unit.enhancements.disruption;
             delete unit.enhancements.overgrowth;
@@ -5031,10 +4847,8 @@ const Board = (props) => {
         let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
         if (unit) {
-          //decrease activation counter
           unit.temporary.activation -= 1;
 
-          //apply anathema
           if (
             unit.temporary.activation === 0 &&
             unit.temporary.anathemaDelay === true
@@ -5042,7 +4856,6 @@ const Board = (props) => {
             delete unit.temporary.anathemaDelay;
             unit.afflictions.anathema = 2;
 
-            //anathema purges boosts, disruption, overgrowth, & proliferation
             unit.boosts = {};
             delete unit.enhancements.disruption;
             delete unit.enhancements.overgrowth;
@@ -5086,7 +4899,6 @@ const Board = (props) => {
     }
 
     dispatch(updateState(newGameState));
-    // props.updateFirebase(newGameState);
   };
 
   const tacticEnd = (unitInfo, effect) => {
@@ -5097,10 +4909,8 @@ const Board = (props) => {
     newGameState.currentResolution.pop();
 
     if (unit) {
-      //decrease activation counter
       unit.temporary.activation -= 1;
 
-      //apply anathema
       if (
         unit.temporary.activation === 0 &&
         unit.temporary.anathemaDelay === true
@@ -5108,7 +4918,6 @@ const Board = (props) => {
         delete unit.temporary.anathemaDelay;
         unit.afflictions.anathema = 2;
 
-        //anathema purges boosts, disruption, overgrowth, & proliferation
         unit.boosts = {};
         delete unit.enhancements.disruption;
         delete unit.enhancements.overgrowth;
@@ -5145,7 +4954,6 @@ const Board = (props) => {
     }, 250);
   };
 
-  //=========================
   //=========================
   const handleSetFirstPlayer = (choice) => {
     const newGameState = JSON.parse(JSON.stringify(localGameState));
@@ -5360,49 +5168,13 @@ const Board = (props) => {
   };
 
   //====================================================================
-  //====================================================================
 
   return (
     <div className="board-body">
       {zones && localGameState && (
         <>
-          {/* <div className="board-data">
-            Initiator:{" "}
-            {localGameState.turnPlayer !== null &&
-              localGameState[localGameState.turnPlayer].displayName}
-            <br />
-            Turn Count: {localGameState.turnCount}
-            <br />
-            Phase: {localGameState.turnPhase}
-            <br />
-
-            {localGameState.currentResolution.length > 0 && (
-              <>
-                {
-                  localGameState.currentResolution[
-                    localGameState.currentResolution.length - 1
-                  ].resolution
-                }
-              </>
-            )}
-            <br />
-
-            {localGameState.currentResolution.length > 0 && (
-              <>
-                {
-                  localGameState.currentResolution[
-                    localGameState.currentResolution.length - 1
-                  ].resolution2
-                }
-              </>
-            )}
-            <br />
-
-          </div> */}
-
           <div className="board-physical">
             <div
-              // className="board-space"
               className={`board-space ${
                 isYourTurn() ? "board-space-turn" : ""
               }`}
@@ -5428,7 +5200,7 @@ const Board = (props) => {
                               canClick("End Button") ? "demoClick" : ""
                             }`}
                             onClick={() => {
-                              endExecutionPhase();
+                              resolutionUpdate(endExecutionPhase());
                               handleUpdateDemoGuide();
                             }}
                           >

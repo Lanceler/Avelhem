@@ -1,18 +1,6 @@
-import { useAuthContext } from "../hooks/useAuthContext";
-
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-
-import { db } from "../config/firebaseConfig";
-
 import { useSelector, useDispatch } from "react-redux";
-
-import { updateDemo } from "../redux/demoGuide";
-
-import { useGetImages } from "../hooks/useGetImages";
-
-import "./Game.css";
-
 import {
   getDocs,
   collection,
@@ -23,26 +11,32 @@ import {
   onSnapshot,
 } from "firebase/firestore";
 
+import { useAuthContext } from "../hooks/useAuthContext";
+import { useGetImages } from "../hooks/useGetImages";
+
+import { db } from "../config/firebaseConfig";
+import { updateDemo } from "../redux/demoGuide";
+import { updatecontingencySettings } from "../redux/contingencySettings";
+
 import SelectRepertoire from "../components/modals/SelectRepertoire";
 import Loading from "../components/modals/Loading";
 import Board from "../components/Board";
 
-import { updatecontingencySettings } from "../redux/contingencySettings";
+import "./Game.css";
 
 export default function Game() {
   const dispatch = useDispatch();
   const { getBannerImage } = useGetImages();
-
   const { user } = useAuthContext();
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(false);
   const [gameError, setGameError] = useState(null);
-
   const [gameId, setGameId] = useState(null);
   const [gameData, setGameData] = useState(null);
-
   const [userRole, setUserRole] = useState("");
+  const [playerStatus, setPlayerStatus] = useState("");
+  const [banner, setBanner] = useState({ title: "", buttonText: "" });
 
   const queryString = useLocation().search;
   const queryParams = new URLSearchParams(queryString);
@@ -62,7 +56,6 @@ export default function Game() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-
     dispatch(
       updatecontingencySettings({
         Activation: true,
@@ -74,9 +67,7 @@ export default function Game() {
       })
     );
     updateDemo(null);
-  }, []);
-
-  //---Realtime data functionality below
+  }, [dispatch]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -101,7 +92,6 @@ export default function Game() {
         } else {
           const GameDoc = snapshot.docs[0];
           setGameId(GameDoc.data().id);
-
           setIsLoading(false);
         }
       })
@@ -109,7 +99,7 @@ export default function Game() {
         setGameError(err.message);
         setIsLoading(false);
       });
-  }, [queryGame]);
+  }, [queryGame, navigate]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -132,30 +122,21 @@ export default function Game() {
     return () => unsubscribe?.();
   }, [gameId]);
 
-  useEffect(
-    () => {
-      if (gameData && user.uid === gameData.hostId) {
-        setUserRole("host");
-      } else if (gameData && user.uid === gameData.guestId) {
-        setUserRole("guest");
-      } else {
-        setUserRole("spectator");
-      }
-    },
-    [gameData, gameData && gameData.guestId]
-    // [gameData && gameData.hostId, gameData && gameData.guestId]
-  );
-
-  //---Realtime data functionality above
-
-  //---Player situation functionality below
+  useEffect(() => {
+    if (gameData && user.uid === gameData.hostId) {
+      setUserRole("host");
+    } else if (gameData && user.uid === gameData.guestId) {
+      setUserRole("guest");
+    } else {
+      setUserRole("spectator");
+    }
+  }, [gameData, user.uid]);
 
   const handleJoinGame = async () => {
     setIsLoading(true);
 
     try {
       const gameDoc = doc(db, "gameInfo", gameId);
-
       await updateDoc(gameDoc, {
         guestId: user.uid,
         guestName: user.displayName,
@@ -173,7 +154,6 @@ export default function Game() {
 
     try {
       const gameDoc = doc(db, "gameInfo", gameId);
-
       let newGameState = JSON.parse(JSON.stringify(gameData.gameState));
       newGameState[userRole].skillRepertoire = rep.skillRepertoire;
       newGameState[userRole].avelhemRepertoire = rep.avelhemRepertoire;
@@ -187,9 +167,6 @@ export default function Game() {
       setIsLoading(false);
     }
   };
-
-  const [playerStatus, setPlayerStatus] = useState("");
-  const [banner, setBanner] = useState({ title: "", buttonText: "" });
 
   useEffect(() => {
     if (gameError) {
@@ -240,13 +217,11 @@ export default function Game() {
         }
       } else if (!gameData.guestId) {
         setPlayerStatus("join");
-
         setBanner({
           title: "ACCEPT CHALLENGE",
           buttonText: "Join",
         });
       } else {
-        //spectator
         setPlayerStatus("spectate");
       }
     }
@@ -260,15 +235,14 @@ export default function Game() {
         return handleJoinGame();
       case "error":
         return navigate("/");
+      default:
+        return null;
     }
   };
-
-  //---Player situations functionality above
 
   return (
     <div className="demo-body">
       <br />
-
       {["ready", "spectate"].includes(playerStatus) && (
         <Board
           gameState={gameData.gameState}
@@ -276,7 +250,6 @@ export default function Game() {
           userRole={userRole}
         />
       )}
-
       {[
         "waiting",
         "join",
@@ -307,11 +280,9 @@ export default function Game() {
           </div>
         </div>
       )}
-
       {playerStatus === "pick repertoire" && (
         <SelectRepertoire onSelectRepertoire={onSelectRepertoire} />
       )}
-
       {isLoading && <Loading />}
     </div>
   );

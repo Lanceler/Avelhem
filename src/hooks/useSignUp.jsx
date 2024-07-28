@@ -11,89 +11,66 @@ export const useSignUp = () => {
   const { dispatch } = useAuthContext();
 
   const starterSkillRepertoire = [
-    //Ignition Propulsiom
-    "01-01", //1
-    "01-01", //2
-    "01-01", //3
-    "01-01", //4
-    //Conflagration
-    "01-02", //5
-    "01-02", //6
-    "01-02", //7
-    "01-02", //8
-    //Blaze of Glory
-    "01-03", //9
-    "01-03", //10
-    "01-03", //11
-    //Resplendence
-    "01-04", //12
-    //Purification
-    "02-01", //13
-    "02-01", //14
-    "02-01", //15
-    "02-01", //16
-    //Frigid Breath
-    "02-02", //17
-    "02-02", //18
-    "02-02", //19
-    "02-02", //20
-    //Healing Rain
-    "02-03", //21
-    "02-03", //22
-    //Glacial Torrent
-    "02-04", //25
-    //Crystallization
-    "04-01", //26
-    "04-01", //27
-    "04-01", //28
-    "04-01", //29
-    //Pitfall Trap
-    "04-03", //30
-    "04-03", //31
-    "04-03", //32
-    "04-03", //33
-    //Geomancy
-    "04-04", //34
-    //Magnetic Shockwwave
-    "07-01", //35
-    "07-01", //36
-    "07-01", //37
-    "07-01", //38
-    //Reinforce
-    "07-02", //39
-    "07-02", //40
-    "07-02", //41
-    "07-02", //42
-    //Frenzy Blade
-    "07-03", //43
-    "07-03", //44
-    "07-03", //45
-    "07-03", //46
-    //Arsenal Onslaught
-    "07-04", //47
-    //Tea For Two
-    "SA-02", //48
-    "SA-02", //49
-    //Dark Halo
-    "SA-03", //50
-    "SA-03", //51
-    //Reminiscence
-    "SA-04", //52
-    "SA-04", //53
-    //Transmute
-    "SB-01", //54
-    "SB-01", //55
-    //Providence
-    "SB-03", //56
-    "SB-03", //57
-    //Fervent Prayer
-    "SB-04", //58
-    "SB-04", //59
-    //Press the Attack
-    "SB-05", //21
-    "SB-05", //22
-    //Cataclysmic Tempest
-    "03-04", //60
+    "01-01", //1. Ignition Propulsion
+    "01-01", //2. Ignition Propulsion
+    "01-01", //3. Ignition Propulsion
+    "01-01", //4. Ignition Propulsion
+    "01-02", //5. Conflagration
+    "01-02", //6. Conflagration
+    "01-02", //7. Conflagration
+    "01-02", //8. Conflagration
+    "01-04", //9. Resplendence
+    "02-01", //10. Purification
+    "02-01", //11. Purification
+    "02-01", //12. Purification
+    "02-01", //13. Purification
+    "02-02", //14. Frigid Breath
+    "02-02", //15. Frigid Breath
+    "02-02", //16. Frigid Breath
+    "02-02", //17. Frigid Breath
+    "02-03", //18. Healing Rain
+    "02-03", //19. Healing Rain
+    "02-04", //20. Glacial Torrent
+    "03-01", //21. Aerial Impetus
+    "03-01", //22. Aerial Impetus
+    "03-01", //23. Aerial Impetus
+    "03-02", //24. Gale Conjuration
+    "03-02", //25. Gale Conjuration
+    "03-02", //26. Gale Conjuration
+    "03-03", //27. Symphonic Screech
+    "03-03", //28. Symphonic Screech
+    "03-04", //29. Cataclysmic Tempest
+    "04-01", //30. Crystallization
+    "04-01", //31. Crystallization
+    "04-01", //32. Crystallization
+    "04-01", //33. Crystallization
+    "04-03", //34. Pitfall Trap
+    "04-03", //35. Pitfall Trap
+    "04-04", //36. Geomancy
+    "07-01", //37. Magnetic Shockwave
+    "07-01", //38. Magnetic Shockwave
+    "07-01", //39. Magnetic Shockwave
+    "07-02", //40. Reinforce
+    "07-02", //41. Reinforce
+    "07-02", //42. Reinforce
+    "07-03", //43. Frenzy Blade
+    "07-03", //44. Frenzy Blade
+    "07-03", //45. Frenzy Blade
+    "07-04", //46. Arsenal Onslaught
+    "SA-02", //47. Tea For Two
+    "SA-02", //48. Tea For Two
+    "SA-03", //49. Dark Halo
+    "SA-03", //50. Dark Halo
+    "SA-04", //51. Reminiscence
+    "SA-04", //52. Reminiscence
+    "SB-01", //53. Transmute
+    "SB-01", //54. Transmute
+    "SB-02", //55. Ambidexterity
+    "SB-02", //56. Ambidexterity
+    "SB-03", //57. Providence
+    "SB-03", //58. Providence
+    "SB-05", //59. Press The Attack
+    "SB-05", //60. Press The Attack
   ];
 
   const starterAvelhemRepertoire = [
@@ -134,6 +111,26 @@ export const useSignUp = () => {
           id: userRef.id,
           displayName: res.user.displayName,
           repertoire: [
+            {
+              name: "Starter Repertoire 1",
+              skillRepertoire: starterSkillRepertoire,
+              avelhemRepertoire: starterAvelhemRepertoire,
+              description: "The default repertoire assigned to new accounts.",
+            },
+            {
+              name: "Starter Repertoire 2",
+              skillRepertoire: starterSkillRepertoire,
+              avelhemRepertoire: starterAvelhemRepertoire,
+              description: "The default repertoire assigned to new accounts.",
+            },
+            {
+              name: "Starter Repertoire 3",
+              skillRepertoire: starterSkillRepertoire,
+              avelhemRepertoire: starterAvelhemRepertoire,
+              description: "The default repertoire assigned to new accounts.",
+            },
+          ],
+          repertoire2: [
             {
               name: "Starter Repertoire 1",
               skillRepertoire: starterSkillRepertoire,

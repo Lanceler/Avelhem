@@ -26,6 +26,7 @@ const SelectTacticalAction = (props) => {
     canBlast,
     canMove,
     canStrike,
+    enterMoveMode,
     enterSelectUnitMode,
     getVacantAdjacentZones,
     getZonesWithEnemies,
@@ -214,7 +215,7 @@ const SelectTacticalAction = (props) => {
       case "Advance":
         if (selectedChoice === 0) {
           if (!isRooted(unit)) {
-            props.enterMoveMode(
+            newGameState = enterMoveMode(
               getVacantAdjacentZones(unit),
               unit,
               newGameState,
@@ -233,9 +234,9 @@ const SelectTacticalAction = (props) => {
                 tactic: props.dice,
               },
             });
-
-            dispatch(updateState(newGameState));
           }
+
+          dispatch(updateState(newGameState));
         } else if (selectedChoice === 1) {
           // //give unit activationCounter
           // unit.temporary.activation
@@ -307,7 +308,7 @@ const SelectTacticalAction = (props) => {
       case "Mobilize":
         if (selectedChoice === 0) {
           if (!isRooted(unit)) {
-            props.enterMoveMode(
+            newGameState = enterMoveMode(
               getVacantAdjacentZones(unit),
               unit,
               newGameState,
@@ -326,16 +327,16 @@ const SelectTacticalAction = (props) => {
                 tactic: props.dice,
               },
             });
-
-            dispatch(updateState(newGameState));
           }
+
+          dispatch(updateState(newGameState));
         }
         break;
 
       case "Assault":
         if (selectedChoice === 0) {
           if (!isRooted(unit)) {
-            props.enterMoveMode(
+            newGameState = enterMoveMode(
               getVacantAdjacentZones(unit),
               unit,
               newGameState,
@@ -354,9 +355,8 @@ const SelectTacticalAction = (props) => {
                 tactic: props.dice,
               },
             });
-
-            dispatch(updateState(newGameState));
           }
+          dispatch(updateState(newGameState));
         } else if (selectedChoice === 1) {
           //give unit activationCounter
           unit.temporary.activation

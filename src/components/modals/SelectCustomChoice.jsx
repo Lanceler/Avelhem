@@ -30,6 +30,7 @@ const SelectCustomChoice = (props) => {
     canSowAndReapStrike,
     canStrike,
     drawSkill,
+    enterMoveMode,
     enterSelectUnitMode,
     getVacantAdjacentZones,
     getZonesAerialImpetusAlly,
@@ -295,7 +296,7 @@ const SelectCustomChoice = (props) => {
 
       case "Ignition Propulsion":
         if (selectedChoice === 1) {
-          props.enterMoveMode(
+          newGameState = enterMoveMode(
             getVacantAdjacentZones(unit),
             unit,
             newGameState,
@@ -456,7 +457,7 @@ const SelectCustomChoice = (props) => {
 
       case "Reap the Whirlwind":
         if (selectedChoice === 1) {
-          props.enterMoveMode(
+          newGameState = enterMoveMode(
             getVacantAdjacentZones(unit),
             unit,
             newGameState,
@@ -552,7 +553,7 @@ const SelectCustomChoice = (props) => {
 
       case "Fortify":
         if (selectedChoice === 1) {
-          props.enterMoveMode(
+          newGameState = enterMoveMode(
             getVacantAdjacentZones(unit),
             unit,
             newGameState,
@@ -598,7 +599,7 @@ const SelectCustomChoice = (props) => {
 
       case "Arc Flash3":
         if (selectedChoice === 1) {
-          props.enterMoveMode(
+          newGameState = enterMoveMode(
             getVacantAdjacentZones(unit),
             unit,
             newGameState,
@@ -631,7 +632,7 @@ const SelectCustomChoice = (props) => {
             },
           });
 
-          props.enterMoveMode(
+          newGameState = enterMoveMode(
             getVacantAdjacentZones(unit),
             unit,
             newGameState,
@@ -654,7 +655,7 @@ const SelectCustomChoice = (props) => {
         if (selectedChoice === 1) {
           props.setMovingSpecial("Surge");
 
-          props.enterMoveMode(
+          newGameState = enterMoveMode(
             getVacantAdjacentZones(unit),
             unit,
             newGameState,

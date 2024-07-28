@@ -17,6 +17,7 @@ const YouMayNoYes = (props) => {
   const {
     drawAvelhem,
     drawSkill,
+    enterMoveMode,
     enterSelectUnitMode,
     getVacantAdjacentZones,
     getVacantFrontier,
@@ -224,7 +225,7 @@ const YouMayNoYes = (props) => {
         break;
 
       case "Galvanize": // "Galvanize1"
-        props.enterMoveMode(
+        newGameState = enterMoveMode(
           getVacantAdjacentZones(unit),
           unit,
           newGameState,
@@ -233,7 +234,7 @@ const YouMayNoYes = (props) => {
         break;
 
       case "Arc Flash": // "Arc Flash1"
-        props.enterMoveMode(
+        newGameState = enterMoveMode(
           getVacantAdjacentZones(unit),
           unit,
           newGameState,

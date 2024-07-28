@@ -1,13 +1,8 @@
 .tile{
     width: 70px;
     height: 70px;
-    /* background-color: bisque; */
-    /* background-color: rgb(240, 223, 208); */
-    /* background-color: rgb(231, 211, 179); */
-
     background-color: rgba(255, 255, 255, 0.9);
-    
-        
+      
     display: flex;
     justify-content: center;
     align-items: center;
@@ -27,10 +22,8 @@ background-color: rgb(99, 192, 63);
 
 .tile-grid {
     display: grid;
-    /* grid-template-columns: 1fr 1fr 1fr 1fr 1fr; */
     grid-template-columns: repeat(5, 1fr);
     grid-gap: 8px;
-    /* max-width: 80px; */
     margin: 10px;    
 }
 
