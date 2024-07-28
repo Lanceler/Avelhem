@@ -4057,13 +4057,11 @@ const Board = (props) => {
   //Helper functions below
 
   const animationDelay = () => {
-    let time = props.demo ? 230 : 750;
-
     setTimeout(() => {
       const newGameState = JSON.parse(JSON.stringify(localGameState));
       newGameState.currentResolution.pop();
       dispatch(updateState(newGameState));
-    }, time);
+    }, 250);
   };
 
   const avelhemConclusion = (
@@ -4115,7 +4113,7 @@ const Board = (props) => {
       dispatch(updateState(newGameState));
 
       updateFirebase(newGameState);
-    }, 1000);
+    }, 250);
   };
 
   const cancelDeploy = () => {

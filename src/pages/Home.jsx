@@ -1,13 +1,10 @@
-import "./Home.css";
-
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import { useAuthContext } from "../hooks/useAuthContext";
-
-import { useEffect } from "react";
-
 import { useGetImages } from "../hooks/useGetImages";
+
+import "./Home.css";
 
 export default function Home() {
   useEffect(() => {
@@ -60,26 +57,24 @@ export default function Home() {
             <div className="home-banner-title">ENTER THE FRAY</div>
             <div className="home-banner-text-body">
               <div className="home-banner-text">
-                {!user && (
+                {!user ? (
                   <Link to="/login">
                     <button className="home-banner-button">Log In</button>
                   </Link>
-                )}
-                {user && (
+                ) : (
                   <Link to="/create-game">
                     <button className="home-banner-button">Host A Game</button>
                   </Link>
                 )}
               </div>
               <div className="home-banner-text">
-                {!user && (
+                {!user ? (
                   <Link to="/SignUp">
                     <button className="home-banner-button">
                       Create Account
                     </button>
                   </Link>
-                )}
-                {user && (
+                ) : (
                   <Link to="/repertoires">
                     <button className="home-banner-button">
                       View Repertoires

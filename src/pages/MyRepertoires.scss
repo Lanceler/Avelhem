@@ -1,12 +1,6 @@
 .repertoires-body {
-    min-height: calc(100vh - 65px);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    // background-color: rgb(90, 0, 0);
-
+    height: 100%;
+    min-height: fit-content;
     background: linear-gradient(to bottom,
         rgb(190, 189, 189) 0%,
         rgb(224, 217, 217) 20%,
@@ -14,24 +8,53 @@
         rgb(187, 184, 184) 60%,
         rgb(160, 157, 157) 80%,
         rgb(114, 111, 111) 100%);
+}
 
-    background-repeat: no-repeat;
+
+.repertoires-content {
+    min-height: calc(100vh - 65px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    // justify-content: center;
+    background-size: cover;
     background-position: center;
 
     
 }
 
-.repertoires-content {
-    // background-color: blue;
-    display: flex;
+.repertoires-title {
+    padding-top: 10px;
+    height: 80px;
+    margin-bottom: 25px;
+
+    text-align: center;
+    font-family: Alegreya, Geogia, Times New Roman, "serif";
+    font-size: 4.5rem;
+    font-weight: 600;
+    color: goldenrod;
+
+    -webkit-text-stroke: 1.25px #fdd700;
+    text-shadow: rgb(0, 0, 0) 1px 0 10px;
 }
+
+.repertoires-selection{
+    display: flex;
+    flex-direction: row;
+    // background-color: aqua;
+}
+
+
 
 
 .black-border{
     border: 4px solid rgba(0, 0, 0, 1);
     margin: 10px;
     padding: 0;
+
 }
+
+
 
 
 .repertoire-frame {
@@ -45,13 +68,14 @@
     text-align: center;
     color: #e8e8e8;
 
-    background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
+    background: linear-gradient(to bottom, rgba(151, 8, 11,0.75), rgba(221, 35, 38,0.75) 60%, rgba(255, 90, 93,0.75) 100%);
     border: 7px groove rgb(236, 180, 36);
     box-shadow: 2px 2px 6px 2px rgba(0, 0, 0, 0.75);
 }
 
 .repertoire-frame:hover {
-    filter:brightness(1.2)
+    background: linear-gradient(to bottom, rgba(151, 8, 11,), rgba(221, 35, 38,) 60%, rgba(255, 90, 93) 100%);
+    filter:brightness(1.2);
 }
 
 .repertoire-name{
@@ -59,13 +83,12 @@
     font-size: 35px;
     height: 25%;
 
+
     font-family: "Times New Roman", Times, serif;
         
     text-overflow: ellipsis;
     overflow: hidden;
-    // margin-bottom: 25px;
 
-    // background-color: rgb(52, 136, 136);
 }
 
 .repertoire-desc {
@@ -103,7 +126,7 @@
 
 @media screen and (max-width: 1030px) {
 
-    .repertoires-content {
+    .repertoires-selection {
         flex-direction: column;
     }
     
@@ -126,4 +149,11 @@
         // display: none;
     }
 
+}
+
+@media screen and (max-width: 500px) {
+
+    .repertoires-title {
+        font-size: 2.5rem;
+    }
 }

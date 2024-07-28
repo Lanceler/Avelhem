@@ -76,23 +76,32 @@ export default function MyRepertoires() {
 
   return (
     <div className="repertoires-body">
-      <div className="repertoires-content">
-        {userData &&
-          userData.repertoire.map((rep, index) => (
-            <Link
-              to={`/repertoire/${index}`}
-              className="repertoire-link"
-              key={index}
-            >
-              <div className="black-border">
-                <div className="repertoire-frame">
-                  <div className="repertoire-name">{rep.name}</div>
+      <div
+        className="repertoires-content"
+        style={{
+          backgroundImage: `url(${getBannerImage("Heir")})`,
+        }}
+      >
+        <div className="repertoires-title">REPERTOIRES</div>
 
-                  <div className="repertoire-desc">{rep.description}</div>
+        <div className="repertoires-selection">
+          {userData &&
+            userData.repertoire.map((rep, index) => (
+              <Link
+                to={`/repertoire/${index}`}
+                className="repertoire-link"
+                key={index}
+              >
+                <div className="black-border">
+                  <div className="repertoire-frame">
+                    <div className="repertoire-name">{rep.name}</div>
+
+                    <div className="repertoire-desc">{rep.description}</div>
+                  </div>
                 </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            ))}
+        </div>
       </div>
 
       {isLoading && <Loading />}

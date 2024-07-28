@@ -152,7 +152,7 @@ import ManaBG from "../assets/banners/ManaBG.jpg";
 import MetalBG from "../assets/banners/MetalBG.jpg";
 import PlantBG from "../assets/banners/PlantBG.jpg";
 
-import LearnBanner from "../assets/banners/LearnBanner.png";
+import HeirBanner from "../assets/banners/HeirBanner.jpg";
 import InviteBanner from "../assets/banners/InviteBanner.jpg";
 import ChallengeBanner from "../assets/banners/ChallengeBanner.jpg";
 import ForeshadowBanner from "../assets/banners/ForeshadowBanner.jpg";
@@ -286,7 +286,7 @@ export const useGetImages = () => {
     Invoke,
     Rally,
     //banners
-    LearnBanner,
+    HeirBanner,
     ChallengeBanner,
     ForeshadowBanner,
     TeaBanner,
@@ -362,8 +362,8 @@ export const useGetImages = () => {
       case "Foreshadow":
         return ForeshadowBanner;
 
-      case "Learn":
-        return LearnBanner;
+      case "Heir":
+        return HeirBanner;
 
       case "Tea":
         return TeaBanner;
