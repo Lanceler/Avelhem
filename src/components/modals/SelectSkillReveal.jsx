@@ -160,11 +160,16 @@ const SelectSkillReveal = (props) => {
     }
 
     newGameState.currentResolution.push({
-      resolution: "Revealing Skill",
+      resolution: "Misc.",
+      resolution2: "Revealing Skill",
       player: enemy,
       skill: usableSkills[selectedSkill].id,
       title: revealTitle,
       message: revealMessage,
+      specMessage: revealMessage.replace(
+        "Your opponent",
+        `${self === "host" ? "Gold" : "Silver"} Sovereign`
+      ),
     });
 
     dispatch(updateState(newGameState));

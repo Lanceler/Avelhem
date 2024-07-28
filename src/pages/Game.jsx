@@ -218,8 +218,14 @@ export default function Game() {
       } else if (!gameData.guestId) {
         setPlayerStatus("join");
         setBanner({
-          title: "ACCEPT CHALLENGE",
-          buttonText: "Join",
+          // title: "ACCEPT CHALLENGE",
+          title: (
+            <>
+              INVITED BY: <br />
+              {gameData.hostName}
+            </>
+          ),
+          buttonText: "Accept Challenge",
         });
       } else {
         setPlayerStatus("spectate");

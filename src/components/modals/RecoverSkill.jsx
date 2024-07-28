@@ -47,6 +47,9 @@ const RecoverSkill = (props) => {
       ].includes(props.message)
     ) {
       let message = "Your opponent has recovered and revealed a skill.";
+      let specMessage = `${
+        self === "host" ? "Gold" : "Silver"
+      } Sovereign has recovered and revealed a skill.`;
 
       let title = "";
 
@@ -65,13 +68,15 @@ const RecoverSkill = (props) => {
       }
 
       newGameState.currentResolution.push({
-        resolution: "Revealing Skill",
+        resolution: "Misc.",
+        resolution2: "Revealing Skill",
         player: enemy,
         skill:
           newGameState[self].skillVestige[
             newGameState[self].skillVestige.length - 1 - selectedSkill
           ],
         message: message,
+        specMessage: specMessage,
         title: title,
       });
     }

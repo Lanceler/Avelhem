@@ -90,12 +90,15 @@ const SearchSkill = (props) => {
           ];
 
         newGameState.currentResolution.push({
-          resolution: "Revealing Skill",
+          resolution: "Misc.",
+          resolution2: "Revealing Skill",
           player: enemy,
           skill: chosenSkill,
           title: "Press the Attack",
-          message:
-            "Your opponent has searched for a skill that enables the activator to strike or blast.",
+          message: "Your opponent has searched for and revealed a skill.",
+          specMessage: `${
+            self === "host" ? "Gold" : "Silver"
+          } Sovereign has searched for and revealed a skill.`,
         });
       }
 
@@ -142,12 +145,16 @@ const SearchSkill = (props) => {
       }
 
       newGameState.currentResolution.push({
-        resolution: "Revealing Skill",
+        resolution: "Misc.",
+        resolution2: "Revealing Skill",
         player: enemy,
         skill: chosenSkill,
         title: "Foreshadow",
         message:
           "Your opponent has searched for, revealed, and discarded a skill.",
+        specMessage: `${
+          self === "host" ? "Gold" : "Silver"
+        } Sovereign has searched for, revealed, and discarded a skill.`,
       });
 
       //add selected skill from repertoire to vestige

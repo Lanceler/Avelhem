@@ -94,8 +94,6 @@ const Board = (props) => {
   const { demoGuide } = useSelector((state) => state.demoGuide);
   const { magnifiedSkill } = useSelector((state) => state.magnifiedSkill);
 
-  const [error, setError] = useState(false);
-
   const [zones, setZones] = useState(null);
 
   const [validZones, setValidZones] = useState([]);
@@ -541,13 +539,11 @@ const Board = (props) => {
   useEffect(() => {
     dispatch(updateMagnifiedSkill(null));
 
-    if (props.userRole === "host") {
-      dispatch(updateSelf("host"));
-      dispatch(updateEnemy("guest"));
-    } else if (props.userRole === "guest") {
+    if (props.userRole === "guest") {
       dispatch(updateSelf("guest"));
       dispatch(updateEnemy("host"));
     } else {
+      // host or spectator
       dispatch(updateSelf("host"));
       dispatch(updateEnemy("guest"));
     }
@@ -630,11 +626,26 @@ const Board = (props) => {
                   title={lastResolution.title}
                   message={lastResolution.specMessage}
                   updateFirebase={updateFirebase}
-                  spectator={true}
                 />
               )}
             </>
           );
+
+        case "Revealing Skill":
+          return (
+            <>
+              {!hideModal && (
+                <ViewRevealedSkill
+                  skill={lastResolution.skill}
+                  title={lastResolution.title}
+                  message={lastResolution.specMessage}
+                  updateFirebase={updateFirebase}
+                  hideOrRevealModale={hideOrRevealModale}
+                />
+              )}
+            </>
+          );
+
         default:
           return;
       }
@@ -1019,21 +1030,6 @@ const Board = (props) => {
           </>
         );
 
-      case "Revealing Skill":
-        return (
-          <>
-            {self === lastResolution.player && !hideModal && (
-              <ViewRevealedSkill
-                skill={lastResolution.skill}
-                title={lastResolution.title}
-                message={lastResolution.message}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
       case "Avelhem Conclusion":
         if (self === lastResolution.player) {
           avelhemConclusion(
@@ -1329,6 +1325,21 @@ const Board = (props) => {
                     details={lastResolution.details}
                     hideOrRevealModale={hideOrRevealModale}
                     updateFirebase={updateFirebase}
+                  />
+                )}
+              </>
+            );
+
+          case "Revealing Skill":
+            return (
+              <>
+                {self === lastResolution.player && !hideModal && (
+                  <ViewRevealedSkill
+                    skill={lastResolution.skill}
+                    title={lastResolution.title}
+                    message={lastResolution.message}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
                   />
                 )}
               </>
@@ -4005,7 +4016,7 @@ const Board = (props) => {
         if (self === "host" && !lastResolution.resolution2) {
           return (
             <>
-              <SelectFirstPlayer handleSetFirstPlayer={handleSetFirstPlayer} />
+              <SelectFirstPlayer updateFirebase={updateFirebase} />
             </>
           );
         }
@@ -4955,87 +4966,6 @@ const Board = (props) => {
   };
 
   //=========================
-  const handleSetFirstPlayer = (choice) => {
-    const newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    newGameState.turnPlayer = choice;
-
-    let hostSkillRepertoire = [...newGameState.host.skillRepertoire];
-    hostSkillRepertoire = shuffleCards(hostSkillRepertoire);
-    let hostStartingHand = hostSkillRepertoire.splice(
-      hostSkillRepertoire.length - 4,
-      4
-    );
-
-    newGameState.host.skillHand = hostStartingHand;
-    newGameState.host.skillRepertoire = hostSkillRepertoire;
-
-    let hostAvelhemRepertoire = [...newGameState.host.avelhemRepertoire];
-    newGameState.host.avelhemRepertoire = shuffleCards(hostAvelhemRepertoire);
-    let guestSkillRepertoire = [...newGameState.guest.skillRepertoire];
-    guestSkillRepertoire = shuffleCards(guestSkillRepertoire);
-
-    let guestStartingHand = guestSkillRepertoire.splice(
-      guestSkillRepertoire.length - 4,
-      4
-    );
-
-    newGameState.guest.skillHand = guestStartingHand;
-    newGameState.guest.skillRepertoire = guestSkillRepertoire;
-
-    let guestAvelhemRepertoire = [...newGameState.guest.avelhemRepertoire];
-    newGameState.guest.avelhemRepertoire = shuffleCards(guestAvelhemRepertoire);
-
-    newGameState.guest.skillHand.push("SX-01");
-    newGameState.host.skillHand.push("SX-01");
-
-    if (choice === "host") {
-      newGameState.guest.skillHand.push("SX-01");
-      newGameState.host.skillVestige.push("SX-01");
-    } else {
-      newGameState.host.skillHand.push("SX-01");
-      newGameState.guest.skillVestige.push("SX-01");
-    }
-
-    newGameState.host.units = [
-      newUnitStats("host", 0, 6, 0, "Pawn"),
-      newUnitStats("host", 1, 6, 2, "Pawn"),
-      newUnitStats("host", 2, 6, 4, "Pawn"),
-    ];
-
-    newGameState.guest.units = [
-      newUnitStats("guest", 0, 3, 4, "Pawn"),
-      newUnitStats("guest", 1, 3, 2, "Pawn"),
-      newUnitStats("guest", 2, 3, 0, "Pawn"),
-    ];
-
-    let newZoneInfo = [...zones];
-
-    newZoneInfo[6][0].player = "host";
-    newZoneInfo[6][0].unitIndex = 0;
-    newZoneInfo[6][2].player = "host";
-    newZoneInfo[6][2].unitIndex = 1;
-    newZoneInfo[6][4].player = "host";
-    newZoneInfo[6][4].unitIndex = 2;
-    newZoneInfo[3][0].player = "guest";
-    newZoneInfo[3][0].unitIndex = 2;
-    newZoneInfo[3][2].player = "guest";
-    newZoneInfo[3][2].unitIndex = 1;
-    newZoneInfo[3][4].player = "guest";
-    newZoneInfo[3][4].unitIndex = 0;
-
-    newGameState.zones = JSON.stringify(newZoneInfo);
-
-    newGameState.turnCount = 1;
-    newGameState.turnPhase = "Acquisition";
-    newGameState.currentResolution.push({
-      resolution: "Acquisition Phase Selection",
-    });
-
-    dispatch(updateState(newGameState));
-
-    updateFirebase(newGameState);
-  };
 
   const canClick = (element, element2) => {
     switch (demoGuide) {
