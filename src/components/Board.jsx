@@ -627,10 +627,6 @@ const Board = (props) => {
   //Current Resolution Prompt below
 
   const currentResolutionPrompt = () => {
-    if (props.userRole === "spectator") {
-      return;
-    }
-
     let lastResolution = { resolution: "" };
 
     if (localGameState.currentResolution.length > 0) {
@@ -638,6 +634,26 @@ const Board = (props) => {
         localGameState.currentResolution[
           localGameState.currentResolution.length - 1
         ];
+    }
+
+    if (props.userRole === "spectator") {
+      switch (lastResolution.resolution2) {
+        case "Message To Player":
+          return (
+            <>
+              {lastResolution.specMessage && (
+                <MessageToPlayer
+                  title={lastResolution.title}
+                  message={lastResolution.specMessage}
+                  updateFirebase={updateFirebase}
+                  spectator={true}
+                />
+              )}
+            </>
+          );
+        default:
+          return;
+      }
     }
 
     switch (lastResolution.resolution) {
@@ -4088,20 +4104,12 @@ const Board = (props) => {
   //Helper functions below
 
   const animationDelay = () => {
-    let time = 1250;
-
-    if (props.demo) {
-      time = 300;
-    }
+    let time = props.demo ? 230 : 750;
 
     setTimeout(() => {
       const newGameState = JSON.parse(JSON.stringify(localGameState));
-
       newGameState.currentResolution.pop();
-
       dispatch(updateState(newGameState));
-
-      // updateFirebase(newGameState);
     }, time);
   };
 
@@ -5358,7 +5366,7 @@ const Board = (props) => {
     <div className="board-body">
       {zones && localGameState && (
         <>
-          <div className="board-data">
+          {/* <div className="board-data">
             Initiator:{" "}
             {localGameState.turnPlayer !== null &&
               localGameState[localGameState.turnPlayer].displayName}
@@ -5367,7 +5375,7 @@ const Board = (props) => {
             <br />
             Phase: {localGameState.turnPhase}
             <br />
-            {/* Resolution: */}{" "}
+
             {localGameState.currentResolution.length > 0 && (
               <>
                 {
@@ -5378,7 +5386,7 @@ const Board = (props) => {
               </>
             )}
             <br />
-            {/* Resolution2: */}{" "}
+
             {localGameState.currentResolution.length > 0 && (
               <>
                 {
@@ -5389,11 +5397,16 @@ const Board = (props) => {
               </>
             )}
             <br />
-            {/* {JSON.stringify(tileMode)} {validZones.length} */}
-          </div>
+
+          </div> */}
 
           <div className="board-physical">
-            <div className="board-space">
+            <div
+              // className="board-space"
+              className={`board-space ${
+                isYourTurn() ? "board-space-turn" : ""
+              }`}
+            >
               <div className="board-left">
                 <div className="board-left-buttons">
                   {props.userRole === "spectator" && (
@@ -5811,6 +5824,37 @@ const Board = (props) => {
                 <InfoPopUp info={infoPopUp} setInfoPopUp={setInfoPopUp} />
               )}
             </div>
+          </div>
+
+          <div className="board-data">
+            Initiator:{" "}
+            {localGameState.turnPlayer !== null &&
+              localGameState[localGameState.turnPlayer].displayName}
+            <br />
+            Turn Count: {localGameState.turnCount}
+            <br />
+            Phase: {localGameState.turnPhase}
+            <br />
+            {localGameState.currentResolution.length > 0 && (
+              <>
+                {
+                  localGameState.currentResolution[
+                    localGameState.currentResolution.length - 1
+                  ].resolution
+                }
+              </>
+            )}
+            <br />
+            {localGameState.currentResolution.length > 0 && (
+              <>
+                {
+                  localGameState.currentResolution[
+                    localGameState.currentResolution.length - 1
+                  ].resolution2
+                }
+              </>
+            )}
+            <br />
           </div>
         </>
       )}

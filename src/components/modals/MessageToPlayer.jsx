@@ -45,8 +45,10 @@ const MessageToPlayer = (props) => {
           <div className="modalTitle">{props.title}</div>
         </div>
 
+        <br />
+
         <div className="modalContent">
-          <h3>{props.message}</h3>
+          <h3 style={{ maxWidth: 700 }}>{props.message}</h3>
         </div>
 
         <div className="modalBottomButton">

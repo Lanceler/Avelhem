@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import "./DisplayedCard.css";
 
 import { useSelector, useDispatch } from "react-redux";
+import { updateMagnifiedSkill } from "../../redux/magnifySkill";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 import { useGetImages } from "../../hooks/useGetImages";
 import { useCardDatabase } from "../../hooks/useCardDatabase";
@@ -11,6 +15,7 @@ import { AnimatePresence, motion } from "framer-motion";
 const ActivatedSkills = () => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
+  const dispatch = useDispatch();
   const { getCardImage } = useGetImages();
 
   return (
@@ -44,12 +49,19 @@ const ActivatedSkills = () => {
                 transform: `rotate(${
                   (localGameState.activatingSkill.length - (i + 1)) * -10
                 }deg)`,
-                backgroundImage: `url(${getCardImage(
-                  card
-                  // localGameState.activatingSkill[i]
-                )})`,
+                backgroundImage: `url(${getCardImage(card)})`,
               }}
-            ></motion.div>
+            >
+              <button
+                className="zoom-button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  dispatch(updateMagnifiedSkill(card));
+                }}
+              >
+                <FontAwesomeIcon icon={faMagnifyingGlass} />
+              </button>
+            </motion.div>
           ))}
         </AnimatePresence>
       </div>

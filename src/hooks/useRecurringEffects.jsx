@@ -3049,7 +3049,7 @@ export const useRecurringEffects = () => {
       case "SA-04": // Reminiscence
         return (
           localGameState[self].skillVestige.length > 0 ||
-          localGameState[self].avelhemVestige.length
+          localGameState[self].avelhemVestige.length > 0
         );
 
       case "SA-05": // Foreshadow

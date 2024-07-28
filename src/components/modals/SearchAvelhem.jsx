@@ -56,7 +56,12 @@ const SearchAvelhem = (props) => {
           resolution2: "Message To Player",
           player: enemy,
           title: "Transmute",
-          message: `Your oppnent has search for 1 ${avelhemToScion(
+          message: `Your opponent has searched for 1 ${avelhemToScion(
+            parseInt(chosenAvelhem)
+          ).replace("Scion", "Avelhem")} and added it to their hand.`,
+          specMessage: `${
+            self === "host" ? "Gold" : "Silver"
+          } Sovereign has searched for 1 ${avelhemToScion(
             parseInt(chosenAvelhem)
           ).replace("Scion", "Avelhem")} and added it to their hand.`,
         });

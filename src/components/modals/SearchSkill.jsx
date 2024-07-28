@@ -74,7 +74,12 @@ const SearchSkill = (props) => {
           resolution2: "Message To Player",
           player: enemy,
           title: "Transmute",
-          message: `Your oppnent has searched for 1 ${avelhemToScion(
+          message: `Your opponent has searched for 1 ${avelhemToScion(
+            parseInt(skillCode)
+          ).replace("Scion", "Skill")} and added it to their hand.`,
+          specMessage: `${
+            self === "host" ? "Gold" : "Silver"
+          } Sovereign has searched for 1 ${avelhemToScion(
             parseInt(skillCode)
           ).replace("Scion", "Skill")} and added it to their hand.`,
         });

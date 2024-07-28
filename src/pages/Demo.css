@@ -40,7 +40,8 @@
 
 .demo-switch-button {
     position: absolute;
-    top: 845px;
+    /* top: 845px; */
+    top: 705px;
     left: 160px;
     margin: 0px;
     z-index: 4;
@@ -49,7 +50,8 @@
 .demo-instructions{
     position: absolute;
     z-index: 5;
-    top: 205px;
+    /* top: 205px; */
+    top: 65px;
     left: 750px;
 
     margin: 0px;
@@ -78,7 +80,8 @@
 .demo-instructions-button{
     position: absolute;
     z-index: 5;
-    top: 390px;
+    /* top: 390px; */
+    top: 250px;
     left: 1279px;
     margin: 0px;
 }

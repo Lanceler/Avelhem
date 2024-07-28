@@ -306,6 +306,9 @@ const YouMayNoYes = (props) => {
           player: enemy,
           title: "Mana Restructure",
           message: "Your opponent has floated 1 Mana skill from their hand.",
+          specMessage: `${
+            self === "host" ? "Gold" : "Silver"
+          } Sovereign has floated 1 Mana skill from their hand.`,
         });
         break;
 

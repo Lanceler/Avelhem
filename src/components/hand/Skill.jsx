@@ -15,8 +15,6 @@ const Skill = (props) => {
 
   const { getCardImage } = useGetImages();
 
-  const image = getCardImage(props.usableSkill.id);
-
   return (
     <>
       <div
@@ -24,7 +22,7 @@ const Skill = (props) => {
           !props.canActivateSkill ? "cannotUseSkill" : ""
         }`}
         style={{
-          backgroundImage: `url(${image})`,
+          backgroundImage: `url(${getCardImage(props.usableSkill.id)})`,
         }}
       >
         <button

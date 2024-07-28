@@ -115,6 +115,9 @@ const InspectSkill = (props) => {
           title: "Heir’s Endeavor",
           message:
             "Your opponent has floated 1 Sovereign skill from their repertoire.",
+          specMessage: `${
+            self === "host" ? "Gold" : "Silver"
+          } Sovereign has floated 1 Sovereign skill from their repertoire.`,
         });
         break;
 
@@ -126,6 +129,9 @@ const InspectSkill = (props) => {
           title: "Arc Flash",
           message:
             "Your opponent has floated 1 Lightning skill from their repertoire.",
+          specMessage: `${
+            self === "host" ? "Gold" : "Silver"
+          } Sovereign has floated 1 Lightning skill from their repertoire.`,
         });
         break;
 

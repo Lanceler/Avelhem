@@ -189,6 +189,11 @@ const SelectSkillHandMulti = (props) => {
           player: enemy,
           title: "Defiance: Artifice",
           message: `Your opponent has returned ${skillsToReturn.length} skills to their repertoire and drawn the same number.`,
+          specMessage: `${
+            self === "host" ? "Gold" : "Silver"
+          } Sovereign has returned ${
+            skillsToReturn.length
+          } skills to their repertoire and drawn the same number.`,
         });
 
         break;
@@ -260,12 +265,19 @@ const SelectSkillHandMulti = (props) => {
         //7. inform enemy of aspects
 
         let transmuteMessage = "";
+        let specTransmuteMessage = "";
 
         switch (skillsToShuffle.length) {
           case 1:
             transmuteMessage = `Your opponent has revealed a skill with the following aspect: ${avelhemToScion(
               parseInt(skillsToShuffle[0])
             ).replace(" Scion", "")}.`;
+            specTransmuteMessage = `${
+              self === "host" ? "Gold" : "Silver"
+            } Sovereign has revealed a skill with the following aspect: ${avelhemToScion(
+              parseInt(skillsToShuffle[0])
+            ).replace(" Scion", "")}.`;
+
             break;
           case 2:
             transmuteMessage = `Your opponent has revealed skills with the following aspects: ${avelhemToScion(
@@ -273,6 +285,15 @@ const SelectSkillHandMulti = (props) => {
             ).replace(" Scion", "")} and ${avelhemToScion(
               parseInt(skillsToShuffle[1])
             ).replace(" Scion", "")}.`;
+
+            specTransmuteMessage = `${
+              self === "host" ? "Gold" : "Silver"
+            } Sovereign has revealed skills with the following aspects: ${avelhemToScion(
+              parseInt(skillsToShuffle[0])
+            ).replace(" Scion", "")} and ${avelhemToScion(
+              parseInt(skillsToShuffle[1])
+            ).replace(" Scion", "")}.`;
+
             break;
         }
 
@@ -284,6 +305,7 @@ const SelectSkillHandMulti = (props) => {
           player: enemy,
           title: "Transmute",
           message: transmuteMessage,
+          specMessage: specTransmuteMessage,
         });
 
         break;
