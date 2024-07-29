@@ -1,14 +1,23 @@
 .create-game-body{
     height: 100%;
     min-height: fit-content;
+    max-height: 1200px;
 
-    background: linear-gradient(to bottom,
+    /* background: linear-gradient(to bottom,
         rgb(190, 189, 189) 0%,
         rgb(224, 217, 217) 20%,
         rgb(211, 205, 205) 40%,
         rgb(187, 184, 184) 60%,
         rgb(160, 157, 157) 80%,
-        rgb(114, 111, 111) 100%);
+        rgb(114, 111, 111) 100%); */
+
+
+    background: #181818;
+
+
+
+    background-size: cover;
+    background-position: center;
 
     /* background: aqua;  */
 }
@@ -33,18 +42,21 @@
 
 .create-game-content {
     display: flex;
-    height: calc(100vh - 65px - 90px);
+    /* min-height: 1200px; */
+    /* height: calc(100vh - 65px - 90px); */
     /* background-color: #333; */
     /* background-color: goldenrod; */
     padding: 30px;
 
-    /* background-color: aqua */
+    /* background-color: rgb(0, 255, 64) */
 }
 
 
 
 .create-game-elemental, .create-game-soon{
-    height: calc(100% - 30px);
+    /* height: calc(100% - 30px); */
+    /* min-height: 1200px; */
+    height: 750px;
     width: 50%;
 
     position: relative;

@@ -28,7 +28,7 @@ export default function MyGames() {
   const { user } = useAuthContext();
   const navigate = useNavigate();
 
-  const { getBannerImage, getMiscImage } = useGetImages();
+  const { getBannerImage } = useGetImages();
   const [bannerIndex, setBannerIndex] = useState(0);
 
   const bannerImages = [
@@ -144,7 +144,12 @@ export default function MyGames() {
   };
 
   return (
-    <div className="create-game-body">
+    <div
+      className="create-game-body"
+      // style={{
+      //   backgroundImage: `url(${getBannerImage("Challenge")})`,
+      // }}
+    >
       <div className="create-game-header">CREATE GAME</div>
       <div className="create-game-content">
         <div
