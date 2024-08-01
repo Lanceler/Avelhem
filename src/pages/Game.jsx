@@ -228,7 +228,14 @@ export default function Game() {
           buttonText: "Accept Challenge",
         });
       } else {
-        setPlayerStatus("spectate");
+        if (
+          gameData.gameState.guest.skillRepertoire &&
+          gameData.gameState.host.skillRepertoire
+        )
+          setPlayerStatus("spectate");
+        else {
+          setPlayerStatus("spectate wait");
+        }
       }
     }
   }, [gameData, userRole, gameError]);

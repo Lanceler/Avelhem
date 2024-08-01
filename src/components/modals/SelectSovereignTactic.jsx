@@ -36,15 +36,7 @@ const SelectSovereignTactic = (props) => {
       abilityDetails = [
         {
           abilityName: "Deploy Pawn",
-          abilityQualifier: (
-            <div className="abilityQualifier">
-              {newGameState[self].bountyUpgrades.tactics < 2 && (
-                <div style={{ fontSize: 18 }}>
-                  {/* Can be upgraded <br /> via Bounty Phase <br /> (2nd Tactics). */}
-                </div>
-              )}
-            </div>
-          ),
+          abilityQualifier: <div className="abilityQualifier"></div>,
           abilityText: (
             <>
               <div className="abilityText ">
@@ -52,7 +44,7 @@ const SelectSovereignTactic = (props) => {
               </div>
               <div className="abilityText ">
                 ⬩
-                {newGameState[self].bountyUpgrades.tactics < 2 && (
+                {newGameState[self].bountyUpgrades.tactics < 1 && (
                   <>If upgraded: </>
                 )}
                 You may draw 1 Avelhem.
@@ -75,8 +67,8 @@ const SelectSovereignTactic = (props) => {
           abilityName: "Deploy Scion",
           abilityQualifier: (
             <div className="abilityQualifier">
-              {newGameState[self].bountyUpgrades.tactics < 4 && (
-                <div style={{ fontSize: 18 }}>Available after upgrade.</div>
+              {newGameState[self].bountyUpgrades.tactics < 3 && (
+                <div style={{ fontSize: 20 }}>Must be unlocked</div>
               )}
             </div>
           ),
@@ -148,17 +140,11 @@ const SelectSovereignTactic = (props) => {
         },
         {
           abilityName: "Divine Invocation",
-          abilityQualifier: (
-            <div className="abilityQualifier">
-              {newGameState[self].bountyUpgrades.tactics < 1 && (
-                <div style={{ fontSize: 18 }}>Available after upgrade.</div>
-              )}
-            </div>
-          ),
+          abilityQualifier: <div className="abilityQualifier"></div>,
           abilityText: (
             <>
               <div className="abilityText ">⬩Gain 2 FD.</div>
-              <div className="abilityText ">⬩Draw 1 Avelhem.</div>
+              {/* <div className="abilityText ">⬩Draw 1 Avelhem.</div> */}
               <div className="abilityText ">
                 ⬩You may recover 1 “Transcendence”.
               </div>
@@ -199,7 +185,7 @@ const SelectSovereignTactic = (props) => {
             return newGameState[self].fateDefiances >= 6;
           case 2:
             return (
-              newGameState[self].bountyUpgrades.tactics >= 4 &&
+              newGameState[self].bountyUpgrades.tactics >= 3 &&
               canDeploy() &&
               newGameState[self].skillHand.length > 0
             );
@@ -223,10 +209,11 @@ const SelectSovereignTactic = (props) => {
         switch (i) {
           case 0:
           case 1:
+          case 2:
             return true;
 
-          case 2:
-            return newGameState[self].bountyUpgrades.tactics > 0;
+          // case 2:
+          //   return newGameState[self].bountyUpgrades.tactics > 0;
         }
         break;
 
@@ -267,7 +254,7 @@ const SelectSovereignTactic = (props) => {
           case 0:
             updateData = false;
 
-            if (newGameState[self].bountyUpgrades.tactics >= 2) {
+            if (newGameState[self].bountyUpgrades.tactics >= 1) {
               newGameState.currentResolution.push({
                 resolution: "Misc.",
                 resolution2: "Advance Avelhem Draw",
@@ -295,7 +282,6 @@ const SelectSovereignTactic = (props) => {
             //Gain assault command
             newGameState.tactics[props.dice].stock += 1;
             newGameState.tactics[props.dice].face = "Assault";
-
             break;
 
           case 2:
@@ -313,7 +299,6 @@ const SelectSovereignTactic = (props) => {
                 message: "Deploy a Scion; choose their class.",
               },
             });
-
             break;
         }
         break;
@@ -348,7 +333,7 @@ const SelectSovereignTactic = (props) => {
             );
 
             //Draw 1 Avelhem
-            newGameState = drawAvelhem(newGameState);
+            // newGameState = drawAvelhem(newGameState);
 
             //Recover Transcendence
             if (newGameState[self].skillVestige.includes("SX-01")) {

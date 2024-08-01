@@ -171,10 +171,10 @@ const BountyPhase = (props) => {
   // const frontierCosts = [2, 3, 5];
   // frontier reworked
   const frontierCosts = [4, 6, 10];
-  const acquisitionCosts = [3, 3, 3];
-  const coordinationCosts = [3, 3];
-  const tacticsCosts = [2, 2, 2, 2];
-  const avelhemCosts = [3, 3, 3, 3];
+  const acquisitionCosts = [2, 3, 3];
+  const coordinationCosts = [4, 4];
+  const tacticsCosts = [2, 3, 3];
+  const avelhemCosts = [2, 3, 3];
   const victoryCosts = [10, 5];
 
   const canFrontier = [
@@ -407,7 +407,9 @@ const BountyPhase = (props) => {
                 >
                   <div className="modalBountyContents">
                     <h4 className="modalChoiceText modalBountyText">
-                      Upgrade Appoint: Grant the pawn Shield for 2 turns.
+                      Upgrade Beseech:
+                      <br />
+                      Gain 1 FD
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
                       {localGameState[self].bountyUpgrades.acquisition > 0
@@ -432,9 +434,7 @@ const BountyPhase = (props) => {
                 >
                   <div className="modalBountyContents">
                     <h4 className="modalChoiceText modalBountyText">
-                      Upgrade Beseech:
-                      <br />
-                      Gain 1 FD.
+                      Upgrade Appoint: Grant the pawn Shield for 2 turns
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
                       {localGameState[self].bountyUpgrades.acquisition > 1
@@ -461,7 +461,7 @@ const BountyPhase = (props) => {
                     <h4 className="modalChoiceText modalBountyText">
                       Upgrade Cultivate:
                       <br />
-                      You may spend 1 skill to draw again.
+                      You may spend 1 FD to recover 1 “Transcendence”
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
                       {localGameState[self].bountyUpgrades.acquisition > 2
@@ -493,7 +493,7 @@ const BountyPhase = (props) => {
                 >
                   <div className="modalBountyContents">
                     <h4 className="modalChoiceText modalBountyText">
-                      Upgrade Battle Cry: Roll 1 tactical die.
+                      Upgrade Battle Cry: Roll 1 tactical die
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
                       {localGameState[self].bountyUpgrades.coordination > 0
@@ -518,7 +518,7 @@ const BountyPhase = (props) => {
                 >
                   <div className="modalBountyContents">
                     <h4 className="modalChoiceText modalBountyText">
-                      Upgrade Convene: Gain 1 Advance tactic and draw 1 Avelhem.
+                      Upgrade Convene: Gain 1 Advance tactic and draw 1 Avelhem
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
                       {localGameState[self].bountyUpgrades.coordination > 1
@@ -573,7 +573,7 @@ const BountyPhase = (props) => {
             </h3>
             <div className="modalContent">
               <div
-                className={`modalChoice1 modalChoice3 ${
+                className={`modalChoice1 modalChoice2 ${
                   selectedChoice === 10 ? "selectedModalChoice" : ""
                 } `}
                 style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
@@ -586,7 +586,9 @@ const BountyPhase = (props) => {
                 >
                   <div className="modalBountyContents">
                     <h4 className="modalChoiceText modalBountyText">
-                      Upgrade Invoke.
+                      Upgrade Advance:
+                      <br />
+                      After deploying a pawn, you may draw <br /> 1 Avelhem
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
                       {localGameState[self].bountyUpgrades.tactics > 0
@@ -598,7 +600,7 @@ const BountyPhase = (props) => {
               </div>
 
               <div
-                className={`modalChoice1 modalChoice3 ${
+                className={`modalChoice1 modalChoice2 ${
                   selectedChoice === 11 ? "selectedModalChoice" : ""
                 } `}
                 style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
@@ -611,7 +613,9 @@ const BountyPhase = (props) => {
                 >
                   <div className="modalBountyContents">
                     <h4 className="modalChoiceText modalBountyText">
-                      Upgrade Advance.
+                      Upgrade Mobilize:
+                      <br />
+                      Increase instances to 4
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
                       {localGameState[self].bountyUpgrades.tactics > 1
@@ -623,7 +627,7 @@ const BountyPhase = (props) => {
               </div>
 
               <div
-                className={`modalChoice1 modalChoice3 ${
+                className={`modalChoice1 modalChoice2 ${
                   selectedChoice === 12 ? "selectedModalChoice" : ""
                 } `}
                 style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
@@ -636,37 +640,14 @@ const BountyPhase = (props) => {
                 >
                   <div className="modalBountyContents">
                     <h4 className="modalChoiceText modalBountyText">
-                      Upgrade Mobilize.
+                      Upgrade Advance:
+                      <br />
+                      Unlock “Deploy Scion”
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
                       {localGameState[self].bountyUpgrades.tactics > 2
                         ? "Purchased"
                         : `Cost: ${tacticsCosts[2]} BP`}
-                    </h4>
-                  </div>
-                </div>
-              </div>
-
-              <div
-                className={`modalChoice1 modalChoice3 ${
-                  selectedChoice === 13 ? "selectedModalChoice" : ""
-                } `}
-                style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
-                onClick={() => handleSelect(13, canTactics[3])}
-              >
-                <div
-                  className={`modalChoiceContent ${
-                    canTactics[3] ? "" : "disabledModalChoice"
-                  } `}
-                >
-                  <div className="modalBountyContents">
-                    <h4 className="modalChoiceText modalBountyText">
-                      Upgrade Advance further.
-                    </h4>
-                    <h4 className="modalChoiceText modalBountyText modalCost">
-                      {localGameState[self].bountyUpgrades.tactics > 3
-                        ? "Purchased"
-                        : `Cost: ${tacticsCosts[3]} BP`}
                     </h4>
                   </div>
                 </div>
@@ -680,7 +661,7 @@ const BountyPhase = (props) => {
             <h3 className="modalChoiceName2">Avelhem</h3>
             <div className="modalContent">
               <div
-                className={`modalChoice1 modalChoice3 ${
+                className={`modalChoice1 modalChoice2 ${
                   selectedChoice === 14 ? "selectedModalChoice" : ""
                 } `}
                 style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
@@ -693,7 +674,7 @@ const BountyPhase = (props) => {
                 >
                   <div className="modalBountyContents">
                     <h4 className="modalChoiceText modalBountyText">
-                      Your hand can retain up to 1 Avelhem at the Final Phase.
+                      Your hand can retain up to 1 Avelhem at the Final Phase
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
                       {localGameState[self].bountyUpgrades.avelhem > 0
@@ -705,7 +686,7 @@ const BountyPhase = (props) => {
               </div>
 
               <div
-                className={`modalChoice1 modalChoice3 ${
+                className={`modalChoice1 modalChoice2 ${
                   selectedChoice === 15 ? "selectedModalChoice" : ""
                 } `}
                 style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
@@ -718,9 +699,9 @@ const BountyPhase = (props) => {
                 >
                   <div className="modalBountyContents">
                     <h4 className="modalChoiceText modalBountyText">
-                      <p style={{ fontSize: 16.5 }}>
-                        Avelhem alternate effect: Spend 3 FD to search for 1
-                        non-burst skill with the matching aspect.
+                      <p>
+                        When your pawns ascend via an Avelhem, grant them Shield
+                        for 2 turns
                       </p>
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
@@ -733,7 +714,7 @@ const BountyPhase = (props) => {
               </div>
 
               <div
-                className={`modalChoice1 modalChoice3 ${
+                className={`modalChoice1 modalChoice2 ${
                   selectedChoice === 16 ? "selectedModalChoice" : ""
                 } `}
                 style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
@@ -746,9 +727,9 @@ const BountyPhase = (props) => {
                 >
                   <div className="modalBountyContents">
                     <h4 className="modalChoiceText modalBountyText">
-                      <p style={{ fontSize: 18.5 }}>
-                        When your pawns ascend via an Avelhem, grant them Shield
-                        for 2 turns.
+                      <p style={{ fontSize: 20 }}>
+                        Unlock Avelhem alternate effect: Spend 3 FD to recover 1
+                        skill with the matching aspect.
                       </p>
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
@@ -760,7 +741,7 @@ const BountyPhase = (props) => {
                 </div>
               </div>
 
-              <div
+              {/* <div
                 className={`modalChoice1 modalChoice3 ${
                   selectedChoice === 17 ? "selectedModalChoice" : ""
                 } `}
@@ -775,8 +756,8 @@ const BountyPhase = (props) => {
                   <div className="modalBountyContents">
                     <h4 className="modalChoiceText modalBountyText">
                       <p style={{ fontSize: 16.5 }}>
-                        Avelhem alternate effect: Spend 3 FD to recover 1 skill
-                        with the matching aspect.
+                        Your Avelhems have an alternate effect: Spend 3 FD to
+                        recover 1 skill with the matching aspect.
                       </p>
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
@@ -786,7 +767,7 @@ const BountyPhase = (props) => {
                     </h4>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

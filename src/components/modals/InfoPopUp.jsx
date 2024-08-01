@@ -69,8 +69,8 @@ const InfoPopUp = (props) => {
                 ⬩Spend 6 FD to gain an Assault tactic.
               </li>
               <li className="unitInfo-text-desc">
-                ⬩<em>(Available after upgrading Advance twice)</em> Float 1
-                skill to deploy a Scion in your frontier.
+                ⬩Float 1 skill to deploy a Scion in your frontier.{" "}
+                <em>(Must be unlocked.)</em>
               </li>
             </ol>
             <div className="unitInfo-text-heading2">Unit Tactical Actions</div>
@@ -106,11 +106,11 @@ const InfoPopUp = (props) => {
             </ol>
 
             <div className="unitInfo-text-heading2">
-              {/* <em> */}
-              Note: Mobilize provides 3 (4 if upgraded) instances. Once a unit
-              has used any instances of a Mobilize tactic, they are prohibited
-              from using its remainder.
-              {/* </em> */}
+              <em>
+                Note: Mobilize provides 3 (4 if upgraded) instances. Once a unit
+                has used any instances of a Mobilize tactic, they are prohibited
+                from using its remainder.
+              </em>
             </div>
 
             <br />
@@ -142,8 +142,7 @@ const InfoPopUp = (props) => {
               <li className="unitInfo-text-desc">⬩Draw 3 Avelhems.</li>
               <li className="unitInfo-text-desc">⬩Draw 2 skills.</li>
               <li className="unitInfo-text-desc">
-                ⬩<em>(Available after upgrading Invoke)</em> Gain 2 FD. ⬩Draw 1
-                Avelhem. ⬩You may recover 1 “Transcendence”.
+                ⬩Gain 2 FD. ⬩You may recover 1 “Transcendence”.
               </li>
             </ol>
 

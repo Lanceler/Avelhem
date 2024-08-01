@@ -214,7 +214,19 @@ const SearchSkill = (props) => {
       ...floaters,
     ];
 
+    newGameState.currentResolution.push({
+      resolution: "Misc.",
+      resolution2: "Message To Player",
+      player: enemy,
+      title: "Unsuccessful Search",
+      message: `Your opponent has failed to search for a valid card.`,
+      specMessage: `${
+        self === "host" ? "Gold" : "Silver"
+      } Sovereign has failed to search for a valid card.`,
+    });
+
     dispatch(updateState(newGameState));
+    props.updateFirebase(newGameState);
   };
 
   const handleViewBoard = () => {

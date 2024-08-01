@@ -25,20 +25,12 @@ const AcquisitionPhase = (props) => {
   let abilityDetails = [
     {
       abilityName: "Appoint",
-      abilityQualifier: (
-        <div className="">
-          {upgrade < 1 && (
-            <div>
-              Can be upgraded <br /> via Bounty Phase <br /> (1st Acquisition).
-            </div>
-          )}
-        </div>
-      ),
+
       abilityText: (
         <>
           <div className=" ">⬩Deploy a pawn in your frontier.</div>
           <div className=" ">
-            ⬩{upgrade < 1 && <>If upgraded: </>}
+            ⬩{upgrade < 2 && <>If upgraded: </>}
             Grant them Shield for 2 turns.
           </div>
         </>
@@ -46,20 +38,12 @@ const AcquisitionPhase = (props) => {
     },
     {
       abilityName: "Beseech",
-      abilityQualifier: (
-        <div className="">
-          {upgrade < 2 && (
-            <div style={{ fontSize: 18 }}>
-              Can be upgraded <br /> via Bounty Phase <br /> (2nd Acquisition).
-            </div>
-          )}
-        </div>
-      ),
+
       abilityText: (
         <>
           <div className=" ">⬩Draw 2 Avelhems.</div>
           <div className=" ">
-            ⬩{upgrade < 2 && <>If upgraded: </>}
+            ⬩{upgrade < 1 && <>If upgraded: </>}
             Gain 1 FD.
           </div>
         </>
@@ -67,21 +51,13 @@ const AcquisitionPhase = (props) => {
     },
     {
       abilityName: "Cultivate",
-      abilityQualifier: (
-        <div className="">
-          {upgrade < 3 && (
-            <div style={{ fontSize: 18 }}>
-              Can be upgraded <br /> via Bounty Phase <br /> (3rd Acquisition).
-            </div>
-          )}
-        </div>
-      ),
+
       abilityText: (
         <>
           <div className=" ">⬩Draw 1 skill.</div>
           <div className=" ">
             ⬩{upgrade < 3 && <>If upgraded: </>}
-            You may spend 1 skill to draw again.
+            You may spend 1 FD to recover 1 “Transcendence”.
           </div>
         </>
       ),
@@ -128,14 +104,13 @@ const AcquisitionPhase = (props) => {
         });
 
         dispatch(updateState(newGameState));
-
         break;
 
       case 1:
         newGameState = drawAvelhem(newGameState);
         newGameState = drawAvelhem(newGameState);
 
-        if (upgrade >= 2) {
+        if (upgrade >= 1) {
           newGameState[self].fateDefiances = Math.min(
             6,
             newGameState[self].fateDefiances + 1
@@ -150,20 +125,35 @@ const AcquisitionPhase = (props) => {
 
       case 2:
         newGameState = drawSkill(newGameState);
-
         newGameState = nextPhase(newGameState);
 
-        if (newGameState[self].bountyUpgrades.acquisition >= 3) {
+        // if (newGameState[self].bountyUpgrades.acquisition >= 3) {
+        //   newGameState.currentResolution.push({
+        //     resolution: "Misc.",
+        //     resolution2: "Acquisition Phase: Cultivate",
+        //     player: self,
+        //     details: {
+        //       title: "Cultivate",
+        //       message: "You may spend 1 skill to draw again.",
+        //       restriction: null,
+        //       reason: "Cultivate",
+        //     },
+        //   });
+        // }
+
+        if (
+          newGameState[self].bountyUpgrades.acquisition >= 3 &&
+          newGameState[self].skillVestige.includes("SX-01") &&
+          newGameState[self].fateDefiances > 0
+        ) {
           newGameState.currentResolution.push({
-            resolution: "Misc.",
-            resolution2: "Acquisition Phase: Cultivate",
+            resolution: "Recover Skill",
             player: self,
-            details: {
-              title: "Cultivate",
-              message: "You may spend 1 skill to draw again.",
-              restriction: null,
-              reason: "Cultivate",
-            },
+            restriction: ["SX-01"],
+            message: "You may spend 1 FD to recover 1 “Transcendence”",
+            outcome: "Add",
+            canSkip: true,
+            cost: "1 FD",
           });
         }
 

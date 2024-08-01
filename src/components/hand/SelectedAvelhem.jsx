@@ -29,15 +29,15 @@ const SelectedAvelhem = (props) => {
       localGameState.currentResolution.length - 1
     ].resolution === "Execution Phase";
 
-  const canSearch =
-    yourTurn &&
-    localGameState[self].bountyUpgrades.avelhem >= 2 &&
-    // !localGameState[self].hasAvelhemSearch &&
-    localGameState[self].fateDefiances >= 3;
+  // const canSearch =
+  //   yourTurn &&
+  //   localGameState[self].bountyUpgrades.avelhem >= 2 &&
+  //   // !localGameState[self].hasAvelhemSearch &&
+  //   localGameState[self].fateDefiances >= 3;
 
   const canRecover =
     yourTurn &&
-    localGameState[self].bountyUpgrades.avelhem >= 4 &&
+    localGameState[self].bountyUpgrades.avelhem >= 3 &&
     // !localGameState[self].hasAvelhemRecover &&
     localGameState[self].fateDefiances >= 3 &&
     getScionSet(scionClass).some((s) =>
@@ -216,7 +216,7 @@ const SelectedAvelhem = (props) => {
               </button>
             </>
           )}
-          {canSearch && (
+          {/* {canSearch && (
             <>
               <button
                 className="redButton selectedCardModal-buttons"
@@ -225,7 +225,7 @@ const SelectedAvelhem = (props) => {
                 Search (3 FD)
               </button>
             </>
-          )}
+          )} */}
           {canActivateAvelhem && (
             <>
               <button

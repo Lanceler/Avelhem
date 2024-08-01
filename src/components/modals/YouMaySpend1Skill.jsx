@@ -89,9 +89,24 @@ const YouMaySpend1Skill = (props) => {
         newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
         break;
 
-      case "Castle of Thorns":
-        newGameState = drawSkill(newGameState);
-        newGameState = drawSkill(newGameState);
+      case "Castle of Thorns1":
+        newGameState.currentResolution.push({
+          resolution: "Search Skill",
+          player: self,
+          restriction: ["08-01", "08-02", "08-03"],
+          message: "Search for 1 Plant skill",
+          outcome: "Add",
+        });
+        break;
+
+      case "Castle of Thorns2":
+        newGameState.currentResolution.push({
+          resolution: "Recover Skill",
+          player: self,
+          restriction: ["08-01", "08-02", "08-03"],
+          message: "Recover 1 Plant skill",
+          outcome: "Add",
+        });
         break;
 
       default:
@@ -114,9 +129,9 @@ const YouMaySpend1Skill = (props) => {
     newGameState.currentResolution.pop();
 
     switch (props.details.reason) {
-      case "Cultivate":
-        newGameState = drawSkill(newGameState);
-        break;
+      // case "Cultivate":
+      //   newGameState = drawSkill(newGameState);
+      //   break;
 
       case "Resplendence1":
         newGameState.currentResolution.push({
@@ -234,9 +249,24 @@ const YouMaySpend1Skill = (props) => {
         newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
         break;
 
-      case "Castle of Thorns":
-        newGameState = drawSkill(newGameState);
-        newGameState = drawSkill(newGameState);
+      case "Castle of Thorns1":
+        newGameState.currentResolution.push({
+          resolution: "Search Skill",
+          player: self,
+          restriction: ["08-01", "08-02", "08-03"],
+          message: "Search for 1 Plant skill",
+          outcome: "Add",
+        });
+        break;
+
+      case "Castle of Thorns2":
+        newGameState.currentResolution.push({
+          resolution: "Recover Skill",
+          player: self,
+          restriction: ["08-01", "08-02", "08-03"],
+          message: "Recover 1 Plant skill",
+          outcome: "Add",
+        });
         break;
 
       case "Match Made in Heaven":

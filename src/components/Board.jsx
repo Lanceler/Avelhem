@@ -257,6 +257,7 @@ const Board = (props) => {
     efflorescenceR2,
     viridianGrave1,
     castleOfThorns1,
+    castleOfThorns2,
   } = useSkillEffects();
 
   const {
@@ -525,10 +526,10 @@ const Board = (props) => {
     } else {
       try {
         updateDoc(gameDoc, { gameState: newGameState });
-        console.log("TRY");
+        // console.log("TRY");
       } catch (err) {
         console.log(err);
-        console.log("ERR");
+        // console.log("ERR");
         // console.log(newGameState);
       }
     }
@@ -1006,6 +1007,7 @@ const Board = (props) => {
                 outcome={lastResolution.outcome}
                 message={lastResolution.message}
                 canSkip={lastResolution.canSkip}
+                cost={lastResolution.cost}
                 hideOrRevealModale={hideOrRevealModale}
                 updateFirebase={updateFirebase}
               />
@@ -1358,18 +1360,18 @@ const Board = (props) => {
               </>
             );
 
-          case "Acquisition Phase: Cultivate":
-            return (
-              <>
-                {self === lastResolution.player && !hideModal && (
-                  <YouMaySpend1Skill
-                    details={lastResolution.details}
-                    updateFirebase={updateFirebase}
-                    hideOrRevealModale={hideOrRevealModale}
-                  />
-                )}
-              </>
-            );
+          // case "Acquisition Phase: Cultivate":
+          //   return (
+          //     <>
+          //       {self === lastResolution.player && !hideModal && (
+          //         <YouMaySpend1Skill
+          //           details={lastResolution.details}
+          //           updateFirebase={updateFirebase}
+          //           hideOrRevealModale={hideOrRevealModale}
+          //         />
+          //       )}
+          //     </>
+          //   );
 
           case "Battle Cry":
             return (
@@ -3269,6 +3271,7 @@ const Board = (props) => {
             break;
 
           case "Castle Of Thorns1":
+          case "Castle Of Thorns3":
             return (
               <>
                 {self === lastResolution.unit.player && !hideModal && (
@@ -3281,6 +3284,14 @@ const Board = (props) => {
                 )}
               </>
             );
+
+          case "Castle Of Thorns2":
+            if (self === lastResolution.unit.player) {
+              resolutionUpdateGameStateOnly(
+                castleOfThorns2(lastResolution.unit)
+              );
+            }
+            break;
         }
         break;
 
@@ -4174,7 +4185,11 @@ const Board = (props) => {
     newZoneInfo[r][c].unitIndex = newIndex;
     newGameState.zones = JSON.stringify(newZoneInfo);
 
-    if (deployingPawn) {
+    if (
+      deployingPawn &&
+      newGameState.currentResolution[newGameState.currentResolution.length - 1]
+        .resolution2 !== "Advance Avelhem Draw"
+    ) {
       newGameState.currentResolution.pop();
     }
 
@@ -4185,7 +4200,7 @@ const Board = (props) => {
         resolution: "Bounty Phase Selection",
       });
 
-      if (newGameState[self].bountyUpgrades.acquisition >= 1) {
+      if (newGameState[self].bountyUpgrades.acquisition >= 2) {
         newGameState.currentResolution.push({
           resolution: "Misc.",
           resolution2: "Appoint - Upgraded",

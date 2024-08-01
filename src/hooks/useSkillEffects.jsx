@@ -2519,6 +2519,41 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
+  // const castleOfThorns1 = (unitInfo) => {
+  //   let newGameState = JSON.parse(JSON.stringify(localGameState));
+  //   let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+  //   //end "Activating Castle of Thorns" resolution
+  //   newGameState.currentResolution.pop();
+
+  //   //give unit activationCounter
+  //   unit.temporary.activation
+  //     ? (unit.temporary.activation += 1)
+  //     : (unit.temporary.activation = 1);
+
+  //   if (!unit.afflictions.burn) {
+  //     //burn would otherwise instantly purge overgrowth
+  //     unit.enhancements.overgrowth = true;
+  //     unit.enhancements.proliferation = 3;
+  //   }
+
+  //   newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+  //   newGameState.currentResolution.push({
+  //     resolution: "Plant Skill",
+  //     resolution2: "Castle Of Thorns1",
+  //     unit: unit,
+  //     details: {
+  //       title: "Castle of Thorns",
+  //       message: "You may spend 1 skill to draw 2 skills",
+  //       restriction: null,
+  //       reason: "Castle of Thorns",
+  //     },
+  //   });
+
+  //   return newGameState;
+  // };
+
   const castleOfThorns1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
@@ -2531,13 +2566,23 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    if (!unit.afflictions.burn) {
-      //burn would otherwise instantly purge overgrowth
-      unit.enhancements.overgrowth = true;
-      unit.enhancements.proliferation = 3;
+    unit.enhancements.shield
+      ? (unit.enhancements.shield = Math.max(unit.enhancements.shield, 2))
+      : (unit.enhancements.shield = 2);
+
+    if (unit.enhancements.overgrowth === true) {
+      unit.enhancements.ward
+        ? (unit.enhancements.ward = Math.max(unit.enhancements.ward, 2))
+        : (unit.enhancements.ward = 2);
     }
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    newGameState.currentResolution.push({
+      resolution: "Plant Skill",
+      resolution2: "Castle Of Thorns2",
+      unit: unit,
+    });
 
     newGameState.currentResolution.push({
       resolution: "Plant Skill",
@@ -2545,11 +2590,51 @@ export const useSkillEffects = () => {
       unit: unit,
       details: {
         title: "Castle of Thorns",
-        message: "You may spend 1 skill to draw 2 skills",
+        message: "You may spend 1 skill to search for 1 Plant skill",
         restriction: null,
-        reason: "Castle of Thorns",
+        reason: "Castle of Thorns1",
       },
     });
+
+    return newGameState;
+  };
+
+  const castleOfThorns2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Castle Of Thorns2" resolution
+    newGameState.currentResolution.pop();
+
+    if (
+      !["08-01", "08-02", "08-03"].some((s) =>
+        newGameState[unit.player].skillVestige.includes(s)
+      )
+    ) {
+      newGameState.currentResolution.push({
+        resolution: "Misc.",
+        resolution2: "Message To Player",
+        player: self,
+        title: "Castle of Thorns",
+        message: "You do not have any Plant skills to recover.",
+      });
+    } else if (
+      unit !== null &&
+      !isMuted(unit) &&
+      (newGameState[unit.player].skillHand.length > 0 || unit.blossom > 0)
+    ) {
+      newGameState.currentResolution.push({
+        resolution: "Plant Skill",
+        resolution2: "Castle Of Thorns3",
+        unit: unit,
+        details: {
+          title: "Castle of Thorns",
+          message: "You may spend 1 skill to recover 1 Plant skill",
+          restriction: null,
+          reason: "Castle of Thorns2",
+        },
+      });
+    }
 
     return newGameState;
   };
@@ -2628,5 +2713,6 @@ export const useSkillEffects = () => {
     efflorescenceR2,
     viridianGrave1,
     castleOfThorns1,
+    castleOfThorns2,
   };
 };

@@ -344,9 +344,18 @@ const UnitInfo = (props) => {
               ⬩Upon your debut, you may search for then float 1 “Magnetic
               Shockwave”.
             </p>
+            <p className="unitInfo-text-heading2">2. Penetrator</p>
+            <p className="unitInfo-text-desc ">
+              ⬩Your attacks gain 1 AP for each Sharpness you have.
+            </p>
+            <p className="unitInfo-text-desc unitInfo-text-last">
+              ⬩If you have 2 Sharpness, your strikes bypass Shield.
+            </p>
 
-            <p className="unitInfo-text-heading2">
-              2. Adamant Armor (One-shot)
+            {/* Temporary(?) nerf: Adamant armor removed */}
+
+            {/* <p className="unitInfo-text-heading2">
+              3. Adamant Armor (One-shot)
             </p>
             <p className="unitInfo-text-desc unitInfo-text-last">
               ⬩
@@ -354,15 +363,7 @@ const UnitInfo = (props) => {
                 You may activate when targeted via Virtue-blast or strike.
               </em>{" "}
               Spend 1 skill to reduce the attack’s AP by 1.
-            </p>
-
-            <p className="unitInfo-text-heading2">3. Penetrator</p>
-            <p className="unitInfo-text-desc ">
-              ⬩Your attacks gain 1 AP for each Sharpness you have.
-            </p>
-            <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩If you have 2 Sharpness, your strikes bypass Shield.
-            </p>
+            </p> */}
           </>
         );
 

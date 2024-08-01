@@ -50,6 +50,10 @@ const YouMayNoYes = (props) => {
       newGameState.activatingTarget.pop();
     }
 
+    if (props.details.reason === "Advance Avelhem Draw") {
+      newGameState.currentResolution.pop();
+    }
+
     if (props.details.reason === "Mana Restructure") {
       newGameState[self].skillVestige.push(props.details.skill);
     }
@@ -83,6 +87,7 @@ const YouMayNoYes = (props) => {
       case "Advance Avelhem Draw": //"Advance Avelhem Draw"
         updateData = true;
         newGameState = drawAvelhem(newGameState);
+        newGameState.currentResolution.pop();
         break;
 
       case "Conflagration Ignite": //"ConflagrationR2"

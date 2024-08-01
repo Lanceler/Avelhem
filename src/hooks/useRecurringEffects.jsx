@@ -2496,7 +2496,7 @@ export const useRecurringEffects = () => {
 
     switch (method) {
       case "Avelhem":
-        if (newGameState[unit.player].bountyUpgrades.avelhem >= 3)
+        if (newGameState[unit.player].bountyUpgrades.avelhem >= 2)
           unit.enhancements.shield
             ? (unit.enhancements.shield = Math.max(2, unit.enhancements.shield))
             : (unit.enhancements.shield = 2);
@@ -4434,7 +4434,8 @@ export const useRecurringEffects = () => {
   const rollTactic = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    const mobilizeLimit = newGameState[self].bountyUpgrades.tactics > 2 ? 4 : 3;
+    const mobilizeLimit =
+      newGameState[self].bountyUpgrades.tactics >= 2 ? 4 : 3;
 
     const dieFaces = [
       { face: "Advance", stock: 1, limit: 1 },
@@ -5047,6 +5048,8 @@ export const useRecurringEffects = () => {
   };
 
   const triggerAdamantArmor = (victim) => {
+    return false;
+    //Temporary(?) nerf: Adamant armor removed
     return (
       victim.unitClass === "Metal Scion" && //must be Metal Scion
       !isMuted(victim) &&

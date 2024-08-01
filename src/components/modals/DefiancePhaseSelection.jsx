@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import "./Modal.css";
 
-import GoldFrame from "../../assets/others/GoldFrame.png";
-
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
 import { updateDemo } from "../../redux/demoGuide";
@@ -10,13 +8,11 @@ import { updateDemo } from "../../redux/demoGuide";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import { useCardDatabase } from "../../hooks/useCardDatabase";
-import { useGetImages } from "../../hooks/useGetImages";
 
 const DefiancePhaseSelection = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
-  const { getMiscImage } = useGetImages();
 
   const dispatch = useDispatch();
 
@@ -32,8 +28,10 @@ const DefiancePhaseSelection = (props) => {
     rollTactic,
   } = useRecurringEffects();
 
+  let newGameState = JSON.parse(JSON.stringify(localGameState));
+
   const handleSkip = () => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    // let newGameState = JSON.parse(JSON.stringify(localGameState));
     newGameState = endDefiancePhase(newGameState);
 
     dispatch(updateState(newGameState));
@@ -43,7 +41,7 @@ const DefiancePhaseSelection = (props) => {
   let updateData = true;
 
   const handleProceed = () => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    // let newGameState = JSON.parse(JSON.stringify(localGameState));
 
     // DO NOT pop
     // newGameState.currentResolution.pop();
@@ -182,21 +180,21 @@ const DefiancePhaseSelection = (props) => {
 
   const canSelect = [
     //Artifice
-    localGameState[self].fateDefiances >= defianceCosts[0] &&
-      localGameState[self].skillHand.length > 0,
+    newGameState[self].fateDefiances >= defianceCosts[0] &&
+      newGameState[self].skillHand.length > 0,
     //Backtrack
-    localGameState[self].fateDefiances >= defianceCosts[1] &&
-      localGameState.tactics.length > 1,
+    newGameState[self].fateDefiances >= defianceCosts[1] &&
+      newGameState.tactics.length > 1,
     //Curate
-    localGameState[self].fateDefiances >= defianceCosts[2] &&
-      localGameState.tactics.length > 1,
+    newGameState[self].fateDefiances >= defianceCosts[2] &&
+      newGameState.tactics.length > 1,
     //Destine (Power at the Final Hour has the same activation requirement)
-    localGameState[self].fateDefiances >= defianceCosts[3] &&
+    newGameState[self].fateDefiances >= defianceCosts[3] &&
       canActivateSovereignSkill("SC-01"),
     //Ex Machina
-    localGameState[self].fateDefiances >= defianceCosts[4],
+    newGameState[self].fateDefiances >= defianceCosts[4],
     //Finesse
-    localGameState[self].fateDefiances >= defianceCosts[5],
+    newGameState[self].fateDefiances >= defianceCosts[5],
   ];
 
   const defianceOptions = [
