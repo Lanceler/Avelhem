@@ -618,6 +618,7 @@ export default function Demo() {
         "Learn1.165",
         "Learn1.176",
         "Learn1.183",
+        "Learn1.188",
         "Learn1.198",
         "Learn1.204",
         "Learn1.216.1",
@@ -754,6 +755,10 @@ export default function Demo() {
 
         duplicateDemoGameState.host.avelhemRepertoire[17] = 2;
         duplicateDemoGameState.host.avelhemRepertoire[16] = 2;
+        break;
+
+      case "Learn1.188":
+        duplicateDemoGameState.currentResolution.pop();
         break;
 
       case "Learn1.198":
@@ -893,7 +898,7 @@ export default function Demo() {
 
           {/* display demoGuide for debugging */}
 
-          {/* {demoGuide && <h1>{demoGuide}</h1>} */}
+          {demoGuide && <h1>{demoGuide}</h1>}
         </div>
       )}
     </>

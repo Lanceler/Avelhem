@@ -5,9 +5,7 @@ import { updateState } from "../../redux/gameState";
 import { updateDemo } from "../../redux/demoGuide";
 
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
-
 import { useGetImages } from "../../hooks/useGetImages";
-import { useCardDatabase } from "../../hooks/useCardDatabase";
 
 const SelectedSkill = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
