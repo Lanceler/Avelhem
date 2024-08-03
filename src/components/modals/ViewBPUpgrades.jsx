@@ -77,17 +77,18 @@ const ViewBPUpgrades = (props) => {
 
                   {upgrades.acquisition >= 1 && (
                     <p className="unitInfo-text-desc">
-                      1. Pawns deployed via Appoint gain Shield for 2 turns.
+                      1. Beseech grants 1 FD.
                     </p>
                   )}
                   {upgrades.acquisition >= 2 && (
                     <p className="unitInfo-text-desc">
-                      2. Beseech grants 1 FD.
+                      2. Pawns deployed via Appoint gain Shield for 2 turns.
                     </p>
                   )}
                   {upgrades.acquisition >= 3 && (
                     <p className="unitInfo-text-desc">
-                      3. May spend 1 skill to draw another skill via Cultivate.
+                      3. May spend 1 FD to recover 1 “Transcendence” via
+                      Cultivate.
                     </p>
                   )}
                   <br />
@@ -123,26 +124,21 @@ const ViewBPUpgrades = (props) => {
 
                   {upgrades.tactics >= 1 && (
                     <p className="unitInfo-text-desc">
-                      1. Invoke upgraded: unlocked Divine Invocation
+                      1. Advance upgraded: may draw 1 Avelhem after deploying a
+                      pawn.
                     </p>
                   )}
                   {upgrades.tactics >= 2 && (
                     <p className="unitInfo-text-desc">
-                      2. Advance upgraded: may draw 1 Avelhem after deploying a
-                      pawn.
+                      2. Mobilize upgraded: instances raised from 3 to 4.
                     </p>
                   )}
                   {upgrades.tactics >= 3 && (
                     <p className="unitInfo-text-desc">
-                      3. Mobilize upgraded: instances raised from 3 to 4.
+                      3. Advance upgraded: “Deploy Scion” action unlocked.
                     </p>
                   )}
-                  {upgrades.tactics >= 4 && (
-                    <p className="unitInfo-text-desc">
-                      4. Advance upgraded: can float 1 skill to deploy a Scion
-                      in their frontier.
-                    </p>
-                  )}
+
                   <br />
                 </>
               )}
@@ -160,21 +156,16 @@ const ViewBPUpgrades = (props) => {
                   )}
                   {upgrades.avelhem >= 2 && (
                     <p className="unitInfo-text-desc">
-                      2. Avelhems have an alternate effect: spend 3 FD to search
-                      for 1 non-burst skill with the matching aspect.
+                      2. Units ascending via Avelhems gain Shield for 2 turns.
                     </p>
                   )}
                   {upgrades.avelhem >= 3 && (
                     <p className="unitInfo-text-desc">
-                      3. Units ascending via Avelhems gain Shield for 2 turns.
-                    </p>
-                  )}
-                  {upgrades.avelhem >= 4 && (
-                    <p className="unitInfo-text-desc">
-                      4. Avelhems have an alternate effect: spend 3 FD to
+                      3. Avelhems have an alternate effect: spend 3 FD to
                       recover 1 skill with the matching aspect.
                     </p>
                   )}
+
                   <br />
                 </>
               )}

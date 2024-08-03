@@ -2768,27 +2768,44 @@ export const useSkillEffects = () => {
         return magneticShockwave2(a);
       case "magneticShockwave3":
         return magneticShockwave3(a);
+      case "reinforce1":
+        return reinforce1(a);
+      case "reinforceR1":
+        return reinforceR1(a, b);
+      case "reinforceR2":
+        return reinforceR2(a);
+      case "frenzyBlade1":
+        return frenzyBlade1(a, b);
+      case "frenzyBlade2":
+        return frenzyBlade2(a);
+      case "arsenalOnslaught1":
+        return arsenalOnslaught1(a);
+      case "arsenalOnslaught2":
+        return arsenalOnslaught2(a);
+      case "arsenalOnslaught3":
+        return arsenalOnslaught3(a);
+
+      //Plant
+      case "sowAndReap1":
+        return sowAndReap1(a);
+      case "sowAndReap2":
+        return sowAndReap2(a);
+      case "efflorescence1":
+        return efflorescence1(a);
+      case "efflorescenceR1":
+        return efflorescenceR1(a, b);
+      case "efflorescenceR2":
+        return efflorescenceR2(a);
+      case "viridianGrave1":
+        return viridianGrave1(a, b);
+      case "castleOfThorns1":
+        return castleOfThorns1(a);
+      case "castleOfThorns2":
+        return castleOfThorns2(a);
     }
   };
 
   return {
     applySkill,
-
-    reinforce1,
-    reinforceR1,
-    reinforceR2,
-    frenzyBlade1,
-    frenzyBlade2,
-    arsenalOnslaught1,
-    arsenalOnslaught2,
-    arsenalOnslaught3,
-    sowAndReap1,
-    sowAndReap2,
-    efflorescence1,
-    efflorescenceR1,
-    efflorescenceR2,
-    viridianGrave1,
-    castleOfThorns1,
-    castleOfThorns2,
   };
 };

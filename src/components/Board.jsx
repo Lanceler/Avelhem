@@ -185,26 +185,7 @@ const Board = (props) => {
     virtueBlast,
   } = useRecurringEffects();
 
-  const {
-    applySkill,
-
-    reinforce1,
-    reinforceR1,
-    reinforceR2,
-    frenzyBlade1,
-    frenzyBlade2,
-    arsenalOnslaught1,
-    arsenalOnslaught2,
-    arsenalOnslaught3,
-    sowAndReap1,
-    sowAndReap2,
-    efflorescence1,
-    efflorescenceR1,
-    efflorescenceR2,
-    viridianGrave1,
-    castleOfThorns1,
-    castleOfThorns2,
-  } = useSkillEffects();
+  const { applySkill } = useSkillEffects();
 
   const {
     heirsEndeavor1,
@@ -2858,7 +2839,7 @@ const Board = (props) => {
 
           case "Activating Reinforce":
             if (self === lastRes.unit.player) {
-              updateLocalState(reinforce1(lastRes.unit));
+              updateLocalState(applySkill("reinforce1", lastRes.unit));
             }
             break;
 
@@ -2878,13 +2859,15 @@ const Board = (props) => {
 
           case "Resonating Reinforce":
             if (self === lastRes.unit.player) {
-              updateLocalState(reinforceR1(lastRes.unit, lastRes.resonator));
+              updateLocalState(
+                applySkill("reinforceR1", lastRes.unit, lastRes.resonator)
+              );
             }
             break;
 
           case "ReinforceR1":
             if (self === lastRes.unit.player) {
-              updateLocalState(reinforceR2(lastRes.unit));
+              updateLocalState(applySkill("reinforceR2", lastRes.unit));
             }
             break;
 
@@ -2896,7 +2879,9 @@ const Board = (props) => {
 
           case "Activating Frenzy Blade":
             if (self === lastRes.unit.player) {
-              updateLocalState(frenzyBlade1(lastRes.unit, lastRes.victim));
+              updateLocalState(
+                applySkill("frenzyBlade1", lastRes.unit, lastRes.victim)
+              );
             }
             break;
 
@@ -2916,7 +2901,7 @@ const Board = (props) => {
 
           case "Frenzy Blade1.5":
             if (self === lastRes.unit.player) {
-              updateLocalState(frenzyBlade2(lastRes.unit));
+              updateLocalState(applySkill("frenzyBlade2", lastRes.unit));
             }
             break;
 
@@ -2936,7 +2921,7 @@ const Board = (props) => {
 
           case "Activating Arsenal Onslaught":
             if (self === lastRes.unit.player) {
-              updateLocalState(arsenalOnslaught1(lastRes.unit));
+              updateLocalState(applySkill("arsenalOnslaught1", lastRes.unit));
             }
             break;
 
@@ -2954,7 +2939,7 @@ const Board = (props) => {
 
           case "Arsenal Onslaught2":
             if (self === lastRes.unit.player) {
-              updateLocalState(arsenalOnslaught2(lastRes.unit));
+              updateLocalState(applySkill("arsenalOnslaught2", lastRes.unit));
             }
             break;
 
@@ -2980,7 +2965,7 @@ const Board = (props) => {
 
           case "Arsenal Onslaught4":
             if (self === lastRes.unit.player) {
-              updateLocalState(arsenalOnslaught3(lastRes.unit));
+              updateLocalState(applySkill("arsenalOnslaught3", lastRes.unit));
             }
             break;
 
@@ -3018,7 +3003,7 @@ const Board = (props) => {
         switch (lastRes.resolution2) {
           case "Activating Sow And Reap":
             if (self === lastRes.unit.player) {
-              updateLocalState(sowAndReap1(lastRes.unit));
+              updateLocalState(applySkill("sowAndReap1", lastRes.unit));
             }
             break;
 
@@ -3062,13 +3047,13 @@ const Board = (props) => {
 
           case "Sow and Reap2":
             if (self === lastRes.unit.player) {
-              updateLocalState(sowAndReap2(lastRes.unit));
+              updateLocalState(applySkill("sowAndReap2", lastRes.unit));
             }
             break;
 
           case "Activating Efflorescence":
             if (self === lastRes.unit.player) {
-              updateLocalState(efflorescence1(lastRes.unit));
+              updateLocalState(applySkill("efflorescence1", lastRes.unit));
             }
             break;
 
@@ -3089,14 +3074,14 @@ const Board = (props) => {
           case "Resonating Efflorescence":
             if (self === lastRes.unit.player) {
               updateLocalState(
-                efflorescenceR1(lastRes.unit, lastRes.resonator)
+                applySkill("efflorescenceR1", lastRes.unit, lastRes.resonator)
               );
             }
             break;
 
           case "EfflorescenceR1":
             if (self === lastRes.unit.player) {
-              updateLocalState(efflorescenceR2(lastRes.unit));
+              updateLocalState(applySkill("efflorescenceR2", lastRes.unit));
             }
             break;
 
@@ -3108,7 +3093,9 @@ const Board = (props) => {
 
           case "Activating Viridian Grave":
             if (self === lastRes.unit.player) {
-              updateLocalState(viridianGrave1(lastRes.unit, lastRes.victim));
+              updateLocalState(
+                applySkill("viridianGrave1", lastRes.unit, lastRes.victim)
+              );
             }
             break;
 
@@ -3128,7 +3115,7 @@ const Board = (props) => {
 
           case "Activating Castle of Thorns":
             if (self === lastRes.unit.player) {
-              updateLocalState(castleOfThorns1(lastRes.unit));
+              updateLocalState(applySkill("castleOfThorns1", lastRes.unit));
             }
             break;
 
@@ -3149,7 +3136,7 @@ const Board = (props) => {
 
           case "Castle Of Thorns2":
             if (self === lastRes.unit.player) {
-              updateLocalState(castleOfThorns2(lastRes.unit));
+              updateLocalState(applySkill("castleOfThorns2", lastRes.unit));
             }
             break;
         }
