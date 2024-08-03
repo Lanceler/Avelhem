@@ -123,9 +123,20 @@ const DefiancePhaseSelection = (props) => {
         newGameState.currentResolution.push({
           resolution: "Search Skill",
           player: self,
-          restriction: sovereignSkillList(),
-          message: "Search for 1 Sovereign Skill.",
-          outcome: "Add",
+          details: {
+            restriction: sovereignSkillList(),
+            exclusion: [],
+            searchTitle: "Ex Machina",
+            searchMessage: "Search for 1 Sovereign Skill",
+            outcome: "Add",
+            revealTitle: null,
+            revealMessage: null,
+            messageTitle: "Ex Machina",
+            message: "Your opponent has searched for 1 Sovereign skill.",
+            specMessage: `${
+              self === "host" ? "Gold" : "Silver"
+            } Sovereign has searched for 1 Sovereign skill.`,
+          },
         });
 
         break;

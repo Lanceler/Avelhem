@@ -72,9 +72,18 @@ const SelectSkillReveal = (props) => {
         newGameState.currentResolution.push({
           resolution: "Search Skill",
           player: self,
-          restriction: usableSkills[selectedSkill].id,
-          message: "Search for then float the skill you revealed.",
-          outcome: "Float",
+          details: {
+            restriction: usableSkills[selectedSkill].id,
+            exclusion: [],
+            searchTitle: "Purification",
+            searchMessage: "Search for then float the skill you revealed",
+            outcome: "Float",
+            revealTitle: null,
+            revealMessage: null,
+            messageTitle: null,
+            message: null,
+            specMessage: null,
+          },
         });
 
         revealTitle = "Purification";

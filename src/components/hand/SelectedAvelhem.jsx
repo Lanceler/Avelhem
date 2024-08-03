@@ -76,37 +76,37 @@ const SelectedAvelhem = (props) => {
     props.setSelectedAvelhem(null);
   };
 
-  const handleSearch = () => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
+  // const handleSearch = () => {
+  //   let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    //Remove Avelhem from hand AND send to vestige
-    newGameState[self].avelhemVestige.push(
-      newGameState[self].avelhemHand.splice(
-        props.selectedAvelhem.handIndex,
-        1
-      )[0]
-    );
+  //   //Remove Avelhem from hand AND send to vestige
+  //   newGameState[self].avelhemVestige.push(
+  //     newGameState[self].avelhemHand.splice(
+  //       props.selectedAvelhem.handIndex,
+  //       1
+  //     )[0]
+  //   );
 
-    newGameState[self].hasAvelhemSearch = true;
-    newGameState[self].fateDefiances -= 3;
+  //   newGameState[self].hasAvelhemSearch = true;
+  //   newGameState[self].fateDefiances -= 3;
 
-    newGameState.currentResolution.push({
-      resolution: "Search Skill",
-      player: self,
-      restriction: getScionSet(scionClass).filter((s) => s[4] !== "4"),
-      message: `Search for 1 non-burst ${scionClass.replace(
-        " Scion",
-        ""
-      )} skill.`,
-      outcome: "Add",
-    });
+  //   newGameState.currentResolution.push({
+  //     resolution: "Search Skill",
+  //     player: self,
+  //     restriction: getScionSet(scionClass).filter((s) => s[4] !== "4"),
+  //     message: `Search for 1 non-burst ${scionClass.replace(
+  //       " Scion",
+  //       ""
+  //     )} skill.`,
+  //     outcome: "Add",
+  //   });
 
-    dispatch(updateState(newGameState));
-    props.updateFirebase(newGameState);
+  //   dispatch(updateState(newGameState));
+  //   props.updateFirebase(newGameState);
 
-    props.setRaise(false);
-    props.setSelectedAvelhem(null);
-  };
+  //   props.setRaise(false);
+  //   props.setSelectedAvelhem(null);
+  // };
 
   const handleActivate = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));

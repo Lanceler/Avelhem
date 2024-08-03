@@ -972,10 +972,11 @@ const Board = (props) => {
           <>
             {self === lastResolution.player && !hideModal && (
               <SearchSkill
-                restriction={lastResolution.restriction}
-                outcome={lastResolution.outcome}
-                message={lastResolution.message}
-                reveal={lastResolution.reveal}
+                // restriction={lastResolution.restriction}
+                // outcome={lastResolution.outcome}
+                // message={lastResolution.message}
+                // reveal={lastResolution.reveal}
+                details={lastResolution.details}
                 hideOrRevealModale={hideOrRevealModale}
                 updateFirebase={updateFirebase}
               />

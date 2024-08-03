@@ -325,9 +325,18 @@ export const useSovereignSkillEffects = () => {
     newGameState.currentResolution.push({
       resolution: "Search Skill",
       player: self,
-      restriction: [standardSkill],
-      message: "Search for 1 standard skill of their class.",
-      outcome: "Add",
+      details: {
+        restriction: [standardSkill],
+        exclusion: [],
+        searchTitle: "Ambidexterity",
+        searchMessage: "Search for 1 standard skill of their class",
+        outcome: "Add",
+        revealTitle: null,
+        revealMessage: null,
+        messageTitle: null,
+        message: null,
+        specMessage: null,
+      },
     });
 
     return newGameState;
@@ -485,20 +494,24 @@ export const useSovereignSkillEffects = () => {
     newGameState.currentResolution.pop();
 
     if (resonator) {
-      // newGameState.currentResolution.push({
-      //   resolution: "Sovereign Resonant Skill",
-      //   resolution2: "Press the AttackR1",
-      //   player: self,
-      // });
-
       newGameState.currentResolution.push({
         resolution: "Search Skill",
         player: self,
-        restriction: pressTheAttackList(),
-        message:
-          "Search for 1 non-burst Scion skill that enables the activator to strike or blast.",
-        outcome: "Add",
-        reveal: "Press the Attack",
+        details: {
+          restriction: pressTheAttackList(),
+          exclusion: [],
+          searchTitle: "Press the Attack",
+          searchMessage:
+            "Search for 1 non-burst Scion skill that enables the activator to strike or blast",
+          outcome: "Add",
+          revealTitle: "Press the Attack",
+          revealMessage: "Your opponent has searched for and revealed a skill.",
+          messageTitle: null,
+          message: null,
+          specMessage: `${
+            self === "host" ? "Gold" : "Silver"
+          } Sovereign has searched for and revealed a skill.`,
+        },
       });
     }
 

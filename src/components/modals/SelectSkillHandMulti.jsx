@@ -253,12 +253,20 @@ const SelectSkillHandMulti = (props) => {
           newGameState.currentResolution.push({
             resolution: "Search Skill",
             player: self,
-            restriction: getScionSet(avelhemToScion(parseInt(skillCode))),
-            message: `Search for 1 ${avelhemToScion(
-              parseInt(skillCode)
-            ).replace("Scion", "Skill")}.`,
-            outcome: "Add",
-            reveal: "Transmute",
+            details: {
+              restriction: getScionSet(avelhemToScion(parseInt(skillCode))),
+              exclusion: [],
+              searchTitle: "Transmute",
+              searchMessage: `Search for 1 ${avelhemToScion(
+                parseInt(skillCode)
+              ).replace("Scion", "Skill")}.`,
+              outcome: "Add",
+              revealTitle: null,
+              revealMessage: null,
+              messageTitle: "Transmute",
+              message: null,
+              specMessage: null,
+            },
           });
         }
 

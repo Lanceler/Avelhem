@@ -85,7 +85,7 @@ export default function SelectRepertoire(props) {
                 className="modal-option-outline"
                 onClick={() => props.onSelectRepertoire(rep)}
               >
-                <div className="repertoire-frame">
+                <div className="repertoire-frame-select">
                   <div className="modal-option-header">
                     <div className="modal-option-title ">{rep.name}</div>
                   </div>

@@ -39,11 +39,15 @@ const SearchSkill = (props) => {
   );
 
   const canSearch = (skill) => {
-    if (props.restriction === null) {
-      return true;
-    } else {
-      return props.restriction.includes(skill);
+    if (props.details.exclusion.includes(skill)) {
+      return false;
     }
+
+    if (props.details.restriction === null) {
+      return true;
+    }
+
+    return props.details.restriction.includes(skill);
   };
 
   const handleClick = (canActivate, i) => {
@@ -60,48 +64,54 @@ const SearchSkill = (props) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     newGameState.currentResolution.pop();
 
-    if (props.outcome === "Add") {
-      //inform enemy if search done via transmute
-      if (props.reveal === "Transmute") {
+    if (props.details.messageTitle) {
+      let message = props.details.message;
+      let specMessage = props.details.specMessage;
+
+      if (props.details.messageTitle === "Transmute") {
         let chosenSkill =
           newGameState[self].skillRepertoire[
             newGameState[self].skillRepertoire.length - 1 - selectedSkill
           ];
         const skillCode = chosenSkill.substring(0, 2);
 
-        newGameState.currentResolution.push({
-          resolution: "Misc.",
-          resolution2: "Message To Player",
-          player: enemy,
-          title: "Transmute",
-          message: `Your opponent has searched for 1 ${avelhemToScion(
-            parseInt(skillCode)
-          ).replace("Scion", "Skill")} and added it to their hand.`,
-          specMessage: `${
-            self === "host" ? "Gold" : "Silver"
-          } Sovereign has searched for 1 ${avelhemToScion(
-            parseInt(skillCode)
-          ).replace("Scion", "Skill")} and added it to their hand.`,
-        });
-      } else if (props.reveal === "Press the Attack") {
-        let chosenSkill =
-          newGameState[self].skillRepertoire[
-            newGameState[self].skillRepertoire.length - 1 - selectedSkill
-          ];
+        message = `Your opponent has searched for 1 ${avelhemToScion(
+          parseInt(skillCode)
+        ).replace("Scion", "Skill")} and added it to their hand.`;
 
-        newGameState.currentResolution.push({
-          resolution: "Misc.",
-          resolution2: "Revealing Skill",
-          player: enemy,
-          skill: chosenSkill,
-          title: "Press the Attack",
-          message: "Your opponent has searched for and revealed a skill.",
-          specMessage: `${
-            self === "host" ? "Gold" : "Silver"
-          } Sovereign has searched for and revealed a skill.`,
-        });
+        specMessage = `${
+          self === "host" ? "Gold" : "Silver"
+        } Sovereign has searched for 1 ${avelhemToScion(
+          parseInt(skillCode)
+        ).replace("Scion", "Skill")} and added it to their hand.`;
       }
 
+      newGameState.currentResolution.push({
+        resolution: "Misc.",
+        resolution2: "Message To Player",
+        player: enemy,
+        title: props.details.messageTitle,
+        message: message,
+        specMessage: specMessage,
+      });
+    } else if (props.details.revealTitle) {
+      const chosenSkill =
+        newGameState[self].skillRepertoire[
+          newGameState[self].skillRepertoire.length - 1 - selectedSkill
+        ];
+
+      newGameState.currentResolution.push({
+        resolution: "Misc.",
+        resolution2: "Revealing Skill",
+        player: enemy,
+        skill: chosenSkill,
+        title: props.details.revealTitle,
+        message: props.details.revealMessage,
+        specMessage: props.details.specMessage,
+      });
+    }
+
+    if (props.details.outcome === "Add") {
       //add selected skill from repertoire to hand
       newGameState[self].skillHand.push(
         newGameState[self].skillRepertoire.splice(
@@ -119,7 +129,7 @@ const SearchSkill = (props) => {
       if (newGameState[self].skillRepertoire.length === 0) {
         newGameState = refillRepertoireSkill(newGameState);
       }
-    } else if (props.outcome === "Float") {
+    } else if (props.details.outcome === "Float") {
       //take selected card then put it at the top of deck (end of array)
       newGameState[self].skillRepertoire.push(
         newGameState[self].skillRepertoire.splice(
@@ -132,7 +142,7 @@ const SearchSkill = (props) => {
       if (selectedSkill > newGameState[self].skillFloat - 1) {
         newGameState[self].skillFloat = newGameState[self].skillFloat + 1;
       }
-    } else if (props.outcome === "Foreshadow") {
+    } else if (props.details.outcome === "Foreshadow") {
       let chosenSkill =
         newGameState[self].skillRepertoire[
           newGameState[self].skillRepertoire.length - 1 - selectedSkill
@@ -140,22 +150,9 @@ const SearchSkill = (props) => {
 
       if (allBurstSkills().includes(chosenSkill)) {
         newGameState.currentResolution[
-          newGameState.currentResolution.length - 1
+          newGameState.currentResolution.length - 2
         ].discardedBurst = true;
       }
-
-      newGameState.currentResolution.push({
-        resolution: "Misc.",
-        resolution2: "Revealing Skill",
-        player: enemy,
-        skill: chosenSkill,
-        title: "Foreshadow",
-        message:
-          "Your opponent has searched for, revealed, and discarded a skill.",
-        specMessage: `${
-          self === "host" ? "Gold" : "Silver"
-        } Sovereign has searched for, revealed, and discarded a skill.`,
-      });
 
       //add selected skill from repertoire to vestige
       newGameState[self].skillVestige.push(
@@ -314,13 +311,15 @@ const SearchSkill = (props) => {
     <div className="modal-backdrop">
       <div className="modal">
         <div className="modalHeader">
-          <div className="modalTitle">{props.message}</div>
+          <div className="modalTitle">{props.details.searchTitle}</div>
           <div className="modalButton">
             <button className="redButton" onClick={() => handleViewBoard()}>
               View
             </button>
           </div>
         </div>
+
+        <h3 style={{ maxWidth: 700 }}>{props.details.searchMessage}</h3>
 
         <br />
 

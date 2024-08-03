@@ -504,12 +504,22 @@ const SelectCustomChoice = (props) => {
           });
         } else {
           updateData = true;
+
           newGameState.currentResolution.push({
             resolution: "Search Skill",
             player: self,
-            restriction: ["04-01", "04-02", "04-03"],
-            message: "Search for 1 non-burst Land skill.",
-            outcome: "Add",
+            details: {
+              restriction: ["04-01", "04-02", "04-03"],
+              exclusion: [],
+              searchTitle: "Upheaval",
+              searchMessage: "Search for 1 non-burst Land skill",
+              outcome: "Add",
+              revealTitle: null,
+              revealMessage: null,
+              messageTitle: null,
+              message: null,
+              specMessage: null,
+            },
           });
         }
         break;
@@ -536,9 +546,18 @@ const SelectCustomChoice = (props) => {
           newGameState.currentResolution.push({
             resolution: "Search Skill",
             player: self,
-            restriction: ["04-01"],
-            message: "Search for 1 “Crystallization”.",
-            outcome: "Add",
+            details: {
+              restriction: ["04-01"],
+              exclusion: [],
+              searchTitle: "Mountain Stance",
+              searchMessage: "Search for 1 “Crystallization”",
+              outcome: "Add",
+              revealTitle: null,
+              revealMessage: null,
+              messageTitle: null,
+              message: null,
+              specMessage: null,
+            },
           });
 
           newGameState.currentResolution.push({
@@ -840,10 +859,22 @@ const SelectCustomChoice = (props) => {
           newGameState.currentResolution.push({
             resolution: "Search Skill",
             player: self,
-            restriction: null,
-            message:
-              "Search for any skill; if successful, reveal and discard it.",
-            outcome: "Foreshadow",
+            details: {
+              restriction: null,
+              exclusion: [],
+              searchTitle: "Foreshadow",
+              searchMessage:
+                "Search for any skill; if successful, reveal and discard it",
+              outcome: "Foreshadow",
+              revealTitle: "Foreshadow",
+              revealMessage:
+                "Your opponent has searched for, revealed, and discarded a skill",
+              messageTitle: null,
+              message: null,
+              specMessage: `${
+                self === "host" ? "Gold" : "Silver"
+              } Sovereign has searched for, revealed, and discarded a skill.`,
+            },
           });
         }
         break;

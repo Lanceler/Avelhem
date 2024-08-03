@@ -282,24 +282,46 @@ const YouMayNoYes = (props) => {
 
       case "Conduction":
         updateData = true;
+
         newGameState.currentResolution.push({
           resolution: "Search Skill",
           player: self,
-          restriction: ["07-01"],
-          message: "Search for then float 1 “Magnetic Shockwave”.",
-          outcome: "Float",
+          details: {
+            restriction: ["07-01"],
+            exclusion: [],
+            searchTitle: "Conduction",
+            searchMessage: "Search for then float 1 “Magnetic Shockwave”",
+            outcome: "Float",
+            revealTitle: null,
+            revealMessage: null,
+            messageTitle: null,
+            message: null,
+            specMessage: null,
+          },
         });
+
         break;
 
       case "Ambiance Assimilation":
         updateData = true;
+
         newGameState.currentResolution.push({
           resolution: "Search Skill",
           player: self,
-          restriction: ["06-01", "06-02", "06-03"],
-          message: "Search for 1 non-burst Mana skill.",
-          outcome: "Add",
+          details: {
+            restriction: ["06-01", "06-02", "06-03"],
+            exclusion: [],
+            searchTitle: "Ambiance Assimilation",
+            searchMessage: "Search for 1 non-burst Mana skill”",
+            outcome: "Add",
+            revealTitle: null,
+            revealMessage: null,
+            messageTitle: null,
+            message: null,
+            specMessage: null,
+          },
         });
+
         break;
 
       case "Mana Restructure":

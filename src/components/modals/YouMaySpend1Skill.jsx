@@ -93,10 +93,20 @@ const YouMaySpend1Skill = (props) => {
         newGameState.currentResolution.push({
           resolution: "Search Skill",
           player: self,
-          restriction: ["08-01", "08-02", "08-03"],
-          message: "Search for 1 Plant skill",
-          outcome: "Add",
+          details: {
+            restriction: ["08-01", "08-02", "08-03"],
+            exclusion: [],
+            searchTitle: "Castle of Thorns",
+            searchMessage: "Search for 1 Plant skill”",
+            outcome: "Add",
+            revealTitle: null,
+            revealMessage: null,
+            messageTitle: null,
+            message: null,
+            specMessage: null,
+          },
         });
+
         break;
 
       case "Castle of Thorns2":
@@ -253,10 +263,20 @@ const YouMaySpend1Skill = (props) => {
         newGameState.currentResolution.push({
           resolution: "Search Skill",
           player: self,
-          restriction: ["08-01", "08-02", "08-03"],
-          message: "Search for 1 Plant skill",
-          outcome: "Add",
+          details: {
+            restriction: ["08-01", "08-02", "08-03"],
+            exclusion: [],
+            searchTitle: "Castle of Thorns",
+            searchMessage: "Search for 1 Plant skill”",
+            outcome: "Add",
+            revealTitle: null,
+            revealMessage: null,
+            messageTitle: null,
+            message: null,
+            specMessage: null,
+          },
         });
+
         break;
 
       case "Castle of Thorns2":

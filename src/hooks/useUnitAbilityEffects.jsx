@@ -245,9 +245,18 @@ export const useUnitAbilityEffects = () => {
     newGameState.currentResolution.push({
       resolution: "Search Skill",
       player: self,
-      restriction: ["03-02"],
-      message: "Search for 1 “Gale Conjuration”.",
-      outcome: "Add",
+      details: {
+        restriction: ["03-02"],
+        exclusion: [],
+        searchTitle: "Reap the Whirlwind",
+        searchMessage: "Search for 1 “Gale Conjuration”",
+        outcome: "Add",
+        revealTitle: null,
+        revealMessage: null,
+        messageTitle: null,
+        message: null,
+        specMessage: null,
+      },
     });
 
     return newGameState;
@@ -395,27 +404,21 @@ export const useUnitAbilityEffects = () => {
       });
     }
 
-    // newGameState.currentResolution.push({
-    //   resolution: "Misc.",
-    //   resolution2: "Inspect Skill",
-    //   player: self,
-
-    //   details: {
-    //     restriction: ["05-01", "05-02", "05-03"],
-    //     outcome: "Float",
-    //     title: "Arc Flash",
-    //     message:
-    //       "Inspect 3 skills. You may float 1 Lightning skill among them.",
-    //     inspectionCount: 3,
-    //   },
-    // });
-
     newGameState.currentResolution.push({
       resolution: "Search Skill",
       player: self,
-      restriction: ["05-01", "05-02", "05-03"],
-      message: "Search for then float 1 non-burst Lightning skill.",
-      outcome: "Float",
+      details: {
+        restriction: ["05-01", "05-02", "05-03"],
+        exclusion: [],
+        searchTitle: "Arc Flash",
+        searchMessage: "Search for then float 1 non-burst Lightning skill",
+        outcome: "Float",
+        revealTitle: null,
+        revealMessage: null,
+        messageTitle: null,
+        message: null,
+        specMessage: null,
+      },
     });
 
     return newGameState;
@@ -528,9 +531,18 @@ export const useUnitAbilityEffects = () => {
     newGameState.currentResolution.push({
       resolution: "Search Skill",
       player: self,
-      restriction: ["07-03"],
-      message: "Search for 1 Frenzy Blade.",
-      outcome: "Add",
+      details: {
+        restriction: ["07-03"],
+        exclusion: [],
+        searchTitle: "Brandish",
+        searchMessage: "Search for 1 Frenzy Blade",
+        outcome: "Add",
+        revealTitle: null,
+        revealMessage: null,
+        messageTitle: null,
+        message: null,
+        specMessage: null,
+      },
     });
 
     return newGameState;
