@@ -2641,63 +2641,139 @@ export const useSkillEffects = () => {
 
   //end of list
 
+  const applySkill = (effect, a, b, c) => {
+    switch (effect) {
+      //Fire
+      case "ignitionPropulsion1":
+        return ignitionPropulsion1(a);
+      case "conflagration1":
+        return conflagration1(a);
+      case "conflagrationR1":
+        return conflagrationR1(a, b);
+      case "conflagrationR2":
+        return conflagrationR2(a);
+      case "blazeOfGlory1":
+        return blazeOfGlory1(a);
+      case "blazeOfGlory2":
+        return blazeOfGlory2(a);
+      case "resplendence1":
+        return resplendence1(a);
+
+      //Water
+      case "purification1":
+        return purification1(a);
+      case "frigidBreath1":
+        return frigidBreath1(a);
+      case "frigidBreath2":
+        return frigidBreath2(a);
+      case "frigidBreathR1":
+        return frigidBreathR1(a, b);
+      case "frigidBreathR2":
+        return frigidBreathR2(a);
+      case "healingRain1":
+        return healingRain1(a, b);
+      case "glacialTorrent1":
+        return glacialTorrent1(a);
+
+      //Wind
+      case "aerialImpetus1":
+        return aerialImpetus1(a);
+      case "aerialImpetus2E":
+        return aerialImpetus2E(a);
+      case "galeConjuration1":
+        return galeConjuration1(a);
+      case "galeConjurationR1":
+        return galeConjurationR1(a, b);
+      case "galeConjurationR2":
+        return galeConjurationR2(a);
+      case "symphonicScreech1":
+        return symphonicScreech1(a, b);
+      case "cataclysmicTempest1":
+        return cataclysmicTempest1(a);
+      case "cataclysmicTempest2":
+        return cataclysmicTempest2(a);
+      case "cataclysmicTempest3":
+        return cataclysmicTempest3(a);
+      case "cataclysmicTempest4":
+        return cataclysmicTempest4(a);
+
+      //Land
+      case "crystallization1":
+        return crystallization1(a);
+      case "crystallization2":
+        return crystallization2(a);
+      case "upheaval1":
+        return upheaval1(a);
+      case "upheaval2":
+        return upheaval2(a);
+      case "upheavalR1":
+        return upheavalR1(a, b);
+      case "upheavalR2":
+        return upheavalR2(a);
+      case "pitfallTrap1":
+        return pitfallTrap1(a, b);
+      case "pitfallTrap2":
+        return pitfallTrap2(a, b);
+      case "pitfallTrap3":
+        return pitfallTrap3(a, b);
+      case "geomancy1":
+        return geomancy1(a);
+      case "geomancy2":
+        return geomancy2(a);
+
+      //Lightning
+      case "chainLightning1":
+        return chainLightning1(a);
+      case "chainLightning2":
+        return chainLightning2(a);
+      case "chainLightning3":
+        return chainLightning3(a, b);
+      case "zipAndZap1":
+        return zipAndZap1(a);
+      case "zipAndZap2":
+        return zipAndZap2(a);
+      case "zipAndZapR1":
+        return zipAndZapR1(a, b);
+      case "zipAndZapR2":
+        return zipAndZapR2(a);
+      case "thunderThaumaturge1":
+        return thunderThaumaturge1(a, b);
+      case "thunderThaumaturge2":
+        return thunderThaumaturge2(a);
+      case "valiantSpark1":
+        return valiantSpark1(a);
+
+      //Mana
+      case "surge1":
+        return surge1(a);
+      case "diffusion1":
+        return diffusion1(a);
+      case "diffusion2":
+        return diffusion2(a);
+      case "diffusionR1":
+        return diffusionR1(a, b);
+      case "diffusionR2":
+        return diffusionR2(a);
+      case "diffusionR3":
+        return diffusionR3(a);
+      case "aegis1":
+        return aegis1(a, b);
+      case "disruptionField1":
+        return disruptionField1(a);
+
+      //Metal
+      case "magneticShockwave1":
+        return magneticShockwave1(a);
+      case "magneticShockwave2":
+        return magneticShockwave2(a);
+      case "magneticShockwave3":
+        return magneticShockwave3(a);
+    }
+  };
+
   return {
-    ignitionPropulsion1,
-    conflagration1,
-    conflagrationR1,
-    conflagrationR2,
-    blazeOfGlory1,
-    blazeOfGlory2,
-    resplendence1,
-    purification1,
-    frigidBreath1,
-    frigidBreath2,
-    frigidBreathR1,
-    frigidBreathR2,
-    healingRain1,
-    glacialTorrent1,
-    aerialImpetus1,
-    aerialImpetus2E,
-    galeConjuration1,
-    galeConjurationR1,
-    galeConjurationR2,
-    symphonicScreech1,
-    cataclysmicTempest1,
-    cataclysmicTempest2,
-    cataclysmicTempest3,
-    cataclysmicTempest4,
-    crystallization1,
-    crystallization2,
-    upheaval1,
-    upheaval2,
-    upheavalR1,
-    upheavalR2,
-    pitfallTrap1,
-    pitfallTrap2,
-    pitfallTrap3,
-    geomancy1,
-    geomancy2,
-    chainLightning1,
-    chainLightning2,
-    chainLightning3,
-    zipAndZap1,
-    zipAndZap2,
-    zipAndZapR1,
-    zipAndZapR2,
-    thunderThaumaturge1,
-    thunderThaumaturge2,
-    valiantSpark1,
-    surge1,
-    diffusion1,
-    diffusion2,
-    diffusionR1,
-    diffusionR2,
-    diffusionR3,
-    aegis1,
-    disruptionField1,
-    magneticShockwave1,
-    magneticShockwave2,
-    magneticShockwave3,
+    applySkill,
+
     reinforce1,
     reinforceR1,
     reinforceR2,

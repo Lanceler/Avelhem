@@ -186,62 +186,8 @@ const Board = (props) => {
   } = useRecurringEffects();
 
   const {
-    ignitionPropulsion1,
-    conflagration1,
-    conflagrationR1,
-    conflagrationR2,
-    blazeOfGlory1,
-    blazeOfGlory2,
-    resplendence1,
-    purification1,
-    frigidBreath1,
-    frigidBreath2,
-    frigidBreathR1,
-    frigidBreathR2,
-    healingRain1,
-    glacialTorrent1,
-    aerialImpetus1,
-    aerialImpetus2E,
-    galeConjuration1,
-    galeConjurationR1,
-    galeConjurationR2,
-    symphonicScreech1,
-    cataclysmicTempest1,
-    cataclysmicTempest2,
-    cataclysmicTempest3,
-    cataclysmicTempest4,
-    crystallization1,
-    crystallization2,
-    upheaval1,
-    upheaval2,
-    upheavalR1,
-    upheavalR2,
-    pitfallTrap1,
-    pitfallTrap2,
-    pitfallTrap3,
-    geomancy1,
-    geomancy2,
-    chainLightning1,
-    chainLightning2,
-    chainLightning3,
-    zipAndZap1,
-    zipAndZap2,
-    zipAndZapR1,
-    zipAndZapR2,
-    thunderThaumaturge1,
-    thunderThaumaturge2,
-    valiantSpark1,
-    surge1,
-    diffusion1,
-    diffusion2,
-    diffusionR1,
-    diffusionR2,
-    diffusionR3,
-    aegis1,
-    disruptionField1,
-    magneticShockwave1,
-    magneticShockwave2,
-    magneticShockwave3,
+    applySkill,
+
     reinforce1,
     reinforceR1,
     reinforceR2,
@@ -476,7 +422,7 @@ const Board = (props) => {
 
         // //for testing: quick movement
 
-        // resolutionUpdateGameStateOnly(
+        // updateLocalState(
         //   enterMoveMode(
         //     getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
         //     expandedUnit,
@@ -608,24 +554,24 @@ const Board = (props) => {
   //Current Resolution Prompt below
 
   const currentResolutionPrompt = () => {
-    let lastResolution = { resolution: "" };
+    let lastRes = { resolution: "" };
 
     if (localGameState.currentResolution.length > 0) {
-      lastResolution =
+      lastRes =
         localGameState.currentResolution[
           localGameState.currentResolution.length - 1
         ];
     }
 
     if (props.userRole === "spectator") {
-      switch (lastResolution.resolution2) {
+      switch (lastRes.resolution2) {
         case "Message To Player":
           return (
             <>
-              {lastResolution.specMessage && (
+              {lastRes.specMessage && (
                 <MessageToPlayer
-                  title={lastResolution.title}
-                  message={lastResolution.specMessage}
+                  title={lastRes.title}
+                  message={lastRes.specMessage}
                   updateFirebase={updateFirebase}
                 />
               )}
@@ -637,9 +583,9 @@ const Board = (props) => {
             <>
               {!hideModal && (
                 <ViewRevealedSkill
-                  skill={lastResolution.skill}
-                  title={lastResolution.title}
-                  message={lastResolution.specMessage}
+                  skill={lastRes.skill}
+                  title={lastRes.title}
+                  message={lastRes.specMessage}
                   updateFirebase={updateFirebase}
                   hideOrRevealModale={hideOrRevealModale}
                 />
@@ -652,9 +598,9 @@ const Board = (props) => {
       }
     }
 
-    switch (lastResolution.resolution) {
+    switch (lastRes.resolution) {
       case "Animation Delay":
-        if (self === lastResolution.priority) {
+        if (self === lastRes.priority) {
           animationDelay();
         }
         break;
@@ -708,13 +654,13 @@ const Board = (props) => {
         );
 
       case "Defiance Options":
-        switch (lastResolution.resolution2) {
+        switch (lastRes.resolution2) {
           case "Artifice":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <SelectSkillHandMulti
-                    details={lastResolution.details}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -725,52 +671,52 @@ const Board = (props) => {
           case "Destine":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <PowerAtTheFinalHourProaction
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                     reason="Destine"
-                    defianceCost={lastResolution.defianceCost}
+                    defianceCost={lastRes.defianceCost}
                   />
                 )}
               </>
             );
 
           case "Select Destine Pawn":
-            if (self === lastResolution.player) {
-              selectDestine(lastResolution.scionClass);
+            if (self === lastRes.player) {
+              selectDestine(lastRes.scionClass);
             }
             break;
 
           case "Curate Results":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <TacticResults3
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
-                    reroll={lastResolution.reroll}
+                    reroll={lastRes.reroll}
                   />
                 )}
               </>
             );
 
           case "End Phase":
-            if (self === lastResolution.player) {
-              resolutionUpdateGameStateOnly(endDefiancePhase2());
+            if (self === lastRes.player) {
+              updateLocalState(endDefiancePhase2());
             }
             break;
         }
         break;
 
       case "Final Phase":
-        switch (lastResolution.resolution2) {
+        switch (lastRes.resolution2) {
           case "Avelhem Retention":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <SelectAvelhemHandMulti
-                    details={lastResolution.details}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -781,10 +727,10 @@ const Board = (props) => {
           case "Skill Hand Limit":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <SelectSkillHandMulti
-                    resonated={lastResolution.resonated}
-                    details={lastResolution.details}
+                    resonated={lastRes.resonated}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -793,19 +739,19 @@ const Board = (props) => {
             );
 
           case "Burn Decrement":
-            if (self === lastResolution.player) {
+            if (self === lastRes.player) {
               resolutionUpdate(decrementBurn());
             }
             break;
 
           case "Status Decrement":
-            if (self === lastResolution.player) {
-              resolutionUpdateGameStateOnly(decrementStatus());
+            if (self === lastRes.player) {
+              updateLocalState(decrementStatus());
             }
             break;
 
           case "Scoring":
-            if (self === lastResolution.player) {
+            if (self === lastRes.player) {
               resolutionUpdate(applyScore());
             }
             break;
@@ -815,7 +761,7 @@ const Board = (props) => {
       case "Deploying Pawn":
         if (self === localGameState.turnPlayer && tileMode !== "deploy") {
           setTileMode("deploy");
-          setValidZones(lastResolution.zoneIds);
+          setValidZones(lastRes.zoneIds);
           setDeployClass("Pawn");
         }
         break;
@@ -823,19 +769,19 @@ const Board = (props) => {
       case "Deploying Scion":
         if (self === localGameState.turnPlayer && tileMode !== "deploy") {
           setTileMode("deploy");
-          setValidZones(lastResolution.zoneIds);
-          setDeployClass(lastResolution.scionClass);
+          setValidZones(lastRes.zoneIds);
+          setDeployClass(lastRes.scionClass);
         }
         break;
 
       case "Mitigating Virtue-Blast":
         return (
           <>
-            {self === lastResolution.unit.player && !hideModal && (
+            {self === lastRes.unit.player && !hideModal && (
               <YouMayNoYes
-                unit={lastResolution.unit}
-                attacker={lastResolution.attacker}
-                details={lastResolution.details}
+                unit={lastRes.unit}
+                attacker={lastRes.attacker}
+                details={lastRes.details}
                 updateFirebase={updateFirebase}
                 hideOrRevealModale={hideOrRevealModale}
               />
@@ -844,56 +790,56 @@ const Board = (props) => {
         );
 
       case "Tactic End":
-        if (self === lastResolution.unit.player) {
-          tacticEnd(lastResolution.unit, lastResolution.effect);
+        if (self === lastRes.unit.player) {
+          tacticEnd(lastRes.unit, lastRes.effect);
         }
         break;
 
       case "Apply Burn":
-        if (self === lastResolution.attacker.player) {
-          resolveApplyBurn(lastResolution.attacker, lastResolution.victim);
+        if (self === lastRes.attacker.player) {
+          resolveApplyBurn(lastRes.attacker, lastRes.victim);
         }
         break;
 
       case "Apply Damage":
-        if (self === lastResolution.attacker.player) {
+        if (self === lastRes.attacker.player) {
           resolutionUpdate(
             applyDamage(
-              lastResolution.attacker,
-              lastResolution.victim,
-              lastResolution.type,
-              lastResolution.special
+              lastRes.attacker,
+              lastRes.victim,
+              lastRes.type,
+              lastRes.special
             )
           );
-        } else if (self === lastResolution.victim.player) {
-          resolutionUpdateGameStateOnly(
+        } else if (self === lastRes.victim.player) {
+          updateLocalState(
             applyDamage(
-              lastResolution.attacker,
-              lastResolution.victim,
-              lastResolution.type,
-              lastResolution.special
+              lastRes.attacker,
+              lastRes.victim,
+              lastRes.type,
+              lastRes.special
             )
           );
         }
         break;
 
       case "Apply Frostbite":
-        if (self === lastResolution.attacker.player) {
+        if (self === lastRes.attacker.player) {
           resolveApplyFrostbite(
-            lastResolution.attacker,
-            lastResolution.victim,
-            lastResolution.duration
+            lastRes.attacker,
+            lastRes.victim,
+            lastRes.duration
           );
         }
         break;
 
       case "Apply Paralysis":
-        if (self === lastResolution.attacker.player) {
+        if (self === lastRes.attacker.player) {
           resolveApplyParalysis(
-            lastResolution.attacker,
-            lastResolution.victim,
-            lastResolution.duration,
-            lastResolution.special
+            lastRes.attacker,
+            lastRes.victim,
+            lastRes.duration,
+            lastRes.special
           );
         }
         break;
@@ -901,10 +847,10 @@ const Board = (props) => {
       case "Choose Resonator":
         return (
           <>
-            {self === lastResolution.player && (
+            {self === lastRes.player && (
               <SelectResonatorSkill
-                unit={lastResolution.unit}
-                skill={lastResolution.skill}
+                unit={lastRes.unit}
+                skill={lastRes.skill}
                 hideOrRevealModale={hideOrRevealModale}
                 updateFirebase={updateFirebase}
               />
@@ -915,9 +861,9 @@ const Board = (props) => {
       case "Choose Resonator Avelhem":
         return (
           <>
-            {self === lastResolution.player && (
+            {self === lastRes.player && (
               <SelectAvelhemResonator
-                avelhem={lastResolution.avelhem}
+                avelhem={lastRes.avelhem}
                 updateFirebase={updateFirebase}
               />
             )}
@@ -925,19 +871,17 @@ const Board = (props) => {
         );
 
       case "Avelhem Resonance":
-        if (self === lastResolution.unit.player) {
-          resolutionUpdateGameStateOnly(
-            avelhemResonance(lastResolution.unit, lastResolution.resonator)
-          );
+        if (self === lastRes.unit.player) {
+          updateLocalState(avelhemResonance(lastRes.unit, lastRes.resonator));
         }
         break;
 
       case "You May Shuffle Avelhem":
         return (
           <>
-            {self === lastResolution.player && !hideModal && (
+            {self === lastRes.player && !hideModal && (
               <YouMayNoYes
-                details={lastResolution.details}
+                details={lastRes.details}
                 updateFirebase={updateFirebase}
                 hideOrRevealModale={hideOrRevealModale}
               />
@@ -946,20 +890,20 @@ const Board = (props) => {
         );
 
       case "Avelhem Select Pawn":
-        if (self === lastResolution.player) {
-          selectAvelhemPawn(lastResolution.avelhem, lastResolution.resonator);
+        if (self === lastRes.player) {
+          selectAvelhemPawn(lastRes.avelhem, lastRes.resonator);
         }
         break;
 
       case "Search Avelhem":
         return (
           <>
-            {self === lastResolution.player && !hideModal && (
+            {self === lastRes.player && !hideModal && (
               <SearchAvelhem
-                restriction={lastResolution.restriction}
-                outcome={lastResolution.outcome}
-                message={lastResolution.message}
-                reveal={lastResolution.reveal}
+                restriction={lastRes.restriction}
+                outcome={lastRes.outcome}
+                message={lastRes.message}
+                reveal={lastRes.reveal}
                 hideOrRevealModale={hideOrRevealModale}
                 updateFirebase={updateFirebase}
               />
@@ -970,13 +914,13 @@ const Board = (props) => {
       case "Search Skill":
         return (
           <>
-            {self === lastResolution.player && !hideModal && (
+            {self === lastRes.player && !hideModal && (
               <SearchSkill
-                // restriction={lastResolution.restriction}
-                // outcome={lastResolution.outcome}
-                // message={lastResolution.message}
-                // reveal={lastResolution.reveal}
-                details={lastResolution.details}
+                // restriction={lastRes.restriction}
+                // outcome={lastRes.outcome}
+                // message={lastRes.message}
+                // reveal={lastRes.reveal}
+                details={lastRes.details}
                 hideOrRevealModale={hideOrRevealModale}
                 updateFirebase={updateFirebase}
               />
@@ -987,11 +931,11 @@ const Board = (props) => {
       case "Recover Avelhem":
         return (
           <>
-            {self === lastResolution.player && !hideModal && (
+            {self === lastRes.player && !hideModal && (
               <RecoverAvelhem
-                restriction={lastResolution.restriction}
-                outcome={lastResolution.outcome}
-                message={lastResolution.message}
+                restriction={lastRes.restriction}
+                outcome={lastRes.outcome}
+                message={lastRes.message}
                 hideOrRevealModale={hideOrRevealModale}
                 updateFirebase={updateFirebase}
               />
@@ -1002,13 +946,13 @@ const Board = (props) => {
       case "Recover Skill":
         return (
           <>
-            {self === lastResolution.player && !hideModal && (
+            {self === lastRes.player && !hideModal && (
               <RecoverSkill
-                restriction={lastResolution.restriction}
-                outcome={lastResolution.outcome}
-                message={lastResolution.message}
-                canSkip={lastResolution.canSkip}
-                cost={lastResolution.cost}
+                restriction={lastRes.restriction}
+                outcome={lastRes.outcome}
+                message={lastRes.message}
+                canSkip={lastRes.canSkip}
+                cost={lastRes.cost}
                 hideOrRevealModale={hideOrRevealModale}
                 updateFirebase={updateFirebase}
               />
@@ -1019,14 +963,14 @@ const Board = (props) => {
       case "Discard Skill":
         return (
           <>
-            {self === lastResolution.player && !hideModal && (
+            {self === lastRes.player && !hideModal && (
               <SpendSkill
                 updateFirebase={updateFirebase}
-                unit={lastResolution.unit}
-                player={lastResolution.player}
-                message={lastResolution.message}
-                fever={lastResolution.fever}
-                restriction={lastResolution.restriction}
+                unit={lastRes.unit}
+                player={lastRes.player}
+                message={lastRes.message}
+                fever={lastRes.fever}
+                restriction={lastRes.restriction}
                 hideOrRevealModale={hideOrRevealModale}
               />
             )}
@@ -1034,60 +978,60 @@ const Board = (props) => {
         );
 
       case "Avelhem Conclusion":
-        if (self === lastResolution.player) {
+        if (self === lastRes.player) {
           avelhemConclusion(
-            lastResolution.avelhem,
-            lastResolution.conclusion,
-            lastResolution.resonator,
-            lastResolution.resonatorConclusion
+            lastRes.avelhem,
+            lastRes.conclusion,
+            lastRes.resonator,
+            lastRes.resonatorConclusion
           );
         }
         break;
 
       case "Skill Conclusion":
-        if (self === lastResolution.player) {
+        if (self === lastRes.player) {
           skillConclusion(
-            lastResolution.player,
-            lastResolution.unit,
-            lastResolution.skill,
-            lastResolution.conclusion
+            lastRes.player,
+            lastRes.unit,
+            lastRes.skill,
+            lastRes.conclusion
           );
         }
         break;
 
       case "Resonance Conclusion":
-        if (self === lastResolution.player) {
+        if (self === lastRes.player) {
           skillResonanceConclusion(
-            lastResolution.player,
-            lastResolution.unit,
-            lastResolution.skill,
-            lastResolution.skillConclusion,
-            lastResolution.resonator,
-            lastResolution.resonatorConclusion
+            lastRes.player,
+            lastRes.unit,
+            lastRes.skill,
+            lastRes.skillConclusion,
+            lastRes.resonator,
+            lastRes.resonatorConclusion
           );
         }
         break;
 
       case "Selecting":
-        switch (lastResolution.resolution2) {
+        switch (lastRes.resolution2) {
           case "Selecting Unit":
-            if (self === lastResolution.player && tileMode !== "selectUnit") {
+            if (self === lastRes.player && tileMode !== "selectUnit") {
               setTileMode("selectUnit");
-              setValidZones(lastResolution.zoneIds);
-              setMovingUnit(lastResolution.unit);
-              setTacticUsed(lastResolution.tactic);
-              setSelectUnitReason(lastResolution.reason);
-              setSelectUnitSpecial(lastResolution.special);
+              setValidZones(lastRes.zoneIds);
+              setMovingUnit(lastRes.unit);
+              setTacticUsed(lastRes.tactic);
+              setSelectUnitReason(lastRes.reason);
+              setSelectUnitSpecial(lastRes.special);
             }
             break;
 
           case "Selecting Scion Skill":
             return (
               <>
-                {self === lastResolution.unit.player && (
+                {self === lastRes.unit.player && (
                   <SelectScionSkill
                     updateFirebase={updateFirebase}
-                    unit={lastResolution.unit}
+                    unit={lastRes.unit}
                   />
                 )}
               </>
@@ -1096,10 +1040,10 @@ const Board = (props) => {
           case "Selecting Unit Ability":
             return (
               <>
-                {self === lastResolution.unit.player && (
+                {self === lastRes.unit.player && (
                   <SelectUnitAbility
                     updateFirebase={updateFirebase}
-                    unit={lastResolution.unit}
+                    unit={lastRes.unit}
                   />
                 )}
               </>
@@ -1108,13 +1052,13 @@ const Board = (props) => {
         break;
 
       case "Misc.":
-        switch (lastResolution.resolution2) {
+        switch (lastRes.resolution2) {
           case "Moving Unit":
             if (self === localGameState.turnPlayer && tileMode !== "move") {
               setTileMode("move");
-              setValidZones(lastResolution.zoneIds);
-              setMovingUnit(lastResolution.unit);
-              setTacticUsed(lastResolution.tactic);
+              setValidZones(lastRes.zoneIds);
+              setMovingUnit(lastRes.unit);
+              setTacticUsed(lastRes.tactic);
             }
             break;
 
@@ -1124,7 +1068,7 @@ const Board = (props) => {
                 {self === localGameState.turnPlayer && !hideModal && (
                   <SelectTactic
                     updateFirebase={updateFirebase}
-                    unit={lastResolution.unit}
+                    unit={lastRes.unit}
                   />
                 )}
               </>
@@ -1135,9 +1079,9 @@ const Board = (props) => {
               <>
                 {self === localGameState.turnPlayer && !hideModal && (
                   <SelectTacticalAction
-                    unit={lastResolution.unit}
-                    dice={lastResolution.dice}
-                    face={lastResolution.face}
+                    unit={lastRes.unit}
+                    dice={lastRes.dice}
+                    face={lastRes.face}
                     updateFirebase={updateFirebase}
                   />
                 )}
@@ -1149,8 +1093,8 @@ const Board = (props) => {
               <>
                 {self === localGameState.turnPlayer && !hideModal && (
                   <SelectSovereignTactic
-                    dice={lastResolution.dice}
-                    face={lastResolution.face}
+                    dice={lastRes.dice}
+                    face={lastRes.face}
                     updateFirebase={updateFirebase}
                   />
                 )}
@@ -1160,9 +1104,9 @@ const Board = (props) => {
           case "Advance Avelhem Draw":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <YouMayNoYes
-                    details={lastResolution.details}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1173,9 +1117,9 @@ const Board = (props) => {
           case "Advance Deploy Scion: Choose Element":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <SelectElement
-                    details={lastResolution.details}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1186,14 +1130,14 @@ const Board = (props) => {
           case "Advance Deploy Scion: Float Skill":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <YouMayFloat1Skill
-                    restriction={lastResolution.restriction}
-                    title={lastResolution.title}
-                    message={lastResolution.message}
-                    reason={lastResolution.reason}
-                    tactic={lastResolution.tactic}
-                    scionClass={lastResolution.scionClass}
+                    restriction={lastRes.restriction}
+                    title={lastRes.title}
+                    message={lastRes.message}
+                    reason={lastRes.reason}
+                    tactic={lastRes.tactic}
+                    scionClass={lastRes.scionClass}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1202,8 +1146,8 @@ const Board = (props) => {
             );
 
           case "Appoint - Upgraded":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdate(appointShield(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              resolutionUpdate(appointShield(lastRes.unit));
             }
             break;
 
@@ -1214,27 +1158,25 @@ const Board = (props) => {
                   <TacticResults
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
-                    reroll={lastResolution.reroll}
+                    reroll={lastRes.reroll}
                   />
                 )}
               </>
             );
 
           case "Strike Movement":
-            if (self === lastResolution.attacker.player) {
-              resolutionUpdate(
-                strikeMove(lastResolution.attacker, lastResolution.zone)
-              );
+            if (self === lastRes.attacker.player) {
+              resolutionUpdate(strikeMove(lastRes.attacker, lastRes.zone));
             }
             break;
 
           case "Rooted Traverse":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <YouMaySpend1Skill
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1245,10 +1187,10 @@ const Board = (props) => {
           case "Rooted Virtue-blast":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <YouMaySpend1Skill
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1257,13 +1199,13 @@ const Board = (props) => {
             );
 
           case "Rooted Traverse Movement":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
+            if (self === lastRes.unit.player) {
+              updateLocalState(
                 enterMoveMode(
-                  getVacantAdjacentZones(lastResolution.unit),
-                  lastResolution.unit,
+                  getVacantAdjacentZones(lastRes.unit),
+                  lastRes.unit,
                   null,
-                  lastResolution.tactic,
+                  lastRes.tactic,
                   true
                 )
               );
@@ -1271,13 +1213,9 @@ const Board = (props) => {
             break;
 
           case "May float resonant skill unit":
-            if (self === lastResolution.player) {
-              resolutionUpdateGameStateOnly(
-                unitFloatSkill(
-                  lastResolution.unit,
-                  lastResolution.skill,
-                  lastResolution.resonator
-                )
+            if (self === lastRes.player) {
+              updateLocalState(
+                unitFloatSkill(lastRes.unit, lastRes.skill, lastRes.resonator)
               );
             }
             break;
@@ -1285,11 +1223,11 @@ const Board = (props) => {
           case "May float resonant skill":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <MayFloatResonantSkill
-                    player={lastResolution.player}
-                    skill={lastResolution.skill}
-                    resonator={lastResolution.resonator}
+                    player={lastRes.player}
+                    skill={lastRes.skill}
+                    resonator={lastRes.resonator}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1300,13 +1238,13 @@ const Board = (props) => {
           case "Retain resonant skill unit":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <>
-                    {resolutionUpdateGameStateOnly(
+                    {updateLocalState(
                       unitRetainSkill(
-                        lastResolution.unit,
-                        lastResolution.skill,
-                        lastResolution.resonator
+                        lastRes.unit,
+                        lastRes.skill,
+                        lastRes.resonator
                       )
                     )}
                   </>
@@ -1315,17 +1253,17 @@ const Board = (props) => {
             );
 
           case "Retain resonant skill":
-            if (self === lastResolution.player) {
-              skillResonanceRetain(lastResolution.resonator);
+            if (self === lastRes.player) {
+              skillResonanceRetain(lastRes.resonator);
             }
             break;
 
           case "Inspect Skill":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <InspectSkill
-                    details={lastResolution.details}
+                    details={lastRes.details}
                     hideOrRevealModale={hideOrRevealModale}
                     updateFirebase={updateFirebase}
                   />
@@ -1336,11 +1274,11 @@ const Board = (props) => {
           case "Revealing Skill":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <ViewRevealedSkill
-                    skill={lastResolution.skill}
-                    title={lastResolution.title}
-                    message={lastResolution.message}
+                    skill={lastRes.skill}
+                    title={lastRes.title}
+                    message={lastRes.message}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1351,10 +1289,10 @@ const Board = (props) => {
           case "Message To Player":
             return (
               <>
-                {self === lastResolution.player && (
+                {self === lastRes.player && (
                   <MessageToPlayer
-                    title={lastResolution.title}
-                    message={lastResolution.message}
+                    title={lastRes.title}
+                    message={lastRes.message}
                     updateFirebase={updateFirebase}
                   />
                 )}
@@ -1364,9 +1302,9 @@ const Board = (props) => {
           // case "Acquisition Phase: Cultivate":
           //   return (
           //     <>
-          //       {self === lastResolution.player && !hideModal && (
+          //       {self === lastRes.player && !hideModal && (
           //         <YouMaySpend1Skill
-          //           details={lastResolution.details}
+          //           details={lastRes.details}
           //           updateFirebase={updateFirebase}
           //           hideOrRevealModale={hideOrRevealModale}
           //         />
@@ -1377,9 +1315,9 @@ const Board = (props) => {
           case "Battle Cry":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <SelectSkillHandMulti
-                    details={lastResolution.details}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1390,14 +1328,14 @@ const Board = (props) => {
         break;
 
       case "Unit Ability":
-        switch (lastResolution.resolution2) {
+        switch (lastRes.resolution2) {
           case "Ability - select tactic":
             return (
               <>
                 {self === localGameState.turnPlayer && !hideModal && (
                   <SelectTacticViaEffect
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1406,48 +1344,48 @@ const Board = (props) => {
             );
 
           case "Activating Afterburner":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(afterburner1(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(afterburner1(lastRes.unit));
             }
             break;
 
           case "Afterburner1":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(afterburner2(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(afterburner2(lastRes.unit));
             }
             break;
 
           case "Activating Fiery Heart":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(fieryHeart1(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(fieryHeart1(lastRes.unit));
             }
             break;
 
           case "Fiery Heart1":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(fieryHeart2(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(fieryHeart2(lastRes.unit));
             }
             break;
 
           case "Activating Hydrotherapy":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(hydrotherapy1(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(hydrotherapy1(lastRes.unit));
             }
             break;
 
           case "Activating Cold Embrace":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(coldEmbrace1(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(coldEmbrace1(lastRes.unit));
             }
             break;
 
           case "Cold Embrace1":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <SelectCustomChoice
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1456,24 +1394,22 @@ const Board = (props) => {
             );
 
           case "Activating Reap the Whirlwind":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                reapTheWhirlwind1(lastResolution.unit)
-              );
+            if (self === lastRes.unit.player) {
+              updateLocalState(reapTheWhirlwind1(lastRes.unit));
             }
             break;
 
           case "Activating Air Dash":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(airDash1(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(airDash1(lastRes.unit));
             }
             break;
 
           case "Air Dash1":
-            if (self === lastResolution.unit.player) {
+            if (self === lastRes.unit.player) {
               enterMoveModeViaSkill(
-                getVacant2SpaceZones(lastResolution.unit),
-                lastResolution.unit
+                getVacant2SpaceZones(lastRes.unit),
+                lastRes.unit
               );
               setMovingSpecial("AirDash");
             }
@@ -1482,10 +1418,10 @@ const Board = (props) => {
           case "Reap the Whirlwind1":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <YouMayNoYes
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1496,10 +1432,10 @@ const Board = (props) => {
           case "Reap the Whirlwind2":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <SelectCustomChoice
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1508,21 +1444,21 @@ const Board = (props) => {
             );
 
           case "Activating Fortify":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(fortify1(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(fortify1(lastRes.unit));
             }
             break;
 
           case "Fortify1":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <YouMayFloat1Skill
-                    unit={lastResolution.unit}
-                    restriction={lastResolution.restriction}
-                    title={lastResolution.title}
-                    message={lastResolution.message}
-                    reason={lastResolution.reason}
+                    unit={lastRes.unit}
+                    restriction={lastRes.restriction}
+                    title={lastRes.title}
+                    message={lastRes.message}
+                    reason={lastRes.reason}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1533,10 +1469,10 @@ const Board = (props) => {
           case "Fortify2":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <SelectCustomChoice
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1545,18 +1481,18 @@ const Board = (props) => {
             );
 
           case "Activating Galvanize":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(galvanize1(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(galvanize1(lastRes.unit));
             }
             break;
 
           case "Galvanize1":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <YouMayNoYes
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1565,18 +1501,18 @@ const Board = (props) => {
             );
 
           case "Activating Arc Flash":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdate(arcFlash1(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              resolutionUpdate(arcFlash1(lastRes.unit));
             }
             break;
 
           case "Arc Flash1":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <YouMayNoYes
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1585,18 +1521,18 @@ const Board = (props) => {
             );
 
           case "Arc Flash2":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(arcFlash2(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(arcFlash2(lastRes.unit));
             }
             break;
 
           case "Arc Flash3":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <SelectCustomChoice
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1605,30 +1541,30 @@ const Board = (props) => {
             );
 
           case "Activating Particle Beam":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(particleBeam1(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(particleBeam1(lastRes.unit));
             }
             break;
 
           case "Particle Beam1":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(particleBeam2(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(particleBeam2(lastRes.unit));
             }
             break;
 
           case "Activating Brandish":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(brandish1(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(brandish1(lastRes.unit));
             }
             break;
 
           case "Brandish1":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <SelectCustomChoice
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1637,20 +1573,20 @@ const Board = (props) => {
             );
 
           case "Activating Flourish":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(flourish1(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(flourish1(lastRes.unit));
             }
             break;
 
           case "Flourish1":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(flourish2(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(flourish2(lastRes.unit));
             }
             break;
 
           case "Activating Ambrosia":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(ambrosia1(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(ambrosia1(lastRes.unit));
             }
             break;
 
@@ -1659,16 +1595,16 @@ const Board = (props) => {
         break;
 
       case "Unit Talent":
-        switch (lastResolution.resolution2) {
+        switch (lastRes.resolution2) {
           case "Activating Flash Fire":
           case "Activating Kleptothermy":
           case "Activating Mountain Stance":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <SelectCustomChoice
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1679,10 +1615,10 @@ const Board = (props) => {
           case "Activating Lightning Rod":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <YouMaySpend1Skill
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1695,10 +1631,10 @@ const Board = (props) => {
           case "Activating Everblooming":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <YouMayNoYes
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1707,18 +1643,18 @@ const Board = (props) => {
             );
 
           case "Activating Second Wind":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(secondWind1());
+            if (self === lastRes.unit.player) {
+              updateLocalState(secondWind1());
             }
             break;
 
           case "Triggering Adamant Armor":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <YouMaySpend1Skill
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1727,7 +1663,7 @@ const Board = (props) => {
             );
 
           case "Talent Conclusion":
-            if (self === lastResolution.unit.player) {
+            if (self === lastRes.unit.player) {
               talentConclusion();
             }
             break;
@@ -1735,22 +1671,20 @@ const Board = (props) => {
         break;
 
       case "Fire Skill":
-        switch (lastResolution.resolution2) {
+        switch (lastRes.resolution2) {
           case "Activating Ignition Propulsion":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                ignitionPropulsion1(lastResolution.unit)
-              );
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("ignitionPropulsion1", lastRes.unit));
             }
             break;
 
           case "Ignition Propulsion1":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <SelectCustomChoice
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1759,48 +1693,38 @@ const Board = (props) => {
             );
 
           case "Activating Conflagration":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                conflagration1(lastResolution.unit)
-              );
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("conflagration1", lastRes.unit));
             }
             break;
 
           case "Conflagration1":
-            if (self === lastResolution.unit.player) {
-              selectEnemies(
-                lastResolution.unit,
-                1,
-                null,
-                "blast",
-                "Fire Scion"
-              );
+            if (self === lastRes.unit.player) {
+              selectEnemies(lastRes.unit, 1, null, "blast", "Fire Scion");
             }
             break;
 
           case "Resonating Conflagration":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                conflagrationR1(lastResolution.unit, lastResolution.resonator)
+            if (self === lastRes.unit.player) {
+              updateLocalState(
+                applySkill("conflagrationR1", lastRes.unit, lastRes.resonator)
               );
             }
             break;
 
           case "ConflagrationR1":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                conflagrationR2(lastResolution.unit)
-              );
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("conflagrationR2", lastRes.unit));
             }
             break;
 
           case "ConflagrationR2":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <YouMayNoYes
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1809,30 +1733,30 @@ const Board = (props) => {
             );
 
           case "Activating Blaze of Glory":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(blazeOfGlory1(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("blazeOfGlory1", lastRes.unit));
             }
             break;
 
           case "Blaze of Glory1":
-            if (self === lastResolution.unit.player) {
-              selectEnemies(lastResolution.unit, 1, null, "ignite", null);
+            if (self === lastRes.unit.player) {
+              selectEnemies(lastRes.unit, 1, null, "ignite", null);
             }
             break;
 
           case "Blaze of Glory2":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(blazeOfGlory2(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("blazeOfGlory2", lastRes.unit));
             }
             break;
 
           case "Blaze of Glory3":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <YouMayNoYes
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1841,18 +1765,18 @@ const Board = (props) => {
             );
 
           case "Activating Resplendence":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(resplendence1(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("resplendence1", lastRes.unit));
             }
             break;
 
           case "Resplendence1":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <YouMaySpend1Skill
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1861,28 +1785,28 @@ const Board = (props) => {
             );
 
           case "Resplendence2":
-            if (self === lastResolution.unit.player) {
-              selectEnemies(lastResolution.unit, 1, null, "ignite", null);
+            if (self === lastRes.unit.player) {
+              selectEnemies(lastRes.unit, 1, null, "ignite", null);
             }
             break;
         }
         break;
 
       case "Water Skill":
-        switch (lastResolution.resolution2) {
+        switch (lastRes.resolution2) {
           case "Activating Purification":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(purification1(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("purification1", lastRes.unit));
             }
             break;
 
           case "Purification1":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <SelectCustomChoice
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1891,18 +1815,18 @@ const Board = (props) => {
             );
 
           case "Purification1.5":
-            if (self === lastResolution.unit.player) {
-              selectAllies(lastResolution.unit, 2, false, "purification", null);
+            if (self === lastRes.unit.player) {
+              selectAllies(lastRes.unit, 2, false, "purification", null);
             }
             break;
 
           case "Purification2":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <SelectSkillReveal
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1911,33 +1835,33 @@ const Board = (props) => {
             );
 
           case "Activating Frigid Breath":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(frigidBreath1(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("frigidBreath1", lastRes.unit));
             }
             break;
 
           case "Frigid Breath1":
-            if (self === lastResolution.unit.player) {
-              selectEnemies(lastResolution.unit, 2, null, "freeze1", null);
+            if (self === lastRes.unit.player) {
+              selectEnemies(lastRes.unit, 2, null, "freeze1", null);
             }
             break;
 
           case "Frigid Breath2":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(frigidBreath2(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("frigidBreath2", lastRes.unit));
             }
             break;
 
           case "Frigid Breath3":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <YouMayFloat1Skill
-                    unit={lastResolution.unit}
-                    restriction={lastResolution.restriction}
-                    title={lastResolution.title}
-                    message={lastResolution.message}
-                    reason={lastResolution.reason}
+                    unit={lastRes.unit}
+                    restriction={lastRes.restriction}
+                    title={lastRes.title}
+                    message={lastRes.message}
+                    reason={lastRes.reason}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1946,34 +1870,32 @@ const Board = (props) => {
             );
 
           case "Frigid Breath4":
-            if (self === lastResolution.unit.player) {
-              selectEnemies(lastResolution.unit, 1, null, "freeze2", null);
+            if (self === lastRes.unit.player) {
+              selectEnemies(lastRes.unit, 1, null, "freeze2", null);
             }
             break;
 
           case "Resonating Frigid Breath":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                frigidBreathR1(lastResolution.unit, lastResolution.resonator)
+            if (self === lastRes.unit.player) {
+              updateLocalState(
+                applySkill("frigidBreathR1", lastRes.unit, lastRes.resonator)
               );
             }
             break;
 
           case "Frigid BreathR1":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                frigidBreathR2(lastResolution.unit)
-              );
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("frigidBreathR2", lastRes.unit));
             }
             break;
 
           case "Frigid BreathR2":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <YouMayNoYes
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1982,9 +1904,9 @@ const Board = (props) => {
             );
 
           case "Frigid BreathR3":
-            if (self === lastResolution.unit.player) {
+            if (self === lastRes.unit.player) {
               selectEnemiesAfflicted(
-                lastResolution.unit,
+                lastRes.unit,
                 1,
                 null,
                 "blast",
@@ -1995,15 +1917,15 @@ const Board = (props) => {
             break;
 
           case "Select Healing Rain Activator":
-            if (self === lastResolution.player) {
-              selectHealingRainActivator(lastResolution.victim);
+            if (self === lastRes.player) {
+              selectHealingRainActivator(lastRes.victim);
             }
             break;
 
           case "Activating Healing Rain":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                healingRain1(lastResolution.unit, lastResolution.victim)
+            if (self === lastRes.unit.player) {
+              updateLocalState(
+                applySkill("healingRain1", lastRes.unit, lastRes.victim)
               );
             }
             break;
@@ -2011,10 +1933,10 @@ const Board = (props) => {
           case "Healing Rain1":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <SelectCustomChoice
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2025,10 +1947,10 @@ const Board = (props) => {
           case "Healing Rain2":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <SelectSkillReveal
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2037,19 +1959,17 @@ const Board = (props) => {
             );
 
           case "Activating Glacial Torrent":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                glacialTorrent1(lastResolution.unit)
-              );
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("glacialTorrent1", lastRes.unit));
             }
             break;
 
           case "Glacial Torrent 1":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <GlacialTorrent
-                    unit={lastResolution.unit}
+                    unit={lastRes.unit}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2060,22 +1980,20 @@ const Board = (props) => {
         break;
 
       case "Wind Skill":
-        switch (lastResolution.resolution2) {
+        switch (lastRes.resolution2) {
           case "Activating Aerial Impetus":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                aerialImpetus1(lastResolution.unit)
-              );
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("aerialImpetus1", lastRes.unit));
             }
             break;
 
           case "Aerial Impetus1":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <SelectCustomChoice
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2084,27 +2002,25 @@ const Board = (props) => {
             );
 
           case "Aerial Impetus Prompt":
-            if (self === lastResolution.unit.player) {
-              selectAerialImpetusMove(lastResolution.unit, "Ally");
+            if (self === lastRes.unit.player) {
+              selectAerialImpetusMove(lastRes.unit, "Ally");
             }
             break;
 
           case "Aerial Impetus Purge":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                aerialImpetus2E(lastResolution.victim)
-              );
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("aerialImpetus2E", lastRes.victim));
             }
             break;
 
           case "Aerial Impetus Purge Move":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <YouMayNoYes
-                    unit={lastResolution.unit}
-                    player={lastResolution.player}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    player={lastRes.player}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2113,29 +2029,27 @@ const Board = (props) => {
             );
 
           case "Aerial Impetus Purge Move2":
-            if (self === lastResolution.player) {
-              selectAerialImpetusMove(lastResolution.victim, "Enemy");
+            if (self === lastRes.player) {
+              selectAerialImpetusMove(lastRes.victim, "Enemy");
             }
             break;
 
           case "Activating Gale Conjuration":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                galeConjuration1(lastResolution.unit)
-              );
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("galeConjuration1", lastRes.unit));
             }
             break;
 
           case "Gale Conjuration1":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <YouMayFloat1Skill
-                    unit={lastResolution.unit}
-                    restriction={lastResolution.restriction}
-                    title={lastResolution.title}
-                    message={lastResolution.message}
-                    reason={lastResolution.reason}
+                    unit={lastRes.unit}
+                    restriction={lastRes.restriction}
+                    title={lastRes.title}
+                    message={lastRes.message}
+                    reason={lastRes.reason}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2144,28 +2058,26 @@ const Board = (props) => {
             );
 
           case "Resonating Gale Conjuration":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                galeConjurationR1(lastResolution.unit, lastResolution.resonator)
+            if (self === lastRes.unit.player) {
+              updateLocalState(
+                applySkill("galeConjurationR1", lastRes.unit, lastRes.resonator)
               );
             }
             break;
 
           case "Gale ConjurationR1":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                galeConjurationR2(lastResolution.unit)
-              );
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("galeConjurationR2", lastRes.unit));
             }
             break;
 
           case "Gale ConjurationR2":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <YouMayNoYes
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2176,11 +2088,11 @@ const Board = (props) => {
           case "Gale ConjurationR3":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <YouMayNoYes
-                    unit={lastResolution.unit}
-                    attacker={lastResolution.attacker}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    attacker={lastRes.attacker}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2189,16 +2101,16 @@ const Board = (props) => {
             );
 
           case "Select Symphonic Screech Activator":
-            if (self === lastResolution.player) {
-              selectSymphonicScreechActivator(lastResolution.activator);
+            if (self === lastRes.player) {
+              selectSymphonicScreechActivator(lastRes.activator);
             }
             break;
 
           case "Activating Symphonic Screech":
-            if (self === lastResolution.unit.player) {
+            if (self === lastRes.unit.player) {
               //Do not use UpdateGameStateOnly
               resolutionUpdate(
-                symphonicScreech1(lastResolution.unit, lastResolution.victim)
+                applySkill("symphonicScreech1", lastRes.unit, lastRes.victim)
               );
             }
             break;
@@ -2206,10 +2118,10 @@ const Board = (props) => {
           case "Symphonic Screech Float":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <YouMayNoYes
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2220,10 +2132,10 @@ const Board = (props) => {
           case "Symphonic Screech2":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <SelectSkillReveal
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2232,17 +2144,15 @@ const Board = (props) => {
             );
 
           case "Activating Cataclysmic Tempest":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                cataclysmicTempest1(lastResolution.unit)
-              );
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("cataclysmicTempest1", lastRes.unit));
             }
             break;
 
           case "Cataclysmic Tempest1":
-            if (self === lastResolution.unit.player) {
+            if (self === lastRes.unit.player) {
               selectEnemies(
-                lastResolution.unit,
+                lastRes.unit,
                 1,
                 null,
                 "paralyze1",
@@ -2252,20 +2162,18 @@ const Board = (props) => {
             break;
 
           case "Cataclysmic Tempest2":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                cataclysmicTempest2(lastResolution.unit)
-              );
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("cataclysmicTempest2", lastRes.unit));
             }
             break;
 
           case "Cataclysmic Tempest3":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <YouMayNoYes
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2274,18 +2182,18 @@ const Board = (props) => {
             );
 
           case "Cataclysmic Tempest4":
-            if (self === lastResolution.unit.player) {
+            if (self === lastRes.unit.player) {
               //Do not use UpdateGameStateOnly
-              resolutionUpdate(cataclysmicTempest3(lastResolution.unit));
+              resolutionUpdate(applySkill("cataclysmicTempest3", lastRes.unit));
             }
             break;
 
           case "Cataclysmic Tempest Float":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <CataclysmicTempestFloat
-                    floatCount={lastResolution.floatCount}
+                    floatCount={lastRes.floatCount}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2294,20 +2202,18 @@ const Board = (props) => {
             );
 
           case "Cataclysmic Tempest5":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                cataclysmicTempest4(lastResolution.unit)
-              );
+            if (self === lastRes.unit.player) {
+              resolutionUpdate(applySkill("cataclysmicTempest4", lastRes.unit));
             }
             break;
 
           case "Cataclysmic Tempest6":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <SelectSkillReveal
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2316,9 +2222,9 @@ const Board = (props) => {
             );
 
           case "Cataclysmic Tempest6.5":
-            if (self === lastResolution.unit.player) {
+            if (self === lastRes.unit.player) {
               selectEnemiesAfflicted(
-                lastResolution.unit,
+                lastRes.unit,
                 1,
                 null,
                 "blast",
@@ -2331,22 +2237,20 @@ const Board = (props) => {
         break;
 
       case "Land Skill":
-        switch (lastResolution.resolution2) {
+        switch (lastRes.resolution2) {
           case "Activating Crystallization":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                crystallization1(lastResolution.unit)
-              );
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("crystallization1", lastRes.unit));
             }
             break;
 
           case "Crystallization1":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <YouMaySpend1Skill
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2355,46 +2259,36 @@ const Board = (props) => {
             );
 
           case "Crystallization2":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                crystallization2(lastResolution.unit)
-              );
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("crystallization2", lastRes.unit));
             }
             break;
 
           case "Activating Upheaval":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                upheaval1(lastResolution.unit, lastResolution.victim)
-              );
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("upheaval1", lastRes.unit));
             }
             break;
 
           case "Upheaval1":
-            if (self === lastResolution.unit.player) {
-              selectEnemies(
-                lastResolution.unit,
-                1,
-                null,
-                "paralyze1",
-                "Upheaval"
-              );
+            if (self === lastRes.unit.player) {
+              selectEnemies(lastRes.unit, 1, null, "paralyze1", "Upheaval");
             }
             break;
 
           case "Upheaval2":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(upheaval2(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("upheaval2", lastRes.unit));
             }
             break;
 
           case "Upheaval3":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <YouMayNoYes
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2403,26 +2297,26 @@ const Board = (props) => {
             );
 
           case "Resonating Upheaval":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                upheavalR1(lastResolution.unit, lastResolution.resonator)
+            if (self === lastRes.unit.player) {
+              updateLocalState(
+                applySkill("upheavalR1", lastRes.unit, lastRes.resonator)
               );
             }
             break;
 
           case "UpheavalR1":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(upheavalR2(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("upheavalR2", lastRes.unit));
             }
             break;
 
           case "UpheavalR2":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <SelectCustomChoice
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2433,10 +2327,10 @@ const Board = (props) => {
           case "UpheavalR2.5":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <SelectSkillReveal
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2445,34 +2339,34 @@ const Board = (props) => {
             );
 
           case "UpheavalR3":
-            if (self === lastResolution.unit.player) {
+            if (self === lastRes.unit.player) {
               enterMoveModeViaSkill(
-                getVacantAdjacentZones(lastResolution.unit),
-                lastResolution.unit
+                getVacantAdjacentZones(lastRes.unit),
+                lastRes.unit
               );
             }
             break;
 
           case "Select Pitfall Trap Activator":
-            if (self === lastResolution.player) {
-              selectPitfallTrapActivator(lastResolution.mover);
+            if (self === lastRes.player) {
+              selectPitfallTrapActivator(lastRes.mover);
             }
             break;
 
           case "Activating Pitfall Trap":
-            if (self === lastResolution.unit.player) {
+            if (self === lastRes.unit.player) {
               //Do not use UpdateGameStateOnly
               resolutionUpdate(
-                pitfallTrap1(lastResolution.unit, lastResolution.victim)
+                applySkill("pitfallTrap1", lastRes.unit, lastRes.victim)
               );
             }
             break;
 
           case "Pitfall Trap1":
-            if (self === lastResolution.unit.player) {
+            if (self === lastRes.unit.player) {
               //Do not use UpdateGameStateOnly
               resolutionUpdate(
-                pitfallTrap2(lastResolution.unit, lastResolution.victim)
+                applySkill("pitfallTrap2", lastRes.unit, lastRes.victim)
               );
             }
             break;
@@ -2480,11 +2374,11 @@ const Board = (props) => {
           case "Pitfall Trap2":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <YouMaySpend1Skill
-                    unit={lastResolution.unit}
-                    victim={lastResolution.victim}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    victim={lastRes.victim}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2493,27 +2387,27 @@ const Board = (props) => {
             );
 
           case "Pitfall Trap3":
-            if (self === lastResolution.unit.player) {
+            if (self === lastRes.unit.player) {
               //Do not use UpdateGameStateOnly
               resolutionUpdate(
-                pitfallTrap3(lastResolution.unit, lastResolution.victim)
+                applySkill("pitfallTrap3", lastRes.unit, lastRes.victim)
               );
             }
             break;
 
           case "Activating Geomancy":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(geomancy1(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("geomancy1", lastRes.unit));
             }
             break;
 
           case "Geomancy1":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <SelectCustomChoice
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2524,10 +2418,10 @@ const Board = (props) => {
           case "Geomancy2":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <YouMayNoYes
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2536,18 +2430,18 @@ const Board = (props) => {
             );
 
           case "Geomancy3":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(geomancy2(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("geomancy2", lastRes.unit));
             }
             break;
 
           case "Geomancy4":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <YouMayNoYes
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2558,19 +2452,17 @@ const Board = (props) => {
         break;
 
       case "Lightning Skill":
-        switch (lastResolution.resolution2) {
+        switch (lastRes.resolution2) {
           case "Activating Chain Lightning":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                chainLightning1(lastResolution.unit)
-              );
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("chainLightning1", lastRes.unit));
             }
             break;
 
           case "Chain Lightning1":
-            if (self === lastResolution.unit.player) {
+            if (self === lastRes.unit.player) {
               selectEnemies(
-                lastResolution.unit,
+                lastRes.unit,
                 1,
                 null,
                 "paralyze1",
@@ -2580,20 +2472,18 @@ const Board = (props) => {
             break;
 
           case "Chain Lightning2":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                chainLightning2(lastResolution.unit)
-              );
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("chainLightning2", lastRes.unit));
             }
             break;
 
           case "Chain Lightning3":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <SelectSkillReveal
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2602,53 +2492,51 @@ const Board = (props) => {
             );
 
           case "Chain Lightning4":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                chainLightning3(
-                  lastResolution.unit,
-                  lastResolution.adjacentEnemies
+            if (self === lastRes.unit.player) {
+              updateLocalState(
+                applySkill(
+                  "chainLightning3",
+                  lastRes.unit,
+                  lastRes.adjacentEnemies
                 )
               );
             }
             break;
 
           case "Chain Lightning5":
-            if (self === lastResolution.unit.player) {
-              selectChainLightningBlast(
-                lastResolution.unit,
-                lastResolution.adjacentEnemies
-              );
+            if (self === lastRes.unit.player) {
+              selectChainLightningBlast(lastRes.unit, lastRes.adjacentEnemies);
             }
             break;
 
           case "Activating Zip and Zap":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(zipAndZap1(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("zipAndZap1", lastRes.unit));
             }
             break;
 
           case "Zip And Zap1":
-            if (self === lastResolution.unit.player) {
+            if (self === lastRes.unit.player) {
               enterMoveModeViaSkill(
-                getVacantAdjacentZones(lastResolution.unit),
-                lastResolution.unit
+                getVacantAdjacentZones(lastRes.unit),
+                lastRes.unit
               );
             }
             break;
 
           case "Zip And Zap2":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(zipAndZap2(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("zipAndZap2", lastRes.unit));
             }
             break;
 
           case "Zip And Zap3":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <YouMayNoYes
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2657,26 +2545,26 @@ const Board = (props) => {
             );
 
           case "Resonating Zip And Zap":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                zipAndZapR1(lastResolution.unit, lastResolution.resonator)
+            if (self === lastRes.unit.player) {
+              updateLocalState(
+                applySkill("zipAndZapR1", lastRes.unit, lastRes.resonator)
               );
             }
             break;
 
           case "Zip And ZapR1":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(zipAndZapR2(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("zipAndZapR2", lastRes.unit));
             }
             break;
 
           case "Zip And ZapR2":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <YouMayNoYes
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2685,32 +2573,31 @@ const Board = (props) => {
             );
 
           case "Activating Thunder Thaumaturge":
-            if (self === lastResolution.unit.player) {
+            if (self === lastRes.unit.player) {
               //Do not use UpdateGameStateOnly
               resolutionUpdate(
-                thunderThaumaturge1(
-                  lastResolution.unit,
-                  lastResolution.attacker
+                applySkill(
+                  "thunderThaumaturge1",
+                  lastRes.unit,
+                  lastRes.attacker
                 )
               );
             }
             break;
 
           case "Thunder Thaumaturge1":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                thunderThaumaturge2(lastResolution.unit)
-              );
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("thunderThaumaturge2", lastRes.unit));
             }
             break;
 
           case "Thunder Thaumaturge2":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <YouMaySpend1Skill
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2719,18 +2606,18 @@ const Board = (props) => {
             );
 
           case "Activating Valiant Spark":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(valiantSpark1(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("valiantSpark1", lastRes.unit));
             }
             break;
 
           case "Valiant Spark1":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <SelectSkillReveal
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2741,10 +2628,10 @@ const Board = (props) => {
         break;
 
       case "Mana Skill":
-        switch (lastResolution.resolution2) {
+        switch (lastRes.resolution2) {
           case "Activating Surge":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(surge1(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("surge1", lastRes.unit));
             }
             break;
 
@@ -2753,8 +2640,8 @@ const Board = (props) => {
               <>
                 {self === localGameState.turnPlayer && !hideModal && (
                   <SelectTacticViaEffect
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2765,10 +2652,10 @@ const Board = (props) => {
           case "Surge2":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <SelectCustomChoice
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     setMovingSpecial={setMovingSpecial}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
@@ -2780,10 +2667,10 @@ const Board = (props) => {
           case "Surge3":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <SelectCustomChoice
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     setMovingSpecial={setMovingSpecial}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
@@ -2793,8 +2680,8 @@ const Board = (props) => {
             );
 
           case "Activating Diffusion":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(diffusion1(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("diffusion1", lastRes.unit));
             }
             break;
 
@@ -2803,8 +2690,8 @@ const Board = (props) => {
               <>
                 {self === localGameState.turnPlayer && !hideModal && (
                   <SelectTacticViaEffect
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2813,24 +2700,24 @@ const Board = (props) => {
             );
 
           case "Diffusion2":
-            if (self === lastResolution.unit.player) {
-              selectEnemies(lastResolution.unit, 1, null, "blast", "Diffusion");
+            if (self === lastRes.unit.player) {
+              selectEnemies(lastRes.unit, 1, null, "blast", "Diffusion");
             }
             break;
 
           case "Diffusion3":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(diffusion2(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("diffusion2", lastRes.unit));
             }
             break;
 
           case "Diffusion4":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <YouMayNoYes
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2839,26 +2726,26 @@ const Board = (props) => {
             );
 
           case "Resonating Diffusion":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                diffusionR1(lastResolution.unit, lastResolution.resonator)
+            if (self === lastRes.unit.player) {
+              updateLocalState(
+                applySkill("diffusionR1", lastRes.unit, lastRes.resonator)
               );
             }
             break;
 
           case "DiffusionR1":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(diffusionR2(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("diffusionR2", lastRes.unit));
             }
             break;
 
           case "DiffusionR2":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <YouMaySpend1Skill
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2867,21 +2754,21 @@ const Board = (props) => {
             );
 
           case "DiffusionR3":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(diffusionR3(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("diffusionR3", lastRes.unit));
             }
             break;
 
           case "Select Aegis Activator":
-            if (self === lastResolution.player) {
-              selectAegisActivator(lastResolution.victim);
+            if (self === lastRes.player) {
+              selectAegisActivator(lastRes.victim);
             }
             break;
 
           case "Activating Aegis":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                aegis1(lastResolution.unit, lastResolution.victim)
+            if (self === lastRes.unit.player) {
+              updateLocalState(
+                applySkill("aegis1", lastRes.unit, lastRes.victim)
               );
             }
             break;
@@ -2889,11 +2776,11 @@ const Board = (props) => {
           case "Aegis1":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <SelectCustomChoice
-                    unit={lastResolution.unit}
-                    victim={lastResolution.victim}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    victim={lastRes.victim}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2902,29 +2789,25 @@ const Board = (props) => {
             );
 
           case "Activating Disruption Field":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                disruptionField1(lastResolution.unit)
-              );
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("disruptionField1", lastRes.unit));
             }
             break;
         }
         break;
 
       case "Metal Skill":
-        switch (lastResolution.resolution2) {
+        switch (lastRes.resolution2) {
           case "Activating Magnetic Shockwave":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                magneticShockwave1(lastResolution.unit)
-              );
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("magneticShockwave1", lastRes.unit));
             }
             break;
 
           case "Magnetic Shockwave1":
-            if (self === lastResolution.unit.player) {
+            if (self === lastRes.unit.player) {
               selectEnemies(
-                lastResolution.unit,
+                lastRes.unit,
                 1,
                 null,
                 "paralyze1",
@@ -2934,20 +2817,18 @@ const Board = (props) => {
             break;
 
           case "Magnetic Shockwave2":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                magneticShockwave2(lastResolution.unit)
-              );
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("magneticShockwave2", lastRes.unit));
             }
             break;
 
           case "Magnetic Shockwave2.1":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <YouMayNoYes
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2956,20 +2837,18 @@ const Board = (props) => {
             );
 
           case "Magnetic Shockwave3":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                magneticShockwave3(lastResolution.unit)
-              );
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("magneticShockwave3", lastRes.unit));
             }
             break;
 
           case "Magnetic Shockwave3.1":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <YouMayNoYes
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2978,18 +2857,18 @@ const Board = (props) => {
             );
 
           case "Activating Reinforce":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(reinforce1(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(reinforce1(lastRes.unit));
             }
             break;
 
           case "Reinforce1":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <SelectCustomChoice
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2998,40 +2877,36 @@ const Board = (props) => {
             );
 
           case "Resonating Reinforce":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                reinforceR1(lastResolution.unit, lastResolution.resonator)
-              );
+            if (self === lastRes.unit.player) {
+              updateLocalState(reinforceR1(lastRes.unit, lastRes.resonator));
             }
             break;
 
           case "ReinforceR1":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(reinforceR2(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(reinforceR2(lastRes.unit));
             }
             break;
 
           case "Select Frenzy Blade Activator":
-            if (self === lastResolution.player) {
-              selectFrenzyBladeActivator(lastResolution.victim);
+            if (self === lastRes.player) {
+              selectFrenzyBladeActivator(lastRes.victim);
             }
             break;
 
           case "Activating Frenzy Blade":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                frenzyBlade1(lastResolution.unit, lastResolution.victim)
-              );
+            if (self === lastRes.unit.player) {
+              updateLocalState(frenzyBlade1(lastRes.unit, lastRes.victim));
             }
             break;
 
           case "Frenzy Blade1":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <SelectCustomChoice
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3040,18 +2915,18 @@ const Board = (props) => {
             );
 
           case "Frenzy Blade1.5":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(frenzyBlade2(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(frenzyBlade2(lastRes.unit));
             }
             break;
 
           case "Frenzy Blade2":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <SelectCustomChoice
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3060,40 +2935,36 @@ const Board = (props) => {
             );
 
           case "Activating Arsenal Onslaught":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                arsenalOnslaught1(lastResolution.unit)
-              );
+            if (self === lastRes.unit.player) {
+              updateLocalState(arsenalOnslaught1(lastRes.unit));
             }
             break;
 
           case "Arsenal Onslaught1":
-            if (self === lastResolution.unit.player) {
-              selectEnemies(lastResolution.unit, 1, null, "strike", null);
+            if (self === lastRes.unit.player) {
+              selectEnemies(lastRes.unit, 1, null, "strike", null);
             }
             break;
 
           case "Arsenal Onslaught1.1":
-            if (self === lastResolution.unit.player) {
-              selectEnemies(lastResolution.unit, 1, null, "blast", null);
+            if (self === lastRes.unit.player) {
+              selectEnemies(lastRes.unit, 1, null, "blast", null);
             }
             break;
 
           case "Arsenal Onslaught2":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                arsenalOnslaught2(lastResolution.unit)
-              );
+            if (self === lastRes.unit.player) {
+              updateLocalState(arsenalOnslaught2(lastRes.unit));
             }
             break;
 
           case "Arsenal Onslaught3":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <SelectSkillReveal
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3102,26 +2973,24 @@ const Board = (props) => {
             );
 
           case "Arsenal Onslaught3.5":
-            if (self === lastResolution.unit.player) {
-              selectEnemies(lastResolution.unit, 1, null, "paralyze1", null);
+            if (self === lastRes.unit.player) {
+              selectEnemies(lastRes.unit, 1, null, "paralyze1", null);
             }
             break;
 
           case "Arsenal Onslaught4":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                arsenalOnslaught3(lastResolution.unit)
-              );
+            if (self === lastRes.unit.player) {
+              updateLocalState(arsenalOnslaught3(lastRes.unit));
             }
             break;
 
           case "Arsenal Onslaught5":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <YouMaySpend1Skill
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3132,10 +3001,10 @@ const Board = (props) => {
           case "Arsenal Onslaught6":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <SelectCustomChoice
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3146,20 +3015,20 @@ const Board = (props) => {
         break;
 
       case "Plant Skill":
-        switch (lastResolution.resolution2) {
+        switch (lastRes.resolution2) {
           case "Activating Sow And Reap":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(sowAndReap1(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(sowAndReap1(lastRes.unit));
             }
             break;
 
           case "Sow and Reap1":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <SelectCustomChoice
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3168,9 +3037,9 @@ const Board = (props) => {
             );
 
           case "Sow and Reap Blast":
-            if (self === lastResolution.unit.player) {
+            if (self === lastRes.unit.player) {
               selectEnemiesRooted(
-                lastResolution.unit,
+                lastRes.unit,
                 1,
                 null,
                 "blast",
@@ -3180,38 +3049,36 @@ const Board = (props) => {
             break;
 
           case "Select Sow and Reap Striker":
-            if (self === lastResolution.unit.player) {
-              selectSowAndReapStriker(lastResolution.unit);
+            if (self === lastRes.unit.player) {
+              selectSowAndReapStriker(lastRes.unit);
             }
             break;
 
           case "Sow and Reap Strike":
-            if (self === lastResolution.unit.player) {
-              selectEnemiesRooted(lastResolution.unit, 1, null, "strike", null);
+            if (self === lastRes.unit.player) {
+              selectEnemiesRooted(lastRes.unit, 1, null, "strike", null);
             }
             break;
 
           case "Sow and Reap2":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(sowAndReap2(lastResolution.unit));
+            if (self === lastRes.unit.player) {
+              updateLocalState(sowAndReap2(lastRes.unit));
             }
             break;
 
           case "Activating Efflorescence":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                efflorescence1(lastResolution.unit)
-              );
+            if (self === lastRes.unit.player) {
+              updateLocalState(efflorescence1(lastRes.unit));
             }
             break;
 
           case "Efflorescence1":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <YouMaySpend1Skill
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3220,42 +3087,38 @@ const Board = (props) => {
             );
 
           case "Resonating Efflorescence":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                efflorescenceR1(lastResolution.unit, lastResolution.resonator)
+            if (self === lastRes.unit.player) {
+              updateLocalState(
+                efflorescenceR1(lastRes.unit, lastRes.resonator)
               );
             }
             break;
 
           case "EfflorescenceR1":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                efflorescenceR2(lastResolution.unit)
-              );
+            if (self === lastRes.unit.player) {
+              updateLocalState(efflorescenceR2(lastRes.unit));
             }
             break;
 
           case "Select Viridian Grave Activator":
-            if (self === lastResolution.player) {
-              selectViridianGraveActivator(lastResolution.victim);
+            if (self === lastRes.player) {
+              selectViridianGraveActivator(lastRes.victim);
             }
             break;
 
           case "Activating Viridian Grave":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                viridianGrave1(lastResolution.unit, lastResolution.victim)
-              );
+            if (self === lastRes.unit.player) {
+              updateLocalState(viridianGrave1(lastRes.unit, lastRes.victim));
             }
             break;
 
           case "Viridian Grave1":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <YouMaySpend1Skill
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3264,10 +3127,8 @@ const Board = (props) => {
             );
 
           case "Activating Castle of Thorns":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                castleOfThorns1(lastResolution.unit)
-              );
+            if (self === lastRes.unit.player) {
+              updateLocalState(castleOfThorns1(lastRes.unit));
             }
             break;
 
@@ -3275,10 +3136,10 @@ const Board = (props) => {
           case "Castle Of Thorns3":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <YouMaySpend1Skill
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3287,35 +3148,33 @@ const Board = (props) => {
             );
 
           case "Castle Of Thorns2":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                castleOfThorns2(lastResolution.unit)
-              );
+            if (self === lastRes.unit.player) {
+              updateLocalState(castleOfThorns2(lastRes.unit));
             }
             break;
         }
         break;
 
       case "Sovereign Standard Skill":
-        switch (lastResolution.resolution2) {
+        switch (lastRes.resolution2) {
           case "Activating Heir’s Endeavor":
-            if (self === lastResolution.player) {
-              resolutionUpdateGameStateOnly(heirsEndeavor1());
+            if (self === lastRes.player) {
+              updateLocalState(heirsEndeavor1());
             }
             break;
 
           case "Activating Tea for Two":
-            if (self === lastResolution.player) {
-              resolutionUpdateGameStateOnly(teaForTwo1());
+            if (self === lastRes.player) {
+              updateLocalState(teaForTwo1());
             }
             break;
 
           case "Tea for Two1":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <SelectCustomChoice
-                    details={lastResolution.details}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3326,10 +3185,10 @@ const Board = (props) => {
           case "Tea for Two2":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <FloatSkill
                     title="Tea for Two"
-                    message={lastResolution.message}
+                    message={lastRes.message}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3338,29 +3197,29 @@ const Board = (props) => {
             );
 
           case "Activating Dark Halo":
-            if (self === lastResolution.player) {
-              resolutionUpdateGameStateOnly(darkHalo1());
+            if (self === lastRes.player) {
+              updateLocalState(darkHalo1());
             }
             break;
 
           case "Select Dark Halo":
-            if (self === lastResolution.player) {
+            if (self === lastRes.player) {
               selectDarkHalo();
             }
             break;
 
           case "Activating Reminiscence":
-            if (self === lastResolution.player) {
-              resolutionUpdateGameStateOnly(reminiscence1());
+            if (self === lastRes.player) {
+              updateLocalState(reminiscence1());
             }
             break;
 
           case "Reminiscence1":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <SelectCustomChoice
-                    details={lastResolution.details}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3373,7 +3232,7 @@ const Board = (props) => {
               <>
                 {self === localGameState.turnPlayer && !hideModal && (
                   <SelectTacticViaEffect
-                    details={lastResolution.details}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3382,17 +3241,17 @@ const Board = (props) => {
             );
 
           case "Activating Foreshadow":
-            if (self === lastResolution.player) {
-              resolutionUpdateGameStateOnly(foreshadow1());
+            if (self === lastRes.player) {
+              updateLocalState(foreshadow1());
             }
             break;
 
           case "Foreshadow1":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <SelectCustomChoice
-                    details={lastResolution.details}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3401,19 +3260,17 @@ const Board = (props) => {
             );
 
           case "Foreshadow2":
-            if (self === lastResolution.player) {
-              resolutionUpdateGameStateOnly(
-                foreshadow2(lastResolution.discardedBurst)
-              );
+            if (self === lastRes.player) {
+              updateLocalState(foreshadow2(lastRes.discardedBurst));
             }
             break;
 
           case "Foreshadow Draw":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <YouMayNoYes
-                    details={lastResolution.details}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3422,30 +3279,28 @@ const Board = (props) => {
             );
 
           case "Foreshadow3":
-            if (self === lastResolution.player) {
-              resolutionUpdateGameStateOnly(foreshadow3());
+            if (self === lastRes.player) {
+              updateLocalState(foreshadow3());
             }
             break;
         }
         break;
 
       case "Sovereign Resonant Skill":
-        switch (lastResolution.resolution2) {
+        switch (lastRes.resolution2) {
           case "Activating Transmute":
-            if (self === lastResolution.player) {
-              resolutionUpdateGameStateOnly(
-                transmute1(lastResolution.resonator)
-              );
+            if (self === lastRes.player) {
+              updateLocalState(transmute1(lastRes.resonator));
             }
             break;
 
           case "Transmute1":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <SelectSkillHandMulti
-                    resonated={lastResolution.resonated}
-                    details={lastResolution.details}
+                    resonated={lastRes.resonated}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3454,33 +3309,29 @@ const Board = (props) => {
             );
 
           case "TransmuteR1":
-            if (self === lastResolution.player) {
-              resolutionUpdateGameStateOnly(
-                transmuteR1(lastResolution.skillsToShuffle)
-              );
+            if (self === lastRes.player) {
+              updateLocalState(transmuteR1(lastRes.skillsToShuffle));
             }
             break;
 
           case "Activating Ambidexterity":
-            if (self === lastResolution.player) {
-              resolutionUpdateGameStateOnly(
-                ambidexterity1(lastResolution.resonator)
-              );
+            if (self === lastRes.player) {
+              updateLocalState(ambidexterity1(lastRes.resonator));
             }
             break;
 
           case "Select Ambidexterity":
-            if (self === lastResolution.player) {
-              selectAmbidexterity(lastResolution.resonated);
+            if (self === lastRes.player) {
+              selectAmbidexterity(lastRes.resonated);
             }
             break;
 
           case "Ambidexterity2":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <YouMayNoYes
-                    details={lastResolution.details}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3493,7 +3344,7 @@ const Board = (props) => {
               <>
                 {self === localGameState.turnPlayer && !hideModal && (
                   <SelectTacticViaEffect
-                    details={lastResolution.details}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3502,18 +3353,14 @@ const Board = (props) => {
             );
 
           case "AmbidexterityR1":
-            if (self === lastResolution.player) {
-              resolutionUpdateGameStateOnly(
-                ambidexterityR1(lastResolution.unit)
-              );
+            if (self === lastRes.player) {
+              updateLocalState(ambidexterityR1(lastRes.unit));
             }
             break;
 
           case "Activating Providence":
-            if (self === lastResolution.player) {
-              resolutionUpdateGameStateOnly(
-                providence1(lastResolution.resonator)
-              );
+            if (self === lastRes.player) {
+              updateLocalState(providence1(lastRes.resonator));
             }
             break;
 
@@ -3522,7 +3369,7 @@ const Board = (props) => {
               <>
                 {self === localGameState.turnPlayer && !hideModal && (
                   <SelectTacticViaEffect
-                    details={lastResolution.details}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3531,19 +3378,17 @@ const Board = (props) => {
             );
 
           case "Providence2":
-            if (self === lastResolution.player) {
-              resolutionUpdateGameStateOnly(
-                providence2(lastResolution.resonator)
-              );
+            if (self === lastRes.player) {
+              updateLocalState(providence2(lastRes.resonator));
             }
             break;
 
           case "Providence Recovery":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <YouMayNoYes
-                    details={lastResolution.details}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3552,27 +3397,23 @@ const Board = (props) => {
             );
 
           case "ProvidenceR1":
-            if (self === lastResolution.player) {
-              resolutionUpdateGameStateOnly(
-                providenceR1(lastResolution.resonator)
-              );
+            if (self === lastRes.player) {
+              updateLocalState(providenceR1(lastRes.resonator));
             }
             break;
 
           case "Activating Fervent Prayer":
-            if (self === lastResolution.player) {
-              resolutionUpdateGameStateOnly(
-                ferventPrayer1(lastResolution.resonator)
-              );
+            if (self === lastRes.player) {
+              updateLocalState(ferventPrayer1(lastRes.resonator));
             }
             break;
 
           case "Fervent Prayer1":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <YouMayNoYes
-                    details={lastResolution.details}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3583,9 +3424,9 @@ const Board = (props) => {
           case "Fervent Prayer2":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <SelectAvelhemHandMulti
-                    details={lastResolution.details}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3594,15 +3435,15 @@ const Board = (props) => {
             );
 
           case "Fervent PrayerR1":
-            if (self === lastResolution.player) {
-              resolutionUpdateGameStateOnly(ferventPrayerR1());
+            if (self === lastRes.player) {
+              updateLocalState(ferventPrayerR1());
             }
             break;
 
           case "Fervent PrayerR2":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <FerventPrayerResonance
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
@@ -3614,11 +3455,11 @@ const Board = (props) => {
           case "Fervent Prayer Reveal":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <ViewRevealedSkill
-                    avelhems={lastResolution.avelhems}
+                    avelhems={lastRes.avelhems}
                     multi={true}
-                    message={lastResolution.message}
+                    message={lastRes.message}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3627,19 +3468,17 @@ const Board = (props) => {
             );
 
           case "Activating Press the Attack":
-            if (self === lastResolution.player) {
-              resolutionUpdateGameStateOnly(
-                pressTheAttack1(lastResolution.resonator)
-              );
+            if (self === lastRes.player) {
+              updateLocalState(pressTheAttack1(lastRes.resonator));
             }
             break;
 
           case "Press the Attack1":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <YouMayNoYes
-                    details={lastResolution.details}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3650,9 +3489,9 @@ const Board = (props) => {
           case "Press the Attack2":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <YouMayNoYes
-                    details={lastResolution.details}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3661,30 +3500,28 @@ const Board = (props) => {
             );
 
           case "Heirs Endeavor Resonance":
-            if (self === lastResolution.player) {
-              resolutionUpdateGameStateOnly(heirsEndeavorResonance());
+            if (self === lastRes.player) {
+              updateLocalState(heirsEndeavorResonance());
             }
             break;
         }
         break;
 
       case "Sovereign Contingent Skill":
-        switch (lastResolution.resolution2) {
+        switch (lastRes.resolution2) {
           case "Activating Power at the Final Hour":
-            if (self === lastResolution.player) {
-              resolutionUpdateGameStateOnly(
-                powerAtTheFinalHour1(lastResolution.unit)
-              );
+            if (self === lastRes.player) {
+              updateLocalState(powerAtTheFinalHour1(lastRes.unit));
             }
             break;
 
           case "Power at the Final Hour":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <SelectElement
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3693,23 +3530,21 @@ const Board = (props) => {
             );
 
           case "Power at the Final Hour2":
-            if (self === lastResolution.player) {
-              resolutionUpdateGameStateOnly(
-                powerAtTheFinalHour2(lastResolution.unit)
-              );
+            if (self === lastRes.player) {
+              updateLocalState(powerAtTheFinalHour2(lastRes.unit));
             }
             break;
 
           case "Activating Power at the Final Hour: Proaction":
-            if (self === lastResolution.player) {
-              resolutionUpdateGameStateOnly(powerAtTheFinalHourProaction());
+            if (self === lastRes.player) {
+              updateLocalState(powerAtTheFinalHourProaction());
             }
             break;
 
           case "Power at the Final Hour: Proaction":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <PowerAtTheFinalHourProaction
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
@@ -3720,39 +3555,37 @@ const Board = (props) => {
             );
 
           case "Select Power at the Final Hour Pawn":
-            if (self === lastResolution.player) {
-              selectPowerAtTheFinalHour(lastResolution.scionClass);
+            if (self === lastRes.player) {
+              selectPowerAtTheFinalHour(lastRes.scionClass);
             }
             break;
 
           case "Activating Fated Rivalry":
-            if (self === lastResolution.player) {
-              resolutionUpdateGameStateOnly(fatedRivalry1(lastResolution.unit));
+            if (self === lastRes.player) {
+              updateLocalState(fatedRivalry1(lastRes.unit));
             }
             break;
 
           case "Select Fated Rivalry":
-            if (self === lastResolution.player) {
-              selectFatedRivalry(lastResolution.unit);
+            if (self === lastRes.player) {
+              selectFatedRivalry(lastRes.unit);
             }
             break;
 
           case "Fated Rivalry2":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                fatedRivalry2(lastResolution.unit, lastResolution.enemy)
-              );
+            if (self === lastRes.unit.player) {
+              updateLocalState(fatedRivalry2(lastRes.unit, lastRes.enemy));
             }
             break;
 
           case "Activating Fated Rivalry: Proaction":
-            if (self === lastResolution.player) {
-              resolutionUpdateGameStateOnly(fatedRivalryProaction());
+            if (self === lastRes.player) {
+              updateLocalState(fatedRivalryProaction());
             }
             break;
 
           case "Select Fated Rivalry Proaction":
-            if (self === lastResolution.player) {
+            if (self === lastRes.player) {
               selectFatedRivalryProaction();
             }
             break;
@@ -3760,10 +3593,10 @@ const Board = (props) => {
           case "Fated Rivalry Proaction2":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <SelectElement
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3772,40 +3605,36 @@ const Board = (props) => {
             );
 
           case "Activating Match Made In Heaven":
-            if (self === lastResolution.player) {
-              resolutionUpdateGameStateOnly(
-                matchMadeInHeaven1(lastResolution.unit)
-              );
+            if (self === lastRes.player) {
+              updateLocalState(matchMadeInHeaven1(lastRes.unit));
             }
             break;
 
           case "Select Match Made in Heaven Pawn":
-            if (self === lastResolution.unit.player) {
-              selectMatchMadeInHeavenPawn(lastResolution.unit);
+            if (self === lastRes.unit.player) {
+              selectMatchMadeInHeavenPawn(lastRes.unit);
             }
             break;
 
           case "Match Made in Heaven2":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                matchMadeInHeaven2(lastResolution.unit, lastResolution.unit2)
-              );
+            if (self === lastRes.unit.player) {
+              updateLocalState(matchMadeInHeaven2(lastRes.unit, lastRes.unit2));
             }
             break;
 
           case "Match Made in Heaven3":
-            if (self === lastResolution.player) {
-              resolutionUpdateGameStateOnly(matchMadeInHeaven3());
+            if (self === lastRes.player) {
+              updateLocalState(matchMadeInHeaven3());
             }
             break;
 
           case "Match Made in Heaven4":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <YouMaySpend1Skill
-                    unit={lastResolution.unit}
-                    details={lastResolution.details}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3814,37 +3643,33 @@ const Board = (props) => {
             );
 
           case "Activating Vengeful Legacy":
-            if (self === lastResolution.player) {
-              resolutionUpdateGameStateOnly(
-                vengefulLegacy1(lastResolution.victim)
-              );
+            if (self === lastRes.player) {
+              updateLocalState(vengefulLegacy1(lastRes.victim));
             }
             break;
 
           case "Select Vengeful Legacy":
-            if (self === lastResolution.player) {
-              selectVengefulLegacy(lastResolution.victim);
+            if (self === lastRes.player) {
+              selectVengefulLegacy(lastRes.victim);
             }
             break;
 
           case "Vengeful Legacy2":
-            if (self === lastResolution.unit.player) {
-              resolutionUpdateGameStateOnly(
-                vengefulLegacy2(lastResolution.unit)
-              );
+            if (self === lastRes.unit.player) {
+              updateLocalState(vengefulLegacy2(lastRes.unit));
             }
             break;
 
           case "Vengeful Legacy Ravager":
             return (
               <>
-                {self === lastResolution.unit.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <YouMayFloat1Skill
-                    unit={lastResolution.unit}
-                    restriction={lastResolution.restriction}
-                    title={lastResolution.title}
-                    message={lastResolution.message}
-                    reason={lastResolution.reason}
+                    unit={lastRes.unit}
+                    restriction={lastRes.restriction}
+                    title={lastRes.title}
+                    message={lastRes.message}
+                    reason={lastRes.reason}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3853,8 +3678,8 @@ const Board = (props) => {
             );
 
           case "Activating Black Business Card":
-            if (self === lastResolution.player) {
-              resolutionUpdateGameStateOnly(blackBusinessCard1());
+            if (self === lastRes.player) {
+              updateLocalState(blackBusinessCard1());
             }
             break;
         }
@@ -3862,15 +3687,15 @@ const Board = (props) => {
         break;
 
       case "Triggering Contingent Skill":
-        switch (lastResolution.resolution2) {
+        switch (lastRes.resolution2) {
           case "Triggering Elimination Ally":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <ContingentTriggered
                     contingencyType="Elimination"
-                    player={lastResolution.player}
-                    unit={lastResolution.unit}
+                    player={lastRes.player}
+                    unit={lastRes.unit}
                     team="ally"
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
@@ -3882,14 +3707,14 @@ const Board = (props) => {
           case "Triggering Ascension Ally":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <ContingentTriggered
                     contingencyType="Ascension"
-                    player={lastResolution.player}
-                    unit={lastResolution.unit}
+                    player={lastRes.player}
+                    unit={lastRes.unit}
                     team="ally"
-                    scionClass={lastResolution.scionClass}
-                    method={lastResolution.method}
+                    scionClass={lastRes.scionClass}
+                    method={lastRes.method}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3900,14 +3725,14 @@ const Board = (props) => {
           case "Triggering Ascension Enemy":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <ContingentTriggered
                     contingencyType="Ascension"
-                    player={lastResolution.player}
-                    unit={lastResolution.unit}
+                    player={lastRes.player}
+                    unit={lastRes.unit}
                     team="enemy"
-                    scionClass={lastResolution.scionClass}
-                    method={lastResolution.method}
+                    scionClass={lastRes.scionClass}
+                    method={lastRes.method}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3918,11 +3743,11 @@ const Board = (props) => {
           case "Triggering Elimination Enemy":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <ContingentTriggered
                     contingencyType="Elimination"
-                    player={lastResolution.player}
-                    unit={lastResolution.unit}
+                    player={lastRes.player}
+                    unit={lastRes.unit}
                     team="enemy"
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
@@ -3934,10 +3759,10 @@ const Board = (props) => {
           case "Triggering Motion":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <ContingentTriggered
                     contingencyType="Motion"
-                    mover={lastResolution.mover}
+                    mover={lastRes.mover}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3948,11 +3773,11 @@ const Board = (props) => {
           case "Triggering Survival Ally":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <ContingentTriggered
                     contingencyType="Survival"
-                    attacker={lastResolution.attacker}
-                    victim={lastResolution.victim}
+                    attacker={lastRes.attacker}
+                    victim={lastRes.victim}
                     team="ally"
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
@@ -3964,11 +3789,11 @@ const Board = (props) => {
           case "Triggering Survival Enemy":
             return (
               <>
-                {self === lastResolution.player && !hideModal && (
+                {self === lastRes.player && !hideModal && (
                   <ContingentTriggered
                     contingencyType="Survival"
-                    attacker={lastResolution.attacker}
-                    victim={lastResolution.victim}
+                    attacker={lastRes.attacker}
+                    victim={lastRes.victim}
                     team="enemy"
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
@@ -3980,13 +3805,13 @@ const Board = (props) => {
           case "Triggering Target":
             return (
               <>
-                {self === lastResolution.victim.player && !hideModal && (
+                {self === lastRes.victim.player && !hideModal && (
                   <ContingentTriggered
                     contingencyType="Target"
                     updateFirebase={updateFirebase}
-                    attacker={lastResolution.attacker}
-                    victim={lastResolution.victim}
-                    type={lastResolution.type}
+                    attacker={lastRes.attacker}
+                    victim={lastRes.victim}
+                    type={lastRes.type}
                     hideOrRevealModale={hideOrRevealModale}
                   />
                 )}
@@ -3998,12 +3823,12 @@ const Board = (props) => {
       case "Triggering Activation":
         return (
           <>
-            {self === lastResolution.player && !hideModal && (
+            {self === lastRes.player && !hideModal && (
               <ContingentTriggered
                 contingencyType="Activation"
                 updateFirebase={updateFirebase}
-                activator={lastResolution.activator}
-                screech={lastResolution.screech}
+                activator={lastRes.activator}
+                screech={lastRes.screech}
                 hideOrRevealModale={hideOrRevealModale}
               />
             )}
@@ -4013,10 +3838,10 @@ const Board = (props) => {
       case "Mana Restructure":
         return (
           <>
-            {self === lastResolution.unit.player && !hideModal && (
+            {self === lastRes.unit.player && !hideModal && (
               <YouMayNoYes
-                unit={lastResolution.unit}
-                details={lastResolution.details}
+                unit={lastRes.unit}
+                details={lastRes.details}
                 updateFirebase={updateFirebase}
                 hideOrRevealModale={hideOrRevealModale}
               />
@@ -4025,7 +3850,7 @@ const Board = (props) => {
         );
 
       case "":
-        if (self === "host" && !lastResolution.resolution2) {
+        if (self === "host" && !lastRes.resolution2) {
           return (
             <>
               <SelectFirstPlayer updateFirebase={updateFirebase} />
@@ -4039,7 +3864,7 @@ const Board = (props) => {
           <>
             {!hideModal && (
               <VictoryScreen
-                player={lastResolution.player}
+                player={lastRes.player}
                 updateFirebase={updateFirebase}
                 hideOrRevealModale={hideOrRevealModale}
               />
@@ -4050,9 +3875,9 @@ const Board = (props) => {
       case "Continue Game":
         return (
           <>
-            {self === lastResolution.player && !hideModal && (
+            {self === lastRes.player && !hideModal && (
               <YouMayNoYes
-                details={lastResolution.details}
+                details={lastRes.details}
                 updateFirebase={updateFirebase}
                 hideOrRevealModale={hideOrRevealModale}
               />
@@ -4233,9 +4058,7 @@ const Board = (props) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     newGameState.currentResolution.pop();
 
-    resolutionUpdateGameStateOnly(
-      enterMoveMode(zoneIds, unit, newGameState, null)
-    );
+    updateLocalState(enterMoveMode(zoneIds, unit, newGameState, null));
 
     dispatch(updateState(newGameState));
   };
@@ -4247,25 +4070,25 @@ const Board = (props) => {
 
   const isYourTurn = () => {
     if (localGameState.currentResolution.length > 0) {
-      const lastResolution =
+      const lastRes =
         localGameState.currentResolution[
           localGameState.currentResolution.length - 1
         ];
 
-      if (lastResolution.resolution2 === "Triggering Target") {
-        return lastResolution.victim.player === self;
+      if (lastRes.resolution2 === "Triggering Target") {
+        return lastRes.victim.player === self;
       }
 
-      if (lastResolution.player) {
-        return lastResolution.player === self;
+      if (lastRes.player) {
+        return lastRes.player === self;
       }
 
-      if (lastResolution.unit) {
-        return lastResolution.unit.player === self;
+      if (lastRes.unit) {
+        return lastRes.unit.player === self;
       }
 
-      if (lastResolution.attacker) {
-        return lastResolution.attacker.player === self;
+      if (lastRes.attacker) {
+        return lastRes.attacker.player === self;
       }
 
       return localGameState.turnPlayer === self;
@@ -4306,7 +4129,7 @@ const Board = (props) => {
     updateFirebase(gameState);
   };
 
-  const resolutionUpdateGameStateOnly = (gameState) => {
+  const updateLocalState = (gameState) => {
     dispatch(updateState(gameState));
   };
 
@@ -4376,7 +4199,7 @@ const Board = (props) => {
     //end "Aerial Impetus Prompt" or "Aerial Impetus Purge Move2"
     newGameState.currentResolution.pop();
 
-    resolutionUpdateGameStateOnly(
+    updateLocalState(
       enterMoveMode(getVacantAdjacentZones(unit), unit, newGameState, null)
     );
 
