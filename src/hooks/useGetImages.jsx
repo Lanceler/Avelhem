@@ -132,15 +132,15 @@ import Rally from "../assets/diceIcons/Rally.png";
 
 import LoadingBanner from "../assets/banners/LoadingBanner.jpg";
 
-import SovereignBanner from "../assets/banners/SovereignBanner.png";
-import FireBanner from "../assets/banners/FireBanner.png";
-import WaterBanner from "../assets/banners/WaterBanner.png";
-import WindBanner from "../assets/banners/WindBanner.png";
-import LandBanner from "../assets/banners/LandBanner.png";
-import LightningBanner from "../assets/banners/LightningBanner.png";
-import ManaBanner from "../assets/banners/ManaBanner.png";
-import MetalBanner from "../assets/banners/MetalBanner.png";
-import PlantBanner from "../assets/banners/PlantBanner.png";
+import SovereignBanner from "../assets/banners/SovereignBanner.jpg";
+import FireBanner from "../assets/banners/FireBanner.jpg";
+import WaterBanner from "../assets/banners/WaterBanner.jpg";
+import WindBanner from "../assets/banners/WindBanner.jpg";
+import LandBanner from "../assets/banners/LandBanner.jpg";
+import LightningBanner from "../assets/banners/LightningBanner.jpg";
+import ManaBanner from "../assets/banners/ManaBanner.jpg";
+import MetalBanner from "../assets/banners/MetalBanner.jpg";
+import PlantBanner from "../assets/banners/PlantBanner.jpg";
 
 import FireBG from "../assets/banners/FireBG.jpg";
 import WaterBG from "../assets/banners/WaterBG.jpg";

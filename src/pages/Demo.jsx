@@ -898,7 +898,7 @@ export default function Demo() {
 
           {/* display demoGuide for debugging */}
 
-          {demoGuide && <h1>{demoGuide}</h1>}
+          {/* {demoGuide && <h1>{demoGuide}</h1>} */}
         </div>
       )}
     </>

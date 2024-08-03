@@ -19,7 +19,8 @@ export default function Home() {
       <div
         className="home-content"
         style={{
-          backgroundImage: `url(${getBannerImage("MountainFields")})`,
+          // backgroundImage: `url(${getBannerImage("MountainFields")})`,
+          backgroundImage: `url(${getBannerImage("LandBG")})`,
         }}
       >
         <div className="home-title">HOME</div>

@@ -146,9 +146,9 @@ export default function MyGames() {
   return (
     <div
       className="create-game-body"
-      // style={{
-      //   backgroundImage: `url(${getBannerImage("Challenge")})`,
-      // }}
+      style={{
+        backgroundImage: `url(${getBannerImage("MetalBG")})`,
+      }}
     >
       <div className="create-game-header">CREATE GAME</div>
       <div className="create-game-content">

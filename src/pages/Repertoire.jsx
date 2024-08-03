@@ -32,6 +32,8 @@ import SRSkillCard from "../components/createRepertoire/SRSkillCard";
 import CPAvelhemCard from "../components/createRepertoire/CPAvelhemCard";
 import ARAvelhemCard from "../components/createRepertoire/ARAvelhemCard";
 
+import { useGetImages } from "../hooks/useGetImages";
+
 export default function Repertoire() {
   //   const params = useParams();  // destructure instead
   const { id } = useParams(); //note: id was entered as the parameter in the routes of App.jsx
@@ -54,6 +56,8 @@ export default function Repertoire() {
 
   const [showAvelhemSelection, setShowAvelhemSelection] = useState(false);
   const [showSkillSelection, setShowSkillSelection] = useState(false);
+
+  const { getBannerImage } = useGetImages();
 
   const navigate = useNavigate();
 
@@ -353,7 +357,12 @@ export default function Repertoire() {
   //---Realtime data functionality above
 
   return (
-    <div className="repertoire-body">
+    <div
+      className="repertoire-body"
+      style={{
+        backgroundImage: `url(${getBannerImage("ManaBG")})`,
+      }}
+    >
       <div className="repertoire-input-box">
         <form>
           <div className="repertoire-input">

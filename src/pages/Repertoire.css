@@ -11,13 +11,16 @@
     align-items: center;
     /* justify-content: center; */
     
-    background: linear-gradient(to bottom,
+    /* background: linear-gradient(to bottom,
         rgb(190, 189, 189) 0%,
         rgb(224, 217, 217) 20%,
         rgb(211, 205, 205) 40%,
         rgb(187, 184, 184) 60%,
         rgb(160, 157, 157) 80%,
-        rgb(114, 111, 111) 100%);
+        rgb(114, 111, 111) 100%); */
+
+    background-size: cover;
+    background-position: center;
 
     overflow: hidden;
 }
