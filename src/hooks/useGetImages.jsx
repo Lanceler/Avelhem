@@ -1,71 +1,70 @@
 import React from "react";
 
-import FireAvelhem from "../assets/avelhemcards/FireAvelhem.png";
-import IgnitionPropulsion from "../assets/skillcards/IgnitionPropulsion.png";
-import Conflagration from "../assets/skillcards/Conflagration.png";
-import BlazeOfGlory from "../assets/skillcards/BlazeOfGlory.png";
-import Resplendence from "../assets/skillcards/Resplendence.png";
+import FireAvelhem from "../assets/avelhemcards/FireAvelhem.jpg";
+import IgnitionPropulsion from "../assets/skillcards/IgnitionPropulsion.jpg";
+import Conflagration from "../assets/skillcards/Conflagration.jpg";
+import BlazeOfGlory from "../assets/skillcards/BlazeOfGlory.jpg";
+import Resplendence from "../assets/skillcards/Resplendence.jpg";
 
-import WaterAvelhem from "../assets/avelhemcards/WaterAvelhem.png";
-import Purification from "../assets/skillcards/Purification.png";
-import FrigidBreath from "../assets/skillcards/FrigidBreath.png";
-import HealingRain from "../assets/skillcards/HealingRain.png";
-import GlacialTorrent from "../assets/skillcards/GlacialTorrent.png";
+import WaterAvelhem from "../assets/avelhemcards/WaterAvelhem.jpg";
+import Purification from "../assets/skillcards/Purification.jpg";
+import FrigidBreath from "../assets/skillcards/FrigidBreath.jpg";
+import HealingRain from "../assets/skillcards/HealingRain.jpg";
+import GlacialTorrent from "../assets/skillcards/GlacialTorrent.jpg";
 
-import WindAvelhem from "../assets/avelhemcards/WindAvelhem.png";
-import AerialImpetus from "../assets/skillcards/AerialImpetus.png";
-import GaleConjuration from "../assets/skillcards/GaleConjuration.png";
-import SymphonicScreech from "../assets/skillcards/SymphonicScreech.png";
-import CataclysmicTempest from "../assets/skillcards/CataclysmicTempest.png";
+import WindAvelhem from "../assets/avelhemcards/WindAvelhem.jpg";
+import AerialImpetus from "../assets/skillcards/AerialImpetus.jpg";
+import GaleConjuration from "../assets/skillcards/GaleConjuration.jpg";
+import SymphonicScreech from "../assets/skillcards/SymphonicScreech.jpg";
+import CataclysmicTempest from "../assets/skillcards/CataclysmicTempest.jpg";
 
-import LandAvelhem from "../assets/avelhemcards/LandAvelhem.png";
-import Crystallization from "../assets/skillcards/Crystallization.png";
-import Upheaval from "../assets/skillcards/Upheaval.png";
-import PitfallTrap from "../assets/skillcards/PitfallTrap.png";
-import Geomancy from "../assets/skillcards/Geomancy.png";
+import LandAvelhem from "../assets/avelhemcards/LandAvelhem.jpg";
+import Crystallization from "../assets/skillcards/Crystallization.jpg";
+import Upheaval from "../assets/skillcards/Upheaval.jpg";
+import PitfallTrap from "../assets/skillcards/PitfallTrap.jpg";
+import Geomancy from "../assets/skillcards/Geomancy.jpg";
 
-import LightningAvelhem from "../assets/avelhemcards/LightningAvelhem.png";
-import ChainLightning from "../assets/skillcards/ChainLightning.png";
-import ZipAndZap from "../assets/skillcards/ZipAndZap.png";
-import ThunderThaumaturge from "../assets/skillcards/ThunderThaumaturge.png";
-import ValiantSpark from "../assets/skillcards/ValiantSpark.png";
+import LightningAvelhem from "../assets/avelhemcards/LightningAvelhem.jpg";
+import ChainLightning from "../assets/skillcards/ChainLightning.jpg";
+import ZipAndZap from "../assets/skillcards/ZipAndZap.jpg";
+import ThunderThaumaturge from "../assets/skillcards/ThunderThaumaturge.jpg";
+import ValiantSpark from "../assets/skillcards/ValiantSpark.jpg";
 
-import ManaAvelhem from "../assets/avelhemcards/ManaAvelhem.png";
-import Surge from "../assets/skillcards/Surge.png";
-import Diffusion from "../assets/skillcards/Diffusion.png";
-import Aegis from "../assets/skillcards/Aegis.png";
-import DisruptionField from "../assets/skillcards/DisruptionField.png";
+import ManaAvelhem from "../assets/avelhemcards/ManaAvelhem.jpg";
+import Surge from "../assets/skillcards/Surge.jpg";
+import Diffusion from "../assets/skillcards/Diffusion.jpg";
+import Aegis from "../assets/skillcards/Aegis.jpg";
+import DisruptionField from "../assets/skillcards/DisruptionField.jpg";
 
-import MetalAvelhem from "../assets/avelhemcards/MetalAvelhem.png";
-import MagneticShockwave from "../assets/skillcards/MagneticShockwave.png";
-import Reinforce from "../assets/skillcards/Reinforce.png";
-import FrenzyBlade from "../assets/skillcards/FrenzyBlade.png";
-import ArsenalOnslaught from "../assets/skillcards/ArsenalOnslaught.png";
+import MetalAvelhem from "../assets/avelhemcards/MetalAvelhem.jpg";
+import MagneticShockwave from "../assets/skillcards/MagneticShockwave.jpg";
+import Reinforce from "../assets/skillcards/Reinforce.jpg";
+import FrenzyBlade from "../assets/skillcards/FrenzyBlade.jpg";
+import ArsenalOnslaught from "../assets/skillcards/ArsenalOnslaught.jpg";
 
-import PlantAvelhem from "../assets/avelhemcards/PlantAvelhem.png";
-import SowAndReap from "../assets/skillcards/SowAndReap.png";
-import Efflorescence from "../assets/skillcards/Efflorescence.png";
-import ViridianGrave from "../assets/skillcards/ViridianGrave.png";
-import CastleOfThorns from "../assets/skillcards/CastleOfThorns.png";
+import PlantAvelhem from "../assets/avelhemcards/PlantAvelhem.jpg";
+import SowAndReap from "../assets/skillcards/SowAndReap.jpg";
+import Efflorescence from "../assets/skillcards/Efflorescence.jpg";
+import ViridianGrave from "../assets/skillcards/ViridianGrave.jpg";
+import CastleOfThorns from "../assets/skillcards/CastleOfThorns.jpg";
 
-import HeirsEndeavor from "../assets/skillcards/HeirsEndeavor.png";
-import TeaForTwo from "../assets/skillcards/TeaForTwo.png";
-import CouplesCoffee from "../assets/skillcards/CouplesCoffee.png";
-import DarkHalo from "../assets/skillcards/DarkHalo.png";
-import Reminiscence from "../assets/skillcards/Reminiscence.png";
-import Foreshadow from "../assets/skillcards/Foreshadow.png";
-import Transmute from "../assets/skillcards/Transmute.png";
-import Ambidexterity from "../assets/skillcards/Ambidexterity.png";
-import Providence from "../assets/skillcards/Providence.png";
-import FerventPrayer from "../assets/skillcards/FerventPrayer.png";
-import PressTheAttack from "../assets/skillcards/PressTheAttack.png";
-import PowerAtTheFinalHour from "../assets/skillcards/PowerAtTheFinalHour.png";
-import FatedRivalry from "../assets/skillcards/FatedRivalry.png";
-import MatchMadeInHeaven from "../assets/skillcards/MatchMadeInHeaven.png";
-import VengefulLegacy from "../assets/skillcards/VengefulLegacy.png";
-import BlackBusinessCard from "../assets/skillcards/BlackBusinessCard.png";
-import Coalescence from "../assets/skillcards/Coalescence.png";
-import Transcendence from "../assets/skillcards/Transcendence.png";
+import HeirsEndeavor from "../assets/skillcards/HeirsEndeavor.jpg";
+import TeaForTwo from "../assets/skillcards/TeaForTwo.jpg";
+import DarkHalo from "../assets/skillcards/DarkHalo.jpg";
+import Reminiscence from "../assets/skillcards/Reminiscence.jpg";
+import Foreshadow from "../assets/skillcards/Foreshadow.jpg";
+import Transmute from "../assets/skillcards/Transmute.jpg";
+import Ambidexterity from "../assets/skillcards/Ambidexterity.jpg";
+import Providence from "../assets/skillcards/Providence.jpg";
+import FerventPrayer from "../assets/skillcards/FerventPrayer.jpg";
+import PressTheAttack from "../assets/skillcards/PressTheAttack.jpg";
+import PowerAtTheFinalHour from "../assets/skillcards/PowerAtTheFinalHour.jpg";
+import FatedRivalry from "../assets/skillcards/FatedRivalry.jpg";
+import MatchMadeInHeaven from "../assets/skillcards/MatchMadeInHeaven.jpg";
+import VengefulLegacy from "../assets/skillcards/VengefulLegacy.jpg";
+import BlackBusinessCard from "../assets/skillcards/BlackBusinessCard.jpg";
+import Coalescence from "../assets/skillcards/Coalescence.jpg";
+import Transcendence from "../assets/skillcards/Transcendence.jpg";
 
 import Pawn from "../assets/scionIcons/Pawn.png";
 import FireScion from "../assets/scionIcons/FireScion.png";
@@ -100,8 +99,8 @@ import Flourish from "../assets/abilities/Flourish.png";
 import Ambrosia from "../assets/abilities/Ambrosia.png";
 import Everblooming from "../assets/abilities/Everblooming.png";
 
-import SkillCardBack from "../assets/skillcards/SkillCardBack.png";
-import AvelhemCardBack from "../assets/avelhemcards/AvelhemCardBack.png";
+import SkillCardBack from "../assets/skillcards/SkillCardBack.jpg";
+import AvelhemCardBack from "../assets/avelhemcards/AvelhemCardBack.jpg";
 
 import Shield from "../assets/attributeIcons/Shield.png";
 import Ward from "../assets/attributeIcons/Ward.png";
@@ -209,7 +208,6 @@ export const useGetImages = () => {
     CastleOfThorns,
     HeirsEndeavor,
     TeaForTwo,
-    CouplesCoffee,
     DarkHalo,
     Reminiscence,
     Foreshadow,
