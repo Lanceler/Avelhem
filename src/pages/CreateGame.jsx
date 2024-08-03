@@ -46,7 +46,7 @@ export default function MyGames() {
   useEffect(() => {
     const interval = setInterval(() => {
       setBannerIndex((prevIndex) => (prevIndex + 1) % bannerImages.length);
-    }, 6000);
+    }, 4500);
 
     return () => clearInterval(interval); // Cleanup the interval on component unmount
   }, [bannerImages.length]);
@@ -147,7 +147,7 @@ export default function MyGames() {
     <div
       className="create-game-body"
       style={{
-        backgroundImage: `url(${getBannerImage("MetalBG")})`,
+        backgroundImage: `url(${getBannerImage("FireBG")})`,
       }}
     >
       <div className="create-game-header">CREATE GAME</div>

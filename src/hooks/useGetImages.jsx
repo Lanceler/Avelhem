@@ -164,7 +164,11 @@ export const useGetImages = () => {
   const imagesLoadingList = [
     LoadingBanner,
     NightSky,
-    MountainFields,
+    // MountainFields,
+    LandBG,
+    ManaBG,
+    MetalBG,
+    FireBG,
     //////////
     FireAvelhem,
     IgnitionPropulsion,
@@ -350,7 +354,7 @@ export const useGetImages = () => {
         return PlantBanner;
 
       case "PlantBG":
-        return PlantBG;
+        return;
 
       //
 

@@ -254,8 +254,12 @@ export default function Game() {
   };
 
   return (
-    <div className="demo-body">
-      <br />
+    <div
+      className="demo-body"
+      style={{
+        backgroundImage: `url(${getBannerImage("MetalBG")})`,
+      }}
+    >
       {["ready", "spectate"].includes(playerStatus) && (
         <Board
           gameState={gameData.gameState}

@@ -1,15 +1,33 @@
 
 .board-body {
     width: 100%;
-    /* background-color: aqua; */
+
+
+    display: flex;
+    flex-direction: column;
+
 }
 
 
 .board-data {
-    color: #333;
-    margin: 5px 75px;
+    position: relative;
+    bottom: 0;
+    justify-items: flex-end;
+    margin-bottom: 0;
+    
+    color: #eee;
+    padding: 25px 105px 0px;
     font-family: "Times New Roman", Times, serif;
     font-size: 1.5rem;
+
+        
+    
+
+    // background-color: rgba(15, 15, 15, 0.75);
+    background: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.9) 20%, rgba(0, 0, 0, 0) 100%);
+    // background-color: aqua;
+
+
 }
 
 
