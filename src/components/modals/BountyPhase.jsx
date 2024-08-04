@@ -5,8 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
 import { updateDemo } from "../../redux/demoGuide";
 
-import { useGetImages } from "../../hooks/useGetImages";
-
 import InfoPopUp from "./InfoPopUp";
 
 const BountyPhase = (props) => {
@@ -17,8 +15,6 @@ const BountyPhase = (props) => {
   const dispatch = useDispatch();
 
   const [selectedChoice, setSelectedChoice] = useState(null);
-
-  const { getMiscImage } = useGetImages();
 
   const [infoPopUp, setInfoPopUp] = useState(null);
 
@@ -306,18 +302,17 @@ const BountyPhase = (props) => {
             <h3 className="modalChoiceName2">Frontier</h3>
             <div className="modalContent">
               <div
-                className={`modalChoice1  modalChoice2 ${
-                  selectedChoice === 1 ? "selectedModalChoice" : ""
+                className={`modal-option-outline   ${
+                  selectedChoice === 1 ? "selected-modal-option" : ""
                 } ${canClick("Frontier", 0) ? "demoClick" : ""}`}
-                style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
                 onClick={() => {
                   handleSelect(1, canFrontier[0]);
                   handleUpdateDemoGuide();
                 }}
               >
                 <div
-                  className={`modalChoiceContent ${
-                    canFrontier[0] ? "" : "disabledModalChoice"
+                  className={`modal-option-content modal-option-content-2 ${
+                    canFrontier[0] ? "" : "disabled-modal-option-content"
                   } `}
                 >
                   <div className="modalBountyContents">
@@ -334,18 +329,17 @@ const BountyPhase = (props) => {
               </div>
 
               <div
-                className={`modalChoice1  modalChoice2 ${
-                  selectedChoice === 2 ? "selectedModalChoice" : ""
+                className={`modal-option-outline  ${
+                  selectedChoice === 2 ? "selected-modal-option" : ""
                 } ${canClick("Frontier", 1) ? "demoClick" : ""}`}
-                style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
                 onClick={() => {
                   handleSelect(2, canFrontier[1]);
                   handleUpdateDemoGuide();
                 }}
               >
                 <div
-                  className={`modalChoiceContent ${
-                    canFrontier[1] ? "" : "disabledModalChoice"
+                  className={`modal-option-content modal-option-content-2 ${
+                    canFrontier[1] ? "" : "disabled-modal-option-content"
                   } `}
                 >
                   <div className="modalBountyContents">
@@ -362,15 +356,14 @@ const BountyPhase = (props) => {
               </div>
 
               <div
-                className={`modalChoice1  modalChoice2 ${
-                  selectedChoice === 3 ? "selectedModalChoice" : ""
+                className={`modal-option-outline ${
+                  selectedChoice === 3 ? "selected-modal-option" : ""
                 } `}
-                style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
                 onClick={() => handleSelect(3, canFrontier[2])}
               >
                 <div
-                  className={`modalChoiceContent ${
-                    canFrontier[2] ? "" : "disabledModalChoice"
+                  className={`modal-option-content modal-option-content-2 ${
+                    canFrontier[2] ? "" : "disabled-modal-option-content"
                   } `}
                 >
                   <div className="modalBountyContents">
@@ -394,15 +387,14 @@ const BountyPhase = (props) => {
             <h3 className="modalChoiceName2">Acquisition Phase</h3>
             <div className="modalContent">
               <div
-                className={`modalChoice1  modalChoice2 ${
-                  selectedChoice === 4 ? "selectedModalChoice" : ""
+                className={`modal-option-outline  ${
+                  selectedChoice === 4 ? "selected-modal-option" : ""
                 } `}
-                style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
                 onClick={() => handleSelect(4, canAcquisition[0])}
               >
                 <div
-                  className={`modalChoiceContent ${
-                    canAcquisition[0] ? "" : "disabledModalChoice"
+                  className={`modal-option-content modal-option-content-2 ${
+                    canAcquisition[0] ? "" : "disabled-modal-option-content"
                   } `}
                 >
                   <div className="modalBountyContents">
@@ -421,15 +413,14 @@ const BountyPhase = (props) => {
               </div>
 
               <div
-                className={`modalChoice1  modalChoice2 ${
-                  selectedChoice === 5 ? "selectedModalChoice" : ""
+                className={`modal-option-outline${
+                  selectedChoice === 5 ? "selected-modal-option" : ""
                 } `}
-                style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
                 onClick={() => handleSelect(5, canAcquisition[1])}
               >
                 <div
-                  className={`modalChoiceContent ${
-                    canAcquisition[1] ? "" : "disabledModalChoice"
+                  className={`modal-option-content modal-option-content-2 ${
+                    canAcquisition[1] ? "" : "disabled-modal-option-content"
                   } `}
                 >
                   <div className="modalBountyContents">
@@ -446,15 +437,14 @@ const BountyPhase = (props) => {
               </div>
 
               <div
-                className={`modalChoice1  modalChoice2 ${
-                  selectedChoice === 6 ? "selectedModalChoice" : ""
+                className={`modal-option-outline ${
+                  selectedChoice === 6 ? "selected-modal-option" : ""
                 } `}
-                style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
                 onClick={() => handleSelect(6, canAcquisition[2])}
               >
                 <div
-                  className={`modalChoiceContent ${
-                    canAcquisition[2] ? "" : "disabledModalChoice"
+                  className={`modal-option-content modal-option-content-2 ${
+                    canAcquisition[2] ? "" : "disabled-modal-option-content"
                   } `}
                 >
                   <div className="modalBountyContents">
@@ -480,15 +470,14 @@ const BountyPhase = (props) => {
             <h3 className="modalChoiceName2">Coordination Phase</h3>
             <div className="modalContent">
               <div
-                className={`modalChoice1 modalChoice2 ${
-                  selectedChoice === 7 ? "selectedModalChoice" : ""
+                className={`modal-option-outline ${
+                  selectedChoice === 7 ? "selected-modal-option" : ""
                 } `}
-                style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
                 onClick={() => handleSelect(7, canCoordination[0])}
               >
                 <div
-                  className={`modalChoiceContent ${
-                    canCoordination[0] ? "" : "disabledModalChoice"
+                  className={`modal-option-content modal-option-content-2 ${
+                    canCoordination[0] ? "" : "disabled-modal-option-content"
                   } `}
                 >
                   <div className="modalBountyContents">
@@ -505,15 +494,14 @@ const BountyPhase = (props) => {
               </div>
 
               <div
-                className={`modalChoice1 modalChoice2 ${
-                  selectedChoice === 8 ? "selectedModalChoice" : ""
+                className={`modal-option-outline ${
+                  selectedChoice === 8 ? "selected-modal-option" : ""
                 } `}
-                style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
                 onClick={() => handleSelect(8, canCoordination[1])}
               >
                 <div
-                  className={`modalChoiceContent ${
-                    canCoordination[1] ? "" : "disabledModalChoice"
+                  className={`modal-option-content modal-option-content-2 ${
+                    canCoordination[1] ? "" : "disabled-modal-option-content"
                   } `}
                 >
                   <div className="modalBountyContents">
@@ -528,31 +516,6 @@ const BountyPhase = (props) => {
                   </div>
                 </div>
               </div>
-
-              {/* <div
-                className={`modalChoice1 modalChoice2 ${
-                  selectedChoice === 9 ? "selectedModalChoice" : ""
-                } `}
-                style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
-                onClick={() => handleSelect(9, canCoordination[2])}
-              >
-                <div
-                  className={`modalChoiceContent ${
-                    canCoordination[2] ? "" : "disabledModalChoice"
-                  } `}
-                >
-                  <div className="modalBountyContents">
-                    <h4 className="modalChoiceText modalBountyText">
-                      Upgrade Convene.
-                    </h4>
-                    <h4 className="modalChoiceText modalBountyText modalCost">
-                      {localGameState[self].bountyUpgrades.coordination > 2
-                        ? "Purchased"
-                        : `Cost: ${coordinationCosts[2]} BP`}
-                    </h4>
-                  </div>
-                </div>
-              </div> */}
             </div>
           </div>
 
@@ -573,15 +536,14 @@ const BountyPhase = (props) => {
             </h3>
             <div className="modalContent">
               <div
-                className={`modalChoice1 modalChoice2 ${
-                  selectedChoice === 10 ? "selectedModalChoice" : ""
+                className={`modal-option-outline ${
+                  selectedChoice === 10 ? "selected-modal-option" : ""
                 } `}
-                style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
                 onClick={() => handleSelect(10, canTactics[0])}
               >
                 <div
-                  className={`modalChoiceContent ${
-                    canTactics[0] ? "" : "disabledModalChoice"
+                  className={`modal-option-content modal-option-content-2 ${
+                    canTactics[0] ? "" : "disabled-modal-option-content"
                   } `}
                 >
                   <div className="modalBountyContents">
@@ -600,15 +562,14 @@ const BountyPhase = (props) => {
               </div>
 
               <div
-                className={`modalChoice1 modalChoice2 ${
-                  selectedChoice === 11 ? "selectedModalChoice" : ""
+                className={`modal-option-outline ${
+                  selectedChoice === 11 ? "selected-modal-option" : ""
                 } `}
-                style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
                 onClick={() => handleSelect(11, canTactics[1])}
               >
                 <div
-                  className={`modalChoiceContent ${
-                    canTactics[1] ? "" : "disabledModalChoice"
+                  className={`modal-option-content modal-option-content-2 ${
+                    canTactics[1] ? "" : "disabled-modal-option-content"
                   } `}
                 >
                   <div className="modalBountyContents">
@@ -627,15 +588,14 @@ const BountyPhase = (props) => {
               </div>
 
               <div
-                className={`modalChoice1 modalChoice2 ${
-                  selectedChoice === 12 ? "selectedModalChoice" : ""
+                className={`modal-option-outline ${
+                  selectedChoice === 12 ? "selected-modal-option" : ""
                 } `}
-                style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
                 onClick={() => handleSelect(12, canTactics[2])}
               >
                 <div
-                  className={`modalChoiceContent ${
-                    canTactics[2] ? "" : "disabledModalChoice"
+                  className={`modal-option-content modal-option-content-2 ${
+                    canTactics[2] ? "" : "disabled-modal-option-content"
                   } `}
                 >
                   <div className="modalBountyContents">
@@ -661,15 +621,14 @@ const BountyPhase = (props) => {
             <h3 className="modalChoiceName2">Avelhem</h3>
             <div className="modalContent">
               <div
-                className={`modalChoice1 modalChoice2 ${
-                  selectedChoice === 14 ? "selectedModalChoice" : ""
+                className={`modal-option-outline ${
+                  selectedChoice === 14 ? "selected-modal-option" : ""
                 } `}
-                style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
                 onClick={() => handleSelect(14, canAvelhem[0])}
               >
                 <div
-                  className={`modalChoiceContent ${
-                    canAvelhem[0] ? "" : "disabledModalChoice"
+                  className={`modal-option-content modal-option-content-2 ${
+                    canAvelhem[0] ? "" : "disabled-modal-option-content"
                   } `}
                 >
                   <div className="modalBountyContents">
@@ -686,15 +645,14 @@ const BountyPhase = (props) => {
               </div>
 
               <div
-                className={`modalChoice1 modalChoice2 ${
-                  selectedChoice === 15 ? "selectedModalChoice" : ""
+                className={`modal-option-outline ${
+                  selectedChoice === 15 ? "selected-modal-option" : ""
                 } `}
-                style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
                 onClick={() => handleSelect(15, canAvelhem[1])}
               >
                 <div
-                  className={`modalChoiceContent ${
-                    canAvelhem[1] ? "" : "disabledModalChoice"
+                  className={`modal-option-content modal-option-content-2 ${
+                    canAvelhem[1] ? "" : "disabled-modal-option-content"
                   } `}
                 >
                   <div className="modalBountyContents">
@@ -714,15 +672,14 @@ const BountyPhase = (props) => {
               </div>
 
               <div
-                className={`modalChoice1 modalChoice2 ${
-                  selectedChoice === 16 ? "selectedModalChoice" : ""
+                className={`modal-option-outline ${
+                  selectedChoice === 16 ? "selected-modal-option" : ""
                 } `}
-                style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
                 onClick={() => handleSelect(16, canAvelhem[2])}
               >
                 <div
-                  className={`modalChoiceContent ${
-                    canAvelhem[2] ? "" : "disabledModalChoice"
+                  className={`modal-option-content modal-option-content-2 ${
+                    canAvelhem[2] ? "" : "disabled-modal-option-content"
                   } `}
                 >
                   <div className="modalBountyContents">
@@ -740,34 +697,6 @@ const BountyPhase = (props) => {
                   </div>
                 </div>
               </div>
-
-              {/* <div
-                className={`modalChoice1 modalChoice3 ${
-                  selectedChoice === 17 ? "selectedModalChoice" : ""
-                } `}
-                style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
-                onClick={() => handleSelect(17, canAvelhem[3])}
-              >
-                <div
-                  className={`modalBountyContents ${
-                    canAvelhem[3] ? "" : "disabledModalChoice"
-                  } `}
-                >
-                  <div className="modalBountyContents">
-                    <h4 className="modalChoiceText modalBountyText">
-                      <p style={{ fontSize: 16.5 }}>
-                        Your Avelhems have an alternate effect: Spend 3 FD to
-                        recover 1 skill with the matching aspect.
-                      </p>
-                    </h4>
-                    <h4 className="modalChoiceText modalBountyText modalCost">
-                      {localGameState[self].bountyUpgrades.avelhem > 3
-                        ? "Purchased"
-                        : `Cost: ${avelhemCosts[3]} BP`}
-                    </h4>
-                  </div>
-                </div>
-              </div> */}
             </div>
           </div>
         </div>

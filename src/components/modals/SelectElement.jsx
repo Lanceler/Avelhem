@@ -13,7 +13,7 @@ const SelectElement = (props) => {
 
   const [selectedChoice, setSelectedChoice] = useState(null);
   const { ascendPawn, canAscend, getZonesWithEnemies } = useRecurringEffects();
-  const { getElementImage, getMiscImage } = useGetImages();
+  const { getElementImage } = useGetImages();
 
   const aspects = [
     "Fire Scion",
@@ -191,24 +191,23 @@ const SelectElement = (props) => {
               <div
                 key={i}
                 onClick={() => handleSelect(aspect)}
-                style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
-                className={` modalChoice1 modalChoiceE ${
-                  selectedChoice === aspect ? "selectedModalChoice" : ""
-                } `}
+                className={` modal-option-outline 
+                  ${selectedChoice === aspect ? "selected-modal-option" : ""} `}
               >
                 <div
-                  className={`customChoiceFrameElement  ${
-                    canSelect(aspect) ? "" : "disabledModalChoice"
+                  className={`modal-option-content modal-option-content-3   ${
+                    canSelect(aspect) ? "" : "disabled-modal-option-content"
                   }`}
                 >
-                  <div>
+                  <div className="modal-option-element">
                     <img
                       src={getElementImage(aspect)}
                       className="selectElementIcon"
+                      alt={aspect.replace(" Scion", "element icon")}
                     />
-                    <p className="customChoiceDescription">
-                      {aspect.replace(" Scion", "")}{" "}
-                    </p>
+                    <div className="modal-option-title">
+                      {aspect.replace(" Scion", "")}
+                    </div>
                   </div>
                 </div>
               </div>

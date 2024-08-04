@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Modal.css";
 
-import GoldFrame from "../../assets/others/GoldFrame.png";
-import AdvanceSmall from "../../assets/diceIcons/AdvanceSmall.png";
-import MobilizeSmall from "../../assets/diceIcons/MobilizeSmall.png";
-import AssaultSmall from "../../assets/diceIcons/AssaultSmall.png";
-import InvokeSmall from "../../assets/diceIcons/InvokeSmall.png";
-
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
 import { updateDemo } from "../../redux/demoGuide";
@@ -412,21 +406,6 @@ const SelectSovereignTactic = (props) => {
     dispatch(updateState(newGameState));
   };
 
-  // let modalColumn = "oneAbility";
-  // let modalClass = "singleAbilityModal";
-
-  // switch (abilityDetails.length) {
-  //   case 2:
-  //     modalColumn = "twoColumn";
-  //     modalClass = "dualAbilityModal";
-  //     break;
-
-  //   case 3:
-  //     modalColumn = "threeColumn";
-  //     modalClass = "";
-  //     break;
-  // }
-
   const canClick = (element, element2) => {
     switch (demoGuide) {
       case "Learn1.35":
@@ -480,29 +459,27 @@ const SelectSovereignTactic = (props) => {
           {abilityDetails.map((detail, i) => (
             <div
               key={i}
-              className={`customChoice ${
-                selectedChoice === i ? "selectedChoice" : ""
+              className={`modal-option-outline ${
+                selectedChoice === i ? "selected-modal-option" : ""
               } ${canClick("Tactic", i) ? "demoClick" : ""}`}
-              style={{ backgroundImage: `url(${GoldFrame})` }}
               onClick={() => {
                 handleChoice(i);
                 handleUpdateDemoGuide();
               }}
             >
               <div
-                // className="abilityFrame"
-                className={`abilityFrame ${
-                  canChoice(i) ? "" : "disabledAbility"
+                className={`modal-option-content ${
+                  canChoice(i) ? "" : "disabled-modal-option-content"
                 } `}
               >
-                <div className="abilityHeader">
-                  <h3 className="abilityName ">{detail.abilityName}</h3>
+                <div className="modal-option-header">
+                  <div className="modal-option-title ">
+                    {detail.abilityName}
+                  </div>
 
                   <div>{detail.abilityQualifier}</div>
                 </div>
-                <div className="abilityContent scrollable">
-                  {detail.abilityText}
-                </div>
+                <div className="modalChoiceText ">{detail.abilityText}</div>
               </div>
             </div>
           ))}

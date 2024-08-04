@@ -1,11 +1,8 @@
 
 .board-body {
     width: 100%;
-
-
     display: flex;
     flex-direction: column;
-
 }
 
 
@@ -14,20 +11,12 @@
     bottom: 0;
     justify-items: flex-end;
     margin-bottom: 0;
-    
     color: #eee;
     padding: 25px 105px 0px;
     font-family: "Times New Roman", Times, serif;
     font-size: 1.5rem;
-
-        
-    
-
-    // background-color: rgba(15, 15, 15, 0.75);
-    background: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.9) 20%, rgba(0, 0, 0, 0) 100%);
+    background: linear-gradient(to top, rgb(14, 14, 14), rgba(0, 0, 0, 0) 100%);
     // background-color: aqua;
-
-
 }
 
 
@@ -43,21 +32,26 @@
 .board-space {
     display: flex;
     align-items: center;
-    border: 8px groove goldenrod;
+    border: 6px groove goldenrod;
     height: 890px;
     width: 1450px;
     padding-top: 10px;
     transform: scale(0.9);
     overflow: hidden;
-    background: linear-gradient(to bottom, rgb(31, 31, 31), rgb(90, 90, 90) 70%, rgb(158, 158, 158) 100%);
+    // background: linear-gradient(to bottom, rgb(31, 31, 31), rgb(90, 90, 90) 70%, rgb(158, 158, 158) 100%);
+    background: linear-gradient(to bottom, rgba(31, 31, 31, 0.9), rgba(90, 90, 90, 0.9) 70%, rgba(158, 158, 158, 0.9) 100%);
     box-shadow: 4px 4px 8px 4px rgba(0, 0, 0, 0.5);
     scrollbar-color: rgb(255, 168, 7) rgba(92, 63, 52, 0);
     scrollbar-width: thin;
+
+    
+    // transition: background 0.5s ease;
 }
 
 
 .board-space-turn {
-    background: linear-gradient(to bottom, rgb(85, 84, 84), rgb(116, 116, 116) 35%, rgb(230, 223, 223) 100%);
+    // background: linear-gradient(to bottom, rgb(85, 84, 84), rgb(116, 116, 116) 35%, rgb(230, 223, 223) 100%);
+    background: linear-gradient(to bottom, rgba(85, 84, 84, 0.8), rgba(116, 116, 116, 0.8) 35%, rgba(230, 223, 223, 0.75) 100%);
 }
 
 
@@ -103,17 +97,19 @@
 }
 
 .board-center .board-frame {
-    border: 4px groove goldenrod;
+    border: 3.5px groove goldenrod;
     height: fit-content;
     width: fit-content;
     position: relative;
     /* overflow: hidden; */
     background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
     box-shadow: 2px 2px 3px 3px rgba(0, 0, 0, 0.5);
+    filter: brightness(1.05);
 }
 
 .board-center .board-frame-enemy {
     background: linear-gradient(to bottom, rgb(0, 0, 0), rgb(19, 15, 15) 60%, rgb(44, 43, 43) 100%);
+    filter: brightness(1.00);
 }
 
 

@@ -118,7 +118,6 @@ import UnitProfile from "../assets/others/UnitProfile.png";
 import UnitSkill from "../assets/others/UnitSkill.png";
 import UnitTactic from "../assets/others/UnitTactic.png";
 
-import GoldFrame from "../assets/others/GoldFrame.png";
 import AdvanceSmall from "../assets/diceIcons/AdvanceSmall.png";
 import MobilizeSmall from "../assets/diceIcons/MobilizeSmall.png";
 import AssaultSmall from "../assets/diceIcons/AssaultSmall.png";
@@ -276,7 +275,6 @@ export const useGetImages = () => {
     UnitProfile,
     UnitSkill,
     UnitTactic,
-    GoldFrame,
     AdvanceSmall,
     MobilizeSmall,
     AssaultSmall,
@@ -607,9 +605,6 @@ export const useGetImages = () => {
 
       case "Crosshair":
         return Crosshair;
-
-      case "GoldFrame":
-        return GoldFrame;
 
       case "UnitAbility":
         return UnitAbility;

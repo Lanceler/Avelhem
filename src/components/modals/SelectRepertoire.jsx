@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Modal.css";
 
-import GoldFrame from "../../assets/others/GoldFrame.png";
-
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { db } from "../../config/firebaseConfig";
 

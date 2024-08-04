@@ -4,9 +4,7 @@ import "./Modal.css";
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
 import { updateDemo } from "../../redux/demoGuide";
-
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
-import { useGetImages } from "../../hooks/useGetImages";
 
 import InfoPopUp from "./InfoPopUp";
 
@@ -14,7 +12,6 @@ const SelectTacticalAction = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
-  const { getMiscImage } = useGetImages();
 
   const dispatch = useDispatch();
 
@@ -238,30 +235,6 @@ const SelectTacticalAction = (props) => {
 
           dispatch(updateState(newGameState));
         } else if (selectedChoice === 1) {
-          // //give unit activationCounter
-          // unit.temporary.activation
-          //   ? (unit.temporary.activation += 1)
-          //   : (unit.temporary.activation = 1);
-
-          // newGameState[unit.player].units[unit.unitIndex] = unit;
-
-          // //newGameState.activatingSkill.push("Advance") <-- to do?
-          // newGameState.activatingUnit.push(unit);
-
-          // newGameState.currentResolution.push({
-          //   resolution: "Tactic End",
-          //   unit: unit,
-          // });
-
-          // enterSelectUnitMode(
-          //   getZonesWithEnemies(props.unit, 1),
-          //   props.unit,
-          //   newGameState,
-          //   props.dice,
-          //   "virtue-blast",
-          //   null
-          // );
-
           if (!isRooted(unit)) {
             //give unit activationCounter
             unit.temporary.activation
@@ -524,22 +497,23 @@ const SelectTacticalAction = (props) => {
           {abilityDetails.map((detail, i) => (
             <div
               key={i}
-              className={`modalChoice1 ${
-                selectedChoice === i ? "selectedModalChoice" : ""
+              className={`modal-option-outline ${
+                selectedChoice === i ? "selected-modal-option" : ""
               } ${canClick("Action", i) ? "demoClick" : ""}    `}
-              style={{ backgroundImage: `url(${getMiscImage("GoldFrame")})` }}
               onClick={() => {
                 handleChoice(i);
                 handleUpdateDemoGuide();
               }}
             >
               <div
-                className={`modalChoiceContent ${
-                  canChoice(i) ? "" : "disabledModalChoice"
+                className={`modal-option-content ${
+                  canChoice(i) ? "" : "disabled-modal-option-content"
                 } `}
               >
-                <div className="modalChoiceHeader">
-                  <h3 className="modalChoiceName ">{detail.abilityName}</h3>
+                <div className="modal-option-header modal-option-header-ability">
+                  <div className="modal-option-title ">
+                    {detail.abilityName}
+                  </div>
 
                   <div>{detail.abilityQualifier}</div>
                 </div>

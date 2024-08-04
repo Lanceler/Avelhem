@@ -302,7 +302,6 @@ const DefiancePhaseSelection = (props) => {
 
         <div className="modalContent">
           <div className="threeColumn">
-            {" "}
             {defianceOptions.map((d, i) => (
               <div
                 key={i}
