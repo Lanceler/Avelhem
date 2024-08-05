@@ -127,7 +127,6 @@
 }
 
 .bountySection{
-    /* background-color: #b30000; */
     margin-bottom: 10px;
 }
 
@@ -151,8 +150,6 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    /* padding: 0px 10px; */
-    /* background-color: #b30000; */
 }
 
 .modalDefianceText {
@@ -175,32 +172,6 @@
     justify-content: center;
 }
 
-
-/* ///////////////////////////////////////////////// */
-
-
-.bountyHeader {
-    justify-content: space-between;
-}
-
-.choiceWithDescription{
-    border: 2px solid;
-    text-align: center;
-    padding: 4px;
-    width: 180px;
-    cursor: pointer;
-}
-
-.choiceWithDescription:not(.disabledOption):hover {
-    background: rgb(99, 192, 63)
-}
-
-.disabledOption{
-    background: linear-gradient(to bottom, rgb(0, 0, 0), rgb(19, 15, 15) 60%, rgb(44, 43, 43) 100%);
-    color: #e8e8e8;
-    /* filter: grayscale(100%); */
-    cursor: default;
-}
 
 .tactic{
     padding: 10px;
@@ -268,12 +239,6 @@
     display: grid;
 }
 
-.twoColumn3-1 {
-    grid-template-columns: 3fr 1fr;
-    display: grid;
-
-}
-
 .threeColumn {
     grid-template-columns: 1fr 1fr 1fr;
     display: grid;
@@ -289,12 +254,6 @@
     justify-content: center; */
 }
 
-.column-centered {
-
-    display: flex;
-    /* justify-content: center; */
-    justify-content: space-around;
-}
 
 .scrollable{
     max-height: 550px;
@@ -313,6 +272,8 @@
     padding-right: 25px;
 
 }
+
+/* to-do: remove .center */
 
 .center {
     display: flex;
@@ -369,16 +330,6 @@
     max-height: 320px !important;
 }
 
-
-
-
-
-.choiceText{
-    padding: 4px 8px 0px 8px;
-    color: #e8e8e8;
-    font-family: "Times New Roman", Times, serif;
-    font-size: 23px;
-}
 
 .redButton{
     width: fit-content;
@@ -442,18 +393,8 @@
     justify-content: center;
 }
 
-.singleAbilityModal{
-    max-width: 395.6px ;
-}
 
-.dualAbilityModal {
-    max-width: 628px;
-}
 
-/* width
-::-webkit-scrollbar {
-    width: 15px;
-}
 /* Handle */
 ::-webkit-scrollbar-thumb {
     background: red;
@@ -472,49 +413,6 @@
 .scroll-color-colors {
     scrollbar-color: rgb(255, 153, 0) lightyellow;
 }
-
-
-.defianceText{
-    height: 196px;
-    /* display: flex;
-    flex-direction: column; */
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 25% 55% 20%
-
-
-}
-
-.defianceTitle{
-    color: #e8e8e8;
-    padding: 10px 15px;
-    margin: 0;
-    font-family: Arial, sans-serif;
-    font-size: 28px;
-    height: fit-content;
-    grid-row: 1;
-}
-
-.defianceDescription {
-    color: #e8e8e8;
-    padding: 5px 8px 0px;
-    font-family: Arial, sans-serif;
-    font-size: 20px;
-    grid-row: 2;
-}
-
-.defianceDescriptionSmall {
-    font-size: 16.75px;
-}
-
-.fdCost {
-    color: #e8e8e8;
-    font-family: 'Times New Roman', Times, serif;
-    padding: 0px 5px;
-    margin: 0;
-    grid-row: 3;
-}
-
 
 .unitInfoModal {
     padding: 30px;
@@ -536,14 +434,6 @@
     cursor: default;
 }
 
-.unitInfoHeader{
-position: relative;
-display: flex;
-/* background: rgba(229, 255, 0, 0.411); */
-
-
-}
-
 .unitInfo-close {
     position: absolute;
     z-index: 300;
@@ -551,24 +441,8 @@ display: flex;
     right: 0
 }
 
-.unitInfo-icon {
-    /* object-fit: cover; */
-    width: 80px;
-    height: 80px;
-    /* position: absolute; */
-    z-index: 3;
-    border-radius: 100%;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.95);
-    margin-right: 20px;
-}
 
-.unitInfo-name{
-        color: #333333;
-        font-family: "Times New Roman", Times, serif;
-        font-size: 45px;
-        line-height: 135%;
-        padding: 10px 0px;
-}
+
 
 .unitInfo-Abilities-Attributes{
     position: relative;
@@ -1005,14 +879,5 @@ display: flex;
 
 
 /* @media screen and (max-width: 875px){
-    .modal, .unitInfoModal {
-        padding: 4px;
-        max-width: 87.5vw;
-    }
 
-    .unitInfo-name {
-        font-size: 35px;
-        line-height: 135%;
-        margin-left: 10px;
-    }
 } */

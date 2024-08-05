@@ -21,11 +21,9 @@ const Skill = (props) => {
         className={`select-skill ${
           !props.canActivateSkill ? "cannotUseSkill" : ""
         }`}
-        // style={{
-        //   backgroundImage: `url(${getCardImage(
-        //     props.usableSkill.id || props.usableSkill
-        //   )})`,
-        // }}
+        style={{
+          backgroundImage: `url(${getCardImage(props.usableSkill.id)})`,
+        }}
       >
         <button
           className="zoom-button"
@@ -34,11 +32,6 @@ const Skill = (props) => {
             dispatch(updateMagnifiedSkill(props.usableSkill.id));
           }}
         >
-          <img
-            src={`url(${getCardImage(
-              props.usableSkill.id || props.usableSkill
-            )})`}
-          ></img>
           <FontAwesomeIcon icon={faMagnifyingGlass} />
         </button>
         <div className="select-skill-click"></div>
