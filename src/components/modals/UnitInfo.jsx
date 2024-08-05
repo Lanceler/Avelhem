@@ -1,6 +1,8 @@
 import React from "react";
 import "./Modal.css";
 
+import { updateMagnifiedSkill } from "../../redux/magnifySkill";
+
 import { useGetImages } from "../../hooks/useGetImages";
 
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
@@ -12,21 +14,23 @@ import InvokeSmall from "../../assets/diceIcons/InvokeSmall.png";
 
 import { updateDemo } from "../../redux/demoGuide";
 
+import { useCardDatabase } from "../../hooks/useCardDatabase";
+
 import { useSelector, useDispatch } from "react-redux";
 const UnitInfo = (props) => {
-  const { localGameState } = useSelector((state) => state.gameState);
   const { demoGuide } = useSelector((state) => state.demoGuide);
-
-  const { self, enemy } = useSelector((state) => state.teams);
+  const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const { getElementImage } = useGetImages();
-
+  const { getCardImage, getElementImage } = useGetImages();
   const { isRooted } = useRecurringEffects();
+  const { getScionSet } = useCardDatabase();
 
   const unit = props.unit;
 
   const team = unit.player === self ? "Ally" : "Enemy";
+
+  const skillSet = getScionSet(unit.unitClass);
 
   const handleCollapse = () => {
     props.setUnitInfor(null);
@@ -439,51 +443,78 @@ const UnitInfo = (props) => {
               <div className="unitInfo-scroll scrollable">{abilities()}</div>
             </div>
 
-            <div className="unitInfo-Attributes">
-              <p className="unitInfo-text-heading1">
-                <u>
-                  <strong>Attributes</strong>
-                </u>
-              </p>
+            <div className="unitInfo-Attributes-SkillSet">
+              <div className="unitInfo-Attributes">
+                <p className="unitInfo-text-heading1">
+                  <u>
+                    <strong>Attributes</strong>
+                  </u>
+                </p>
 
-              <div className="unitInfo-scroll scrollable">
-                {!unit.enhancements.score && (
-                  <>
-                    <p className="unitInfo-text-heading2">HP: {unit.hp}</p>
-                    <p className="unitInfo-text-heading2">
-                      Virtue: {unit.virtue ? "Present" : "Absent"}
-                    </p>
-                    {unit.fever && (
+                <div className="unitInfo-scroll scrollable">
+                  {!unit.enhancements.score && (
+                    <>
+                      <p className="unitInfo-text-heading2">HP: {unit.hp}</p>
                       <p className="unitInfo-text-heading2">
-                        Fever: {unit.fever}
+                        Virtue: {unit.virtue ? "Present" : "Absent"}
                       </p>
-                    )}
-                    {unit.charge && (
-                      <p className="unitInfo-text-heading2">
-                        Charge: {unit.charge}
-                      </p>
-                    )}
-                    {unit.sharpness && (
-                      <p className="unitInfo-text-heading2">
-                        Sharpness: {unit.sharpness}
-                      </p>
-                    )}
-                    {unit.blossom && (
-                      <p className="unitInfo-text-heading2">
-                        Blossom: {unit.blossom}
-                      </p>
-                    )}
-                  </>
-                )}
+                      {unit.fever > 0 && (
+                        <p className="unitInfo-text-heading2">
+                          Fever: {unit.fever}
+                        </p>
+                      )}
+                      {unit.charge > 0 && (
+                        <p className="unitInfo-text-heading2">
+                          Charge: {unit.charge}
+                        </p>
+                      )}
+                      {unit.sharpness > 0 && (
+                        <p className="unitInfo-text-heading2">
+                          Sharpness: {unit.sharpness}
+                        </p>
+                      )}
+                      {unit.blossom > 0 && (
+                        <p className="unitInfo-text-heading2">
+                          Blossom: {unit.blossom}
+                        </p>
+                      )}
+                    </>
+                  )}
 
-                {unit.enhancements.score && (
-                  <>
-                    <p className="unitInfo-text-heading2">
-                      This unit has scored.
-                    </p>
-                  </>
-                )}
+                  {unit.enhancements.score && (
+                    <>
+                      <p className="unitInfo-text-heading2">
+                        This unit has scored.
+                      </p>
+                    </>
+                  )}
+                </div>
               </div>
+
+              {unit.unitClass !== "Pawn" && (
+                <div className="unitInfo-Attributes">
+                  <p className="unitInfo-text-heading1">
+                    <u>
+                      <strong>Skill Set</strong>
+                    </u>
+                  </p>
+
+                  <div className="unit-info-skill-set">
+                    {skillSet.map((skill, i) => (
+                      <div
+                        key={i}
+                        className="unit-info-skill"
+                        style={{
+                          backgroundImage: `url(${getCardImage(skill)})`,
+                        }}
+                        onClick={() => {
+                          dispatch(updateMagnifiedSkill(skill));
+                        }}
+                      ></div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 

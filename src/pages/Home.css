@@ -1,8 +1,7 @@
 .home-body{
     height: 100%;
-    min-height: fit-content;
+    /* min-height: fit-content; */
     user-select: none;
-
     /* background-color: rgb(94, 0, 0); */
 }
 

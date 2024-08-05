@@ -1,6 +1,9 @@
 .select-skill{
-    width: 180px;
-    height: 252px;
+    width: 165px;
+    height: 231px;
+    /* width: 180px;
+    height: 252px; */
+
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -384,8 +387,8 @@
 }
 
 .pile-view-skill{
-    width: 180px;
-    height: 252px;
+    width: 165px;
+    height: 231px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;

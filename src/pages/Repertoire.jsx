@@ -360,7 +360,7 @@ export default function Repertoire() {
     <div
       className="repertoire-body"
       style={{
-        backgroundImage: `url(${getBannerImage("ManaBG")})`,
+        backgroundImage: `url(${getBannerImage("PlantBG")})`,
       }}
     >
       <div className="repertoire-input-box">

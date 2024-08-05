@@ -79,7 +79,7 @@ export default function MyRepertoires() {
       <div
         className="repertoires-content"
         style={{
-          backgroundImage: `url(${getBannerImage("Heir")})`,
+          backgroundImage: `url(${getBannerImage("ManaBG")})`,
         }}
       >
         <div className="repertoires-title">REPERTOIRES</div>

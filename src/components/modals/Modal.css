@@ -571,11 +571,9 @@ display: flex;
 }
 
 .unitInfo-Abilities-Attributes{
-
     position: relative;
     display: flex;
     gap: 1rem;
-
     height: 280px;
 }
 
@@ -596,6 +594,36 @@ display: flex;
     /* scrollbar-color: rgb(255, 168, 7) rgba(92, 63, 52, 0);
     scrollbar-width: thin; */
 }
+
+
+.unitInfo-Attributes-SkillSet {
+    display: flex;
+    flex-direction: column;
+}
+
+.unit-info-skill-set {
+    display: flex;
+    justify-content: center;
+}
+
+.unit-info-skill {
+    width: 60px;
+    height: 84px;
+    margin: 0px 10px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 5px;
+    position: relative;
+    transition: transform 0.15s ease-in-out;
+}
+
+.unit-info-skill:hover {
+    filter: brightness(1.2);
+    cursor: pointer;
+    transform: scale(1.2);
+}
+
+
 
 .unitInfo-Talents-Statuses {
     margin-top: 10px;
@@ -906,10 +934,6 @@ display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    
-
-    background-color: aqua;
-
 }
 
 
@@ -974,6 +998,7 @@ display: flex;
 .info-modal-contents{
     padding: 0px 20px 20px;
 }
+
 
 
 /* ////////////////////////////////////// */

@@ -5050,12 +5050,12 @@ export const useRecurringEffects = () => {
   const triggerAdamantArmor = (victim) => {
     return false;
     //Temporary(?) nerf: Adamant armor removed
-    return (
-      victim.unitClass === "Metal Scion" && //must be Metal Scion
-      !isMuted(victim) &&
-      localGameState[victim.player].skillHand.length > 0 &&
-      !victim.temporary.usedAdamantArmor
-    );
+    // return (
+    //   victim.unitClass === "Metal Scion" && //must be Metal Scion
+    //   !isMuted(victim) &&
+    //   localGameState[victim.player].skillHand.length > 0 &&
+    //   !victim.temporary.usedAdamantArmor
+    // );
   };
 
   const triggerAegis = (victim) => {

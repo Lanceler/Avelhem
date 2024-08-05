@@ -352,7 +352,7 @@ export const useGetImages = () => {
         return PlantBanner;
 
       case "PlantBG":
-        return;
+        return PlantBG;
 
       //
 

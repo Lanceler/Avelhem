@@ -255,7 +255,7 @@ export default function Game() {
 
   return (
     <div
-      className="demo-body"
+      className="game-body"
       style={{
         backgroundImage: `url(${getBannerImage("MetalBG")})`,
       }}
