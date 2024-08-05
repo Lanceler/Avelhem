@@ -119,7 +119,10 @@ export default function SelectFirstPlayer(props) {
 
   return (
     <div className="modal-backdrop">
-      <div className="modal column-centered">
+      <div
+        className="modal"
+        style={{ display: "flex", justifyContent: "space-around" }}
+      >
         <button
           className={`redButton ${canClick() ? "demoClick" : ""}`}
           onClick={() => {

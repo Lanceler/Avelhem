@@ -243,8 +243,7 @@
     grid-template-columns: 1fr 1fr 1fr;
     display: grid;
         /* display: flex;
-            justify-content: center; */
-
+        justify-content: center; */
 }
 
 .fourColumn {
@@ -252,6 +251,11 @@
     display: grid;
     /* display: flex;
     justify-content: center; */
+}
+
+.column-centered{
+    display: flex;
+    justify-content: space-around;
 }
 
 
