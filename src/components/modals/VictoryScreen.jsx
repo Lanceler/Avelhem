@@ -84,7 +84,7 @@ const VictoryScreen = (props) => {
         <br />
         {/* <h3>{message3}</h3> */}
 
-        <div className="FinalPhase-Button">
+        <div className="finalPhase-Button">
           {!demoOverride() &&
             self === props.player &&
             localGameState[self].score < 5 && (
