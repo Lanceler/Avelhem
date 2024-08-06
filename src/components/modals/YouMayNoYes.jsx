@@ -17,6 +17,7 @@ const YouMayNoYes = (props) => {
   const {
     drawAvelhem,
     drawSkill,
+    endExecutionPhase2,
     enterMoveMode,
     enterSelectUnitMode,
     getVacantAdjacentZones,
@@ -79,6 +80,11 @@ const YouMayNoYes = (props) => {
     }
 
     switch (props.details.reason) {
+      case "End Execution Phase": //"End Execution Phase Confirm"
+        newGameState.activatingTarget.pop();
+        newGameState = endExecutionPhase2();
+        break;
+
       case "Mitigate Virtue-Blast": //"Mitigating Virtue-Blast"
         newGameState.activatingTarget.pop();
         newGameState = virtueBlastYes(newGameState, props.attacker, unit);
@@ -112,6 +118,7 @@ const YouMayNoYes = (props) => {
       case "Blaze of Glory Draw": //"Blaze of Glory3"
         unit.fever -= 1;
         newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+        newGameState = drawSkill(newGameState);
         newGameState = drawSkill(newGameState);
         break;
 

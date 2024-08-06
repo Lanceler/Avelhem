@@ -1034,6 +1034,19 @@ const Board = (props) => {
 
       case "Misc.":
         switch (lastRes.resolution2) {
+          case "End Execution Phase Confirm":
+            return (
+              <>
+                {self === lastRes.player && !hideModal && (
+                  <YouMayNoYes
+                    details={lastRes.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
           case "Moving Unit":
             if (self === localGameState.turnPlayer && tileMode !== "move") {
               setTileMode("move");

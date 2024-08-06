@@ -436,17 +436,7 @@ const SelectCustomChoice = (props) => {
         break;
 
       case "Aerial Impetus":
-        // updateLocal = false;
         if (selectedChoice === 1) {
-          // enterSelectUnitMode(
-          //   getZonesAerialImpetusAlly(unit),
-          //   unit,
-          //   newGameState,
-          //   null,
-          //   "aerial impetus prompt",
-          //   null
-          // );
-
           newGameState.currentResolution.push({
             resolution: "Wind Skill",
             resolution2: "Aerial Impetus Select Ally",
@@ -494,20 +484,6 @@ const SelectCustomChoice = (props) => {
 
       case "Upheaval":
         if (selectedChoice === 1) {
-          // newGameState.currentResolution.push({
-          //   resolution: "Land Skill",
-          //   resolution2: "UpheavalR3",
-          //   unit: unit,
-          // });
-
-          // newGameState.currentResolution.push({
-          //   resolution: "Discard Skill",
-          //   unit: unit,
-          //   player: self,
-          //   message: "Spend 1 skill",
-          //   restriction: null,
-          // });
-
           newGameState.currentResolution.push({
             resolution: "Land Skill",
             resolution2: "UpheavalR2.5",

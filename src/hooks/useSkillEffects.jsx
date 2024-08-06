@@ -213,15 +213,6 @@ export const useSkillEffects = () => {
       unit: unit,
     });
 
-    //Buffed; no need to spend
-    // newGameState.currentResolution.push({
-    //   resolution: "Discard Skill",
-    //   unit: unit,
-    //   player: self,
-    //   message: "Spend 1 skill",
-    //   restriction: null,
-    // });
-
     return newGameState;
   };
 
@@ -236,12 +227,11 @@ export const useSkillEffects = () => {
       newGameState.currentResolution.push({
         resolution: "Fire Skill",
         resolution2: "Blaze of Glory3",
-        // resolution: "Blaze of Glory3",
         unit: unit,
         details: {
           reason: "Blaze of Glory Draw",
           title: "Blaze of Glory",
-          message: "You may spend 1 fever to draw 1 skill.",
+          message: "You may spend 1 fever to draw 2 skills.",
           no: "Skip",
           yes: "Draw",
         },

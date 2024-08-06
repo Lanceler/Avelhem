@@ -3568,6 +3568,30 @@ export const useRecurringEffects = () => {
   const endExecutionPhase = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
+    if (newGameState[self].avelhemHand.length > 0) {
+      newGameState.currentResolution.push({
+        resolution: "Misc.",
+        resolution2: "End Execution Phase Confirm",
+        player: self,
+        details: {
+          reason: "End Execution Phase",
+          title: "End Execution Phase",
+          message:
+            "You have unused Avelhems. Do you still wish to end the Execution Phase?",
+          no: "Cancel",
+          yes: "End Turn",
+        },
+      });
+    } else {
+      return endExecutionPhase2();
+    }
+
+    return newGameState;
+  };
+
+  const endExecutionPhase2 = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
     newGameState.turnPhase = "Final";
     newGameState.currentResolution.pop();
 
@@ -5636,6 +5660,7 @@ export const useRecurringEffects = () => {
     endDefiancePhase,
     endDefiancePhase2,
     endExecutionPhase,
+    endExecutionPhase2,
     enterMoveMode,
     enterSelectUnitMode,
     floatAvelhem,
