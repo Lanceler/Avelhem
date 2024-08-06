@@ -114,7 +114,7 @@ export default function Demo() {
       case "Learn1.145":
       case "Learn1.155":
       case "Learn1.167":
-      case "Learn1.173":
+      case "Learn1.173.1":
       case "Learn1.202":
       case "Learn1.204":
       case "Learn1.263":
@@ -463,7 +463,7 @@ export default function Demo() {
         dispatch(updateDemo("Learn1.173"));
         break;
 
-      case "Learn1.173":
+      case "Learn1.173.1":
         dispatch(updateDemo("Learn1.174"));
         break;
 

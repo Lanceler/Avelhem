@@ -2004,6 +2004,7 @@ export const useDemoGameStates = () => {
 
           case "Learn1.172":
           case "Learn1.173":
+          case "Learn1.173.1":
             return <div>Click on End Turn, then switch perspective.</div>;
 
           case "Learn1.174":

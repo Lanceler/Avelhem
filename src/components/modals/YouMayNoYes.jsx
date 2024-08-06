@@ -458,6 +458,7 @@ const YouMayNoYes = (props) => {
     switch (demoGuide) {
       case "Learn1.101":
       case "Learn1.158":
+      case "Learn1.173":
       case "Learn1.193":
       case "Learn1.194":
       case "Learn1.195":
@@ -496,6 +497,10 @@ const YouMayNoYes = (props) => {
 
       case "Learn1.158":
         dispatch(updateDemo("Learn1.159"));
+        break;
+
+      case "Learn1.173":
+        dispatch(updateDemo("Learn1.173.1"));
         break;
 
       case "Learn1.193":
