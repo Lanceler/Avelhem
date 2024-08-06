@@ -1,5 +1,7 @@
 import React from "react";
 
+import AvelhemLogo from "../assets/others/AvelhemLogo.png";
+
 import FireAvelhem from "../assets/avelhemcards/FireAvelhem.jpg";
 import IgnitionPropulsion from "../assets/skillcards/IgnitionPropulsion.jpg";
 import Conflagration from "../assets/skillcards/Conflagration.jpg";
@@ -161,6 +163,7 @@ import MountainFields from "../assets/banners/MountainFields.jpg";
 
 export const useGetImages = () => {
   const imagesLoadingList = [
+    AvelhemLogo,
     LoadingBanner,
     NightSky,
     // MountainFields,

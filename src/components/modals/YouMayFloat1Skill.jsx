@@ -201,6 +201,8 @@ const YouMayFloat1Skill = (props) => {
           </div>
         </div>
 
+        <br />
+
         <h3>{props.message}</h3>
 
         <br />

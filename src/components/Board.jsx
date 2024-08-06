@@ -399,18 +399,18 @@ const Board = (props) => {
 
     switch (option) {
       case "Info":
-        setUnitInfor(expandedUnit);
+        // setUnitInfor(expandedUnit);
 
         // //for testing: quick movement
 
-        // updateLocalState(
-        //   enterMoveMode(
-        //     getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
-        //     expandedUnit,
-        //     newGameState,
-        //     null
-        //   )
-        // );
+        updateLocalState(
+          enterMoveMode(
+            getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
+            expandedUnit,
+            newGameState,
+            null
+          )
+        );
 
         // //for testing: quick movement
         break;
@@ -1981,6 +1981,26 @@ const Board = (props) => {
                 )}
               </>
             );
+
+          case "Aerial Impetus Float":
+            return (
+              <>
+                {self === lastRes.player && !hideModal && (
+                  <FloatSkill
+                    title="Aerial Impetus"
+                    message={lastRes.message}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Aerial Impetus Select Ally":
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("aerialImpetus2", lastRes.unit));
+            }
+            break;
 
           case "Aerial Impetus Prompt":
             if (self === lastRes.unit.player) {

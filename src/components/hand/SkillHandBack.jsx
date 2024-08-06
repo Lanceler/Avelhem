@@ -21,7 +21,10 @@ const SkillHandBack = (props) => {
   }
 
   const cardImage = (position) => {
-    if (transcendenceCount > Math.min(5, handNum) - position) {
+    if (
+      transcendenceCount > 0 &&
+      transcendenceCount > Math.min(5, handNum) - position
+    ) {
       return `url(${getCardImage("SX-01")})`;
     } else {
       return `url(${getCardImage("SkillCardBack")})`;

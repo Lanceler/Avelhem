@@ -116,9 +116,12 @@ const SelectCustomChoice = (props) => {
       break;
 
     case "Aerial Impetus":
-      canFirstChoice = getZonesAerialImpetusAlly(unit).length > 0;
+      canFirstChoice =
+        getZonesAerialImpetusAlly(unit).length > 0 &&
+        newGameState[unit.player].skillHand.length > 0;
       canSecondChoice = getZonesWithEnemies(unit, 1).length > 0;
-      ChoiceFirstMessage = "Prompt an adjacent ally to traverse.";
+      ChoiceFirstMessage =
+        "Float 1 skill to prompt an adjacent ally to traverse.";
       ChoiceSecondMessage = "Purge an adjacent enemy’s Virtue and Shield.";
       break;
 
@@ -433,17 +436,31 @@ const SelectCustomChoice = (props) => {
         break;
 
       case "Aerial Impetus":
-        updateLocal = false;
+        // updateLocal = false;
         if (selectedChoice === 1) {
-          enterSelectUnitMode(
-            getZonesAerialImpetusAlly(unit),
-            unit,
-            newGameState,
-            null,
-            "aerial impetus prompt",
-            null
-          );
+          // enterSelectUnitMode(
+          //   getZonesAerialImpetusAlly(unit),
+          //   unit,
+          //   newGameState,
+          //   null,
+          //   "aerial impetus prompt",
+          //   null
+          // );
+
+          newGameState.currentResolution.push({
+            resolution: "Wind Skill",
+            resolution2: "Aerial Impetus Select Ally",
+            unit: unit,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Wind Skill",
+            resolution2: "Aerial Impetus Float",
+            player: self,
+            message: "Float 1 skill.",
+          });
         } else {
+          updateLocal = false;
           enterSelectUnitMode(
             getZonesWithEnemies(unit, 1),
             unit,

@@ -88,6 +88,8 @@ const FloatSkill = (props) => {
             </button>
           </div>
         </div>
+
+        <br />
         <h3>{props.message}</h3>
 
         <br />

@@ -17,6 +17,8 @@ export const useSkillEffects = () => {
     canMove,
     canStrike,
     drawSkill,
+    enterSelectUnitMode,
+    getZonesAerialImpetusAlly,
     getZonesWithAllies,
     getZonesWithEnemies,
     getZonesWithEnemiesAfflicted,
@@ -576,6 +578,25 @@ export const useSkillEffects = () => {
         reason: "Aerial Impetus",
       },
     });
+
+    return newGameState;
+  };
+
+  const aerialImpetus2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Aerial Impetus Select Ally" resolution
+    newGameState.currentResolution.pop();
+
+    enterSelectUnitMode(
+      getZonesAerialImpetusAlly(unit),
+      unit,
+      newGameState,
+      null,
+      "aerial impetus prompt",
+      null
+    );
 
     return newGameState;
   };
@@ -2678,6 +2699,8 @@ export const useSkillEffects = () => {
       //Wind
       case "aerialImpetus1":
         return aerialImpetus1(a);
+      case "aerialImpetus2":
+        return aerialImpetus2(a);
       case "aerialImpetus2E":
         return aerialImpetus2E(a);
       case "galeConjuration1":

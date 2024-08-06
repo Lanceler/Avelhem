@@ -2773,7 +2773,10 @@ export const useRecurringEffects = () => {
         return true;
       }
 
-      if (getZonesAerialImpetusAlly(unit).length > 0) {
+      if (
+        getZonesAerialImpetusAlly(unit).length > 0 &&
+        localGameState[self].skillHand.length > 1
+      ) {
         return true;
       }
 
@@ -2827,11 +2830,13 @@ export const useRecurringEffects = () => {
         return false;
       }
 
-      if (localGameState[self].skillHand.length < 2) {
-        return false;
-      }
+      return localGameState[self].skillHand.length > 1;
 
-      return true;
+      // if (localGameState[self].skillHand.length < 2) {
+      //   return false;
+      // }
+
+      // return true;
     };
 
     const canSurge = () => {
