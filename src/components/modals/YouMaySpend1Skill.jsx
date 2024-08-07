@@ -106,7 +106,6 @@ const YouMaySpend1Skill = (props) => {
             specMessage: null,
           },
         });
-
         break;
 
       case "Castle of Thorns2":
@@ -139,10 +138,6 @@ const YouMaySpend1Skill = (props) => {
     newGameState.currentResolution.pop();
 
     switch (props.details.reason) {
-      // case "Cultivate":
-      //   newGameState = drawSkill(newGameState);
-      //   break;
-
       case "Resplendence1":
         newGameState.currentResolution.push({
           resolution: "Fire Skill",
@@ -225,7 +220,6 @@ const YouMaySpend1Skill = (props) => {
           resolution: "Animation Delay",
           priority: unit.player,
         });
-
         break;
 
       case "Efflorescence1":
@@ -276,7 +270,6 @@ const YouMaySpend1Skill = (props) => {
             specMessage: null,
           },
         });
-
         break;
 
       case "Castle of Thorns2":
@@ -287,34 +280,6 @@ const YouMaySpend1Skill = (props) => {
           message: "Recover 1 Plant skill",
           outcome: "Add",
         });
-        break;
-
-      case "Match Made in Heaven":
-        let unit1 =
-          newGameState[props.details.unit1.player].units[
-            props.details.unit1.unitIndex
-          ];
-
-        let unit2 =
-          newGameState[props.details.unit2.player].units[
-            props.details.unit2.unitIndex
-          ];
-
-        unit1.enhancements.ward
-          ? (unit1.enhancements.ward = Math.max(2, unit1.enhancements.ward))
-          : (unit1.enhancements.ward = 2);
-
-        newGameState[props.details.unit1.player].units[
-          props.details.unit1.unitIndex
-        ] = unit1;
-
-        unit2.enhancements.ward
-          ? (unit2.enhancements.ward = Math.max(2, unit2.enhancements.ward))
-          : (unit2.enhancements.ward = 2);
-
-        newGameState[props.details.unit2.player].units[
-          props.details.unit2.unitIndex
-        ] = unit2;
         break;
 
       case "Rooted Traverse":

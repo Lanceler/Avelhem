@@ -30,10 +30,10 @@ const YouMayFloat1Skill = (props) => {
   }
 
   const canBeFloated = (skill) => {
-    if (props.restriction === null) {
+    if (props.details.restriction === null) {
       return true;
     }
-    if (props.restriction.includes(skill)) {
+    if (props.details.restriction.includes(skill)) {
       return true;
     }
     return false;
@@ -49,7 +49,7 @@ const YouMayFloat1Skill = (props) => {
     //end Floating Skill resolution
     newGameState.currentResolution.pop();
 
-    switch (props.reason) {
+    switch (props.details.reason) {
       case "Frigid Breath3":
         newGameState.currentResolution.push({
           resolution: "Water Skill",
@@ -74,6 +74,33 @@ const YouMayFloat1Skill = (props) => {
           },
         });
         break;
+
+      case "Match Made in Heaven":
+        let unit1 =
+          newGameState[props.details.unit1.player].units[
+            props.details.unit1.unitIndex
+          ];
+
+        let unit2 =
+          newGameState[props.details.unit2.player].units[
+            props.details.unit2.unitIndex
+          ];
+
+        unit1.enhancements.ward
+          ? (unit1.enhancements.ward = Math.max(2, unit1.enhancements.ward))
+          : (unit1.enhancements.ward = 2);
+
+        newGameState[props.details.unit1.player].units[
+          props.details.unit1.unitIndex
+        ] = unit1;
+
+        unit2.enhancements.ward
+          ? (unit2.enhancements.ward = Math.max(2, unit2.enhancements.ward))
+          : (unit2.enhancements.ward = 2);
+
+        newGameState[props.details.unit2.player].units[
+          props.details.unit2.unitIndex
+        ] = unit2;
         break;
 
       case "Vengeful Legacy Ravager":
@@ -83,15 +110,13 @@ const YouMayFloat1Skill = (props) => {
 
       case "Advance Deploy Scion":
         //consume tactic
-        newGameState.tactics[props.tactic].stock -= 1;
+        newGameState.tactics[props.details.tactic].stock -= 1;
 
         newGameState.currentResolution.push({
           resolution: "Deploying Scion",
           zoneIds: getVacantFrontier(),
-          scionClass: props.scionClass,
+          scionClass: props.details.scionClass,
         });
-        break;
-
         break;
 
       default:
@@ -193,7 +218,7 @@ const YouMayFloat1Skill = (props) => {
     <div className="modal-backdrop">
       <div className="modal">
         <div className="modalHeader">
-          <div className="modalTitle">{props.title}</div>
+          <div className="modalTitle">{props.details.title}</div>
           <div className="modalButton">
             <button className="redButton" onClick={() => handleViewBoard()}>
               View
@@ -203,7 +228,7 @@ const YouMayFloat1Skill = (props) => {
 
         <br />
 
-        <h3>{props.message}</h3>
+        <h3>{props.details.message}</h3>
 
         <br />
 

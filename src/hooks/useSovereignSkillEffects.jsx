@@ -705,7 +705,7 @@ export const useSovereignSkillEffects = () => {
         details: {
           title: "Match Made in Heaven",
           message:
-            "You may spend 1 skill to grant both of them Ward for 2 turns.",
+            "You may float 1 skill to grant both of them Ward for 2 turns.",
           restriction: null,
           reason: "Match Made in Heaven",
           unit1: unit1,
@@ -731,6 +731,7 @@ export const useSovereignSkillEffects = () => {
     // end "Match Made in Heaven3"
     newGameState.currentResolution.pop();
 
+    newGameState = drawSkill(newGameState);
     newGameState = drawSkill(newGameState);
 
     return newGameState;
@@ -764,9 +765,11 @@ export const useSovereignSkillEffects = () => {
         resolution2: "Vengeful Legacy Ravager",
         title: "Vengeful Legacy",
         unit: unit,
-        reason: "Vengeful Legacy Ravager",
-        restriction: null,
-        message: "You may float 1 skill to grant them Ravager.",
+        details: {
+          reason: "Vengeful Legacy Ravager",
+          restriction: null,
+          message: "You may float 1 skill to grant them Ravager.",
+        },
       });
     }
 

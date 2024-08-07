@@ -318,10 +318,12 @@ export const useUnitAbilityEffects = () => {
         resolution: "Unit Ability",
         resolution2: "Fortify1",
         unit: unit,
-        reason: "Fortify",
-        restriction: null,
-        title: "Fortify",
-        message: "You may float 1 skill to traverse or strike.",
+        details: {
+          reason: "Fortify",
+          restriction: null,
+          title: "Fortify",
+          message: "You may float 1 skill to traverse or strike.",
+        },
       });
     }
 

@@ -396,11 +396,13 @@ export const useSkillEffects = () => {
         resolution: "Water Skill",
         resolution2: "Frigid Breath3",
         unit: unit,
-        reason: "Frigid Breath3",
-        restriction: null,
-        title: "Frigid Breath",
-        message:
-          "You may float 1 skill to freeze an adjacent enemy for 2 turns.",
+        details: {
+          reason: "Frigid Breath3",
+          restriction: null,
+          title: "Frigid Breath",
+          message:
+            "You may float 1 skill to freeze an adjacent enemy for 2 turns.",
+        },
       });
     }
 
@@ -644,10 +646,12 @@ export const useSkillEffects = () => {
         resolution: "Wind Skill",
         resolution2: "Gale Conjuration1",
         unit: unit,
-        title: "Gale Conjuration",
-        message: "You may float 1 skill to restore your Virtue.",
-        restriction: null,
-        reason: "Gale Conjuration1",
+        details: {
+          title: "Gale Conjuration",
+          message: "You may float 1 skill to restore your Virtue.",
+          restriction: null,
+          reason: "Gale Conjuration1",
+        },
       });
     }
 

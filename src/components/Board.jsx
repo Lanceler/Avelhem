@@ -1126,12 +1126,8 @@ const Board = (props) => {
               <>
                 {self === lastRes.player && !hideModal && (
                   <YouMayFloat1Skill
-                    restriction={lastRes.restriction}
-                    title={lastRes.title}
-                    message={lastRes.message}
-                    reason={lastRes.reason}
-                    tactic={lastRes.tactic}
-                    scionClass={lastRes.scionClass}
+                    unit={lastRes.unit}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1449,10 +1445,7 @@ const Board = (props) => {
                 {self === lastRes.unit.player && !hideModal && (
                   <YouMayFloat1Skill
                     unit={lastRes.unit}
-                    restriction={lastRes.restriction}
-                    title={lastRes.title}
-                    message={lastRes.message}
-                    reason={lastRes.reason}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -1852,10 +1845,7 @@ const Board = (props) => {
                 {self === lastRes.unit.player && !hideModal && (
                   <YouMayFloat1Skill
                     unit={lastRes.unit}
-                    restriction={lastRes.restriction}
-                    title={lastRes.title}
-                    message={lastRes.message}
-                    reason={lastRes.reason}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2060,10 +2050,7 @@ const Board = (props) => {
                 {self === lastRes.unit.player && !hideModal && (
                   <YouMayFloat1Skill
                     unit={lastRes.unit}
-                    restriction={lastRes.restriction}
-                    title={lastRes.title}
-                    message={lastRes.message}
-                    reason={lastRes.reason}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3652,7 +3639,7 @@ const Board = (props) => {
             return (
               <>
                 {self === lastRes.player && !hideModal && (
-                  <YouMaySpend1Skill
+                  <YouMayFloat1Skill
                     unit={lastRes.unit}
                     details={lastRes.details}
                     updateFirebase={updateFirebase}
@@ -3686,10 +3673,7 @@ const Board = (props) => {
                 {self === lastRes.unit.player && !hideModal && (
                   <YouMayFloat1Skill
                     unit={lastRes.unit}
-                    restriction={lastRes.restriction}
-                    title={lastRes.title}
-                    message={lastRes.message}
-                    reason={lastRes.reason}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />

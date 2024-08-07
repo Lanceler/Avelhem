@@ -2704,7 +2704,7 @@ export const useDemoGameStates = () => {
           case "Fire1.34":
           case "Fire1.35":
           case "Fire1.36":
-            return "15. Switch player, then prompt the Fire Scion to activate their contingent skill: Blaze of Glory, which is triggered when a Fire Scion is targeted by an attack. Ignite the Metal Scion, then draw 1 skill when given the option.";
+            return "15. Switch player, then prompt the Fire Scion to activate their contingent skill: Blaze of Glory, which is triggered when a Fire Scion is targeted by an attack. Ignite the Metal Scion, then draw 2 skills when given the option.";
 
           case "Fire1.36.1":
           case "Fire1.37":

@@ -128,15 +128,17 @@ const SelectElement = (props) => {
         newGameState.currentResolution.push({
           resolution: "Misc.",
           resolution2: "Advance Deploy Scion: Float Skill",
-          reason: "Advance Deploy Scion",
           player: self,
-          restriction: null,
-          title: "Deploy Scion",
-          tactic: props.details.tactic,
-          scionClass: selectedChoice,
-          message: `Float 1 skill to deploy ${
-            ["A", "E", "I", "O", "U"].includes(selectedChoice[1]) ? "an" : "a"
-          } ${selectedChoice} in your frontier.`,
+          details: {
+            reason: "Advance Deploy Scion",
+            restriction: null,
+            title: "Deploy Scion",
+            tactic: props.details.tactic,
+            scionClass: selectedChoice,
+            message: `Float 1 skill to deploy ${
+              ["A", "E", "I", "O", "U"].includes(selectedChoice[1]) ? "an" : "a"
+            } ${selectedChoice} in your frontier.`,
+          },
         });
         break;
 
