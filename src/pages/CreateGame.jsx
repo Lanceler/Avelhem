@@ -106,6 +106,7 @@ export default function MyGames() {
         const createdGamesRef = collection(db, "gameInfo");
         const gameRef = await addDoc(createdGamesRef, {
           date: createTime,
+          version: "0.0.1",
           hostId: user.uid,
           hostName: user.displayName,
           guestId: null,
@@ -128,8 +129,6 @@ export default function MyGames() {
             winner: null,
           },
         });
-
-        console.log(gameRef.id);
 
         const gameDoc = doc(db, "gameInfo", gameRef.id);
 

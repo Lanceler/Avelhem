@@ -18,7 +18,7 @@ const SelectedAvelhem = (props) => {
   const { getCardImage } = useGetImages();
   const { getScionSet } = useCardDatabase();
 
-  const { activateAvelhem, avelhemToScion, canAscend, isMuted } =
+  const { activateAvelhem, activateAvelhemRecover, avelhemToScion, canAscend } =
     useRecurringEffects();
 
   const scionClass = avelhemToScion(props.selectedAvelhem.avelhem);
@@ -29,16 +29,9 @@ const SelectedAvelhem = (props) => {
       localGameState.currentResolution.length - 1
     ].resolution === "Execution Phase";
 
-  // const canSearch =
-  //   yourTurn &&
-  //   localGameState[self].bountyUpgrades.avelhem >= 2 &&
-  //   // !localGameState[self].hasAvelhemSearch &&
-  //   localGameState[self].fateDefiances >= 3;
-
   const canRecover =
     yourTurn &&
     localGameState[self].bountyUpgrades.avelhem >= 3 &&
-    // !localGameState[self].hasAvelhemRecover &&
     localGameState[self].fateDefiances >= 3 &&
     getScionSet(scionClass).some((s) =>
       localGameState[self].skillVestige.includes(s)
@@ -46,67 +39,6 @@ const SelectedAvelhem = (props) => {
 
   const canActivateAvelhem =
     yourTurn && canAscend(localGameState, self, scionClass);
-
-  const handleRecover = () => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    //Remove Avelhem from hand AND send to vestige
-    newGameState[self].avelhemVestige.push(
-      newGameState[self].avelhemHand.splice(
-        props.selectedAvelhem.handIndex,
-        1
-      )[0]
-    );
-
-    newGameState[self].hasAvelhemRecover = true;
-    newGameState[self].fateDefiances -= 3;
-
-    newGameState.currentResolution.push({
-      resolution: "Recover Skill",
-      player: self,
-      restriction: getScionSet(scionClass),
-      message: `Recover 1 ${scionClass.replace(" Scion", "")} skill.`,
-      outcome: "Add",
-    });
-
-    dispatch(updateState(newGameState));
-    props.updateFirebase(newGameState);
-
-    props.setRaise(false);
-    props.setSelectedAvelhem(null);
-  };
-
-  // const handleSearch = () => {
-  //   let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-  //   //Remove Avelhem from hand AND send to vestige
-  //   newGameState[self].avelhemVestige.push(
-  //     newGameState[self].avelhemHand.splice(
-  //       props.selectedAvelhem.handIndex,
-  //       1
-  //     )[0]
-  //   );
-
-  //   newGameState[self].hasAvelhemSearch = true;
-  //   newGameState[self].fateDefiances -= 3;
-
-  //   newGameState.currentResolution.push({
-  //     resolution: "Search Skill",
-  //     player: self,
-  //     restriction: getScionSet(scionClass).filter((s) => s[4] !== "4"),
-  //     message: `Search for 1 non-burst ${scionClass.replace(
-  //       " Scion",
-  //       ""
-  //     )} skill.`,
-  //     outcome: "Add",
-  //   });
-
-  //   dispatch(updateState(newGameState));
-  //   props.updateFirebase(newGameState);
-
-  //   props.setRaise(false);
-  //   props.setSelectedAvelhem(null);
-  // };
 
   const handleActivate = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
@@ -142,6 +74,22 @@ const SelectedAvelhem = (props) => {
     props.setSelectedAvelhem(null);
 
     dispatch(updateState(newGameState));
+  };
+
+  const handleRecover = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    newGameState[self].avelhemHand.splice(props.selectedAvelhem.handIndex, 1);
+
+    newGameState = activateAvelhemRecover(
+      newGameState,
+      props.selectedAvelhem.avelhem
+    );
+
+    dispatch(updateState(newGameState));
+    props.updateFirebase(newGameState);
+
+    props.setRaise(false);
+    props.setSelectedAvelhem(null);
   };
 
   const canClick = (element) => {
@@ -212,7 +160,7 @@ const SelectedAvelhem = (props) => {
                 className="redButton selectedCardModal-buttons"
                 onClick={() => handleRecover()}
               >
-                Recover (3 FD)
+                Recover
               </button>
             </>
           )}

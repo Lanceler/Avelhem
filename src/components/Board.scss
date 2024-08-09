@@ -32,7 +32,7 @@
 .board-space {
     display: flex;
     align-items: center;
-    border: 6px groove goldenrod;
+    border: 6px ridge goldenrod;
     height: 890px;
     width: 1450px;
     padding-top: 10px;
@@ -97,7 +97,7 @@
 }
 
 .board-center .board-frame {
-    border: 3.5px groove goldenrod;
+    border: 3.5px ridge goldenrod;
     height: fit-content;
     width: fit-content;
     position: relative;

@@ -3,10 +3,14 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../redux/gameState";
 
+import { useCardDatabase } from "./useCardDatabase";
+
 export const useRecurringEffects = () => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
+
+  const { getScionSet } = useCardDatabase();
 
   const [zones, setZones] = useState(null);
 
@@ -89,6 +93,38 @@ export const useRecurringEffects = () => {
     }
 
     //newGameState.activatingUnit.push(null);
+
+    newGameState.currentResolution.push({
+      resolution: "Animation Delay",
+      priority: self,
+    });
+
+    return newGameState;
+  };
+
+  const activateAvelhemRecover = (newGameState, avelhem) => {
+    //newGameState.currentResolution.pop() <--not needed
+
+    newGameState[self].fateDefiances -= 3;
+
+    const scionClass = avelhemToScion(avelhem);
+
+    newGameState.currentResolution.push({
+      resolution: "Avelhem Conclusion",
+      player: self,
+      avelhem: avelhem,
+      conclusion: "discard",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Recover Skill",
+      player: self,
+      restriction: getScionSet(scionClass),
+      message: `Recover 1 ${scionClass.replace(" Scion", "")} skill`,
+      outcome: "Add",
+    });
+
+    newGameState.activatingSkill.push(avelhem + "Alt");
 
     newGameState.currentResolution.push({
       resolution: "Animation Delay",
@@ -2496,7 +2532,7 @@ export const useRecurringEffects = () => {
 
     switch (method) {
       case "Avelhem":
-        if (newGameState[unit.player].bountyUpgrades.avelhem >= 2)
+        if (newGameState[unit.player].bountyUpgrades.avelhem > 0)
           unit.enhancements.shield
             ? (unit.enhancements.shield = Math.max(2, unit.enhancements.shield))
             : (unit.enhancements.shield = 2);
@@ -3071,7 +3107,7 @@ export const useRecurringEffects = () => {
         return hasTactic(["Invoke"]);
 
       case "SB-04": // Fervent Prayer
-        return localGameState[self].fateDefiances >= 3;
+        return localGameState[self].fateDefiances >= 2;
 
       case "SB-05": // Press the Attack
         return canPressTheAttack();
@@ -3668,7 +3704,7 @@ export const useRecurringEffects = () => {
     //However, you can retain 1 if purchased the Avelhem upgrade.
     if (
       newGameState[self].avelhemHand.length > 0 &&
-      newGameState[self].bountyUpgrades.avelhem > 0
+      newGameState[self].bountyUpgrades.avelhem > 1
     ) {
       newGameState.currentResolution.push({
         resolution: "Final Phase",
@@ -5614,6 +5650,7 @@ export const useRecurringEffects = () => {
   return {
     activateAegis,
     activateAvelhem,
+    activateAvelhemRecover,
     activateBlackBusinessCard,
     activateBlazeOfGlory,
     activateHealingRain,

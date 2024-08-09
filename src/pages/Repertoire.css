@@ -43,7 +43,7 @@
     padding: 10px 30px 5px;
     
     border-radius: 0px;
-    border: 5px groove rgb(236, 180, 36);
+    border: 5px ridge rgb(236, 180, 36);
 
     background-image: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
 
@@ -140,7 +140,7 @@
 .repertoire-division {
     background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
     border-radius: 0px;
-    border: 5px groove rgb(236, 180, 36);
+    border: 5px ridge rgb(236, 180, 36);
     box-shadow: 3px 3px 4px 2px rgba(0, 0, 0, 0.50);
 
     margin: 20px;
@@ -294,7 +294,7 @@
         margin: 1px;
         padding: 10px 30px 15px;
         border-radius: 0px;
-        border: 4px groove rgb(236, 180, 36);
+        border: 4px ridge rgb(236, 180, 36);
     }
 
     .repertoire-input-name{
@@ -307,7 +307,7 @@
     }
 
     .repertoire-division {
-        border: 4px groove rgb(236, 180, 36);
+        border: 4px ridge rgb(236, 180, 36);
         width: 90vw;
 
         margin: 8px;

@@ -36,7 +36,6 @@ const CoordinationPhaseSelection = (props) => {
         </>
       ),
     },
-
     {
       abilityName: "Battle Cry",
       abilityText: (
@@ -52,7 +51,6 @@ const CoordinationPhaseSelection = (props) => {
         </>
       ),
     },
-
     {
       abilityName: "Convene",
       abilityText: (

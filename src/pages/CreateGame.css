@@ -54,7 +54,7 @@
     background-position: center;
 
 
-    border: 12px groove rgb(236, 180, 36);
+    border: 12px ridge rgb(236, 180, 36);
     box-shadow: 4px 4px 15px 4px rgba(0, 0, 0, 0.45);
 
     /* background-color: brown; */
@@ -154,7 +154,7 @@
         margin-right: 0;
         width: 80%;
         height: 500px;
-        border: 6px groove rgb(236, 180, 36);
+        border: 6px ridge rgb(236, 180, 36);
     }
 
     .create-game-elemental{
@@ -194,7 +194,7 @@
         margin: 10px auto;
         height: 275px;
         width: 90vw;
-        border: 6px groove rgb(247, 195, 63);
+        border: 6px ridge rgb(247, 195, 63);
     }
 
     .create-game-elemental {

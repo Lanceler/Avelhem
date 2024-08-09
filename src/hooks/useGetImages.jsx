@@ -3,48 +3,56 @@ import React from "react";
 import AvelhemLogo from "../assets/others/AvelhemLogo.png";
 
 import FireAvelhem from "../assets/avelhemcards/FireAvelhem.jpg";
+import FireAvelhemRecover from "../assets/avelhemcards/FireAvelhemRecover.jpg";
 import IgnitionPropulsion from "../assets/skillcards/IgnitionPropulsion.jpg";
 import Conflagration from "../assets/skillcards/Conflagration.jpg";
 import BlazeOfGlory from "../assets/skillcards/BlazeOfGlory.jpg";
 import Resplendence from "../assets/skillcards/Resplendence.jpg";
 
 import WaterAvelhem from "../assets/avelhemcards/WaterAvelhem.jpg";
+import WaterAvelhemRecover from "../assets/avelhemcards/WaterAvelhemRecover.jpg";
 import Purification from "../assets/skillcards/Purification.jpg";
 import FrigidBreath from "../assets/skillcards/FrigidBreath.jpg";
 import HealingRain from "../assets/skillcards/HealingRain.jpg";
 import GlacialTorrent from "../assets/skillcards/GlacialTorrent.jpg";
 
 import WindAvelhem from "../assets/avelhemcards/WindAvelhem.jpg";
+import WindAvelhemRecover from "../assets/avelhemcards/WindAvelhemRecover.jpg";
 import AerialImpetus from "../assets/skillcards/AerialImpetus.jpg";
 import GaleConjuration from "../assets/skillcards/GaleConjuration.jpg";
 import SymphonicScreech from "../assets/skillcards/SymphonicScreech.jpg";
 import CataclysmicTempest from "../assets/skillcards/CataclysmicTempest.jpg";
 
 import LandAvelhem from "../assets/avelhemcards/LandAvelhem.jpg";
+import LandAvelhemRecover from "../assets/avelhemcards/LandAvelhemRecover.jpg";
 import Crystallization from "../assets/skillcards/Crystallization.jpg";
 import Upheaval from "../assets/skillcards/Upheaval.jpg";
 import PitfallTrap from "../assets/skillcards/PitfallTrap.jpg";
 import Geomancy from "../assets/skillcards/Geomancy.jpg";
 
 import LightningAvelhem from "../assets/avelhemcards/LightningAvelhem.jpg";
+import LightningAvelhemRecover from "../assets/avelhemcards/LightningAvelhemRecover.jpg";
 import ChainLightning from "../assets/skillcards/ChainLightning.jpg";
 import ZipAndZap from "../assets/skillcards/ZipAndZap.jpg";
 import ThunderThaumaturge from "../assets/skillcards/ThunderThaumaturge.jpg";
 import ValiantSpark from "../assets/skillcards/ValiantSpark.jpg";
 
 import ManaAvelhem from "../assets/avelhemcards/ManaAvelhem.jpg";
+import ManaAvelhemRecover from "../assets/avelhemcards/ManaAvelhemRecover.jpg";
 import Surge from "../assets/skillcards/Surge.jpg";
 import Diffusion from "../assets/skillcards/Diffusion.jpg";
 import Aegis from "../assets/skillcards/Aegis.jpg";
 import DisruptionField from "../assets/skillcards/DisruptionField.jpg";
 
 import MetalAvelhem from "../assets/avelhemcards/MetalAvelhem.jpg";
+import MetalAvelhemRecover from "../assets/avelhemcards/MetalAvelhemRecover.jpg";
 import MagneticShockwave from "../assets/skillcards/MagneticShockwave.jpg";
 import Reinforce from "../assets/skillcards/Reinforce.jpg";
 import FrenzyBlade from "../assets/skillcards/FrenzyBlade.jpg";
 import ArsenalOnslaught from "../assets/skillcards/ArsenalOnslaught.jpg";
 
 import PlantAvelhem from "../assets/avelhemcards/PlantAvelhem.jpg";
+import PlantAvelhemRecover from "../assets/avelhemcards/PlantAvelhemRecover.jpg";
 import SowAndReap from "../assets/skillcards/SowAndReap.jpg";
 import Efflorescence from "../assets/skillcards/Efflorescence.jpg";
 import ViridianGrave from "../assets/skillcards/ViridianGrave.jpg";
@@ -396,6 +404,8 @@ export const useGetImages = () => {
 
       case 1:
         return FireAvelhem;
+      case "1Alt":
+        return FireAvelhemRecover;
       case "01-01":
         return IgnitionPropulsion;
       case "01-02":
@@ -413,6 +423,8 @@ export const useGetImages = () => {
 
       case 2:
         return WaterAvelhem;
+      case "2Alt":
+        return WaterAvelhemRecover;
       case "02-01":
         return Purification;
       case "02-02":
@@ -430,6 +442,8 @@ export const useGetImages = () => {
 
       case 3:
         return WindAvelhem;
+      case "3Alt":
+        return WindAvelhemRecover;
       case "03-01":
         return AerialImpetus;
       case "03-02":
@@ -447,6 +461,8 @@ export const useGetImages = () => {
 
       case 4:
         return LandAvelhem;
+      case "4Alt":
+        return LandAvelhemRecover;
       case "04-01":
         return Crystallization;
       case "04-02":
@@ -462,6 +478,8 @@ export const useGetImages = () => {
 
       case 5:
         return LightningAvelhem;
+      case "5Alt":
+        return LightningAvelhemRecover;
       case "05-01":
         return ChainLightning;
       case "05-02":
@@ -479,6 +497,8 @@ export const useGetImages = () => {
 
       case 6:
         return ManaAvelhem;
+      case "6Alt":
+        return ManaAvelhemRecover;
       case "06-01":
         return Surge;
       case "06-02":
@@ -494,6 +514,8 @@ export const useGetImages = () => {
 
       case 7:
         return MetalAvelhem;
+      case "7Alt":
+        return MetalAvelhemRecover;
       case "07-01":
         return MagneticShockwave;
       case "07-02":
@@ -511,6 +533,8 @@ export const useGetImages = () => {
 
       case 8:
         return PlantAvelhem;
+      case "8Alt":
+        return PlantAvelhemRecover;
       case "08-01":
         return SowAndReap;
       case "08-02":

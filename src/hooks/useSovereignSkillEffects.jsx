@@ -348,7 +348,7 @@ export const useSovereignSkillEffects = () => {
     //end "Activating Fervent Prayer" resolution
     newGameState.currentResolution.pop();
 
-    newGameState[self].fateDefiances -= 3;
+    newGameState[self].fateDefiances -= 2;
 
     let count = 2;
     if (resonator) {

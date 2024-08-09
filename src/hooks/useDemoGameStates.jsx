@@ -1433,7 +1433,7 @@ export const useDemoGameStates = () => {
                 is the standard skill of their class. This is similar to the
                 Mountain Stance talent of Land Scions, but there are some
                 differences. First, Conduction is not modular; it has no
-                alternative effect.
+                alternate effect.
               </div>
             );
 

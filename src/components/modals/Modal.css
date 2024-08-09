@@ -220,7 +220,7 @@
     margin: 0 5px 0 5px;
     width: fit-content;
     height: fit-content;
-    border: 8px groove goldenrod;
+    border: 8px ridge goldenrod;
     background-image: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
     box-shadow: 4px 4px 6px 4px rgba(0, 0, 0, 0.50);
 }
@@ -678,21 +678,21 @@
     width: 250px;
     display: flex;
     flex-direction: column;
-    border: 7.5px groove rgb(247, 200, 84);
+    border: 7.5px ridge rgb(247, 200, 84);
 }
 
 
 .modal-option-content-2 {
     height: 170px;
     width: 245.5px;
-    border: 6.5px groove rgb(247, 200, 84);
+    border: 6.5px ridge rgb(247, 200, 84);
 }
 
 
 .modal-option-content-3 {
     height: 180px;
     width: 190px;
-    border: 6.5px groove rgb(247, 200, 84);
+    border: 6.5px ridge rgb(247, 200, 84);
 }
 
 
@@ -799,7 +799,7 @@
     height: 60px;
     fill: rgb(151, 8, 11);
     border-radius: 100%;
-    border: 2px goldenrod groove;
+    border: 2px goldenrod ridge;
     box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.50);
     cursor: pointer;
 }
@@ -816,7 +816,7 @@
     margin: 100px auto;
     background: rgba(255, 255, 255, 0.875);
     border-radius: 10px;
-    border: goldenrod 8px groove;
+    border: goldenrod 8px ridge;
     display: flex;
     flex-direction: column;
     pointer-events: all;

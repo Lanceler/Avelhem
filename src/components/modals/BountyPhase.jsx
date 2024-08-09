@@ -631,7 +631,8 @@ const BountyPhase = (props) => {
                 >
                   <div className="modalBountyContents">
                     <h4 className="modalChoiceText modalBountyText">
-                      Your hand can retain up to 1 Avelhem at the Final Phase
+                      When your pawns ascend via an Avelhem, grant them Shield
+                      for 2 turns
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
                       {localGameState[self].bountyUpgrades.avelhem > 0
@@ -656,8 +657,7 @@ const BountyPhase = (props) => {
                   <div className="modalBountyContents">
                     <h4 className="modalChoiceText modalBountyText">
                       <p>
-                        When your pawns ascend via an Avelhem, grant them Shield
-                        for 2 turns
+                        Your hand can retain up to 1 Avelhem at the Final Phase
                       </p>
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">

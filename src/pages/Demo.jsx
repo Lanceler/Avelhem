@@ -66,7 +66,6 @@ export default function Demo() {
           setCurrentPlayer("host");
           setDemoTitle("Gameplay Demo");
           dispatch(updateDemo(null));
-
           break;
 
         case "learn":
@@ -86,7 +85,6 @@ export default function Demo() {
               Target: true,
             })
           );
-
           break;
 
         case "fire":

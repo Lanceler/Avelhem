@@ -63,7 +63,7 @@
     font-size: 45px;
     color: goldenrod;
     
-    border: 6px groove goldenrod;
+    border: 6px ridge goldenrod;
     border-radius: 8px;
     
     background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
@@ -91,7 +91,7 @@
         padding: 6px 15px;
         font-size: 45px;
         color: goldenrod;
-        border: 4px groove goldenrod;
+        border: 4px ridge goldenrod;
     }
 }
 
@@ -104,6 +104,6 @@
         padding: 4px 12px;
         font-size: 30px;
         color: goldenrod;
-        border: 3px groove goldenrod;
+        border: 3px ridge goldenrod;
     }
 }
