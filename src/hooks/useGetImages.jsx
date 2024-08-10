@@ -102,6 +102,7 @@ import ArcFlash from "../assets/abilities/ArcFlash.jpg";
 import LightningRod from "../assets/abilities/LightningRod.jpg";
 import ParticleBeam from "../assets/abilities/ParticleBeam.jpg";
 import AmbianceAssimilation from "../assets/abilities/AmbianceAssimilation.jpg";
+import ManaFeedback from "../assets/abilities/ManaFeedback.jpg";
 import Brandish from "../assets/abilities/Brandish.jpg";
 import Conduction from "../assets/abilities/Conduction.jpg";
 import AdamantArmor from "../assets/abilities/AdamantArmor.jpg";
@@ -511,6 +512,8 @@ export const useGetImages = () => {
         return ParticleBeam;
       case "AmbianceAssimilation":
         return AmbianceAssimilation;
+      case "ManaFeedback":
+        return ManaFeedback;
 
       case 7:
         return MetalAvelhem;

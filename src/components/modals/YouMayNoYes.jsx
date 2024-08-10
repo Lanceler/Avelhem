@@ -33,8 +33,8 @@ const YouMayNoYes = (props) => {
   let updateData = false;
   if (
     [
+      "Mana Feedback",
       "Mitigate Virtue-Blast",
-      "Mana Restructure",
       "Fervent Prayer",
       "Press the Attack Avelhem",
     ].includes(props.details.reason)
@@ -53,10 +53,6 @@ const YouMayNoYes = (props) => {
 
     if (props.details.reason === "Advance Avelhem Draw") {
       newGameState.currentResolution.pop();
-    }
-
-    if (props.details.reason === "Mana Restructure") {
-      newGameState[self].skillVestige.push(props.details.skill);
     }
 
     dispatch(updateState(newGameState));
@@ -328,25 +324,9 @@ const YouMayNoYes = (props) => {
             specMessage: null,
           },
         });
-
         break;
 
-      case "Mana Restructure":
-        newGameState[self].skillRepertoire.push(props.details.skill);
-        newGameState[self].skillFloat += 1;
-
-        newGameState.currentResolution.push({
-          resolution: "Misc.",
-          resolution2: "Message To Player",
-          player: enemy,
-          title: "Mana Restructure",
-          message: "Your opponent has floated 1 Mana skill from their hand.",
-          specMessage: `${
-            self === "host" ? "Gold" : "Silver"
-          } Sovereign has floated 1 Mana skill from their hand.`,
-        });
-        break;
-
+      case "Mana Feedback": //Activating Mana Restructure
       case "Everblooming": //"Activating Everblooming"
         newGameState = drawSkill(newGameState);
         break;
@@ -549,6 +529,8 @@ const YouMayNoYes = (props) => {
             </button>
           </div>
         </div>
+
+        <br />
 
         <h3 style={{ maxWidth: 700 }}>{props.details.message}</h3>
         <br />

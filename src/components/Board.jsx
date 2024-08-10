@@ -399,18 +399,18 @@ const Board = (props) => {
 
     switch (option) {
       case "Info":
-        setUnitInfor(expandedUnit);
+        // setUnitInfor(expandedUnit);
 
         // //for testing: quick movement
 
-        // updateLocalState(
-        //   enterMoveMode(
-        //     getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
-        //     expandedUnit,
-        //     newGameState,
-        //     null
-        //   )
-        // );
+        updateLocalState(
+          enterMoveMode(
+            getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
+            expandedUnit,
+            newGameState,
+            null
+          )
+        );
 
         // //for testing: quick movement
         break;
@@ -581,9 +581,10 @@ const Board = (props) => {
 
     switch (lastRes.resolution) {
       case "Animation Delay":
-        if (self === lastRes.priority) {
-          animationDelay();
-        }
+        animationDelay();
+        // if (self === lastRes.priority) {
+        //   animationDelay();
+        // }
         break;
 
       case "Acquisition Phase Selection":
@@ -1614,6 +1615,7 @@ const Board = (props) => {
             );
 
           case "Activating Ambiance Assimilation":
+          case "Activating Mana Feedback":
           case "Activating Conduction":
           case "Activating Everblooming":
             return (
@@ -3833,20 +3835,6 @@ const Board = (props) => {
                 updateFirebase={updateFirebase}
                 activator={lastRes.activator}
                 screech={lastRes.screech}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
-      case "Mana Restructure":
-        return (
-          <>
-            {self === lastRes.unit.player && !hideModal && (
-              <YouMayNoYes
-                unit={lastRes.unit}
-                details={lastRes.details}
-                updateFirebase={updateFirebase}
                 hideOrRevealModale={hideOrRevealModale}
               />
             )}

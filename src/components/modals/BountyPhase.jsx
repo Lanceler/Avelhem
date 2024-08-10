@@ -631,8 +631,8 @@ const BountyPhase = (props) => {
                 >
                   <div className="modalBountyContents">
                     <h4 className="modalChoiceText modalBountyText">
-                      When your pawns ascend via an Avelhem, grant them Shield
-                      for 2 turns
+                      When your pawns ascend via Avelhem, grant them Shield for
+                      2 turns
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
                       {localGameState[self].bountyUpgrades.avelhem > 0
@@ -684,7 +684,7 @@ const BountyPhase = (props) => {
                     <h4 className="modalChoiceText modalBountyText">
                       <p style={{ fontSize: 20 }}>
                         Unlock Avelhem alternate effect: Spend 3 FD to recover 1
-                        skill with the matching aspect.
+                        skill with the matching aspect
                       </p>
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">

@@ -332,10 +332,9 @@ const UnitInfo = (props) => {
               ⬩Upon your elimination, you may search for 1 non-burst Mana skill.
             </p>
 
-            <p className="unitInfo-text-heading2">2. Mana Restructure</p>
+            <p className="unitInfo-text-heading2">2. Mana Feedback</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩When you and your adjacent allies spend a Mana skill, you may
-              recover then float it.
+              ⬩When an enemy survives your attack, you may draw 1 skill.
             </p>
           </>
         );

@@ -2207,7 +2207,7 @@ export const useRecurringEffects = () => {
         break;
     }
 
-    //survival or elimination
+    //survival
     if (newGameState[victim.player].units[victim.unitIndex].hp > 0) {
       const pushSurvivalResolution = (
         resolution2,
@@ -2261,7 +2261,32 @@ export const useRecurringEffects = () => {
           );
         }
       }
+
+      //Mana feedback
+      if (attacker.unitClass === "Mana Scion" && !isMuted(attacker)) {
+        newGameState.activatingUnit.push(attacker);
+        newGameState.activatingSkill.push("ManaFeedback");
+        newGameState.currentResolution.push({
+          resolution: "Unit Talent",
+          resolution2: "Talent Conclusion",
+          unit: attacker,
+        });
+
+        newGameState.currentResolution.push({
+          resolution: "Unit Talent",
+          resolution2: "Activating Mana Feedback",
+          unit: attacker,
+          details: {
+            reason: "Mana Feedback",
+            title: "Mana Feedback",
+            message: "You may draw 1 skill.",
+            no: "Skip",
+            yes: "Draw",
+          },
+        });
+      }
     } else {
+      //elimination
       newGameState = eliminateUnit(
         newGameState,
         attacker,

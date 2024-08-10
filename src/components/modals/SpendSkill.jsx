@@ -84,57 +84,13 @@ const SpendSkill = (props) => {
     //end Discarding Skill resolution
     newGameState.currentResolution.pop();
 
-    const isAdjacentToManaScion = (unitInfo) => {
-      const zones = JSON.parse(localGameState.zones);
-      const adjacentAllies = getZonesWithAllies(unitInfo, 1, true); // includes self
-
-      for (let i of adjacentAllies) {
-        const zone = zones[Math.floor(i / 5)][i % 5];
-        const unit = localGameState[zone.player].units[zone.unitIndex];
-
-        if (unit.unitClass === "Mana Scion" && !isMuted(unit)) {
-          return true;
-        }
-      }
-
-      return false;
-    };
-
-    // Mana Scion talent: Mana Scions and their adjacent allies
-    // may float Mana skills when spending them
-    if (
-      unit &&
-      ["06-01", "06-02", "06-03", "06-04"].includes(
-        usableSkills[selectedSkill].id
-      ) &&
-      isAdjacentToManaScion(props.unit)
-    ) {
-      newGameState.currentResolution.push({
-        resolution: "Mana Restructure",
-        // player: self,
-        unit: unit,
-        details: {
-          reason: "Mana Restructure",
-          title: "Mana Restructure",
-          message:
-            "When a Mana Scion or their adjacent ally spends a Mana skill, they may float it instead.",
-          no: "Discard",
-          yes: "Float",
-          skill: newGameState[self].skillHand.splice(
-            usableSkills[selectedSkill].handIndex,
-            1
-          )[0],
-        },
-      });
-    } else {
-      //send selected skill to vestige
-      newGameState[self].skillVestige.push(
-        newGameState[self].skillHand.splice(
-          usableSkills[selectedSkill].handIndex,
-          1
-        )[0]
-      );
-    }
+    //send selected skill to vestige
+    newGameState[self].skillVestige.push(
+      newGameState[self].skillHand.splice(
+        usableSkills[selectedSkill].handIndex,
+        1
+      )[0]
+    );
 
     dispatch(updateState(newGameState));
     props.updateFirebase(newGameState);
