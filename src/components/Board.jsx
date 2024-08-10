@@ -236,6 +236,7 @@ const Board = (props) => {
     arcFlash2,
     particleBeam1,
     particleBeam2,
+    auraAmplication1,
     brandish1,
     flourish1,
     flourish2,
@@ -399,18 +400,18 @@ const Board = (props) => {
 
     switch (option) {
       case "Info":
-        // setUnitInfor(expandedUnit);
+        setUnitInfor(expandedUnit);
 
         // //for testing: quick movement
 
-        updateLocalState(
-          enterMoveMode(
-            getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
-            expandedUnit,
-            newGameState,
-            null
-          )
-        );
+        // updateLocalState(
+        //   enterMoveMode(
+        //     getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
+        //     expandedUnit,
+        //     newGameState,
+        //     null
+        //   )
+        // );
 
         // //for testing: quick movement
         break;
@@ -1540,6 +1541,12 @@ const Board = (props) => {
             }
             break;
 
+          case "Activating Aura Amplification":
+            if (self === lastRes.unit.player) {
+              updateLocalState(auraAmplication1(lastRes.unit));
+            }
+            break;
+
           case "Activating Brandish":
             if (self === lastRes.unit.player) {
               updateLocalState(brandish1(lastRes.unit));
@@ -2652,11 +2659,26 @@ const Board = (props) => {
               </>
             );
 
+          // case "Surge2":
+          //   return (
+          //     <>
+          //       {self === lastRes.unit.player && !hideModal && (
+          //         <SelectCustomChoice
+          //           unit={lastRes.unit}
+          //           details={lastRes.details}
+          //           setMovingSpecial={setMovingSpecial}
+          //           updateFirebase={updateFirebase}
+          //           hideOrRevealModale={hideOrRevealModale}
+          //         />
+          //       )}
+          //     </>
+          //   );
+
           case "Surge2":
             return (
               <>
                 {self === lastRes.unit.player && !hideModal && (
-                  <SelectCustomChoice
+                  <YouMayNoYes
                     unit={lastRes.unit}
                     details={lastRes.details}
                     setMovingSpecial={setMovingSpecial}
@@ -2668,6 +2690,12 @@ const Board = (props) => {
             );
 
           case "Surge3":
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("surge2", lastRes.unit));
+            }
+            break;
+
+          case "Surge4":
             return (
               <>
                 {self === lastRes.unit.player && !hideModal && (
@@ -4415,6 +4443,29 @@ const Board = (props) => {
 
       case "aegis":
         newGameState = activateAegis(newGameState, selectedUnit, unit);
+        break;
+
+      case "aura amplification":
+        newGameState[selectedUnit.player].units[
+          selectedUnit.unitIndex
+        ].virtue = 0;
+
+        if (
+          newGameState[selectedUnit.player].units[selectedUnit.unitIndex]
+            .enhancements.shield > 0
+        ) {
+          newGameState[selectedUnit.player].units[
+            selectedUnit.unitIndex
+          ].enhancements.shield = Math.max(
+            newGameState[selectedUnit.player].units[selectedUnit.unitIndex]
+              .enhancements.shield,
+            2
+          );
+        } else {
+          newGameState[selectedUnit.player].units[
+            selectedUnit.unitIndex
+          ].enhancements.shield = 2;
+        }
         break;
 
       case "frenzy blade":

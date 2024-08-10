@@ -3189,6 +3189,26 @@ export const useRecurringEffects = () => {
     return unmutedPawns > 0 && scionCount < 2;
   };
 
+  const canAuraAmplification = (unit) => {
+    if (unit.virtue) {
+      return true;
+    }
+
+    const adjacentAllies = getZonesWithAllies(unit, 1, false);
+    const zones = JSON.parse(localGameState.zones);
+
+    for (let i of adjacentAllies) {
+      const zone = zones[Math.floor(i / 5)][i % 5];
+      const ally = localGameState[zone.player].units[zone.unitIndex];
+
+      if (ally.virtue) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
   const canBlast = (unit) => {
     if (getZonesWithEnemies(unit, 1).length && !isMuted(unit)) {
       return true;
@@ -5709,6 +5729,7 @@ export const useRecurringEffects = () => {
     canActivateSovereignSkill,
     canActivateSovereignResonance,
     canAscend,
+    canAuraAmplification,
     canBlast,
     canDeploy,
     canSowAndReapBlast,

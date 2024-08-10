@@ -177,19 +177,11 @@ const SelectCustomChoice = (props) => {
       ChoiceSecondMessage = "Strike.";
       break;
 
-    case "Surge2":
+    case "Surge4":
       canSkip = true;
       canFirstChoice = canMove(unit);
       canSecondChoice = canStrike(unit);
-      ChoiceFirstMessage = "Traverse.";
-      ChoiceSecondMessage = "Strike (2 AP).";
-      break;
-
-    case "Surge3":
-      canSkip = true;
-      canFirstChoice = canMove(unit);
-      canSecondChoice = canStrike(unit);
-      ChoiceFirstMessage = "Traverse.";
+      ChoiceFirstMessage = "Traverse (bypass motion contingent skills).";
       ChoiceSecondMessage = "Strike (2 AP).";
       break;
 
@@ -583,32 +575,6 @@ const SelectCustomChoice = (props) => {
         }
         break;
 
-      // case "Arc Flash1":
-      //   if (selectedChoice === 1) {
-      //     newGameState.currentResolution.push({
-      //       resolution: "Unit Ability",
-      //       resolution2: "Arc Flash2",
-      //       unit: unit,
-      //     });
-
-      //     props.enterMoveMode(
-      //       getVacantAdjacentZones(unit),
-      //       unit,
-      //       newGameState,
-      //       null
-      //     );
-      //   } else {
-      //     enterSelectUnitMode(
-      //       getZonesWithEnemies(unit, 1),
-      //       unit,
-      //       newGameState,
-      //       null,
-      //       "strike",
-      //       null
-      //     );
-      //   }
-      //   break;
-
       case "Arc Flash3":
         if (selectedChoice === 1) {
           newGameState = enterMoveMode(
@@ -629,41 +595,7 @@ const SelectCustomChoice = (props) => {
         }
         break;
 
-      case "Surge2":
-        updateLocal = false; // needed because of setMovingSpecial
-        if (selectedChoice === 1) {
-          props.setMovingSpecial("Surge");
-
-          newGameState.currentResolution.push({
-            resolution: "Mana Skill",
-            resolution2: "Surge3",
-            unit: unit,
-            details: {
-              title: "Surge",
-              reason: "Surge3",
-            },
-          });
-
-          newGameState = enterMoveMode(
-            getVacantAdjacentZones(unit),
-            unit,
-            newGameState,
-            null
-          );
-        } else {
-          enterSelectUnitMode(
-            getZonesWithEnemies(unit, 1),
-            unit,
-            newGameState,
-            null,
-            "strike",
-            "Surge"
-          );
-        }
-        break;
-
-      case "Surge3":
-        updateLocal = false; // needed because of setMovingSpecial
+      case "Surge4":
         if (selectedChoice === 1) {
           props.setMovingSpecial("Surge");
 

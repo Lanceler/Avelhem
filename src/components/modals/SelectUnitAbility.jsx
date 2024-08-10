@@ -24,6 +24,7 @@ const SelectUnitAbility = (props) => {
   const {} = useCardDatabase();
 
   const {
+    canAuraAmplification,
     canStrike,
     getVacant2SpaceZones,
     getZonesWithAllies,
@@ -272,6 +273,24 @@ const SelectUnitAbility = (props) => {
             </>
           ),
         },
+        {
+          abilityName: "Aura Amplification",
+          abilityQualifier: (
+            <div className="abilityQualifier">
+              <span className="abilityQualifier">
+                <em>One-shot</em>
+              </span>
+            </div>
+          ),
+          abilityText: (
+            <>
+              <div className="abilityText ">
+                ⬩Convert your or an adjacent ally’s Virtue into Shield for 2
+                turns.
+              </div>
+            </>
+          ),
+        },
       ];
       break;
 
@@ -399,6 +418,12 @@ const SelectUnitAbility = (props) => {
             return (
               getZonesWithEnemies(unit, 2).length > 0 &&
               newGameState[unit.player].skillHand.length > 0
+            );
+
+          case 1:
+            return (
+              !unit.temporary.usedAuraAmplification &&
+              canAuraAmplification(unit)
             );
         }
 
@@ -694,6 +719,27 @@ const SelectUnitAbility = (props) => {
               reason: "Particle Beam",
               canSkip: "Return",
             },
+          });
+        } else if (selectedChoice === 1) {
+          updateData = true;
+          newGameState.activatingSkill.push("AuraAmplification");
+          newGameState.activatingUnit.push(unit);
+
+          newGameState.currentResolution.push({
+            resolution: "Tactic End",
+            unit: unit,
+            effect: true,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Unit Ability",
+            resolution2: "Activating Aura Amplification",
+            unit: unit,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Animation Delay",
+            priority: self,
           });
         }
         break;

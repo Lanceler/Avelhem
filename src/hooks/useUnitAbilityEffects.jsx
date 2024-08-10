@@ -506,6 +506,49 @@ export const useUnitAbilityEffects = () => {
     return newGameState;
   };
 
+  const auraAmplication1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Aura Amplification"
+    newGameState.currentResolution.pop();
+
+    //give unit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation += 1)
+      : (unit.temporary.activation = 1);
+
+    unit.temporary.usedAuraAmplification = true;
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    const allies = getZonesWithAllies(unit, 1, true);
+    const zones = JSON.parse(newGameState.zones);
+    const alliesWithAura = [];
+
+    for (let i of allies) {
+      const zone = zones[Math.floor(i / 5)][i % 5];
+      const ally = localGameState[zone.player].units[zone.unitIndex];
+
+      if (ally.virtue) {
+        alliesWithAura.push(i);
+      }
+    }
+
+    console.log(alliesWithAura);
+
+    enterSelectUnitMode(
+      alliesWithAura,
+      unit,
+      newGameState,
+      null,
+      "aura amplification",
+      null
+    );
+
+    return newGameState;
+  };
+
   const brandish1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
@@ -660,6 +703,7 @@ export const useUnitAbilityEffects = () => {
     arcFlash2,
     particleBeam1,
     particleBeam2,
+    auraAmplication1,
     brandish1,
     flourish1,
     flourish2,

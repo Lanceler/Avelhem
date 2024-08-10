@@ -250,6 +250,17 @@ const YouMayNoYes = (props) => {
         );
         break;
 
+      case "Surge": // "Surge2"
+        props.setMovingSpecial("Surge");
+
+        newGameState = enterMoveMode(
+          getVacantAdjacentZones(unit),
+          unit,
+          newGameState,
+          null
+        );
+        break;
+
       case "Diffusion 2nd Blast": // "Diffusion4"
         enterSelectUnitMode(
           props.details.adjacentEnemies,

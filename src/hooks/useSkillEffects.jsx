@@ -1731,6 +1731,34 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
+  const surge2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Surge3"
+    newGameState.currentResolution.pop();
+
+    if (unit && !isMuted(unit) && (canMove(unit) || canStrike(unit))) {
+      newGameState.currentResolution.push({
+        resolution: "Mana Skill",
+        resolution2: "Surge4",
+        player: self,
+        unit: unit,
+        details: {
+          title: "Surge",
+          reason: "Surge4",
+        },
+      });
+
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: self,
+      });
+    }
+
+    return newGameState;
+  };
+
   const diffusion1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
@@ -2763,6 +2791,8 @@ export const useSkillEffects = () => {
       //Mana
       case "surge1":
         return surge1(a);
+      case "surge2":
+        return surge2(a);
       case "diffusion1":
         return diffusion1(a);
       case "diffusion2":

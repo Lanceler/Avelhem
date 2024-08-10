@@ -333,14 +333,23 @@ const SelectTacticViaEffect = (props) => {
         case "Surge":
           unit.virtue = 1;
 
-          if (canMove(unit) || canStrike(unit)) {
+          newGameState.currentResolution.push({
+            resolution: "Mana Skill",
+            resolution2: "Surge3",
+            unit: unit,
+          });
+
+          if (canMove(unit)) {
             newGameState.currentResolution.push({
               resolution: "Mana Skill",
               resolution2: "Surge2",
               unit: unit,
               details: {
+                reason: "Surge",
                 title: "Surge",
-                reason: "Surge2",
+                message: "You may traverse (bypass motion contingent skills).",
+                no: "Skip",
+                yes: "Traverse",
               },
             });
           }
