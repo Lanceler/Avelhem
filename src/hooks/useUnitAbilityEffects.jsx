@@ -494,14 +494,36 @@ export const useUnitAbilityEffects = () => {
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
+    newGameState.currentResolution.push({
+      resolution: "Unit Ability",
+      resolution2: "Particle Beam2",
+      unit: unit,
+    });
+
     enterSelectUnitMode(
       getZonesWithEnemies(unit, 2),
       unit,
       newGameState,
       null,
       "blast",
-      "Particle Beam"
+      null
     );
+
+    return newGameState;
+  };
+
+  const particleBeam3 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Particle Beam2"
+    newGameState.currentResolution.pop();
+
+    if (unit && !isMuted(unit)) {
+      unit.virtue = 1;
+    }
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     return newGameState;
   };
@@ -510,7 +532,7 @@ export const useUnitAbilityEffects = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
-    //end "Activating Aura Amplification"
+    //end "Activating Amplify Aura"
     newGameState.currentResolution.pop();
 
     //give unit activationCounter
@@ -518,7 +540,7 @@ export const useUnitAbilityEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    unit.temporary.usedAuraAmplification = true;
+    unit.temporary.usedAmplifyAura = true;
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
@@ -542,7 +564,7 @@ export const useUnitAbilityEffects = () => {
       unit,
       newGameState,
       null,
-      "aura amplification",
+      "amplify aura",
       null
     );
 
@@ -587,6 +609,48 @@ export const useUnitAbilityEffects = () => {
         messageTitle: null,
         message: null,
         specMessage: null,
+      },
+    });
+
+    return newGameState;
+  };
+
+  const castOff1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating CastOff"
+    newGameState.currentResolution.pop();
+
+    //give unit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation += 1)
+      : (unit.temporary.activation = 1);
+
+    unit.temporary.usedCastOff = true;
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    newGameState.currentResolution.push({
+      resolution: "Unit Ability",
+      resolution2: "Cast Off2",
+      unit: unit,
+      details: {
+        title: "Cast Off",
+        reason: "Cast Off",
+      },
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Unit Ability",
+      resolution2: "Cast Off1",
+      title: "Cast Off",
+      unit: unit,
+      details: {
+        title: "Cast Off",
+        reason: "Cast Off",
+        restriction: null,
+        message: "Float 1 skill and spend your Shield or Ward to traverse",
       },
     });
 
@@ -703,8 +767,10 @@ export const useUnitAbilityEffects = () => {
     arcFlash2,
     particleBeam1,
     particleBeam2,
+    particleBeam3,
     auraAmplication1,
     brandish1,
+    castOff1,
     flourish1,
     flourish2,
     ambrosia1,

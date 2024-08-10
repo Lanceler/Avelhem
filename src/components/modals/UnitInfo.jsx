@@ -176,8 +176,15 @@ const UnitInfo = (props) => {
                 <img src={AssaultSmall} className="unitInfo-tactic-icon" />
               </span>
             </p>
-            <p className="unitInfo-text-desc ">
-              ⬩Spend 1 skill to blast (2 AP) an enemy 2 spaces away.
+            <p className="unitInfo-text-desc unitInfo-text-last">
+              ⬩Spend 1 skill to blast an enemy within 2 spaces. ⬩Restore your
+              Virtue.
+            </p>
+
+            <p className="unitInfo-text-heading2">2. Amplify Aura (One-shot)</p>
+            <p className="unitInfo-text-desc">
+              ⬩Convert your or an adjacent ally’s Virtue into Shield for 2
+              turns.
             </p>
           </>
         );
@@ -192,8 +199,13 @@ const UnitInfo = (props) => {
               </span>
             </p>
             <p className="unitInfo-text-desc">⬩Search for 1 “Frenzy Blade”.</p>
-            <p className="unitInfo-text-desc">
+            <p className="unitInfo-text-desc unitInfo-text-last">
               ⬩Draw 1 skill or restore your Virtue.
+            </p>
+
+            <p className="unitInfo-text-heading2">2. Cast Off (One-shot)</p>
+            <p className="unitInfo-text-desc">
+              ⬩Float 1 skill and spend your Shield or Ward to traverse.
             </p>
           </>
         );
@@ -354,19 +366,6 @@ const UnitInfo = (props) => {
             <p className="unitInfo-text-desc unitInfo-text-last">
               ⬩If you have 2 Sharpness, your strikes bypass Shield.
             </p>
-
-            {/* Temporary(?) nerf: Adamant armor removed */}
-
-            {/* <p className="unitInfo-text-heading2">
-              3. Adamant Armor (One-shot)
-            </p>
-            <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩
-              <em>
-                You may activate when targeted via Virtue-blast or strike.
-              </em>{" "}
-              Spend 1 skill to reduce the attack’s AP by 1.
-            </p> */}
           </>
         );
 
@@ -531,8 +530,7 @@ const UnitInfo = (props) => {
                 unit.enhancements.ward ||
                 unit.enhancements.shield ||
                 unit.enhancements.disruption ||
-                unit.enhancements.overgrowth ||
-                unit.enhancements.proliferation) && (
+                unit.enhancements.overgrowth) && (
                 <>
                   <p className="unitInfo-text-heading1">
                     <u>
@@ -549,7 +547,7 @@ const UnitInfo = (props) => {
                     </>
                   )}
 
-                  {unit.enhancements.ward && (
+                  {unit.enhancements.ward > 0 && (
                     <>
                       <p className="unitInfo-text-heading2">
                         Ward ({unit.enhancements.ward} turn
@@ -562,7 +560,7 @@ const UnitInfo = (props) => {
                     </>
                   )}
 
-                  {unit.enhancements.shield && (
+                  {unit.enhancements.shield > 0 && (
                     <>
                       <p className="unitInfo-text-heading2">
                         Shield ({unit.enhancements.shield} turn
@@ -575,7 +573,7 @@ const UnitInfo = (props) => {
                     </>
                   )}
 
-                  {unit.enhancements.disruption && (
+                  {unit.enhancements.disruption > 0 && (
                     <>
                       <p className="unitInfo-text-heading2">
                         Disruption ({unit.enhancements.disruption} turn
@@ -605,22 +603,6 @@ const UnitInfo = (props) => {
                       <p className="unitInfo-text-desc unitInfo-text-last">
                         ⬩This enhancement is purged if the unit moves or has an
                         affliction.
-                      </p>
-                    </>
-                  )}
-
-                  {unit.enhancements.proliferation && (
-                    <>
-                      <p className="unitInfo-text-heading2">
-                        Proliferation ({unit.enhancements.proliferation} turn
-                        {unit.enhancements.proliferation > 1 ? "s" : ""})
-                      </p>
-                      <p className="unitInfo-text-desc ">
-                        ⬩Afflicts enemies within 2 spaces with Root.
-                      </p>
-                      <p className="unitInfo-text-desc unitInfo-text-last">
-                        ⬩This enhancement is purged if the unit’s Overgrowth is
-                        purged.
                       </p>
                     </>
                   )}

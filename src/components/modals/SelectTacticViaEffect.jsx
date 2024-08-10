@@ -19,7 +19,8 @@ const SelectTacticViaEffect = (props) => {
 
   const [infoPopUp, setInfoPopUp] = useState(null);
 
-  const { canMove, canStrike, drawAvelhem, drawSkill } = useRecurringEffects();
+  const { drawAvelhem, drawSkill, enterMoveMode, getVacantAdjacentZones } =
+    useRecurringEffects();
 
   const { getTacticImage } = useGetImages();
 
@@ -331,28 +332,35 @@ const SelectTacticViaEffect = (props) => {
         //Skills
 
         case "Surge":
-          unit.virtue = 1;
-
           newGameState.currentResolution.push({
             resolution: "Mana Skill",
             resolution2: "Surge3",
             unit: unit,
           });
 
-          if (canMove(unit)) {
-            newGameState.currentResolution.push({
-              resolution: "Mana Skill",
-              resolution2: "Surge2",
-              unit: unit,
-              details: {
-                reason: "Surge",
-                title: "Surge",
-                message: "You may traverse (bypass motion contingent skills).",
-                no: "Skip",
-                yes: "Traverse",
-              },
-            });
-          }
+          props.setMovingSpecial("Surge");
+
+          newGameState = enterMoveMode(
+            getVacantAdjacentZones(unit),
+            unit,
+            newGameState,
+            null
+          );
+
+          // if (canMove(unit)) {
+          //   newGameState.currentResolution.push({
+          //     resolution: "Mana Skill",
+          //     resolution2: "Surge2",
+          //     unit: unit,
+          //     details: {
+          //       reason: "Surge",
+          //       title: "Surge",
+          //       message: "You may traverse (bypass motion contingent skills).",
+          //       no: "Skip",
+          //       yes: "Traverse",
+          //     },
+          //   });
+          // }
 
           newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
           break;

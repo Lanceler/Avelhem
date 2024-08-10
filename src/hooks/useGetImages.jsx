@@ -103,10 +103,10 @@ import LightningRod from "../assets/abilities/LightningRod.jpg";
 import ParticleBeam from "../assets/abilities/ParticleBeam.jpg";
 import AmbianceAssimilation from "../assets/abilities/AmbianceAssimilation.jpg";
 import ManaFeedback from "../assets/abilities/ManaFeedback.jpg";
-import AuraAmplification from "../assets/abilities/AuraAmplification.jpg";
+import AmplifyAura from "../assets/abilities/AmplifyAura.jpg";
 import Brandish from "../assets/abilities/Brandish.jpg";
+import CastOff from "../assets/abilities/CastOff.jpg";
 import Conduction from "../assets/abilities/Conduction.jpg";
-import AdamantArmor from "../assets/abilities/AdamantArmor.jpg";
 import Flourish from "../assets/abilities/Flourish.jpg";
 import Ambrosia from "../assets/abilities/Ambrosia.jpg";
 import Everblooming from "../assets/abilities/Everblooming.jpg";
@@ -263,12 +263,12 @@ export const useGetImages = () => {
     ArcFlash,
     LightningRod,
     ParticleBeam,
-    AuraAmplification,
+    AmplifyAura,
     AmbianceAssimilation,
     ManaFeedback,
     Brandish,
     Conduction,
-    AdamantArmor,
+    CastOff,
     Flourish,
     Ambrosia,
     Everblooming,
@@ -513,8 +513,8 @@ export const useGetImages = () => {
         return DisruptionField;
       case "ParticleBeam":
         return ParticleBeam;
-      case "AuraAmplification":
-        return AuraAmplification;
+      case "AmplifyAura":
+        return AmplifyAura;
       case "AmbianceAssimilation":
         return AmbianceAssimilation;
       case "ManaFeedback":
@@ -536,8 +536,8 @@ export const useGetImages = () => {
         return Brandish;
       case "Conduction":
         return Conduction;
-      case "AdamantArmor":
-        return AdamantArmor;
+      case "CastOff":
+        return CastOff;
 
       case 8:
         return PlantAvelhem;

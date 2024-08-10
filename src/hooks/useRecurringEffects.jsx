@@ -2074,8 +2074,6 @@ export const useRecurringEffects = () => {
         .frostbite;
       delete newGameState[victim.player].units[victim.unitIndex].enhancements
         .overgrowth;
-      delete newGameState[victim.player].units[victim.unitIndex].enhancements
-        .proliferation;
     }
 
     return newGameState;
@@ -2142,9 +2140,7 @@ export const useRecurringEffects = () => {
       // case victim.afflictions.anathema > 0:
       //   aP = 5;
       //   break;
-      case ["Geomancy", "Surge", "Particle Beam", "Diffusion"].includes(
-        special
-      ):
+      case ["Geomancy", "Surge", "Diffusion"].includes(special):
         aP = 2;
         break;
       case special === "Fire Scion" &&
@@ -2166,11 +2162,7 @@ export const useRecurringEffects = () => {
         if (attacker.sharpness > 0) {
           aP += attacker.sharpness;
         }
-        if (victim.temporary.adamantArmor) {
-          aP = Math.max(0, aP - 1);
-          delete newGameState[victim.player].units[victim.unitIndex].temporary
-            .adamantArmor;
-        }
+
         if (special === "Virtue-blast-blocked") {
           aP = Math.max(0, aP - 1);
         }
@@ -2334,14 +2326,12 @@ export const useRecurringEffects = () => {
         ].afflictions.frostbite = duration;
       }
 
-      //frostbite purges boosts, disruption, overgrowth, & proliferation
+      //frostbite purges boosts, disruption, overgrowth
       newGameState[victim.player].units[victim.unitIndex].boosts = {};
       delete newGameState[victim.player].units[victim.unitIndex].enhancements
         .disruption;
       delete newGameState[victim.player].units[victim.unitIndex].enhancements
         .overgrowth;
-      delete newGameState[victim.player].units[victim.unitIndex].enhancements
-        .proliferation;
     }
 
     return newGameState;
@@ -2417,11 +2407,10 @@ export const useRecurringEffects = () => {
             ))
           : (victim.afflictions.paralysis = duration);
 
-        //paralysis purges boosts, disruption, overgrowth, & proliferation
+        //paralysis purges boosts, disruption, overgrowth
         victim.boosts = {};
         delete victim.enhancements.disruption;
         delete victim.enhancements.overgrowth;
-        delete victim.enhancements.proliferation;
 
         //If Cataclysmic Tempest
         if (special === "Cataclysmic Tempest") {
@@ -2892,16 +2881,12 @@ export const useRecurringEffects = () => {
       }
 
       return localGameState[self].skillHand.length > 1;
-
-      // if (localGameState[self].skillHand.length < 2) {
-      //   return false;
-      // }
-
-      // return true;
     };
 
-    const canSurge = () => {
-      //to-do: maybe consider unit has used tactic? then again, it normally wont be an issue
+    const canSurge = (unit) => {
+      if (!canMove(unit)) {
+        return false;
+      }
 
       if (
         localGameState.tactics[0].face === "Assault" &&
@@ -2967,7 +2952,7 @@ export const useRecurringEffects = () => {
         return true;
 
       case "06-01":
-        return canSurge();
+        return canSurge(unit);
       case "06-02":
         return canDiffusion(unit);
       case "06-03":
@@ -3170,26 +3155,7 @@ export const useRecurringEffects = () => {
     }
   };
 
-  const canAscend = (newGameState, team, scionClass) => {
-    let scionCount = 0;
-    let unmutedPawns = 0;
-    for (let unit of newGameState[team].units) {
-      if (unit) {
-        if (unit.unitClass === scionClass) {
-          scionCount += 1;
-          if (scionCount > 1) {
-            break;
-          }
-        } else if (!isMuted(unit) && unit.unitClass === "Pawn") {
-          unmutedPawns += 1;
-        }
-      }
-    }
-
-    return unmutedPawns > 0 && scionCount < 2;
-  };
-
-  const canAuraAmplification = (unit) => {
+  const canAmplifyAura = (unit) => {
     if (unit.virtue) {
       return true;
     }
@@ -3209,10 +3175,41 @@ export const useRecurringEffects = () => {
     return false;
   };
 
+  const canAscend = (newGameState, team, scionClass) => {
+    let scionCount = 0;
+    let unmutedPawns = 0;
+    for (let unit of newGameState[team].units) {
+      if (unit) {
+        if (unit.unitClass === scionClass) {
+          scionCount += 1;
+          if (scionCount > 1) {
+            break;
+          }
+        } else if (!isMuted(unit) && unit.unitClass === "Pawn") {
+          unmutedPawns += 1;
+        }
+      }
+    }
+
+    return unmutedPawns > 0 && scionCount < 2;
+  };
+
   const canBlast = (unit) => {
     if (getZonesWithEnemies(unit, 1).length && !isMuted(unit)) {
       return true;
     }
+    return false;
+  };
+
+  const canCastOff = (unit) => {
+    if (!canMove(unit)) {
+      return false;
+    }
+
+    if (unit.enhancements.shield > 0 || unit.enhancements.ward > 0) {
+      return true;
+    }
+
     return false;
   };
 
@@ -3353,9 +3350,6 @@ export const useRecurringEffects = () => {
         unit.enhancements.ward ? unit.enhancements.ward-- : null;
 
         unit.enhancements.disruption ? unit.enhancements.disruption-- : null;
-        unit.enhancements.proliferation
-          ? unit.enhancements.proliferation--
-          : null;
 
         unit = units[u];
       }
@@ -4309,18 +4303,6 @@ export const useRecurringEffects = () => {
       }
     }
 
-    const zonesWithDistantEnemies = getZonesWithEnemies(unit, 2);
-
-    for (let z of zonesWithDistantEnemies) {
-      const zone = zones[Math.floor(z / 5)][z % 5];
-      if (
-        newGameState[zone.player].units[zone.unitIndex].enhancements
-          .proliferation > 0
-      ) {
-        return true;
-      }
-    }
-
     return false;
   };
 
@@ -4349,7 +4331,6 @@ export const useRecurringEffects = () => {
     mover.row = Math.floor(zoneId / 5);
     mover.column = zoneId % 5;
     delete mover.enhancements.overgrowth;
-    delete mover.enhancements.proliferation;
     newGameState[mover.player].units[mover.unitIndex] = mover;
 
     //pop "Moving Unit" resolution <-- Manual movement
@@ -4421,22 +4402,6 @@ export const useRecurringEffects = () => {
       newGameState.activatingTarget.push(victim);
     }
 
-    //Adamant Armor nerfed; no longer blocks paralysis
-    // if (triggerAdamantArmor(victim)) {
-    //   newGameState.currentResolution.push({
-    //     resolution: "Unit Talent",
-    //     resolution2: "Triggering Adamant Armor",
-    //     unit: victim,
-    //     details: {
-    //       title: "Adamant Armor",
-    //       message:
-    //         "Your Metal Scion was targeted via paralyze (1 turn). They may spend 1 skill to negate the affliction.",
-    //       restriction: null,
-    //       reason: "Adamant Armor",
-    //     },
-    //   });
-    // }
-
     return newGameState;
   };
 
@@ -4450,7 +4415,7 @@ export const useRecurringEffects = () => {
       duration: 2,
     });
 
-    //to do in the future: consider bypass Target and Adamant Armor
+    //to do in the future: consider bypass Target
     if (triggerTarget(attacker, victim, "paralyze2")) {
       newGameState.currentResolution.push({
         resolution: "Triggering Contingent Skill",
@@ -4462,22 +4427,6 @@ export const useRecurringEffects = () => {
 
       newGameState.activatingTarget.push(victim);
     }
-
-    //Adamant Armor nerfed; no longer blocks paralysis
-    // if (triggerAdamantArmor(victim)) {
-    //   newGameState.currentResolution.push({
-    //     resolution: "Unit Talent",
-    //     resolution2: "Triggering Adamant Armor",
-    //     unit: victim,
-    //     details: {
-    //       title: "Adamant Armor",
-    //       message:
-    //         "Your Metal Scion was targeted via paralyze (2 turns). They may spend 1 skill to negate the affliction.",
-    //       restriction: null,
-    //       reason: "Adamant Armor",
-    //     },
-    //   });
-    // }
 
     return newGameState;
   };
@@ -5112,7 +5061,7 @@ export const useRecurringEffects = () => {
       type: "strike",
     });
 
-    //to do in the future: consider bypass Target and Adamant Armor
+    //to do in the future: consider bypass Target
 
     if (triggerTarget(attacker, victim, "strike")) {
       newGameState.currentResolution.push({
@@ -5121,23 +5070,6 @@ export const useRecurringEffects = () => {
         attacker: attacker,
         victim: victim,
         type: "strike",
-      });
-
-      newGameState.activatingTarget.push(victim);
-    }
-
-    if (triggerAdamantArmor(victim)) {
-      newGameState.currentResolution.push({
-        resolution: "Unit Talent",
-        resolution2: "Triggering Adamant Armor",
-        unit: victim,
-        details: {
-          title: "Adamant Armor",
-          message:
-            "Your Metal Scion was targeted via strike. They may spend 1 skill to reduce the attack’s AP by 1.",
-          restriction: null,
-          reason: "Adamant Armor",
-        },
       });
 
       newGameState.activatingTarget.push(victim);
@@ -5155,17 +5087,6 @@ export const useRecurringEffects = () => {
     newGameState = move(newGameState, mover, zone, "strike");
 
     return newGameState;
-  };
-
-  const triggerAdamantArmor = (victim) => {
-    return false;
-    //Temporary(?) nerf: Adamant armor removed
-    // return (
-    //   victim.unitClass === "Metal Scion" && //must be Metal Scion
-    //   !isMuted(victim) &&
-    //   localGameState[victim.player].skillHand.length > 0 &&
-    //   !victim.temporary.usedAdamantArmor
-    // );
   };
 
   const triggerAegis = (victim) => {
@@ -5644,7 +5565,7 @@ export const useRecurringEffects = () => {
       newGameState.activatingTarget.push(victim);
     }
 
-    //to do in the future: consider bypass Target and Adamant Armor
+    //to do in the future: consider bypass Target
     if (triggerTarget(attacker, victim, "virtue-blast")) {
       newGameState.currentResolution.push({
         resolution: "Triggering Contingent Skill",
@@ -5652,23 +5573,6 @@ export const useRecurringEffects = () => {
         attacker: attacker,
         victim: victim,
         type: "virtue-blast",
-      });
-
-      newGameState.activatingTarget.push(victim);
-    }
-
-    if (triggerAdamantArmor(victim)) {
-      newGameState.currentResolution.push({
-        resolution: "Unit Talent",
-        resolution2: "Triggering Adamant Armor",
-        unit: victim,
-        details: {
-          title: "Adamant Armor",
-          message:
-            "Your Metal Scion was targeted via Virtue-blast. They may spend 1 skill to reduce the attack’s AP by 1.",
-          restriction: null,
-          reason: "Adamant Armor",
-        },
       });
 
       newGameState.activatingTarget.push(victim);
@@ -5729,8 +5633,9 @@ export const useRecurringEffects = () => {
     canActivateSovereignSkill,
     canActivateSovereignResonance,
     canAscend,
-    canAuraAmplification,
+    canAmplifyAura,
     canBlast,
+    canCastOff,
     canDeploy,
     canSowAndReapBlast,
     canSowAndReapStrike,

@@ -763,9 +763,9 @@ export const useSovereignSkillEffects = () => {
       newGameState.currentResolution.push({
         resolution: "Sovereign Contingent Skill",
         resolution2: "Vengeful Legacy Ravager",
-        title: "Vengeful Legacy",
         unit: unit,
         details: {
+          title: "Vengeful Legacy",
           reason: "Vengeful Legacy Ravager",
           restriction: null,
           message: "You may float 1 skill to grant them Ravager.",

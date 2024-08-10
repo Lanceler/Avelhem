@@ -509,8 +509,8 @@ const ContingentTriggered = (props) => {
             </button>
           </div>
         </div>
+        <br />
         <h3>{contingencyMessage}</h3>
-
         <br />
 
         <div className="scrollable scrollable-y-only">

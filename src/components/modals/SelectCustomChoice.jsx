@@ -228,6 +228,13 @@ const SelectCustomChoice = (props) => {
       ChoiceSecondMessage = "Restore your Virtue.";
       break;
 
+    case "Cast Off":
+      canFirstChoice = unit.enhancements.shield > 0;
+      canSecondChoice = unit.enhancements.ward > 0;
+      ChoiceFirstMessage = "Spend your Shield to traverse.";
+      ChoiceSecondMessage = "Spend your Ward to traverse.";
+      break;
+
     case "Sow and Reap":
       canFirstChoice = canSowAndReapBlast(unit);
       canSecondChoice = canSowAndReapStrike(unit);
@@ -435,11 +442,23 @@ const SelectCustomChoice = (props) => {
             unit: unit,
           });
 
+          // newGameState.currentResolution.push({
+          //   resolution: "Wind Skill",
+          //   resolution2: "Aerial Impetus Float",
+          //   player: self,
+          //   message: "Float 1 skill.",
+          // });
+
           newGameState.currentResolution.push({
             resolution: "Wind Skill",
             resolution2: "Aerial Impetus Float",
-            player: self,
-            message: "Float 1 skill.",
+            unit: unit,
+            details: {
+              title: "Aerial Impetus",
+              reason: "Aerial Impetus",
+              restriction: null,
+              message: "Float 1 skill",
+            },
           });
         } else {
           updateLocal = false;
@@ -716,6 +735,23 @@ const SelectCustomChoice = (props) => {
         }
         break;
 
+      case "Cast Off":
+        if (selectedChoice === 1) {
+          unit.enhancements.shield = 0;
+        } else {
+          unit.enhancements.ward = 0;
+        }
+        newGameState[unit.player].units[unit.unitIndex] = unit;
+
+        newGameState = enterMoveMode(
+          getVacantAdjacentZones(unit),
+          unit,
+          newGameState,
+          null
+        );
+
+        break;
+
       case "Sow and Reap":
         if (selectedChoice === 1) {
           newGameState.currentResolution.push({
@@ -739,7 +775,12 @@ const SelectCustomChoice = (props) => {
             resolution: "Sovereign Standard Skill",
             resolution2: "Tea for Two2",
             player: self,
-            message: "Float 1 skill.",
+            details: {
+              title: "Tea for Two",
+              reason: "Tea for Two",
+              restriction: null,
+              message: "Float 1 skill",
+            },
           });
         } else {
           newGameState.currentResolution.push({

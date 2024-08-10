@@ -2562,41 +2562,6 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
-  // const castleOfThorns1 = (unitInfo) => {
-  //   let newGameState = JSON.parse(JSON.stringify(localGameState));
-  //   let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-  //   //end "Activating Castle of Thorns" resolution
-  //   newGameState.currentResolution.pop();
-
-  //   //give unit activationCounter
-  //   unit.temporary.activation
-  //     ? (unit.temporary.activation += 1)
-  //     : (unit.temporary.activation = 1);
-
-  //   if (!unit.afflictions.burn) {
-  //     //burn would otherwise instantly purge overgrowth
-  //     unit.enhancements.overgrowth = true;
-  //     unit.enhancements.proliferation = 3;
-  //   }
-
-  //   newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
-  //   newGameState.currentResolution.push({
-  //     resolution: "Plant Skill",
-  //     resolution2: "Castle Of Thorns1",
-  //     unit: unit,
-  //     details: {
-  //       title: "Castle of Thorns",
-  //       message: "You may spend 1 skill to draw 2 skills",
-  //       restriction: null,
-  //       reason: "Castle of Thorns",
-  //     },
-  //   });
-
-  //   return newGameState;
-  // };
-
   const castleOfThorns1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];

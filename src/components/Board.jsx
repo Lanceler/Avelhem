@@ -35,7 +35,6 @@ import SelectAvelhemHandMulti from "./modals/SelectAvelhemHandMulti";
 import SelectAvelhemResonator from "./modals/SelectAvelhemResonator";
 import SpendSkill from "./modals/SpendSkill";
 import SelectSkillHandMulti from "./modals/SelectSkillHandMulti";
-import FloatSkill from "./modals/FloatSkill";
 import SelectSkillReveal from "./modals/SelectSkillReveal";
 import SelectUnitAbility from "./modals/SelectUnitAbility";
 import SelectTacticalAction from "./modals/SelectTacticalAction";
@@ -43,7 +42,7 @@ import SelectSovereignTactic from "./modals/SelectSovereignTactic";
 import TacticResults from "./modals/TacticResults";
 import TacticResults3 from "./modals/TacticResults3";
 import ViewRevealedSkill from "./modals/ViewRevealedSkill";
-import YouMayFloat1Skill from "./modals/YouMayFloat1Skill";
+import FloatSkill from "./modals/FloatSkill";
 import YouMaySpend1Skill from "./modals/YouMaySpend1Skill";
 import YouMayNoYes from "./modals/YouMayNoYes";
 import VictoryScreen from "./modals/VictoryScreen";
@@ -143,7 +142,7 @@ const Board = (props) => {
     enterMoveMode,
     getVacant2SpaceZones,
     getVacantAdjacentZones,
-    getZonesInRange, // needed for quick movement testing
+    getZonesInRange, // needed for quick movement
     grantRavager,
     freeze1,
     freeze2,
@@ -236,8 +235,10 @@ const Board = (props) => {
     arcFlash2,
     particleBeam1,
     particleBeam2,
+    particleBeam3,
     auraAmplication1,
     brandish1,
+    castOff1,
     flourish1,
     flourish2,
     ambrosia1,
@@ -1127,7 +1128,7 @@ const Board = (props) => {
             return (
               <>
                 {self === lastRes.player && !hideModal && (
-                  <YouMayFloat1Skill
+                  <FloatSkill
                     unit={lastRes.unit}
                     details={lastRes.details}
                     updateFirebase={updateFirebase}
@@ -1445,7 +1446,7 @@ const Board = (props) => {
             return (
               <>
                 {self === lastRes.unit.player && !hideModal && (
-                  <YouMayFloat1Skill
+                  <FloatSkill
                     unit={lastRes.unit}
                     details={lastRes.details}
                     updateFirebase={updateFirebase}
@@ -1541,7 +1542,13 @@ const Board = (props) => {
             }
             break;
 
-          case "Activating Aura Amplification":
+          case "Particle Beam2":
+            if (self === lastRes.unit.player) {
+              updateLocalState(particleBeam3(lastRes.unit));
+            }
+            break;
+
+          case "Activating Amplify Aura":
             if (self === lastRes.unit.player) {
               updateLocalState(auraAmplication1(lastRes.unit));
             }
@@ -1554,6 +1561,41 @@ const Board = (props) => {
             break;
 
           case "Brandish1":
+            return (
+              <>
+                {self === lastRes.unit.player && !hideModal && (
+                  <SelectCustomChoice
+                    unit={lastRes.unit}
+                    details={lastRes.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Activating Cast Off":
+            if (self === lastRes.unit.player) {
+              updateLocalState(castOff1(lastRes.unit));
+            }
+            break;
+
+          case "Cast Off1":
+            return (
+              <>
+                {self === lastRes.unit.player && !hideModal && (
+                  <FloatSkill
+                    unit={lastRes.unit}
+                    details={lastRes.details}
+                    unSkippable={true}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Cast Off2":
             return (
               <>
                 {self === lastRes.unit.player && !hideModal && (
@@ -1643,20 +1685,6 @@ const Board = (props) => {
               updateLocalState(secondWind1());
             }
             break;
-
-          case "Triggering Adamant Armor":
-            return (
-              <>
-                {self === lastRes.unit.player && !hideModal && (
-                  <YouMaySpend1Skill
-                    unit={lastRes.unit}
-                    details={lastRes.details}
-                    updateFirebase={updateFirebase}
-                    hideOrRevealModale={hideOrRevealModale}
-                  />
-                )}
-              </>
-            );
 
           case "Talent Conclusion":
             if (self === lastRes.unit.player) {
@@ -1852,7 +1880,7 @@ const Board = (props) => {
             return (
               <>
                 {self === lastRes.unit.player && !hideModal && (
-                  <YouMayFloat1Skill
+                  <FloatSkill
                     unit={lastRes.unit}
                     details={lastRes.details}
                     updateFirebase={updateFirebase}
@@ -1997,10 +2025,10 @@ const Board = (props) => {
           case "Aerial Impetus Float":
             return (
               <>
-                {self === lastRes.player && !hideModal && (
+                {self === lastRes.unit.player && !hideModal && (
                   <FloatSkill
-                    title="Aerial Impetus"
-                    message={lastRes.message}
+                    unSkippable={true}
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -2057,7 +2085,7 @@ const Board = (props) => {
             return (
               <>
                 {self === lastRes.unit.player && !hideModal && (
-                  <YouMayFloat1Skill
+                  <FloatSkill
                     unit={lastRes.unit}
                     details={lastRes.details}
                     updateFirebase={updateFirebase}
@@ -2652,6 +2680,7 @@ const Board = (props) => {
                   <SelectTacticViaEffect
                     unit={lastRes.unit}
                     details={lastRes.details}
+                    setMovingSpecial={setMovingSpecial}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
@@ -3223,12 +3252,16 @@ const Board = (props) => {
             return (
               <>
                 {self === lastRes.player && !hideModal && (
-                  <FloatSkill
-                    title="Tea for Two"
-                    message={lastRes.message}
-                    updateFirebase={updateFirebase}
-                    hideOrRevealModale={hideOrRevealModale}
-                  />
+                  <>
+                    {self === lastRes.player && !hideModal && (
+                      <FloatSkill
+                        unSkippable={true}
+                        details={lastRes.details}
+                        updateFirebase={updateFirebase}
+                        hideOrRevealModale={hideOrRevealModale}
+                      />
+                    )}
+                  </>
                 )}
               </>
             );
@@ -3669,7 +3702,7 @@ const Board = (props) => {
             return (
               <>
                 {self === lastRes.player && !hideModal && (
-                  <YouMayFloat1Skill
+                  <FloatSkill
                     unit={lastRes.unit}
                     details={lastRes.details}
                     updateFirebase={updateFirebase}
@@ -3701,7 +3734,7 @@ const Board = (props) => {
             return (
               <>
                 {self === lastRes.unit.player && !hideModal && (
-                  <YouMayFloat1Skill
+                  <FloatSkill
                     unit={lastRes.unit}
                     details={lastRes.details}
                     updateFirebase={updateFirebase}
@@ -4445,7 +4478,7 @@ const Board = (props) => {
         newGameState = activateAegis(newGameState, selectedUnit, unit);
         break;
 
-      case "aura amplification":
+      case "amplify aura":
         newGameState[selectedUnit.player].units[
           selectedUnit.unitIndex
         ].virtue = 0;
@@ -4686,7 +4719,6 @@ const Board = (props) => {
             unit.boosts = {};
             delete unit.enhancements.disruption;
             delete unit.enhancements.overgrowth;
-            delete unit.enhancements.proliferation;
           }
 
           newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
@@ -4750,7 +4782,6 @@ const Board = (props) => {
             unit.boosts = {};
             delete unit.enhancements.disruption;
             delete unit.enhancements.overgrowth;
-            delete unit.enhancements.proliferation;
           }
 
           newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
@@ -4812,7 +4843,6 @@ const Board = (props) => {
         unit.boosts = {};
         delete unit.enhancements.disruption;
         delete unit.enhancements.overgrowth;
-        delete unit.enhancements.proliferation;
       }
 
       newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;

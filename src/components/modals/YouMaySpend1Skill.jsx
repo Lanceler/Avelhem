@@ -202,26 +202,6 @@ const YouMaySpend1Skill = (props) => {
         });
         break;
 
-      case "Adamant Armor":
-        newGameState.activatingTarget.pop();
-        unit.temporary.adamantArmor = true;
-        unit.temporary.usedAdamantArmor = true;
-
-        newGameState.activatingUnit.push(unit);
-        newGameState.activatingSkill.push("AdamantArmor");
-
-        newGameState.currentResolution.push({
-          resolution: "Unit Talent",
-          resolution2: "Talent Conclusion",
-          unit: unit,
-        });
-
-        newGameState.currentResolution.push({
-          resolution: "Animation Delay",
-          priority: unit.player,
-        });
-        break;
-
       case "Efflorescence1":
         newGameState.currentResolution.push({
           resolution: "Recover Skill",
@@ -346,10 +326,6 @@ const YouMaySpend1Skill = (props) => {
 
     //end Discarding Skill resolution
     newGameState.currentResolution.pop();
-
-    if (props.details.reason === "Adamant Armor") {
-      newGameState.activatingTarget.pop();
-    }
 
     dispatch(updateState(newGameState));
     props.updateFirebase(newGameState);

@@ -24,7 +24,8 @@ const SelectUnitAbility = (props) => {
   const {} = useCardDatabase();
 
   const {
-    canAuraAmplification,
+    canAmplifyAura,
+    canCastOff,
     canStrike,
     getVacant2SpaceZones,
     getZonesWithAllies,
@@ -268,13 +269,14 @@ const SelectUnitAbility = (props) => {
           abilityText: (
             <>
               <div className="abilityText ">
-                ⬩Spend 1 skill to blast (2 AP) an enemy within 2 spaces.
+                ⬩Spend 1 skill to blast an enemy within 2 spaces.
               </div>
+              <div className="abilityText ">⬩Restore your Virtue.</div>
             </>
           ),
         },
         {
-          abilityName: "Aura Amplification",
+          abilityName: "Amplify Aura",
           abilityQualifier: (
             <div className="abilityQualifier">
               <span className="abilityQualifier">
@@ -308,6 +310,23 @@ const SelectUnitAbility = (props) => {
               <div className="abilityText ">⬩Search for 1 “Frenzy Blade”.</div>
               <div className="abilityText ">
                 ⬩Draw 1 skill or restore your Virtue.
+              </div>
+            </>
+          ),
+        },
+        {
+          abilityName: "Cast Off",
+          abilityQualifier: (
+            <div className="abilityQualifier">
+              <span className="abilityQualifier">
+                <em>One-shot</em>
+              </span>
+            </div>
+          ),
+          abilityText: (
+            <>
+              <div className="abilityText ">
+                ⬩Float 1 skill and spend your Shield or Ward to traverse.
               </div>
             </>
           ),
@@ -419,18 +438,20 @@ const SelectUnitAbility = (props) => {
               getZonesWithEnemies(unit, 2).length > 0 &&
               newGameState[unit.player].skillHand.length > 0
             );
-
           case 1:
-            return (
-              !unit.temporary.usedAuraAmplification &&
-              canAuraAmplification(unit)
-            );
+            return !unit.temporary.usedAmplifyAura && canAmplifyAura(unit);
         }
 
       case "Metal Scion":
         switch (i) {
           case 0:
             return true;
+          case 1:
+            return (
+              !unit.temporary.usedCastOff &&
+              newGameState[unit.player].skillHand.length > 0 &&
+              canCastOff(unit)
+            );
         }
 
       case "Plant Scion":
@@ -722,7 +743,7 @@ const SelectUnitAbility = (props) => {
           });
         } else if (selectedChoice === 1) {
           updateData = true;
-          newGameState.activatingSkill.push("AuraAmplification");
+          newGameState.activatingSkill.push("AmplifyAura");
           newGameState.activatingUnit.push(unit);
 
           newGameState.currentResolution.push({
@@ -733,7 +754,7 @@ const SelectUnitAbility = (props) => {
 
           newGameState.currentResolution.push({
             resolution: "Unit Ability",
-            resolution2: "Activating Aura Amplification",
+            resolution2: "Activating Amplify Aura",
             unit: unit,
           });
 
@@ -758,6 +779,27 @@ const SelectUnitAbility = (props) => {
               reason: "Brandish",
               canSkip: "Return",
             },
+          });
+        } else if (selectedChoice === 1) {
+          updateData = true;
+          newGameState.activatingSkill.push("CastOff");
+          newGameState.activatingUnit.push(unit);
+
+          newGameState.currentResolution.push({
+            resolution: "Tactic End",
+            unit: unit,
+            effect: true,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Unit Ability",
+            resolution2: "Activating Cast Off",
+            unit: unit,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Animation Delay",
+            priority: self,
           });
         }
         break;
