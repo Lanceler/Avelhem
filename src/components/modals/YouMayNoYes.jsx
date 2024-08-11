@@ -426,6 +426,13 @@ const YouMayNoYes = (props) => {
         newGameState = drawAvelhem(newGameState);
         break;
 
+      case "Press the Attack Pawn":
+        newGameState.currentResolution.push({
+          resolution: "Deploying Pawn",
+          zoneIds: getVacantFrontier(),
+        });
+        break;
+
       case "Fated Rivalry":
         newGameState.currentResolution.push({
           resolution: "Search Skill",
