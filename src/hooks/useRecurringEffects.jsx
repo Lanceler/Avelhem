@@ -3165,8 +3165,8 @@ export const useRecurringEffects = () => {
     return false;
   };
 
-  const canCastOff = (unit) => {
-    if (!canMove(unit)) {
+  const canBallisticArmor = (unit) => {
+    if (!canBlast(unit)) {
       return false;
     }
 
@@ -5549,7 +5549,7 @@ export const useRecurringEffects = () => {
     canAscend,
     canAmplifyAura,
     canBlast,
-    canCastOff,
+    canBallisticArmor,
     canDeploy,
     canSowAndReapBlast,
     canSowAndReapStrike,

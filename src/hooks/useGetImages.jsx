@@ -106,7 +106,7 @@ import AmbianceAssimilation from "../assets/abilities/AmbianceAssimilation.jpg";
 import ManaFeedback from "../assets/abilities/ManaFeedback.jpg";
 import AmplifyAura from "../assets/abilities/AmplifyAura.jpg";
 import Brandish from "../assets/abilities/Brandish.jpg";
-import CastOff from "../assets/abilities/CastOff.jpg";
+import BallisticArmor from "../assets/abilities/BallisticArmor.jpg";
 import Conduction from "../assets/abilities/Conduction.jpg";
 import Flourish from "../assets/abilities/Flourish.jpg";
 import Ambrosia from "../assets/abilities/Ambrosia.jpg";
@@ -270,7 +270,7 @@ export const useGetImages = () => {
     ManaFeedback,
     Brandish,
     Conduction,
-    CastOff,
+    BallisticArmor,
     Flourish,
     Ambrosia,
     Everblooming,
@@ -540,8 +540,8 @@ export const useGetImages = () => {
         return Brandish;
       case "Conduction":
         return Conduction;
-      case "CastOff":
-        return CastOff;
+      case "BallisticArmor":
+        return BallisticArmor;
 
       case 8:
         return PlantAvelhem;

@@ -658,11 +658,11 @@ export const useUnitAbilityEffects = () => {
     return newGameState;
   };
 
-  const castOff1 = (unitInfo) => {
+  const ballisticArmor1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
-    //end "Activating CastOff"
+    //end "Activating Ballistic Armor"
     newGameState.currentResolution.pop();
 
     //give unit activationCounter
@@ -670,30 +670,29 @@ export const useUnitAbilityEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    unit.temporary.usedCastOff = true;
-
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     newGameState.currentResolution.push({
       resolution: "Unit Ability",
-      resolution2: "Cast Off2",
+      resolution2: "Ballistic Armor2",
       unit: unit,
       details: {
-        title: "Cast Off",
-        reason: "Cast Off",
+        title: "Ballistic Armor",
+        reason: "Ballistic Armor",
       },
     });
 
     newGameState.currentResolution.push({
       resolution: "Unit Ability",
-      resolution2: "Cast Off1",
-      title: "Cast Off",
+      resolution2: "Ballistic Armor1",
+      title: "Ballistic Armor",
       unit: unit,
       details: {
-        title: "Cast Off",
-        reason: "Cast Off",
+        title: "Ballistic Armor",
+        reason: "Ballistic Armor",
         restriction: null,
-        message: "Float 1 skill and spend your Shield or Ward to traverse",
+        message:
+          "Float 1 skill and spend your Shield or Ward to blast an adjacent enemy",
       },
     });
 
@@ -814,7 +813,7 @@ export const useUnitAbilityEffects = () => {
     particleBeam3,
     auraAmplication1,
     brandish1,
-    castOff1,
+    ballisticArmor1,
     flourish1,
     flourish2,
     ambrosia1,

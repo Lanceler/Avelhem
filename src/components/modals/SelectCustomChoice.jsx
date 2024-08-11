@@ -234,11 +234,11 @@ const SelectCustomChoice = (props) => {
       ChoiceSecondMessage = "Restore your Virtue.";
       break;
 
-    case "Cast Off":
+    case "Ballistic Armor":
       canFirstChoice = unit.enhancements.shield > 0;
       canSecondChoice = unit.enhancements.ward > 0;
-      ChoiceFirstMessage = "Spend your Shield to traverse.";
-      ChoiceSecondMessage = "Spend your Ward to traverse.";
+      ChoiceFirstMessage = "Spend your Shield.";
+      ChoiceSecondMessage = "Spend your Ward.";
       break;
 
     case "Sow and Reap":
@@ -742,7 +742,7 @@ const SelectCustomChoice = (props) => {
         }
         break;
 
-      case "Cast Off":
+      case "Ballistic Armor":
         if (selectedChoice === 1) {
           unit.enhancements.shield = 0;
         } else {
@@ -750,10 +750,12 @@ const SelectCustomChoice = (props) => {
         }
         newGameState[unit.player].units[unit.unitIndex] = unit;
 
-        newGameState = enterMoveMode(
-          getVacantAdjacentZones(unit),
+        enterSelectUnitMode(
+          getZonesWithEnemies(unit, 1),
           unit,
           newGameState,
+          null,
+          "blast",
           null
         );
 

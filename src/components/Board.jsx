@@ -237,7 +237,7 @@ const Board = (props) => {
     particleBeam3,
     auraAmplication1,
     brandish1,
-    castOff1,
+    ballisticArmor1,
     flourish1,
     flourish2,
     ambrosia1,
@@ -1606,13 +1606,13 @@ const Board = (props) => {
               </>
             );
 
-          case "Activating Cast Off":
+          case "Activating Ballistic Armor":
             if (self === lastRes.unit.player) {
-              updateLocalState(castOff1(lastRes.unit));
+              updateLocalState(ballisticArmor1(lastRes.unit));
             }
             break;
 
-          case "Cast Off1":
+          case "Ballistic Armor1":
             return (
               <>
                 {self === lastRes.unit.player && !hideModal && (
@@ -1627,7 +1627,7 @@ const Board = (props) => {
               </>
             );
 
-          case "Cast Off2":
+          case "Ballistic Armor2":
             return (
               <>
                 {self === lastRes.unit.player && !hideModal && (

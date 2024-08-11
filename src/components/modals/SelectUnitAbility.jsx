@@ -25,7 +25,7 @@ const SelectUnitAbility = (props) => {
 
   const {
     canAmplifyAura,
-    canCastOff,
+    canBallisticArmor,
     canStrike,
     getVacant2SpaceZones,
     getZonesWithAllies,
@@ -335,18 +335,13 @@ const SelectUnitAbility = (props) => {
           ),
         },
         {
-          abilityName: "Cast Off",
-          abilityQualifier: (
-            <div className="abilityQualifier">
-              <span className="abilityQualifier">
-                <em>One-shot</em>
-              </span>
-            </div>
-          ),
+          abilityName: "Ballistic Armor",
+          abilityQualifier: <div className="abilityQualifier"></div>,
           abilityText: (
             <>
               <div className="abilityText ">
-                ⬩Float 1 skill and spend your Shield or Ward to traverse.
+                ⬩Float 1 skill and spend your Shield or Ward to blast an
+                adjacent enemy.
               </div>
             </>
           ),
@@ -469,9 +464,8 @@ const SelectUnitAbility = (props) => {
             return true;
           case 1:
             return (
-              !unit.temporary.usedCastOff &&
               newGameState[unit.player].skillHand.length > 0 &&
-              canCastOff(unit)
+              canBallisticArmor(unit)
             );
         }
 
@@ -817,7 +811,7 @@ const SelectUnitAbility = (props) => {
           });
         } else if (selectedChoice === 1) {
           updateData = true;
-          newGameState.activatingSkill.push("CastOff");
+          newGameState.activatingSkill.push("BallisticArmor");
           newGameState.activatingUnit.push(unit);
 
           newGameState.currentResolution.push({
@@ -828,7 +822,7 @@ const SelectUnitAbility = (props) => {
 
           newGameState.currentResolution.push({
             resolution: "Unit Ability",
-            resolution2: "Activating Cast Off",
+            resolution2: "Activating Ballistic Armor",
             unit: unit,
           });
 

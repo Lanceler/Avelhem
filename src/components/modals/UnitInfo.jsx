@@ -217,9 +217,10 @@ const UnitInfo = (props) => {
               ⬩Draw 1 skill or restore your Virtue.
             </p>
 
-            <p className="unitInfo-text-heading2">2. Cast Off (One-shot)</p>
+            <p className="unitInfo-text-heading2">2. Ballistic Armor</p>
             <p className="unitInfo-text-desc">
-              ⬩Float 1 skill and spend your Shield or Ward to traverse.
+              ⬩Float 1 skill and spend your Shield or Ward to blast an adjacent
+              enemy.
             </p>
           </>
         );
