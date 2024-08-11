@@ -330,6 +330,49 @@ export const useUnitAbilityEffects = () => {
     return newGameState;
   };
 
+  const converge1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Converge"
+    newGameState.currentResolution.pop();
+
+    //give unit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation += 1)
+      : (unit.temporary.activation = 1);
+
+    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+
+    if (canMove(unit)) {
+      newGameState.currentResolution.push({
+        resolution: "Unit Ability",
+        resolution2: "Converge2",
+        player: self,
+        unit: unit,
+        details: {
+          reason: "Converge",
+          title: "Converge",
+          message: "You may traverse.",
+          no: "Skip",
+          yes: "Traverse",
+        },
+      });
+    }
+
+    newGameState.currentResolution.push({
+      resolution: "Unit Ability",
+      resolution2: "Converge1",
+      unit: unit,
+      details: {
+        title: "Converge",
+        reason: "Converge",
+      },
+    });
+
+    return newGameState;
+  };
+
   const galvanize1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
@@ -762,6 +805,7 @@ export const useUnitAbilityEffects = () => {
     reapTheWhirlwind1,
     secondWind1,
     fortify1,
+    converge1,
     galvanize1,
     arcFlash1,
     arcFlash2,

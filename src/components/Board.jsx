@@ -164,7 +164,6 @@ const Board = (props) => {
     selectEnemiesAfflicted,
     selectEnemiesRooted,
     selectFatedRivalry,
-    selectFatedRivalryProaction,
     selectFrenzyBladeActivator,
     selectHealingRainActivator,
     selectMatchMadeInHeavenPawn,
@@ -210,7 +209,6 @@ const Board = (props) => {
     powerAtTheFinalHourProaction,
     fatedRivalry1,
     fatedRivalry2,
-    fatedRivalryProaction,
     matchMadeInHeaven1,
     matchMadeInHeaven2,
     matchMadeInHeaven3,
@@ -230,6 +228,7 @@ const Board = (props) => {
     reapTheWhirlwind1,
     secondWind1,
     fortify1,
+    converge1,
     galvanize1,
     arcFlash1,
     arcFlash2,
@@ -414,7 +413,6 @@ const Board = (props) => {
         //   )
         // );
 
-        // //for testing: quick movement
         break;
 
       case "Tactic":
@@ -1461,6 +1459,40 @@ const Board = (props) => {
               <>
                 {self === lastRes.unit.player && !hideModal && (
                   <SelectCustomChoice
+                    unit={lastRes.unit}
+                    details={lastRes.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Activating Converge":
+            if (self === lastRes.unit.player) {
+              updateLocalState(converge1(lastRes.unit));
+            }
+            break;
+
+          case "Converge1":
+            return (
+              <>
+                {self === lastRes.unit.player && !hideModal && (
+                  <SelectCustomChoice
+                    unit={lastRes.unit}
+                    details={lastRes.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Converge2":
+            return (
+              <>
+                {self === lastRes.unit.player && !hideModal && (
+                  <YouMayNoYes
                     unit={lastRes.unit}
                     details={lastRes.details}
                     updateFirebase={updateFirebase}
@@ -3648,23 +3680,11 @@ const Board = (props) => {
             }
             break;
 
-          case "Activating Fated Rivalry: Proaction":
-            if (self === lastRes.player) {
-              updateLocalState(fatedRivalryProaction());
-            }
-            break;
-
-          case "Select Fated Rivalry Proaction":
-            if (self === lastRes.player) {
-              selectFatedRivalryProaction();
-            }
-            break;
-
-          case "Fated Rivalry Proaction2":
+          case "Fated Rivalry3":
             return (
               <>
-                {self === lastRes.player && !hideModal && (
-                  <SelectElement
+                {self === lastRes.unit.player && !hideModal && (
+                  <YouMayNoYes
                     unit={lastRes.unit}
                     details={lastRes.details}
                     updateFirebase={updateFirebase}
@@ -4611,22 +4631,6 @@ const Board = (props) => {
           null,
           unit
         );
-        break;
-
-      case "fated rivalry proaction":
-        newGameState.currentResolution.push({
-          resolution: "Sovereign Contingent Skill",
-          resolution2: "Fated Rivalry Proaction2",
-          player: self,
-          unit: selectedUnit,
-          details: {
-            reason: "Fated Rivalry",
-            title: "Fated Rivalry",
-            message:
-              "Ascend the pawn to the class of an enemy Scion within 2 spaces.",
-          },
-        });
-
         break;
 
       case "match made in heaven":

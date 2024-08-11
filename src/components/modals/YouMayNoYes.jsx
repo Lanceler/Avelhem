@@ -7,12 +7,16 @@ import { updateDemo } from "../../redux/demoGuide";
 
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
+import { useCardDatabase } from "../../hooks/useCardDatabase";
+
 const YouMayNoYes = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
 
   const dispatch = useDispatch();
+
+  const { allBurstSkills, getScionSet } = useCardDatabase();
 
   const {
     drawAvelhem,
@@ -210,6 +214,15 @@ const YouMayNoYes = (props) => {
           null,
           "paralyze2",
           "Geomancy"
+        );
+        break;
+
+      case "Converge": // "Converge2"
+        newGameState = enterMoveMode(
+          getVacantAdjacentZones(unit),
+          unit,
+          newGameState,
+          null
         );
         break;
 
@@ -413,11 +426,27 @@ const YouMayNoYes = (props) => {
         newGameState = drawAvelhem(newGameState);
         break;
 
-      case "Press the Attack Pawn":
+      case "Fated Rivalry":
         newGameState.currentResolution.push({
-          resolution: "Deploying Pawn",
-          zoneIds: getVacantFrontier(),
+          resolution: "Search Skill",
+          player: self,
+          details: {
+            restriction: getScionSet(unit.unitClass),
+            exclusion: allBurstSkills(),
+            searchTitle: "Fated Rivalry",
+            searchMessage:
+              "Search for then float 1 non-burst skill of their class",
+            outcome: "Float",
+            revealTitle: null,
+            revealMessage: null,
+            messageTitle: "Fated Rivalry",
+            message: "Your opponent has searched for and floated a skill.",
+            specMessage: `${
+              self === "host" ? "Gold" : "Silver"
+            } Sovereign has searched for and floated a skill.`,
+          },
         });
+
         break;
 
       case "Continue Game":

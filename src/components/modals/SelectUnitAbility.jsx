@@ -206,6 +206,26 @@ const SelectUnitAbility = (props) => {
             </>
           ),
         },
+        {
+          abilityName: "Converge",
+          abilityQualifier: (
+            <>
+              <div className="abilityQualifier"></div>
+              <div className="abilityQualifier">
+                <img src={MobilizeSmall} style={{ height: 30 }} />
+                <img src={MobilizeSmall} style={{ height: 30 }} />
+              </div>
+            </>
+          ),
+          abilityText: (
+            <>
+              <div className="abilityText ">
+                ⬩Draw 1 skill or restore your Virtue.
+              </div>
+              <div className="abilityText ">⬩You may traverse.</div>
+            </>
+          ),
+        },
       ];
       break;
 
@@ -420,6 +440,7 @@ const SelectUnitAbility = (props) => {
       case "Land Scion":
         switch (i) {
           case 0:
+          case 1:
             return true;
         }
 
@@ -663,6 +684,20 @@ const SelectUnitAbility = (props) => {
               restriction: fortifyRestriction,
               stock: 1,
               reason: "Fortify",
+              canSkip: "Return",
+            },
+          });
+        } else if (selectedChoice === 1) {
+          newGameState.currentResolution.push({
+            resolution: "Unit Ability",
+            resolution2: "Ability - select tactic",
+            unit: unit,
+            details: {
+              title: "Converge",
+              message: "Use 2 instances of 1 mobilize tactic.",
+              restriction: ["Mobilize"],
+              stock: 2,
+              reason: "Converge",
               canSkip: "Return",
             },
           });

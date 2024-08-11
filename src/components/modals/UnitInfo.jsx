@@ -134,6 +134,20 @@ const UnitInfo = (props) => {
             <p className="unitInfo-text-desc unitInfo-text-last">
               ⬩You may float 1 skill to traverse or strike.
             </p>
+
+            <p className="unitInfo-text-heading2">
+              2. Converge{" "}
+              <span className="unitInfo-tactic-group">
+                <img src={MobilizeSmall} className="unitInfo-tactic-mobilize" />
+                <img src={MobilizeSmall} className="unitInfo-tactic-mobilize" />
+              </span>
+            </p>
+            <p className="unitInfo-text-desc ">
+              ⬩Draw 1 skill or restore your Virtue.
+            </p>
+            <p className="unitInfo-text-desc unitInfo-text-last">
+              ⬩You may traverse.
+            </p>
           </>
         );
 

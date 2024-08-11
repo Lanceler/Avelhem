@@ -234,6 +234,31 @@ const SelectTacticViaEffect = (props) => {
           });
           break;
 
+        case "Converge":
+          updateData = true;
+          newGameState.activatingSkill.push("Converge");
+          newGameState.activatingUnit.push(unit);
+
+          newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+
+          newGameState.currentResolution.push({
+            resolution: "Tactic End",
+            unit: unit,
+            effect: true,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Unit Ability",
+            resolution2: "Activating Converge",
+            unit: unit,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Animation Delay",
+            priority: self,
+          });
+          break;
+
         case "Galvanize":
           updateData = true;
           newGameState.activatingSkill.push("Galvanize");

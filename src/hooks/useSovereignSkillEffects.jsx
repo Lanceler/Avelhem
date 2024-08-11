@@ -651,24 +651,20 @@ export const useSovereignSkillEffects = () => {
       Math.abs(unit1.row - unit2.row) <= 2 &&
       Math.abs(unit1.column - unit2.column) <= 2
     ) {
-      newGameState = drawSkill(newGameState);
-      newGameState = drawSkill(newGameState);
+      newGameState.currentResolution.push({
+        resolution: "Sovereign Contingent Skill",
+        resolution2: "Fated Rivalry3",
+        unit: unit1,
+        details: {
+          reason: "Fated Rivalry",
+          title: "Fated Rivalry",
+          message:
+            "You may search for then float 1 non-burst skill of their class.",
+          no: "Skip",
+          yes: "Search",
+        },
+      });
     }
-    return newGameState;
-  };
-
-  const fatedRivalryProaction = () => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    //end "Activating Fated Rivalry: Proaction" resolution
-    newGameState.currentResolution.pop();
-
-    newGameState.currentResolution.push({
-      resolution: "Sovereign Contingent Skill",
-      resolution2: "Select Fated Rivalry Proaction",
-      player: self,
-    });
-
     return newGameState;
   };
 
@@ -816,7 +812,6 @@ export const useSovereignSkillEffects = () => {
     powerAtTheFinalHourProaction,
     fatedRivalry1,
     fatedRivalry2,
-    fatedRivalryProaction,
     matchMadeInHeaven1,
     matchMadeInHeaven2,
     matchMadeInHeaven3,

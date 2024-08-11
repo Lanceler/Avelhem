@@ -27,6 +27,7 @@ const SelectTacticalAction = (props) => {
     enterSelectUnitMode,
     getVacantAdjacentZones,
     getZonesWithEnemies,
+    isDisrupted,
     isImmobilized,
     isMuted,
     isRooted,
@@ -148,6 +149,7 @@ const SelectTacticalAction = (props) => {
               unit.virtue &&
               canBlast(unit) &&
               unit.unitClass !== "Pawn" &&
+              !isDisrupted(unit, 2) &&
               (isRooted(unit)
                 ? localGameState[unit.player].skillHand.length > 0
                 : true)

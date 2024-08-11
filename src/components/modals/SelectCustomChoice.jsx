@@ -168,7 +168,13 @@ const SelectCustomChoice = (props) => {
       ChoiceSecondMessage = "Strike.";
       break;
 
-    // case "Arc Flash1":
+    case "Converge":
+      canFirstChoice = true;
+      canSecondChoice = true;
+      ChoiceFirstMessage = "Draw 1 skill.";
+      ChoiceSecondMessage = "Restore your Virtue.";
+      break;
+
     case "Arc Flash3":
       canSkip = true;
       canFirstChoice = canMove(unit);
@@ -442,13 +448,6 @@ const SelectCustomChoice = (props) => {
             unit: unit,
           });
 
-          // newGameState.currentResolution.push({
-          //   resolution: "Wind Skill",
-          //   resolution2: "Aerial Impetus Float",
-          //   player: self,
-          //   message: "Float 1 skill.",
-          // });
-
           newGameState.currentResolution.push({
             resolution: "Wind Skill",
             resolution2: "Aerial Impetus Float",
@@ -591,6 +590,14 @@ const SelectCustomChoice = (props) => {
             "strike",
             null
           );
+        }
+        break;
+
+      case "Converge":
+        if (selectedChoice === 1) {
+          newGameState = drawSkill(newGameState);
+        } else {
+          unit.virtue = 1;
         }
         break;
 

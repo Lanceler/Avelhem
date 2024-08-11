@@ -96,6 +96,7 @@ import AirDash from "../assets/abilities/AirDash.jpg";
 import ReapTheWhirlwind from "../assets/abilities/ReapTheWhirlwind.jpg";
 import SecondWind from "../assets/abilities/SecondWind.jpg";
 import Fortify from "../assets/abilities/Fortify.jpg";
+import Converge from "../assets/abilities/Converge.jpg";
 import MountainStance from "../assets/abilities/MountainStance.jpg";
 import Galvanize from "../assets/abilities/Galvanize.jpg";
 import ArcFlash from "../assets/abilities/ArcFlash.jpg";
@@ -258,6 +259,7 @@ export const useGetImages = () => {
     ReapTheWhirlwind,
     SecondWind,
     Fortify,
+    Converge,
     MountainStance,
     Galvanize,
     ArcFlash,
@@ -477,6 +479,8 @@ export const useGetImages = () => {
         return Geomancy;
       case "Fortify":
         return Fortify;
+      case "Converge":
+        return Converge;
       case "MountainStance":
         return MountainStance;
 

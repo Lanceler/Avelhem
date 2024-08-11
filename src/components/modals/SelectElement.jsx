@@ -31,21 +31,6 @@ const SelectElement = (props) => {
     canSkip = true;
   }
 
-  const fatedRivalryEnemies = [];
-  if (props.details.reason === "Fated Rivalry") {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let zones = JSON.parse(newGameState.zones);
-
-    const enemies = getZonesWithEnemies(props.unit, 2);
-
-    for (let z of enemies) {
-      const zone = zones[Math.floor(z / 5)][z % 5];
-      const enemyUnit = newGameState[zone.player].units[zone.unitIndex];
-
-      fatedRivalryEnemies.push(enemyUnit.unitClass);
-    }
-  }
-
   const canDeployScion = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -74,12 +59,6 @@ const SelectElement = (props) => {
       case "Power at the Final Hour":
       case "Advance Deploy Scion":
         return !classList[choice] || classList[choice] < 2;
-
-      case "Fated Rivalry":
-        return (
-          (!classList[choice] || classList[choice] < 2) &&
-          fatedRivalryEnemies.includes(choice)
-        );
 
       default:
         return false;
@@ -112,15 +91,15 @@ const SelectElement = (props) => {
         );
         break;
 
-      case "Fated Rivalry":
-        newGameState = ascendPawn(
-          newGameState,
-          props.unit,
-          selectedChoice,
-          "Fated Rivalry Proaction",
-          null
-        );
-        break;
+      // case "Fated Rivalry":
+      //   newGameState = ascendPawn(
+      //     newGameState,
+      //     props.unit,
+      //     selectedChoice,
+      //     "Fated Rivalry Proaction",
+      //     null
+      //   );
+      //   break;
 
       case "Advance Deploy Scion":
         updateData = false;
