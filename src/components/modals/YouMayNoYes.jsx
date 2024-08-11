@@ -434,16 +434,15 @@ const YouMayNoYes = (props) => {
             restriction: getScionSet(unit.unitClass),
             exclusion: allBurstSkills(),
             searchTitle: "Fated Rivalry",
-            searchMessage:
-              "Search for then float 1 non-burst skill of their class",
-            outcome: "Float",
+            searchMessage: "Search for 1 non-burst skill of their class",
+            outcome: "Add",
             revealTitle: null,
             revealMessage: null,
             messageTitle: "Fated Rivalry",
-            message: "Your opponent has searched for and floated a skill.",
+            message: "Your opponent has searched for a skill.",
             specMessage: `${
               self === "host" ? "Gold" : "Silver"
-            } Sovereign has searched for and floated a skill.`,
+            } Sovereign has searched for a skill.`,
           },
         });
 

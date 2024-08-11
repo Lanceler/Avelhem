@@ -658,8 +658,7 @@ export const useSovereignSkillEffects = () => {
         details: {
           reason: "Fated Rivalry",
           title: "Fated Rivalry",
-          message:
-            "You may search for then float 1 non-burst skill of their class.",
+          message: "You may search for 1 non-burst skill of their class.",
           no: "Skip",
           yes: "Search",
         },
