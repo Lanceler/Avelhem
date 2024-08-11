@@ -73,8 +73,11 @@ const UnitInfo = (props) => {
                 <img src={InvokeSmall} className="unitInfo-tactic-icon" />
               </span>
             </p>
-            <p className="unitInfo-text-desc unitInfo-text-last">
+            <p className="unitInfo-text-desc">
               ⬩Purge an adjacent ally’s Paralysis, Frostbite, and Burn.
+            </p>
+            <p className="unitInfo-text-desc unitInfo-text-last">
+              ⬩Draw 1 skill.
             </p>
 
             <p className="unitInfo-text-heading2">

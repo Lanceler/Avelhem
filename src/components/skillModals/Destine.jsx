@@ -8,7 +8,7 @@ import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import Skill from "../hand/Skill";
 
-const PowerAtTheFinalHourProaction = (props) => {
+const Destine = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
@@ -17,17 +17,10 @@ const PowerAtTheFinalHourProaction = (props) => {
 
   const [selectedSkill, setSelectedSkill] = useState(null);
 
-  let canSkip = false;
-  let SkipMessage = "Skip";
+  let canSkip = true;
+  let SkipMessage = "Return";
   let message =
-    "Reveal the aspect of 1 Scion skill to ascend an ally pawn to the matching class.";
-
-  if (props.reason === "Destine") {
-    canSkip = true;
-    SkipMessage = "Return";
-    message =
-      "Spend 1 Scion skill to ascend an ally pawn to the matching class.";
-  }
+    "Spend 1 Scion skill to ascend an ally pawn to the matching class.";
 
   let usableSkills = [];
   for (let i in localGameState[self].skillHand) {
@@ -71,14 +64,7 @@ const PowerAtTheFinalHourProaction = (props) => {
     const scionClass = avelhemToScion(parseInt(skillCode));
     // console.log(scionClass);
 
-    if (props.reason === "Power at the Final Hour") {
-      newGameState.currentResolution.push({
-        resolution: "Sovereign Contingent Skill",
-        resolution2: "Select Power at the Final Hour Pawn",
-        player: self,
-        scionClass: scionClass,
-      });
-    } else if (props.reason === "Destine") {
+    if (props.reason === "Destine") {
       //Spend FD
       newGameState[self].fateDefiances -= props.defianceCost;
 
@@ -140,7 +126,6 @@ const PowerAtTheFinalHourProaction = (props) => {
                   }`}
                   onClick={() => {
                     handleClick(canBeRevealed(usableSkill.id), i);
-                    // handleUpdateDemoGuide();
                   }}
                 >
                   <Skill
@@ -172,4 +157,4 @@ const PowerAtTheFinalHourProaction = (props) => {
   );
 };
 
-export default PowerAtTheFinalHourProaction;
+export default Destine;

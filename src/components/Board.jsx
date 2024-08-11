@@ -55,7 +55,7 @@ import SelectCustomChoice from "./modals/SelectCustomChoice";
 import GlacialTorrent from "./skillModals/GlacialTorrent";
 import CataclysmicTempestFloat from "./skillModals/CataclysmicTempestFloat";
 import FerventPrayerResonance from "./skillModals/FerventPrayerResonance";
-import PowerAtTheFinalHourProaction from "./skillModals/PowerAtTheFinalHourProaction";
+import Destine from "./skillModals/Destine";
 
 import ContingentTriggered from "./modals/ContingentTriggered";
 
@@ -167,7 +167,7 @@ const Board = (props) => {
     selectFrenzyBladeActivator,
     selectHealingRainActivator,
     selectMatchMadeInHeavenPawn,
-    selectPowerAtTheFinalHour,
+    // selectPowerAtTheFinalHour,
     selectPitfallTrapActivator,
     selectSowAndReapStriker,
     selectSymphonicScreechActivator,
@@ -206,7 +206,7 @@ const Board = (props) => {
     pressTheAttack1,
     powerAtTheFinalHour1,
     powerAtTheFinalHour2,
-    powerAtTheFinalHourProaction,
+    powerAtTheFinalHour3,
     fatedRivalry1,
     fatedRivalry2,
     matchMadeInHeaven1,
@@ -223,6 +223,7 @@ const Board = (props) => {
     fieryHeart1,
     fieryHeart2,
     hydrotherapy1,
+    hydrotherapy2,
     coldEmbrace1,
     airDash1,
     reapTheWhirlwind1,
@@ -400,18 +401,18 @@ const Board = (props) => {
 
     switch (option) {
       case "Info":
-        setUnitInfor(expandedUnit);
+        // setUnitInfor(expandedUnit);
 
         // //for testing: quick movement
 
-        // updateLocalState(
-        //   enterMoveMode(
-        //     getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
-        //     expandedUnit,
-        //     newGameState,
-        //     null
-        //   )
-        // );
+        updateLocalState(
+          enterMoveMode(
+            getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
+            expandedUnit,
+            newGameState,
+            null
+          )
+        );
 
         break;
 
@@ -654,7 +655,7 @@ const Board = (props) => {
             return (
               <>
                 {self === lastRes.player && !hideModal && (
-                  <PowerAtTheFinalHourProaction
+                  <Destine
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                     reason="Destine"
@@ -898,10 +899,6 @@ const Board = (props) => {
           <>
             {self === lastRes.player && !hideModal && (
               <SearchSkill
-                // restriction={lastRes.restriction}
-                // outcome={lastRes.outcome}
-                // message={lastRes.message}
-                // reveal={lastRes.reveal}
                 details={lastRes.details}
                 hideOrRevealModale={hideOrRevealModale}
                 updateFirebase={updateFirebase}
@@ -1361,6 +1358,12 @@ const Board = (props) => {
           case "Activating Hydrotherapy":
             if (self === lastRes.unit.player) {
               updateLocalState(hydrotherapy1(lastRes.unit));
+            }
+            break;
+
+          case "Hydrotherapy1":
+            if (self === lastRes.unit.player) {
+              updateLocalState(hydrotherapy2());
             }
             break;
 
@@ -3637,28 +3640,9 @@ const Board = (props) => {
             }
             break;
 
-          case "Activating Power at the Final Hour: Proaction":
-            if (self === lastRes.player) {
-              updateLocalState(powerAtTheFinalHourProaction());
-            }
-            break;
-
-          case "Power at the Final Hour: Proaction":
-            return (
-              <>
-                {self === lastRes.player && !hideModal && (
-                  <PowerAtTheFinalHourProaction
-                    updateFirebase={updateFirebase}
-                    hideOrRevealModale={hideOrRevealModale}
-                    reason={"Power at the Final Hour"}
-                  />
-                )}
-              </>
-            );
-
-          case "Select Power at the Final Hour Pawn":
-            if (self === lastRes.player) {
-              selectPowerAtTheFinalHour(lastRes.scionClass);
+          case "Power at the Final Hour3":
+            if (self === lastRes.unit.player) {
+              updateLocalState(powerAtTheFinalHour3(lastRes.unit));
             }
             break;
 
@@ -4612,15 +4596,15 @@ const Board = (props) => {
           );
         break;
 
-      case "power at the final hour":
-        newGameState = ascendPawn(
-          newGameState,
-          selectedUnit,
-          special,
-          "Power at the Final Hour",
-          null
-        );
-        break;
+      // case "power at the final hour":
+      //   newGameState = ascendPawn(
+      //     newGameState,
+      //     selectedUnit,
+      //     special,
+      //     "Power at the Final Hour",
+      //     null
+      //   );
+      //   break;
 
       case "fated rivalry":
         newGameState = ascendPawn(
@@ -4685,7 +4669,6 @@ const Board = (props) => {
     setTacticUsed(null);
 
     dispatch(updateState(newGameState));
-
     updateFirebase(newGameState);
   };
 

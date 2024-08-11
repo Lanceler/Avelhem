@@ -53,9 +53,6 @@ const SelectElement = (props) => {
 
   const canSelect = (choice) => {
     switch (props.details.reason) {
-      // case "Power at the Final Hour":
-      //   return canAscend(localGameState, props.unit.player, choice);
-
       case "Power at the Final Hour":
       case "Advance Deploy Scion":
         return !classList[choice] || classList[choice] < 2;
@@ -86,20 +83,10 @@ const SelectElement = (props) => {
           newGameState,
           props.unit,
           selectedChoice,
-          "Power at the Final Hour Proaction",
+          "Power at the Final Hour",
           null
         );
         break;
-
-      // case "Fated Rivalry":
-      //   newGameState = ascendPawn(
-      //     newGameState,
-      //     props.unit,
-      //     selectedChoice,
-      //     "Fated Rivalry Proaction",
-      //     null
-      //   );
-      //   break;
 
       case "Advance Deploy Scion":
         updateData = false;

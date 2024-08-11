@@ -17,6 +17,7 @@ export const useUnitAbilityEffects = () => {
     canBlast,
     canMove,
     canStrike,
+    drawSkill,
     enterSelectUnitMode,
     getVacant2SpaceZones,
     getZonesWithAllies,
@@ -144,11 +145,11 @@ export const useUnitAbilityEffects = () => {
 
     newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
-    // newGameState.currentResolution.push({
-    //   resolution: "Unit Ability",
-    //   resolution2: "Hydrotherapy1",
-    //   unit: unit,
-    // });
+    newGameState.currentResolution.push({
+      resolution: "Unit Ability",
+      resolution2: "Hydrotherapy1",
+      unit: unit,
+    });
 
     enterSelectUnitMode(
       getZonesWithAllies(unit, 1, false),
@@ -158,6 +159,17 @@ export const useUnitAbilityEffects = () => {
       "hydrotherapy",
       null
     );
+
+    return newGameState;
+  };
+
+  const hydrotherapy2 = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Hydrotherapy1"
+    newGameState.currentResolution.pop();
+
+    newGameState = drawSkill(newGameState);
 
     return newGameState;
   };
@@ -799,6 +811,7 @@ export const useUnitAbilityEffects = () => {
     fieryHeart1,
     fieryHeart2,
     hydrotherapy1,
+    hydrotherapy2,
     airDash1,
     coldEmbrace1,
     reapTheWhirlwind1,

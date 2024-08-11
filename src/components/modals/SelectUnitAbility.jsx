@@ -109,6 +109,7 @@ const SelectUnitAbility = (props) => {
               <div className="abilityText ">
                 ⬩Purge an adjacent ally’s Paralysis, Frostbite, and Burn.
               </div>
+              <div className="abilityText ">⬩Draw 1 skill.</div>
             </>
           ),
         },

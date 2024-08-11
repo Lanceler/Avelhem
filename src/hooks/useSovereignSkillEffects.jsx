@@ -578,6 +578,12 @@ export const useSovereignSkillEffects = () => {
     //end "Power at the Final Hour2" resolution
     newGameState.currentResolution.pop();
 
+    newGameState.currentResolution.push({
+      resolution: "Sovereign Contingent Skill",
+      resolution2: "Power at the Final Hour3",
+      unit: unit,
+    });
+
     if (
       getScionSet(unit.unitClass).some((s) =>
         newGameState[unit.player].skillVestige.includes(s)
@@ -607,17 +613,20 @@ export const useSovereignSkillEffects = () => {
     return newGameState;
   };
 
-  const powerAtTheFinalHourProaction = () => {
+  const powerAtTheFinalHour3 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
-    //end "Activating Power at the Final Hour: Proaction" resolution
+    //end "Power at the Final Hour3" resolution
     newGameState.currentResolution.pop();
 
-    newGameState.currentResolution.push({
-      resolution: "Sovereign Contingent Skill",
-      resolution2: "Power at the Final Hour: Proaction",
-      player: self,
-    });
+    unit.virtue = 1;
+    newGameState[unit.player].fateDefiances = Math.min(
+      6,
+      newGameState[unit.player].fateDefiances + 2
+    );
+
+    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     return newGameState;
   };
@@ -808,7 +817,7 @@ export const useSovereignSkillEffects = () => {
     pressTheAttack1,
     powerAtTheFinalHour1,
     powerAtTheFinalHour2,
-    powerAtTheFinalHourProaction,
+    powerAtTheFinalHour3,
     fatedRivalry1,
     fatedRivalry2,
     matchMadeInHeaven1,
