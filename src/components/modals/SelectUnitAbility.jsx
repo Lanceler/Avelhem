@@ -181,7 +181,7 @@ const SelectUnitAbility = (props) => {
 
     case "Land Scion":
       if (unit.boosts.mountainStance) {
-        message = `Mountain Stance boost: You can use an Invoke tactic to activate Fortify.`;
+        message = `Mountain Stance boost: You can use an Advance tactic to activate Fortify.`;
       }
 
       abilityDetails = [
@@ -193,7 +193,7 @@ const SelectUnitAbility = (props) => {
               {unit.boosts.mountainStance && (
                 <span>
                   {"\u00A0\u00A0or\u00A0\u00A0"}
-                  <img src={InvokeSmall} style={{ height: 35 }} />
+                  <img src={AdvanceSmall} style={{ height: 35 }} />
                 </span>
               )}
             </div>
@@ -473,11 +473,14 @@ const SelectUnitAbility = (props) => {
       case "Plant Scion":
         switch (i) {
           case 0:
-            return !unit.temporary.usedFlourish && unit.blossom
-              ? unit.blossom + newGameState[unit.player].skillHand.length >= 2
-              : newGameState[unit.player].skillHand.length >= 2;
+            return (
+              !unit.temporary.usedFlourish &&
+              (unit.blossom
+                ? unit.blossom + newGameState[unit.player].skillHand.length >= 2
+                : newGameState[unit.player].skillHand.length >= 2)
+            );
           case 1:
-            return unit.blossom >= 1 && !unit.temporary.usedFlourish;
+            return unit.blossom >= 1;
         }
     }
 
@@ -549,7 +552,7 @@ const SelectUnitAbility = (props) => {
         if (selectedChoice === 0) {
           if (unit.boosts.glacialTorrent > 0) {
             unit.boosts.glacialTorrent -= 1;
-            newGameState[unit.player].units[unit.unitIndex] = unit;
+            //newGameState[unit.player].units[unit.unitIndex] = unit;
 
             newGameState.activatingSkill.push("Hydrotherapy");
             newGameState.activatingUnit.push(unit);
@@ -588,7 +591,7 @@ const SelectUnitAbility = (props) => {
         } else if (selectedChoice === 1) {
           if (unit.boosts.glacialTorrent > 0) {
             unit.boosts.glacialTorrent -= 1;
-            newGameState[unit.player].units[unit.unitIndex] = unit;
+            //newGameState[unit.player].units[unit.unitIndex] = unit;
 
             newGameState.activatingSkill.push("ColdEmbrace");
             newGameState.activatingUnit.push(unit);
@@ -665,8 +668,8 @@ const SelectUnitAbility = (props) => {
           let fortifyRestriction = ["Assault"];
 
           if (unit.boosts.mountainStance) {
-            fortifyMessage = "Use an Assault or Invoke tactic.";
-            fortifyRestriction = ["Assault", "Invoke"];
+            fortifyMessage = "Use an Assault or Advance tactic.";
+            fortifyRestriction = ["Assault", "Advance"];
           }
 
           newGameState.currentResolution.push({
@@ -717,7 +720,7 @@ const SelectUnitAbility = (props) => {
         } else if (selectedChoice === 1) {
           if (unit.boosts.valiantSpark) {
             delete unit.boosts.valiantSpark;
-            newGameState[unit.player].units[unit.unitIndex] = unit;
+            //newGameState[unit.player].units[unit.unitIndex] = unit;
 
             newGameState.activatingSkill.push("ArcFlash");
             newGameState.activatingUnit.push(unit);

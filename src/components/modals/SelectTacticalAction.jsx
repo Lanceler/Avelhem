@@ -243,7 +243,7 @@ const SelectTacticalAction = (props) => {
               ? (unit.temporary.activation += 1)
               : (unit.temporary.activation = 1);
 
-            newGameState[unit.player].units[unit.unitIndex] = unit;
+            //newGameState[unit.player].units[unit.unitIndex] = unit;
             newGameState.activatingUnit.push(unit);
 
             newGameState.currentResolution.push({
@@ -338,7 +338,7 @@ const SelectTacticalAction = (props) => {
             ? (unit.temporary.activation += 1)
             : (unit.temporary.activation = 1);
 
-          newGameState[unit.player].units[unit.unitIndex] = unit;
+          //newGameState[unit.player].units[unit.unitIndex] = unit;
 
           //newGameState.activatingSkill.push("Advance") <-- to do?
           newGameState.activatingUnit.push(unit);

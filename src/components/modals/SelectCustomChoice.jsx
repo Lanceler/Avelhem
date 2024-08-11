@@ -157,7 +157,7 @@ const SelectCustomChoice = (props) => {
       canFirstChoice = true;
       canSecondChoice = newGameState[unit.player].skillHand.length > 0;
       ChoiceFirstMessage =
-        "Gain a boost: you can use an Invoke tactic to activate “Fortify”.";
+        "Gain a boost: you can use an Advance tactic to activate “Fortify”.";
       ChoiceSecondMessage = "Spend 1 skill to search for 1 “Crystallization”.";
       break;
 
@@ -327,7 +327,7 @@ const SelectCustomChoice = (props) => {
           unit.fever
             ? (unit.fever = Math.min(2, unit.fever + 2))
             : (unit.fever = 2);
-          newGameState[unit.player].units[unit.unitIndex] = unit;
+          //newGameState[unit.player].units[unit.unitIndex] = unit;
         } else {
           newGameState.currentResolution.push({
             resolution: "Recover Skill",
@@ -530,7 +530,7 @@ const SelectCustomChoice = (props) => {
       case "Geomancy":
         if (selectedChoice === 1) {
           unit.hp = Math.min(unit.hp + 1, 3);
-          newGameState[unit.player].units[unit.unitIndex] = unit;
+          //newGameState[unit.player].units[unit.unitIndex] = unit;
         } else {
           newGameState.currentResolution.push({
             resolution: "Recover Skill",
@@ -675,10 +675,10 @@ const SelectCustomChoice = (props) => {
           unit.sharpness
             ? (unit.sharpness = Math.min(2, unit.sharpness + 1))
             : (unit.sharpness = 1);
-          newGameState[unit.player].units[unit.unitIndex] = unit;
+          //newGameState[unit.player].units[unit.unitIndex] = unit;
         } else {
           unit.hp = Math.max(2, unit.hp);
-          newGameState[unit.player].units[unit.unitIndex] = unit;
+          //newGameState[unit.player].units[unit.unitIndex] = unit;
           newGameState.currentResolution.push({
             resolution: "Discard Skill",
             unit: unit,
@@ -738,7 +738,7 @@ const SelectCustomChoice = (props) => {
           newGameState = drawSkill(newGameState);
         } else {
           unit.virtue = 1;
-          newGameState[unit.player].units[unit.unitIndex] = unit;
+          //newGameState[unit.player].units[unit.unitIndex] = unit;
         }
         break;
 
@@ -748,7 +748,7 @@ const SelectCustomChoice = (props) => {
         } else {
           unit.enhancements.ward = 0;
         }
-        newGameState[unit.player].units[unit.unitIndex] = unit;
+        //newGameState[unit.player].units[unit.unitIndex] = unit;
 
         enterSelectUnitMode(
           getZonesWithEnemies(unit, 1),

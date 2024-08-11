@@ -3130,6 +3130,46 @@ export const useRecurringEffects = () => {
     return !(newIndex >= 8 || getVacantFrontier().length === 0);
   };
 
+  const canDestine = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let pawn = null;
+    const units = newGameState[self].units;
+
+    //1. get any (the first) pawn that can promote
+    for (let unit of units) {
+      if (unit && unit.unitClass === "Pawn" && !isMuted(unit)) {
+        pawn = unit;
+        break;
+      }
+    }
+
+    //2. if no pawns were found in step 1, return false
+    if (pawn === null) {
+      return false;
+    }
+
+    //3. try to see if pawn can promote to aspect of any card in hand
+
+    const skillHand = newGameState[self].skillHand;
+
+    for (let skill of skillHand) {
+      //3.1 get aspect of skill
+      const skillCode = skill.substring(0, 2);
+
+      //3.2 if aspect is non-sovereign, check if can ascend
+      if (!isNaN(parseInt(skillCode))) {
+        if (
+          canAscend(newGameState, self, avelhemToScion(parseInt(skillCode)))
+        ) {
+          return true;
+        }
+      }
+    }
+
+    //4. return false if failed to return true
+    return false;
+  };
+
   const canMove = (unit) => {
     if (getVacantAdjacentZones(unit).length > 0) {
       return true;
@@ -5475,6 +5515,7 @@ export const useRecurringEffects = () => {
     canBlast,
     canBallisticArmor,
     canDeploy,
+    canDestine,
     canSowAndReapBlast,
     canSowAndReapStrike,
     canMove,

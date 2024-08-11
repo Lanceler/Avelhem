@@ -277,7 +277,7 @@ const YouMaySpend1Skill = (props) => {
           ? (unit.temporary.activation += 1)
           : (unit.temporary.activation = 1);
 
-        newGameState[unit.player].units[unit.unitIndex] = unit;
+        //newGameState[unit.player].units[unit.unitIndex] = unit;
         newGameState.activatingUnit.push(unit);
 
         newGameState.currentResolution.push({

@@ -324,7 +324,7 @@ const UnitInfo = (props) => {
             <p className="unitInfo-text-desc unitInfo-text-last">
               ⬩Upon your debut, gain a boost: you can use{" "}
               <span className="unitInfo-tactic-group2">
-                <img src={InvokeSmall} className="unitInfo-tactic-icon2" />
+                <img src={AdvanceSmall} className="unitInfo-tactic-icon2" />
               </span>{" "}
               to activate “Fortify”. Alternatively, spend 1 skill to search for
               1 “Crystallization”.
@@ -756,7 +756,7 @@ const UnitInfo = (props) => {
                         ⬩Can activate “Fortify” by using{" "}
                         <span className="unitInfo-tactic-group2">
                           <img
-                            src={InvokeSmall}
+                            src={AdvanceSmall}
                             className="unitInfo-tactic-icon2"
                           />
                         </span>

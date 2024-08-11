@@ -207,7 +207,7 @@ const SelectTacticViaEffect = (props) => {
           break;
 
         case "Fortify":
-          if (newGameState.tactics[i].face === "Invoke") {
+          if (newGameState.tactics[i].face === "Advance") {
             delete unit.boosts.mountainStance;
             newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
           }

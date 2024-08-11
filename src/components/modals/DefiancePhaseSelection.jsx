@@ -20,13 +20,8 @@ const DefiancePhaseSelection = (props) => {
 
   const { sovereignSkillList } = useCardDatabase();
 
-  const {
-    assignTactics,
-    canActivateSovereignSkill,
-    drawSkill,
-    endDefiancePhase,
-    rollTactic,
-  } = useRecurringEffects();
+  const { assignTactics, canDestine, drawSkill, endDefiancePhase, rollTactic } =
+    useRecurringEffects();
 
   let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -199,9 +194,9 @@ const DefiancePhaseSelection = (props) => {
     //Curate
     newGameState[self].fateDefiances >= defianceCosts[2] &&
       newGameState.tactics.length > 1,
-    //Destine (Power at the Final Hour has the same activation requirement)
-    newGameState[self].fateDefiances >= defianceCosts[3] &&
-      canActivateSovereignSkill("SC-01"),
+    //Destine
+    newGameState[self].fateDefiances >= defianceCosts[3] && canDestine(),
+
     //Ex Machina
     newGameState[self].fateDefiances >= defianceCosts[4],
     //Finesse

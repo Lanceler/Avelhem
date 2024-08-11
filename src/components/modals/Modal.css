@@ -379,10 +379,14 @@
 .abilityQualifier {
     color: #e8e8e8;
     font-family: "Times New Roman", Times, serif;
-    font-size: 20px;
+    font-size: 25px;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-top: 3px;
+
+    /* background-color: aqua; */
+
 }
 
 .abilityText {
