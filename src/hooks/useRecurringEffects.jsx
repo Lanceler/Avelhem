@@ -2072,7 +2072,7 @@ export const useRecurringEffects = () => {
 
     unit.hp -= 1;
 
-    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     if (unit.hp < 1) {
       newGameState = eliminateUnit(newGameState, null, unit, null, "burn");
@@ -2502,7 +2502,7 @@ export const useRecurringEffects = () => {
         : (unit.enhancements.shield = 2);
     }
 
-    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     return newGameState;
   };
@@ -2648,7 +2648,7 @@ export const useRecurringEffects = () => {
     newGameState.currentResolution.pop();
 
     unit.enhancements.ravager = true;
-    newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     if (resonator === "SA-02") {
       newGameState = drawSkill(newGameState);

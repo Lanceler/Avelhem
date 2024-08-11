@@ -401,18 +401,18 @@ const Board = (props) => {
 
     switch (option) {
       case "Info":
-        // setUnitInfor(expandedUnit);
+        setUnitInfor(expandedUnit);
 
         // //for testing: quick movement
 
-        updateLocalState(
-          enterMoveMode(
-            getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
-            expandedUnit,
-            newGameState,
-            null
-          )
-        );
+        // updateLocalState(
+        //   enterMoveMode(
+        //     getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
+        //     expandedUnit,
+        //     newGameState,
+        //     null
+        //   )
+        // );
 
         break;
 
@@ -2723,21 +2723,6 @@ const Board = (props) => {
               </>
             );
 
-          // case "Surge2":
-          //   return (
-          //     <>
-          //       {self === lastRes.unit.player && !hideModal && (
-          //         <SelectCustomChoice
-          //           unit={lastRes.unit}
-          //           details={lastRes.details}
-          //           setMovingSpecial={setMovingSpecial}
-          //           updateFirebase={updateFirebase}
-          //           hideOrRevealModale={hideOrRevealModale}
-          //         />
-          //       )}
-          //     </>
-          //   );
-
           case "Surge2":
             return (
               <>
@@ -4596,16 +4581,6 @@ const Board = (props) => {
           );
         break;
 
-      // case "power at the final hour":
-      //   newGameState = ascendPawn(
-      //     newGameState,
-      //     selectedUnit,
-      //     special,
-      //     "Power at the Final Hour",
-      //     null
-      //   );
-      //   break;
-
       case "fated rivalry":
         newGameState = ascendPawn(
           newGameState,
@@ -4708,7 +4683,7 @@ const Board = (props) => {
             delete unit.enhancements.overgrowth;
           }
 
-          newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+          //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
         }
       }
 
@@ -4771,7 +4746,7 @@ const Board = (props) => {
             delete unit.enhancements.overgrowth;
           }
 
-          newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+          //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
         }
       }
 
@@ -4832,7 +4807,7 @@ const Board = (props) => {
         delete unit.enhancements.overgrowth;
       }
 
-      newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+      //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
     }
 
     newGameState.activatingUnit.pop();

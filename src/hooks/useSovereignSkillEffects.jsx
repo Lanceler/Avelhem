@@ -626,7 +626,7 @@ export const useSovereignSkillEffects = () => {
       newGameState[unit.player].fateDefiances + 2
     );
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+    ////newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     return newGameState;
   };
