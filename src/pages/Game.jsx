@@ -274,28 +274,30 @@ export default function Game() {
         "pick repertoire",
         "wait enemy repertoire",
       ].includes(playerStatus) && (
-        <div
-          className="game-banner"
-          style={{
-            backgroundImage: `url(${getBannerImage("Invite")})`,
-          }}
-        >
-          <div className="game-banner-backdrop">
-            <div className="game-banner-title">{banner.title}</div>
-            <div className="game-banner-text-body">
-              <div className="game-banner-text">
-                {banner.buttonText && (
-                  <button
-                    className="home-banner-button"
-                    onClick={() => bannerButton()}
-                  >
-                    {banner.buttonText}
-                  </button>
-                )}
+        <>
+          <div
+            className="game-banner"
+            style={{
+              backgroundImage: `url(${getBannerImage("Invite")})`,
+            }}
+          >
+            <div className="game-banner-backdrop">
+              <div className="game-banner-title">{banner.title}</div>
+              <div className="game-banner-text-body">
+                <div className="game-banner-text">
+                  {banner.buttonText && (
+                    <button
+                      className="home-banner-button"
+                      onClick={() => bannerButton()}
+                    >
+                      {banner.buttonText}
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </>
       )}
       {playerStatus === "pick repertoire" && (
         <SelectRepertoire onSelectRepertoire={onSelectRepertoire} />

@@ -7,8 +7,6 @@ import { updateDemo } from "../../redux/demoGuide";
 import { useGetImages } from "../../hooks/useGetImages";
 import { useCardDatabase } from "../../hooks/useCardDatabase";
 
-import Collapse from "../../assets/others/Collapse.png";
-
 import SelectedAvelhem from "./SelectedAvelhem";
 
 const PlayerAvelhemHand = (props) => {

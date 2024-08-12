@@ -6,8 +6,8 @@
 }
 
 .home-title{
-    padding-top: 10px;
-    height: 80px;
+    padding-top: 35px;
+    /* height: 80px; */
 
     text-align: center;
     font-family: Alegreya, Geogia, Times New Roman, "serif";
@@ -131,6 +131,13 @@
         width: 90vw;
     }
     
+}
+
+@media screen and (max-width: 850px) {
+    .home-title {
+        padding-top: 45px;
+    }
+
 }
 
 

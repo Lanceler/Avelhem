@@ -18,7 +18,7 @@
 
 .demo-header{
     /* color: #333; */
-    padding-top: 10px;
+    padding-top: 35px;
     color: goldenrod;
     -webkit-text-stroke: 1.25px #fdd700;
     text-shadow: rgb(0, 0, 0) 1px 0 10px;
@@ -86,4 +86,12 @@
     top: 250px;
     left: 1279px;
     margin: 0px;
+}
+
+
+@media screen and (max-width: 850px) {
+    .demo-header {
+        padding-top: 45px;
+    }
+
 }

@@ -9,7 +9,7 @@
 }
 
 .create-game-header{
-    padding-top: 10px;
+    padding-top: 35px;
     height: 80px;
 
     text-align: center;
@@ -174,8 +174,17 @@
         user-select: none;
         height: 150px;
     }
+}
+
+
+@media screen and (max-width: 850px) {
+    .create-game-header {
+        padding-top: 45px;
+    }
 
 }
+
+
 
 @media screen and (max-width: 550px) {
 

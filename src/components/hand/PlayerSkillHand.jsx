@@ -9,8 +9,6 @@ import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 import { useGetImages } from "../../hooks/useGetImages";
 import { useCardDatabase } from "../../hooks/useCardDatabase";
 
-import Collapse from "../../assets/others/Collapse.png";
-
 import SelectedSkill from "./SelectedSkill";
 
 const PlayerSkillHand = (props) => {

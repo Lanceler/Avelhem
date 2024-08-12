@@ -4,11 +4,16 @@
     background-position: center;
 
     /* background: aqua; */
+    padding: 45px 0px 0px;
+
+    /* min-height: calc(100vh - 65px - 45px); */
+    overflow: auto;
 }
 
 
 .game-banner {
     margin: 20px auto;
+
     background-color: #333;
     height: 650px;
     width: 1040px;
@@ -16,6 +21,9 @@
     background-size: cover;
     background-position: center;
     box-shadow: 4px 4px 15px 4px rgba(0, 0, 0, 0.45);
+
+        
+        
 }
 
 .game-banner-backdrop {
@@ -71,6 +79,10 @@
 }
 
 @media screen and (max-width: 500px) {
+
+    .game-body{
+        min-height: calc(100vh - 65px - 45px);
+    }
 
 
     .game-banner {

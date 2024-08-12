@@ -20,8 +20,7 @@
 }
 
 .repertoires-title {
-    padding-top: 10px;
-    height: 80px;
+    padding-top: 35px;
     margin-bottom: 25px;
     text-align: center;
     font-family: 'Alegreya', 'Georgia', 'Times New Roman', serif;
@@ -110,6 +109,13 @@
     .repertoire-desc {
         font-size: 22px;
     }
+}
+
+@media screen and (max-width: 850px) {
+    .repertoires-title {
+        padding-top: 45px;
+    }
+
 }
 
 @media screen and (max-width: 500px) {

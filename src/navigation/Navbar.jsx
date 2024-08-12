@@ -38,7 +38,7 @@ const Navbar = () => {
             </svg>
           </div>
 
-          <div className="leftContainer">
+          <div className="nav-logo-container">
             <Link
               to="/"
               onClick={() => {
@@ -48,7 +48,6 @@ const Navbar = () => {
             >
               <img src={AvelhemLogo} className="avelhem-logo" />
             </Link>
-            <span></span>
           </div>
 
           <ul className={`nav-menu ${click ? "active" : ""}`}>
@@ -76,7 +75,7 @@ const Navbar = () => {
                 style={{ cursor: "pointer" }}
               >
                 <>
-                  Demonstrations{" "}
+                  Demo{" "}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 320 512"

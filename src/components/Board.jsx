@@ -4974,7 +4974,7 @@ const Board = (props) => {
   return (
     <div className="board-body">
       {zones && localGameState && (
-        <>
+        <div className="board-contents">
           <div className="board-physical">
             <div
               className={`board-space ${
@@ -5430,7 +5430,7 @@ const Board = (props) => {
             )}
             <br />
           </div>
-        </>
+        </div>
       )}
 
       {magnifiedSkill && <ZoomCard cardInfo={magnifiedSkill} />}
