@@ -180,7 +180,7 @@ const Board = (props) => {
     unitFloatSkill,
     unitRetainSkill,
     uponDebutTalents,
-    virtueBlast,
+    aetherBlast,
   } = useRecurringEffects();
 
   const { applySkill } = useSkillEffects();
@@ -583,9 +583,6 @@ const Board = (props) => {
     switch (lastRes.resolution) {
       case "Animation Delay":
         animationDelay();
-        // if (self === lastRes.priority) {
-        //   animationDelay();
-        // }
         break;
 
       case "Acquisition Phase Selection":
@@ -757,7 +754,7 @@ const Board = (props) => {
         }
         break;
 
-      case "Mitigating Virtue-Blast":
+      case "Mitigating Aether-Blast":
         return (
           <>
             {self === lastRes.unit.player && !hideModal && (
@@ -1172,7 +1169,7 @@ const Board = (props) => {
               </>
             );
 
-          case "Rooted Virtue-blast":
+          case "Rooted Aether-blast":
             return (
               <>
                 {self === lastRes.unit.player && !hideModal && (
@@ -2115,20 +2112,6 @@ const Board = (props) => {
               updateLocalState(applySkill("galeConjuration1", lastRes.unit));
             }
             break;
-
-          case "Gale Conjuration1":
-            return (
-              <>
-                {self === lastRes.unit.player && !hideModal && (
-                  <FloatSkill
-                    unit={lastRes.unit}
-                    details={lastRes.details}
-                    updateFirebase={updateFirebase}
-                    hideOrRevealModale={hideOrRevealModale}
-                  />
-                )}
-              </>
-            );
 
           case "Resonating Gale Conjuration":
             if (self === lastRes.unit.player) {
@@ -4271,8 +4254,8 @@ const Board = (props) => {
         );
         break;
 
-      case "virtue-blast":
-        newGameState = virtueBlast(
+      case "aether-blast":
+        newGameState = aetherBlast(
           newGameState,
           newGameState[unit.player].units[unit.unitIndex],
           selectedUnit
@@ -4391,7 +4374,7 @@ const Board = (props) => {
       case "kleptothermy ally":
         newGameState[selectedUnit.player].units[
           selectedUnit.unitIndex
-        ].virtue = 1;
+        ].aether = 1;
         break;
 
       case "kleptothermy enemy":
@@ -4401,7 +4384,7 @@ const Board = (props) => {
         if (kleptoVictim.unitClass !== "Water Scion" || isMuted(kleptoVictim)) {
           newGameState[selectedUnit.player].units[
             selectedUnit.unitIndex
-          ].virtue = 0;
+          ].aether = 0;
         }
         break;
 
@@ -4470,7 +4453,7 @@ const Board = (props) => {
       case "amplify aura":
         newGameState[selectedUnit.player].units[
           selectedUnit.unitIndex
-        ].virtue = 0;
+        ].aether = 0;
 
         if (
           newGameState[selectedUnit.player].units[selectedUnit.unitIndex]
@@ -4682,8 +4665,6 @@ const Board = (props) => {
             delete unit.enhancements.disruption;
             delete unit.enhancements.overgrowth;
           }
-
-          //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
         }
       }
 
@@ -4745,8 +4726,6 @@ const Board = (props) => {
             delete unit.enhancements.disruption;
             delete unit.enhancements.overgrowth;
           }
-
-          //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
         }
       }
 
@@ -4806,8 +4785,6 @@ const Board = (props) => {
         delete unit.enhancements.disruption;
         delete unit.enhancements.overgrowth;
       }
-
-      //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
     }
 
     newGameState.activatingUnit.pop();

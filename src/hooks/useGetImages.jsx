@@ -117,7 +117,7 @@ import AvelhemCardBack from "../assets/avelhemcards/AvelhemCardBack.jpg";
 
 import Shield from "../assets/attributeIcons/Shield.png";
 import Ward from "../assets/attributeIcons/Ward.png";
-import Virtue from "../assets/attributeIcons/Virtue.png";
+import Aether from "../assets/attributeIcons/Aether.png";
 import HP from "../assets/attributeIcons/HP.png";
 import BurnGif from "../assets/attributeIcons/BurnGif.gif";
 import FrostbiteGif from "../assets/attributeIcons/FrostbiteGif.gif";
@@ -279,7 +279,7 @@ export const useGetImages = () => {
     //statuses
     Shield,
     Ward,
-    Virtue,
+    Aether,
     HP,
     BurnGif,
     FrostbiteGif,

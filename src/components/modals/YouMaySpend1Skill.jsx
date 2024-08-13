@@ -271,7 +271,7 @@ const YouMaySpend1Skill = (props) => {
         });
         break;
 
-      case "Rooted Virtue-blast":
+      case "Rooted Aether-blast":
         //give unit activationCounter
         unit.temporary.activation
           ? (unit.temporary.activation += 1)
@@ -290,7 +290,7 @@ const YouMaySpend1Skill = (props) => {
           unit,
           newGameState,
           props.details.tactic,
-          "virtue-blast",
+          "aether-blast",
           null
         );
         break;

@@ -58,11 +58,6 @@ const FloatSkill = (props) => {
         });
         break;
 
-      case "Gale Conjuration1":
-        unit.virtue = 1;
-        newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
-        break;
-
       case "Fortify":
         newGameState.currentResolution.push({
           resolution: "Unit Ability",

@@ -32,8 +32,8 @@ const InfoPopUp = (props) => {
       case "FD":
         return "FD (Fate Defiance) Info.";
 
-      case "Virtue-Blast Mitigation":
-        return "Virtue-Blast Mitigation";
+      case "Aether-Blast Mitigation":
+        return "Aether-Blast Mitigation";
 
       case "game":
         return "Gameplay Demo";
@@ -77,7 +77,7 @@ const InfoPopUp = (props) => {
             <ol className="infoPopUp-list">
               <li className="unitInfo-text-desc">⬩Traverse.</li>
               <li className="unitInfo-text-desc">
-                ⬩Virtue-blast an adjacent enemy.
+                ⬩Aether-blast an adjacent enemy.
               </li>
             </ol>
 
@@ -226,19 +226,19 @@ const InfoPopUp = (props) => {
           </div>
         );
 
-      case "Virtue-Blast Mitigation":
+      case "Aether-Blast Mitigation":
         return (
           <div>
             <div className="unitInfo-text-desc">
               <p>
-                When a unit is attacked via Virtue-blast, they may mitigate it
-                by spending their own Virtue. (Tip: Muted units cannot spend
-                their Virtue; thus, you can deny them the option to mitigate.)
+                When a unit is attacked via Aether-blast, they may mitigate it
+                by spending their own Aether. (Tip: Muted units cannot spend
+                their Aether; thus, you can deny them the option to mitigate.)
               </p>
               <br />
               <p>
-                Migitating a Virtue-blast reduces its AP by 1, but it also
-                restores the Virtue of the attacker. (Tip: Virtue-blasts with at
+                Migitating a Aether-blast reduces its AP by 1, but it also
+                restores the Aether of the attacker. (Tip: Aether-blasts with at
                 least 2 AP will still do damage; avoid mitigating them if they
                 remain lethal, as that would only benefit your opponent.)
               </p>

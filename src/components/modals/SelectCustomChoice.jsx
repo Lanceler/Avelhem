@@ -90,7 +90,7 @@ const SelectCustomChoice = (props) => {
         localGameState[self].skillHand.includes(s)
       );
       ChoiceFirstMessage =
-        "Restore their Virtue and grant them Ward for 2 turns.";
+        "Restore their Aether and grant them Ward for 2 turns.";
       ChoiceSecondMessage = (
         <>
           Reveal 1 Water skill <br /> to grant them 1 HP (Max. 2).
@@ -101,9 +101,10 @@ const SelectCustomChoice = (props) => {
     case "Kleptothermy":
       canFirstChoice = true;
       canSecondChoice = getZonesWithEnemies(unit, 1).length > 0;
-      ChoiceFirstMessage = "Restore your or an adjacent ally’s Virtue.";
+      ChoiceFirstMessage =
+        "Restore your Aether or that of an ally within 2 spaces.";
       ChoiceSecondMessage =
-        "Purge an adjacent enemy’s Virtue. This cannot affect Water Scions.";
+        "Purge an adjacent enemy’s Aether. This cannot affect Water Scions.";
       break;
 
     case "Cold Embrace":
@@ -122,7 +123,7 @@ const SelectCustomChoice = (props) => {
       canSecondChoice = getZonesWithEnemies(unit, 1).length > 0;
       ChoiceFirstMessage =
         "Float 1 skill to prompt an adjacent ally to traverse.";
-      ChoiceSecondMessage = "Purge an adjacent enemy’s Virtue and Shield.";
+      ChoiceSecondMessage = "Purge an adjacent enemy’s Aether and Shield.";
       break;
 
     case "Reap the Whirlwind":
@@ -172,7 +173,7 @@ const SelectCustomChoice = (props) => {
       canFirstChoice = true;
       canSecondChoice = true;
       ChoiceFirstMessage = "Draw 1 skill.";
-      ChoiceSecondMessage = "Restore your Virtue.";
+      ChoiceSecondMessage = "Restore your Aether.";
       break;
 
     case "Arc Flash3":
@@ -231,7 +232,7 @@ const SelectCustomChoice = (props) => {
       canFirstChoice = true;
       canSecondChoice = true;
       ChoiceFirstMessage = "Draw 1 skill.";
-      ChoiceSecondMessage = "Restore your Virtue.";
+      ChoiceSecondMessage = "Restore your Aether.";
       break;
 
     case "Ballistic Armor":
@@ -370,7 +371,7 @@ const SelectCustomChoice = (props) => {
           ];
 
         if (selectedChoice === 1) {
-          healingRainUnit.virtue = 1;
+          healingRainUnit.aether = 1;
 
           if (healingRainUnit.enhancements.ward > 0) {
             healingRainUnit.enhancements.ward = Math.max(
@@ -399,7 +400,7 @@ const SelectCustomChoice = (props) => {
       case "Kleptothermy":
         if (selectedChoice === 1) {
           enterSelectUnitMode(
-            getZonesWithAllies(unit, 1, true),
+            getZonesWithAllies(unit, 2, true),
             null,
             newGameState,
             null,
@@ -597,7 +598,7 @@ const SelectCustomChoice = (props) => {
         if (selectedChoice === 1) {
           newGameState = drawSkill(newGameState);
         } else {
-          unit.virtue = 1;
+          unit.aether = 1;
         }
         break;
 
@@ -737,7 +738,7 @@ const SelectCustomChoice = (props) => {
         if (selectedChoice === 1) {
           newGameState = drawSkill(newGameState);
         } else {
-          unit.virtue = 1;
+          unit.aether = 1;
           //newGameState[unit.player].units[unit.unitIndex] = unit;
         }
         break;

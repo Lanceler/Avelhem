@@ -221,7 +221,7 @@ const SelectUnitAbility = (props) => {
           abilityText: (
             <>
               <div className="abilityText ">
-                ⬩Draw 1 skill or restore your Virtue.
+                ⬩Draw 1 skill or restore your Aether.
               </div>
               <div className="abilityText ">⬩You may traverse.</div>
             </>
@@ -292,7 +292,7 @@ const SelectUnitAbility = (props) => {
               <div className="abilityText ">
                 ⬩Spend 1 skill to blast an enemy within 2 spaces.
               </div>
-              <div className="abilityText ">⬩Restore your Virtue.</div>
+              <div className="abilityText ">⬩Restore your Aether.</div>
             </>
           ),
         },
@@ -308,7 +308,7 @@ const SelectUnitAbility = (props) => {
           abilityText: (
             <>
               <div className="abilityText ">
-                ⬩Convert your or an adjacent ally’s Virtue into Shield for 2
+                ⬩Convert your or an adjacent ally’s Aether into Shield for 2
                 turns.
               </div>
             </>
@@ -330,7 +330,7 @@ const SelectUnitAbility = (props) => {
             <>
               <div className="abilityText ">⬩Search for 1 “Frenzy Blade”.</div>
               <div className="abilityText ">
-                ⬩Draw 1 skill or restore your Virtue.
+                ⬩Draw 1 skill or restore your Aether.
               </div>
             </>
           ),
@@ -364,7 +364,7 @@ const SelectUnitAbility = (props) => {
           abilityText: (
             <>
               <div className="abilityText ">
-                ⬩Spend 2 skills to restore your Virtue and gain Overgrowth.
+                ⬩Spend 2 skills to restore your Aether and gain Overgrowth.
               </div>
             </>
           ),

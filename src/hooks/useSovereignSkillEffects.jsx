@@ -620,13 +620,13 @@ export const useSovereignSkillEffects = () => {
     //end "Power at the Final Hour3" resolution
     newGameState.currentResolution.pop();
 
-    unit.virtue = 1;
+    unit.aether = 1;
     newGameState[unit.player].fateDefiances = Math.min(
       6,
       newGameState[unit.player].fateDefiances + 2
     );
 
-    ////newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+    //
 
     return newGameState;
   };

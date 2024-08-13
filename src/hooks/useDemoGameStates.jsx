@@ -408,12 +408,12 @@ export const useDemoGameStates = () => {
                 unitIndex: 0,
                 hp: 1,
                 unitClass: "Fire Scion",
-                virtue: 1,
+                aether: 1,
                 boosts: {},
               },
               null,
               {
-                virtue: 1,
+                aether: 1,
                 player: "host",
                 hp: 1,
                 unitIndex: 2,
@@ -429,7 +429,7 @@ export const useDemoGameStates = () => {
                 player: "host",
                 unitIndex: 3,
                 boosts: {},
-                virtue: 1,
+                aether: 1,
                 row: 2,
                 temporary: {},
                 afflictions: { frostbite: 1 },
@@ -560,7 +560,7 @@ export const useDemoGameStates = () => {
                 boosts: {},
                 temporary: {},
                 unitIndex: 0,
-                virtue: 1,
+                aether: 1,
                 player: "guest",
                 hp: 1,
                 column: 3,
@@ -575,7 +575,7 @@ export const useDemoGameStates = () => {
                 fever: 2,
                 enhancements: {},
                 player: "guest",
-                virtue: 1,
+                aether: 1,
                 unitIndex: 1,
                 hp: 1,
                 temporary: {},
@@ -591,10 +591,10 @@ export const useDemoGameStates = () => {
                 player: "guest",
                 temporary: {},
                 boosts: {},
-                virtue: 1,
+                aether: 1,
               },
               {
-                virtue: 1,
+                aether: 1,
                 boosts: {},
                 unitIndex: 3,
                 unitClass: "Land Scion",
@@ -610,7 +610,7 @@ export const useDemoGameStates = () => {
                 temporary: {},
                 row: 2,
                 enhancements: {},
-                virtue: 1,
+                aether: 1,
                 hp: 1,
                 unitIndex: 4,
                 column: 3,
@@ -620,7 +620,7 @@ export const useDemoGameStates = () => {
                 afflictions: {},
               },
               {
-                virtue: 1,
+                aether: 1,
                 boosts: {},
                 row: 0,
                 temporary: {},
@@ -2196,10 +2196,10 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 The debut talent of Water Scions allows them to either restore a
-                friendly unit’s Virtue or remove that of an enemy.
+                friendly unit’s Aether or remove that of an enemy.
                 <br />
                 <br />
-                (When units are deployed, they are automatically granted Virtue,
+                (When units are deployed, they are automatically granted Aether,
                 the applications of which will be discussed later.)
               </div>
             );
@@ -2209,17 +2209,17 @@ export const useDemoGameStates = () => {
           case "Learn1.215":
             return (
               <div>
-                Since all your units still possess their Virtues, purge the
-                Virtue of the enemy Metal Scion.
+                Since all your units still possess their Aethers, purge the
+                Aether of the enemy Metal Scion.
               </div>
             );
 
           case "Learn1.216":
             return (
               <div>
-                The visual indicator of a Virtue is found at the bottom center
+                The visual indicator of a Aether is found at the bottom center
                 of a unit (to the right of the heart-shaped HP icon). As the
-                Metal Scion no longer possesses their Virtue, their icon is
+                Metal Scion no longer possesses their Aether, their icon is
                 absent.
               </div>
             );
@@ -2440,7 +2440,7 @@ export const useDemoGameStates = () => {
           case "Learn1.254":
             return (
               <div>
-                Up next is an explanation of Virtues.{" "}
+                Up next is an explanation of Aethers.{" "}
                 <strong>
                   For the sake of the demo, your tactics have been rerolled.
                 </strong>
@@ -2454,14 +2454,14 @@ export const useDemoGameStates = () => {
           case "Learn1.255":
             return (
               <div>
-                As mentioned earlier, units inherently possess a Virtue.
+                As mentioned earlier, units inherently possess a Aether.
                 <br />
                 <br />
                 <strong>
-                  Virtues are primarily used to perform and mitigate
-                  Virtue-blasts.
+                  Aethers are primarily used to perform and mitigate
+                  Aether-blasts.
                 </strong>{" "}
-                Scions (not pawns) can perform a Virtue-blast via the Advance
+                Scions (not pawns) can perform a Aether-blast via the Advance
                 tactic.
               </div>
             );
@@ -2469,8 +2469,8 @@ export const useDemoGameStates = () => {
           case "Learn1.256":
             return (
               <div>
-                When a unit performs a <strong>Virtue-blast</strong>, they
-                expend their Virtue to blast an enemy. When the attack connects,
+                When a unit performs a <strong>Aether-blast</strong>, they
+                expend their Aether to blast an enemy. When the attack connects,
                 the victim is given the option to mitigate it.
               </div>
             );
@@ -2478,12 +2478,12 @@ export const useDemoGameStates = () => {
           case "Learn1.257":
             return (
               <div>
-                <strong>Mitigating a Virtue-blast reduces its AP by 1.</strong>
+                <strong>Mitigating a Aether-blast reduces its AP by 1.</strong>
                 <br />
                 <br />
-                When a unit mitigates a Virtue-blast, they spend their Virtue
+                When a unit mitigates a Aether-blast, they spend their Aether
                 and transfer it to the attacker. (Muted units cannot spend their
-                Virtues; thus, they are most vulnerable to Virtue-blasts.)
+                Aethers; thus, they are most vulnerable to Aether-blasts.)
               </div>
             );
 
@@ -2494,7 +2494,7 @@ export const useDemoGameStates = () => {
           case "Learn1.262":
             return (
               <div>
-                Let’s see it in action. Make your Water Scion Virtue-blast the
+                Let’s see it in action. Make your Water Scion Aether-blast the
                 enemy pawn.
               </div>
             );
@@ -2509,9 +2509,9 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 Attacks have 1 AP by default; thus, the damage dealt by the
-                Virtue-blast was reduced to 0. <br />
+                Aether-blast was reduced to 0. <br />
                 <br />
-                Due to the mitigation, the Water Scion regained the Virtue they
+                Due to the mitigation, the Water Scion regained the Aether they
                 spent on their attack.
               </div>
             );

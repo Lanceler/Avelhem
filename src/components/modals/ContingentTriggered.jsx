@@ -72,14 +72,14 @@ const ContingentTriggered = (props) => {
   };
 
   const contingencySkip = (type) => {
-    if (!contingencySettings[type]) {
+    if (localGameState[self].skillHand.length < 1) {
+      handleSkip();
+    } else if (!contingencySettings[type]) {
       for (let usableSkill of usableSkills) {
         if (canActivateSkill(usableSkill.id)) {
           return;
         }
       }
-
-      console.log("SKIP");
       handleSkip();
     }
   };
@@ -194,8 +194,8 @@ const ContingentTriggered = (props) => {
       contingencySkip(props.contingencyType);
 
       switch (props.type) {
-        case "virtue-blast":
-          targetType = "Virtue-blast";
+        case "aether-blast":
+          targetType = "Aether-blast";
           break;
 
         case "strike":

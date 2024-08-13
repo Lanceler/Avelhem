@@ -27,7 +27,7 @@ const YouMayNoYes = (props) => {
     getVacantAdjacentZones,
     getVacantFrontier,
     getZonesWithEnemies,
-    virtueBlastYes,
+    aetherBlastYes,
   } = useRecurringEffects();
 
   const handleViewBoard = () => {
@@ -38,7 +38,7 @@ const YouMayNoYes = (props) => {
   if (
     [
       "Mana Feedback",
-      "Mitigate Virtue-Blast",
+      "Mitigate Aether-Blast",
       "Fervent Prayer",
       "Press the Attack Avelhem",
     ].includes(props.details.reason)
@@ -51,7 +51,7 @@ const YouMayNoYes = (props) => {
 
     newGameState.currentResolution.pop();
 
-    if (props.details.reason === "Mitigate Virtue-Blast") {
+    if (props.details.reason === "Mitigate Aether-Blast") {
       newGameState.activatingTarget.pop();
     }
 
@@ -85,9 +85,9 @@ const YouMayNoYes = (props) => {
         newGameState = endExecutionPhase2();
         break;
 
-      case "Mitigate Virtue-Blast": //"Mitigating Virtue-Blast"
+      case "Mitigate Aether-Blast": //"Mitigating Aether-Blast"
         newGameState.activatingTarget.pop();
-        newGameState = virtueBlastYes(newGameState, props.attacker, unit);
+        newGameState = aetherBlastYes(newGameState, props.attacker, unit);
         break;
 
       case "Advance Avelhem Draw": //"Advance Avelhem Draw"

@@ -6,7 +6,7 @@ import "./Piece.css";
 
 import Shield from "../assets/attributeIcons/Shield.png";
 import Ward from "../assets/attributeIcons/Ward.png";
-import Virtue from "../assets/attributeIcons/Virtue.png";
+import Aether from "../assets/attributeIcons/Aether.png";
 import HP from "../assets/attributeIcons/HP.png";
 import BurnGif from "../assets/attributeIcons/BurnGif.gif";
 import FrostbiteGif from "../assets/attributeIcons/FrostbiteGif.gif";
@@ -429,9 +429,9 @@ export const Piece = (props) => {
             <div className="hP hP-amount">{props.unit.hp}</div>
           )}
 
-          {/* virtue */}
+          {/* aether */}
 
-          {props.unit.virtue == true && <img src={Virtue} className="virtue" />}
+          {props.unit.aether == true && <img src={Aether} className="aether" />}
 
           {/* ward */}
 

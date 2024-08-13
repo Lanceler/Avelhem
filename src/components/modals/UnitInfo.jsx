@@ -146,7 +146,7 @@ const UnitInfo = (props) => {
               </span>
             </p>
             <p className="unitInfo-text-desc ">
-              ⬩Draw 1 skill or restore your Virtue.
+              ⬩Draw 1 skill or restore your Aether.
             </p>
             <p className="unitInfo-text-desc unitInfo-text-last">
               ⬩You may traverse.
@@ -195,12 +195,12 @@ const UnitInfo = (props) => {
             </p>
             <p className="unitInfo-text-desc unitInfo-text-last">
               ⬩Spend 1 skill to blast an enemy within 2 spaces. ⬩Restore your
-              Virtue.
+              Aether.
             </p>
 
             <p className="unitInfo-text-heading2">2. Amplify Aura (One-shot)</p>
             <p className="unitInfo-text-desc">
-              ⬩Convert your or an adjacent ally’s Virtue into Shield for 2
+              ⬩Convert your or an adjacent ally’s Aether into Shield for 2
               turns.
             </p>
           </>
@@ -217,7 +217,7 @@ const UnitInfo = (props) => {
             </p>
             <p className="unitInfo-text-desc">⬩Search for 1 “Frenzy Blade”.</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Draw 1 skill or restore your Virtue.
+              ⬩Draw 1 skill or restore your Aether.
             </p>
 
             <p className="unitInfo-text-heading2">2. Ballistic Armor</p>
@@ -233,7 +233,7 @@ const UnitInfo = (props) => {
           <>
             <p className="unitInfo-text-heading2">1. Flourish (One-shot) </p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Spend 2 skills to restore your Virtue and gain Overgrowth.
+              ⬩Spend 2 skills to restore your Aether and gain Overgrowth.
             </p>
 
             <p className="unitInfo-text-heading2">2. Ambrosia</p>
@@ -257,7 +257,7 @@ const UnitInfo = (props) => {
             </p>
 
             <p className="unitInfo-text-heading2">2. Outclassed</p>
-            <p className="unitInfo-text-desc">⬩You cannot Virtue-blast.</p>
+            <p className="unitInfo-text-desc">⬩You cannot Aether-blast.</p>
           </>
         );
 
@@ -285,9 +285,9 @@ const UnitInfo = (props) => {
           <>
             <p className="unitInfo-text-heading2">1. Kleptothermy</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Upon your debut, restore your or an adjacent ally’s Virtue.
-              Alternatively, purge an adjacent enemy’s Virtue; this cannot
-              affect Water Scions.
+              ⬩Upon your debut, restore your Aether or that of an ally within 2
+              spaces. Alternatively, purge an adjacent enemy’s Aether; this
+              cannot affect Water Scions.
             </p>
 
             <p className="unitInfo-text-heading2">2. Clear as Crystal</p>
@@ -472,7 +472,7 @@ const UnitInfo = (props) => {
                     <>
                       <p className="unitInfo-text-heading2">HP: {unit.hp}</p>
                       <p className="unitInfo-text-heading2">
-                        Virtue: {unit.virtue ? "Present" : "Absent"}
+                        Aether: {unit.aether ? "Present" : "Absent"}
                       </p>
                       {unit.fever > 0 && (
                         <p className="unitInfo-text-heading2">
@@ -572,8 +572,8 @@ const UnitInfo = (props) => {
                         {unit.enhancements.ward > 1 ? "s" : ""})
                       </p>
                       <p className="unitInfo-text-desc unitInfo-text-last">
-                        ⬩Negates the next attack or targeting affliction.
-                        (Applies before Shield.)
+                        ⬩Negates the next attack or affliction that targets this
+                        unit.
                       </p>
                     </>
                   )}
@@ -585,8 +585,8 @@ const UnitInfo = (props) => {
                         {unit.enhancements.shield > 1 ? "s" : ""})
                       </p>
                       <p className="unitInfo-text-desc unitInfo-text-last">
-                        ⬩Negates the next attack. (Does not apply if unit is
-                        enhanced with Ward.)
+                        ⬩Negates the next attack targets this unit, unless they
+                        are enhanced with Ward.
                       </p>
                     </>
                   )}
@@ -599,7 +599,7 @@ const UnitInfo = (props) => {
                       </p>
                       <p className="unitInfo-text-desc">
                         ⬩Prevents enemies within 2 spaces from spending their
-                        Virtues and activating abilities.
+                        Aethers and activating abilities.
                       </p>
                       <p className="unitInfo-text-desc">
                         ⬩Prevents adjacent enemies from activating non-burst
@@ -697,7 +697,7 @@ const UnitInfo = (props) => {
                         ⬩<em>Rooted</em>; cannot strike.
                       </p>
                       <p className="unitInfo-text-desc unitInfo-text-last">
-                        ⬩Must spend 1 skill to traverse or Virtue-blast via
+                        ⬩Must spend 1 skill to traverse or Aether-blast via
                         tactical action.
                       </p>
                     </>

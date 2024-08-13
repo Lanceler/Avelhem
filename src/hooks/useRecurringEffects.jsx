@@ -2072,8 +2072,6 @@ export const useRecurringEffects = () => {
 
     unit.hp -= 1;
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
     if (unit.hp < 1) {
       newGameState = eliminateUnit(newGameState, null, unit, null, "burn");
     }
@@ -2147,7 +2145,7 @@ export const useRecurringEffects = () => {
           aP += attacker.sharpness;
         }
 
-        if (special === "Virtue-blast-blocked") {
+        if (special === "Aether-blast-blocked") {
           aP = Math.max(0, aP - 1);
         }
         break;
@@ -2426,7 +2424,7 @@ export const useRecurringEffects = () => {
     const applyScoreUnit = (unit) => {
       unit.enhancements = { score: true };
       unit.afflictions = {};
-      unit.virtue = 0;
+      unit.aether = 0;
       unit.hp = 0;
       unit.charge = 0;
       unit.fever = 0;
@@ -2501,8 +2499,6 @@ export const useRecurringEffects = () => {
         ? (unit.enhancements.shield = Math.max(unit.enhancements.shield, 2))
         : (unit.enhancements.shield = 2);
     }
-
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     return newGameState;
   };
@@ -2648,7 +2644,6 @@ export const useRecurringEffects = () => {
     newGameState.currentResolution.pop();
 
     unit.enhancements.ravager = true;
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     if (resonator === "SA-02") {
       newGameState = drawSkill(newGameState);
@@ -3062,7 +3057,7 @@ export const useRecurringEffects = () => {
   };
 
   const canAmplifyAura = (unit) => {
-    if (unit.virtue) {
+    if (unit.aether) {
       return true;
     }
 
@@ -3073,7 +3068,7 @@ export const useRecurringEffects = () => {
       const zone = zones[Math.floor(i / 5)][i % 5];
       const ally = localGameState[zone.player].units[zone.unitIndex];
 
-      if (ally.virtue) {
+      if (ally.aether) {
         return true;
       }
     }
@@ -4171,7 +4166,7 @@ export const useRecurringEffects = () => {
     }
 
     //Note: range 1 prevents non-burst skill activation
-    //Note: range 2 prevents virtue-spending and abilities
+    //Note: range 2 prevents aether-spending and abilities
 
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     const zones = JSON.parse(localGameState.zones);
@@ -4313,7 +4308,7 @@ export const useRecurringEffects = () => {
       column: column,
       unitClass: unitClass,
       hp: 1,
-      virtue: 1,
+      aether: 1,
       afflictions: {},
       enhancements: {},
       boosts: {},
@@ -5007,7 +5002,7 @@ export const useRecurringEffects = () => {
       victim.unitClass === "Fire Scion" && //must be Fire Scion
       !isMuted(victim) &&
       !isDisrupted(victim, 1) &&
-      ["strike", "virtue-blast", "blast"].includes(method) && //only attacks can trigger it
+      ["strike", "aether-blast", "blast"].includes(method) && //only attacks can trigger it
       localGameState[victim.player].skillHand.length > 0 &&
       victim.fever > 0 && //enemy needs fever
       getZonesWithEnemies(victim, 1).length //must be able to burn an adjacent enemy
@@ -5172,16 +5167,10 @@ export const useRecurringEffects = () => {
   };
 
   const triggerSurvivalAlly = (victim) => {
-    if (localGameState[victim.player].skillHand.length < 1) {
-      return false;
-    }
     return triggerPowerAtTheFinalHour(victim) || triggerHealingRain(victim);
   };
 
   const triggerSurvivalEnemy = (victim) => {
-    if (localGameState[victim.player].skillHand.length < 1) {
-      return false;
-    }
     return triggerFrenzyBlade(victim);
   };
 
@@ -5416,7 +5405,7 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
-  const virtueBlast = (newGameState, attacker, victim) => {
+  const aetherBlast = (newGameState, attacker, victim) => {
     newGameState.currentResolution.push({
       resolution: "Apply Damage",
       attacker: attacker,
@@ -5424,16 +5413,16 @@ export const useRecurringEffects = () => {
       type: "blast",
     });
 
-    if (victim.virtue && !isMuted(victim) && !isDisrupted(victim, 2)) {
+    if (victim.aether && !isMuted(victim) && !isDisrupted(victim, 2)) {
       newGameState.currentResolution.push({
-        resolution: "Mitigating Virtue-Blast",
+        resolution: "Mitigating Aether-Blast",
 
         unit: victim,
         attacker: attacker,
         details: {
-          reason: "Mitigate Virtue-Blast",
-          title: "Mitigate Virtue-Blast",
-          message: `The enemy ${attacker.unitClass} is about to Virtue-blast your ${victim.unitClass}. Your unit may spend their Virtue to reduce the attack’s AP by
+          reason: "Mitigate Aether-Blast",
+          title: "Mitigate Aether-Blast",
+          message: `The enemy ${attacker.unitClass} is about to Aether-blast your ${victim.unitClass}. Your unit may spend their Aether to reduce the attack’s AP by
           1.`,
           no: "Skip",
           yes: "Reduce AP",
@@ -5444,32 +5433,32 @@ export const useRecurringEffects = () => {
     }
 
     //to do in the future: consider bypass Target
-    if (triggerTarget(attacker, victim, "virtue-blast")) {
+    if (triggerTarget(attacker, victim, "aether-blast")) {
       newGameState.currentResolution.push({
         resolution: "Triggering Contingent Skill",
         resolution2: "Triggering Target",
         attacker: attacker,
         victim: victim,
-        type: "virtue-blast",
+        type: "aether-blast",
       });
 
       newGameState.activatingTarget.push(victim);
     }
 
-    newGameState[attacker.player].units[attacker.unitIndex].virtue = 0;
+    newGameState[attacker.player].units[attacker.unitIndex].aether = 0;
 
     return newGameState;
   };
 
-  const virtueBlastYes = (newGameState, attacker, victim) => {
+  const aetherBlastYes = (newGameState, attacker, victim) => {
     // newGameState.currentResolution.pop();
     newGameState.currentResolution[
       newGameState.currentResolution.length - 1
-    ].special = "Virtue-blast-blocked";
+    ].special = "Aether-blast-blocked";
 
-    newGameState[victim.player].units[victim.unitIndex].virtue = 0;
+    newGameState[victim.player].units[victim.unitIndex].aether = 0;
 
-    newGameState[attacker.player].units[attacker.unitIndex].virtue = 1;
+    newGameState[attacker.player].units[attacker.unitIndex].aether = 1;
 
     return newGameState;
   };
@@ -5597,7 +5586,7 @@ export const useRecurringEffects = () => {
     unitFloatSkill,
     unitRetainSkill,
     uponDebutTalents,
-    virtueBlast,
-    virtueBlastYes,
+    aetherBlast,
+    aetherBlastYes,
   };
 };

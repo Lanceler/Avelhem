@@ -43,8 +43,6 @@ export const useSkillEffects = () => {
     //consume unit's fever
     unit.fever -= 1;
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
     newGameState.currentResolution.push({
       resolution: "Fire Skill",
       resolution2: "Ignition Propulsion1",
@@ -81,8 +79,6 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
     newGameState.currentResolution.push({
       resolution: "Fire Skill",
       resolution2: "Conflagration1",
@@ -115,8 +111,6 @@ export const useSkillEffects = () => {
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
-
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     if (resonator !== "SA-02") {
       newGameState.currentResolution.push({
@@ -199,8 +193,6 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
     newGameState.currentResolution.push({
       resolution: "Fire Skill",
       resolution2: "Blaze of Glory2",
@@ -259,8 +251,6 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
     if (
       getZonesWithEnemies(unit, 1).length &&
       newGameState[unit.player].skillHand.length > 0
@@ -294,8 +284,6 @@ export const useSkillEffects = () => {
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
-
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     // const isAdjacentToFrostbitten = () => {
     //   const zones = JSON.parse(localGameState.zones);
@@ -362,8 +350,6 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
     newGameState.currentResolution.push({
       resolution: "Water Skill",
       resolution2: "Frigid Breath2",
@@ -420,8 +406,6 @@ export const useSkillEffects = () => {
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
-
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     if (resonator !== "SA-02") {
       newGameState.currentResolution.push({
@@ -507,7 +491,6 @@ export const useSkillEffects = () => {
       },
     });
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
     return newGameState;
   };
 
@@ -530,8 +513,6 @@ export const useSkillEffects = () => {
       ? (unit.enhancements.ward = Math.max(3, unit.enhancements.ward))
       : (unit.enhancements.ward = 3);
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
     newGameState.currentResolution.push({
       resolution: "Water Skill",
       resolution2: "Glacial Torrent 1",
@@ -552,8 +533,6 @@ export const useSkillEffects = () => {
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
-
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     // newGameState.currentResolution.push({
     //   resolution: "Aerial Impetus1",
@@ -601,9 +580,8 @@ export const useSkillEffects = () => {
     newGameState.currentResolution.pop();
 
     if (!(unit.unitClass === "Wind Scion" && !isMuted(unit))) {
-      unit.virtue = 0;
+      unit.aether = 0;
       delete unit.enhancements.shield;
-      //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
       if (canMove(unit)) {
         newGameState.currentResolution.push({
@@ -638,22 +616,7 @@ export const useSkillEffects = () => {
       : (unit.temporary.activation = 1);
 
     unit.boosts.galeConjuration = true;
-
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
-    if (newGameState[unit.player].skillHand.length > 0) {
-      newGameState.currentResolution.push({
-        resolution: "Wind Skill",
-        resolution2: "Gale Conjuration1",
-        unit: unit,
-        details: {
-          title: "Gale Conjuration",
-          message: "You may float 1 skill to restore your Virtue.",
-          restriction: null,
-          reason: "Gale Conjuration1",
-        },
-      });
-    }
+    unit.aether = 1;
 
     return newGameState;
   };
@@ -671,8 +634,7 @@ export const useSkillEffects = () => {
       : (unit.temporary.activation = 1);
 
     unit.boosts.galeConjuration = true;
-
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
+    unit.aether = 1;
 
     if (resonator !== "SA-02") {
       newGameState.currentResolution.push({
@@ -690,18 +652,6 @@ export const useSkillEffects = () => {
       resolution2: "Gale ConjurationR1",
       unit: unit,
     });
-
-    if (newGameState[unit.player].skillHand.length > 0) {
-      newGameState.currentResolution.push({
-        resolution: "Wind Skill",
-        resolution2: "Gale Conjuration1",
-        unit: unit,
-        title: "Gale Conjuration",
-        message: "You may float 1 skill to restore your Virtue.",
-        restriction: null,
-        reason: "Gale Conjuration1",
-      });
-    }
 
     return newGameState;
   };
@@ -773,8 +723,6 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
     //temporarily remove the skill conclusion of Screech
     const symphonicScreechConclusion = newGameState.currentResolution.pop();
 
@@ -842,8 +790,6 @@ export const useSkillEffects = () => {
 
     delete unit.temporary.previousTarget;
     unit.temporary.cataclysmicFloat = 0;
-
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     //2. Continue
     newGameState.currentResolution.push({
@@ -999,8 +945,6 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
     if (newGameState[unit.player].skillHand.length > 0) {
       newGameState.currentResolution.push({
         resolution: "Land Skill",
@@ -1031,8 +975,6 @@ export const useSkillEffects = () => {
       ? (unit.enhancements.shield = Math.max(unit.enhancements.shield, 2))
       : (unit.enhancements.shield = 2);
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
     return newGameState;
   };
 
@@ -1049,8 +991,6 @@ export const useSkillEffects = () => {
       : (unit.temporary.activation = 1);
 
     delete unit.temporary.previousTarget;
-
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     //2. Continue
     newGameState.currentResolution.push({
@@ -1131,8 +1071,6 @@ export const useSkillEffects = () => {
 
     delete unit.temporary.previousTarget;
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
     //3. Resonance
     newGameState.currentResolution.push({
       resolution: "Land Skill",
@@ -1195,8 +1133,6 @@ export const useSkillEffects = () => {
       : (unit.temporary.activation = 1);
 
     delete unit.temporary.pitfallTrapBlast;
-
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     newGameState.currentResolution.push({
       resolution: "Land Skill",
@@ -1267,8 +1203,6 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
     //Strike
     if (canStrike(unit)) {
       //Continue -> Paralyze adjacent if lethal
@@ -1334,7 +1268,6 @@ export const useSkillEffects = () => {
     }
 
     delete unit.temporary.geomancyLethal;
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     return newGameState;
   };
@@ -1352,8 +1285,6 @@ export const useSkillEffects = () => {
       : (unit.temporary.activation = 1);
 
     delete unit.temporary.previousTarget;
-
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     newGameState.currentResolution.push({
       resolution: "Lightning Skill",
@@ -1434,8 +1365,6 @@ export const useSkillEffects = () => {
     //consume charge --- no longer assumed
     // unit.charge -= 1;
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
     newGameState.currentResolution.push({
       resolution: "Lightning Skill",
       resolution2: "Chain Lightning5",
@@ -1460,8 +1389,6 @@ export const useSkillEffects = () => {
 
     //use 2 charges if not resonating
     unit.charge -= 2;
-
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     newGameState.currentResolution.push({
       resolution: "Lightning Skill",
@@ -1528,8 +1455,6 @@ export const useSkillEffects = () => {
 
     //use 1 charge if resonating
     unit.charge -= 1;
-
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     //3. Resonance
     newGameState.currentResolution.push({
@@ -1598,8 +1523,6 @@ export const useSkillEffects = () => {
 
     //consume charge
     unit.charge -= 1;
-
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     newGameState.currentResolution.push({
       resolution: "Lightning Skill",
@@ -1680,8 +1603,6 @@ export const useSkillEffects = () => {
         : (unit.charge = 2);
     }
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
     if (newGameState[unit.player].skillHand.length > 0) {
       newGameState.currentResolution.push({
         resolution: "Lightning Skill",
@@ -1712,15 +1633,13 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
     newGameState.currentResolution.push({
       resolution: "Mana Skill",
       resolution2: "Surge1",
       unit: unit,
       details: {
         title: "Surge",
-        message: "Use an Assault tactic to restore your Virtue.",
+        message: "Use an Assault tactic to restore your Aether.",
         restriction: ["Assault"],
         stock: 1,
         reason: "Surge",
@@ -1772,8 +1691,6 @@ export const useSkillEffects = () => {
       : (unit.temporary.activation = 1);
 
     delete unit.temporary.previousTarget;
-
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     newGameState.currentResolution.push({
       resolution: "Mana Skill",
@@ -1854,8 +1771,6 @@ export const useSkillEffects = () => {
 
     delete unit.temporary.previousTarget;
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
     //2. Resonance
     newGameState.currentResolution.push({
       resolution: "Mana Skill",
@@ -1918,8 +1833,6 @@ export const useSkillEffects = () => {
       ? (unit.enhancements.shield = Math.max(3, unit.enhancements.shield))
       : (unit.enhancements.shield = 2);
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
     return newGameState;
   };
 
@@ -1936,7 +1849,6 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
     newGameState[victimInfo.player].units[victimInfo.unitIndex] = victim;
 
     if (unit.unitIndex === victim.unitIndex) {
@@ -1976,8 +1888,6 @@ export const useSkillEffects = () => {
 
     unit.enhancements.disruption = 2;
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
     let enemyZones = getZonesWithEnemies(unit, 1);
 
     for (let i of enemyZones) {
@@ -2015,8 +1925,6 @@ export const useSkillEffects = () => {
       : (unit.temporary.activation = 1);
 
     delete unit.temporary.previousTarget;
-
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     if (unit.sharpness > 1) {
       newGameState.currentResolution.push({
@@ -2120,8 +2028,6 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
     newGameState.currentResolution.push({
       resolution: "Metal Skill",
       resolution2: "Reinforce1",
@@ -2146,8 +2052,6 @@ export const useSkillEffects = () => {
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
-
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     if (resonator !== "SA-02") {
       newGameState.currentResolution.push({
@@ -2191,8 +2095,6 @@ export const useSkillEffects = () => {
       ? (unit.sharpness = Math.min(unit.sharpness + 1, 2))
       : (unit.sharpness = 1);
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
     return newGameState;
   };
 
@@ -2211,8 +2113,6 @@ export const useSkillEffects = () => {
     unit.sharpness
       ? (unit.sharpness = Math.min(2, unit.sharpness + 1))
       : (unit.sharpness = 1);
-
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     newGameState.currentResolution.push({
       resolution: "Metal Skill",
@@ -2249,8 +2149,6 @@ export const useSkillEffects = () => {
       ? (unit.enhancements.shield = Math.max(2, unit.enhancements.shield))
       : (unit.enhancements.shield = 2);
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
     return newGameState;
   };
 
@@ -2265,8 +2163,6 @@ export const useSkillEffects = () => {
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
-
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     newGameState.currentResolution.push({
       resolution: "Metal Skill",
@@ -2361,8 +2257,6 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
     newGameState.currentResolution.push({
       resolution: "Plant Skill",
       resolution2: "Sow and Reap2",
@@ -2395,8 +2289,6 @@ export const useSkillEffects = () => {
         : (unit.blossom = 1);
     }
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
     return newGameState;
   };
 
@@ -2420,8 +2312,6 @@ export const useSkillEffects = () => {
     unit.blossom
       ? (unit.blossom = Math.min(3, unit.blossom + 2))
       : (unit.blossom = 2);
-
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     if (
       ["08-01", "08-03", "08-04"].some((s) =>
@@ -2477,8 +2367,6 @@ export const useSkillEffects = () => {
       ? (unit.blossom = Math.min(3, unit.blossom + 2))
       : (unit.blossom = 2);
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
     newGameState.currentResolution.push({
       resolution: "Plant Skill",
       resolution2: "EfflorescenceR1",
@@ -2518,8 +2406,6 @@ export const useSkillEffects = () => {
       unit.hp = 2;
     }
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
     return newGameState;
   };
 
@@ -2539,8 +2425,6 @@ export const useSkillEffects = () => {
       : (unit.temporary.activation = 1);
 
     unit.blossom = 3;
-
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     if (isRooted(victimInfo)) {
       newGameState = drawSkill(newGameState);
@@ -2583,8 +2467,6 @@ export const useSkillEffects = () => {
         ? (unit.enhancements.ward = Math.max(unit.enhancements.ward, 2))
         : (unit.enhancements.ward = 2);
     }
-
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     newGameState.currentResolution.push({
       resolution: "Plant Skill",

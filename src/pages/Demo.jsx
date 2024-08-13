@@ -802,7 +802,7 @@ export default function Demo() {
           column: 3,
           unitClass: "Pawn",
           hp: 1,
-          virtue: 1,
+          aether: 1,
           afflictions: {},
           enhancements: {},
           boosts: {},

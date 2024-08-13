@@ -1,763 +1,808 @@
 .piece-body {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .piece {
-    width: 60px;
-    height: 60px;
-    border: 3px solid black;
-    border-radius: 100%;
-    color:rgb(49, 109, 31);
+  width: 60px;
+  height: 60px;
+  border: 3px solid black;
+  border-radius: 100%;
+  color: rgb(49, 109, 31);
 
-    text-align: center;
-    position: relative;
-    user-select: none;
-    justify-content: center;
-    display: flex;
-    align-items: center;    
-    box-shadow: 0px 0px 2px 1.5px rgba(0, 0, 0, 0.50);  
+  text-align: center;
+  position: relative;
+  user-select: none;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 0px 2px 1.5px rgba(0, 0, 0, 0.5);
 }
 
+.piece-scionClass {
+  object-fit: cover;
+  width: 46px;
+  height: 46px;
+  position: absolute;
+  z-index: 3;
 
+  border-radius: 100%;
 
-
-.piece-scionClass{
-    object-fit: cover;
-    width: 46px;
-    height: 46px;
-    position: absolute;
-    z-index: 3;
-
-    border-radius: 100%;
-
-    box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.55);
+  box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.55);
 }
 
-.ascension{
-    background-color: #e8e8e8;
-    animation: ascend 2.5s ease-in-out;
-    border-radius: 100%;
-    width: 50px;
-    height: 50px;
-    position: absolute;
-    opacity: 0%;
-    z-index: 4;
+.ascension {
+  background-color: #e8e8e8;
+  animation: ascend 2.5s ease-in-out;
+  border-radius: 100%;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  opacity: 0%;
+  z-index: 4;
 }
-    
+
 @keyframes ascend {
-    0% {
-        scale: 1.5;
-        opacity: 1.0; 
-
-    }
-    65%{
-        scale: 1;
-        opacity: 0.85;
-    }
-    100% {
-        opacity: 0.0;
-    }
+  0% {
+    scale: 1.5;
+    opacity: 1;
+  }
+  65% {
+    scale: 1;
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
-.host{
-    background: linear-gradient(25deg, #a0782e, #eebb5b, #ffedbb)
+.host {
+  background: linear-gradient(25deg, #a0782e, #eebb5b, #ffedbb);
 }
 
 .guest {
-    background: linear-gradient(25deg, #4d4949, #635c5c, #dbd2d2)
+  background: linear-gradient(25deg, #4d4949, #635c5c, #dbd2d2);
 }
 
-.pieceOption{
-    width: 25px;
-    height: 25px;
-    border: 2px solid rgb(252, 200, 31);
+.pieceOption {
+  width: 25px;
+  height: 25px;
+  border: 2px solid rgb(252, 200, 31);
 
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.85);
-    
-    /*diamond shape*/
-    transform: rotate(45deg);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.85);
 
-    /* background-color: rgb(255, 255, 255); */
-    background: linear-gradient(to right, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
-    color: #e8e8e8;
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    position: absolute;
-    font-size: small;
-    /* z-index: 400; */
+  /*diamond shape*/
+  transform: rotate(45deg);
+
+  /* background-color: rgb(255, 255, 255); */
+  background: linear-gradient(
+    to right,
+    rgb(151, 8, 11),
+    rgb(221, 35, 38) 60%,
+    rgb(255, 90, 93) 100%
+  );
+  color: #e8e8e8;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  position: absolute;
+  font-size: small;
+  /* z-index: 400; */
 }
 
 .pieceOption:hover {
-    background-color: rgb(252, 247, 180);
-    cursor: pointer;
-    scale: 1.5;
+  background-color: rgb(252, 247, 180);
+  cursor: pointer;
+  scale: 1.5;
 }
 
-
-
-
-.burn{
-z-index: 297;
-height: 75px;
-width: 70px;
-position: absolute;
-pointer-events: none;
-top: -5px;
-left: 0.5px;
-opacity: 0.8;
+.burn {
+  z-index: 297;
+  height: 75px;
+  width: 70px;
+  position: absolute;
+  pointer-events: none;
+  top: -5px;
+  left: 0.5px;
+  opacity: 0.8;
 }
 
-.frostbite{
-/* z-index: 397; */
-z-index: 4;
-top:-3.5px;
-left: -6px;
-height: 79.5px;
-width: 79.5px;
-position: absolute;
-pointer-events: none;
-opacity: 0.85;
-rotate: -10deg;
-filter: saturate(2.5);
+.frostbite {
+  /* z-index: 397; */
+  z-index: 4;
+  top: -3.5px;
+  left: -6px;
+  height: 79.5px;
+  width: 79.5px;
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.85;
+  rotate: -10deg;
+  filter: saturate(2.5);
 }
 
-.frostbite-1{
-animation: frostbitefadeInOut 3s ease infinite alternate
+.frostbite-1 {
+  animation: frostbitefadeInOut 3s ease infinite alternate;
 }
 
 @keyframes frostbitefadeInOut {
-    0%,
-    25% {
-        opacity: 0.0;
-
-    }
-    80%, 100% {
-        opacity: 0.95;
-    }
+  0%,
+  25% {
+    opacity: 0;
+  }
+  80%,
+  100% {
+    opacity: 0.95;
+  }
 }
 
 .frostbite-2 {
-    animation: frostbitefadeInOut2 3s ease infinite alternate
+  animation: frostbitefadeInOut2 3s ease infinite alternate;
 }
 
 @keyframes frostbitefadeInOut2 {
+  0%,
+  15% {
+    opacity: 0.45;
+  }
 
-    0%,
-    15% {
-        opacity: 0.45;
-
-    }
-
-    80%,
-    100% {
-        opacity: 0.95;
-    }
+  80%,
+  100% {
+    opacity: 0.95;
+  }
 }
 
 .paralyzed {
-    z-index: 498;
-    height: 90px;
-    width: 90px;
-    position: absolute;
-    pointer-events: none;
-    top: -11px;
-    left: -11px;
-    opacity: 0.95;
-    filter: contrast(1.15);
-    animation: rotate 5.3s linear infinite
+  z-index: 498;
+  height: 90px;
+  width: 90px;
+  position: absolute;
+  pointer-events: none;
+  top: -11px;
+  left: -11px;
+  opacity: 0.95;
+  filter: contrast(1.15);
+  animation: rotate 5.3s linear infinite;
 }
 
 .fade-in-out-paralyze {
-    animation: rotate 5.3s linear infinite, fadeInOut2 1.425s ease-in-out infinite alternate;
+  animation: rotate 5.3s linear infinite,
+    fadeInOut2 1.425s ease-in-out infinite alternate;
 }
 
 @keyframes fadeInOut2 {
-    0%,10% {
-        opacity: 0.05;
-    }
+  0%,
+  10% {
+    opacity: 0.05;
+  }
 
-    60%, 100% {
-        opacity: 1;
-    }
-
-
+  60%,
+  100% {
+    opacity: 1;
+  }
 }
 
 @keyframes rotate {
-    from {
-        transform: rotate(0deg);
-        /* Start rotation from 0 degrees */
-    }
+  from {
+    transform: rotate(0deg);
+    /* Start rotation from 0 degrees */
+  }
 
-    to {
-        transform: rotate(360deg);
-        /* End rotation at 360 degrees */
-    }
+  to {
+    transform: rotate(360deg);
+    /* End rotation at 360 degrees */
+  }
 }
 
-
 .shieldAndWard {
-    height: 25px;
-    position: absolute;
-    z-index: 397;
-    pointer-events: none;
-    top: 48px;
-    left: 48px;
+  height: 25px;
+  position: absolute;
+  z-index: 397;
+  pointer-events: none;
+  top: 48px;
+  left: 48px;
 }
 
 .fade-in-out {
-    animation: fadeInOut 1s ease-in-out infinite alternate;
+  animation: fadeInOut 1s ease-in-out infinite alternate;
 }
 
 @keyframes fadeInOut {
-    0% {
-        opacity: 0.2;
-    }
-    100% {
-        opacity: 1;
-    }
-
-    
+  0% {
+    opacity: 0.2;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
-.virtue{
-    height: 25px;
-    position: absolute;
-    z-index: 398;
-    pointer-events: none;
-    top: 47.5px;
-    left: 20px;
-    /* filter: brightness(1.85)  ; */
-    animation: scaleAnimation 1s ease-in-out infinite alternate
+.aether {
+  height: 25px;
+  position: absolute;
+  z-index: 398;
+  pointer-events: none;
+  top: 47.5px;
+  left: 20px;
+  /* filter: brightness(1.85)  ; */
+  animation: scaleAnimation 1s ease-in-out infinite alternate;
 }
 
-.shield-ward-group{
-animation: moveUpDownHP 1.0s ease-in-out infinite;
+.shield-ward-group {
+  animation: moveUpDownHP 1s ease-in-out infinite;
 }
 
 .hP {
-    height: 20px;
-    position: absolute;
-    z-index: 399;
-    pointer-events: none;
-    top: 50px;
-    left: -2px;
-    filter: brightness(1.15) contrast(1.3) ;
+  height: 20px;
+  position: absolute;
+  z-index: 399;
+  pointer-events: none;
+  top: 50px;
+  left: -2px;
+  filter: brightness(1.15) contrast(1.3);
 
-    /* animation: scaleAnimation 1s ease-in-out infinite alternate */
-    animation: moveUpDownHP 1.0s ease-in-out infinite;
+  /* animation: scaleAnimation 1s ease-in-out infinite alternate */
+  animation: moveUpDownHP 1s ease-in-out infinite;
 }
-
 
 .hP-amount {
-    left: 3.75px;
-    color: #e8e8e8;
-    font-size: 0.65em;
-    font-weight: 500;
+  left: 3.75px;
+  color: #e8e8e8;
+  font-size: 0.65em;
+  font-weight: 500;
 }
-
 
 @keyframes moveUpDownHP {
-
-    0%,
-    100% {
-        top: 50px;
-    }
-    50% {
-        top: 48px;
-    }
+  0%,
+  100% {
+    top: 50px;
+  }
+  50% {
+    top: 48px;
+  }
 }
-
-
 
 @keyframes scaleAnimation {
-
-    0%,
-    100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.2);
-    }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
 }
 
-
 .glow {
-    width: 40px;
-    height: 40px;
-    border: 4px solid rgb(255, 227, 67);
-    border-radius: 100%;
-    /* background-color: transparent; */
-    background-color: rgb(255, 227, 67, 0.45);;
-    /* transition: all 1.5s ease; */
-    position: absolute;
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgb(255, 227, 67);
+  border-radius: 100%;
+  /* background-color: transparent; */
+  background-color: rgb(255, 227, 67, 0.45);
+  /* transition: all 1.5s ease; */
+  position: absolute;
 
-
-    pointer-events: none;
-    
+  pointer-events: none;
 }
 
 .glow.animating {
-    animation: expand-contract 2.2s linear infinite;
-
+  animation: expand-contract 2.2s linear infinite;
 }
 
 @keyframes expand-contract {
-    0% {
-        /* width: 50px;
+  0% {
+    /* width: 50px;
         height: 50px; */
-        opacity: 0.90;
-        transform: scale(0.8);
-    }
-    50% {
-        opacity: 0.75;
-        transform: scale(1.9);
-    }
-    100% {
-        opacity: 0;
-        transform: scale(2.5);
- 
-    }
+    opacity: 0.9;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 0.75;
+    transform: scale(1.9);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2.5);
+  }
 }
 
 .disruption {
-    width: 40px;
-    height: 40px;
-    border: 3px solid rgb(114, 250, 255,0);
-    border-radius: 100%;
-    /* background-color: transparent; */
-    /* background-color: rgba(34, 153, 201, 0.45); */
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.329), rgba(78, 220, 255, 0.932))
-    ;
-    /* transition: all 1.5s ease; */
-    position: absolute;
-    z-index: 200;
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgb(114, 250, 255, 0);
+  border-radius: 100%;
+  /* background-color: transparent; */
+  /* background-color: rgba(34, 153, 201, 0.45); */
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.329),
+    rgba(78, 220, 255, 0.932)
+  );
+  /* transition: all 1.5s ease; */
+  position: absolute;
+  z-index: 200;
 
-    top: 10%;
-    left: 10%;
-    pointer-events: none;
+  top: 10%;
+  left: 10%;
+  pointer-events: none;
 }
 
 .disruption.animating {
-    animation: expand-disruption 3.0s linear infinite;
-
+  animation: expand-disruption 3s linear infinite;
 }
 
-.disruption2{
-    background-color: #00000000;
-    position: absolute;
-    z-index: 200;
-    width: 70px;
-    height: 70px;
-    border-radius: 100%;
-    /* box-shadow: 0px 0px 4px 4px rgba(78, 220, 255, 0.932); */
-    /* box-shadow: 0px 0px 55px 75px rgba(78, 220, 255, 0.45); */
+.disruption2 {
+  background-color: #00000000;
+  position: absolute;
+  z-index: 200;
+  width: 70px;
+  height: 70px;
+  border-radius: 100%;
+  /* box-shadow: 0px 0px 4px 4px rgba(78, 220, 255, 0.932); */
+  /* box-shadow: 0px 0px 55px 75px rgba(78, 220, 255, 0.45); */
 
-    pointer-events: none;
-
-
-
+  pointer-events: none;
 }
 
-.disruption2-animate{
-    animation: disruption2-expand 2.5s linear infinite;
+.disruption2-animate {
+  animation: disruption2-expand 2.5s linear infinite;
 }
 
 @keyframes disruption2-expand {
+  0%,
+  15% {
+    box-shadow: 0px 0px 0px 0px rgba(78, 220, 255, 0);
+  }
 
-                0%,
-                15% {
-                    box-shadow: 0px 0px 0px 0px rgba(78, 220, 255, 0);
-                }
-        
-                30% {
-                    box-shadow: 0px 0px 40px 20px rgba(78, 220, 255, 0.975);
-                }
-        
-                70% {
-                    box-shadow: 0px 0px 55px 90px rgba(78, 220, 255, 0.85);
-                }
-        
-                100% {
-                    box-shadow: 0px 0px 55px 180px rgba(78, 220, 255, 0.05);
-                }
+  30% {
+    box-shadow: 0px 0px 40px 20px rgba(78, 220, 255, 0.975);
+  }
 
+  70% {
+    box-shadow: 0px 0px 55px 90px rgba(78, 220, 255, 0.85);
+  }
 
+  100% {
+    box-shadow: 0px 0px 55px 180px rgba(78, 220, 255, 0.05);
+  }
 }
 
-
-
 @keyframes expand-disruption {
-    0% {
-        /* width: 50px;
+  0% {
+    /* width: 50px;
         height: 50px; */
-        opacity: 0.90;
-        transform: scale(0.8);
-    }
+    opacity: 0.9;
+    transform: scale(0.8);
+  }
 
-    50% {
-        /* opacity: 0.70; */
-        /* transform: scale(4.5); */
-    }
+  50% {
+    /* opacity: 0.70; */
+    /* transform: scale(4.5); */
+  }
 
-    80% {
-        opacity: 0.2;
-        transform: scale(8.2);
-    }
+  80% {
+    opacity: 0.2;
+    transform: scale(8.2);
+  }
 
-    85%, 100% {
-        opacity: 0;
-        transform: scale(8.2);
-    }
+  85%,
+  100% {
+    opacity: 0;
+    transform: scale(8.2);
+  }
 }
 
 .overgrowth {
-    width: 40px;
-    height: 40px;
-    border: 3px solid rgb(114, 250, 255, 0);
-    border-radius: 100%;
-    /* background-color: transparent; */
-    /* background-color: rgba(34, 153, 201, 0.45); */
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.452), rgba(49, 223, 87, 0.692));
-    /* transition: all 1.5s ease; */
-    position: absolute;
-    z-index: 600;
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgb(114, 250, 255, 0);
+  border-radius: 100%;
+  /* background-color: transparent; */
+  /* background-color: rgba(34, 153, 201, 0.45); */
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.452),
+    rgba(49, 223, 87, 0.692)
+  );
+  /* transition: all 1.5s ease; */
+  position: absolute;
+  z-index: 600;
 
-    top: 10%;
-    left: 10%;
-    pointer-events: none;
+  top: 10%;
+  left: 10%;
+  pointer-events: none;
 }
 
 .overgrowth.animating {
-    animation: expand-overgrowth 2.5s linear infinite;
-
+  animation: expand-overgrowth 2.5s linear infinite;
 }
 
 @keyframes expand-overgrowth {
-    0% {
-        /* width: 50px;
+  0% {
+    /* width: 50px;
         height: 50px; */
-        opacity: 0.90;
-        transform: scale(0.8);
-    }
+    opacity: 0.9;
+    transform: scale(0.8);
+  }
 
-    50% {
-        /* opacity: 0.70; */
-        /* transform: scale(2.5); */
-    }
+  50% {
+    /* opacity: 0.70; */
+    /* transform: scale(2.5); */
+  }
 
-    85%,
-    100% {
-        opacity: 0;
-        transform: scale(5.2);
-    }
-
-
+  85%,
+  100% {
+    opacity: 0;
+    transform: scale(5.2);
+  }
 }
 
-.anathema-aura{
-    width: 60px;
-    height: 60px;
-    top: -3px;
-    left: -3px;
+.anathema-aura {
+  width: 60px;
+  height: 60px;
+  top: -3px;
+  left: -3px;
 
-    border: 3px solid rgb(0, 0, 0,0);
-    border-radius: 100%;
-    position: absolute;
-    
-    overflow: hidden;
+  border: 3px solid rgb(0, 0, 0, 0);
+  border-radius: 100%;
+  position: absolute;
+
+  overflow: hidden;
 }
 
 .cascade-line {
-    position: absolute;
-    left: -5px;
-    width: 120%;
-    height: 200px;
-    /* background: linear-gradient(to bottom, rgba(75, 0, 0,0.5), rgb(75, 0, 0)); */
-    background: linear-gradient(to bottom, rgba(46, 32, 145, 0.10), rgba(46, 32, 145, 0.25) 50%, rgba(121, 0, 111, 0.95) 95% ,rgba(0, 0, 0, 1) 100%);
-    animation: cascadeAnimation 2s linear infinite;
+  position: absolute;
+  left: -5px;
+  width: 120%;
+  height: 200px;
+  /* background: linear-gradient(to bottom, rgba(75, 0, 0,0.5), rgb(75, 0, 0)); */
+  background: linear-gradient(
+    to bottom,
+    rgba(46, 32, 145, 0.1),
+    rgba(46, 32, 145, 0.25) 50%,
+    rgba(121, 0, 111, 0.95) 95%,
+    rgba(0, 0, 0, 1) 100%
+  );
+  animation: cascadeAnimation 2s linear infinite;
 }
 
 @keyframes cascadeAnimation {
-    0% {
-        top: -220px;
-    }
-    100% {
-        top: 0px
-    }
+  0% {
+    top: -220px;
+  }
+  100% {
+    top: 0px;
+  }
 }
 
 .cascade-line2 {
-    position: absolute;
-    left: -5px;
-    width: 120%;
-    height: 80px;
-    background: rgba(46, 32, 145, 0.10);
-    animation: cascadeAnimation2 2s linear infinite;
+  position: absolute;
+  left: -5px;
+  width: 120%;
+  height: 80px;
+  background: rgba(46, 32, 145, 0.1);
+  animation: cascadeAnimation2 2s linear infinite;
 }
 
 @keyframes cascadeAnimation2 {
-    0% {
-        top: -20px;
-    }
-    100% {
-        top: 200px
-    }
+  0% {
+    top: -20px;
+  }
+  100% {
+    top: 200px;
+  }
 }
 
 .cascade-line3 {
-    position: absolute;
-    left: -5px;
-    width: 120%;
-    height: 40px;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 1) 100%);
-    animation: cascadeAnimation3 2s linear infinite;
+  position: absolute;
+  left: -5px;
+  width: 120%;
+  height: 40px;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 1) 100%
+  );
+  animation: cascadeAnimation3 2s linear infinite;
 }
 
 @keyframes cascadeAnimation3 {
-    0% {
-        top: -40px;
-    }
-    100% {
-        top: 180px
-    }
+  0% {
+    top: -40px;
+  }
+  100% {
+    top: 180px;
+  }
 }
 
-
 .ravager-line {
-    position: absolute;
-    left: -5px;
-    width: 120%;
-    height: 250px;
-    top: 65px;
-    
-    background: linear-gradient(to bottom, rgb(197, 39, 0), rgba(129, 0, 0, .95) 5%, rgba(129, 0, 0, 0.10) 50%, rgba(129, 0, 0, 0.10) 100%);
-    animation: ravagerAnimation 2s linear infinite;
+  position: absolute;
+  left: -5px;
+  width: 120%;
+  height: 250px;
+  top: 65px;
+
+  background: linear-gradient(
+    to bottom,
+    rgb(197, 39, 0),
+    rgba(129, 0, 0, 0.95) 5%,
+    rgba(129, 0, 0, 0.1) 50%,
+    rgba(129, 0, 0, 0.1) 100%
+  );
+  animation: ravagerAnimation 2s linear infinite;
 }
 
 @keyframes ravagerAnimation {
-    0% {
-        top: 65px;
-    }
-    100% {
-        top: -155px
-    }
+  0% {
+    top: 65px;
+  }
+  100% {
+    top: -155px;
+  }
 }
 
 .ravager-line2 {
-    position: absolute;
-    left: -5px;
-    width: 120%;
-    height: 80px;
-    background: rgba(129, 0, 0, 0.10);
-    animation: ravagerAnimation2 2s linear infinite;
+  position: absolute;
+  left: -5px;
+  width: 120%;
+  height: 80px;
+  background: rgba(129, 0, 0, 0.1);
+  animation: ravagerAnimation2 2s linear infinite;
 }
 
 @keyframes ravagerAnimation2 {
-    0% {
-        top: -15px;
-    }
-    100% {
-        top: -235px
-    }
+  0% {
+    top: -15px;
+  }
+  100% {
+    top: -235px;
+  }
 }
 
 .blink {
-    animation: fadeInOut 2s infinite alternate;
+  animation: fadeInOut 2s infinite alternate;
 }
 
-.fever{
-    transform: rotate(45deg);
-    background: linear-gradient(22deg, #ff0b03,#ff0b03,#dd1e17, #ff8b1e, #ffc1a4, #ffb0b0);
-    border: 0.5px solid #000000de;
-    height: 7.5px;
-    width: 7.5px;
-    position: absolute;
-    animation: moveUpDown 0.95s ease-in-out infinite;
-    pointer-events: none;
-    z-index: 5;
+.fever {
+  transform: rotate(45deg);
+  background: linear-gradient(
+    22deg,
+    #ff0b03,
+    #ff0b03,
+    #dd1e17,
+    #ff8b1e,
+    #ffc1a4,
+    #ffb0b0
+  );
+  border: 0.5px solid #000000de;
+  height: 7.5px;
+  width: 7.5px;
+  position: absolute;
+  animation: moveUpDown 0.95s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 5;
 }
 
 .glacial-torrent {
-    transform: rotate(45deg);
-    background: linear-gradient(22deg, #03afff, #006deb, #2ea1ff, #60a0ff, #b2d3ff, #f4fbff);
-    border: 0.5px solid #000000de;
-    height: 7.5px;
-    width: 7.5px;
-    position: absolute;
-    animation: moveUpDown 0.95s ease-in-out infinite;
-    pointer-events: none;
-        z-index: 5;
+  transform: rotate(45deg);
+  background: linear-gradient(
+    22deg,
+    #03afff,
+    #006deb,
+    #2ea1ff,
+    #60a0ff,
+    #b2d3ff,
+    #f4fbff
+  );
+  border: 0.5px solid #000000de;
+  height: 7.5px;
+  width: 7.5px;
+  position: absolute;
+  animation: moveUpDown 0.95s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 5;
 }
 
-.gale-conjuration{
-        transform: rotate(45deg);
-        background: linear-gradient(22deg, #005222, #00911f, #18ca5d, #39e271, #8dfdb2, #d8ffd8);
-        border: 0.5px solid #000000de;
-        height: 7.5px;
-        width: 7.5px;
-        position: absolute;
-        animation: moveUpDown 0.95s ease-in-out infinite;
-        pointer-events: none;
-            z-index: 5;
-    }
+.gale-conjuration {
+  transform: rotate(45deg);
+  background: linear-gradient(
+    22deg,
+    #005222,
+    #00911f,
+    #18ca5d,
+    #39e271,
+    #8dfdb2,
+    #d8ffd8
+  );
+  border: 0.5px solid #000000de;
+  height: 7.5px;
+  width: 7.5px;
+  position: absolute;
+  animation: moveUpDown 0.95s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 5;
+}
 
-    
-.mountain-stance{
-        transform: rotate(45deg);
-        background: linear-gradient(22deg, #502000, #7e3707, #b1500f, #d3641a, #e97b31, #d8ffd8);
-        border: 0.5px solid #000000de;
-        height: 7.5px;
-        width: 7.5px;
-        position: absolute;
-        animation: moveUpDown 0.95s ease-in-out infinite;
-        pointer-events: none;
-            z-index: 5;
-    }
+.mountain-stance {
+  transform: rotate(45deg);
+  background: linear-gradient(
+    22deg,
+    #502000,
+    #7e3707,
+    #b1500f,
+    #d3641a,
+    #e97b31,
+    #d8ffd8
+  );
+  border: 0.5px solid #000000de;
+  height: 7.5px;
+  width: 7.5px;
+  position: absolute;
+  animation: moveUpDown 0.95s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 5;
+}
 
 .sharpness {
-    transform: rotate(45deg);
-    background: linear-gradient(22deg, #2b2a2a, #3b3535, #5c4c4c, #ffffff, #cec7c4, #6b6b6b);
-    border: 0.5px solid #000000de;
-    height: 7.5px;
-    width: 7.5px;
-    position: absolute;
-    animation: moveUpDown 0.95s ease-in-out infinite;
-    pointer-events: none;
-        z-index: 5;
+  transform: rotate(45deg);
+  background: linear-gradient(
+    22deg,
+    #2b2a2a,
+    #3b3535,
+    #5c4c4c,
+    #ffffff,
+    #cec7c4,
+    #6b6b6b
+  );
+  border: 0.5px solid #000000de;
+  height: 7.5px;
+  width: 7.5px;
+  position: absolute;
+  animation: moveUpDown 0.95s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 5;
 }
 
 .blossom {
-    transform: rotate(45deg);
-    background: linear-gradient(22deg, #7a137e, #971e9b, #d138d6, #fa69ff, #f7deff, #fcdbff);
-    border: 0.5px solid #000000de;
-    height: 7.5px;
-    width: 7.5px;
-    position: absolute;
-    animation: moveUpDown 0.95s ease-in-out infinite;
-    pointer-events: none;
-        z-index: 5;
+  transform: rotate(45deg);
+  background: linear-gradient(
+    22deg,
+    #7a137e,
+    #971e9b,
+    #d138d6,
+    #fa69ff,
+    #f7deff,
+    #fcdbff
+  );
+  border: 0.5px solid #000000de;
+  height: 7.5px;
+  width: 7.5px;
+  position: absolute;
+  animation: moveUpDown 0.95s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 5;
 }
 
 .charge {
-    transform: rotate(45deg);
-    background: linear-gradient(22deg, #6e6700, #9b9000, #ddcf08, #ccbe00, #fff241, #fff894);
-    border: 0.5px solid #000000de;
-    height: 7.5px;
-    width: 7.5px;
-    position: absolute;
-    animation: moveUpDown 0.95s ease-in-out infinite;
-    pointer-events: none;
-        z-index: 5;
+  transform: rotate(45deg);
+  background: linear-gradient(
+    22deg,
+    #6e6700,
+    #9b9000,
+    #ddcf08,
+    #ccbe00,
+    #fff241,
+    #fff894
+  );
+  border: 0.5px solid #000000de;
+  height: 7.5px;
+  width: 7.5px;
+  position: absolute;
+  animation: moveUpDown 0.95s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 5;
 }
-
 
 .disruptionCounter {
-    transform: rotate(45deg);
-    background: linear-gradient(22deg, #03eeff, #03e2ff, #03e2ff, #78f1eb, #cbecff, #f0fcff);
-    border: 0.5px solid #000000de;
-    height: 7.5px;
-    width: 7.5px;
-    position: absolute;
-    animation: moveUpDown 0.95s ease-in-out infinite;
-    pointer-events: none;
-    z-index: 5;
+  transform: rotate(45deg);
+  background: linear-gradient(
+    22deg,
+    #03eeff,
+    #03e2ff,
+    #03e2ff,
+    #78f1eb,
+    #cbecff,
+    #f0fcff
+  );
+  border: 0.5px solid #000000de;
+  height: 7.5px;
+  width: 7.5px;
+  position: absolute;
+  animation: moveUpDown 0.95s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 5;
 }
-
-
-
-
-
-
-
-
-
 
 @keyframes moveUpDown {
-    0%,
-    100% {
-        top: 0;
-    }
-    50% {
-        top: 2.5px;
-    }
+  0%,
+  100% {
+    top: 0;
+  }
+  50% {
+    top: 2.5px;
+  }
 }
 
-.blue-tint{
-    filter: hue-rotate(180deg)
+.blue-tint {
+  filter: hue-rotate(180deg);
 }
 
 .black-tint {
-    filter: grayscale(95%)
+  filter: grayscale(95%);
 }
 
 .ambidexterity {
-    z-index: 3000;
-    height: 65px;
-    width: 85px;
-    position: absolute;
-    pointer-events: none;
-    top: 0px;
-    left: -9px;
-    
-    animation: ambidex 2.20s ease-in-out infinite;
-        pointer-events: none;
-    }
-    
-    @keyframes ambidex {
-    
-        0%,
-        100% {
-            top: 0;
-        }
-    
-        40%, 50%, 60% {
-            top: -10px;
-            opacity: 10%;
-        }
-    }
+  z-index: 3000;
+  height: 65px;
+  width: 85px;
+  position: absolute;
+  pointer-events: none;
+  top: 0px;
+  left: -9px;
 
+  animation: ambidex 2.2s ease-in-out infinite;
+  pointer-events: none;
+}
 
-.rooted{
-    top: -8px;
-    left: -10px;
-    width: 80px;
-    height: 74px;
-    position: absolute;
-    z-index: 4;
+@keyframes ambidex {
+  0%,
+  100% {
+    top: 0;
+  }
 
+  40%,
+  50%,
+  60% {
+    top: -10px;
+    opacity: 10%;
+  }
+}
+
+.rooted {
+  top: -8px;
+  left: -10px;
+  width: 80px;
+  height: 74px;
+  position: absolute;
+  z-index: 4;
 }
 
 .crosshair {
-    z-index: 700;
-    /* height: 75px;
+  z-index: 700;
+  /* height: 75px;
     width: 70px; */
-    position: absolute;
-    pointer-events: none;
-    top: -20.0px;
-    left: -17.5px;
-    scale: 1.05;
-    opacity: 0.55;
-    animation: scaleAnimation2 2.20s ease-in-out infinite alternate;
+  position: absolute;
+  pointer-events: none;
+  top: -20px;
+  left: -17.5px;
+  scale: 1.05;
+  opacity: 0.55;
+  animation: scaleAnimation2 2.2s ease-in-out infinite alternate;
 
-    /* filter: sepia(2.5) saturate(10000%) hue-rotate(-290deg); */
-    /* filter: sepia(2.5) saturate(10000%) hue-rotate(-70deg) contrast(1.5); */
-    /* filter: sepia(1) saturate(10000%) hue-rotate(-35deg); */
-    filter: sepia(1) saturate(10000%) hue-rotate(-275deg);
+  /* filter: sepia(2.5) saturate(10000%) hue-rotate(-290deg); */
+  /* filter: sepia(2.5) saturate(10000%) hue-rotate(-70deg) contrast(1.5); */
+  /* filter: sepia(1) saturate(10000%) hue-rotate(-35deg); */
+  filter: sepia(1) saturate(10000%) hue-rotate(-275deg);
 }
 
 @keyframes scaleAnimation2 {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
 
-    0%,
-    100% {
-        opacity: 0.35;
-    }
-
-    45%,
-    50%,
-    55% {
-        opacity: 0.8;
-        top: -17.5px;
-    }
+  45%,
+  50%,
+  55% {
+    opacity: 0.8;
+    top: -17.5px;
+  }
 }

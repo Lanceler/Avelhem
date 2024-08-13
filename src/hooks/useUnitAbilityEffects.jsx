@@ -39,8 +39,6 @@ export const useUnitAbilityEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
     newGameState.currentResolution.push({
       resolution: "Unit Ability",
       resolution2: "Afterburner1",
@@ -92,8 +90,6 @@ export const useUnitAbilityEffects = () => {
 
     unit.temporary.usedFieryHeart = true;
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
     newGameState.currentResolution.push({
       resolution: "Unit Ability",
       resolution2: "Fiery Heart1",
@@ -143,8 +139,6 @@ export const useUnitAbilityEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
     newGameState.currentResolution.push({
       resolution: "Unit Ability",
       resolution2: "Hydrotherapy1",
@@ -186,8 +180,6 @@ export const useUnitAbilityEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
     newGameState.currentResolution.push({
       resolution: "Unit Ability",
       resolution2: "Cold Embrace1",
@@ -213,8 +205,6 @@ export const useUnitAbilityEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
     newGameState.currentResolution.push({
       resolution: "Unit Ability",
       resolution2: "Air Dash1",
@@ -235,8 +225,6 @@ export const useUnitAbilityEffects = () => {
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
-
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     if (canMove(unit) || canBlast(unit)) {
       newGameState.currentResolution.push({
@@ -323,8 +311,6 @@ export const useUnitAbilityEffects = () => {
       ? (unit.enhancements.shield = Math.max(2, unit.enhancements.shield))
       : (unit.enhancements.shield = 2);
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
     if (canMove(unit) || canStrike(unit)) {
       newGameState.currentResolution.push({
         resolution: "Unit Ability",
@@ -353,8 +339,6 @@ export const useUnitAbilityEffects = () => {
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
-
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     if (canMove(unit)) {
       newGameState.currentResolution.push({
@@ -402,8 +386,6 @@ export const useUnitAbilityEffects = () => {
       ? (unit.charge = Math.min(3, unit.charge + 1))
       : (unit.charge = 1);
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
     if (canMove(unit)) {
       newGameState.currentResolution.push({
         resolution: "Unit Ability",
@@ -437,8 +419,6 @@ export const useUnitAbilityEffects = () => {
 
     //Spend 3 charges
     unit.charge -= 3;
-
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     newGameState.currentResolution.push({
       resolution: "Unit Ability",
@@ -521,8 +501,6 @@ export const useUnitAbilityEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
     newGameState.currentResolution.push({
       resolution: "Unit Ability",
       resolution2: "Particle Beam1",
@@ -546,8 +524,6 @@ export const useUnitAbilityEffects = () => {
 
     //end "Particle Beam1"
     newGameState.currentResolution.pop();
-
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     newGameState.currentResolution.push({
       resolution: "Unit Ability",
@@ -575,10 +551,8 @@ export const useUnitAbilityEffects = () => {
     newGameState.currentResolution.pop();
 
     if (unit && !isMuted(unit)) {
-      unit.virtue = 1;
+      unit.aether = 1;
     }
-
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     return newGameState;
   };
@@ -597,8 +571,6 @@ export const useUnitAbilityEffects = () => {
 
     unit.temporary.usedAmplifyAura = true;
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
     const allies = getZonesWithAllies(unit, 1, true);
     const zones = JSON.parse(newGameState.zones);
     const alliesWithAura = [];
@@ -607,7 +579,7 @@ export const useUnitAbilityEffects = () => {
       const zone = zones[Math.floor(i / 5)][i % 5];
       const ally = localGameState[zone.player].units[zone.unitIndex];
 
-      if (ally.virtue) {
+      if (ally.aether) {
         alliesWithAura.push(i);
       }
     }
@@ -637,8 +609,6 @@ export const useUnitAbilityEffects = () => {
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
-
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     newGameState.currentResolution.push({
       resolution: "Unit Ability",
@@ -682,8 +652,6 @@ export const useUnitAbilityEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
     newGameState.currentResolution.push({
       resolution: "Unit Ability",
       resolution2: "Ballistic Armor2",
@@ -725,8 +693,6 @@ export const useUnitAbilityEffects = () => {
 
     unit.temporary.usedFlourish = true;
 
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
-
     newGameState.currentResolution.push({
       resolution: "Unit Ability",
       resolution2: "Flourish1",
@@ -762,14 +728,12 @@ export const useUnitAbilityEffects = () => {
     //end "Flourish1"
     newGameState.currentResolution.pop();
 
-    unit.virtue = 1;
+    unit.aether = 1;
 
     if (!unit.afflictions.burn) {
       //burn would otherwise instantly purge overgrowth
       unit.enhancements.overgrowth = true;
     }
-
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     return newGameState;
   };
@@ -788,8 +752,6 @@ export const useUnitAbilityEffects = () => {
 
     //Spend 1 Blossom
     unit.blossom -= 1;
-
-    //newGameState[unitInfo.player].units[unitInfo.unitIndex] = unit;
 
     enterSelectUnitMode(
       getZonesWithAllies(unit, 1, true),
