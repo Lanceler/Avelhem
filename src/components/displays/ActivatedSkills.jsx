@@ -33,7 +33,7 @@ const ActivatedSkills = () => {
               }}
               transition={{ duration: 0.4, scale: 0.5 }}
               exit={{ opacity: 0, scale: 1.5 }}
-              key={i}
+              key={card + i}
               className={`activatedSkill displayedSkills ${
                 localGameState.activatingSkill.length - 1 === i
                   ? "topmostDisplay"

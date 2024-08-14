@@ -54,9 +54,7 @@
     scrollbar-color: rgb(255, 168, 7) rgba(92, 63, 52, 0);
     scrollbar-width: thin;
 
-    transform: scale(0.9)
-
-    
+    transform: scale(0.9);
     // transition: background 0.5s ease;
 }
 
@@ -300,5 +298,13 @@
 
     100% {
         transform: scale(1);
+    }
+}
+//////////////////////////////////////////////////////////////
+
+@media screen and (max-height: 400px) {
+
+    .board-physical {
+        transform: scale(0.42);
     }
 }

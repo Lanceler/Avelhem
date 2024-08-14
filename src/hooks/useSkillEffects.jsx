@@ -1,15 +1,11 @@
 import React from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-import { updateState } from "../redux/gameState";
-import gameState from "../redux/gameState";
-
 import { useRecurringEffects } from "./useRecurringEffects";
 
 export const useSkillEffects = () => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
-  const dispatch = useDispatch();
 
   const {
     blast,
@@ -258,7 +254,6 @@ export const useSkillEffects = () => {
       newGameState.currentResolution.push({
         resolution: "Fire Skill",
         resolution2: "Resplendence1",
-        // resolution: "Resplendence1",
         unit: unit,
         details: {
           title: "Resplendence",
@@ -284,33 +279,6 @@ export const useSkillEffects = () => {
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
-
-    // const isAdjacentToFrostbitten = () => {
-    //   const zones = JSON.parse(localGameState.zones);
-    //   const adjacentEnemies = getZonesWithEnemies(unit, 1);
-
-    //   for (let i of adjacentEnemies) {
-    //     const zone = zones[Math.floor(i / 5)][i % 5];
-    //     const enemy = localGameState[zone.player].units[zone.unitIndex];
-
-    //     if (enemy.afflictions.frostbite > 0) {
-    //       return true;
-    //     }
-    //   }
-    //   return false;
-    // };
-
-    // if (isAdjacentToFrostbitten()) {
-    //   newGameState.currentResolution.push({
-    //     resolution: "Water Skill",
-    //     resolution2: "Purification2",
-    //     unit: unit,
-    //     details: {
-    //       title: "Purification",
-    //       reason: "Purification",
-    //     },
-    //   });
-    // }
 
     newGameState.currentResolution.push({
       resolution: "Water Skill",
@@ -534,15 +502,9 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    // newGameState.currentResolution.push({
-    //   resolution: "Aerial Impetus1",
-    //   unit: unit,
-    // });
-
     newGameState.currentResolution.push({
       resolution: "Wind Skill",
       resolution2: "Aerial Impetus1",
-      // resolution: "Aerial Impetus1",
       unit: unit,
       details: {
         title: "Aerial Impetus",
@@ -897,20 +859,6 @@ export const useSkillEffects = () => {
         newGameState[self].skillHand.length > 0 &&
         getZonesWithEnemiesAfflicted(unit, 1, "paralysis").length > 0
       ) {
-        // newGameState.currentResolution.push({
-        //   resolution: "Wind Skill",
-        //   resolution2: "Cataclysmic Tempest6",
-        //   unit: unit,
-        //   details: {
-        //     reason: "Cataclysmic Tempest Blast",
-        //     title: "Cataclysmic Tempest",
-        //     message: "You may blast an adjacent paralyzed enemy.",
-        //     no: "Skip",
-        //     yes: "Blast",
-        //     adjacentEnemies: getZonesWithEnemiesAfflicted(unit, 1, "paralysis"),
-        //   },
-        // });
-
         newGameState.currentResolution.push({
           resolution: "Wind Skill",
           resolution2: "Cataclysmic Tempest6",
@@ -1309,28 +1257,6 @@ export const useSkillEffects = () => {
     //end "Chain Lightning2" resolution
     newGameState.currentResolution.pop();
 
-    // if (unit !== null && !isMuted(unit) && unit.charge > 0) {
-    //   //allies of victim
-    //   let adjacentEnemies = getZonesWithAllies(victim, 1);
-
-    //   if (adjacentEnemies.length > 0) {
-    //     newGameState.currentResolution.push({
-    //       resolution: "Lightning Skill",
-    //       resolution2: "Chain Lightning3",
-    //       unit: unit,
-    //       details: {
-    //         reason: "Chain Lightning Blast",
-    //         title: "Chain Lightning",
-    //         message:
-    //           "You may spend 1 Charge to blast an enemy adjacent to the previous one.",
-    //         no: "Skip",
-    //         yes: "Blast",
-    //         adjacentEnemies: adjacentEnemies,
-    //       },
-    //     });
-    //   }
-    // }
-
     if (unit !== null && !isMuted(unit)) {
       //allies of victim
       let adjacentEnemies = getZonesWithAllies(victim, 1);
@@ -1361,9 +1287,6 @@ export const useSkillEffects = () => {
 
     //end "Chain Lightning4" resolution
     newGameState.currentResolution.pop();
-
-    //consume charge --- no longer assumed
-    // unit.charge -= 1;
 
     newGameState.currentResolution.push({
       resolution: "Lightning Skill",
@@ -2412,9 +2335,7 @@ export const useSkillEffects = () => {
   const viridianGrave1 = (unitInfo, victimInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
     //DO NOT UPDATE victim (we are using their information right before they were eliminated
-    //let victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
 
     //end "Activating Viridian Grave" resolution
     newGameState.currentResolution.pop();

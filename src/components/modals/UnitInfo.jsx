@@ -585,8 +585,8 @@ const UnitInfo = (props) => {
                         {unit.enhancements.shield > 1 ? "s" : ""})
                       </p>
                       <p className="unitInfo-text-desc unitInfo-text-last">
-                        ⬩Negates the next attack targets this unit, unless they
-                        are enhanced with Ward.
+                        ⬩Negates the next attack that targets this unit, unless
+                        they are enhanced with Ward.
                       </p>
                     </>
                   )}

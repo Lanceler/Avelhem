@@ -2,25 +2,11 @@
     margin-bottom: 65px;
 }
 
-.avelhem-logo {
-    height: 110px;
-    position: absolute;
-    z-index: 200;
-    top: 8px;
-
-    /* background-color: aqua; */
-}
-
-.avelhem-logo:hover{
-    filter: brightness(1.1);
-}
-
-
 /* ////////// */
 
 .navbar {
-    position: fixed;
-    /* position: absolute; */
+    /* position: fixed; */
+    position: absolute;
     z-index: 9999;
     top: 0px;
 
@@ -30,7 +16,9 @@
     border-bottom: 5px ridge goldenrod;
 
 
-    width: 100%;
+    /* width: 100%; */
+    min-width: 100%;
+    width: 100vw;
     max-width: 1500px;
 
     font-size: 1.5rem;
@@ -40,7 +28,7 @@
 
 .navbar-content{
     height: 100%;
-    padding-left: 10px;
+    padding: 0px 6px;
     display: flex;
     align-items: center;
 
@@ -53,10 +41,28 @@
     z-index: 3;
     flex-shrink: 0;
     height: 100%;
-    width: 300px;
-    /* background-color: aqua; */
+    width: 255px;
 
+
+    
+    /* background-color: aqua; */
 }
+
+
+.avelhem-logo {
+    height: 95px;
+    position: absolute;
+    z-index: 200;
+    top: 6px;
+
+    /* background-color: aqua; */
+}
+
+.avelhem-logo:hover {
+    filter: brightness(1.1);
+}
+
+
 
 
 .nav-menu {
@@ -81,7 +87,6 @@
     justify-content: center;
 
         /* background-color: aqua; */
-
         
 }
 
@@ -106,6 +111,7 @@
 
 .menu-icon {
     display: none;
+    margin-right: 8px;
 }
 
 .caret-down{
@@ -280,11 +286,10 @@
 @media screen and (max-width: 560px) {
 
 .nav-logo-container {
-    width: 245px;
+    width: 242px;
 }
 
 .avelhem-logo {
     height: 90px;
-    top: 16px;
-    }
+}
 }
