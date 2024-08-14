@@ -25,7 +25,7 @@ const ContingencySettings = (props) => {
 
   return (
     <div className="modal-backdrop">
-      <div className="info-modal ">
+      <div className={`info-modal ${props.demo ? "modal-mobile" : ""}`}>
         <div className="info-modal-header">
           <div className="info-modal-title">Contingency Settings</div>
           <svg

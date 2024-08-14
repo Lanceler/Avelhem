@@ -285,11 +285,11 @@
 
 @media screen and (max-width: 560px) {
 
-.nav-logo-container {
-    width: 242px;
-}
+    .nav-logo-container {
+        width: 242px;
+    }
 
-.avelhem-logo {
-    height: 90px;
-}
+    .avelhem-logo {
+        height: 90px;
+    }
 }

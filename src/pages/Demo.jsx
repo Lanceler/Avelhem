@@ -897,7 +897,11 @@ export default function Demo() {
           </div>
 
           {infoPopUp && (
-            <InfoPopUp info={infoPopUp} setInfoPopUp={setInfoPopUp} />
+            <InfoPopUp
+              info={infoPopUp}
+              setInfoPopUp={setInfoPopUp}
+              mobile={true}
+            />
           )}
 
           {/* display demoGuide for debugging */}

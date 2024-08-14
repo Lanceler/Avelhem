@@ -5415,6 +5415,7 @@ const Board = (props) => {
       {openContingencySettings && (
         <ContingencySettings
           setOpenContingencySettings={setOpenContingencySettings}
+          mobile={true}
         />
       )}
     </div>

@@ -446,8 +446,8 @@ const InfoPopUp = (props) => {
   };
 
   return (
-    <div className="modal-backdrop">
-      <div className="info-modal">
+    <div className={"modal-backdrop"}>
+      <div className={`info-modal ${props.mobile ? "modal-mobile" : ""}`}>
         {/* unitInfoModal */}
         <div className="info-modal-header">
           <div className="info-modal-title">{infoTitle()}</div>
