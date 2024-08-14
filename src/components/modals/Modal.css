@@ -865,7 +865,7 @@
 
 /* ////////////////////////////////////// */
 
-@media screen and (max-width: 920px) and (orientation: landscape) {
+@media screen and (max-width: 926px) and (orientation: landscape) {
 
     .modal-mobile {
         transform: scale(0.90) translateY(-25%);

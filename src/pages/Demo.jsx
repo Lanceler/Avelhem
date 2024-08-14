@@ -848,6 +848,12 @@ export default function Demo() {
                 demoGame={id === "game"}
                 gameState={demoGameState}
                 setDemoGameState={setDemoGameState}
+                demoInstructions={true}
+                getDemoInstructions={getDemoInstructions}
+                demoNextRevealed={demoNextRevealed}
+                handleUpdateDemoGuide={handleUpdateDemoGuide}
+                canClick={canClick}
+                changeCurrentPlayer={changeCurrentPlayer}
               />
             )}
 
@@ -858,10 +864,16 @@ export default function Demo() {
                 demoGame={id === "game"}
                 gameState={demoGameState}
                 setDemoGameState={setDemoGameState}
+                demoInstructions={true}
+                getDemoInstructions={getDemoInstructions}
+                demoNextRevealed={demoNextRevealed}
+                handleUpdateDemoGuide={handleUpdateDemoGuide}
+                canClick={canClick}
+                changeCurrentPlayer={changeCurrentPlayer}
               />
             )}
 
-            <button
+            {/* <button
               className={`redButton demo-switch-button ${
                 canClick("Switch Player Button") ? "demoClick" : ""
               }`}
@@ -871,9 +883,9 @@ export default function Demo() {
               }}
             >
               Switch Player
-            </button>
+            </button> */}
 
-            {demoGuide && (
+            {/* {demoGuide && (
               <>
                 <div
                   className={`demo-instructions ${
@@ -893,7 +905,7 @@ export default function Demo() {
                   </button>
                 )}
               </>
-            )}
+            )} */}
           </div>
 
           {infoPopUp && (

@@ -4958,6 +4958,45 @@ const Board = (props) => {
                 isYourTurn() ? "board-space-turn" : ""
               }`}
             >
+              {props.demo && (
+                <button
+                  className={`redButton demo-switch-button ${
+                    props.canClick("Switch Player Button") ? "demoClick" : ""
+                  }`}
+                  onClick={() => {
+                    props.changeCurrentPlayer();
+                    props.handleUpdateDemoGuide();
+                  }}
+                >
+                  Switch Player
+                </button>
+              )}
+              {props.demoInstructions && (
+                <>
+                  {demoGuide && (
+                    <>
+                      <div
+                        className={`demo-instructions ${
+                          ["Learn1.76.1", "Learn1.118"].includes(demoGuide)
+                            ? "demo-short"
+                            : ""
+                        }`}
+                      >
+                        {props.getDemoInstructions()}
+                      </div>
+                      {props.demoNextRevealed() && (
+                        <button
+                          className="redButton demo-instructions-button demoClick"
+                          onClick={() => props.handleUpdateDemoGuide()}
+                        >
+                          Next
+                        </button>
+                      )}
+                    </>
+                  )}
+                </>
+              )}
+
               <div className="board-left">
                 <div className="board-left-buttons">
                   {props.userRole === "spectator" && (
