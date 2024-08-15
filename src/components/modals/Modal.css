@@ -865,37 +865,25 @@
 
 /* ////////////////////////////////////// */
 
-@media screen and (max-width: 926px) and (orientation: landscape) {
+
+@media screen and (max-width: 450px) and (orientation: portrait) {
 
     .modal-mobile {
-        /* top: 0px;
-        transform: translateY(0); */
-        /* transform: scale(0.90) translateY(-25%); */
-        /* transform: scale(0.90); */
-        transform: scale(0.5) translateY(-75%);
-        max-height: 160vh;
-
-
-
-
-
-
-
-
-
-
-
-
-
+        max-width: 90vw;
+        max-height: 80vh;
     }
 
 }
 
-/* @media screen and (max-width: 754px) and (orientation: landscape) {
+
+
+@media screen and (max-width: 926px) and (orientation: landscape) {
 
     .modal-mobile {
-        transform: scale(0.85) translateY(-25%);
-        max-height: 90vh;
+        transform: scale(0.5) translateY(-75%);
+        max-height: 160vh;
+        max-width: none;
     }
 
-} */
+}
+

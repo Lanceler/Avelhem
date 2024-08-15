@@ -82,11 +82,10 @@
     display: flex;
     align-items: center;
     height: 40px;
-
     flex-direction: column;
     justify-content: center;
 
-        /* background-color: aqua; */
+    /* background-color: aqua; */
         
 }
 
@@ -134,7 +133,7 @@
 }
 
 .dropdown-menu li {
-    background: #f3f3f3;
+    background: #fcfcfc;
     cursor: pointer;
 }
 
@@ -184,13 +183,9 @@
         left: 50%;
         transform: translateX(-50%);
     }
-    
-    .NavbarItems {
-        position: relative;
-    }
 
     .nav-menu {
-        padding-top: 160px;
+        padding-top: 125px;
         display: flex;
         flex-direction: column;
         justify-content: start;
@@ -227,7 +222,7 @@
     }
 
     .nav-links:hover {
-        background-color: #f3f3f3;
+        background-color: #fcfcfc;
         border-radius: 0;
         
     }
@@ -244,7 +239,7 @@
     }
 
     .menu-icon:hover{
-        fill: #f3f3f3
+        fill: #fcfcfc
     }
 
     .nav-links-mobile {
@@ -270,7 +265,7 @@
         width: 215px;
         position: absolute;
         z-index: 7;
-        top: 202px;
+        top: 226px;
         transform: translateX(-20px);
         list-style: none;
         text-align: start;
