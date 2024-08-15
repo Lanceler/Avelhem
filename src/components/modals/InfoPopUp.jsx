@@ -11,8 +11,6 @@ import RallySmall from "../../assets/diceIcons/RallySmall.png";
 
 import { useSelector, useDispatch } from "react-redux";
 const InfoPopUp = (props) => {
-  const { localGameState } = useSelector((state) => state.gameState);
-  const { self, enemy } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
 
   const dispatch = useDispatch();
@@ -448,7 +446,6 @@ const InfoPopUp = (props) => {
   return (
     <div className={"modal-backdrop"}>
       <div className={`info-modal ${props.mobile ? "modal-mobile" : ""}`}>
-        {/* unitInfoModal */}
         <div className="info-modal-header">
           <div className="info-modal-title">{infoTitle()}</div>
           <svg

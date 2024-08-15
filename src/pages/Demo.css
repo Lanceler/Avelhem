@@ -34,11 +34,10 @@
 }
 
 .demo-board{
-    /* min-height: 1050px; */
     position: relative;
-
-    /* background-color: rgb(0, 117, 20); */
     overflow: auto;
+    margin-top: auto;
+    /* background-color: rgb(0, 117, 20); */
 }
 
 .demo-switch-button {
@@ -94,20 +93,7 @@
 @media screen and (max-width: 850px) {
     .demo-header {
         padding-top: 45px;
+        font-size: 3.5rem;
     }
 
-}
-
-@media screen and (max-width: 926px) and (orientation: landscape) {
-    .demo-board {
-        min-height: 706.2px;
-    }
-
-}
-
-@media screen and (max-width: 754px) and (orientation: landscape) {
-    .demo-board {
-        min-height: 634px;
-
-    }
 }

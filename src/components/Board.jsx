@@ -471,15 +471,14 @@ const Board = (props) => {
     if (props.userRole === "guest") {
       dispatch(updateSelf("guest"));
       dispatch(updateEnemy("host"));
-    } else {
-      // host or spectator
+    } else if (["host", "specatatir"].includes(props.userRole)) {
       dispatch(updateSelf("host"));
       dispatch(updateEnemy("guest"));
     }
 
     // STRINGED GAMESTATE"
     // console.log(JSON.stringify(localGameState));
-  }, []);
+  }, [props.userRole]);
 
   useEffect(() => {
     setValidZones([]);
@@ -491,7 +490,7 @@ const Board = (props) => {
     setTacticUsed(null);
 
     setExpandedUnit(null);
-  }, [localGameState]);
+  }, [localGameState, props.userRole]);
 
   useEffect(() => {
     if (
@@ -531,6 +530,10 @@ const Board = (props) => {
       setHideModal(false);
     }
   }, [props.gameState]);
+
+  useEffect(() => {
+    setHideModal(false);
+  }, [props.userRole]);
 
   //====================================================================
   //Current Resolution Prompt below

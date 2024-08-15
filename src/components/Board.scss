@@ -310,7 +310,7 @@
 
 @media screen and (max-width: 926px) and (orientation: landscape) {
     .board-physical {
-        transform: scale(0.425);
+        transform: scale(0.4);
         max-width: 100vw;
         max-height: 100vh;
     }
@@ -326,9 +326,18 @@
 
 @media screen and (max-width: 754px) and (orientation: landscape) {
     .board-physical {
-        transform: scale(0.375);
+        transform: scale(0.35);
     }
-    
+}
 
-    
+@media screen and (max-height: 400px) and (orientation: landscape) {
+    .board-physical {
+        transform: scale(0.325);
+    }
+}
+
+@media screen and (max-height: 330px) and (orientation: landscape) {
+    .board-physical {
+        transform: scale(0.30);
+    }
 }
