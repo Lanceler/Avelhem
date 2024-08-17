@@ -3107,7 +3107,7 @@ export const useRecurringEffects = () => {
       return false;
     }
 
-    if (unit.enhancements.shield > 0 || unit.enhancements.ward > 0) {
+    if (unit.enhancements.shield > 1 || unit.enhancements.ward > 1) {
       return true;
     }
 
@@ -3904,15 +3904,6 @@ export const useRecurringEffects = () => {
 
       if (canMove(ally) && !isImmobilized(ally)) {
         AerialImpetusAllyZones.push(ally.row * 5 + ally.column);
-
-        // Aerial Impetus has been buffed to affect any adjacent ally
-
-        // if (ally.player === "host" && unit.row < ally.row) {
-        //   AerialImpetusAllyZones.push(ally.row * 5 + ally.column);
-        // }
-        // if (ally.player === "guest" && unit.row > ally.row) {
-        //   AerialImpetusAllyZones.push(ally.row * 5 + ally.column);
-        // }
       }
     }
 

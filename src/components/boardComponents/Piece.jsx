@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateDemo } from "../redux/demoGuide";
+import { updateDemo } from "../../redux/demoGuide";
 
 import "./Piece.css";
 
-import Shield from "../assets/attributeIcons/Shield.png";
-import Ward from "../assets/attributeIcons/Ward.png";
-import Aether from "../assets/attributeIcons/Aether.png";
-import HP from "../assets/attributeIcons/HP.png";
-import BurnGif from "../assets/attributeIcons/BurnGif.gif";
-import FrostbiteGif from "../assets/attributeIcons/FrostbiteGif.gif";
-import ParalysisGif from "../assets/attributeIcons/ParalysisGif.gif";
-import RootGif from "../assets/attributeIcons/RootGif.gif";
-import AmbidexterityIcon from "../assets/others/AmbidexterityIcon.png";
+import Shield from "../../assets/attributeIcons/Shield.png";
+import Ward from "../../assets/attributeIcons/Ward.png";
+import Aether from "../../assets/attributeIcons/Aether.png";
+import HP from "../../assets/attributeIcons/HP.png";
+import BurnGif from "../../assets/attributeIcons/BurnGif.gif";
+import FrostbiteGif from "../../assets/attributeIcons/FrostbiteGif.gif";
+import ParalysisGif from "../../assets/attributeIcons/ParalysisGif.gif";
+import RootGif from "../../assets/attributeIcons/RootGif.gif";
+import AmbidexterityIcon from "../../assets/others/AmbidexterityIcon.png";
 
-import { useRecurringEffects } from "../hooks/useRecurringEffects";
+import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
-import { useGetImages } from "../hooks/useGetImages";
+import { useGetImages } from "../../hooks/useGetImages";
 
 export const Piece = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);

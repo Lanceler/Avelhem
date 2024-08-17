@@ -185,7 +185,7 @@
     }
 
     .nav-menu {
-        padding-top: 125px;
+        padding-top: 105px;
         display: flex;
         flex-direction: column;
         justify-content: start;
@@ -202,10 +202,11 @@
 
     .nav-menu.active {
         background: #333;
+        background: #141414;
         left: 0;
         opacity: 1;
         transition: all 0.5s ease;
-        z-index: 1;
+        z-index: 201;
         height: 100vh;
         /* background-color: aqua; */
         position: fixed;
@@ -231,11 +232,12 @@
         fill: goldenrod;
         height: 40px;
         display: block;
-        position: absolute;
+        /* position: absolute; */
+        position: fixed;
         top: 10px;
         right: 10px;
         cursor: pointer;
-        z-index: 5
+        z-index: 202
     }
 
     .menu-icon:hover{
@@ -265,7 +267,7 @@
         width: 215px;
         position: absolute;
         z-index: 7;
-        top: 226px;
+        top: 206px;
         transform: translateX(-20px);
         list-style: none;
         text-align: start;

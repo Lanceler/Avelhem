@@ -1,17 +1,12 @@
 import React from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-import { updateState } from "../redux/gameState";
-import gameState from "../redux/gameState";
-
 import { useCardDatabase } from "./useCardDatabase";
-
 import { useRecurringEffects } from "./useRecurringEffects";
 
 export const useUnitAbilityEffects = () => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
-  const dispatch = useDispatch();
 
   const {
     canBlast,
@@ -652,9 +647,11 @@ export const useUnitAbilityEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
+    unit.temporary.usedBallisticArmor = true;
+
     newGameState.currentResolution.push({
       resolution: "Unit Ability",
-      resolution2: "Ballistic Armor2",
+      resolution2: "Ballistic Armor1",
       unit: unit,
       details: {
         title: "Ballistic Armor",
@@ -663,17 +660,12 @@ export const useUnitAbilityEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Unit Ability",
-      resolution2: "Ballistic Armor1",
-      title: "Ballistic Armor",
+      resolution: "Discard Skill",
       unit: unit,
-      details: {
-        title: "Ballistic Armor",
-        reason: "Ballistic Armor",
-        restriction: null,
-        message:
-          "Float 1 skill and spend your Shield or Ward to blast an adjacent enemy",
-      },
+      player: self,
+      message:
+        "Spend 1 skill and either 2 turns Shield or 2 turns of Ward to blast an adjacent enemy",
+      restriction: null,
     });
 
     return newGameState;

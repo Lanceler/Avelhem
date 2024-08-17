@@ -76,13 +76,11 @@ import ViewBPUpgrades from "./modals/ViewBPUpgrades";
 import InfoPopUp from "./modals/InfoPopUp";
 import ContingencySettings from "./modals/ContingencySettings";
 
-import Tile from "./Tile";
-import Piece from "./Piece";
+import Board from "./boardComponents/Board";
 
 import PileOfCards from "./displays/PileOfCards";
-import { useGetImages } from "../hooks/useGetImages";
 
-const Board = (props) => {
+const BoardArea = (props) => {
   let gameDoc = props.demo ? null : doc(db, "gameInfo", props.gameId);
 
   const dispatch = useDispatch();
@@ -114,8 +112,6 @@ const Board = (props) => {
   const [infoPopUp, setInfoPopUp] = useState(null);
   const [openContingencySettings, setOpenContingencySettings] = useState(false);
 
-  const { getMiscImage } = useGetImages();
-
   const {
     activateAegis,
     activateFrenzyBlade,
@@ -142,7 +138,6 @@ const Board = (props) => {
     enterMoveMode,
     getVacant2SpaceZones,
     getVacantAdjacentZones,
-    getZonesInRange, // needed for quick movement
     grantRavager,
     freeze1,
     freeze2,
@@ -167,7 +162,6 @@ const Board = (props) => {
     selectFrenzyBladeActivator,
     selectHealingRainActivator,
     selectMatchMadeInHeavenPawn,
-    // selectPowerAtTheFinalHour,
     selectPitfallTrapActivator,
     selectSowAndReapStriker,
     selectSymphonicScreechActivator,
@@ -243,206 +237,6 @@ const Board = (props) => {
     flourish2,
     ambrosia1,
   } = useUnitAbilityEffects();
-
-  const activatingTarget = () => {
-    if (
-      localGameState.activatingTarget.length > 0 &&
-      localGameState.activatingTarget[
-        localGameState.activatingTarget.length - 1
-      ]
-    ) {
-      let unitInfo =
-        localGameState.activatingTarget[
-          localGameState.activatingTarget.length - 1
-        ];
-
-      let unit = localGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-      if (!unit) {
-        return;
-      }
-
-      //host or spectator
-      if (self !== "guest") {
-        return {
-          position: "absolute",
-          zIndex: 101,
-          top: 13 + 78 * unit.row,
-          left: 13 + 78 * unit.column,
-        };
-      } else {
-        //guest
-        return {
-          position: "absolute",
-          zIndex: 101,
-          top: 13 + 78 * (9 - unit.row),
-          left: 13 + 78 * (4 - unit.column),
-        };
-      }
-    }
-  };
-
-  const activatingUnit = () => {
-    if (
-      localGameState.activatingUnit.length > 0 &&
-      localGameState.activatingUnit[localGameState.activatingUnit.length - 1]
-    ) {
-      let unitInfo =
-        localGameState.activatingUnit[localGameState.activatingUnit.length - 1];
-
-      let unit = localGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-      if (!unit) {
-        return;
-      }
-
-      //host or spectator
-      if (self !== "guest") {
-        return {
-          position: "absolute",
-          zIndex: 101,
-          top: 21 + 78 * unit.row,
-          left: 21 + 78 * unit.column,
-        };
-      } else {
-        //guest
-        return {
-          position: "absolute",
-          zIndex: 101,
-          top: 21 + 78 * (9 - unit.row),
-          left: 21 + 78 * (4 - unit.column),
-        };
-      }
-    }
-  };
-
-  const unitPosition = (unit) => {
-    //host or spectator
-    if (self !== "guest") {
-      return {
-        position: "absolute",
-        zIndex: 100,
-        top: 12 + 78 * unit.row,
-        left: 12 + 78 * unit.column,
-      };
-    } else {
-      //guest
-      return {
-        position: "absolute",
-        zIndex: 100,
-        top: 12 + 78 * (9 - unit.row),
-        left: 12 + 78 * (4 - unit.column),
-      };
-    }
-  };
-
-  const unitButtonPosition = (unit) => {
-    //host or spectator
-    if (self !== "guest") {
-      return [
-        {
-          position: "absolute",
-          zIndex: 102,
-          top: 12 + 78 * unit.row - 17,
-          left: 12 + 78 * unit.column - 17,
-        },
-        {
-          position: "absolute",
-          zIndex: 102,
-          top: 12 + 78 * unit.row - 17,
-          left: 12 + 78 * unit.column + 54,
-        },
-        {
-          position: "absolute",
-          zIndex: 102,
-          top: 12 + 78 * unit.row + 54,
-          left: 12 + 78 * unit.column + 54,
-        },
-        {
-          position: "absolute",
-          zIndex: 102,
-          top: 12 + 78 * unit.row + 54,
-          left: 12 + 78 * unit.column - 17,
-        },
-      ];
-    } else {
-      //guest
-      return [
-        {
-          position: "absolute",
-          zIndex: 102,
-          top: 12 + 78 * (9 - unit.row) - 17,
-          left: 12 + 78 * (4 - unit.column) - 17,
-        },
-        {
-          position: "absolute",
-          zIndex: 102,
-          top: 12 + 78 * (9 - unit.row) - 17,
-          left: 12 + 78 * (4 - unit.column) + 54,
-        },
-        {
-          position: "absolute",
-          zIndex: 102,
-          top: 12 + 78 * (9 - unit.row) + 54,
-          left: 12 + 78 * (4 - unit.column) + 54,
-        },
-        {
-          position: "absolute",
-          zIndex: 102,
-          top: 12 + 78 * (9 - unit.row) + 54,
-          left: 12 + 78 * (4 - unit.column) - 17,
-        },
-      ];
-    }
-  };
-
-  const handleUnitOptions = (option) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    switch (option) {
-      case "Info":
-        setUnitInfor(expandedUnit);
-
-        // //for testing: quick movement
-
-        // updateLocalState(
-        //   enterMoveMode(
-        //     getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
-        //     expandedUnit,
-        //     newGameState,
-        //     null
-        //   )
-        // );
-
-        break;
-
-      case "Tactic":
-        newGameState.currentResolution.push({
-          resolution: "Misc.",
-          resolution2: "Activating Tactic",
-          unit: expandedUnit,
-        });
-        break;
-
-      case "Ability":
-        newGameState.currentResolution.push({
-          resolution: "Selecting",
-          resolution2: "Selecting Unit Ability",
-          unit: expandedUnit,
-        });
-        break;
-
-      case "Skill":
-        newGameState.currentResolution.push({
-          resolution: "Selecting",
-          resolution2: "Selecting Scion Skill",
-          unit: expandedUnit,
-        });
-        break;
-    }
-
-    dispatch(updateState(newGameState));
-  };
 
   const updateFirebase = (newGameState) => {
     if (props.userRole === "spectator") {
@@ -1616,21 +1410,6 @@ const Board = (props) => {
             break;
 
           case "Ballistic Armor1":
-            return (
-              <>
-                {self === lastRes.unit.player && !hideModal && (
-                  <FloatSkill
-                    unit={lastRes.unit}
-                    details={lastRes.details}
-                    unSkippable={true}
-                    updateFirebase={updateFirebase}
-                    hideOrRevealModale={hideOrRevealModale}
-                  />
-                )}
-              </>
-            );
-
-          case "Ballistic Armor2":
             return (
               <>
                 {self === lastRes.unit.player && !hideModal && (
@@ -4824,49 +4603,12 @@ const Board = (props) => {
       case "Learn1.38":
         return element === "Cancel Button";
 
-      case "Learn1.39":
-      case "Learn1.49":
-      case "Learn1.54":
-      case "Learn1.59":
-      case "Learn1.128":
-      case "Learn1.250":
-      case "Learn1.258":
-      case "Learn1.269":
-        return element === "Tactic Button";
-
-      case "Learn1.67":
-      case "Learn1.106":
-      case "Learn1.217":
-      case "Learn1.230":
-        return element === "Skill Button";
-
-      case "Learn1.74":
-        return element === "Info Button";
-
-      case "Learn1.120":
-      case "Learn1.235":
-      case "Learn1.242":
-        return element === "Ability Button";
-
       case "Learn1.80":
       case "Learn1.172":
       case "Learn1.274":
         return element === "End Button";
 
       /////////////////////////////////////////
-
-      case "Fire1.9":
-      case "Fire1.13":
-        return element === "Ability Button";
-
-      case "Fire1.16":
-      case "Fire1.18":
-      case "Fire1.26":
-      case "Fire1.31":
-        return element === "Skill Button";
-
-      case "Fire1.23":
-        return element === "Tactic Button";
 
       case "Fire1.45.1":
         return element === "End Button";
@@ -5083,185 +4825,25 @@ const Board = (props) => {
                     !isYourTurn() ? "board-frame-enemy" : ""
                   }`}
                 >
-                  {expandedUnit !== null && (
-                    <>
-                      <div
-                        className={`pieceOption ${
-                          canClick("Info Button") ? "demoClick" : ""
-                        }`}
-                        style={unitButtonPosition(expandedUnit)[0]}
-                        onClick={() => {
-                          handleUnitOptions("Info");
-                          handleUpdateDemoGuide();
-                        }}
-                      >
-                        <div className="optionIcon">
-                          <img
-                            src={getMiscImage("UnitProfile")}
-                            className="unitOptions"
-                          />
-                        </div>
-                      </div>
-
-                      {localGameState.currentResolution.length > 0 &&
-                        localGameState.currentResolution[
-                          localGameState.currentResolution.length - 1
-                        ].resolution === "Execution Phase" &&
-                        self === expandedUnit.player &&
-                        self === localGameState.turnPlayer &&
-                        props.userRole !== "spectator" && (
-                          <>
-                            <div
-                              className={`pieceOption ${
-                                canClick("Tactic Button") ? "demoClick" : ""
-                              }`}
-                              style={unitButtonPosition(expandedUnit)[1]}
-                              onClick={() => {
-                                handleUnitOptions("Tactic");
-                                handleUpdateDemoGuide();
-                              }}
-                            >
-                              <div className="optionIcon">
-                                <img
-                                  src={getMiscImage("UnitTactic")}
-                                  className="unitOptions"
-                                />
-                              </div>
-                            </div>
-                            {expandedUnit.unitClass !== "Pawn" && (
-                              <>
-                                <div
-                                  className={`pieceOption ${
-                                    canClick("Ability Button")
-                                      ? "demoClick"
-                                      : ""
-                                  }`}
-                                  style={unitButtonPosition(expandedUnit)[2]}
-                                  onClick={() => {
-                                    handleUnitOptions("Ability");
-                                    handleUpdateDemoGuide();
-                                  }}
-                                >
-                                  <div className="optionIcon">
-                                    {" "}
-                                    <img
-                                      src={getMiscImage("UnitAbility")}
-                                      className="unitOptions"
-                                    />
-                                  </div>
-                                </div>
-                                <div
-                                  className={`pieceOption ${
-                                    canClick("Skill Button") ? "demoClick" : ""
-                                  }`}
-                                  style={unitButtonPosition(expandedUnit)[3]}
-                                  onClick={() => {
-                                    handleUnitOptions("Skill");
-                                    handleUpdateDemoGuide();
-                                  }}
-                                >
-                                  <div className="optionIcon">
-                                    {/* Ski */}
-
-                                    <img
-                                      src={getMiscImage("UnitSkill")}
-                                      className="unitOptions"
-                                    />
-                                  </div>
-                                </div>
-                              </>
-                            )}
-                          </>
-                        )}
-                    </>
-                  )}
-
-                  {localGameState.activatingUnit.length > 0 &&
-                    localGameState.activatingUnit[
-                      localGameState.activatingUnit.length - 1
-                    ] !== null && (
-                      <div
-                        className="glow animating board-piece"
-                        style={activatingUnit()}
-                      ></div>
-                    )}
-
-                  {localGameState.activatingTarget.length > 0 &&
-                    localGameState.activatingTarget[
-                      localGameState.activatingTarget.length - 1
-                    ] !== null && (
-                      <div className="board-piece" style={activatingTarget()}>
-                        <img
-                          src={getMiscImage("Crosshair")}
-                          className="crosshair"
-                        />
-                      </div>
-                    )}
-
-                  {localGameState.host.units.map((unit, i) => (
-                    <div key={i}>
-                      {unit && (
-                        <div className="board-piece" style={unitPosition(unit)}>
-                          <Piece
-                            unit={unit}
-                            movingUnit={movingUnit}
-                            tileMode={tileMode}
-                            selectUnitReason={selectUnitReason}
-                            selectUnitSpecial={selectUnitSpecial}
-                            expandedUnit={expandedUnit}
-                            setExpandedUnit={setExpandedUnit}
-                            validZones={validZones}
-                            selectUnit={selectUnit}
-                          />
-                        </div>
-                      )}
-                    </div>
-                  ))}
-
-                  {localGameState.guest.units.map((unit, i) => (
-                    <div key={-i - 1}>
-                      {unit && (
-                        <div className="board-piece" style={unitPosition(unit)}>
-                          <Piece
-                            unit={unit}
-                            movingUnit={movingUnit}
-                            tileMode={tileMode}
-                            selectUnitReason={selectUnitReason}
-                            selectUnitSpecial={selectUnitSpecial}
-                            expandedUnit={expandedUnit}
-                            setExpandedUnit={setExpandedUnit}
-                            validZones={validZones}
-                            selectUnit={selectUnit}
-                          />
-                        </div>
-                      )}
-                    </div>
-                  ))}
-
-                  <div
-                    className={
-                      self !== "guest"
-                        ? "tile-grid"
-                        : "tile-grid reversed-tile-grid"
-                    }
-                  >
-                    {zones.map((row, r) =>
-                      row.map((zone, c) => (
-                        <Tile
-                          key={zone.id}
-                          zone={zone}
-                          validZones={validZones}
-                          deployUnit={deployUnit}
-                          movingUnit={movingUnit}
-                          movingSpecial={movingSpecial}
-                          setMovingSpecial={setMovingSpecial}
-                          moveUnit={moveUnit}
-                          tileMode={tileMode}
-                          deployClass={deployClass}
-                        />
-                      ))
-                    )}
-                  </div>
+                  <Board
+                    expandedUnit={expandedUnit}
+                    setExpandedUnit={setExpandedUnit}
+                    setUnitInfor={setUnitInfor}
+                    handleUpdateDemoGuide={handleUpdateDemoGuide}
+                    userRole={props.userRole}
+                    movingUnit={movingUnit}
+                    movingSpecial={movingSpecial}
+                    setMovingSpecial={setMovingSpecial}
+                    moveUnit={moveUnit}
+                    deployUnit={deployUnit}
+                    tileMode={tileMode}
+                    selectUnitReason={selectUnitReason}
+                    selectUnitSpecial={selectUnitSpecial}
+                    zones={zones}
+                    validZones={validZones}
+                    selectUnit={selectUnit}
+                    deployClass={deployClass}
+                  />
                 </div>
               </div>
 
@@ -5464,4 +5046,4 @@ const Board = (props) => {
   );
 };
 
-export default Board;
+export default BoardArea;

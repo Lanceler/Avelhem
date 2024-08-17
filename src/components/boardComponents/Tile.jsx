@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateDemo } from "../redux/demoGuide";
+import { updateDemo } from "../../redux/demoGuide";
 
 import "./Tile.css";
 

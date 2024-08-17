@@ -20,7 +20,7 @@ import { updatecontingencySettings } from "../redux/contingencySettings";
 
 import SelectRepertoire from "../components/modals/SelectRepertoire";
 import Loading from "../components/modals/Loading";
-import Board from "../components/Board";
+import BoardArea from "../components/BoardArea";
 
 import "./Game.css";
 
@@ -261,7 +261,7 @@ export default function Game() {
       }}
     >
       {["ready", "spectate"].includes(playerStatus) && (
-        <Board
+        <BoardArea
           gameState={gameData.gameState}
           gameId={gameData.id}
           userRole={userRole}

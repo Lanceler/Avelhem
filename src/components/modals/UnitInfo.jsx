@@ -220,10 +220,12 @@ const UnitInfo = (props) => {
               ⬩Draw 1 skill or restore your Aether.
             </p>
 
-            <p className="unitInfo-text-heading2">2. Ballistic Armor</p>
+            <p className="unitInfo-text-heading2">
+              2. Ballistic Armor (One-shot)
+            </p>
             <p className="unitInfo-text-desc">
-              ⬩Float 1 skill and spend your Shield or Ward to blast an adjacent
-              enemy.
+              ⬩Spend 1 skill and either 2 turns of Shield or 2 turns of Ward to
+              blast an adjacent enemy.
             </p>
           </>
         );

@@ -236,10 +236,10 @@ const SelectCustomChoice = (props) => {
       break;
 
     case "Ballistic Armor":
-      canFirstChoice = unit.enhancements.shield > 0;
-      canSecondChoice = unit.enhancements.ward > 0;
-      ChoiceFirstMessage = "Spend your Shield.";
-      ChoiceSecondMessage = "Spend your Ward.";
+      canFirstChoice = unit.enhancements.shield > 1;
+      canSecondChoice = unit.enhancements.ward > 1;
+      ChoiceFirstMessage = "Spend 2 turns of Shield.";
+      ChoiceSecondMessage = "Spend 2 turns of Ward.";
       break;
 
     case "Sow and Reap":
@@ -328,7 +328,6 @@ const SelectCustomChoice = (props) => {
           unit.fever
             ? (unit.fever = Math.min(2, unit.fever + 2))
             : (unit.fever = 2);
-          //newGameState[unit.player].units[unit.unitIndex] = unit;
         } else {
           newGameState.currentResolution.push({
             resolution: "Recover Skill",
@@ -531,7 +530,6 @@ const SelectCustomChoice = (props) => {
       case "Geomancy":
         if (selectedChoice === 1) {
           unit.hp = Math.min(unit.hp + 1, 3);
-          //newGameState[unit.player].units[unit.unitIndex] = unit;
         } else {
           newGameState.currentResolution.push({
             resolution: "Recover Skill",
@@ -676,10 +674,8 @@ const SelectCustomChoice = (props) => {
           unit.sharpness
             ? (unit.sharpness = Math.min(2, unit.sharpness + 1))
             : (unit.sharpness = 1);
-          //newGameState[unit.player].units[unit.unitIndex] = unit;
         } else {
           unit.hp = Math.max(2, unit.hp);
-          //newGameState[unit.player].units[unit.unitIndex] = unit;
           newGameState.currentResolution.push({
             resolution: "Discard Skill",
             unit: unit,
@@ -739,17 +735,15 @@ const SelectCustomChoice = (props) => {
           newGameState = drawSkill(newGameState);
         } else {
           unit.aether = 1;
-          //newGameState[unit.player].units[unit.unitIndex] = unit;
         }
         break;
 
       case "Ballistic Armor":
         if (selectedChoice === 1) {
-          unit.enhancements.shield = 0;
+          unit.enhancements.shield -= 2;
         } else {
-          unit.enhancements.ward = 0;
+          unit.enhancements.ward -= 2;
         }
-        //newGameState[unit.player].units[unit.unitIndex] = unit;
 
         enterSelectUnitMode(
           getZonesWithEnemies(unit, 1),

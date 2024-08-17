@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./Demo.css";
 
-import Board from "../components/Board";
+import BoardArea from "../components/BoardArea";
 
 import InfoPopUp from "../components/modals/InfoPopUp";
 
@@ -842,7 +842,7 @@ export default function Demo() {
           </div>
 
           <div className="demo-board">
-            <Board
+            <BoardArea
               userRole={currentPlayer}
               demo={true}
               demoGame={id === "game"}

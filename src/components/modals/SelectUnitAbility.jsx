@@ -337,12 +337,18 @@ const SelectUnitAbility = (props) => {
         },
         {
           abilityName: "Ballistic Armor",
-          abilityQualifier: <div className="abilityQualifier"></div>,
+          abilityQualifier: (
+            <div className="abilityQualifier">
+              <span className="abilityQualifier">
+                <em>One-shot</em>
+              </span>
+            </div>
+          ),
           abilityText: (
             <>
               <div className="abilityText ">
-                ⬩Float 1 skill and spend your Shield or Ward to blast an
-                adjacent enemy.
+                ⬩Spend 1 skill and either 2 turns of Shield or 2 turns of Ward
+                to blast an adjacent enemy.
               </div>
             </>
           ),
@@ -465,6 +471,7 @@ const SelectUnitAbility = (props) => {
             return true;
           case 1:
             return (
+              !unit.temporary.usedBallisticArmor &&
               newGameState[unit.player].skillHand.length > 0 &&
               canBallisticArmor(unit)
             );

@@ -29,6 +29,7 @@ const Navbar = () => {
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 448 512"
               className="menu-icon"
+              style={{ position: `${click ? "fixed" : "absolute"}` }}
               onClick={() => {
                 setClick(!click);
                 setDropdown(false);
