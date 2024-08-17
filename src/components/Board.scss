@@ -22,10 +22,10 @@
     justify-items: flex-end;
     margin-bottom: 0;
     color: #eee;
-    padding: 25px 105px 0px;
+    padding: 20px 105px;
     font-family: "Times New Roman", Times, serif;
     font-size: 1.5rem;
-    background: linear-gradient(to top, rgb(14, 14, 14), rgba(0, 0, 0, 0) 100%);
+    background: linear-gradient(to top, rgb(14, 14, 14), rgba(0, 0, 0, 0) 180%);
     margin-top: auto;
 
 
@@ -93,11 +93,31 @@
     height: 80%;
 }
 
-.board-left .board-spectating-label {
-    color: goldenrod;
+.board-spectating-label {
+    color: rgb(255, 255, 241);
     -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.75);
-    font-size: 2.3rem;
+    font-size: 28.5px;
     font-family: Alegreya, Geogia, Times New Roman, "serif";
+    text-align: center;
+    box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.5);
+
+    border: goldenrod ridge 2.5px;
+    background-color: rgba(0, 0, 0, 0.65);
+    width: 250px;
+    height: 145px;
+    padding: 5px;
+    margin-right: 20px;
+}
+
+.board-spectating-label .guestName {
+    color: rgb(173, 170, 170);
+    -webkit-text-stroke: 0.25px rgb(255, 255, 255);
+
+}
+
+.board-spectating-label .hostName {
+    color: goldenrod;
+
 }
 
 
@@ -229,10 +249,13 @@
 .board-right .deck-and-dice-container .dice-container {
     height: 33%;
     width: auto;
-    /* background-color: rgb(34, 31, 31); */
     padding: 10px 5px 10px 15px;
-}
+    display: flex;
+    justify-content: space-between;
 
+
+    // background-color: aqua;
+}
 
 .eye-icon {
     height: 22px;

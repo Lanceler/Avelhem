@@ -474,7 +474,7 @@ const UnitInfo = (props) => {
                     <>
                       <p className="unitInfo-text-heading2">HP: {unit.hp}</p>
                       <p className="unitInfo-text-heading2">
-                        Aether: {unit.aether ? "Present" : "Absent"}
+                        Aether: {unit.aether ? "Present" : "None"}
                       </p>
                       {unit.fever > 0 && (
                         <p className="unitInfo-text-heading2">

@@ -265,7 +265,7 @@ const BoardArea = (props) => {
     if (props.userRole === "guest") {
       dispatch(updateSelf("guest"));
       dispatch(updateEnemy("host"));
-    } else if (["host", "specatatir"].includes(props.userRole)) {
+    } else if (["host", "spectator"].includes(props.userRole)) {
       dispatch(updateSelf("host"));
       dispatch(updateEnemy("guest"));
     }
@@ -4744,13 +4744,24 @@ const BoardArea = (props) => {
 
               <div className="board-left">
                 <div className="board-left-buttons">
-                  {props.userRole === "spectator" && (
+                  {/* {props.userRole === "spectator" && (
                     <>
                       <div className="board-spectating-label">
-                        Spectating Game
+                        Spectating <br />
+                        <br />
+                        <span className="guestName">
+                          {localGameState.guest.displayName}{" "}
+                        </span>
+                        <br />
+                        vs.
+                        <br />
+                        <span className="hostName">
+                          {localGameState.host.displayName}{" "}
+                        </span>
+                        <br />
                       </div>
                     </>
-                  )}
+                  )} */}
                   {props.userRole !== "spectator" && (
                     <>
                       {self === localGameState.turnPlayer &&
@@ -4912,6 +4923,23 @@ const BoardArea = (props) => {
                     }}
                   >
                     <SovereignTactics userRole={props.userRole} />
+                    {props.userRole === "spectator" && (
+                      <>
+                        <div className="board-spectating-label">
+                          Spectating <br />
+                          <span className="guestName">
+                            {localGameState.guest.displayName}{" "}
+                          </span>
+                          <br />
+                          vs.
+                          <br />
+                          <span className="hostName">
+                            {localGameState.host.displayName}{" "}
+                          </span>
+                          <br />
+                        </div>
+                      </>
+                    )}
                   </div>
                   <div className="deck-container">
                     <div className="skill-container">
