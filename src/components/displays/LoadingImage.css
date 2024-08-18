@@ -11,12 +11,16 @@
 .loading-image{
     position: absolute;
     z-index: 99;
+    top: 0px;
 }
 
 .loading-image-container{
 
-    height: calc(100vh - 65px);
-    width: 100vw;
+    /* height: calc(100vh - 65px); */
+    /* width: 100vw; */
+    height: 950px;
+    width: 1500px;
+    
     max-width: 1500px;
     position: relative;
     display: flex;

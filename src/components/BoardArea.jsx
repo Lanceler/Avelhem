@@ -14,6 +14,7 @@ import { useRecurringEffects } from "../hooks/useRecurringEffects";
 import { useSkillEffects } from "../hooks/useSkillEffects";
 import { useSovereignSkillEffects } from "../hooks/useSovereignSkillEffects";
 import { useUnitAbilityEffects } from "../hooks/useUnitAbilityEffects";
+import { useGetImages } from "../hooks/useGetImages";
 
 import AcquisitionPhase from "./modals/AcquisitionPhase";
 import BountyPhase from "./modals/BountyPhase";
@@ -77,8 +78,10 @@ import InfoPopUp from "./modals/InfoPopUp";
 import ContingencySettings from "./modals/ContingencySettings";
 
 import Board from "./boardComponents/Board";
-
 import PileOfCards from "./displays/PileOfCards";
+
+import LoadingImage from "./displays/LoadingImage";
+import { AnimatePresence, motion } from "framer-motion";
 
 const BoardArea = (props) => {
   let gameDoc = props.demo ? null : doc(db, "gameInfo", props.gameId);
@@ -256,6 +259,65 @@ const BoardArea = (props) => {
       }
     }
   };
+
+  //====================================================================
+  //Imageloading below
+
+  const [loadingImages, setLoadingImages] = useState(true);
+  const [showContent, setShowContent] = useState(false);
+  const [imagesLoaded, setImagesLoaded] = useState(0);
+  const { imagesLoadingList } = useGetImages();
+  const totalImages = imagesLoadingList.length;
+
+  useEffect(() => {
+    const imageElements = imagesLoadingList.map((src) => {
+      const img = new Image();
+      img.src = src;
+      img.onload = () => handleImageLoad(src, true);
+      img.onerror = () => handleImageLoad(src, false);
+      return img;
+    });
+
+    const retryCounts = new Map();
+
+    const handleImageLoad = (src, success) => {
+      setImagesLoaded((prev) => {
+        const loaded = prev + 1;
+
+        if (loaded >= totalImages) {
+          setImagesLoaded(totalImages);
+          setLoadingImages(false);
+          return loaded;
+        }
+
+        return loaded;
+      });
+
+      if (!success && (!retryCounts.has(src) || retryCounts.get(src) < 3)) {
+        const retryCount = (retryCounts.get(src) || 0) + 1;
+        retryCounts.set(src, retryCount);
+        loadImage(src); // Retry loading the image
+      }
+    };
+
+    const loadImage = (src) => {
+      const img = new Image();
+      img.src = src;
+      img.onload = () => handleImageLoad(src, true);
+      img.onerror = () => handleImageLoad(src, false);
+    };
+
+    imagesLoadingList.forEach((src) => {
+      retryCounts.set(src, 0); // Initialize retry count
+      loadImage(src);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!loadingImages) {
+      setShowContent(true);
+    }
+  }, [loadingImages]);
 
   //====================================================================
   //UseEffects below
@@ -4703,329 +4765,339 @@ const BoardArea = (props) => {
                 isYourTurn() ? "board-space-turn" : ""
               }`}
             >
-              {props.demo && (
-                <button
-                  className={`redButton demo-switch-button ${
-                    props.canClick("Switch Player Button") ? "demoClick" : ""
-                  }`}
-                  onClick={() => {
-                    props.changeCurrentPlayer();
-                    props.handleUpdateDemoGuide();
-                  }}
-                >
-                  Switch Player
-                </button>
-              )}
-              {props.demoInstructions && (
-                <>
-                  {demoGuide && (
-                    <>
-                      <div
-                        className={`demo-instructions ${
-                          ["Learn1.76.1", "Learn1.118"].includes(demoGuide)
-                            ? "demo-short"
-                            : ""
-                        }`}
-                      >
-                        {props.getDemoInstructions()}
-                      </div>
-                      {props.demoNextRevealed() && (
-                        <button
-                          className="redButton demo-instructions-button demoClick"
-                          onClick={() => props.handleUpdateDemoGuide()}
-                        >
-                          Next
-                        </button>
+              <AnimatePresence>
+                {!showContent && (
+                  <motion.div
+                    layout={true}
+                    // initial={{ opacity: 1, scale: 1 }}
+                    // transition={{ duration: 1.5, scale: 0.5 }}
+                    exit={{
+                      opacity: 0,
+                      transition: { duration: 5 },
+                    }}
+                    className="loading-image"
+                    key={1}
+                  >
+                    <LoadingImage
+                      setShowContent={setShowContent}
+                      percentLoaded={Math.round(
+                        (imagesLoaded / totalImages) * 100
                       )}
-                    </>
-                  )}
-                </>
-              )}
+                    />
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
-              <div className="board-left">
-                <div className="board-left-buttons">
-                  {/* {props.userRole === "spectator" && (
-                    <>
-                      <div className="board-spectating-label">
-                        Spectating <br />
-                        <br />
-                        <span className="guestName">
-                          {localGameState.guest.displayName}{" "}
-                        </span>
-                        <br />
-                        vs.
-                        <br />
-                        <span className="hostName">
-                          {localGameState.host.displayName}{" "}
-                        </span>
-                        <br />
-                      </div>
-                    </>
-                  )} */}
-                  {props.userRole !== "spectator" && (
-                    <>
-                      {self === localGameState.turnPlayer &&
-                        localGameState.currentResolution.length > 0 &&
-                        localGameState.currentResolution[
-                          localGameState.currentResolution.length - 1
-                        ].resolution === "Execution Phase" && (
-                          <button
-                            className={`redButton ${
-                              canClick("End Button") ? "demoClick" : ""
-                            }`}
-                            onClick={() => {
-                              resolutionUpdate(endExecutionPhase());
-                              handleUpdateDemoGuide();
-                            }}
-                          >
-                            End Turn
-                          </button>
-                        )}
-
-                      {self === localGameState.turnPlayer &&
-                        localGameState.currentResolution.length > 0 &&
-                        localGameState.currentResolution[
-                          localGameState.currentResolution.length - 1
-                        ].resolution === "Deploying Pawn" && (
-                          <button
-                            className={`redButton ${
-                              canClick("Cancel Button") ? "demoClick" : ""
-                            }`}
-                            onClick={() => {
-                              cancelDeploy();
-                              handleUpdateDemoGuide();
-                            }}
-                          >
-                            Cancel
-                          </button>
-                        )}
-
-                      {hideModal && (
-                        <button
-                          className="redButton"
-                          onClick={() => hideOrRevealModale()}
-                        >
-                          Return to Message
-                        </button>
-                      )}
-
-                      {(!props.demo || props.demoGame) && (
-                        <div className="contingency-settings">
-                          <button
-                            className="redButton"
-                            onClick={() => {
-                              setOpenContingencySettings(true);
-                            }}
-                          >
-                            Contingency Settings
-                          </button>
-                        </div>
-                      )}
-                    </>
-                  )}
-                </div>
-
-                <div className="activated-card-display">
-                  <ActivatedSkills />
-                </div>
-              </div>
-
-              <div className="board-center">
-                <div
-                  className={`board-frame ${
-                    !isYourTurn() ? "board-frame-enemy" : ""
-                  }`}
-                >
-                  <Board
-                    expandedUnit={expandedUnit}
-                    setExpandedUnit={setExpandedUnit}
-                    setUnitInfor={setUnitInfor}
-                    handleUpdateDemoGuide={handleUpdateDemoGuide}
-                    userRole={props.userRole}
-                    movingUnit={movingUnit}
-                    movingSpecial={movingSpecial}
-                    setMovingSpecial={setMovingSpecial}
-                    moveUnit={moveUnit}
-                    deployUnit={deployUnit}
-                    tileMode={tileMode}
-                    selectUnitReason={selectUnitReason}
-                    selectUnitSpecial={selectUnitSpecial}
-                    zones={zones}
-                    validZones={validZones}
-                    selectUnit={selectUnit}
-                    deployClass={deployClass}
-                  />
-                </div>
-              </div>
-
-              <div className="board-right">
-                <div className="hands-player">
-                  <div className="skill-hand">
-                    <SkillHandBack team={enemy} />
-                  </div>
-                  <div className="avel-hand">
-                    <AvelhemHandBack team={enemy} />
-                  </div>
-                </div>
-
-                <div className="deck-and-dice-container">
-                  <div className="deck-container">
-                    <div className="skill-container">
-                      <div className="skill-container-item">
-                        <PileOfCards team={enemy} pile={"skillRepertoire"} />
-                      </div>
-                      <div className=" skill-container-item">
-                        <PileOfCards team={enemy} pile={"skillVestige"} />
-                      </div>
-                    </div>
-                    <div className="resource-points">
-                      <div className="fd-counter">
-                        {" "}
-                        FD: {localGameState[enemy].fateDefiances} / 6{" "}
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 512 512"
-                          className="question-icon"
-                          onClick={() => setInfoPopUp("FD")}
-                        >
-                          <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM169.8 165.3c7.9-22.3 29.1-37.3 52.8-37.3h58.3c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24V250.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1H222.6c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z" />
-                        </svg>
-                      </div>
-                      <div
-                        className="bp-counter"
-                        onClick={() => setViewBP("enemy")}
-                      >
-                        {" "}
-                        BP: {localGameState[enemy].bountyPoints} / 10{" "}
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 576 512"
-                          className="eye-icon"
-                        >
-                          <path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z" />
-                        </svg>
-                      </div>
-                    </div>
-                    <div className="avel-container">
-                      <div className="avel-deck avel-container-item">
-                        <PileOfCards team={enemy} pile={"avelhemRepertoire"} />
-                      </div>
-                      <div className="avel-discard avel-container-item">
-                        <PileOfCards team={enemy} pile={"avelhemVestige"} />
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    className="dice-container"
-                    style={{
-                      pointerEvents:
-                        props.userRole === "spectator" ? "none" : "",
+              <>
+                {props.demo && (
+                  <button
+                    className={`redButton demo-switch-button ${
+                      props.canClick("Switch Player Button") ? "demoClick" : ""
+                    }`}
+                    onClick={() => {
+                      props.changeCurrentPlayer();
+                      props.handleUpdateDemoGuide();
                     }}
                   >
-                    <SovereignTactics userRole={props.userRole} />
-                    {props.userRole === "spectator" && (
+                    Switch Player
+                  </button>
+                )}
+                {props.demoInstructions && (
+                  <>
+                    {demoGuide && (
                       <>
-                        <div className="board-spectating-label">
-                          Spectating <br />
-                          <span className="guestName">
-                            {localGameState.guest.displayName}{" "}
-                          </span>
-                          <br />
-                          vs.
-                          <br />
-                          <span className="hostName">
-                            {localGameState.host.displayName}{" "}
-                          </span>
-                          <br />
+                        <div
+                          className={`demo-instructions ${
+                            ["Learn1.76.1", "Learn1.118"].includes(demoGuide)
+                              ? "demo-short"
+                              : ""
+                          }`}
+                        >
+                          {props.getDemoInstructions()}
                         </div>
+                        {props.demoNextRevealed() && (
+                          <button
+                            className="redButton demo-instructions-button demoClick"
+                            onClick={() => props.handleUpdateDemoGuide()}
+                          >
+                            Next
+                          </button>
+                        )}
+                      </>
+                    )}
+                  </>
+                )}
+
+                <div className="board-left">
+                  <div className="board-left-buttons">
+                    {props.userRole !== "spectator" && (
+                      <>
+                        {self === localGameState.turnPlayer &&
+                          localGameState.currentResolution.length > 0 &&
+                          localGameState.currentResolution[
+                            localGameState.currentResolution.length - 1
+                          ].resolution === "Execution Phase" && (
+                            <button
+                              className={`redButton ${
+                                canClick("End Button") ? "demoClick" : ""
+                              }`}
+                              onClick={() => {
+                                resolutionUpdate(endExecutionPhase());
+                                handleUpdateDemoGuide();
+                              }}
+                            >
+                              End Turn
+                            </button>
+                          )}
+
+                        {self === localGameState.turnPlayer &&
+                          localGameState.currentResolution.length > 0 &&
+                          localGameState.currentResolution[
+                            localGameState.currentResolution.length - 1
+                          ].resolution === "Deploying Pawn" && (
+                            <button
+                              className={`redButton ${
+                                canClick("Cancel Button") ? "demoClick" : ""
+                              }`}
+                              onClick={() => {
+                                cancelDeploy();
+                                handleUpdateDemoGuide();
+                              }}
+                            >
+                              Cancel
+                            </button>
+                          )}
+
+                        {hideModal && (
+                          <button
+                            className="redButton"
+                            onClick={() => hideOrRevealModale()}
+                          >
+                            Return to Message
+                          </button>
+                        )}
+
+                        {(!props.demo || props.demoGame) && (
+                          <div className="contingency-settings">
+                            <button
+                              className="redButton"
+                              onClick={() => {
+                                setOpenContingencySettings(true);
+                              }}
+                            >
+                              Contingency Settings
+                            </button>
+                          </div>
+                        )}
                       </>
                     )}
                   </div>
-                  <div className="deck-container">
-                    <div className="skill-container">
-                      <div className="skill-container-item">
-                        <PileOfCards team={self} pile={"skillRepertoire"} />
+
+                  <div className="activated-card-display">
+                    <ActivatedSkills />
+                  </div>
+                </div>
+
+                <div className="board-center">
+                  <div
+                    className={`board-frame ${
+                      !isYourTurn() ? "board-frame-enemy" : ""
+                    }`}
+                  >
+                    <Board
+                      expandedUnit={expandedUnit}
+                      setExpandedUnit={setExpandedUnit}
+                      setUnitInfor={setUnitInfor}
+                      handleUpdateDemoGuide={handleUpdateDemoGuide}
+                      userRole={props.userRole}
+                      movingUnit={movingUnit}
+                      movingSpecial={movingSpecial}
+                      setMovingSpecial={setMovingSpecial}
+                      moveUnit={moveUnit}
+                      deployUnit={deployUnit}
+                      tileMode={tileMode}
+                      selectUnitReason={selectUnitReason}
+                      selectUnitSpecial={selectUnitSpecial}
+                      zones={zones}
+                      validZones={validZones}
+                      selectUnit={selectUnit}
+                      deployClass={deployClass}
+                    />
+                  </div>
+                </div>
+
+                <div className="board-right">
+                  <div className="hands-player">
+                    <div className="skill-hand">
+                      <SkillHandBack team={enemy} />
+                    </div>
+                    <div className="avel-hand">
+                      <AvelhemHandBack team={enemy} />
+                    </div>
+                  </div>
+
+                  <div className="deck-and-dice-container">
+                    <div className="deck-container">
+                      <div className="skill-container">
+                        <div className="skill-container-item">
+                          <PileOfCards team={enemy} pile={"skillRepertoire"} />
+                        </div>
+                        <div className=" skill-container-item">
+                          <PileOfCards team={enemy} pile={"skillVestige"} />
+                        </div>
                       </div>
-                      <div className="skill-container-item">
-                        <PileOfCards
-                          team={self}
-                          pile={"skillVestige"}
-                          spectator={props.userRole === "spectator"}
-                        />
+                      <div className="resource-points">
+                        <div className="fd-counter">
+                          {" "}
+                          FD: {localGameState[enemy].fateDefiances} / 6{" "}
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512"
+                            className="question-icon"
+                            onClick={() => setInfoPopUp("FD")}
+                          >
+                            <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM169.8 165.3c7.9-22.3 29.1-37.3 52.8-37.3h58.3c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24V250.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1H222.6c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z" />
+                          </svg>
+                        </div>
+                        <div
+                          className="bp-counter"
+                          onClick={() => setViewBP("enemy")}
+                        >
+                          {" "}
+                          BP: {localGameState[enemy].bountyPoints} / 10{" "}
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 576 512"
+                            className="eye-icon"
+                          >
+                            <path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z" />
+                          </svg>
+                        </div>
+                      </div>
+                      <div className="avel-container">
+                        <div className="avel-deck avel-container-item">
+                          <PileOfCards
+                            team={enemy}
+                            pile={"avelhemRepertoire"}
+                          />
+                        </div>
+                        <div className="avel-discard avel-container-item">
+                          <PileOfCards team={enemy} pile={"avelhemVestige"} />
+                        </div>
                       </div>
                     </div>
-                    <div className="resource-points">
-                      <div className="fd-counter">
-                        FD: {localGameState[self].fateDefiances} / 6{" "}
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 512 512"
-                          className="question-icon"
-                          onClick={() => setInfoPopUp("FD")}
-                        >
-                          <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM169.8 165.3c7.9-22.3 29.1-37.3 52.8-37.3h58.3c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24V250.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1H222.6c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z" />
-                        </svg>
+                    <div
+                      className="dice-container"
+                      style={{
+                        pointerEvents:
+                          props.userRole === "spectator" ? "none" : "",
+                      }}
+                    >
+                      <SovereignTactics userRole={props.userRole} />
+                      {props.userRole === "spectator" && (
+                        <>
+                          <div className="board-spectating-label">
+                            Spectating <br />
+                            <span className="guestName">
+                              {localGameState.guest.displayName}{" "}
+                            </span>
+                            <br />
+                            vs.
+                            <br />
+                            <span className="hostName">
+                              {localGameState.host.displayName}{" "}
+                            </span>
+                            <br />
+                          </div>
+                        </>
+                      )}
+                    </div>
+                    <div className="deck-container">
+                      <div className="skill-container">
+                        <div className="skill-container-item">
+                          <PileOfCards team={self} pile={"skillRepertoire"} />
+                        </div>
+                        <div className="skill-container-item">
+                          <PileOfCards
+                            team={self}
+                            pile={"skillVestige"}
+                            spectator={props.userRole === "spectator"}
+                          />
+                        </div>
                       </div>
-                      <div
-                        className="bp-counter"
-                        onClick={() => setViewBP("self")}
-                      >
-                        BP: {localGameState[self].bountyPoints} / 10{" "}
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 576 512"
-                          className="eye-icon"
+                      <div className="resource-points">
+                        <div className="fd-counter">
+                          FD: {localGameState[self].fateDefiances} / 6{" "}
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512"
+                            className="question-icon"
+                            onClick={() => setInfoPopUp("FD")}
+                          >
+                            <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM169.8 165.3c7.9-22.3 29.1-37.3 52.8-37.3h58.3c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24V250.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1H222.6c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z" />
+                          </svg>
+                        </div>
+                        <div
+                          className="bp-counter"
+                          onClick={() => setViewBP("self")}
                         >
-                          <path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z" />
-                        </svg>
+                          BP: {localGameState[self].bountyPoints} / 10{" "}
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 576 512"
+                            className="eye-icon"
+                          >
+                            <path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z" />
+                          </svg>
+                        </div>
+                      </div>
+                      <div className="avel-container">
+                        <div className="avel-deck avel-container-item">
+                          <PileOfCards team={self} pile={"avelhemRepertoire"} />
+                        </div>
+                        <div className="avel-discard avel-container-item">
+                          <PileOfCards
+                            team={self}
+                            pile={"avelhemVestige"}
+                            spectator={props.userRole === "spectator"}
+                          />
+                        </div>
                       </div>
                     </div>
-                    <div className="avel-container">
-                      <div className="avel-deck avel-container-item">
-                        <PileOfCards team={self} pile={"avelhemRepertoire"} />
-                      </div>
-                      <div className="avel-discard avel-container-item">
-                        <PileOfCards
-                          team={self}
-                          pile={"avelhemVestige"}
-                          spectator={props.userRole === "spectator"}
-                        />
-                      </div>
+                  </div>
+
+                  <div className="hands-player">
+                    <div className="skill-hand">
+                      {props.userRole !== "spectator" && (
+                        <PlayerSkillHand updateFirebase={updateFirebase} />
+                      )}
+                      {props.userRole === "spectator" && (
+                        <SkillHandBack team={self} />
+                      )}
+                    </div>
+                    <div className="avel-hand">
+                      {props.userRole !== "spectator" && (
+                        <PlayerAvelhemHand updateFirebase={updateFirebase} />
+                      )}
+                      {props.userRole === "spectator" && (
+                        <AvelhemHandBack team={self} />
+                      )}
                     </div>
                   </div>
                 </div>
 
-                <div className="hands-player">
-                  <div className="skill-hand">
-                    {props.userRole !== "spectator" && (
-                      <PlayerSkillHand updateFirebase={updateFirebase} />
-                    )}
-                    {props.userRole === "spectator" && (
-                      <SkillHandBack team={self} />
-                    )}
-                  </div>
-                  <div className="avel-hand">
-                    {props.userRole !== "spectator" && (
-                      <PlayerAvelhemHand updateFirebase={updateFirebase} />
-                    )}
-                    {props.userRole === "spectator" && (
-                      <AvelhemHandBack team={self} />
-                    )}
-                  </div>
-                </div>
-              </div>
+                {currentResolutionPrompt()}
+                {unitInfor !== null && (
+                  <UnitInfo unit={unitInfor} setUnitInfor={setUnitInfor} />
+                )}
+                {viewBP !== null && (
+                  <ViewBPUpgrades team={viewBP} setViewBP={setViewBP} />
+                )}
 
-              {currentResolutionPrompt()}
-              {unitInfor !== null && (
-                <UnitInfo unit={unitInfor} setUnitInfor={setUnitInfor} />
-              )}
-              {viewBP !== null && (
-                <ViewBPUpgrades team={viewBP} setViewBP={setViewBP} />
-              )}
-
-              {infoPopUp && (
-                <InfoPopUp info={infoPopUp} setInfoPopUp={setInfoPopUp} />
-              )}
+                {infoPopUp && (
+                  <InfoPopUp info={infoPopUp} setInfoPopUp={setInfoPopUp} />
+                )}
+              </>
             </div>
           </div>
 

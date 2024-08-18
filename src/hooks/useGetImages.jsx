@@ -1,7 +1,3 @@
-import React from "react";
-
-import AvelhemLogo from "../assets/others/AvelhemLogo.png";
-
 import FireAvelhem from "../assets/avelhemcards/FireAvelhem.jpg";
 import FireAvelhemRecover from "../assets/avelhemcards/FireAvelhemRecover.jpg";
 import IgnitionPropulsion from "../assets/skillcards/IgnitionPropulsion.jpg";
@@ -175,15 +171,6 @@ import MountainFields from "../assets/banners/MountainFields.jpg";
 
 export const useGetImages = () => {
   const imagesLoadingList = [
-    AvelhemLogo,
-    LoadingBanner,
-    NightSky,
-    // MountainFields,
-    LandBG,
-    ManaBG,
-    MetalBG,
-    FireBG,
-    //////////
     FireAvelhem,
     IgnitionPropulsion,
     Conflagration,
@@ -303,21 +290,6 @@ export const useGetImages = () => {
     Assault,
     Invoke,
     Rally,
-    //banners
-    HeirBanner,
-    ChallengeBanner,
-    MatchMadeBanner,
-    ForeshadowBanner,
-    TeaBanner,
-    SovereignBanner,
-    FireBanner,
-    WaterBanner,
-    WindBanner,
-    LandBanner,
-    LightningBanner,
-    ManaBanner,
-    MetalBanner,
-    PlantBanner,
   ];
 
   const getBannerImage = (banner) => {
