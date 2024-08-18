@@ -4773,7 +4773,7 @@ const BoardArea = (props) => {
                     // transition={{ duration: 1.5, scale: 0.5 }}
                     exit={{
                       opacity: 0,
-                      transition: { duration: 5 },
+                      transition: { duration: 3.5 },
                     }}
                     className="loading-image"
                     key={1}
