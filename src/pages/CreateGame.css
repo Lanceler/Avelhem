@@ -19,7 +19,7 @@
     color: goldenrod;
 
     -webkit-text-stroke: 1.25px #fdd700;
-    text-shadow: rgb(0, 0, 0) 1px 0 10px;
+    text-shadow: rgb(0, 0, 0) 1px 0 2px;
 
 
     /* background-color: rgb(204, 0, 255) */
@@ -112,7 +112,7 @@
     padding-top: 20px;
     user-select: none;
 
-    text-shadow: rgb(0, 0, 0) 1px 0 5px;
+    text-shadow: rgb(0, 0, 0) 1px 0 2px;
     -webkit-text-stroke: 1.25px #000000;
 
 

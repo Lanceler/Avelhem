@@ -52,7 +52,10 @@ export default function Home() {
 
         <div
           className="home-banner"
-          style={{ backgroundImage: `url(${getBannerImage("Challenge")})` }}
+          style={{
+            // backgroundImage: `url(${getBannerImage("Challenge")})`
+            backgroundImage: `url(${getBannerImage("MatchMade")})`,
+          }}
         >
           <div className="home-banner-backdrop">
             <div className="home-banner-title">ENTER THE FRAY</div>

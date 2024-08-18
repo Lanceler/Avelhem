@@ -39,7 +39,7 @@ const UnitInfo = (props) => {
   const abilities = () => {
     switch (unit.unitClass) {
       case "Pawn":
-        return <p className="unitInfo-text-heading2">None.</p>;
+        return <p className="unitInfo-text-heading2">None</p>;
 
       case "Fire Scion":
         return (

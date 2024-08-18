@@ -166,6 +166,7 @@ import PlantBG from "../assets/banners/PlantBG.jpg";
 import HeirBanner from "../assets/banners/HeirBanner.jpg";
 import InviteBanner from "../assets/banners/InviteBanner.jpg";
 import ChallengeBanner from "../assets/banners/ChallengeBanner.jpg";
+import MatchMadeBanner from "../assets/banners/MatchMadeBanner.jpg";
 import ForeshadowBanner from "../assets/banners/ForeshadowBanner.jpg";
 import TeaBanner from "../assets/banners/TeaBanner.jpg";
 
@@ -305,6 +306,7 @@ export const useGetImages = () => {
     //banners
     HeirBanner,
     ChallengeBanner,
+    MatchMadeBanner,
     ForeshadowBanner,
     TeaBanner,
     SovereignBanner,
@@ -375,6 +377,9 @@ export const useGetImages = () => {
 
       case "Challenge":
         return ChallengeBanner;
+
+      case "MatchMade":
+        return MatchMadeBanner;
 
       case "Foreshadow":
         return ForeshadowBanner;

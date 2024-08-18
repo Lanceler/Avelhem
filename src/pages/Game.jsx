@@ -257,7 +257,8 @@ export default function Game() {
     <div
       className="game-body"
       style={{
-        backgroundImage: `url(${getBannerImage("MetalBG")})`,
+        // backgroundImage: `url(${getBannerImage("MetalBG")})`,
+        backgroundImage: `url(${getBannerImage("Challenge")})`,
       }}
     >
       {["ready", "spectate"].includes(playerStatus) && (
