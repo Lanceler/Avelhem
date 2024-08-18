@@ -164,13 +164,16 @@ import InviteBanner from "../assets/banners/InviteBanner.jpg";
 import ChallengeBanner from "../assets/banners/ChallengeBanner.jpg";
 import MatchMadeBanner from "../assets/banners/MatchMadeBanner.jpg";
 import ForeshadowBanner from "../assets/banners/ForeshadowBanner.jpg";
-import TeaBanner from "../assets/banners/TeaBanner.jpg";
 
 import NightSky from "../assets/banners/NightSky.jpg";
 import MountainFields from "../assets/banners/MountainFields.jpg";
 
 export const useGetImages = () => {
   const imagesLoadingList = [
+    LoadingBanner,
+    HeirBanner,
+    ChallengeBanner,
+    //
     FireAvelhem,
     IgnitionPropulsion,
     Conflagration,
@@ -358,9 +361,6 @@ export const useGetImages = () => {
 
       case "Heir":
         return HeirBanner;
-
-      case "Tea":
-        return TeaBanner;
 
       case "Invite":
         return InviteBanner;
