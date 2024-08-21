@@ -22,6 +22,8 @@ import SelectRepertoire from "../components/modals/SelectRepertoire";
 import Loading from "../components/modals/Loading";
 import BoardArea from "../components/BoardArea";
 
+import { AnimatePresence, motion } from "framer-motion";
+
 import "./Game.css";
 
 export default function Game() {
@@ -257,8 +259,8 @@ export default function Game() {
     <div
       className="game-body"
       style={{
-        // backgroundImage: `url(${getBannerImage("MetalBG")})`,
-        backgroundImage: `url(${getBannerImage("Challenge")})`,
+        backgroundImage: `url(${getBannerImage("MetalBG")})`,
+        // backgroundImage: `url(${getBannerImage("Challenge")})`,
       }}
     >
       {["ready", "spectate"].includes(playerStatus) && (
@@ -268,38 +270,42 @@ export default function Game() {
           userRole={userRole}
         />
       )}
-      {[
-        "waiting",
-        "join",
-        "error",
-        "pick repertoire",
-        "wait enemy repertoire",
-      ].includes(playerStatus) && (
-        <>
-          <div
-            className="game-banner"
-            style={{
-              backgroundImage: `url(${getBannerImage("Invite")})`,
-            }}
-          >
-            <div className="game-banner-backdrop">
-              <div className="game-banner-title">{banner.title}</div>
-              <div className="game-banner-text-body">
-                <div className="game-banner-text">
-                  {banner.buttonText && (
-                    <button
-                      className="home-banner-button"
-                      onClick={() => bannerButton()}
-                    >
-                      {banner.buttonText}
-                    </button>
-                  )}
+
+      <AnimatePresence>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.75 }}
+          exit={{ opacity: 0, transition: { duration: 1.5 } }}
+        >
+          {!["ready", "spectate"].includes(playerStatus) && (
+            <div
+              className="game-banner"
+              style={{
+                // backgroundImage: `url(${getBannerImage("Invite")})`,
+                backgroundImage: `url(${getBannerImage("Challenge")})`,
+              }}
+            >
+              <div className="game-banner-backdrop">
+                <div className="game-banner-title">{banner.title}</div>
+                <div className="game-banner-text-body">
+                  <div className="game-banner-text">
+                    {banner.buttonText && (
+                      <button
+                        className="home-banner-button"
+                        onClick={() => bannerButton()}
+                      >
+                        {banner.buttonText}
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </>
-      )}
+          )}
+        </motion.div>
+      </AnimatePresence>
+
       {playerStatus === "pick repertoire" && (
         <SelectRepertoire onSelectRepertoire={onSelectRepertoire} />
       )}

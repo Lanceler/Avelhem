@@ -60,7 +60,7 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
-  const conflagration1 = (unitInfo) => {
+  const conflagration1 = (unitInfo, resonator) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
@@ -75,61 +75,28 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    newGameState.currentResolution.push({
-      resolution: "Fire Skill",
-      resolution2: "Conflagration1",
-      // resolution: "Conflagration1",
-      unit: unit,
-    });
+    if (resonator) {
+      if (resonator !== "SA-02") {
+        newGameState.currentResolution.push({
+          resolution: "Misc.",
+          resolution2: "May float resonant skill unit",
+          unit: unit,
+          player: unit.player,
+          skill: "01-02",
+          resonator: resonator,
+        });
+      }
 
-    newGameState.currentResolution.push({
-      resolution: "Discard Skill",
-      unit: unit,
-      player: self,
-      message: "Spend 1 skill",
-      restriction: null,
-    });
-
-    return newGameState;
-  };
-
-  const conflagrationR1 = (unitInfo, resonator) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    //end "Resonating Conflagration" resolution
-    newGameState.currentResolution.pop();
-
-    //consume unit's fever
-    unit.fever = unit.fever - 1;
-
-    //give unit activationCounter
-    unit.temporary.activation
-      ? (unit.temporary.activation += 1)
-      : (unit.temporary.activation = 1);
-
-    if (resonator !== "SA-02") {
       newGameState.currentResolution.push({
-        resolution: "Misc.",
-        resolution2: "May float resonant skill unit",
+        resolution: "Fire Skill",
+        resolution2: "ConflagrationR1",
         unit: unit,
-        player: unit.player,
-        skill: "01-02",
-        resonator: resonator,
       });
     }
 
     newGameState.currentResolution.push({
       resolution: "Fire Skill",
-      resolution2: "ConflagrationR1",
-      // resolution: "ConflagrationR1",
-      unit: unit,
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Fire Skill",
       resolution2: "Conflagration1",
-      // resolution: "Conflagration1",
       unit: unit,
     });
 
@@ -144,7 +111,7 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
-  const conflagrationR2 = (unitInfo) => {
+  const conflagrationR1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
@@ -159,7 +126,6 @@ export const useSkillEffects = () => {
       newGameState.currentResolution.push({
         resolution: "Fire Skill",
         resolution2: "ConflagrationR2",
-        // resolution: "ConflagrationR2",
         unit: unit,
         details: {
           reason: "Conflagration Ignite",
@@ -2458,11 +2424,9 @@ export const useSkillEffects = () => {
       case "ignitionPropulsion1":
         return ignitionPropulsion1(a);
       case "conflagration1":
-        return conflagration1(a);
+        return conflagration1(a, b);
       case "conflagrationR1":
-        return conflagrationR1(a, b);
-      case "conflagrationR2":
-        return conflagrationR2(a);
+        return conflagrationR1(a);
       case "blazeOfGlory1":
         return blazeOfGlory1(a);
       case "blazeOfGlory2":

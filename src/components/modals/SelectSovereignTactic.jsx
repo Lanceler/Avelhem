@@ -133,7 +133,7 @@ const SelectSovereignTactic = (props) => {
           ),
         },
         {
-          abilityName: "Divine Invocation",
+          abilityName: "Defy Fate",
           abilityQualifier: <div className="abilityQualifier"></div>,
           abilityText: (
             <>

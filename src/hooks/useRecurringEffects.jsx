@@ -428,8 +428,8 @@ export const useRecurringEffects = () => {
 
     newGameState.currentResolution.push({
       resolution: "Fire Skill",
-      resolution2: "Resonating Conflagration",
-      // resolution: "Resonating Conflagration",
+      // resolution2: "Resonating Conflagration",
+      resolution2: "Activating Conflagration",
       unit: unit,
       resonator: resonator,
     });

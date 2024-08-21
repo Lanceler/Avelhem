@@ -54,7 +54,6 @@
     width: 1450px;
     padding-top: 10px;
     overflow: hidden;
-    // background: linear-gradient(to bottom, rgb(31, 31, 31), rgb(90, 90, 90) 70%, rgb(158, 158, 158) 100%);
     background: linear-gradient(to bottom, rgba(31, 31, 31, 0.9), rgba(90, 90, 90, 0.9) 70%, rgba(158, 158, 158, 0.9) 100%);
     box-shadow: 4px 4px 8px 4px rgba(0, 0, 0, 0.5);
     scrollbar-color: rgb(255, 168, 7) rgba(92, 63, 52, 0);
@@ -99,7 +98,7 @@
     color: rgb(255, 255, 241);
     -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.75);
     font-size: 28.5px;
-    font-family: Alegreya, Geogia, Times New Roman, "serif";
+    font-family: Georgia, Times New Roman, "serif";
     text-align: center;
     box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.5);
 
@@ -201,10 +200,10 @@
 .board-right .deck-and-dice-container .deck-container .skill-container,
 .board-right .deck-and-dice-container .deck-container .avel-container {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     width: 35%;
-    /* background-color: #fa0e5d; */
+    // background-color: aqua;
 }
 
 .board-right .deck-and-dice-container .deck-container .skill-container .skill-container-item,

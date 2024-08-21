@@ -1594,7 +1594,9 @@ const BoardArea = (props) => {
 
           case "Activating Conflagration":
             if (self === lastRes.unit.player) {
-              updateLocalState(applySkill("conflagration1", lastRes.unit));
+              updateLocalState(
+                applySkill("conflagration1", lastRes.unit, lastRes.resonator)
+              );
             }
             break;
 
@@ -1604,17 +1606,9 @@ const BoardArea = (props) => {
             }
             break;
 
-          case "Resonating Conflagration":
-            if (self === lastRes.unit.player) {
-              updateLocalState(
-                applySkill("conflagrationR1", lastRes.unit, lastRes.resonator)
-              );
-            }
-            break;
-
           case "ConflagrationR1":
             if (self === lastRes.unit.player) {
-              updateLocalState(applySkill("conflagrationR2", lastRes.unit));
+              updateLocalState(applySkill("conflagrationR1", lastRes.unit));
             }
             break;
 

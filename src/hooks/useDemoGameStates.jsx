@@ -815,17 +815,17 @@ export const useDemoGameStates = () => {
                 expend tactics to perform tactical actions.
                 <br />
                 <br />
-                This phase offers 3 options, varying in control and cost. As it
-                is free, Sovereigns will more than often opt to Assent.
+                This phase offers 3 options, varying in control and cost. Opt to
+                Assent.
               </div>
             );
 
           case "Learn1.13":
             return (
               <div>
-                <strong>Assent</strong> rolls 2 dice. Though cubic, these dice
-                have 4 different faces. Advance and Mobilize are more likely to
-                appear as they are present on 2 sides each. Each tactic offers a
+                <strong>Assent</strong> rolls 2 dice. Though cubic, these have 4
+                different faces. Advance and Mobilize are more likely to appear
+                as they are present on 2 sides each. Each tactic offers its own
                 set of options with overlaps to some degree. These will be
                 demonstrated in detail as they come along.
               </div>
@@ -941,17 +941,19 @@ export const useDemoGameStates = () => {
           case "Learn1.26":
             return (
               <div>
-                Mountain Stance is a modular effect; pick the second choice,
-                which allows you to spend 1 skill to search for
-                “Crystallization”.
+                Mountain Stance is a modular effect.
+                <br />
+                <br />
+                Pick the second choice, which allows you to spend 1 skill to
+                search for “Crystallization”.
               </div>
             );
 
           case "Learn1.27":
             return (
               <div>
-                Spending a skill would discard it from the hand, so it is
-                important to consider the tradeoff.
+                Spending a skill would discard it from hand, so it is important
+                to consider the tradeoff.
                 <br />
                 <br />
                 Fortunately, you have a copy of “Transcendence”, which is a
@@ -1518,7 +1520,7 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 Because Reinforce was resonated, its resonance was also applied:
-                your Metal Scion has gained 1 Sharpness (indicated by the grey
+                your Metal Scion has gained 1 Sharpness (indicated by the purple
                 diamond hovering above its class icon).
                 <br /> <br />
                 <strong>
@@ -1531,9 +1533,10 @@ export const useDemoGameStates = () => {
           case "Learn1.114":
             return (
               <div>
-                Furthermore, you retained (returned to hand) the Reinforce you
-                activated instead of discarding it. That said, the other
-                Reinforce used as the resonator was still discarded.
+                Furthermore, you retained the Reinforce you activated by
+                returning it to your hand instead of discarding it. That said,
+                you still discarded the other Reinforce that was used as the
+                resonator.
               </div>
             );
 
@@ -1608,7 +1611,8 @@ export const useDemoGameStates = () => {
               <div>
                 Some skills, such as Metal Scion’s Brandish, require the usage
                 of specific tactics. In such cases, the requirement is displayed
-                under its name.
+                under its name. Some abilities have the "One-shot" property,
+                which limits their activation to once per turn.
                 <br /> <br />
                 Activate Brandish.
               </div>
@@ -1786,7 +1790,7 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 The first sub-effect of Frenzy Blade granted your Metal Scion
-                another Sharpness, evinced by the second grey diamond.
+                another Sharpness, evinced by the second purple diamond.
                 <br /> <br />
                 The second sub-effect offers the option to draw 1 skill or spend
                 1 skill to gain Shield. Choose the latter.
@@ -1875,6 +1879,7 @@ export const useDemoGameStates = () => {
 
           case "Learn1.163":
           case "Learn1.164":
+          case "Learn1.164.1":
             return (
               <div>
                 For example, now that Ambiance Assimilation has concluded, you
@@ -1885,7 +1890,6 @@ export const useDemoGameStates = () => {
               </div>
             );
 
-          case "Learn1.164.1":
           case "Learn1.165":
           case "Learn1.166":
             return (
@@ -1904,7 +1908,7 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 Ravager is visually represented by a rising red aura. Unlike
-                Shield and Ward, it has an indefinite duration.
+                Shield and Ward, it has a permanent duration.
                 <br />
                 <br />
                 Return to the Silver Sovereign’s perspective.
@@ -2093,8 +2097,10 @@ export const useDemoGameStates = () => {
           case "Learn1.194":
             return (
               <div>
-                As per the second sub-effect of Press The Attack, draw 2
-                Avelhems.
+                Press the Attack has converted your tactics.
+                <br />
+                <br />
+                As per its second sub-effect, draw 2 Avelhems.
               </div>
             );
 
@@ -2217,10 +2223,9 @@ export const useDemoGameStates = () => {
           case "Learn1.216":
             return (
               <div>
-                The visual indicator of a Aether is found at the bottom center
-                of a unit (to the right of the heart-shaped HP icon). As the
-                Metal Scion no longer possesses their Aether, their icon is
-                absent.
+                The visual indicator of a unit’s Aether is found at their bottom
+                center (beside the heart-shaped HP icon). As the Metal Scion no
+                longer possesses their Aether, their icon is absent.
               </div>
             );
 
@@ -2454,14 +2459,14 @@ export const useDemoGameStates = () => {
           case "Learn1.255":
             return (
               <div>
-                As mentioned earlier, units inherently possess a Aether.
+                As mentioned earlier, units inherently possess an Aether.
                 <br />
                 <br />
                 <strong>
                   Aethers are primarily used to perform and mitigate
                   Aether-blasts.
                 </strong>{" "}
-                Scions (not pawns) can perform a Aether-blast via the Advance
+                Scions (not pawns) can perform an Aether-blast via the Advance
                 tactic.
               </div>
             );
@@ -2478,10 +2483,10 @@ export const useDemoGameStates = () => {
           case "Learn1.257":
             return (
               <div>
-                <strong>Mitigating a Aether-blast reduces its AP by 1.</strong>
+                <strong>Mitigating an Aether-blast reduces its AP by 1.</strong>
                 <br />
                 <br />
-                When a unit mitigates a Aether-blast, they spend their Aether
+                When a unit mitigates an Aether-blast, they spend their Aether
                 and transfer it to the attacker. (Muted units cannot spend their
                 Aethers; thus, they are most vulnerable to Aether-blasts.)
               </div>
@@ -2500,7 +2505,15 @@ export const useDemoGameStates = () => {
             );
 
           case "Learn1.263":
-            return <div>Switch player.</div>;
+            return (
+              <div>
+                The pawn no longer possesses their Aether; thus, they are prone
+                to the next Aether-blast.
+                <br />
+                <br />
+                Switch player.
+              </div>
+            );
 
           case "Learn1.264":
             return <div>Opt to reduce the AP.</div>;

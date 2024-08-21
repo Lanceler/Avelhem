@@ -235,7 +235,7 @@ const InfoPopUp = (props) => {
               </p>
               <br />
               <p>
-                Migitating a Aether-blast reduces its AP by 1, but it also
+                Migitating an Aether-blast reduces its AP by 1, but it also
                 restores the Aether of the attacker. (Tip: Aether-blasts with at
                 least 2 AP will still do damage; avoid mitigating them if they
                 remain lethal, as that would only benefit your opponent.)

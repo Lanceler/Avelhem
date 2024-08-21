@@ -652,6 +652,13 @@
     #cec7c4,
     #6b6b6b
   );
+    background: linear-gradient(22deg,
+          #290029,
+          #5e0066,
+          #750280,
+          #ffdefb,
+          #b208d4,
+          #490150);
   border: 0.5px solid #000000de;
   height: 7.5px;
   width: 7.5px;
