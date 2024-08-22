@@ -1730,7 +1730,9 @@ const BoardArea = (props) => {
 
           case "Activating Frigid Breath":
             if (self === lastRes.unit.player) {
-              updateLocalState(applySkill("frigidBreath1", lastRes.unit));
+              updateLocalState(
+                applySkill("frigidBreath1", lastRes.unit, lastRes.resonator)
+              );
             }
             break;
 
@@ -1763,14 +1765,6 @@ const BoardArea = (props) => {
           case "Frigid Breath4":
             if (self === lastRes.unit.player) {
               selectEnemies(lastRes.unit, 1, null, "freeze2", null);
-            }
-            break;
-
-          case "Resonating Frigid Breath":
-            if (self === lastRes.unit.player) {
-              updateLocalState(
-                applySkill("frigidBreathR1", lastRes.unit, lastRes.resonator)
-              );
             }
             break;
 
@@ -1947,14 +1941,8 @@ const BoardArea = (props) => {
 
           case "Activating Gale Conjuration":
             if (self === lastRes.unit.player) {
-              updateLocalState(applySkill("galeConjuration1", lastRes.unit));
-            }
-            break;
-
-          case "Resonating Gale Conjuration":
-            if (self === lastRes.unit.player) {
               updateLocalState(
-                applySkill("galeConjurationR1", lastRes.unit, lastRes.resonator)
+                applySkill("galeConjuration1", lastRes.unit, lastRes.resonator)
               );
             }
             break;
@@ -2160,7 +2148,9 @@ const BoardArea = (props) => {
 
           case "Activating Upheaval":
             if (self === lastRes.unit.player) {
-              updateLocalState(applySkill("upheaval1", lastRes.unit));
+              updateLocalState(
+                applySkill("upheaval1", lastRes.unit, lastRes.resonator)
+              );
             }
             break;
 
@@ -2189,14 +2179,6 @@ const BoardArea = (props) => {
                 )}
               </>
             );
-
-          case "Resonating Upheaval":
-            if (self === lastRes.unit.player) {
-              updateLocalState(
-                applySkill("upheavalR1", lastRes.unit, lastRes.resonator)
-              );
-            }
-            break;
 
           case "UpheavalR1":
             if (self === lastRes.unit.player) {
@@ -2405,7 +2387,9 @@ const BoardArea = (props) => {
 
           case "Activating Zip and Zap":
             if (self === lastRes.unit.player) {
-              updateLocalState(applySkill("zipAndZap1", lastRes.unit));
+              updateLocalState(
+                applySkill("zipAndZap1", lastRes.unit, lastRes.resonator)
+              );
             }
             break;
 
@@ -2437,14 +2421,6 @@ const BoardArea = (props) => {
                 )}
               </>
             );
-
-          case "Resonating Zip And Zap":
-            if (self === lastRes.unit.player) {
-              updateLocalState(
-                applySkill("zipAndZapR1", lastRes.unit, lastRes.resonator)
-              );
-            }
-            break;
 
           case "Zip And ZapR1":
             if (self === lastRes.unit.player) {
@@ -2582,7 +2558,9 @@ const BoardArea = (props) => {
 
           case "Activating Diffusion":
             if (self === lastRes.unit.player) {
-              updateLocalState(applySkill("diffusion1", lastRes.unit));
+              updateLocalState(
+                applySkill("diffusion1", lastRes.unit, lastRes.resonator)
+              );
             }
             break;
 
@@ -2625,14 +2603,6 @@ const BoardArea = (props) => {
                 )}
               </>
             );
-
-          case "Resonating Diffusion":
-            if (self === lastRes.unit.player) {
-              updateLocalState(
-                applySkill("diffusionR1", lastRes.unit, lastRes.resonator)
-              );
-            }
-            break;
 
           case "DiffusionR1":
             if (self === lastRes.unit.player) {
@@ -2759,7 +2729,9 @@ const BoardArea = (props) => {
 
           case "Activating Reinforce":
             if (self === lastRes.unit.player) {
-              updateLocalState(applySkill("reinforce1", lastRes.unit));
+              updateLocalState(
+                applySkill("reinforce1", lastRes.unit, lastRes.resonator)
+              );
             }
             break;
 
@@ -2776,14 +2748,6 @@ const BoardArea = (props) => {
                 )}
               </>
             );
-
-          case "Resonating Reinforce":
-            if (self === lastRes.unit.player) {
-              updateLocalState(
-                applySkill("reinforceR1", lastRes.unit, lastRes.resonator)
-              );
-            }
-            break;
 
           case "ReinforceR1":
             if (self === lastRes.unit.player) {
@@ -2973,7 +2937,9 @@ const BoardArea = (props) => {
 
           case "Activating Efflorescence":
             if (self === lastRes.unit.player) {
-              updateLocalState(applySkill("efflorescence1", lastRes.unit));
+              updateLocalState(
+                applySkill("efflorescence1", lastRes.unit, lastRes.resonator)
+              );
             }
             break;
 
@@ -2990,14 +2956,6 @@ const BoardArea = (props) => {
                 )}
               </>
             );
-
-          case "Resonating Efflorescence":
-            if (self === lastRes.unit.player) {
-              updateLocalState(
-                applySkill("efflorescenceR1", lastRes.unit, lastRes.resonator)
-              );
-            }
-            break;
 
           case "EfflorescenceR1":
             if (self === lastRes.unit.player) {

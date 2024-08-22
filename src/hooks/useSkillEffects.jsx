@@ -272,7 +272,7 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
-  const frigidBreath1 = (unitInfo) => {
+  const frigidBreath1 = (unitInfo, resonator) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
@@ -283,6 +283,25 @@ export const useSkillEffects = () => {
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
+
+    if (resonator) {
+      if (resonator !== "SA-02") {
+        newGameState.currentResolution.push({
+          resolution: "Misc.",
+          resolution2: "Retain resonant skill unit",
+          unit: unit,
+          player: unit.player,
+          skill: "02-02",
+          resonator: resonator,
+        });
+      }
+
+      newGameState.currentResolution.push({
+        resolution: "Water Skill",
+        resolution2: "Frigid BreathR1",
+        unit: unit,
+      });
+    }
 
     newGameState.currentResolution.push({
       resolution: "Water Skill",
@@ -325,50 +344,6 @@ export const useSkillEffects = () => {
         },
       });
     }
-
-    return newGameState;
-  };
-
-  const frigidBreathR1 = (unitInfo, resonator) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    //end "Frigid Breath" resolution
-    newGameState.currentResolution.pop();
-
-    //give unit activationCounter
-    unit.temporary.activation
-      ? (unit.temporary.activation += 1)
-      : (unit.temporary.activation = 1);
-
-    if (resonator !== "SA-02") {
-      newGameState.currentResolution.push({
-        resolution: "Misc.",
-        resolution2: "Retain resonant skill unit",
-        unit: unit,
-        player: unit.player,
-        skill: "02-02",
-        resonator: resonator,
-      });
-    }
-
-    newGameState.currentResolution.push({
-      resolution: "Water Skill",
-      resolution2: "Frigid BreathR1",
-      unit: unit,
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Water Skill",
-      resolution2: "Frigid Breath2",
-      unit: unit,
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Water Skill",
-      resolution2: "Frigid Breath1",
-      unit: unit,
-    });
 
     return newGameState;
   };
@@ -531,7 +506,7 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
-  const galeConjuration1 = (unitInfo) => {
+  const galeConjuration1 = (unitInfo, resonator) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
@@ -546,40 +521,24 @@ export const useSkillEffects = () => {
     unit.boosts.galeConjuration = true;
     unit.aether = 1;
 
-    return newGameState;
-  };
+    if (resonator) {
+      if (resonator !== "SA-02") {
+        newGameState.currentResolution.push({
+          resolution: "Misc.",
+          resolution2: "Retain resonant skill unit",
+          unit: unit,
+          player: unit.player,
+          skill: "03-02",
+          resonator: resonator,
+        });
+      }
 
-  const galeConjurationR1 = (unitInfo, resonator) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    //end "Resonating Gale Conjuration" resolution
-    newGameState.currentResolution.pop();
-
-    //give unit activationCounter
-    unit.temporary.activation
-      ? (unit.temporary.activation += 1)
-      : (unit.temporary.activation = 1);
-
-    unit.boosts.galeConjuration = true;
-    unit.aether = 1;
-
-    if (resonator !== "SA-02") {
       newGameState.currentResolution.push({
-        resolution: "Misc.",
-        resolution2: "Retain resonant skill unit",
+        resolution: "Wind Skill",
+        resolution2: "Gale ConjurationR1",
         unit: unit,
-        player: unit.player,
-        skill: "03-02",
-        resonator: resonator,
       });
     }
-
-    newGameState.currentResolution.push({
-      resolution: "Wind Skill",
-      resolution2: "Gale ConjurationR1",
-      unit: unit,
-    });
 
     return newGameState;
   };
@@ -892,7 +851,7 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
-  const upheaval1 = (unitInfo) => {
+  const upheaval1 = (unitInfo, resonator) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
@@ -905,6 +864,25 @@ export const useSkillEffects = () => {
       : (unit.temporary.activation = 1);
 
     delete unit.temporary.previousTarget;
+
+    if (resonator) {
+      if (resonator !== "SA-02") {
+        newGameState.currentResolution.push({
+          resolution: "Misc.",
+          resolution2: "May float resonant skill unit",
+          unit: unit,
+          player: unit.player,
+          skill: "04-02",
+          resonator: resonator,
+        });
+      }
+
+      newGameState.currentResolution.push({
+        resolution: "Land Skill",
+        resolution2: "UpheavalR1",
+        unit: unit,
+      });
+    }
 
     //2. Continue
     newGameState.currentResolution.push({
@@ -956,55 +934,6 @@ export const useSkillEffects = () => {
         });
       }
     }
-
-    return newGameState;
-  };
-
-  const upheavalR1 = (unitInfo, resonator) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    //end "Resonating Upheaval" resolution
-    newGameState.currentResolution.pop();
-
-    //give unit activationCounter
-    unit.temporary.activation
-      ? (unit.temporary.activation += 1)
-      : (unit.temporary.activation = 1);
-
-    if (resonator !== "SA-02") {
-      newGameState.currentResolution.push({
-        resolution: "Misc.",
-        resolution2: "May float resonant skill unit",
-        unit: unit,
-        player: unit.player,
-        skill: "04-02",
-        resonator: resonator,
-      });
-    }
-
-    delete unit.temporary.previousTarget;
-
-    //3. Resonance
-    newGameState.currentResolution.push({
-      resolution: "Land Skill",
-      resolution2: "UpheavalR1",
-      unit: unit,
-    });
-
-    //2. Continue
-    newGameState.currentResolution.push({
-      resolution: "Land Skill",
-      resolution2: "Upheaval2",
-      unit: unit,
-    });
-
-    //1. Paralyze 1st enemy
-    newGameState.currentResolution.push({
-      resolution: "Land Skill",
-      resolution2: "Upheaval1",
-      unit: unit,
-    });
 
     return newGameState;
   };
@@ -1264,7 +1193,7 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
-  const zipAndZap1 = (unitInfo) => {
+  const zipAndZap1 = (unitInfo, resonator) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
@@ -1278,6 +1207,28 @@ export const useSkillEffects = () => {
 
     //use 2 charges if not resonating
     unit.charge -= 2;
+
+    if (resonator) {
+      //use 1 charge if resonating, so add it back
+      unit.charge += 1;
+
+      if (resonator !== "SA-02") {
+        newGameState.currentResolution.push({
+          resolution: "Misc.",
+          resolution2: "May float resonant skill unit",
+          unit: unit,
+          player: unit.player,
+          skill: "05-02",
+          resonator: resonator,
+        });
+      }
+
+      newGameState.currentResolution.push({
+        resolution: "Lightning Skill",
+        resolution2: "Zip And ZapR1",
+        unit: unit,
+      });
+    }
 
     newGameState.currentResolution.push({
       resolution: "Lightning Skill",
@@ -1315,54 +1266,6 @@ export const useSkillEffects = () => {
         },
       });
     }
-
-    return newGameState;
-  };
-
-  const zipAndZapR1 = (unitInfo, resonator) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    //end "Resonating Zip and Zap" resolution
-    newGameState.currentResolution.pop();
-
-    //give unit activationCounter
-    unit.temporary.activation
-      ? (unit.temporary.activation += 1)
-      : (unit.temporary.activation = 1);
-
-    if (resonator !== "SA-02") {
-      newGameState.currentResolution.push({
-        resolution: "Misc.",
-        resolution2: "May float resonant skill unit",
-        unit: unit,
-        player: unit.player,
-        skill: "05-02",
-        resonator: resonator,
-      });
-    }
-
-    //use 1 charge if resonating
-    unit.charge -= 1;
-
-    //3. Resonance
-    newGameState.currentResolution.push({
-      resolution: "Lightning Skill",
-      resolution2: "Zip And ZapR1",
-      unit: unit,
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Lightning Skill",
-      resolution2: "Zip And Zap2",
-      unit: unit,
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Lightning Skill",
-      resolution2: "Zip And Zap1",
-      unit: unit,
-    });
 
     return newGameState;
   };
@@ -1567,7 +1470,7 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
-  const diffusion1 = (unitInfo) => {
+  const diffusion1 = (unitInfo, resonator) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
@@ -1581,14 +1484,40 @@ export const useSkillEffects = () => {
 
     delete unit.temporary.previousTarget;
 
+    let d1Message = "Use an Assault tactic to blast an adjacent enemy.";
+    let d1Restriction = ["Assault"];
+
+    if (resonator) {
+      if (resonator !== "SA-02") {
+        newGameState.currentResolution.push({
+          resolution: "Misc.",
+          resolution2: "May float resonant skill unit",
+          unit: unit,
+          player: unit.player,
+          skill: "06-02",
+          resonator: resonator,
+        });
+      }
+
+      d1Message = "Use an Assault or Invoke tactic to blast an adjacent enemy.";
+      d1Restriction = ["Assault", "Invoke"];
+
+      //2. Resonance
+      newGameState.currentResolution.push({
+        resolution: "Mana Skill",
+        resolution2: "DiffusionR1",
+        unit: unit,
+      });
+    }
+
     newGameState.currentResolution.push({
       resolution: "Mana Skill",
       resolution2: "Diffusion1",
       unit: unit,
       details: {
         title: "Diffusion",
-        message: "Use an Assault tactic to blast an adjacent enemy.",
-        restriction: ["Assault"],
+        message: d1Message,
+        restriction: d1Restriction,
         stock: 1,
         reason: "Diffusion",
         canSkip: false,
@@ -1632,54 +1561,6 @@ export const useSkillEffects = () => {
       }
     }
 
-    return newGameState;
-  };
-
-  const diffusionR1 = (unitInfo, resonator) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    //end "Resonating Diffusion" resolution
-    newGameState.currentResolution.pop();
-
-    //give unit activationCounter
-    unit.temporary.activation
-      ? (unit.temporary.activation += 1)
-      : (unit.temporary.activation = 1);
-
-    if (resonator !== "SA-02") {
-      newGameState.currentResolution.push({
-        resolution: "Misc.",
-        resolution2: "May float resonant skill unit",
-        unit: unit,
-        player: unit.player,
-        skill: "06-02",
-        resonator: resonator,
-      });
-    }
-
-    delete unit.temporary.previousTarget;
-
-    //2. Resonance
-    newGameState.currentResolution.push({
-      resolution: "Mana Skill",
-      resolution2: "DiffusionR1",
-      unit: unit,
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Mana Skill",
-      resolution2: "Diffusion1",
-      unit: unit,
-      details: {
-        title: "Diffusion",
-        message: "Use an Assault or Invoke tactic to blast an enemy.",
-        restriction: ["Assault", "Invoke"],
-        stock: 1,
-        reason: "Diffusion",
-        canSkip: false,
-      },
-    });
     return newGameState;
   };
 
@@ -1905,7 +1786,7 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
-  const reinforce1 = (unitInfo) => {
+  const reinforce1 = (unitInfo, resonator) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
@@ -1917,47 +1798,24 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    newGameState.currentResolution.push({
-      resolution: "Metal Skill",
-      resolution2: "Reinforce1",
-      unit: unit,
-      details: {
-        title: "Reinforce",
-        reason: "Reinforce",
-      },
-    });
+    if (resonator) {
+      if (resonator !== "SA-02") {
+        newGameState.currentResolution.push({
+          resolution: "Misc.",
+          resolution2: "Retain resonant skill unit",
+          unit: unit,
+          player: unit.player,
+          skill: "07-02",
+          resonator: resonator,
+        });
+      }
 
-    return newGameState;
-  };
-
-  const reinforceR1 = (unitInfo, resonator) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    //end "Resonating Reinforce" resolution
-    newGameState.currentResolution.pop();
-
-    //give unit activationCounter
-    unit.temporary.activation
-      ? (unit.temporary.activation += 1)
-      : (unit.temporary.activation = 1);
-
-    if (resonator !== "SA-02") {
       newGameState.currentResolution.push({
-        resolution: "Misc.",
-        resolution2: "Retain resonant skill unit",
+        resolution: "Metal Skill",
+        resolution2: "ReinforceR1",
         unit: unit,
-        player: unit.player,
-        skill: "07-02",
-        resonator: resonator,
       });
     }
-
-    newGameState.currentResolution.push({
-      resolution: "Metal Skill",
-      resolution2: "ReinforceR1",
-      unit: unit,
-    });
 
     newGameState.currentResolution.push({
       resolution: "Metal Skill",
@@ -2181,7 +2039,7 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
-  const efflorescence1 = (unitInfo) => {
+  const efflorescence1 = (unitInfo, resonator) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
@@ -2202,6 +2060,25 @@ export const useSkillEffects = () => {
       ? (unit.blossom = Math.min(3, unit.blossom + 2))
       : (unit.blossom = 2);
 
+    if (resonator) {
+      if (resonator !== "SA-02") {
+        newGameState.currentResolution.push({
+          resolution: "Misc.",
+          resolution2: "Retain resonant skill unit",
+          unit: unit,
+          player: unit.player,
+          skill: "08-02",
+          resonator: resonator,
+        });
+      }
+
+      newGameState.currentResolution.push({
+        resolution: "Plant Skill",
+        resolution2: "EfflorescenceR1",
+        unit: unit,
+      });
+    }
+
     if (
       ["08-01", "08-03", "08-04"].some((s) =>
         newGameState[unit.player].skillVestige.includes(s)
@@ -2224,65 +2101,48 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
-  const efflorescenceR1 = (unitInfo, resonator) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+  // const efflorescenceR1 = (unitInfo, resonator) => {
+  //   let newGameState = JSON.parse(JSON.stringify(localGameState));
+  //   let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
-    //end "Resonating Efflorescence" resolution
-    newGameState.currentResolution.pop();
+  //   //end "Resonating Efflorescence" resolution
+  //   newGameState.currentResolution.pop();
 
-    //give unit activationCounter
-    unit.temporary.activation
-      ? (unit.temporary.activation += 1)
-      : (unit.temporary.activation = 1);
+  //   //give unit activationCounter
+  //   unit.temporary.activation
+  //     ? (unit.temporary.activation += 1)
+  //     : (unit.temporary.activation = 1);
 
-    if (resonator !== "SA-02") {
-      newGameState.currentResolution.push({
-        resolution: "Misc.",
-        resolution2: "Retain resonant skill unit",
-        unit: unit,
-        player: unit.player,
-        skill: "08-02",
-        resonator: resonator,
-      });
-    }
+  //       if (!unit.afflictions.burn) {
+  //         //burn would otherwise instantly purge overgrowth
+  //         unit.enhancements.overgrowth = true;
+  //       }
 
-    if (!unit.afflictions.burn) {
-      //burn would otherwise instantly purge overgrowth
-      unit.enhancements.overgrowth = true;
-    }
+  //       unit.blossom
+  //         ? (unit.blossom = Math.min(3, unit.blossom + 2))
+  //         : (unit.blossom = 2);
 
-    unit.blossom
-      ? (unit.blossom = Math.min(3, unit.blossom + 2))
-      : (unit.blossom = 2);
+  //   if (
+  //     ["08-01", "08-03", "08-04"].some((s) =>
+  //       newGameState[unit.player].skillVestige.includes(s)
+  //     )
+  //   ) {
+  //     newGameState.currentResolution.push({
+  //       resolution: "Plant Skill",
+  //       resolution2: "Efflorescence1",
+  //       unit: unit,
+  //       details: {
+  //         title: "Efflorescence",
+  //         message:
+  //           "You may spend 2 skills to recover then float 1 Plant skill other than “Efflorescence”. Select 1st skill.",
+  //         restriction: null,
+  //         reason: "Efflorescence1",
+  //       },
+  //     });
+  //   }
 
-    newGameState.currentResolution.push({
-      resolution: "Plant Skill",
-      resolution2: "EfflorescenceR1",
-      unit: unit,
-    });
-
-    if (
-      ["08-01", "08-03", "08-04"].some((s) =>
-        newGameState[unit.player].skillVestige.includes(s)
-      )
-    ) {
-      newGameState.currentResolution.push({
-        resolution: "Plant Skill",
-        resolution2: "Efflorescence1",
-        unit: unit,
-        details: {
-          title: "Efflorescence",
-          message:
-            "You may spend 2 skills to recover then float 1 Plant skill other than “Efflorescence”. Select 1st skill.",
-          restriction: null,
-          reason: "Efflorescence1",
-        },
-      });
-    }
-
-    return newGameState;
-  };
+  //   return newGameState;
+  // };
 
   const efflorescenceR2 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
@@ -2438,11 +2298,9 @@ export const useSkillEffects = () => {
       case "purification1":
         return purification1(a);
       case "frigidBreath1":
-        return frigidBreath1(a);
+        return frigidBreath1(a, b);
       case "frigidBreath2":
         return frigidBreath2(a);
-      case "frigidBreathR1":
-        return frigidBreathR1(a, b);
       case "frigidBreathR2":
         return frigidBreathR2(a);
       case "healingRain1":
@@ -2458,9 +2316,7 @@ export const useSkillEffects = () => {
       case "aerialImpetus2E":
         return aerialImpetus2E(a);
       case "galeConjuration1":
-        return galeConjuration1(a);
-      case "galeConjurationR1":
-        return galeConjurationR1(a, b);
+        return galeConjuration1(a, b);
       case "galeConjurationR2":
         return galeConjurationR2(a);
       case "symphonicScreech1":
@@ -2480,11 +2336,9 @@ export const useSkillEffects = () => {
       case "crystallization2":
         return crystallization2(a);
       case "upheaval1":
-        return upheaval1(a);
+        return upheaval1(a, b);
       case "upheaval2":
         return upheaval2(a);
-      case "upheavalR1":
-        return upheavalR1(a, b);
       case "upheavalR2":
         return upheavalR2(a);
       case "pitfallTrap1":
@@ -2506,11 +2360,9 @@ export const useSkillEffects = () => {
       case "chainLightning3":
         return chainLightning3(a, b);
       case "zipAndZap1":
-        return zipAndZap1(a);
+        return zipAndZap1(a, b);
       case "zipAndZap2":
         return zipAndZap2(a);
-      case "zipAndZapR1":
-        return zipAndZapR1(a, b);
       case "zipAndZapR2":
         return zipAndZapR2(a);
       case "thunderThaumaturge1":
@@ -2526,11 +2378,9 @@ export const useSkillEffects = () => {
       case "surge2":
         return surge2(a);
       case "diffusion1":
-        return diffusion1(a);
+        return diffusion1(a, b);
       case "diffusion2":
         return diffusion2(a);
-      case "diffusionR1":
-        return diffusionR1(a, b);
       case "diffusionR2":
         return diffusionR2(a);
       case "diffusionR3":
@@ -2548,9 +2398,7 @@ export const useSkillEffects = () => {
       case "magneticShockwave3":
         return magneticShockwave3(a);
       case "reinforce1":
-        return reinforce1(a);
-      case "reinforceR1":
-        return reinforceR1(a, b);
+        return reinforce1(a, b);
       case "reinforceR2":
         return reinforceR2(a);
       case "frenzyBlade1":
@@ -2570,9 +2418,7 @@ export const useSkillEffects = () => {
       case "sowAndReap2":
         return sowAndReap2(a);
       case "efflorescence1":
-        return efflorescence1(a);
-      case "efflorescenceR1":
-        return efflorescenceR1(a, b);
+        return efflorescence1(a, b);
       case "efflorescenceR2":
         return efflorescenceR2(a);
       case "viridianGrave1":

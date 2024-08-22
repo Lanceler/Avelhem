@@ -394,7 +394,6 @@ export const useRecurringEffects = () => {
     newGameState.currentResolution.push({
       resolution: "Fire Skill",
       resolution2: "Activating Conflagration",
-      // resolution: "Activating Conflagration",
       unit: unit,
     });
 
@@ -428,7 +427,6 @@ export const useRecurringEffects = () => {
 
     newGameState.currentResolution.push({
       resolution: "Fire Skill",
-      // resolution2: "Resonating Conflagration",
       resolution2: "Activating Conflagration",
       unit: unit,
       resonator: resonator,
@@ -544,7 +542,7 @@ export const useRecurringEffects = () => {
 
     newGameState.currentResolution.push({
       resolution: "Mana Skill",
-      resolution2: "Resonating Diffusion",
+      resolution2: "Activating Diffusion",
       unit: unit,
       resonator: resonator,
     });
@@ -638,7 +636,7 @@ export const useRecurringEffects = () => {
 
     newGameState.currentResolution.push({
       resolution: "Plant Skill",
-      resolution2: "Resonating Efflorescence",
+      resolution2: "Activating Efflorescence",
       unit: unit,
       resonator: resonator,
     });
@@ -772,7 +770,7 @@ export const useRecurringEffects = () => {
 
     newGameState.currentResolution.push({
       resolution: "Water Skill",
-      resolution2: "Resonating Frigid Breath",
+      resolution2: "Activating Frigid Breath",
       unit: unit,
       resonator: resonator,
     });
@@ -841,7 +839,7 @@ export const useRecurringEffects = () => {
 
     newGameState.currentResolution.push({
       resolution: "Wind Skill",
-      resolution2: "Resonating Gale Conjuration",
+      resolution2: "Activating Gale Conjuration",
       unit: unit,
       resonator: resonator,
     });
@@ -1219,7 +1217,6 @@ export const useRecurringEffects = () => {
     newGameState.currentResolution.push({
       resolution: "Fire Skill",
       resolution2: "Activating Resplendence",
-      // resolution: "Activating Resplendence",
       unit: unit,
     });
 
@@ -1282,7 +1279,7 @@ export const useRecurringEffects = () => {
 
     newGameState.currentResolution.push({
       resolution: "Metal Skill",
-      resolution2: "Resonating Reinforce",
+      resolution2: "Activating Reinforce",
       unit: unit,
       resonator: resonator,
     });
@@ -1853,7 +1850,7 @@ export const useRecurringEffects = () => {
 
     newGameState.currentResolution.push({
       resolution: "Land Skill",
-      resolution2: "Resonating Upheaval",
+      resolution2: "Activating Upheaval",
       unit: unit,
       resonator: resonator,
     });
@@ -2020,7 +2017,7 @@ export const useRecurringEffects = () => {
 
     newGameState.currentResolution.push({
       resolution: "Lightning Skill",
-      resolution2: "Resonating Zip And Zap",
+      resolution2: "Activating Zip and Zap",
       unit: unit,
       resonator: resonator,
     });
