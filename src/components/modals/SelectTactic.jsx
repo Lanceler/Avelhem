@@ -174,7 +174,6 @@ const SelectTactic = (props) => {
                   ></img>
                 </div>
               </div>
-              {/* <div className="tactic-label">{tactic.face}</div> */}
               <h2 style={{ marginTop: 10 }}>{tactic.face}</h2>
               <div className="tactic-label">Instances: {tactic.stock}</div>
             </div>

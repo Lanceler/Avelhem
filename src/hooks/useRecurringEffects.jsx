@@ -3703,7 +3703,7 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
-  const enterMoveMode = (zoneIds, unit, gameState, tactic, pop) => {
+  const enterMoveMode = (zoneIds, unit, gameState, tactic, canCancel, pop) => {
     let newGameState = gameState
       ? gameState
       : JSON.parse(JSON.stringify(localGameState));
@@ -3718,6 +3718,7 @@ export const useRecurringEffects = () => {
       zoneIds: zoneIds,
       unit: unit,
       tactic: tactic,
+      canCancel: canCancel,
     });
 
     return newGameState;

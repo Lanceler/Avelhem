@@ -1050,6 +1050,7 @@ const BoardArea = (props) => {
                   lastRes.unit,
                   null,
                   lastRes.tactic,
+                  false,
                   true
                 )
               );
@@ -3774,6 +3775,30 @@ const BoardArea = (props) => {
     }, 250);
   };
 
+  const canCancel = () => {
+    if (
+      self === localGameState.turnPlayer &&
+      localGameState.currentResolution.length > 0 &&
+      localGameState.currentResolution[
+        localGameState.currentResolution.length - 1
+      ].resolution === "Deploying Pawn"
+    ) {
+      return true;
+    }
+
+    if (
+      localGameState.currentResolution.length > 0 &&
+      localGameState.currentResolution[
+        localGameState.currentResolution.length - 1
+      ].resolution2 === "Moving Unit" &&
+      localGameState.currentResolution[
+        localGameState.currentResolution.length - 1
+      ].canCancel
+    ) {
+      return true;
+    }
+  };
+
   const cancelDeploy = () => {
     const newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -4802,23 +4827,19 @@ const BoardArea = (props) => {
                             </button>
                           )}
 
-                        {self === localGameState.turnPlayer &&
-                          localGameState.currentResolution.length > 0 &&
-                          localGameState.currentResolution[
-                            localGameState.currentResolution.length - 1
-                          ].resolution === "Deploying Pawn" && (
-                            <button
-                              className={`redButton ${
-                                canClick("Cancel Button") ? "demoClick" : ""
-                              }`}
-                              onClick={() => {
-                                cancelDeploy();
-                                handleUpdateDemoGuide();
-                              }}
-                            >
-                              Cancel
-                            </button>
-                          )}
+                        {canCancel() && (
+                          <button
+                            className={`redButton ${
+                              canClick("Cancel Button") ? "demoClick" : ""
+                            }`}
+                            onClick={() => {
+                              cancelDeploy();
+                              handleUpdateDemoGuide();
+                            }}
+                          >
+                            Cancel
+                          </button>
+                        )}
 
                         {hideModal && (
                           <button

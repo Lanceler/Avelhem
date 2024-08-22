@@ -105,9 +105,9 @@ const InfoPopUp = (props) => {
 
             <div className="unitInfo-text-heading2">
               <em>
-                Note: Mobilize provides 3 (4 if upgraded) instances. Once a unit
-                has used any instances of a Mobilize tactic, they are prohibited
-                from using its remainder.
+                Note: Mobilize provides 3 (4 if upgraded) instances. Units
+                cannot use the instances of the same Mobilize tactic more than
+                once.
               </em>
             </div>
 

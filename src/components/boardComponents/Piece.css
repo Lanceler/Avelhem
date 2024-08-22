@@ -643,22 +643,14 @@
 
 .sharpness {
   transform: rotate(45deg);
-  background: linear-gradient(
-    22deg,
-    #2b2a2a,
-    #3b3535,
-    #5c4c4c,
-    #ffffff,
-    #cec7c4,
-    #6b6b6b
-  );
-    background: linear-gradient(22deg,
-          #290029,
-          #5e0066,
-          #750280,
-          #ffdefb,
-          #b208d4,
-          #490150);
+  background: linear-gradient(22deg,
+        #290029,
+        #5e0066,
+        #7f058a,
+        #ffdefb,
+        #b208d4,
+        #490150);
+
   border: 0.5px solid #000000de;
   height: 7.5px;
   width: 7.5px;

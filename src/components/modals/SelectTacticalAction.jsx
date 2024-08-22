@@ -218,7 +218,8 @@ const SelectTacticalAction = (props) => {
               getVacantAdjacentZones(unit),
               unit,
               newGameState,
-              props.dice
+              props.dice,
+              true
             );
           } else {
             newGameState.currentResolution.push({
@@ -287,7 +288,8 @@ const SelectTacticalAction = (props) => {
               getVacantAdjacentZones(unit),
               unit,
               newGameState,
-              props.dice
+              props.dice,
+              true
             );
           } else {
             newGameState.currentResolution.push({
@@ -315,7 +317,8 @@ const SelectTacticalAction = (props) => {
               getVacantAdjacentZones(unit),
               unit,
               newGameState,
-              props.dice
+              props.dice,
+              true
             );
           } else {
             newGameState.currentResolution.push({

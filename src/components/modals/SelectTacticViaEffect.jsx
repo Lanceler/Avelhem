@@ -372,21 +372,6 @@ const SelectTacticViaEffect = (props) => {
             null
           );
 
-          // if (canMove(unit)) {
-          //   newGameState.currentResolution.push({
-          //     resolution: "Mana Skill",
-          //     resolution2: "Surge2",
-          //     unit: unit,
-          //     details: {
-          //       reason: "Surge",
-          //       title: "Surge",
-          //       message: "You may traverse (bypass motion contingent skills).",
-          //       no: "Skip",
-          //       yes: "Traverse",
-          //     },
-          //   });
-          // }
-
           newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
           break;
 

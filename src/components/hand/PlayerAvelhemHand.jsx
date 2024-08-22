@@ -153,7 +153,6 @@ const PlayerAvelhemHand = (props) => {
         <div
           className="player-avelhemhand-container"
           style={{
-            // top: `${raise ? -raiseHeight : 55}px`,
             transform: `translateY(${raise ? -raiseHeight : 55}px)`,
           }}
           onClick={(e) => handleRaise(e)}
@@ -165,9 +164,6 @@ const PlayerAvelhemHand = (props) => {
                 handleUpdateDemoGuide();
               }}
               key={index}
-              // className={`player-hand-card indivAvelhem ${
-              //   raise ? "enlargable" : ""
-              // }`}
               className={`player-hand-card indivAvelhem ${
                 raise ? "enlargable" : ""
               } ${canClick(card) ? "demoClick" : ""}`}
@@ -175,7 +171,6 @@ const PlayerAvelhemHand = (props) => {
                 backgroundImage: `url(${getCardImage(card)})`,
                 top: Math.floor(index / 2) * -110,
                 left: 5 + (index % 2) * -60,
-                // left: (index % 5) * -30,
               }}
             ></div>
           ))}
