@@ -71,8 +71,6 @@ const YouMayNoYes = (props) => {
       unit = newGameState[props.unit.player].units[props.unit.unitIndex];
     }
 
-    //end
-
     const popExceptions = ["Press the Attack Pawn"];
 
     if (!popExceptions.includes(props.details.reason)) {
@@ -81,7 +79,7 @@ const YouMayNoYes = (props) => {
 
     switch (props.details.reason) {
       case "End Execution Phase": //"End Execution Phase Confirm"
-        newGameState.activatingTarget.pop();
+        newGameState.currentResolution.pop();
         newGameState = endExecutionPhase2();
         break;
 

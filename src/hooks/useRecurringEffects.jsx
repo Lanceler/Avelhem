@@ -3607,6 +3607,7 @@ export const useRecurringEffects = () => {
 
     newGameState.turnPhase = "Final";
     newGameState.currentResolution.pop();
+    newGameState.currentResolution.pop();
 
     //7. If at least 3 of your units have scored, you win. Otherwise, your opponent commences the next turn as the initiator.
     //6. If an ally is occupying a zone in the enemy base, grant them Score and purge all their other statuses.

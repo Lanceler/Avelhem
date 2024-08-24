@@ -346,6 +346,10 @@ const BoardArea = (props) => {
     setTacticUsed(null);
 
     setExpandedUnit(null);
+
+    if (localGameState) {
+      console.log(JSON.stringify(localGameState.currentResolution));
+    }
   }, [localGameState, props.userRole]);
 
   useEffect(() => {
@@ -3799,9 +3803,10 @@ const BoardArea = (props) => {
     }
   };
 
-  const cancelDeploy = () => {
+  const cancelAction = () => {
     const newGameState = JSON.parse(JSON.stringify(localGameState));
 
+    //Deploy uses dice; move uses tactic
     const dice =
       newGameState.currentResolution[newGameState.currentResolution.length - 1]
         .dice;
@@ -4833,7 +4838,7 @@ const BoardArea = (props) => {
                               canClick("Cancel Button") ? "demoClick" : ""
                             }`}
                             onClick={() => {
-                              cancelDeploy();
+                              cancelAction();
                               handleUpdateDemoGuide();
                             }}
                           >

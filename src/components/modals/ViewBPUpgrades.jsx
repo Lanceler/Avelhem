@@ -151,12 +151,12 @@ const ViewBPUpgrades = (props) => {
 
                   {upgrades.avelhem >= 1 && (
                     <p className="unitInfo-text-desc">
-                      1. Can retain up to 1 Avelhem at the end of turn.
+                      1. Units ascending via Avelhems gain Shield for 2 turns.
                     </p>
                   )}
                   {upgrades.avelhem >= 2 && (
                     <p className="unitInfo-text-desc">
-                      2. Units ascending via Avelhems gain Shield for 2 turns.
+                      2. Can retain up to 1 Avelhem at the end of turn.
                     </p>
                   )}
                   {upgrades.avelhem >= 3 && (

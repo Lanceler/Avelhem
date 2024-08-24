@@ -772,6 +772,7 @@
   height: 74px;
   position: absolute;
   z-index: 4;
+  opacity: 0.75;
 }
 
 .crosshair {
