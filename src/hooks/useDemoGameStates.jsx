@@ -1607,6 +1607,7 @@ export const useDemoGameStates = () => {
 
           case "Learn1.122":
           case "Learn1.123":
+          case "Learn1.123.1":
             return (
               <div>
                 Some skills, such as Metal Scion’s Brandish, require the usage
@@ -2612,7 +2613,16 @@ export const useDemoGameStates = () => {
             );
 
           case "Learn1.278":
-            return <div>Demo over.</div>;
+            return (
+              <div>
+                The game is initially a race to score 1 point. Once this has
+                been achieved, Sovereigns can agree to continue the game by
+                raising the objective, up to a maximum of 5.
+                <br />
+                <br />
+                Demo over.
+              </div>
+            );
 
           ////////////////////
         }
@@ -2665,6 +2675,7 @@ export const useDemoGameStates = () => {
 
           case "Fire1.13":
           case "Fire1.14":
+          case "Fire1.14.1":
             return "7. Click on the Fire Scion again, then activate their other ability: Afterburner. It allows them to strike by expending an Invoke tactic, as well as either 2 Fevers or 1 skill. Without clicking on any cards, click on the “Spend 2 Fevers” button.";
 
           case "Fire1.15":

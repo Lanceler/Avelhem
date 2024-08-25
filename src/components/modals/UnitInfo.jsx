@@ -723,7 +723,7 @@ const UnitInfo = (props) => {
                     <>
                       <p className="unitInfo-text-heading2">Ambidexterity</p>
                       <p className="unitInfo-text-desc unitInfo-text-last">
-                        ⬩The next standard skill activated will float upon
+                        ⬩Next standard skill activated is retained upon
                         conclusion.
                       </p>
                     </>

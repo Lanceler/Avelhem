@@ -1952,6 +1952,19 @@ const BoardArea = (props) => {
             }
             break;
 
+          case "Gale Conjuration1":
+            return (
+              <>
+                {self === localGameState.turnPlayer && !hideModal && (
+                  <SelectTacticViaEffect
+                    details={lastRes.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
           case "Gale ConjurationR1":
             if (self === lastRes.unit.player) {
               updateLocalState(applySkill("galeConjurationR2", lastRes.unit));
@@ -1964,21 +1977,6 @@ const BoardArea = (props) => {
                 {self === lastRes.unit.player && !hideModal && (
                   <YouMayNoYes
                     unit={lastRes.unit}
-                    details={lastRes.details}
-                    updateFirebase={updateFirebase}
-                    hideOrRevealModale={hideOrRevealModale}
-                  />
-                )}
-              </>
-            );
-
-          case "Gale ConjurationR3":
-            return (
-              <>
-                {self === lastRes.unit.player && !hideModal && (
-                  <YouMayNoYes
-                    unit={lastRes.unit}
-                    attacker={lastRes.attacker}
                     details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
@@ -3200,19 +3198,6 @@ const BoardArea = (props) => {
             }
             break;
 
-          case "Ambidexterity2":
-            return (
-              <>
-                {self === lastRes.player && !hideModal && (
-                  <YouMayNoYes
-                    details={lastRes.details}
-                    updateFirebase={updateFirebase}
-                    hideOrRevealModale={hideOrRevealModale}
-                  />
-                )}
-              </>
-            );
-
           case "Ambidexterity Conversion":
             return (
               <>
@@ -4370,14 +4355,14 @@ const BoardArea = (props) => {
         ) {
           newGameState.currentResolution.push({
             resolution: "Sovereign Resonant Skill",
-            resolution2: "Ambidexterity2",
-            player: self,
+            resolution2: "Ambidexterity Conversion",
             details: {
-              reason: "Ambidexterity Conversion",
               title: "Ambidexterity",
-              message: "You may convert 1 Advance tactic into Invoke.",
-              no: "Skip",
-              yes: "Convert",
+              message: "You may convert an Advance tactic into Invoke.",
+              restriction: ["Advance"],
+              stock: 1,
+              reason: "Ambidexterity",
+              canSkip: true,
             },
           });
         }

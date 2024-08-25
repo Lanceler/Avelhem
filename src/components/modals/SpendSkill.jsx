@@ -146,7 +146,7 @@ const SpendSkill = (props) => {
         }
         break;
 
-      case "Fire1.14":
+      case "Fire1.14.1":
         switch (element) {
           case "Select Fever Button":
             return true;
@@ -191,7 +191,7 @@ const SpendSkill = (props) => {
         dispatch(updateDemo("Fire1.12"));
         break;
 
-      case "Fire1.14":
+      case "Fire1.14.1":
         dispatch(updateDemo("Fire1.15"));
         break;
 

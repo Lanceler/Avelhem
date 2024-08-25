@@ -519,7 +519,6 @@ export const useSkillEffects = () => {
       : (unit.temporary.activation = 1);
 
     unit.boosts.galeConjuration = true;
-    unit.aether = 1;
 
     if (resonator) {
       if (resonator !== "SA-02") {
@@ -540,6 +539,27 @@ export const useSkillEffects = () => {
       });
     }
 
+    if (
+      (["Advance", "Assault"].includes(newGameState.tactics[0].face) &&
+        newGameState.tactics[0].stock > 0) ||
+      (["Advance", "Assault"].includes(newGameState.tactics[1].face) &&
+        newGameState.tactics[1].stock > 0)
+    ) {
+      newGameState.currentResolution.push({
+        resolution: "Wind Skill",
+        resolution2: "Gale Conjuration1",
+        details: {
+          title: "Gale Conjuration",
+          message:
+            "You may convert an Advance or Assault tactic into Mobilize (4 instances).",
+          restriction: ["Advance", "Assault"],
+          stock: 1,
+          reason: "Gale Conjuration",
+          canSkip: true,
+        },
+      });
+    }
+
     return newGameState;
   };
 
@@ -551,20 +571,7 @@ export const useSkillEffects = () => {
     // end "Gale ConjurationR1"
     newGameState.currentResolution.pop();
 
-    if (newGameState[self].skillFloat > 0) {
-      newGameState.currentResolution.push({
-        resolution: "Wind Skill",
-        resolution2: "Gale ConjurationR3",
-        unit: unit,
-        details: {
-          reason: "Gale Conjuration Draw",
-          title: "Gale Conjuration",
-          message: `You may draw 1 floating skill.`,
-          no: "Skip",
-          yes: "Draw",
-        },
-      });
-    }
+    unit.aether = 1;
 
     const zonesWithEnemies = getZonesWithEnemies(unit, 1);
     let shieldedEnemyZones = [];

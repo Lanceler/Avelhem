@@ -104,7 +104,7 @@ const TacticResults3 = (props) => {
               <div
                 // className="tacticBG"
                 className={`tacticBG ${
-                  selectedChoice === index ? "selected-modal-option" : ""
+                  selectedChoice === index ? "selected-modal-option2" : ""
                 } ${canClick("tactic", index) ? "demoClick" : ""} `}
               >
                 <div

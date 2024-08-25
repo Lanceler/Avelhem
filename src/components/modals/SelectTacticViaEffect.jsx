@@ -15,6 +15,8 @@ const SelectTacticViaEffect = (props) => {
   const { self } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
 
+  const [selectedChoice, setSelectedChoice] = useState(null);
+
   const dispatch = useDispatch();
 
   const [infoPopUp, setInfoPopUp] = useState(null);
@@ -61,370 +63,388 @@ const SelectTacticViaEffect = (props) => {
     dispatch(updateState(newGameState));
   };
 
-  const handleClickTactic = (i) => {
-    if (canUseTactic[i] && localGameState.tactics[i].stock > 0) {
-      let newGameState = JSON.parse(JSON.stringify(localGameState));
+  const handleProceed = (i) => {
+    // if (canUseTactic[i] && localGameState.tactics[i].stock > 0) {
 
-      //end Tactic Selection
-      newGameState.currentResolution.pop();
+    // }
 
-      //deduct stock from tactic
-      newGameState.tactics[i].stock -= props.details.stock;
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-      let unit = null;
-      if (props.unit) {
-        unit = newGameState[props.unit.player].units[props.unit.unitIndex];
+    //end Tactic Selection
+    newGameState.currentResolution.pop();
 
-        //prevent unit from using tactic again
-        if (newGameState.tactics[i].face === "Mobilize") {
-          if (i === 0) {
-            unit.temporary.used0thTactic = true;
-          } else if (i === 1) {
-            unit.temporary.used1stTactic = true;
-          }
+    //deduct stock from tactic
+    newGameState.tactics[i].stock -= props.details.stock;
+
+    let unit = null;
+    if (props.unit) {
+      unit = newGameState[props.unit.player].units[props.unit.unitIndex];
+
+      //prevent unit from using tactic again
+      if (newGameState.tactics[i].face === "Mobilize") {
+        if (i === 0) {
+          unit.temporary.used0thTactic = true;
+        } else if (i === 1) {
+          unit.temporary.used1stTactic = true;
         }
       }
+    }
 
-      switch (props.details.reason) {
-        //Abilities
-        case "Afterburner":
-          updateData = true;
-          newGameState.activatingSkill.push("Afterburner");
-          newGameState.activatingUnit.push(unit);
+    switch (props.details.reason) {
+      //Abilities
+      case "Afterburner":
+        updateData = true;
+        newGameState.activatingSkill.push("Afterburner");
+        newGameState.activatingUnit.push(unit);
 
-          newGameState.currentResolution.push({
-            resolution: "Tactic End",
-            unit: unit,
-            effect: true,
-          });
+        newGameState.currentResolution.push({
+          resolution: "Tactic End",
+          unit: unit,
+          effect: true,
+        });
 
-          newGameState.currentResolution.push({
-            resolution: "Unit Ability",
-            resolution2: "Activating Afterburner",
-            unit: unit,
-          });
+        newGameState.currentResolution.push({
+          resolution: "Unit Ability",
+          resolution2: "Activating Afterburner",
+          unit: unit,
+        });
 
-          newGameState.currentResolution.push({
-            resolution: "Animation Delay",
-            priority: self,
-          });
+        newGameState.currentResolution.push({
+          resolution: "Animation Delay",
+          priority: self,
+        });
 
-          break;
+        break;
 
-        case "Hydrotherapy":
-          updateData = true;
-          newGameState.activatingSkill.push("Hydrotherapy");
-          newGameState.activatingUnit.push(unit);
+      case "Hydrotherapy":
+        updateData = true;
+        newGameState.activatingSkill.push("Hydrotherapy");
+        newGameState.activatingUnit.push(unit);
 
-          newGameState.currentResolution.push({
-            resolution: "Tactic End",
-            unit: unit,
-            effect: true,
-          });
+        newGameState.currentResolution.push({
+          resolution: "Tactic End",
+          unit: unit,
+          effect: true,
+        });
 
-          newGameState.currentResolution.push({
-            resolution: "Unit Ability",
-            resolution2: "Activating Hydrotherapy",
-            unit: unit,
-          });
+        newGameState.currentResolution.push({
+          resolution: "Unit Ability",
+          resolution2: "Activating Hydrotherapy",
+          unit: unit,
+        });
 
-          newGameState.currentResolution.push({
-            resolution: "Animation Delay",
-            priority: self,
-          });
-          break;
+        newGameState.currentResolution.push({
+          resolution: "Animation Delay",
+          priority: self,
+        });
+        break;
 
-        case "Cold Embrace":
-          updateData = true;
-          newGameState.activatingSkill.push("ColdEmbrace");
-          newGameState.activatingUnit.push(unit);
+      case "Cold Embrace":
+        updateData = true;
+        newGameState.activatingSkill.push("ColdEmbrace");
+        newGameState.activatingUnit.push(unit);
 
-          newGameState.currentResolution.push({
-            resolution: "Tactic End",
-            unit: unit,
-            effect: true,
-          });
+        newGameState.currentResolution.push({
+          resolution: "Tactic End",
+          unit: unit,
+          effect: true,
+        });
 
-          newGameState.currentResolution.push({
-            resolution: "Unit Ability",
-            resolution2: "Activating Cold Embrace",
-            unit: unit,
-          });
+        newGameState.currentResolution.push({
+          resolution: "Unit Ability",
+          resolution2: "Activating Cold Embrace",
+          unit: unit,
+        });
 
-          newGameState.currentResolution.push({
-            resolution: "Animation Delay",
-            priority: self,
-          });
-          break;
+        newGameState.currentResolution.push({
+          resolution: "Animation Delay",
+          priority: self,
+        });
+        break;
 
-        case "Air Dash":
-          updateData = true;
-          newGameState.activatingSkill.push("AirDash");
-          newGameState.activatingUnit.push(unit);
+      case "Air Dash":
+        updateData = true;
+        newGameState.activatingSkill.push("AirDash");
+        newGameState.activatingUnit.push(unit);
 
-          unit.temporary.usedAirDash = true;
+        unit.temporary.usedAirDash = true;
+        newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+
+        newGameState.currentResolution.push({
+          resolution: "Tactic End",
+          unit: unit,
+          effect: true,
+        });
+
+        newGameState.currentResolution.push({
+          resolution: "Unit Ability",
+          resolution2: "Activating Air Dash",
+          unit: unit,
+        });
+
+        newGameState.currentResolution.push({
+          resolution: "Animation Delay",
+          priority: self,
+        });
+        break;
+
+      case "Reap the Whirlwind":
+        updateData = true;
+        newGameState.activatingSkill.push("ReapTheWhirlwind");
+        newGameState.activatingUnit.push(unit);
+
+        newGameState.currentResolution.push({
+          resolution: "Tactic End",
+          unit: unit,
+          effect: true,
+        });
+
+        newGameState.currentResolution.push({
+          resolution: "Unit Ability",
+          resolution2: "Activating Reap the Whirlwind",
+          unit: unit,
+        });
+
+        newGameState.currentResolution.push({
+          resolution: "Animation Delay",
+          priority: self,
+        });
+        break;
+
+      case "Fortify":
+        if (newGameState.tactics[i].face === "Advance") {
+          delete unit.boosts.mountainStance;
           newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+        }
 
-          newGameState.currentResolution.push({
-            resolution: "Tactic End",
-            unit: unit,
-            effect: true,
-          });
+        updateData = true;
+        newGameState.activatingSkill.push("Fortify");
+        newGameState.activatingUnit.push(unit);
 
-          newGameState.currentResolution.push({
-            resolution: "Unit Ability",
-            resolution2: "Activating Air Dash",
-            unit: unit,
-          });
+        newGameState.currentResolution.push({
+          resolution: "Tactic End",
+          unit: unit,
+          effect: true,
+        });
 
-          newGameState.currentResolution.push({
-            resolution: "Animation Delay",
-            priority: self,
-          });
-          break;
+        newGameState.currentResolution.push({
+          resolution: "Unit Ability",
+          resolution2: "Activating Fortify",
+          unit: unit,
+        });
 
-        case "Reap the Whirlwind":
-          updateData = true;
-          newGameState.activatingSkill.push("ReapTheWhirlwind");
-          newGameState.activatingUnit.push(unit);
+        newGameState.currentResolution.push({
+          resolution: "Animation Delay",
+          priority: self,
+        });
+        break;
 
-          newGameState.currentResolution.push({
-            resolution: "Tactic End",
-            unit: unit,
-            effect: true,
-          });
+      case "Converge":
+        updateData = true;
+        newGameState.activatingSkill.push("Converge");
+        newGameState.activatingUnit.push(unit);
 
-          newGameState.currentResolution.push({
-            resolution: "Unit Ability",
-            resolution2: "Activating Reap the Whirlwind",
-            unit: unit,
-          });
+        newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
 
-          newGameState.currentResolution.push({
-            resolution: "Animation Delay",
-            priority: self,
-          });
-          break;
+        newGameState.currentResolution.push({
+          resolution: "Tactic End",
+          unit: unit,
+          effect: true,
+        });
 
-        case "Fortify":
-          if (newGameState.tactics[i].face === "Advance") {
-            delete unit.boosts.mountainStance;
-            newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
-          }
+        newGameState.currentResolution.push({
+          resolution: "Unit Ability",
+          resolution2: "Activating Converge",
+          unit: unit,
+        });
 
-          updateData = true;
-          newGameState.activatingSkill.push("Fortify");
-          newGameState.activatingUnit.push(unit);
+        newGameState.currentResolution.push({
+          resolution: "Animation Delay",
+          priority: self,
+        });
+        break;
 
-          newGameState.currentResolution.push({
-            resolution: "Tactic End",
-            unit: unit,
-            effect: true,
-          });
+      case "Galvanize":
+        updateData = true;
+        newGameState.activatingSkill.push("Galvanize");
+        newGameState.activatingUnit.push(unit);
 
-          newGameState.currentResolution.push({
-            resolution: "Unit Ability",
-            resolution2: "Activating Fortify",
-            unit: unit,
-          });
+        unit.temporary.usedGalvanize = true;
+        newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
 
-          newGameState.currentResolution.push({
-            resolution: "Animation Delay",
-            priority: self,
-          });
-          break;
+        newGameState.currentResolution.push({
+          resolution: "Tactic End",
+          unit: unit,
+          effect: true,
+        });
 
-        case "Converge":
-          updateData = true;
-          newGameState.activatingSkill.push("Converge");
-          newGameState.activatingUnit.push(unit);
+        newGameState.currentResolution.push({
+          resolution: "Unit Ability",
+          resolution2: "Activating Galvanize",
+          unit: unit,
+        });
 
-          newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+        newGameState.currentResolution.push({
+          resolution: "Animation Delay",
+          priority: self,
+        });
+        break;
 
-          newGameState.currentResolution.push({
-            resolution: "Tactic End",
-            unit: unit,
-            effect: true,
-          });
+      case "Arc Flash":
+        updateData = true;
+        newGameState.activatingSkill.push("ArcFlash");
+        newGameState.activatingUnit.push(unit);
 
-          newGameState.currentResolution.push({
-            resolution: "Unit Ability",
-            resolution2: "Activating Converge",
-            unit: unit,
-          });
+        newGameState.currentResolution.push({
+          resolution: "Tactic End",
+          unit: unit,
+          effect: true,
+        });
 
-          newGameState.currentResolution.push({
-            resolution: "Animation Delay",
-            priority: self,
-          });
-          break;
+        newGameState.currentResolution.push({
+          resolution: "Unit Ability",
+          resolution2: "Activating Arc Flash",
+          unit: unit,
+        });
 
-        case "Galvanize":
-          updateData = true;
-          newGameState.activatingSkill.push("Galvanize");
-          newGameState.activatingUnit.push(unit);
+        newGameState.currentResolution.push({
+          resolution: "Animation Delay",
+          priority: self,
+        });
+        break;
 
-          unit.temporary.usedGalvanize = true;
-          newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+      case "Particle Beam":
+        updateData = true;
+        newGameState.activatingSkill.push("ParticleBeam");
+        newGameState.activatingUnit.push(unit);
 
-          newGameState.currentResolution.push({
-            resolution: "Tactic End",
-            unit: unit,
-            effect: true,
-          });
+        newGameState.currentResolution.push({
+          resolution: "Tactic End",
+          unit: unit,
+          effect: true,
+        });
 
-          newGameState.currentResolution.push({
-            resolution: "Unit Ability",
-            resolution2: "Activating Galvanize",
-            unit: unit,
-          });
+        newGameState.currentResolution.push({
+          resolution: "Unit Ability",
+          resolution2: "Activating Particle Beam",
+          unit: unit,
+        });
 
-          newGameState.currentResolution.push({
-            resolution: "Animation Delay",
-            priority: self,
-          });
-          break;
+        newGameState.currentResolution.push({
+          resolution: "Animation Delay",
+          priority: self,
+        });
+        break;
 
-        case "Arc Flash":
-          updateData = true;
-          newGameState.activatingSkill.push("ArcFlash");
-          newGameState.activatingUnit.push(unit);
+      case "Brandish":
+        updateData = true;
+        newGameState.activatingSkill.push("Brandish");
+        newGameState.activatingUnit.push(unit);
 
-          newGameState.currentResolution.push({
-            resolution: "Tactic End",
-            unit: unit,
-            effect: true,
-          });
+        newGameState.currentResolution.push({
+          resolution: "Tactic End",
+          unit: unit,
+          effect: true,
+        });
 
-          newGameState.currentResolution.push({
-            resolution: "Unit Ability",
-            resolution2: "Activating Arc Flash",
-            unit: unit,
-          });
+        newGameState.currentResolution.push({
+          resolution: "Unit Ability",
+          resolution2: "Activating Brandish",
+          unit: unit,
+        });
 
-          newGameState.currentResolution.push({
-            resolution: "Animation Delay",
-            priority: self,
-          });
-          break;
+        newGameState.currentResolution.push({
+          resolution: "Animation Delay",
+          priority: self,
+        });
+        break;
 
-        case "Particle Beam":
-          updateData = true;
-          newGameState.activatingSkill.push("ParticleBeam");
-          newGameState.activatingUnit.push(unit);
+      //Skills
 
-          newGameState.currentResolution.push({
-            resolution: "Tactic End",
-            unit: unit,
-            effect: true,
-          });
+      case "Gale Conjuration":
+        newGameState.tactics[i].stock = 4;
+        newGameState.tactics[i].limit = 4;
+        newGameState.tactics[i].face = "Mobilize";
+        break;
 
-          newGameState.currentResolution.push({
-            resolution: "Unit Ability",
-            resolution2: "Activating Particle Beam",
-            unit: unit,
-          });
+      case "Surge":
+        newGameState.currentResolution.push({
+          resolution: "Mana Skill",
+          resolution2: "Surge3",
+          unit: unit,
+        });
 
-          newGameState.currentResolution.push({
-            resolution: "Animation Delay",
-            priority: self,
-          });
-          break;
+        props.setMovingSpecial("Surge");
 
-        case "Brandish":
-          updateData = true;
-          newGameState.activatingSkill.push("Brandish");
-          newGameState.activatingUnit.push(unit);
+        newGameState = enterMoveMode(
+          getVacantAdjacentZones(unit),
+          unit,
+          newGameState,
+          null
+        );
 
-          newGameState.currentResolution.push({
-            resolution: "Tactic End",
-            unit: unit,
-            effect: true,
-          });
+        newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+        break;
 
-          newGameState.currentResolution.push({
-            resolution: "Unit Ability",
-            resolution2: "Activating Brandish",
-            unit: unit,
-          });
+      case "Diffusion":
+        //2. Continue
+        newGameState.currentResolution.push({
+          resolution: "Mana Skill",
+          resolution2: "Diffusion3",
+          unit: unit,
+        });
 
-          newGameState.currentResolution.push({
-            resolution: "Animation Delay",
-            priority: self,
-          });
-          break;
+        //1. Blast 1st enemy
+        newGameState.currentResolution.push({
+          resolution: "Mana Skill",
+          resolution2: "Diffusion2",
+          unit: unit,
+        });
+        newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+        break;
 
-        //Skills
+      case "Reminiscence":
+        newGameState = drawSkill(newGameState);
+        newGameState = drawSkill(newGameState);
+        newGameState = drawSkill(newGameState);
+        break;
 
-        case "Surge":
-          newGameState.currentResolution.push({
-            resolution: "Mana Skill",
-            resolution2: "Surge3",
-            unit: unit,
-          });
+      case "Ambidexterity":
+        newGameState.tactics[i].stock += 1;
+        newGameState.tactics[i].face = "Invoke";
+        break;
 
-          props.setMovingSpecial("Surge");
+      case "Providence":
+        newGameState = drawSkill(newGameState);
+        newGameState = drawSkill(newGameState);
+        newGameState = drawSkill(newGameState);
+        newGameState = drawAvelhem(newGameState);
+        newGameState = drawAvelhem(newGameState);
+        newGameState = drawAvelhem(newGameState);
 
-          newGameState = enterMoveMode(
-            getVacantAdjacentZones(unit),
-            unit,
-            newGameState,
-            null
-          );
-
-          newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
-          break;
-
-        case "Diffusion":
-          //2. Continue
-          newGameState.currentResolution.push({
-            resolution: "Mana Skill",
-            resolution2: "Diffusion3",
-            unit: unit,
-          });
-
-          //1. Blast 1st enemy
-          newGameState.currentResolution.push({
-            resolution: "Mana Skill",
-            resolution2: "Diffusion2",
-            unit: unit,
-          });
-          newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
-          break;
-
-        case "Reminiscence":
-          newGameState = drawSkill(newGameState);
-          newGameState = drawSkill(newGameState);
-          newGameState = drawSkill(newGameState);
-          break;
-
-        case "Ambidexterity":
+        if (props.details.resonated === "resonated") {
           newGameState.tactics[i].stock += 1;
-          newGameState.tactics[i].face = "Invoke";
-          break;
+          newGameState.tactics[i].face = "Advance";
+        }
 
-        case "Providence":
-          newGameState = drawSkill(newGameState);
-          newGameState = drawSkill(newGameState);
-          newGameState = drawSkill(newGameState);
-          newGameState = drawAvelhem(newGameState);
-          newGameState = drawAvelhem(newGameState);
-          newGameState = drawAvelhem(newGameState);
+        break;
 
-          if (props.details.resonated === "resonated") {
-            newGameState.tactics[i].stock += 1;
-            newGameState.tactics[i].face = "Advance";
-          }
+      default:
+        break;
+    }
 
-          break;
+    dispatch(updateState(newGameState));
+    if (updateData === true) {
+      props.updateFirebase(newGameState);
+    }
+  };
 
-        default:
-          break;
-      }
-
-      dispatch(updateState(newGameState));
-      if (updateData === true) {
-        props.updateFirebase(newGameState);
+  const handleSelect = (i) => {
+    if (canUseTactic[i] && localGameState.tactics[i].stock > 0) {
+      if (selectedChoice === i) {
+        setSelectedChoice(null);
+      } else {
+        setSelectedChoice(i);
       }
     }
   };
@@ -438,21 +458,33 @@ const SelectTacticViaEffect = (props) => {
       case "Learn1.123":
         return element2 === 0;
 
+      case "Learn1.123.1":
+        return element === "Proceed";
+
       ///////
 
       case "Fire1.14":
-        switch (element) {
-          case "Tactic":
-            return element2 === 0;
-        }
-        break;
+        return element2 === 0;
+
+      case "Fire1.14.1":
+        return element === "Proceed";
     }
   };
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
       case "Learn1.123":
+        dispatch(updateDemo("Learn1.123.1"));
+        break;
+
+      case "Learn1.123.1":
         dispatch(updateDemo("Learn1.124"));
+        break;
+
+      ////////////////
+
+      case "Fire1.14":
+        dispatch(updateDemo("Fire1.14.1"));
         break;
     }
   };
@@ -480,18 +512,21 @@ const SelectTacticViaEffect = (props) => {
           </div>
         </div>
 
-        <h3>{props.details.message}</h3>
         <br />
 
-        <div className="twoColumn">
+        <h3 style={{ maxWidth: 700 }}>{props.details.message}</h3>
+        <br />
+
+        <div className="modalContent">
           {localGameState.tactics.map((tactic, index) => (
             <div className="center" key={index}>
               <div
-                className={`tacticBG ${
-                  !canUseTactic[index] ? "disabledTacticBG" : ""
-                } ${
-                  canClick("Tactic", index) ? "demoClick" : ""
-                }                
+                className={`tacticBG
+                  ${!canUseTactic[index] ? "disabledTacticBG" : ""}
+                  ${selectedChoice === index ? "selected-modal-option2" : ""}
+                  ${
+                    canClick("Tactic", index) ? "demoClick" : ""
+                  }                
                 `}
               >
                 <div
@@ -500,7 +535,7 @@ const SelectTacticViaEffect = (props) => {
                     !canUseTactic[index] ? "disabledTactic" : ""
                   }`}
                   onClick={() => {
-                    handleClickTactic(index);
+                    handleSelect(index);
                     handleUpdateDemoGuide();
                   }}
                 >
@@ -517,7 +552,18 @@ const SelectTacticViaEffect = (props) => {
         </div>
 
         <div className="modalBottomButton">
-          {props.details.canSkip && (
+          {selectedChoice !== null && (
+            <button
+              className={`redButton ${canClick("Proceed") ? "demoClick" : ""}`}
+              onClick={() => {
+                handleProceed(selectedChoice);
+                handleUpdateDemoGuide();
+              }}
+            >
+              Select
+            </button>
+          )}
+          {props.details.canSkip && selectedChoice === null && (
             <button className="redButton" onClick={() => handleSkip()}>
               {skipMessage}
             </button>

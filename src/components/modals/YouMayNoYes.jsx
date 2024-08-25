@@ -140,10 +140,6 @@ const YouMayNoYes = (props) => {
         );
         break;
 
-      case "Gale Conjuration Draw": // "Gale ConjurationR4"
-        newGameState = drawSkill(newGameState);
-        break;
-
       case "Symphonic Screech Float": // "Symphonic Screech Float"
         updateData = true;
         let backtrack = 2;
@@ -362,21 +358,6 @@ const YouMayNoYes = (props) => {
 
       case "Foreshadow Draw": //"Foreshadow Draw"
         newGameState = drawSkill(newGameState);
-        break;
-
-      case "Ambidexterity Conversion":
-        newGameState.currentResolution.push({
-          resolution: "Sovereign Resonant Skill",
-          resolution2: "Ambidexterity Conversion",
-          details: {
-            title: "Ambidexterity",
-            message: "Convert an Advance tactic into Invoke.",
-            restriction: ["Advance"],
-            stock: 1,
-            reason: "Ambidexterity",
-            canSkip: false,
-          },
-        });
         break;
 
       case "Providence Recovery":
