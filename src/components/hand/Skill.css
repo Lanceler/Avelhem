@@ -155,18 +155,9 @@
     padding: 0px 15px 0px 5px;
     position: relative;
     transition: transform 0.6s ease-out;
-}
 
-
-.player-avelhemhand-container2 {
-    width: 450px;
-    height: 400px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    background-color: rgba(95, 233, 226, 0.589);
-    cursor: pointer;
-    padding: 5px;
-    position: relative;
+    /* background-color: rgba(95, 233, 226, 0.589); */
+    z-index: 2;
 }
 
 .player-avelhemhand-container:hover {
@@ -218,6 +209,7 @@
     transition: all 0.75s ease;
     position: absolute;
     box-shadow: 2px 2.5px 6px 2.5px rgba(0, 0, 0, 0.5);
+    pointer-events: none;
 }
 
 .hand-back-label {

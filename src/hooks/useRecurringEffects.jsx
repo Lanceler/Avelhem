@@ -3299,6 +3299,14 @@ export const useRecurringEffects = () => {
   };
 
   const drawAvelhem = (newGameState) => {
+    if (newGameState[self].avelhemRepertoire.length === 0) {
+      newGameState = refillRepertoireAvelhem(newGameState);
+
+      if (newGameState[self].avelhemRepertoire.length === 0) {
+        return newGameState;
+      }
+    }
+
     //transfer card from deck to hand
     newGameState[self].avelhemHand.push(
       newGameState[self].avelhemRepertoire.pop()
