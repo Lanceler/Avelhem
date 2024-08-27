@@ -64,7 +64,8 @@ const Navbar = () => {
                 Tutorial{" "}
               </Link>
             </li>
-            <li className="nav-item">
+
+            {/* <li className="nav-item">
               <span
                 className={`nav-links ${
                   dropdown ? "nav-links-dropExpanded" : ""
@@ -95,7 +96,19 @@ const Navbar = () => {
                   />
                 )}
               </>
-              {/* <DemoDropdown /> */}
+            </li> */}
+
+            <li className="nav-item">
+              <Link
+                to="/demo/game"
+                className="nav-links"
+                onClick={() => {
+                  closeMobileMenu();
+                  setDropdown(false);
+                }}
+              >
+                Demo
+              </Link>
             </li>
 
             {user && (

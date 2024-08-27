@@ -126,19 +126,6 @@ const Board = (props) => {
         return element === "Ability Button";
 
       /////////////////////////////////////////
-
-      case "Fire1.9":
-      case "Fire1.13":
-        return element === "Ability Button";
-
-      case "Fire1.16":
-      case "Fire1.18":
-      case "Fire1.26":
-      case "Fire1.31":
-        return element === "Skill Button";
-
-      case "Fire1.23":
-        return element === "Tactic Button";
     }
   };
 

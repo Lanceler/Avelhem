@@ -1,0 +1,68 @@
+.rule-body {
+    height: 100%;
+    /* min-height: fit-content; */
+    user-select: none;
+    /* background-color: rgb(94, 0, 0); */
+}
+
+.rule-title {
+    padding-top: 35px;
+    /* height: 80px; */
+
+    text-align: center;
+    font-family: Alegreya, Georgia, Times New Roman, "serif";
+    font-size: 4.5rem;
+    font-weight: 600;
+    color: goldenrod;
+
+    -webkit-text-stroke: 1.25px #fdd700;
+    text-shadow: rgb(0, 0, 0) 1px 0 2px;
+}
+
+.rule-content {
+    height: fit-content;
+    min-height: calc(100vh - 65px - 00px);
+
+    max-width: 1500px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    background-size: cover;
+    background-position: center;
+
+    /* background: aqua; */
+}
+
+.rules-text{
+    color: #eee;
+    background-color: rgba(0, 0, 0, 0.85);
+    padding: 20px 80px;
+}
+
+
+
+
+/* /////////////////////////////////////////////////////////////////// */
+
+
+@media screen and (max-width: 850px) {
+    .rule-title {
+        padding-top: 45px;
+    }
+
+}
+
+
+
+
+@media screen and (max-width: 500px) {
+
+    .rule-title {
+        font-size: 2.5rem;
+    }
+
+    
+
+
+}

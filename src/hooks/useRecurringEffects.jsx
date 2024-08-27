@@ -242,7 +242,6 @@ export const useRecurringEffects = () => {
     newGameState.currentResolution.push({
       resolution: "Fire Skill",
       resolution2: "Activating Blaze of Glory",
-      // resolution: "Activating Blaze of Glory",
       unit: unit,
     });
 
@@ -2424,7 +2423,6 @@ export const useRecurringEffects = () => {
       unit.aether = 0;
       unit.hp = 0;
       unit.charge = 0;
-      unit.fever = 0;
       unit.blossom = 0;
       unit.sharpness = 0;
     };
@@ -2809,20 +2807,6 @@ export const useRecurringEffects = () => {
       return false;
     };
 
-    const canConflagration = (unit) => {
-      if (!unit.fever) {
-        return false;
-      }
-      if (!canBlast(unit)) {
-        return false;
-      }
-      if (localGameState[self].skillHand.length < 2) {
-        return false;
-      }
-
-      return true;
-    };
-
     const canDiffusion = (unit) => {
       if (getZonesWithEnemies(unit, 1).length < 1) {
         return false;
@@ -2845,18 +2829,6 @@ export const useRecurringEffects = () => {
       }
 
       return false;
-    };
-
-    const canIgnitionPropulsion = (unit) => {
-      if (!unit.fever) {
-        return false;
-      }
-
-      if (!canMove(unit) && !canStrike(unit)) {
-        return false;
-      }
-
-      return localGameState[self].skillHand.length > 1;
     };
 
     const canSurge = (unit) => {
@@ -2883,9 +2855,9 @@ export const useRecurringEffects = () => {
 
     switch (skill) {
       case "01-01":
-        return canIgnitionPropulsion(unit);
+        return canStrike(unit) && localGameState[self].skillHand.length >= 2;
       case "01-02":
-        return canConflagration(unit);
+        return canBlast(unit) && localGameState[self].skillHand.length >= 2;
       case "01-03":
         return false;
       case "01-04":
@@ -3561,21 +3533,6 @@ export const useRecurringEffects = () => {
     newGameState.currentResolution.push({
       resolution: "Execution Phase",
     });
-
-    //Fire Scion Talent
-
-    const units = newGameState[self].units;
-
-    for (let unit of units) {
-      if (unit && unit.unitClass === "Fire Scion" && !isMuted(unit)) {
-        unit.fever
-          ? (unit.fever = Math.min(2, unit.fever + 1))
-          : (unit.fever = 1);
-
-        // code below not needed
-        // newGameState[self].units[unit.unitIndex] = unit
-      }
-    }
 
     return newGameState;
   };
@@ -5002,8 +4959,7 @@ export const useRecurringEffects = () => {
       !isDisrupted(victim, 1) &&
       ["strike", "aether-blast", "blast"].includes(method) && //only attacks can trigger it
       localGameState[victim.player].skillHand.length > 0 &&
-      victim.fever > 0 && //enemy needs fever
-      getZonesWithEnemies(victim, 1).length //must be able to burn an adjacent enemy
+      getZonesWithEnemies(victim, 1).length > 0 //must be able to burn an adjacent enemy
     ) {
       return true;
     }
@@ -5411,24 +5367,11 @@ export const useRecurringEffects = () => {
       type: "blast",
     });
 
-    if (victim.aether && !isMuted(victim) && !isDisrupted(victim, 2)) {
-      newGameState.currentResolution.push({
-        resolution: "Mitigating Aether-Blast",
-
-        unit: victim,
-        attacker: attacker,
-        details: {
-          reason: "Mitigate Aether-Blast",
-          title: "Mitigate Aether-Blast",
-          message: `The enemy ${attacker.unitClass} is about to Aether-blast your ${victim.unitClass}. Your unit may spend their Aether to reduce the attack’s AP by
-          1.`,
-          no: "Skip",
-          yes: "Reduce AP",
-        },
-      });
-
-      newGameState.activatingTarget.push(victim);
-    }
+    newGameState.currentResolution.push({
+      resolution: "Mitigating Aether-Blast1",
+      unit: victim,
+      attacker: attacker,
+    });
 
     //to do in the future: consider bypass Target
     if (triggerTarget(attacker, victim, "aether-blast")) {
@@ -5444,6 +5387,40 @@ export const useRecurringEffects = () => {
     }
 
     newGameState[attacker.player].units[attacker.unitIndex].aether = 0;
+
+    return newGameState;
+  };
+
+  const aetherBlastMitigate = (attackerInfo, victimInfo) => {
+    const newGameState = JSON.parse(JSON.stringify(localGameState));
+    const attacker =
+      newGameState[attackerInfo.player].units[attackerInfo.unitIndex];
+    const victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
+
+    newGameState.currentResolution.pop();
+
+    if (
+      !isMuted(attacker) &&
+      victim.aether &&
+      !isMuted(victim) &&
+      !isDisrupted(victim, 2)
+    ) {
+      newGameState.currentResolution.push({
+        resolution: "Mitigating Aether-Blast2",
+        unit: victim,
+        attacker: attacker,
+        details: {
+          reason: "Mitigate Aether-Blast",
+          title: "Mitigate Aether-Blast",
+          message: `The enemy ${attacker.unitClass} is about to Aether-blast your ${victim.unitClass}. Your unit may spend their Aether to reduce the attack’s AP by
+          1.`,
+          no: "Skip",
+          yes: "Reduce AP",
+        },
+      });
+
+      newGameState.activatingTarget.push(victim);
+    }
 
     return newGameState;
   };
@@ -5585,6 +5562,7 @@ export const useRecurringEffects = () => {
     unitRetainSkill,
     uponDebutTalents,
     aetherBlast,
+    aetherBlastMitigate,
     aetherBlastYes,
   };
 };

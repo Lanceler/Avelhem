@@ -100,7 +100,7 @@ const FloatSkill = (props) => {
 
       case "Vengeful Legacy Ravager":
         unit = grantRavager(unit);
-        newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+        //newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
         break;
 
       case "Advance Deploy Scion":
@@ -179,12 +179,6 @@ const FloatSkill = (props) => {
         return element === "Skip Button";
 
       //////////////////
-      case "Fire1.40.1":
-        switch (element) {
-          case "Skip Button":
-            return true;
-        }
-        break;
     }
   };
 
@@ -203,9 +197,6 @@ const FloatSkill = (props) => {
         break;
 
       //////////
-      case "Fire1.40.1":
-        dispatch(updateDemo("Fire1.41"));
-        break;
     }
   };
 

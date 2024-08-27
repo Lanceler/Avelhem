@@ -85,13 +85,6 @@ const SelectTactic = (props) => {
       case "Learn1.129":
       case "Learn1.259":
         return element2 === 1;
-
-      case "Fire1.23":
-        switch (element) {
-          case "Tactic":
-            return element2 === 1;
-        }
-        break;
     }
   };
 

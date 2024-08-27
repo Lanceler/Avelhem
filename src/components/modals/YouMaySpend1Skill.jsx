@@ -55,7 +55,7 @@ const YouMaySpend1Skill = (props) => {
 
     unit.blossom = unit.blossom - 1;
 
-    newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+    //newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
 
     switch (props.details.reason) {
       case "Efflorescence1":
@@ -86,7 +86,7 @@ const YouMaySpend1Skill = (props) => {
         unit.enhancements.shield
           ? (unit.enhancements.shield = Math.max(2, unit.enhancements.shield))
           : (unit.enhancements.shield = 2);
-        newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+        //newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
         break;
 
       case "Castle of Thorns1":
@@ -179,7 +179,7 @@ const YouMaySpend1Skill = (props) => {
         unit.charge
           ? (unit.charge = Math.min(3, unit.charge + 1))
           : (unit.charge = 1);
-        newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+        //newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
         break;
 
       case "Diffusion Shield":
@@ -230,7 +230,7 @@ const YouMaySpend1Skill = (props) => {
         unit.enhancements.shield
           ? (unit.enhancements.shield = Math.max(2, unit.enhancements.shield))
           : (unit.enhancements.shield = 2);
-        newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+        //newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
         break;
 
       case "Castle of Thorns1":
@@ -344,14 +344,6 @@ const YouMaySpend1Skill = (props) => {
         return element === "Select Button";
 
       //////////////////////////
-      case "Fire1.17.1":
-        return element === "Skip Button";
-
-      case "Fire1.43":
-        return element === "Skill Card" && element2.id === "05-01";
-
-      case "Fire1.44":
-        return element === "Select Button";
     }
   };
 
@@ -366,13 +358,6 @@ const YouMaySpend1Skill = (props) => {
         break;
 
       //////////////////////
-      case "Fire1.17.1":
-        dispatch(updateDemo("Fire1.18"));
-        break;
-
-      case "Fire1.43":
-        dispatch(updateDemo("Fire1.44"));
-        break;
     }
   };
 

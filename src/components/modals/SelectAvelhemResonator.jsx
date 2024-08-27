@@ -123,19 +123,6 @@ const SelectAvelhemResonator = (props) => {
         return element === "Select Button";
 
       ///////////////////
-      case "Fire1.1.3":
-        switch (element) {
-          case "Resonator":
-            return element2.id === 1;
-        }
-        break;
-
-      case "Fire1.2":
-        switch (element) {
-          case "Select Button":
-            return true;
-        }
-        break;
     }
   };
 
@@ -150,14 +137,6 @@ const SelectAvelhemResonator = (props) => {
         break;
 
       /////////////////
-      case "Fire1.1.3":
-        dispatch(updateDemo("Fire1.2"));
-        break;
-
-      case "Fire1.2":
-        dispatch(updateDemo("Fire1.2.01"));
-
-        break;
     }
   };
 

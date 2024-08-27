@@ -114,8 +114,8 @@ const YouMayNoYes = (props) => {
         break;
 
       case "Blaze of Glory Draw": //"Blaze of Glory3"
-        unit.fever -= 1;
-        newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+        unit.aether = 0;
+        //newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
         newGameState = drawSkill(newGameState);
         newGameState = drawSkill(newGameState);
         break;
@@ -225,7 +225,7 @@ const YouMayNoYes = (props) => {
         unit.enhancements.shield
           ? (unit.enhancements.shield = Math.max(unit.enhancements.shield, 2))
           : (unit.enhancements.shield = 2);
-        newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+        //newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
         break;
 
       case "Zip and Zap Blast": // "Zip And ZapR2"
@@ -474,23 +474,6 @@ const YouMayNoYes = (props) => {
         return element === "No Choice";
 
       ///////////////
-      case "Fire1.7":
-        switch (element) {
-          case "No Choice":
-            return true;
-
-          case "Yes Choice":
-            return true;
-        }
-        break;
-
-      case "Fire1.29.1":
-      case "Fire1.36":
-        switch (element) {
-          case "Yes Choice":
-            return true;
-        }
-        break;
     }
   };
 
@@ -529,17 +512,6 @@ const YouMayNoYes = (props) => {
         break;
 
       ///////
-      case "Fire1.7":
-        dispatch(updateDemo("Fire1.8"));
-        break;
-
-      case "Fire1.29.1":
-        dispatch(updateDemo("Fire1.30"));
-        break;
-
-      case "Fire1.36":
-        dispatch(updateDemo("Fire1.36.1"));
-        break;
     }
   };
 

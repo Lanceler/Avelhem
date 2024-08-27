@@ -396,12 +396,6 @@ const SelectTacticalAction = (props) => {
         return element === "Select Button";
 
       ///////////////////////
-
-      case "Fire1.23":
-        return element === "Action" && element2 === 0;
-
-      case "Fire1.24":
-        return element === "Select Button";
     }
   };
 
@@ -472,14 +466,6 @@ const SelectTacticalAction = (props) => {
         break;
 
       /////////////////////////
-
-      case "Fire1.23":
-        dispatch(updateDemo("Fire1.24"));
-        break;
-
-      case "Fire1.24":
-        dispatch(updateDemo("Fire1.25"));
-        break;
     }
   };
 

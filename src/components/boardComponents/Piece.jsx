@@ -139,88 +139,6 @@ export const Piece = (props) => {
           break;
 
         //////////////////////////////////////////////////
-
-        case demoGuide.slice(0, 4) === "Fire":
-          switch (demoGuide) {
-            case "Fire1.2.01":
-            case "Fire1.8":
-            case "Fire1.9":
-            case "Fire1.13":
-            case "Fire1.16":
-            case "Fire1.18":
-            case "Fire1.23":
-              switch (element) {
-                case "Unit":
-                  return element2.unitIndex === 2 && element2.player === "host";
-              }
-              break;
-
-            case "Fire1.12":
-            case "Fire1.31":
-            case "Fire1.35":
-            case "Fire1.46":
-              switch (element) {
-                case "Unit":
-                  return element2.unitIndex === 3 && element2.player === "host";
-              }
-              break;
-
-            case "Fire1.15":
-              switch (element) {
-                case "Unit":
-                  return (
-                    element2.unitIndex === 4 && element2.player === "guest"
-                  );
-              }
-              break;
-
-            case "Fire1.22":
-              switch (element) {
-                case "Unit":
-                  return (
-                    element2.unitIndex === 0 && element2.player === "guest"
-                  );
-              }
-              break;
-
-            case "Fire1.26":
-              switch (element) {
-                case "Unit":
-                  return element2.unitIndex === 0 && element2.player === "host";
-              }
-              break;
-
-            case "Fire1.29.1":
-            case "Fire1.30":
-              switch (element) {
-                case "Unit":
-                  return (
-                    [2, 3].includes(element2.unitIndex) &&
-                    element2.player === "guest"
-                  );
-              }
-              break;
-
-            case "Fire1.32":
-              switch (element) {
-                case "Unit":
-                  return (
-                    element2.unitIndex === 1 && element2.player === "guest"
-                  );
-              }
-              break;
-
-            case "Fire1.37":
-            case "Fire1.45":
-              switch (element) {
-                case "Unit":
-                  return (
-                    element2.unitIndex === 5 && element2.player === "guest"
-                  );
-              }
-              break;
-          }
-          break;
       }
     }
   };
@@ -280,46 +198,6 @@ export const Piece = (props) => {
 
             case "Learn1.262":
               dispatch(updateDemo("Learn1.263"));
-              break;
-          }
-          break;
-
-        case demoGuide.slice(0, 4) === "Fire":
-          switch (demoGuide) {
-            case "Fire1.2.01":
-              dispatch(updateDemo("Fire1.2.1"));
-              break;
-
-            case "Fire1.8":
-              dispatch(updateDemo("Fire1.9"));
-              break;
-
-            case "Fire1.12":
-              dispatch(updateDemo("Fire1.13"));
-              break;
-
-            case "Fire1.15":
-              dispatch(updateDemo("Fire1.16"));
-              break;
-
-            case "Fire1.22":
-              dispatch(updateDemo("Fire1.23"));
-              break;
-
-            case "Fire1.30":
-              dispatch(updateDemo("Fire1.31"));
-              break;
-
-            case "Fire1.32":
-              dispatch(updateDemo("Fire1.33"));
-              break;
-
-            case "Fire1.35":
-              dispatch(updateDemo("Fire1.36"));
-              break;
-
-            case "Fire1.45":
-              dispatch(updateDemo("Fire1.45.1"));
               break;
           }
           break;

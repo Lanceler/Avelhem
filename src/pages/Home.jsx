@@ -19,7 +19,6 @@ export default function Home() {
       <div
         className="home-content"
         style={{
-          // backgroundImage: `url(${getBannerImage("MountainFields")})`,
           backgroundImage: `url(${getBannerImage("LandBG")})`,
         }}
       >
@@ -40,7 +39,7 @@ export default function Home() {
                 </Link>
               </div>
               <div className="home-banner-text">
-                <Link to="/">
+                <Link to="/rules">
                   <button className="home-banner-button">
                     Rulebook (To do)
                   </button>

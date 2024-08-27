@@ -57,12 +57,12 @@ const SelectCustomChoice = (props) => {
   let updateData = false;
 
   switch (props.details.reason) {
-    case "Ignition Propulsion":
-      canFirstChoice = canMove(unit);
-      canSecondChoice = canStrike(unit);
-      ChoiceFirstMessage = "Traverse.";
-      ChoiceSecondMessage = "Strike. This cannot affect Fire Scions.";
-      break;
+    // case "Ignition Propulsion":
+    //   canFirstChoice = canMove(unit);
+    //   canSecondChoice = canStrike(unit);
+    //   ChoiceFirstMessage = "Traverse.";
+    //   ChoiceSecondMessage = "Strike. This cannot affect Fire Scions.";
+    //   break;
 
     case "Flash Fire":
       canFirstChoice = true;
@@ -303,25 +303,25 @@ const SelectCustomChoice = (props) => {
       //   }
       //   break;
 
-      case "Ignition Propulsion":
-        if (selectedChoice === 1) {
-          newGameState = enterMoveMode(
-            getVacantAdjacentZones(unit),
-            unit,
-            newGameState,
-            null
-          );
-        } else {
-          enterSelectUnitMode(
-            getZonesWithEnemies(unit, 1),
-            unit,
-            newGameState,
-            null,
-            "strike",
-            "Fire Scion"
-          );
-        }
-        break;
+      // case "Ignition Propulsion":
+      //   if (selectedChoice === 1) {
+      //     newGameState = enterMoveMode(
+      //       getVacantAdjacentZones(unit),
+      //       unit,
+      //       newGameState,
+      //       null
+      //     );
+      //   } else {
+      //     enterSelectUnitMode(
+      //       getZonesWithEnemies(unit, 1),
+      //       unit,
+      //       newGameState,
+      //       null,
+      //       "strike",
+      //       "Fire Scion"
+      //     );
+      //   }
+      //   break;
 
       case "Flash Fire":
         if (selectedChoice === 1) {
@@ -897,19 +897,6 @@ const SelectCustomChoice = (props) => {
         return element === "Select Button";
 
       ///////////////////////
-      case "Fire1.2.1":
-      case "Fire1.44":
-        return element === "1st Choice";
-
-      case "Fire1.20":
-      case "Fire1.37":
-        return element === "2nd Choice";
-
-      case "Fire1.3":
-      case "Fire1.21":
-      case "Fire1.38":
-      case "Fire1.45":
-        return element === "Select Button";
     }
   };
 
@@ -992,28 +979,6 @@ const SelectCustomChoice = (props) => {
         break;
 
       ///////////////////////
-      case "Fire1.2.1":
-        dispatch(updateDemo("Fire1.3"));
-        break;
-      case "Fire1.3":
-        dispatch(updateDemo("Fire1.4"));
-        break;
-
-      case "Fire1.20":
-        dispatch(updateDemo("Fire1.21"));
-        break;
-
-      case "Fire1.21":
-        dispatch(updateDemo("Fire1.22"));
-        break;
-
-      case "Fire1.37":
-        dispatch(updateDemo("Fire1.38"));
-        break;
-
-      case "Fire1.44":
-        dispatch(updateDemo("Fire1.45"));
-        break;
     }
   };
 

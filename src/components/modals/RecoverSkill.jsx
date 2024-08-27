@@ -136,35 +136,9 @@ const RecoverSkill = (props) => {
     }
   };
 
-  const canClick = (element, element2) => {
-    switch (demoGuide) {
-      case "Fire1.39":
-        switch (element) {
-          case "Skill Card":
-            return ["01-03"].includes(element2.id);
-        }
-        break;
+  const canClick = (element, element2) => {};
 
-      case "Fire1.40":
-        switch (element) {
-          case "Select Button":
-            return true;
-        }
-        break;
-    }
-  };
-
-  const handleUpdateDemoGuide = () => {
-    switch (demoGuide) {
-      case "Fire1.39":
-        dispatch(updateDemo("Fire1.40"));
-        break;
-
-      case "Fire1.40":
-        dispatch(updateDemo("Fire1.40.1"));
-        break;
-    }
-  };
+  const handleUpdateDemoGuide = () => {};
 
   return (
     <div className="modal-backdrop">

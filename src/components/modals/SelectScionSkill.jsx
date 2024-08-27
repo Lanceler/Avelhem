@@ -123,50 +123,6 @@ const SelectScionSkill = (props) => {
         return element2.id === "02-02";
 
       //////////////////////
-
-      case "Fire1.16":
-        switch (element) {
-          case "Skill Card":
-            return element2.id === "01-04";
-        }
-        break;
-
-      case "Fire1.18":
-        switch (element) {
-          case "Skill Card":
-            return element2.id === "01-01";
-        }
-        break;
-
-      case "Fire1.17":
-      case "Fire1.19":
-      case "Fire1.32":
-        switch (element) {
-          case "Select Button":
-            return true;
-        }
-        break;
-
-      case "Fire1.26":
-        switch (element) {
-          case "Skill Card":
-            return element2.id === "01-02";
-        }
-        break;
-
-      case "Fire1.27":
-        switch (element) {
-          case "Resonate Button":
-            return true;
-        }
-        break;
-
-      case "Fire1.31":
-        switch (element) {
-          case "Skill Card":
-            return element2.id === "07-04";
-        }
-        break;
     }
   };
 
@@ -205,26 +161,6 @@ const SelectScionSkill = (props) => {
         break;
 
       ////////////////////
-
-      case "Fire1.16":
-        dispatch(updateDemo("Fire1.17"));
-        break;
-
-      case "Fire1.17":
-        dispatch(updateDemo("Fire1.17.1"));
-        break;
-
-      case "Fire1.18":
-        dispatch(updateDemo("Fire1.19"));
-        break;
-
-      case "Fire1.26":
-        dispatch(updateDemo("Fire1.27"));
-        break;
-
-      case "Fire1.31":
-        dispatch(updateDemo("Fire1.32"));
-        break;
     }
   };
 

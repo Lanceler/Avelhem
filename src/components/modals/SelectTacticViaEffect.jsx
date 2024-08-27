@@ -168,7 +168,7 @@ const SelectTacticViaEffect = (props) => {
         newGameState.activatingUnit.push(unit);
 
         unit.temporary.usedAirDash = true;
-        newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+        //newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
 
         newGameState.currentResolution.push({
           resolution: "Tactic End",
@@ -214,7 +214,7 @@ const SelectTacticViaEffect = (props) => {
       case "Fortify":
         if (newGameState.tactics[i].face === "Advance") {
           delete unit.boosts.mountainStance;
-          newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+          //newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
         }
 
         updateData = true;
@@ -244,7 +244,7 @@ const SelectTacticViaEffect = (props) => {
         newGameState.activatingSkill.push("Converge");
         newGameState.activatingUnit.push(unit);
 
-        newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+        //newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
 
         newGameState.currentResolution.push({
           resolution: "Tactic End",
@@ -270,7 +270,7 @@ const SelectTacticViaEffect = (props) => {
         newGameState.activatingUnit.push(unit);
 
         unit.temporary.usedGalvanize = true;
-        newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+        //newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
 
         newGameState.currentResolution.push({
           resolution: "Tactic End",
@@ -383,7 +383,7 @@ const SelectTacticViaEffect = (props) => {
           null
         );
 
-        newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+        //newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
         break;
 
       case "Diffusion":
@@ -400,7 +400,7 @@ const SelectTacticViaEffect = (props) => {
           resolution2: "Diffusion2",
           unit: unit,
         });
-        newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+        //newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
         break;
 
       case "Reminiscence":
@@ -462,12 +462,6 @@ const SelectTacticViaEffect = (props) => {
         return element === "Proceed";
 
       ///////
-
-      case "Fire1.14":
-        return element2 === 0;
-
-      case "Fire1.14.1":
-        return element === "Proceed";
     }
   };
 
@@ -482,10 +476,6 @@ const SelectTacticViaEffect = (props) => {
         break;
 
       ////////////////
-
-      case "Fire1.14":
-        dispatch(updateDemo("Fire1.14.1"));
-        break;
     }
   };
 

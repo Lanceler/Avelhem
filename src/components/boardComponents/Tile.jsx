@@ -60,8 +60,6 @@ const Tile = (props) => {
         return element === "Tile" && [3].includes(element2);
 
       ////////////////////////////
-      case "Fire1.25":
-        return element === "Tile" && [2, 3, 4].includes(element2);
     }
   };
 
@@ -96,9 +94,6 @@ const Tile = (props) => {
         break;
 
       /////////////////////////////
-      case "Fire1.25":
-        dispatch(updateDemo("Fire1.26"));
-        break;
     }
   };
 

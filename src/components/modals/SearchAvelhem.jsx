@@ -20,6 +20,16 @@ const SearchAvelhem = (props) => {
 
   let repertoire = [...localGameState[self].avelhemRepertoire];
 
+  useEffect(() => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    if (newGameState[self].avelhemRepertoire.length === 0) {
+      newGameState = refillRepertoireAvelhem(newGameState);
+      dispatch(updateState(newGameState));
+      props.updateFirebase(newGameState);
+    }
+  }, []);
+
   //reverse display, since last card is top of deck
   let searchRerpertoire = [];
   for (let c in repertoire) {

@@ -926,27 +926,6 @@ const SelectUnitAbility = (props) => {
         return element === "Select Button";
 
       ///////////////////////////////
-      case "Fire1.9":
-        switch (element) {
-          case "Ability":
-            return element2 === 1;
-        }
-        break;
-
-      case "Fire1.10":
-      case "Fire1.14":
-        switch (element) {
-          case "Select Button":
-            return true;
-        }
-        break;
-
-      case "Fire1.13":
-        switch (element) {
-          case "Ability":
-            return element2 === 0;
-        }
-        break;
     }
   };
 
@@ -973,17 +952,6 @@ const SelectUnitAbility = (props) => {
         break;
 
       ////////////////////////
-      case "Fire1.9":
-        dispatch(updateDemo("Fire1.10"));
-        break;
-
-      case "Fire1.10":
-        dispatch(updateDemo("Fire1.11"));
-        break;
-
-      case "Fire1.13":
-        dispatch(updateDemo("Fire1.14"));
-        break;
     }
   };
 

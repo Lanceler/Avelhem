@@ -178,6 +178,7 @@ const BoardArea = (props) => {
     unitRetainSkill,
     uponDebutTalents,
     aetherBlast,
+    aetherBlastMitigate,
   } = useRecurringEffects();
 
   const { applySkill } = useSkillEffects();
@@ -347,9 +348,9 @@ const BoardArea = (props) => {
 
     setExpandedUnit(null);
 
-    if (localGameState) {
-      console.log(JSON.stringify(localGameState.currentResolution));
-    }
+    // if (localGameState) {
+    //   console.log(JSON.stringify(localGameState.currentResolution));
+    // }
   }, [localGameState, props.userRole]);
 
   useEffect(() => {
@@ -374,7 +375,6 @@ const BoardArea = (props) => {
         "Learn1.163",
         "Learn1.198",
         "Learn1.223",
-        "Fire1.1",
       ].includes(demoGuide)
     ) {
       setHideModal(false);
@@ -617,7 +617,13 @@ const BoardArea = (props) => {
         }
         break;
 
-      case "Mitigating Aether-Blast":
+      case "Mitigating Aether-Blast1":
+        if (self === lastRes.unit.player) {
+          resolutionUpdate(aetherBlastMitigate(lastRes.attacker, lastRes.unit));
+        }
+        break;
+
+      case "Mitigating Aether-Blast2":
         return (
           <>
             {self === lastRes.unit.player && !hideModal && (
@@ -1583,19 +1589,31 @@ const BoardArea = (props) => {
             }
             break;
 
+          // case "Ignition Propulsion1":
+          //   return (
+          //     <>
+          //       {self === lastRes.unit.player && !hideModal && (
+          //         <SelectCustomChoice
+          //           unit={lastRes.unit}
+          //           details={lastRes.details}
+          //           updateFirebase={updateFirebase}
+          //           hideOrRevealModale={hideOrRevealModale}
+          //         />
+          //       )}
+          //     </>
+          //   );
+
           case "Ignition Propulsion1":
-            return (
-              <>
-                {self === lastRes.unit.player && !hideModal && (
-                  <SelectCustomChoice
-                    unit={lastRes.unit}
-                    details={lastRes.details}
-                    updateFirebase={updateFirebase}
-                    hideOrRevealModale={hideOrRevealModale}
-                  />
-                )}
-              </>
-            );
+            if (self === lastRes.unit.player) {
+              selectEnemies(lastRes.unit, 1, null, "strike", "Fire Scion");
+            }
+            break;
+
+          case "Ignition Propulsion2":
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("ignitionPropulsion2", lastRes.unit));
+            }
+            break;
 
           case "Activating Conflagration":
             if (self === lastRes.unit.player) {
@@ -4638,9 +4656,6 @@ const BoardArea = (props) => {
         return element === "End Button";
 
       /////////////////////////////////////////
-
-      case "Fire1.45.1":
-        return element === "End Button";
     }
   };
 

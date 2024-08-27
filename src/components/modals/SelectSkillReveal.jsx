@@ -147,7 +147,7 @@ const SelectSkillReveal = (props) => {
 
       case "Valiant Spark":
         unit.boosts.valiantSpark = true;
-        newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+        //newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
 
         revealTitle = "Valiant Spark";
         revealMessage = "Your opponent has revealed 1 Lightning Skill";
@@ -207,24 +207,9 @@ const SelectSkillReveal = (props) => {
     }
   };
 
-  const canClick = (element, element2) => {
-    switch (demoGuide) {
-      case "Fire1.42":
-        switch (element) {
-          case "Skip Button":
-            return true;
-        }
-        break;
-    }
-  };
+  const canClick = (element, element2) => {};
 
-  const handleUpdateDemoGuide = () => {
-    switch (demoGuide) {
-      case "Fire1.42":
-        dispatch(updateDemo("Fire1.43"));
-        break;
-    }
-  };
+  const handleUpdateDemoGuide = () => {};
 
   return (
     <div className="modal-backdrop">

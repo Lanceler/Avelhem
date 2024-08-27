@@ -117,20 +117,6 @@ const SelectResonatorSkill = (props) => {
         return element === "Select Button";
 
       ///////////////////
-
-      case "Fire1.27":
-        switch (element) {
-          case "Skill Card":
-            return element2.id === "SA-02";
-        }
-        break;
-
-      case "Fire1.28":
-        switch (element) {
-          case "Select Button":
-            return true;
-        }
-        break;
     }
   };
 
@@ -153,13 +139,6 @@ const SelectResonatorSkill = (props) => {
         break;
 
       ///////////////////////
-      case "Fire1.27":
-        dispatch(updateDemo("Fire1.28"));
-        break;
-
-      case "Fire1.28":
-        dispatch(updateDemo("Fire1.29"));
-        break;
     }
   };
 

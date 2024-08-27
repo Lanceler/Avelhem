@@ -68,10 +68,6 @@ const PlayerAvelhemHand = (props) => {
         return element1 === 2;
 
       ////////////////
-
-      case "Fire1.1.1":
-      case "Fire1.1.2":
-        return true;
     }
   };
 
@@ -110,14 +106,6 @@ const PlayerAvelhemHand = (props) => {
         break;
 
       /////////
-
-      case "Fire1.1.1":
-        dispatch(updateDemo("Fire1.1.2"));
-        break;
-
-      case "Fire1.1.2":
-        dispatch(updateDemo("Fire1.1.3"));
-        break;
     }
   };
 

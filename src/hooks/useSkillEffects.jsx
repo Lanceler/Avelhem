@@ -36,17 +36,26 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    //consume unit's fever
-    unit.fever -= 1;
+    // newGameState.currentResolution.push({
+    //   resolution: "Fire Skill",
+    //   resolution2: "Ignition Propulsion1",
+    //   unit: unit,
+    //   details: {
+    //     title: "Ignition Propulsion",
+    //     reason: "Ignition Propulsion",
+    //   },
+    // });
+
+    newGameState.currentResolution.push({
+      resolution: "Fire Skill",
+      resolution2: "Ignition Propulsion2",
+      unit: unit,
+    });
 
     newGameState.currentResolution.push({
       resolution: "Fire Skill",
       resolution2: "Ignition Propulsion1",
       unit: unit,
-      details: {
-        title: "Ignition Propulsion",
-        reason: "Ignition Propulsion",
-      },
     });
 
     newGameState.currentResolution.push({
@@ -60,15 +69,26 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
+  const ignitionPropulsion2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Ignition Propulsion2"
+    newGameState.currentResolution.pop();
+
+    if (unit && !isMuted(unit)) {
+      unit.aether = 1;
+    }
+
+    return newGameState;
+  };
+
   const conflagration1 = (unitInfo, resonator) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
     //end "Activating Conflagration" resolution
     newGameState.currentResolution.pop();
-
-    //consume unit's fever
-    unit.fever = unit.fever - 1;
 
     //give unit activationCounter
     unit.temporary.activation
@@ -118,23 +138,23 @@ export const useSkillEffects = () => {
     //end "ConflagrationR1"
     newGameState.currentResolution.pop();
 
-    if (
-      unit !== null &&
-      !isMuted(unit) &&
-      getZonesWithEnemies(unit, 1).length > 0
-    ) {
-      newGameState.currentResolution.push({
-        resolution: "Fire Skill",
-        resolution2: "ConflagrationR2",
-        unit: unit,
-        details: {
-          reason: "Conflagration Ignite",
-          title: "Conflagration",
-          message: "You may ignite an adjacent enemy.",
-          no: "Skip",
-          yes: "Ignite",
-        },
-      });
+    if (unit !== null && !isMuted(unit)) {
+      newGameState = drawSkill(newGameState);
+
+      if (getZonesWithEnemies(unit, 1).length > 0) {
+        newGameState.currentResolution.push({
+          resolution: "Fire Skill",
+          resolution2: "ConflagrationR2",
+          unit: unit,
+          details: {
+            reason: "Conflagration Ignite",
+            title: "Conflagration",
+            message: "You may ignite an adjacent enemy.",
+            no: "Skip",
+            yes: "Ignite",
+          },
+        });
+      }
     }
 
     return newGameState;
@@ -146,9 +166,6 @@ export const useSkillEffects = () => {
 
     //end "Activating Blaze of Glory" resolution
     newGameState.currentResolution.pop();
-
-    //consume unit's fever
-    unit.fever = unit.fever - 1;
 
     //give unit activationCounter
     unit.temporary.activation
@@ -177,7 +194,7 @@ export const useSkillEffects = () => {
     //end "Blaze of Glory2"
     newGameState.currentResolution.pop();
 
-    if (unit && !isMuted(unit) && unit.fever > 0) {
+    if (unit && !isMuted(unit) && unit.aether > 0) {
       newGameState.currentResolution.push({
         resolution: "Fire Skill",
         resolution2: "Blaze of Glory3",
@@ -185,7 +202,7 @@ export const useSkillEffects = () => {
         details: {
           reason: "Blaze of Glory Draw",
           title: "Blaze of Glory",
-          message: "You may spend 1 fever to draw 2 skills.",
+          message: "You may spend your Aether to draw 2 skills.",
           no: "Skip",
           yes: "Draw",
         },
@@ -2290,6 +2307,8 @@ export const useSkillEffects = () => {
       //Fire
       case "ignitionPropulsion1":
         return ignitionPropulsion1(a);
+      case "ignitionPropulsion2":
+        return ignitionPropulsion2(a);
       case "conflagration1":
         return conflagration1(a, b);
       case "conflagrationR1":

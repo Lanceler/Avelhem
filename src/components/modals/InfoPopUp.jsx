@@ -38,9 +38,6 @@ const InfoPopUp = (props) => {
 
       case "learn":
         return "Gameplay Tutorial";
-
-      case "fire":
-        return "Fire Scion Demo";
     }
   };
 
@@ -379,40 +376,6 @@ const InfoPopUp = (props) => {
             </div>
           </div>
         );
-
-      case "fire":
-        return (
-          <div>
-            <div className="unitInfo-text-desc">
-              <p>
-                <strong>
-                  Brandishing destructive power, Fire Scions exhibit an
-                  offense-oriented kit that must be fueled through the
-                  expenditure of a skill card and Fever—a unique attribute
-                  exclusive to their class.
-                </strong>{" "}
-                Fever is displayed as orange crystals hovering above the unit.
-                As per their talent, Fire Scions may opt to initiate with 2
-                Fevers upon ascension. Furthermore, they obtain 1 Fever (up to a
-                maximum of 2) at the start of their turn.
-              </p>
-              <br />
-
-              <p>
-                This demo will showcase the skills and abilities of Fire Scions.
-                Instructions will be displayed at the top right corner of the
-                board, and a{" "}
-                <strong>
-                  green glow will envelop the objects you need to click on.
-                </strong>
-              </p>
-              <br />
-              <p>Estimated time: 5 minutes.</p>
-              <br />
-              <p>Close this message to get started.</p>
-            </div>
-          </div>
-        );
     }
   };
 
@@ -420,7 +383,6 @@ const InfoPopUp = (props) => {
     switch (demoGuide) {
       case "Learn1.1":
       case "Learn1.118":
-      case "Fire1.1":
         return element === "Close";
     }
   };
@@ -436,10 +398,6 @@ const InfoPopUp = (props) => {
         break;
 
       /////////
-
-      case "Fire1.1":
-        dispatch(updateDemo("Fire1.1.1"));
-        break;
     }
   };
 

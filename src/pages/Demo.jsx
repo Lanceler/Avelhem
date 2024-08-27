@@ -86,13 +86,6 @@ export default function Demo() {
             })
           );
           break;
-
-        case "fire":
-          setInfoPopUp("fire");
-          setDemoTitle("Fire Scion Demo");
-          dispatch(updateDemo("Fire1.1"));
-          setCurrentPlayer("host");
-          break;
       }
     }
   }, [id]);
@@ -119,13 +112,6 @@ export default function Demo() {
       case "Learn1.204":
       case "Learn1.263":
       case "Learn1.266":
-        return element === "Switch Player Button";
-
-      ///////////
-      case "Fire1.4":
-      case "Fire1.6":
-      case "Fire1.33":
-      case "Fire1.41":
         return element === "Switch Player Button";
     }
   };
@@ -588,22 +574,6 @@ export default function Demo() {
         break;
 
       ////////////////////////////////////////////
-
-      case "Fire1.4":
-        dispatch(updateDemo("Fire1.5"));
-        break;
-
-      case "Fire1.6":
-        dispatch(updateDemo("Fire1.7"));
-        break;
-
-      case "Fire1.33":
-        dispatch(updateDemo("Fire1.34"));
-        break;
-
-      case "Fire1.41":
-        dispatch(updateDemo("Fire1.42"));
-        break;
     }
   };
 

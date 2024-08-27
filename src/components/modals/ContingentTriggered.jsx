@@ -423,31 +423,6 @@ const ContingentTriggered = (props) => {
         return element === "Skip Button";
 
       //////////////
-
-      case "Fire1.34":
-        return element === "Skill Card" && element2.id === "01-03";
-
-      case "Fire1.36.1":
-        switch (element) {
-          case "Skill Card":
-            return element2.id === "SC-04";
-        }
-        break;
-
-      case "Fire1.35":
-      case "Fire1.37":
-        switch (element) {
-          case "Select Button":
-            return true;
-        }
-        break;
-
-      case "Fire1.5":
-        switch (element) {
-          case "Skip Button":
-            return true;
-        }
-        break;
     }
   };
 
@@ -481,18 +456,6 @@ const ContingentTriggered = (props) => {
         dispatch(updateDemo("Learn1.164.1"));
         break;
       /////////////////////////
-
-      case "Fire1.5":
-        dispatch(updateDemo("Fire1.6"));
-        break;
-
-      case "Fire1.34":
-        dispatch(updateDemo("Fire1.35"));
-        break;
-
-      case "Fire1.36.1":
-        dispatch(updateDemo("Fire1.37"));
-        break;
     }
   };
 

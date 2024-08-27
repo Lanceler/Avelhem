@@ -60,11 +60,6 @@ const VictoryScreen = (props) => {
     if (!demoGuide) {
       return false;
     }
-
-    switch (demoGuide) {
-      case "Fire1.46":
-        return "Demo over.";
-    }
   };
 
   return (

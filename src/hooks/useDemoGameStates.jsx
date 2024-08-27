@@ -2290,12 +2290,12 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 The second sub-effect allows you to inspect 5 skills from your
-                hand and add up to 3 Water skills among them to your hand.
-                <br />
-                <br />
-                Inspections function similar to searches, but they are limited
-                to a specified number of cards, starting from the top of the
-                repertoire.
+                repertoire and add up to 3 Water skills among them to your hand.{" "}
+                <strong>
+                  Inspections function similar to searches, but they are limited
+                  to a specified number of cards, starting from the top of the
+                  repertoire.
+                </strong>
               </div>
             );
 
@@ -2625,131 +2625,6 @@ export const useDemoGameStates = () => {
             );
 
           ////////////////////
-        }
-        break;
-
-      case demoGuide.slice(0, 4) === "Fire":
-        switch (demoGuide) {
-          case "Fire1.1":
-          case "Fire1.1.1":
-          case "Fire1.1.2":
-          case "Fire1.1.3":
-          case "Fire1.2":
-          case "Fire1.2.01":
-            return (
-              <div>
-                1. Click on your Avelhem hand to raise it, then click on a Fire
-                Avelhem; resonate it with the other copy to ascend your pawn.
-                <br />
-                <br />
-                <em>
-                  <strong>
-                    (Reminder: In this demo, objects that you need to click will
-                    be enveloped in a green glow.)
-                  </strong>
-                </em>
-              </div>
-            );
-
-          case "Fire1.2.1":
-          case "Fire1.3":
-            return "2. Flash Fire (their debut talent) will activate. Select “Gain 2 Fevers.” (The other option is not available because there are no Fire skills in your Vestige.) Fever is necessary to activate Fire skills (except their burst).";
-
-          case "Fire1.4":
-          case "Fire1.5":
-          case "Fire1.6":
-            return "3. Switch player, then press skip at the prompt. Then switch back to the first player.";
-
-          case "Fire1.7":
-            return "4. Because you resonated an Avelhem, you may either discard or shuffle it back in your repertoire.";
-
-          case "Fire1.8":
-          case "Fire1.9":
-          case "Fire1.10":
-          case "Fire1.11":
-          case "Fire1.11.1":
-            return "5. Click on the Fire Scion that just ascended and view their abilities (bottom right). Activate “Fiery Heart”, which can cure the Frostbite and Burn of an adjacent ally. This will require you to spend 1 Fever or skill; spend the latter by selecting “Transcendence”.";
-
-          case "Fire1.12":
-            return "6. Click on your ally Metal Scion, who is currently afflicted with Frostbite; as per the effect of ”Fiery Heart”, they will be thawed from the ice.";
-
-          case "Fire1.13":
-          case "Fire1.14":
-          case "Fire1.14.1":
-            return "7. Click on the Fire Scion again, then activate their other ability: Afterburner. It allows them to strike by expending an Invoke tactic, as well as either 2 Fevers or 1 skill. Without clicking on any cards, click on the “Spend 2 Fevers” button.";
-
-          case "Fire1.15":
-            return "8. Click on the enemy pawn to strike them as per Afterburner’s effect.";
-
-          case "Fire1.16":
-          case "Fire1.17":
-            return (
-              <div>
-                9. Prompt the same Fire Scion to activate a skill (bottom left).
-                Activate their burst skill: Resplendence, which restores their
-                Fevers and bolsters their defenses.{" "}
-                <em>
-                  <strong>
-                    (Reminder: You can click on the magnifying glass icon at the
-                    top right corner of a card to view it up close.)
-                  </strong>
-                </em>
-              </div>
-            );
-
-          case "Fire1.17.1":
-            return "10. Resplendence can also ignite an adjacent enemy at the cost of 1 skill; however, the only enemy in range is a Water Scion with Burn immunity. Therefore, press skip. (The Burn affliction will be demonstrated later.)";
-
-          case "Fire1.18":
-          case "Fire1.19":
-          case "Fire1.20":
-          case "Fire1.21":
-          case "Fire1.22":
-            return "11. Prompt the Fire Scion to activate their standard skill: Ignition Propulsion, which allows them to traverse or strike on demand. Spend “Transcendence” and choose “strike” to attack the Water Scion. Notice that it consumes 1 Fever, evinced by the disappearance of 1 orange crystal.";
-
-          case "Fire1.23":
-          case "Fire1.24":
-          case "Fire1.25":
-            return "12. Prompt the Fire Scion to use a tactic (top right) and select Mobilize. Have them traverse forward into the opponent’s base.";
-
-          case "Fire1.26":
-          case "Fire1.27":
-          case "Fire1.28":
-          case "Fire1.29":
-          case "Fire1.29.1":
-          case "Fire1.30":
-            return "13. Select your other Fire Scion and prompt them to resonate their resonant skill: Conflagration. When selecting a resonator, use “Tea For Two”. You must spend a skill; select “Healing Rain.” Click on either Land Scion to attack them. Likewise, this consumes 1 Fever.";
-
-          case "Fire1.31":
-          case "Fire1.32":
-            return "14. Normally, resonating “Conflagration” would give you the option to float it. However, because “Tea For Two” was used as the resonator, you drew 1 card instead. That aside, prompt your Metal Scion to activate their burst skill: Arsenal Onslaught. Attack the enemy Fire Scion.";
-
-          case "Fire1.33":
-          case "Fire1.34":
-          case "Fire1.35":
-          case "Fire1.36":
-            return "15. Switch player, then prompt the Fire Scion to activate their contingent skill: Blaze of Glory, which is triggered when a Fire Scion is targeted by an attack. Ignite the Metal Scion, then draw 2 skills when given the option.";
-
-          case "Fire1.36.1":
-          case "Fire1.37":
-          case "Fire1.38":
-          case "Fire1.39":
-          case "Fire1.40":
-            return "16. Activate Vengeful Legacy, a contingent Sovereign skill triggered by the elimination of an ally Scion. Click on the pawn to ascend them to a Fire Scion. Flash Fire will activate; this time, the second option (recovering a Fire skill) is available. Click on it and spend any skill, then recover “Blaze Of Glory.”";
-
-          case "Fire1.40.1":
-            return "17. As per Vengeful Legacy’s effect, you may float a skill to grant the Fire Scion the Ravager status. Press skip.";
-
-          case "Fire1.41":
-          case "Fire1.42":
-          case "Fire1.43":
-          case "Fire1.44":
-          case "Fire1.45":
-            return "18. Switch back to the gold player. You will be given the option to reveal a Metal skill; since you have none, press skip. You will be then given the option to spend a skill to attack again. Spend “Chain Lightning”, then strike the enemy Fire Scion. They have no Fever; thus, “Blaze Of Glory” is not triggered. ";
-
-          case "Fire1.45.1":
-          case "Fire1.46":
-            return "19. Press “End Turn”, then follow the instructions regarding the application of the Burn affliction on your Metal Scion. Note that the enemy Land Scion is also afflicted with Burn; however, they will suffer its consequences at the end of their turn. This ends the demo.";
         }
         break;
     }

@@ -52,7 +52,7 @@ const SpendSkill = (props) => {
 
     unit.blossom -= 1;
 
-    newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+    //newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
 
     dispatch(updateState(newGameState));
     //props.updateFirebase(newGameState);
@@ -64,7 +64,7 @@ const SpendSkill = (props) => {
 
     unit.fever -= props.fever;
 
-    newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+    //newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
 
     dispatch(updateState(newGameState));
     //props.updateFirebase(newGameState);
@@ -113,45 +113,6 @@ const SpendSkill = (props) => {
         return element === "Select Button";
 
       //////////////////////
-
-      case "Fire1.11":
-      case "Fire1.19":
-        switch (element) {
-          case "Skill Card":
-            return element2.id === "SX-01";
-        }
-        break;
-
-      case "Fire1.29":
-        switch (element) {
-          case "Skill Card":
-            return element2.id === "02-03";
-        }
-        break;
-
-      case "Fire1.38":
-        switch (element) {
-          case "Skill Card":
-            return true;
-        }
-        break;
-
-      case "Fire1.11.1":
-      case "Fire1.20":
-      case "Fire1.29.1":
-      case "Fire1.39":
-        switch (element) {
-          case "Select Button":
-            return true;
-        }
-        break;
-
-      case "Fire1.14.1":
-        switch (element) {
-          case "Select Fever Button":
-            return true;
-        }
-        break;
     }
   };
 
@@ -182,30 +143,6 @@ const SpendSkill = (props) => {
         break;
 
       ////////////////////
-
-      case "Fire1.11":
-        dispatch(updateDemo("Fire1.11.1"));
-        break;
-
-      case "Fire1.11.1":
-        dispatch(updateDemo("Fire1.12"));
-        break;
-
-      case "Fire1.14.1":
-        dispatch(updateDemo("Fire1.15"));
-        break;
-
-      case "Fire1.19":
-        dispatch(updateDemo("Fire1.20"));
-        break;
-
-      case "Fire1.29":
-        dispatch(updateDemo("Fire1.29.1"));
-        break;
-
-      case "Fire1.38":
-        dispatch(updateDemo("Fire1.39"));
-        break;
     }
   };
 
