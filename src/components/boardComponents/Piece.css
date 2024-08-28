@@ -561,7 +561,7 @@
   animation: fadeInOut 2s infinite alternate;
 }
 
-.fever {
+/* .fever {
   transform: rotate(45deg);
   background: linear-gradient(
     22deg,
@@ -579,7 +579,7 @@
   animation: moveUpDown 0.95s ease-in-out infinite;
   pointer-events: none;
   z-index: 5;
-}
+} */
 
 .glacial-torrent {
   transform: rotate(45deg);

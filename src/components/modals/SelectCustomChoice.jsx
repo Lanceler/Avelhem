@@ -57,25 +57,6 @@ const SelectCustomChoice = (props) => {
   let updateData = false;
 
   switch (props.details.reason) {
-    // case "Ignition Propulsion":
-    //   canFirstChoice = canMove(unit);
-    //   canSecondChoice = canStrike(unit);
-    //   ChoiceFirstMessage = "Traverse.";
-    //   ChoiceSecondMessage = "Strike. This cannot affect Fire Scions.";
-    //   break;
-
-    case "Flash Fire":
-      canFirstChoice = true;
-      canSecondChoice =
-        newGameState[unit.player].skillHand.length > 0 &&
-        ["01-01", "01-02", "01-03"].some((s) =>
-          localGameState[self].skillVestige.includes(s)
-        );
-      ChoiceFirstMessage = "Gain 2 Fevers (Max. 2).";
-      ChoiceSecondMessage =
-        "Spend 1 skill to recover then float 1 non-burst Fire skill.";
-      break;
-
     case "Purification":
       canFirstChoice = true;
       canSecondChoice = getZonesWithAllies(unit, 2, false).length > 0;
@@ -302,50 +283,6 @@ const SelectCustomChoice = (props) => {
       //     //2nd choice
       //   }
       //   break;
-
-      // case "Ignition Propulsion":
-      //   if (selectedChoice === 1) {
-      //     newGameState = enterMoveMode(
-      //       getVacantAdjacentZones(unit),
-      //       unit,
-      //       newGameState,
-      //       null
-      //     );
-      //   } else {
-      //     enterSelectUnitMode(
-      //       getZonesWithEnemies(unit, 1),
-      //       unit,
-      //       newGameState,
-      //       null,
-      //       "strike",
-      //       "Fire Scion"
-      //     );
-      //   }
-      //   break;
-
-      case "Flash Fire":
-        if (selectedChoice === 1) {
-          unit.fever
-            ? (unit.fever = Math.min(2, unit.fever + 2))
-            : (unit.fever = 2);
-        } else {
-          newGameState.currentResolution.push({
-            resolution: "Recover Skill",
-            player: self,
-            restriction: ["01-01", "01-02", "01-03"],
-            message: "Recover then float 1 non-burst Fire skill.",
-            outcome: "Float",
-          });
-
-          newGameState.currentResolution.push({
-            resolution: "Discard Skill",
-            unit: unit,
-            player: unit.player,
-            message: "Spend 1 skill",
-            restriction: null,
-          });
-        }
-        break;
 
       case "Purification":
         if (selectedChoice === 1) {

@@ -51,13 +51,12 @@ const UnitInfo = (props) => {
               </span>
             </p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Spend 2 Fevers or 1 skill to strike.
+              ⬩Spend 1 skill to strike.
             </p>
 
             <p className="unitInfo-text-heading2">2. Fiery Heart (One-shot)</p>
             <p className="unitInfo-text-desc">
-              ⬩Spend 1 Fever or 1 skill to purge an adjacent ally’s Frostbite
-              and Burn.
+              ⬩Spend 1 skill to purge an adjacent ally’s Frostbite and Burn.
             </p>
           </>
         );
@@ -266,18 +265,15 @@ const UnitInfo = (props) => {
       case "Fire Scion":
         return (
           <>
-            <p className="unitInfo-text-heading2">1. Flash Fire</p>
+            <p className="unitInfo-text-heading2">1. From the Ashes</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Upon your debut, gain 2 Fevers (Max. 2) or spend 1 skill to
-              recover then float 1 non-burst Fire skill.
+              ⬩Upon your debut, you may spend 1 skill to recover then float 1
+              non-burst Fire skill.
             </p>
 
             <p className="unitInfo-text-heading2">2. Eternal Ember</p>
-            <p className="unitInfo-text-desc">
-              ⬩You are immune to Frostbite and Burn.
-            </p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩At the start of your Execution Phase, gain 1 Fever (Max. 2).
+              ⬩You are immune to Frostbite and Burn.
             </p>
           </>
         );
@@ -476,11 +472,7 @@ const UnitInfo = (props) => {
                       <p className="unitInfo-text-heading2">
                         Aether: {unit.aether ? "Present" : "None"}
                       </p>
-                      {unit.fever > 0 && (
-                        <p className="unitInfo-text-heading2">
-                          Fever: {unit.fever}
-                        </p>
-                      )}
+
                       {unit.charge > 0 && (
                         <p className="unitInfo-text-heading2">
                           Charge: {unit.charge}

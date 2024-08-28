@@ -138,11 +138,20 @@ const YouMaySpend1Skill = (props) => {
     newGameState.currentResolution.pop();
 
     switch (props.details.reason) {
-      case "Resplendence1":
+      case "From the Ashes":
+        newGameState.currentResolution.push({
+          resolution: "Recover Skill",
+          player: self,
+          restriction: ["01-01", "01-02", "01-03"],
+          message: "Recover then float 1 Fire skill",
+          outcome: "Float",
+        });
+        break;
+
+      case "Resplendence":
         newGameState.currentResolution.push({
           resolution: "Fire Skill",
-          resolution2: "Resplendence2",
-          // resolution: "Resplendence2",
+          resolution2: "Resplendence4",
           unit: unit,
         });
         break;

@@ -55,9 +55,7 @@ const SelectUnitAbility = (props) => {
           ),
           abilityText: (
             <>
-              <div className="abilityText ">
-                ⬩Spend 2 Fevers or 1 skill to strike.
-              </div>
+              <div className="abilityText ">⬩Spend 1 skill to strike.</div>
             </>
           ),
         },
@@ -73,8 +71,7 @@ const SelectUnitAbility = (props) => {
           abilityText: (
             <>
               <div className="abilityText ">
-                ⬩Spend 1 Fever or 1 skill to purge an adjacent ally’s Frostbite
-                and Burn.
+                ⬩Spend 1 skill to purge an adjacent ally’s Frostbite and Burn.
               </div>
             </>
           ),
@@ -407,15 +404,12 @@ const SelectUnitAbility = (props) => {
         switch (i) {
           case 0:
             return (
-              canStrike(unit) &&
-              (unit.fever >= 2 ||
-                newGameState[unit.player].skillHand.length > 0)
+              canStrike(unit) && newGameState[unit.player].skillHand.length > 0
             );
           case 1:
             return (
               !unit.temporary.usedFieryHeart &&
-              (unit.fever >= 1 ||
-                newGameState[unit.player].skillHand.length > 0) &&
+              newGameState[unit.player].skillHand.length > 0 &&
               getZonesWithAllies(unit, 1, false).length > 0
             );
         }

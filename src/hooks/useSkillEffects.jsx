@@ -36,16 +36,6 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    // newGameState.currentResolution.push({
-    //   resolution: "Fire Skill",
-    //   resolution2: "Ignition Propulsion1",
-    //   unit: unit,
-    //   details: {
-    //     title: "Ignition Propulsion",
-    //     reason: "Ignition Propulsion",
-    //   },
-    // });
-
     newGameState.currentResolution.push({
       resolution: "Fire Skill",
       resolution2: "Ignition Propulsion2",
@@ -220,7 +210,6 @@ export const useSkillEffects = () => {
     newGameState.currentResolution.pop();
 
     unit.hp = 2;
-    unit.fever = 2;
     unit.enhancements.shield
       ? (unit.enhancements.shield = Math.max(2, unit.enhancements.shield))
       : (unit.enhancements.shield = 2);
@@ -230,20 +219,49 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
+    newGameState.currentResolution.push({
+      resolution: "Fire Skill",
+      resolution2: "Resplendence2",
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Fire Skill",
+      resolution2: "Resplendence1",
+      unit: unit,
+      details: {
+        reason: "Resplendence",
+        title: "Resplendence",
+        message: "You may search for 1 Fire skill.",
+        no: "Skip",
+        yes: "Search",
+      },
+    });
+
+    return newGameState;
+  };
+
+  const resplendence2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Resplendence2" resolution
+    newGameState.currentResolution.pop();
+
     if (
       getZonesWithEnemies(unit, 1).length &&
       newGameState[unit.player].skillHand.length > 0
     ) {
       newGameState.currentResolution.push({
         resolution: "Fire Skill",
-        resolution2: "Resplendence1",
+        resolution2: "Resplendence3",
         unit: unit,
         details: {
           title: "Resplendence",
           message:
             "You may spend 1 skill to ignite an adjacent enemy for 1 turn.",
           restriction: null,
-          reason: "Resplendence1",
+          reason: "Resplendence",
         },
       });
     }
@@ -2319,6 +2337,8 @@ export const useSkillEffects = () => {
         return blazeOfGlory2(a);
       case "resplendence1":
         return resplendence1(a);
+      case "resplendence2":
+        return resplendence2(a);
 
       //Water
       case "purification1":

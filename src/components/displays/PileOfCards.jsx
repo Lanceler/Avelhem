@@ -13,6 +13,7 @@ const PileOfCards = (props) => {
   const { demoGuide } = useSelector((state) => state.demoGuide);
 
   const [floatingCards, setFloatingCards] = useState(0);
+  const [shatteredCards, setShatteredCards] = useState(0);
   const [isVestige, setIsVestige] = useState(false);
 
   const dispatch = useDispatch();
@@ -24,23 +25,27 @@ const PileOfCards = (props) => {
   let team = props.team;
   let pile = props.pile;
 
-  let stack = [...localGameState[team][pile]];
+  // let stack = [...localGameState[team][pile]];
+  const [stack, setStack] = useState([...localGameState[team][pile]]);
 
   const cardBack = pile[0] === "a" ? "AvelhemCardBack" : "SkillCardBack";
 
   useEffect(() => {
     switch (pile) {
       case "avelhemRepertoire":
-        // floatingCards = localGameState[team].avelhemFloat;
         setFloatingCards(localGameState[team].avelhemFloat);
         break;
       case "skillRepertoire":
-        // floatingCards = localGameState[team].skillFloat;
         setFloatingCards(localGameState[team].skillFloat);
         break;
 
       case "skillVestige":
-        stack.push(...localGameState[team].skillShattered);
+        // stack.push(...localGameState[team].skillShattered);
+        setStack([
+          ...localGameState[team][pile],
+          ...localGameState[team].skillShattered,
+        ]);
+        setShatteredCards(localGameState[team].skillShattered.length);
       //   break; DO NOT break
       case "avelhemVestige":
         setIsVestige(true);
@@ -115,9 +120,11 @@ const PileOfCards = (props) => {
           <div
             className={`pile-label ${floatingCards > 0 ? "with-float" : ""}`}
           >
-            {`Cards: ${stack.length}  ${
-              floatingCards > 0 ? "(" + floatingCards.toString() + ")" : ""
-            }`}
+            {`
+            Cards: ${stack.length - shatteredCards}
+            ${floatingCards > 0 ? "(" + floatingCards.toString() + ")" : ""}
+            ${shatteredCards > 0 ? "(" + shatteredCards.toString() + ")" : ""}
+            `}
           </div>
         )}
       </div>

@@ -2933,7 +2933,7 @@ export const useRecurringEffects = () => {
 
   const canActivateSovereignSkill = (skill) => {
     const canHeirsEndeavor = () => {
-      if (localGameState[self].fateDefiances < 1) {
+      if (localGameState[self].fateDefiances < 3) {
         return false;
       }
 
@@ -5207,22 +5207,40 @@ export const useRecurringEffects = () => {
         delete unit.afflictions.burn;
 
         newGameState.activatingUnit.push(unit);
-        newGameState.activatingSkill.push("FlashFire");
+        newGameState.activatingSkill.push("FromTheAshes");
         newGameState.currentResolution.push({
           resolution: "Unit Talent",
           resolution2: "Talent Conclusion",
           unit: unit,
         });
 
-        newGameState.currentResolution.push({
-          resolution: "Unit Talent",
-          resolution2: "Activating Flash Fire",
-          unit: unit,
-          details: {
-            title: "Flash Fire",
-            reason: "Flash Fire",
-          },
-        });
+        if (
+          !["01-01", "01-02", "01-03"].some((s) =>
+            newGameState[unit.player].skillVestige.includes(s)
+          )
+        ) {
+          newGameState.currentResolution.push({
+            resolution: "Misc.",
+            resolution2: "Message To Player",
+            player: self,
+            title: "From the Ashes",
+            message: "You do not have any non-burst Fire skills to recover.",
+          });
+        } else {
+          newGameState.currentResolution.push({
+            resolution: "Unit Talent",
+            resolution2: "Activating From the Ashes",
+            unit: unit,
+            details: {
+              title: "From the Ashes",
+              message:
+                "You may spend 1 skill to recover then float 1 non-burst Fire skill.",
+              restriction: null,
+              reason: "From the Ashes",
+            },
+          });
+        }
+
         break;
 
       case "Water Scion":

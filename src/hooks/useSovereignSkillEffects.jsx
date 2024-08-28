@@ -25,7 +25,7 @@ export const useSovereignSkillEffects = () => {
     //end "Activating Heir’s Endeavor" resolution
     newGameState.currentResolution.pop();
 
-    newGameState[self].fateDefiances -= 1;
+    newGameState[self].fateDefiances -= 3;
 
     let recoverableSkills = [...sovereignSkillList()].filter(
       (x) => x !== "SA-01"
@@ -211,11 +211,6 @@ export const useSovereignSkillEffects = () => {
 
     newGameState = drawSkill(newGameState);
     newGameState = drawSkill(newGameState);
-
-    newGameState[self].fateDefiances = Math.min(
-      6,
-      newGameState[self].fateDefiances + 2
-    );
 
     return newGameState;
   };

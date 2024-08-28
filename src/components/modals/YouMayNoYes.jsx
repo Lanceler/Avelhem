@@ -115,9 +115,28 @@ const YouMayNoYes = (props) => {
 
       case "Blaze of Glory Draw": //"Blaze of Glory3"
         unit.aether = 0;
-        //newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
         newGameState = drawSkill(newGameState);
         newGameState = drawSkill(newGameState);
+        break;
+
+      case "Resplendence": //Resplendence1
+        updateData = true;
+        newGameState.currentResolution.push({
+          resolution: "Search Skill",
+          player: self,
+          details: {
+            restriction: ["01-01", "01-02", "01-03"],
+            exclusion: [],
+            searchTitle: "Resplendence",
+            searchMessage: "Search for 1 Fire skill",
+            outcome: "Add",
+            revealTitle: null,
+            revealMessage: null,
+            messageTitle: null,
+            message: null,
+            specMessage: null,
+          },
+        });
         break;
 
       case "Aerial Impetus Purge Move": // Aerial Impetus Purge Move
@@ -303,7 +322,6 @@ const YouMayNoYes = (props) => {
 
       case "Conduction":
         updateData = true;
-
         newGameState.currentResolution.push({
           resolution: "Search Skill",
           player: self,
@@ -320,7 +338,6 @@ const YouMayNoYes = (props) => {
             specMessage: null,
           },
         });
-
         break;
 
       case "Ambiance Assimilation":

@@ -814,7 +814,6 @@ const BoardArea = (props) => {
                 unit={lastRes.unit}
                 player={lastRes.player}
                 message={lastRes.message}
-                fever={lastRes.fever}
                 restriction={lastRes.restriction}
                 hideOrRevealModale={hideOrRevealModale}
               />
@@ -1520,7 +1519,6 @@ const BoardArea = (props) => {
 
       case "Unit Talent":
         switch (lastRes.resolution2) {
-          case "Activating Flash Fire":
           case "Activating Kleptothermy":
           case "Activating Mountain Stance":
             return (
@@ -1536,6 +1534,7 @@ const BoardArea = (props) => {
               </>
             );
 
+          case "Activating From the Ashes":
           case "Activating Lightning Rod":
             return (
               <>
@@ -1588,20 +1587,6 @@ const BoardArea = (props) => {
               updateLocalState(applySkill("ignitionPropulsion1", lastRes.unit));
             }
             break;
-
-          // case "Ignition Propulsion1":
-          //   return (
-          //     <>
-          //       {self === lastRes.unit.player && !hideModal && (
-          //         <SelectCustomChoice
-          //           unit={lastRes.unit}
-          //           details={lastRes.details}
-          //           updateFirebase={updateFirebase}
-          //           hideOrRevealModale={hideOrRevealModale}
-          //         />
-          //       )}
-          //     </>
-          //   );
 
           case "Ignition Propulsion1":
             if (self === lastRes.unit.player) {
@@ -1691,7 +1676,7 @@ const BoardArea = (props) => {
             return (
               <>
                 {self === lastRes.unit.player && !hideModal && (
-                  <YouMaySpend1Skill
+                  <YouMayNoYes
                     unit={lastRes.unit}
                     details={lastRes.details}
                     updateFirebase={updateFirebase}
@@ -1702,6 +1687,26 @@ const BoardArea = (props) => {
             );
 
           case "Resplendence2":
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("resplendence2", lastRes.unit));
+            }
+            break;
+
+          case "Resplendence3":
+            return (
+              <>
+                {self === lastRes.unit.player && !hideModal && (
+                  <YouMaySpend1Skill
+                    unit={lastRes.unit}
+                    details={lastRes.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Resplendence4":
             if (self === lastRes.unit.player) {
               selectEnemies(lastRes.unit, 1, null, "ignite", null);
             }

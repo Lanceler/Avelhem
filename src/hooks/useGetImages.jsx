@@ -84,7 +84,7 @@ import PlantScion from "../assets/scionIcons/PlantScion.png";
 
 import Afterburner from "../assets/abilities/Afterburner.jpg";
 import FieryHeart from "../assets/abilities/FieryHeart.jpg";
-import FlashFire from "../assets/abilities/FlashFire.jpg";
+import FromTheAshes from "../assets/abilities/FromTheAshes.jpg";
 import Hydrotherapy from "../assets/abilities/Hydrotherapy.jpg";
 import ColdEmbrace from "../assets/abilities/ColdEmbrace.jpg";
 import Kleptothermy from "../assets/abilities/Kleptothermy.jpg";
@@ -242,7 +242,7 @@ export const useGetImages = () => {
     PlantScion,
     Afterburner,
     FieryHeart,
-    FlashFire,
+    FromTheAshes,
     Hydrotherapy,
     ColdEmbrace,
     Kleptothermy,
@@ -401,8 +401,8 @@ export const useGetImages = () => {
         return Afterburner;
       case "FieryHeart":
         return FieryHeart;
-      case "FlashFire":
-        return FlashFire;
+      case "FromTheAshes":
+        return FromTheAshes;
 
       case 2:
         return WaterAvelhem;

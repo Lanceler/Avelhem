@@ -58,18 +58,6 @@ const SpendSkill = (props) => {
     //props.updateFirebase(newGameState);
   };
 
-  const handleFever = () => {
-    //end Discarding Skill resolution
-    newGameState.currentResolution.pop();
-
-    unit.fever -= props.fever;
-
-    //newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
-
-    dispatch(updateState(newGameState));
-    //props.updateFirebase(newGameState);
-  };
-
   const handleClick = (canActivate, i) => {
     if (canActivate) {
       if (selectedSkill === i) {
@@ -195,22 +183,6 @@ const SpendSkill = (props) => {
                 Spend 1 Blossom
               </button>
             )}
-
-            {selectedSkill === null &&
-              props.fever &&
-              unit.fever >= props.fever && (
-                <button
-                  className={`redButton ${
-                    canClick("Select Fever Button") ? "demoClick" : ""
-                  }`}
-                  onClick={() => {
-                    handleFever();
-                    handleUpdateDemoGuide();
-                  }}
-                >
-                  {`Spend ${props.fever === 1 ? "1 Fever" : "2 Fevers"}`}
-                </button>
-              )}
 
             {selectedSkill !== null && (
               <button

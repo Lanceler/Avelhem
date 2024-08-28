@@ -381,20 +381,6 @@ export const Piece = (props) => {
             </>
           )}
 
-          {props.unit.unitClass === "Fire Scion" && (
-            <>
-              {props.unit.fever === 1 && (
-                <div className="fever" style={{ left: 20 }}></div>
-              )}
-              {props.unit.fever > 1 && (
-                <>
-                  <div className="fever" style={{ left: 20 }}></div>
-                  <div className="fever" style={{ left: 38 }}></div>
-                </>
-              )}
-            </>
-          )}
-
           {props.unit.unitClass === "Water Scion" && (
             <>
               {props.unit.boosts.glacialTorrent === 1 && (
