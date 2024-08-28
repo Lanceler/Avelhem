@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useGetImages } from "../hooks/useGetImages";
+import RulesImg from "../assets/others/Rules.png";
 
 import "./Rules.css";
 
@@ -22,7 +23,9 @@ export default function Rules() {
           backgroundImage: `url(${getBannerImage("WindBG")})`,
         }}
       >
-        <div className="rule-title">RULES</div>
+        <div className="rule-title">
+          <img src={RulesImg} className="page-title" />
+        </div>
 
         <div className="rules-text">
           <h2>Overview</h2>
@@ -35,7 +38,7 @@ export default function Rules() {
           <br />
           <p>
             Sovereigns alternate taking turns consisting of multiple phases.
-            Each turn provides up to two tactics that can be expended to perform
+            Each turn provides up to two tactics that can be used to perform
             various actions such as drawing a card and moving a unit. Sovereigns
             can accumulate cards over the course of multiple turns and activate
             them at opportune moments to supplement their limited actions.
@@ -47,6 +50,7 @@ export default function Rules() {
             talents, and skill cards with a variety of effects.
           </p>
           <br />
+          <br />
 
           <h2>Objective</h2>
           <p>
@@ -55,6 +59,7 @@ export default function Rules() {
             continue playing by raising the number of units required for
             victory.
           </p>
+          <br />
           <br />
 
           <h2>Components</h2>
@@ -67,7 +72,8 @@ export default function Rules() {
             <li>3 custom dice</li>
             <ul>
               <li>
-                Faces consist of 2 Advance, 2 Mobilize, 1 Assault, and 1 Invoke
+                Cubic; faces consist of 2 Advance, 2 Mobilize, 1 Assault, and 1
+                Invoke
               </li>
             </ul>
 
@@ -82,16 +88,15 @@ export default function Rules() {
             <li>Unit tokens</li>
             <ul>
               <li>
-                The base game provides 2 sets (1 gold and 1 silver) of 8 pawns
-                and 16 (8 unique) Scion tokens
+                The base game provides gold and silver sets of 8 pawns and 16 (8
+                unique) Scion tokens
               </li>
             </ul>
 
             <li>Player boards</li>
             <ul>
               <li>
-                Displays a catalogue of upgrades and contains numbered tracks
-                tallying Bounty Points and Fate Defiances
+                Displays upgrades and tallies Bounty Points and Fate Defiances
               </li>
             </ul>
 

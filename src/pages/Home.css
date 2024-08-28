@@ -7,16 +7,7 @@
 
 .home-title{
     padding-top: 35px;
-    /* height: 80px; */
-
     text-align: center;
-    font-family: Alegreya, Georgia, Times New Roman, "serif";
-    font-size: 4.5rem;
-    font-weight: 600;
-    color: goldenrod;
-
-    -webkit-text-stroke: 1.25px #fdd700;
-    text-shadow: rgb(0, 0, 0) 1px 0 2px;
 }
 
 .home-content{
@@ -138,6 +129,10 @@
         padding-top: 45px;
     }
 
+    .page-title {
+        height: 65px;
+    }
+
 }
 
 
@@ -145,9 +140,6 @@
 
 @media screen and (max-width: 500px) {
 
-    .home-title {
-            font-size: 2.5rem;
-        }
 
     .home-banner {
         margin: 10px auto;
@@ -204,4 +196,9 @@
 
 }
 
+@media screen and (max-width: 450px) {
+    .page-title {
+        height: 45px;
+    }
 
+}

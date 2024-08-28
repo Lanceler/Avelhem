@@ -18,6 +18,7 @@ import {
 } from "firebase/firestore";
 
 import { useGetImages } from "../hooks/useGetImages";
+import CreateGameImg from "../assets/others/CreateGame.png";
 
 export default function MyGames() {
   useEffect(() => {
@@ -149,7 +150,9 @@ export default function MyGames() {
         backgroundImage: `url(${getBannerImage("FireBG")})`,
       }}
     >
-      <div className="create-game-header">CREATE GAME</div>
+      <div className="create-game-header">
+        <img src={CreateGameImg} className="page-title" />
+      </div>
       <div className="create-game-content">
         <div
           className="create-game-elemental"

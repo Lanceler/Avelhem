@@ -6,6 +6,8 @@ import { useGetImages } from "../hooks/useGetImages";
 
 import "./Home.css";
 
+import HomeImg from "../assets/others/Home.png";
+
 export default function Home() {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -22,7 +24,9 @@ export default function Home() {
           backgroundImage: `url(${getBannerImage("LandBG")})`,
         }}
       >
-        <div className="home-title">HOME</div>
+        <div className="home-title">
+          <img src={HomeImg} className="page-title" />
+        </div>
 
         <div
           className="home-banner"

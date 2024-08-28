@@ -1,43 +1,23 @@
 .create-game-body{
     height: 100%;
     min-height: fit-content;
-    /* max-height: 1800px; */
     background-size: cover;
     background-position: top;
-
     /* background: aqua;  */
 }
 
 .create-game-header{
     padding-top: 35px;
-    height: 80px;
-
     text-align: center;
-    font-family: Alegreya, Georgia, Times New Roman, "serif";
-    font-size: 4.5rem;
-    font-weight: 600;
-    color: goldenrod;
-
-    -webkit-text-stroke: 1.25px #fdd700;
-    text-shadow: rgb(0, 0, 0) 1px 0 2px;
-
 
     /* background-color: rgb(204, 0, 255) */
-    
 }
 
 .create-game-content {
     display: flex;
-    /* min-height: 1200px; */
-    /* height: calc(100vh - 65px - 90px); */
-    /* background-color: #333; */
-    /* background-color: goldenrod; */
     padding: 30px;
-
     /* background-color: rgb(0, 255, 64) */
 }
-
-
 
 .create-game-elemental, .create-game-soon{
     /* height: calc(100% - 30px); */

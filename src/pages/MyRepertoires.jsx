@@ -10,6 +10,7 @@ import { db } from "../config/firebaseConfig";
 import Loading from "../components/modals/Loading";
 
 import { useGetImages } from "../hooks/useGetImages";
+import RepertoiresImg from "../assets/others/Repertoires.png";
 
 import {
   collection,
@@ -82,7 +83,9 @@ export default function MyRepertoires() {
           backgroundImage: `url(${getBannerImage("ManaBG")})`,
         }}
       >
-        <div className="repertoires-title">REPERTOIRES</div>
+        <div className="repertoires-title">
+          <img src={RepertoiresImg} className="page-title" />
+        </div>
 
         <div className="repertoires-selection">
           {userData &&
