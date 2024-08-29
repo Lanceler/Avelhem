@@ -263,47 +263,49 @@ export default function Game() {
         // backgroundImage: `url(${getBannerImage("Challenge")})`,
       }}
     >
-      {["ready", "spectate"].includes(playerStatus) && (
-        <BoardArea
-          gameState={gameData.gameState}
-          gameId={gameData.id}
-          userRole={userRole}
-        />
-      )}
-
       <AnimatePresence>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.75 }}
-          exit={{ opacity: 0, transition: { duration: 1.5 } }}
-        >
-          {!["ready", "spectate"].includes(playerStatus) && (
-            <div
-              className="game-banner"
-              style={{
-                // backgroundImage: `url(${getBannerImage("Invite")})`,
-                backgroundImage: `url(${getBannerImage("Challenge")})`,
-              }}
-            >
-              <div className="game-banner-backdrop">
-                <div className="game-banner-title">{banner.title}</div>
-                <div className="game-banner-text-body">
-                  <div className="game-banner-text">
-                    {banner.buttonText && (
-                      <button
-                        className="home-banner-button"
-                        onClick={() => bannerButton()}
-                      >
-                        {banner.buttonText}
-                      </button>
-                    )}
-                  </div>
+        {!["ready", "spectate"].includes(playerStatus) && (
+          <motion.div
+            key="game-banner"
+            exit={{ opacity: 0, transition: { duration: 1.5 } }}
+            className="game-banner"
+            style={{
+              backgroundImage: `url(${getBannerImage("Challenge")})`,
+            }}
+          >
+            <div className="game-banner-backdrop">
+              <div className="game-banner-title">{banner.title}</div>
+              <div className="game-banner-text-body">
+                <div className="game-banner-text">
+                  {banner.buttonText && (
+                    <button
+                      className="home-banner-button"
+                      onClick={() => bannerButton()}
+                    >
+                      {banner.buttonText}
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
-          )}
-        </motion.div>
+          </motion.div>
+        )}
+
+        {["ready", "spectate"].includes(playerStatus) && (
+          <motion.div
+            key="BoardArea"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 2.5 }}
+            // exit={{ opacity: 0, transition: { duration: 0.75 } }}
+          >
+            <BoardArea
+              gameState={gameData.gameState}
+              gameId={gameData.id}
+              userRole={userRole}
+            />
+          </motion.div>
+        )}
       </AnimatePresence>
 
       {playerStatus === "pick repertoire" && (

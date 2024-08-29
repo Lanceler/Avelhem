@@ -98,14 +98,10 @@ const SelectSovereignTactic = (props) => {
       abilityDetails = [
         {
           abilityName: "Null",
-          abilityQualifier: (
-            <div className="abilityQualifier">
-              No tactical actions available.
-            </div>
-          ),
+          abilityQualifier: <div className="abilityQualifier"></div>,
           abilityText: (
             <>
-              <div className="abilityText "></div>
+              <div className="abilityText ">No tactical actions available.</div>
             </>
           ),
         },

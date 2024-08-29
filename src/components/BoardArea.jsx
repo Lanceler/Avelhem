@@ -287,7 +287,9 @@ const BoardArea = (props) => {
 
         if (loaded >= totalImages) {
           setImagesLoaded(totalImages);
-          setLoadingImages(false);
+          setTimeout(() => {
+            setLoadingImages(false);
+          }, 1750);
           return loaded;
         }
 
@@ -4755,15 +4757,12 @@ const BoardArea = (props) => {
               <AnimatePresence>
                 {!showContent && (
                   <motion.div
-                    layout={true}
-                    // initial={{ opacity: 1, scale: 1 }}
-                    // transition={{ duration: 1.5, scale: 0.5 }}
+                    key="LoadingImage"
                     exit={{
                       opacity: 0,
-                      transition: { duration: 3.5 },
+                      transition: { duration: 3.75 },
                     }}
                     className="loading-image"
-                    key={1}
                   >
                     <LoadingImage
                       setShowContent={setShowContent}

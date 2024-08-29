@@ -10,21 +10,28 @@
     /* min-height: calc(100vh - 65px - 45px); */
     overflow: auto;
 
-        /* background: aqua; */
+    /* display: flex;
+    justify-content: center; */
 
+    /* background: aqua; */
 }
 
 
 .game-banner {
-    margin: 20px auto;
+    margin: 80px auto 20px;
     background-color: #333;
     height: 650px;
     width: 1040px;
     border: 7px ridge rgb(236, 180, 36);
     background-size: cover;
     background-position: center;
-    box-shadow: 4px 4px 15px 4px rgba(0, 0, 0, 0.45);     
-}
+    box-shadow: 4px 4px 15px 4px rgba(0, 0, 0, 0.45);    
+
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+
+ }
 
 .game-banner-backdrop {
     height: 100%;
