@@ -22,6 +22,7 @@ const Board = (props) => {
 
   const {
     getZonesInRange, // needed for quick movement testing
+    enterMoveMode,
   } = useRecurringEffects();
   const { getMiscImage } = useGetImages();
 
@@ -138,7 +139,7 @@ const Board = (props) => {
 
         // //for testing: quick movement
 
-        // updateLocalState(
+        // props.updateLocalState(
         //   enterMoveMode(
         //     getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
         //     expandedUnit,

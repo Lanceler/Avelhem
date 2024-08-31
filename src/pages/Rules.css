@@ -38,15 +38,23 @@
     color: #eee;
     background-color: rgba(0, 0, 0, 0.95);
     padding: 20px 80px;
-    height: 1100px;
+    height: 1200px;
 }
 
-.rules-skill-anatomy{
+.rules-image-container{
+    width: 100%;
+    text-align: center;
+}
+
+.rules-skill-anatomy, .rules-unit-token{
     position: absolute;
     height: 550px;
     left: 50%;
     transform: translateX(-50%);
+}
 
+.rules-unit-token {
+    height: 350px;
 }
 
 

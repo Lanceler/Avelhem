@@ -4904,6 +4904,7 @@ const BoardArea = (props) => {
                       validZones={validZones}
                       selectUnit={selectUnit}
                       deployClass={deployClass}
+                      updateLocalState={updateLocalState}
                     />
                   </div>
                 </div>

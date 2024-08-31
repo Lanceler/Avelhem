@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useGetImages } from "../hooks/useGetImages";
+
 import RulesImg from "../assets/others/Rules.png";
 import SkillAnatomy from "../assets/others/SkillAnatomy.png";
+import UnitTokens from "../assets/others/UnitTokens.png";
 
 import "./Rules.css";
 
@@ -158,7 +160,15 @@ export default function Rules() {
       <br />
       <br />
 
-      <h2>4. Shuffle repertoires and draw skill cards.</h2>
+      <h2>4. Set both Sovereigns’ Fate Defiance (FD) counters to 3.</h2>
+      <p>
+        A Sovereign’s FD, as well as their BP, is displayed between their
+        Avelhem and skill repertoires.
+      </p>
+      <br />
+      <br />
+
+      <h2>5. Shuffle repertoires and draw skill cards.</h2>
       <p>
         After shuffling, both Sovereigns draw 4 skill cards. The Sovereign who
         plays the first turn adds 1 copy of “Transcendence” to their hand and
@@ -220,6 +230,14 @@ export default function Rules() {
       </p>
       <br />
       <br />
+      <div className="rules-image-container">
+        <div>Exhibit - From left to right: Pawn, Metal Scion, & Fire Scion</div>
+        <img
+          src={UnitTokens}
+          className="rules-unit-token"
+          alt="From left to right: Pawn, Metal Scion, Fire Scion"
+        />
+      </div>
     </div>,
     //3
     <div className="rules-text">
@@ -249,15 +267,24 @@ export default function Rules() {
 
       <h2>Skills</h2>
       <p>
-        Skills cards offer a wider variety of effects and can be activated by
-        units in addition to Sovereigns. represents Sovereigns. Skills also have
-        aspects, represented by jewels below their aspects. These determine
-        additional properties (and will be discussed at a later section).
+        Skill cards offer a wider variety of effects that can activated by
+        Sovereigns, as well as units. The aspect of a skill, indicated by the
+        icon at its top left corner, identifies its exclusive activator. For
+        example, a Sovereign skill (represented by a crown icon aspect) can only
+        be activated by a Sovereign. Likewise, a Lightning skill can only be
+        activated by a Lightning Scion. Skills also have a method, represented
+        by the gems below their aspect icons. These will be discussed at a later
+        section.
       </p>
       <br />
       <br />
 
       <div className="rules-image-container">
+        <div>
+          Exhibit - From left to right: Plant Avelhem, Sovereign skill, &
+          Lightning skill cards
+        </div>
+        <br />
         <img
           src={SkillAnatomy}
           className="rules-skill-anatomy"
@@ -305,8 +332,9 @@ export default function Rules() {
 
       <h2>Coordination Phase</h2>
       <p>
-        The Coordination Phase provides the Initiator’s tactics. During this
-        Phase, the Initiator chooses 1 of the following:
+        The Coordination Phase provides the Initiator’s tactics, which determine
+        their possible actions. During this Phase, the Initiator chooses 1 of
+        the following:
       </p>
 
       <ul>
