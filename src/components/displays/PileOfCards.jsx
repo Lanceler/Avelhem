@@ -31,6 +31,8 @@ const PileOfCards = (props) => {
   const cardBack = pile[0] === "a" ? "AvelhemCardBack" : "SkillCardBack";
 
   useEffect(() => {
+    setStack([...localGameState[team][pile]]);
+
     switch (pile) {
       case "avelhemRepertoire":
         setFloatingCards(localGameState[team].avelhemFloat);

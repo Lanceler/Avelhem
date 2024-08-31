@@ -36,8 +36,17 @@
 
 .rules-text{
     color: #eee;
-    background-color: rgba(0, 0, 0, 0.85);
+    background-color: rgba(0, 0, 0, 0.95);
     padding: 20px 80px;
+    height: 1100px;
+}
+
+.rules-skill-anatomy{
+    position: absolute;
+    height: 550px;
+    left: 50%;
+    transform: translateX(-50%);
+
 }
 
 
