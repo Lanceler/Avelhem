@@ -48,6 +48,25 @@
 }
 
 
+/* .zoom-body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    position: fixed;
+    left: 50%;
+    z-index: 501;
+    background-color: aqua;
+}
+ */
+
+
+
+
+
 
 .zoom-card {
     width: 540px;
@@ -65,7 +84,8 @@
 
 
 .zoom-card-image{
-    height: 75vh;
+    /* height: 75vh; */
+    height: 650px;
     /* min-height: 270px; */
     z-index: 502;
     border-radius: 15px;
@@ -79,27 +99,6 @@
 
 
 
-.zoom-body {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    /* background-color: rgba(54, 211, 49, 0.479); */
-    /* position: relative; */
-    position: fixed;
-    left: 50%;
-    z-index: 501;
-    background-color: aqua;
-}
-
-.zoom-body2 {
-    display: flex;
-    flex-direction: column;
-
-}
 
 
 

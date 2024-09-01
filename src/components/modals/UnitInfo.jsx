@@ -105,7 +105,7 @@ const UnitInfo = (props) => {
               </span>
             </p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Move to a zone 2 spaces away (bypass motion contingent skills).
+              ⬩Move to a zone 2 spaces away.
             </p>
 
             <p className="unitInfo-text-heading2">
@@ -138,15 +138,13 @@ const UnitInfo = (props) => {
             </p>
 
             <p className="unitInfo-text-heading2">
-              2. Converge{" "}
+              2. Leyline Convergence{" "}
               <span className="unitInfo-tactic-group">
                 <img src={MobilizeSmall} className="unitInfo-tactic-mobilize" />
                 <img src={MobilizeSmall} className="unitInfo-tactic-mobilize" />
               </span>
             </p>
-            <p className="unitInfo-text-desc ">
-              ⬩Draw 1 skill or restore your Aether.
-            </p>
+            <p className="unitInfo-text-desc ">⬩Restore your Aether.</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
               ⬩You may traverse.
             </p>
@@ -307,7 +305,10 @@ const UnitInfo = (props) => {
               Wind skill.
             </p>
 
-            <p className="unitInfo-text-heading2">2. Soundproof</p>
+            <p className="unitInfo-text-heading2">2. Sonic Breeze</p>
+            <p className="unitInfo-text-desc">
+              ⬩Your deployment and movements bypass motion contingent skills.
+            </p>
             <p className="unitInfo-text-desc unitInfo-text-last">
               ⬩Your and your adjacent allies’ activations bypass “Symphonic
               Screech”.

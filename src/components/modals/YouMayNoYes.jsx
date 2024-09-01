@@ -230,7 +230,7 @@ const YouMayNoYes = (props) => {
         );
         break;
 
-      case "Converge": // "Converge2"
+      case "Leyline Convergence": // "Leyline Convergence1"
         newGameState = enterMoveMode(
           getVacantAdjacentZones(unit),
           unit,

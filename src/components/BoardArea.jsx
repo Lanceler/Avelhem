@@ -227,7 +227,7 @@ const BoardArea = (props) => {
     reapTheWhirlwind1,
     secondWind1,
     fortify1,
-    converge1,
+    leylineConvergence1,
     galvanize1,
     arcFlash1,
     arcFlash2,
@@ -1273,7 +1273,7 @@ const BoardArea = (props) => {
                 getVacant2SpaceZones(lastRes.unit),
                 lastRes.unit
               );
-              setMovingSpecial("AirDash");
+              null; //setMovingSpecial("AirDash");
             }
             break;
 
@@ -1339,27 +1339,13 @@ const BoardArea = (props) => {
               </>
             );
 
-          case "Activating Converge":
+          case "Activating Leyline Convergence":
             if (self === lastRes.unit.player) {
-              updateLocalState(converge1(lastRes.unit));
+              updateLocalState(leylineConvergence1(lastRes.unit));
             }
             break;
 
-          case "Converge1":
-            return (
-              <>
-                {self === lastRes.unit.player && !hideModal && (
-                  <SelectCustomChoice
-                    unit={lastRes.unit}
-                    details={lastRes.details}
-                    updateFirebase={updateFirebase}
-                    hideOrRevealModale={hideOrRevealModale}
-                  />
-                )}
-              </>
-            );
-
-          case "Converge2":
+          case "Leyline Convergence1":
             return (
               <>
                 {self === lastRes.unit.player && !hideModal && (

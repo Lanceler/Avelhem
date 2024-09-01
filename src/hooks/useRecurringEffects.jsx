@@ -4241,8 +4241,8 @@ export const useRecurringEffects = () => {
     const moverEnemy = mover.player === "host" ? "guest" : "host";
     if (
       newGameState[moverEnemy].skillHand.length > 0 &&
-      !["strike", "AerialImpetusAlly", "AirDash", "Surge"].includes(special) &&
-      triggerMotion(mover)
+      !["AerialImpetusAlly", "AirDash", "Surge"].includes(special) &&
+      triggerMotion(mover, special)
     ) {
       newGameState.currentResolution.push({
         resolution: "Triggering Contingent Skill",
@@ -5053,15 +5053,23 @@ export const useRecurringEffects = () => {
     );
   };
 
-  const triggerMotion = (mover) => {
-    if (triggerPitfallTrap(mover)) {
+  const triggerMotion = (mover, special) => {
+    if (mover.unitClass === "Wind Scion" && !isMuted(mover)) {
+      return false;
+    }
+
+    if (triggerPitfallTrap(mover, special)) {
       return true;
     }
 
     return false;
   };
 
-  const triggerPitfallTrap = (mover) => {
+  const triggerPitfallTrap = (mover, special) => {
+    if (special === "strike") {
+      return false;
+    }
+
     const zones = JSON.parse(localGameState.zones);
     const adjacentEnemies = getZonesWithEnemies(mover, 1);
 

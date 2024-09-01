@@ -38,27 +38,27 @@
     color: #eee;
     background-color: rgba(0, 0, 0, 0.95);
     padding: 20px 80px;
-    height: 1200px;
+    /* height: 1200px; */
 }
 
 .rules-image-container{
-    width: 100%;
+    width: auto;
     text-align: center;
+
+    /* border: #eee solid 3px;
+    padding: 10px; */
 }
 
 .rules-skill-anatomy, .rules-unit-token{
-    position: absolute;
+    position: relative;
     height: 550px;
-    left: 50%;
-    transform: translateX(-50%);
+
+    /* background-color: aqua; */
 }
 
 .rules-unit-token {
     height: 350px;
 }
-
-
-
 
 /* /////////////////////////////////////////////////////////////////// */
 
@@ -67,10 +67,7 @@
     .rule-title {
         padding-top: 45px;
     }
-
 }
-
-
 
 
 @media screen and (max-width: 500px) {
@@ -78,8 +75,4 @@
     .rule-title {
         font-size: 2.5rem;
     }
-
-    
-
-
 }

@@ -239,9 +239,9 @@ const SelectTacticViaEffect = (props) => {
         });
         break;
 
-      case "Converge":
+      case "Leyline Convergence":
         updateData = true;
-        newGameState.activatingSkill.push("Converge");
+        newGameState.activatingSkill.push("LeylineConvergence");
         newGameState.activatingUnit.push(unit);
 
         //newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
@@ -254,7 +254,7 @@ const SelectTacticViaEffect = (props) => {
 
         newGameState.currentResolution.push({
           resolution: "Unit Ability",
-          resolution2: "Activating Converge",
+          resolution2: "Activating Leyline Convergence",
           unit: unit,
         });
 

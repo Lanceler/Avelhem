@@ -65,7 +65,8 @@
 
     font-family: 'Times New Roman', Times, serif;
     font-size: 45px;
-    color: goldenrod;
+    color: #eee;
+
     
     border: 6px ridge goldenrod;
     border-radius: 8px;
@@ -80,7 +81,7 @@
 
 .loading-button:hover {
     filter: brightness(1.2);
-    color: #eee;
+    color: goldenrod;
     
 }
 

@@ -150,13 +150,6 @@ const SelectCustomChoice = (props) => {
       ChoiceSecondMessage = "Strike.";
       break;
 
-    case "Converge":
-      canFirstChoice = true;
-      canSecondChoice = true;
-      ChoiceFirstMessage = "Draw 1 skill.";
-      ChoiceSecondMessage = "Restore your Aether.";
-      break;
-
     case "Arc Flash3":
       canSkip = true;
       canFirstChoice = canMove(unit);
@@ -526,14 +519,6 @@ const SelectCustomChoice = (props) => {
             "strike",
             null
           );
-        }
-        break;
-
-      case "Converge":
-        if (selectedChoice === 1) {
-          newGameState = drawSkill(newGameState);
-        } else {
-          unit.aether = 1;
         }
         break;
 

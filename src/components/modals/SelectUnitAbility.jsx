@@ -149,9 +149,7 @@ const SelectUnitAbility = (props) => {
           ),
           abilityText: (
             <>
-              <div className="abilityText ">
-                ⬩Move to a zone 2 spaces away (bypass motion contingent skills).
-              </div>
+              <div className="abilityText ">⬩Move to a zone 2 spaces away.</div>
             </>
           ),
         },
@@ -205,7 +203,7 @@ const SelectUnitAbility = (props) => {
           ),
         },
         {
-          abilityName: "Converge",
+          abilityName: "Leyline Convergence",
           abilityQualifier: (
             <>
               <div className="abilityQualifier"></div>
@@ -217,9 +215,7 @@ const SelectUnitAbility = (props) => {
           ),
           abilityText: (
             <>
-              <div className="abilityText ">
-                ⬩Draw 1 skill or restore your Aether.
-              </div>
+              <div className="abilityText ">⬩Restore your Aether.</div>
               <div className="abilityText ">⬩You may traverse.</div>
             </>
           ),
@@ -692,11 +688,11 @@ const SelectUnitAbility = (props) => {
             resolution2: "Ability - select tactic",
             unit: unit,
             details: {
-              title: "Converge",
+              title: "Leyline Convergence",
               message: "Use 2 instances of 1 mobilize tactic.",
               restriction: ["Mobilize"],
               stock: 2,
-              reason: "Converge",
+              reason: "Leyline Convergence",
               canSkip: "Return",
             },
           });

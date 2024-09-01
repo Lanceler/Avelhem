@@ -321,11 +321,11 @@ export const useUnitAbilityEffects = () => {
     return newGameState;
   };
 
-  const converge1 = (unitInfo) => {
+  const leylineConvergence1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
-    //end "Activating Converge"
+    //end "Activating Leyline Convergence"
     newGameState.currentResolution.pop();
 
     //give unit activationCounter
@@ -333,31 +333,23 @@ export const useUnitAbilityEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
+    unit.aether = 1;
+
     if (canMove(unit)) {
       newGameState.currentResolution.push({
         resolution: "Unit Ability",
-        resolution2: "Converge2",
+        resolution2: "Leyline Convergence1",
         player: self,
         unit: unit,
         details: {
-          reason: "Converge",
-          title: "Converge",
+          reason: "Leyline Convergence",
+          title: "Leyline Convergence",
           message: "You may traverse.",
           no: "Skip",
           yes: "Traverse",
         },
       });
     }
-
-    newGameState.currentResolution.push({
-      resolution: "Unit Ability",
-      resolution2: "Converge1",
-      unit: unit,
-      details: {
-        title: "Converge",
-        reason: "Converge",
-      },
-    });
 
     return newGameState;
   };
@@ -769,7 +761,7 @@ export const useUnitAbilityEffects = () => {
     reapTheWhirlwind1,
     secondWind1,
     fortify1,
-    converge1,
+    leylineConvergence1,
     galvanize1,
     arcFlash1,
     arcFlash2,
