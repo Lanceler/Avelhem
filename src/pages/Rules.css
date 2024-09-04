@@ -1,13 +1,13 @@
 .rule-body {
     height: 100%;
     /* min-height: fit-content; */
-    user-select: none;
+    /* user-select: none; */
     /* background-color: rgb(94, 0, 0); */
 }
 
 .rule-title {
     padding-top: 35px;
-    /* height: 80px; */
+    height: 120px;
 
     text-align: center;
     font-family: Alegreya, Georgia, Times New Roman, "serif";
@@ -17,7 +17,16 @@
 
     -webkit-text-stroke: 1.25px #fdd700;
     text-shadow: rgb(0, 0, 0) 1px 0 2px;
+
+
+
+    background-color: rgba(0, 0, 0, 0.95);
 }
+
+.rule-title img:hover{
+    filter: brightness(1.2);
+}
+
 
 .rule-content {
     height: fit-content;
@@ -34,30 +43,88 @@
     /* background: aqua; */
 }
 
+.rule-content2 {
+    position: relative;
+    z-index: 2;
+    /* background: aqua; */
+}
+
+.rules-bg {
+    position: fixed;
+    width: 100%;
+    height: calc(100% + 150px);
+    max-width: 1500px;
+    background-size: cover;
+    background-position: top;
+    top: -150px;
+    z-index: 1;
+}
+
 .rules-text{
     color: #eee;
     background-color: rgba(0, 0, 0, 0.95);
     padding: 20px 80px;
     /* height: 1200px; */
+
+
+    /* max-height: calc(100vh - 65px - 120px - 35px);
+    overflow-y: scroll; */
+}
+
+.rules-text a{
+    text-decoration: none;
+    color: goldenrod;
+}
+
+.rules-text a:hover {
+    filter: brightness(1.2);
 }
 
 .rules-image-container{
     width: auto;
+    padding-top: 20px;
+    padding-bottom: 30px;
     text-align: center;
+    position: relative;
 
     /* border: #eee solid 3px;
     padding: 10px; */
+
+    background-color: rgba(238, 238, 238, 0.1);
+
+}
+
+
+.rules-image-desc{
+    position: absolute;
+    z-index: 2;
+    background-color: rgba(238, 238, 238, 0.85);
+    width: 100%;
+    /* height: 20px; */
+    color: #333;
+    font-weight: 600;
+    bottom: 0;
+
 }
 
 .rules-skill-anatomy, .rules-unit-token{
     position: relative;
-    height: 550px;
+    max-width: 95%;
 
     /* background-color: aqua; */
 }
 
+.rules-skill-anatomy {
+    width: 1000px;
+}
+
+
 .rules-unit-token {
-    height: 350px;
+    width: 850px;
+}
+
+.rules-return{
+    text-align: center;
 }
 
 /* /////////////////////////////////////////////////////////////////// */

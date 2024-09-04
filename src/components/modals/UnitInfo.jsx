@@ -142,6 +142,7 @@ const UnitInfo = (props) => {
               <span className="unitInfo-tactic-group">
                 <img src={MobilizeSmall} className="unitInfo-tactic-mobilize" />
                 <img src={MobilizeSmall} className="unitInfo-tactic-mobilize" />
+                <img src={MobilizeSmall} className="unitInfo-tactic-mobilize" />
               </span>
             </p>
             <p className="unitInfo-text-desc ">⬩Restore your Aether.</p>

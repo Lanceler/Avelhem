@@ -68,9 +68,9 @@ function App() {
                 />
 
                 <Route path="/rules" element={<Rules />} />
+                <Route path="/rules/:id" element={<Rules />} />
 
                 <Route path="/demo/" element={<Demo />} />
-
                 <Route path="/demo/:id" element={<Demo />} />
               </Routes>
             </div>

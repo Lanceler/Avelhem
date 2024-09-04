@@ -122,7 +122,7 @@ const CoordinationPhaseSelection = (props) => {
           details: {
             reason: "Battle Cry",
             title: "Battle Cry",
-            message: "Spend 3 skills to gain an Assault tactic.",
+            message: "Spend 3 skills to gain 1 Assault tactic.",
             count: 3,
           },
         });

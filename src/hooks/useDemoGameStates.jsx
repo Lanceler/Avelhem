@@ -439,9 +439,10 @@ export const useDemoGameStates = () => {
           case "Learn1.5":
             return (
               <div>
-                Furthermore, they add 2 copies of the “Transcendence” skill to
-                their hands. The first Sovereign, however, immediately places
-                one of them in their vestige (discard pile).
+                Furthermore, the first Sovereign adds 1 copy of “Transcendence”
+                to their hand and places another copy in their vestige (discard
+                pile). The second Sovereign adds 2 copies of “Transcendence” to
+                their hand.
               </div>
             );
 
@@ -1355,9 +1356,9 @@ export const useDemoGameStates = () => {
               <div>
                 When a unit suffers an attack, they lose HP equal to its AP
                 (Attack Power). By default, attacks have 1 AP; thus, units tend
-                to be eliminated by a single attack. Metal Scions have a talent
-                that increases the AP of their attacks for every Sharpness they
-                possess.
+                to be eliminated by a single attack. The “Penetrator” talent of
+                Metal Scions increases the AP of their attacks for every
+                Sharpness they possess.
               </div>
             );
 
@@ -1539,7 +1540,8 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 When they are eliminated, Mana Scions can search for a non-burst
-                Mana skill (burst is the fourth and final skill method).
+                Mana skill (burst is the fourth and final skill method, which
+                will be discussed later).
                 <br /> <br />
                 Search for Aegis.
               </div>

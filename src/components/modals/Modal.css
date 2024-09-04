@@ -360,7 +360,8 @@
 }
 
 .redButton:hover {
-    filter: brightness(1.2)
+    filter: brightness(1.2);
+    color: rgb(255, 207, 86);
 }
 
 .bottomAnchor {

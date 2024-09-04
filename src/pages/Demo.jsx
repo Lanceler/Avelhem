@@ -96,8 +96,6 @@ export default function Demo() {
     } else {
       setCurrentPlayer("host");
     }
-    console.log("test");
-    console.log(currentPlayer);
   };
 
   const canClick = (element) => {

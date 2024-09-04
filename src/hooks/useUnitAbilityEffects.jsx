@@ -569,8 +569,6 @@ export const useUnitAbilityEffects = () => {
       }
     }
 
-    console.log(alliesWithAura);
-
     enterSelectUnitMode(
       alliesWithAura,
       unit,

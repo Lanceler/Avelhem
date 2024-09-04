@@ -210,6 +210,7 @@ const SelectUnitAbility = (props) => {
               <div className="abilityQualifier">
                 <img src={MobilizeSmall} style={{ height: 30 }} />
                 <img src={MobilizeSmall} style={{ height: 30 }} />
+                <img src={MobilizeSmall} style={{ height: 30 }} />
               </div>
             </>
           ),
@@ -689,9 +690,9 @@ const SelectUnitAbility = (props) => {
             unit: unit,
             details: {
               title: "Leyline Convergence",
-              message: "Use 2 instances of 1 mobilize tactic.",
+              message: "Use 3 instances of 1 mobilize tactic.",
               restriction: ["Mobilize"],
-              stock: 2,
+              stock: 3,
               reason: "Leyline Convergence",
               canSkip: "Return",
             },
