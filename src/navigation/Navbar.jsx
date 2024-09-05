@@ -151,7 +151,7 @@ const Navbar = () => {
                     setDropdown(false);
                   }}
                 >
-                  Login
+                  Log In
                 </Link>
               </li>
             )}

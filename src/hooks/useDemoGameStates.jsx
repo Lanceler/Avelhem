@@ -220,8 +220,8 @@ export const useDemoGameStates = () => {
               "02-04",
               "04-01",
               "04-01",
-              "04-01",
-              "04-01",
+              "04-02",
+              "04-02",
               "04-03",
               "04-03",
               "04-03",
@@ -261,8 +261,8 @@ export const useDemoGameStates = () => {
               "SB-01",
               "SB-02",
               "SB-02",
-              "SB-03",
-              "SB-03",
+              "SB-04",
+              "SB-05",
               "SC-01",
               "SC-01",
               "SC-03",
@@ -344,7 +344,7 @@ export const useDemoGameStates = () => {
               "07-01",
               "07-01",
               "07-01",
-              "07-01",
+              "07-03",
               "07-02",
               "07-02",
               "07-02",
@@ -400,39 +400,104 @@ export const useDemoGameStates = () => {
           case "Learn1.1.1":
             return (
               <div>
-                The game unfolds on a board with 10 rows and 5 columns.
-                Sovereigns are equipped with 2 repertoires (decks), consisting
-                of 60 skills and 20 Avelhems, respectively.
+                This demo is an interactive tutorial that will familiarize you
+                with general gameplay mechanics, as well as the simulator’s
+                interface.
                 <br />
                 <br />
+                To proceed through, click on objects and buttons that are
+                glowing green.
+              </div>
+            );
+
+          case "Learn1.1.2":
+            return (
+              <div>
                 <em>
-                  <strong>
-                    (Reminder: In this demo, objects that you need to click will
-                    be enveloped in a green glow.)
-                  </strong>
-                </em>
+                  <strong>Avelhem: War of the Sovereigns</strong>
+                </em>{" "}
+                is competitive board game where 2 players assume the roles of
+                Sovereigns vying for dominance.
+                <br />
+                <br />
+                From this point onwards, the term “Sovereign” will refer to a
+                player.
+              </div>
+            );
+
+          case "Learn1.1.3":
+            return (
+              <div>
+                The game unfolds on a board with 10 rows and 5 columns, where
+                units can be deployed. Sovereigns take their positions on
+                opposite sides, with the row closest to each of them designated
+                as their base.{" "}
+                <strong>
+                  To win, a Sovereign must score 1 point by moving any of their
+                  units into their opponent’s base.
+                </strong>
+              </div>
+            );
+
+          case "Learn1.1.4":
+            return (
+              <div>
+                When victory is achieved, Sovereigns may opt to continue playing
+                by incrementing the score objective, up to a maximum 5.
+              </div>
+            );
+
+          case "Learn1.1.5":
+            return (
+              <div>
+                <strong>
+                  Prior to the game, each Sovereign must construct a pair of
+                  repertoires (decks) consisting of 20 Avelhem cards and 60
+                  skills cards.
+                </strong>{" "}
+                Although the game is initially a race to score 1 point, it is
+                recommended that Sovereigns agree on a final objective
+                beforehand, as it may influence their strategies and repertoire
+                creation.
+              </div>
+            );
+
+          case "Learn1.1.6":
+            return (
+              <div>
+                Sovereigns will take turns consisting of multiple phases.{" "}
+                <strong>
+                  The “Initiator” refers to the Sovereign whose turn it
+                  currently is.
+                </strong>{" "}
+                Either Sovereign can be the first turn’s Initiator, determined
+                by any reasonable means.
               </div>
             );
 
           case "Learn1.2":
             return (
               <div>
-                Sovereigns must designate the gold and silver pieces between
-                themselves. Either can play the first turn as determined by any
-                reasonable means. For this demo, gold will play first.
+                Sovereigns are designated either the gold or silver unit tokens
+                to represent their armies. In this simulator, the host is always
+                assigned the gold tokens and is given the choice of taking the
+                first or second turn.
                 <br />
                 <br />
-                In this virtual simulator, the host always takes gold.
+                Click on Go First.
               </div>
             );
 
           case "Learn1.3":
             return (
               <div>
-                At the start of the game, Sovereigns set their FD counters to 3
-                and deploy pawns on the first, third, and fifth columns on the
-                fourth row of their side of the board. They then shuffle their
-                repertoires and draw 4 skills.
+                Once the Initiator of the first turn has been decided, both
+                Sovereigns set their FD counters to 3 and deploy pawns on the
+                first, third, and fifth columns on fourth row of their side of
+                the board.{" "}
+                <em>(FD will be explained when it becomes relevant.)</em> They
+                then shuffle their repertoires (decks) and draw 4 skills cards
+                each.
               </div>
             );
 
@@ -443,19 +508,26 @@ export const useDemoGameStates = () => {
                 to their hand and places another copy in their vestige (discard
                 pile). The second Sovereign adds 2 copies of “Transcendence” to
                 their hand.
+                <br />
+                <br />
+                And that concludes the setup. Let’s proceed to the turn
+                structure.
               </div>
             );
 
           case "Learn1.6":
             return (
               <div>
-                The <strong>Initiator</strong> refers to the Sovereign whose
-                turn it currently is. Each turn has 6 phases.
+                Each turn has 6 phases, the first of which is the{" "}
+                <strong>Acquisition Phase</strong>, where the Initiator is given
+                the opportunity to bolster their resources by deploying
+                reinforcements or drawing more cards.
                 <br />
                 <br />
-                The first is the <strong>Acquisition Phase</strong>, which
-                offers the Initiator the opportunity to bolster their resources
-                by reinforcing their army or drawing cards.
+                <strong>
+                  (Reminder: The Initiator is the Sovereign whose turn it
+                  currently is.)
+                </strong>
               </div>
             );
 
@@ -463,12 +535,27 @@ export const useDemoGameStates = () => {
           case "Learn1.8":
             return (
               <div>
-                There are 3 options available, and these can be upgraded to
-                provided additional effects.
-                <br />
-                <br />
                 Since you already have pawns on the board and skills in your
-                hand, select the Beseech option to draw 2 Avelhems.
+                hand, select “Beseech” to draw 2 Avelhems.
+              </div>
+            );
+
+          case "Learn1.8.1":
+            return (
+              <div>
+                The titular Avelhems refer to the powers bestowed upon mortals
+                that grant them divine authority over specific facets of
+                creation. In this game, they are represented by cards that can
+                be activated to ascend pawns to Scions, who possess abilities
+                and other effects that thematically apply their facet.
+              </div>
+            );
+
+          case "Learn1.8.2":
+            return (
+              <div>
+                For your convenience, skills and Avelhems are held in separate
+                hands. The latter can found to the right of the former.
               </div>
             );
 
@@ -476,8 +563,9 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 Up next is the <strong>Bounty Phase</strong>, where the
-                Initiator can spend BP (Bounty Points) on long-term upgrades,
-                such as those in the Acquisition Phase.
+                Initiator can spend BP (Bounty Points) on permanent upgrades,
+                such as the additional effects shown during the Acquisition
+                Phase.
               </div>
             );
 
@@ -489,7 +577,8 @@ export const useDemoGameStates = () => {
                 </strong>{" "}
                 <br />
                 <br />
-                As you currently have 0 BP, proceed to the next phase.
+                As you currently have 0 BP, proceed to the next phase. (But feel
+                free to scroll through the options first.)
               </div>
             );
 
@@ -497,24 +586,35 @@ export const useDemoGameStates = () => {
           case "Learn1.12":
             return (
               <div>
-                The third Phase is the <strong>Coordination Phase</strong>,
-                which provides the Initiator with tactics. Sovereigns and units
-                expend tactics to perform tactical actions.
+                The <strong>Coordination Phase</strong> presents the Initiator
+                the means to obtain tactics, which allow them and their units to
+                perform actions.
                 <br />
                 <br />
-                This phase offers 3 options, varying in control and cost. Opt to
-                Assent.
+                Choose the “Assent” option.
               </div>
             );
 
           case "Learn1.13":
             return (
               <div>
-                <strong>Assent</strong> rolls 2 dice. Though cubic, these have 4
-                different faces. Advance and Mobilize are more likely to appear
-                as they are present on 2 sides each. Each tactic offers its own
-                set of options with overlaps to some degree. These will be
-                demonstrated in detail as they come along.
+                Assent rolls 2 dice and grants the results as tactics. Though
+                cubic with 6 sides, these dice have 4 different faces. The
+                “Advance” and “Mobilize” tactics are more likely to appear as
+                they are present on 2 sides each.
+              </div>
+            );
+
+          case "Learn1.13.1":
+            return (
+              <div>
+                Tactics determine the actions that can be taken, each providing
+                a few options. There are overlaps between different tactics to
+                some degree, but each tactic excels in its own speciality. For
+                example, both these tactics allow units to move.
+                <br />
+                <br />
+                Click on Proceed.
               </div>
             );
 
@@ -522,55 +622,58 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 The <strong>Defiance Phase</strong> allows the Initiator to
-                spend FD (Fate Defiance) on immediate yet short-term benefits,
-                such as rerolling unfavorable tactics.{" "}
-                <strong>
-                  FD is primarily obtained as consolation when an ally unit is
-                  eliminated.
-                </strong>{" "}
-                The Initiator may choose at most 1 benefit, even though they
-                have sufficient FD for multiple.
+                spend Fate Defiance (FD) on immediate yet short-term benefits,
+                such as rerolling unfavorable tactics. The Initiator may choose
+                at most 1 of these options once, even though they have
+                sufficient FD to afford multiple.
               </div>
             );
 
           case "Learn1.15":
             return (
               <div>
-                Sovereigns start the game with 3 FD. That said, press Skip for
-                now.
+                Sovereigns start the game with 3 FD.{" "}
+                <strong>
+                  2 FD is obtained as consolation when an ally unit is
+                  eliminated.
+                </strong>{" "}
+                <br />
+                <br />
+                Press Skip.
               </div>
             );
 
           case "Learn1.16":
             return (
               <div>
-                And now comes the <strong>Execution Phase</strong>, where the
-                Initiator’s preparations from the previous phases come into
-                fruition!
+                The first 4 phases prepare the Initiator for the{" "}
+                <strong>Execution Phase</strong>. Several options are available
+                in this phase, and they can be performed in any sequence and
+                frequency, provided there are sufficient resources.
               </div>
             );
 
           case "Learn1.17":
             return (
               <div>
-                During the Execution Phase, the Initiator and their units can
-                utilize cards they have accumulated and tactics they have
-                obtained. The latter can also activate innate abilities.
+                Simply put, the Execution Phase is where the Initiator and their
+                units can activate cards and use tactics.
               </div>
             );
 
           case "Learn1.18":
             return (
               <div>
-                Let’s start by activating an Avelhem.{" "}
+                Let’s start by activating an Avelhem card.{" "}
                 <strong>
                   Avelhems are activated by Sovereigns, and they are primarily
-                  used to ascend pawns into Scions of a specific class.
+                  used to ascend pawns to Scions of a specified class.
                 </strong>
                 <br />
                 <br />
-                To activate an Avelhem, click on your hand to raise it. Then
-                click on the specific card to be activated.
+                To activate an Avelhem, raise your Avelhem hand by clicking on
+                any of its cards, then click on the specific one you want to
+                use.
               </div>
             );
 
@@ -579,8 +682,8 @@ export const useDemoGameStates = () => {
           case "Learn1.20.01":
             return (
               <div>
-                Activate your Mana Avelhem to ascend your center pawn into a
-                Mana Scion.
+                Activate your Mana Avelhem to ascend your center pawn to a Mana
+                Scion.
                 <br />
                 <br />
                 <strong>
@@ -608,7 +711,7 @@ export const useDemoGameStates = () => {
           case "Learn1.23.01":
             return (
               <div>
-                Activate your Land Avelhem to ascend your right pawn into a Land
+                Activate your Land Avelhem to ascend your right pawn to a Land
                 Scion.
               </div>
             );
@@ -616,8 +719,10 @@ export const useDemoGameStates = () => {
           case "Learn1.24":
             return (
               <div>
-                Units possess <strong>class-exclusive talents</strong>, which
-                are passive effects that automatically activate when applicable.
+                <strong>
+                  Units possess class-exclusive talents, which are passive
+                  effects that automatically activate when applicable.
+                </strong>{" "}
                 In the case of Land Scions, their{" "}
                 <strong>“Mountain Stance”</strong> talent activates upon their
                 debut (as they enter play via ascension or deployment).
@@ -628,19 +733,20 @@ export const useDemoGameStates = () => {
           case "Learn1.26":
             return (
               <div>
-                Mountain Stance is a modular effect.
+                Mountain Stance is a talent with a modular effect.
                 <br />
                 <br />
-                Pick the second choice, which allows you to spend 1 skill to
-                search for “Crystallization”.
+                Pick the option that allows you to spend any skill from your
+                hand to search for the “Crystallization” skill from your
+                repertoire (deck).
               </div>
             );
 
           case "Learn1.27":
             return (
               <div>
-                Spending a skill would discard it from hand, so it is important
-                to consider the tradeoff.
+                Spending a skill would discard it from your hand, so it is
+                important to consider the tradeoff.
                 <br />
                 <br />
                 Fortunately, you have a copy of “Transcendence”, which is a
@@ -667,11 +773,12 @@ export const useDemoGameStates = () => {
           case "Learn1.30":
             return (
               <div>
-                <strong>Search</strong> in an effect where a Sovereign views the
-                contents of their repertoire in an attempt to locate a card and
-                add it to their hand (unless stated otherwise). Searches are
-                subject to restrictions; a search is considered successful if it
-                yields an eligible card. (Ineligible cards will be greyed out.)
+                <strong>Search</strong> in an effect that allows Sovereigns to
+                view the contents of their repertoire in an attempt to locate a
+                card and add it to their hand (unless stated otherwise).
+                Searches are subject to restrictions; a search is considered
+                successful if it yields an eligible card. (Ineligible cards will
+                be greyed out.)
               </div>
             );
 
@@ -712,7 +819,7 @@ export const useDemoGameStates = () => {
                 <br />
                 <br />
                 <strong>
-                  Note: Sovereigns can have up to 8 units on the board.
+                  Note: Each Sovereign can have up to 8 units on the board.
                 </strong>
               </div>
             );
@@ -720,11 +827,14 @@ export const useDemoGameStates = () => {
           case "Learn1.37":
             return (
               <div>
-                The <strong>frontier</strong> refers to the set of zones (tiles)
-                where you can deploy your units. The frontier initially consists
-                of 3 rows, starting from your side of the board. But, as you may
-                have noticed during the Bounty Phase, it can be expanded to 6
-                rows.
+                The{" "}
+                <strong>
+                  frontier refers to the set of zones (tiles) where you can
+                  deploy your units
+                </strong>
+                . The frontier initially consists of 3 rows, starting from your
+                side of the board. But, as you may have noticed during the
+                Bounty Phase, it can be expanded to cover 6 rows.
               </div>
             );
 
@@ -783,17 +893,17 @@ export const useDemoGameStates = () => {
                 for further use.
                 <br />
                 <br />
-                That said, the Mobilize tactic has a quirk that allows multiple
-                (but still limited) usage.
+                That said, the Mobilize tactic has a feature that allows it to
+                be used multiple times.
               </div>
             );
 
           case "Learn1.46":
             return (
               <div>
-                Unlike other tactics, Mobilize comes with{" "}
-                <strong>3 instances</strong> that can be used either separately
-                or simultaneously.
+                Unlike other tactics,{" "}
+                <strong>Mobilize comes with 3 instances</strong> that can be
+                used either separately or simultaneously.
                 <br />
                 <br />
                 Click on the Mobilize Tactic below.
@@ -877,35 +987,39 @@ export const useDemoGameStates = () => {
           case "Learn1.64":
             return (
               <div>
-                You have depleted your tactics. Now let us go over skill cards.
+                You have depleted your tactics. Now let us go over the
+                activation of skill cards.
                 <br />
                 <br />
-                Skill cards have 2 icons on their upper left corner: the aspect
-                and method.
+                Skills are the applications of powers granted by Avelhems.{" "}
+                <strong>
+                  These cards offer a wider variety of effects that can
+                  activated by Sovereigns, as well as units.
+                </strong>
               </div>
             );
 
           case "Learn1.65":
             return (
               <div>
-                The <strong>aspect</strong> identifies who can activate the
-                skill, be it the Sovereign themself or a specific Scion.
-                <br />
-                <br />
-                The <strong>method</strong> indicates the nuances of activation.
+                Skill cards have 2 icons at their upper left corner: the aspect
+                and method. The <strong>aspect</strong> identifies who can
+                activate the skill, be it the Sovereign themself or a specific
+                Scion. The <strong>method</strong> indicates the nuances of its
+                activation.
               </div>
             );
 
           case "Learn1.66":
             return (
               <div>
-                The Crystallization skill you searched earlier is a standard
-                (method) Land (aspect) skill.
+                The Crystallization skill you searched earlier has the Land
+                aspect, which means it can only be activated by a Land Scion.
                 <br />
                 <br />
-                Displaying a circular sapphire icon,{" "}
-                <strong>standard skills</strong> exhibit rudimentary features.
-                Simply put, they can be activated during one’s Execution Phase.
+                It is also a <strong>standard skill</strong>, which displays a
+                circular sapphire icon below its aspect. Standard skills are the
+                simplest cards, containing only the most basic features.
               </div>
             );
 
@@ -922,12 +1036,14 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 This display will filter out any skills with aspects that do not
-                match the unit. Click on Crystallization and activate it.
+                match the selected unit. Click on Crystallization and activate
+                it.
                 <br />
                 <br />
                 <strong>
                   Reminder: You can click on the magnifying glass icon at the
-                  top right corner of a card to view it up close.
+                  top right corner of a card to view it up close. Use this
+                  opportunity to view its icons and read its effect text.
                 </strong>
               </div>
             );
@@ -936,9 +1052,8 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 Crystallization’s effect has 2 sub-effects, the first of which
-                increases the activator’s HP (Health Points) to 2.
-                <br />
-                <br />
+                increases the activator’s Health Points (HP) to 2. This has been
+                applied, evinced by the number 2 in their heart-shaped HP icon.
                 Speaking of HP, <strong>units have 1 HP by default</strong>.
                 Thus, they are prone to elimination due to a single attack.
                 (Attacks will be discussed next turn.)
@@ -986,13 +1101,13 @@ export const useDemoGameStates = () => {
           case "Learn1.76":
             return (
               <div>
-                You can also find their status conditions with their definitions
-                and durations.
+                You can also find their status conditions with accompanying
+                definitions and durations.
                 <br />
                 <br />
                 Speaking of statuses, visual indicators will be present on the
-                affected units; for example, a silver icon at the bottom right
-                corner of your Land Scion is representing their Shield.
+                affected units; for example, For example, notice the silver
+                shield icon on your Land Scion.
               </div>
             );
 
@@ -1040,6 +1155,67 @@ export const useDemoGameStates = () => {
               </div>
             );
 
+          case "Learn1.79.2":
+            return (
+              <div>
+                Let’s quickly go over the 6 phases before ending the turn. It
+                may help to notice that the names of each phase start with the
+                letters A to F.
+              </div>
+            );
+
+          case "Learn1.79.3":
+            return (
+              <div>
+                The Acquisition Phase allows the Initiator to bolster their
+                resources by deploying a pawn or drawing a card from either
+                their Avelhem or skill repertoire.
+              </div>
+            );
+
+          case "Learn1.79.4":
+            return (
+              <div>
+                The Bounty Phase allows the Initiator to spend BP on permanent
+                upgrades that can bring them closer to victory.
+              </div>
+            );
+
+          case "Learn1.79.5":
+            return (
+              <div>
+                The Coordination Phase provides the Initiator the tactics for
+                the turn.
+              </div>
+            );
+
+          case "Learn1.79.6":
+            return (
+              <div>
+                The Defiance Phase allows the Initiator to spend FD on immediate
+                short-term benefits.
+              </div>
+            );
+
+          case "Learn1.79.7":
+            return (
+              <div>
+                The Execution Phase is where the Initiator and their units can
+                activate cards they’ve accumulated and perform actions using the
+                tactics from the previous phases. This is also where units can
+                activate their abilities.
+              </div>
+            );
+
+          case "Learn1.79.8":
+            return (
+              <div>
+                Lastly, the Final Phase wraps up the turn, forcing the Initiator
+                to forfeit unused tactics, discard excess cards, and tick down
+                the statuses affecting their units.
+              </div>
+            );
+
           case "Learn1.80":
             return <div>Click on End Turn.</div>;
 
@@ -1048,11 +1224,13 @@ export const useDemoGameStates = () => {
               <div>
                 The board has turned from red to black.{" "}
                 <strong>
-                  When the board is red, the game proceeds through your inputs
+                  When the board is red, the game is waiting for your input to
+                  proceed
                 </strong>
-                , primarily when it is your turn -- but there are occasions when
-                Sovereigns are prompted during their opponent’s turn.
-                Conversely, <strong>black corresponds to your opponent.</strong>
+                , which tends to be when it is your turn -- but there are
+                occasions when Sovereigns are prompted during their opponent’s
+                turn. Conversely,{" "}
+                <strong>black corresponds to your opponent.</strong>
               </div>
             );
 
@@ -1161,21 +1339,22 @@ export const useDemoGameStates = () => {
               <div>
                 Now let us go over the second skill method.
                 <br /> <br />
-                Displaying a bichromatic alexandrite icon,{" "}
-                <strong>resonant skills</strong> synergize to provide additional
-                effects.
+                <strong>Resonant skills</strong> have a bichromatic alexandrite
+                icon. These skills possess a <strong>resonance</strong>, which
+                is an additional effect that applies only when the skill is
+                resonated.
               </div>
             );
 
           case "Learn1.105":
             return (
               <div>
-                Like standard skills, resonant skills can be activated only
-                during one’s own Execution Phase. Exclusive to these skills is
-                their <strong>resonance</strong>, which is an additional effect
-                that applies only when the skill is resonated. Activating a
-                resonant skill without resonating it would apply only its
-                primary sub-effects.
+                Activating a resonant skill without resonating it would apply
+                only its primary sub-effects.
+                <br /> <br />
+                To resonate a skill, activate it with a resonator, which can be
+                either an indentical copy or a card that functions as a valid
+                substitute.
               </div>
             );
 
@@ -1185,10 +1364,14 @@ export const useDemoGameStates = () => {
           case "Learn1.109":
             return (
               <div>
-                To resonate a skill, activate it with a resonator, which is
-                either an identical copy or a valid substitute.
-                <br /> <br />
                 Make your Metal Scion resonate their “Reinforce” skill.
+                <br />
+                <br />
+                <strong>
+                  Reminder: You can click on the magnifying glass icon at the
+                  top right corner of a card to view it up close. Use this
+                  opportunity to view its icons and read its effect text.
+                </strong>
               </div>
             );
 
@@ -1297,10 +1480,10 @@ export const useDemoGameStates = () => {
           case "Learn1.123.1":
             return (
               <div>
-                Some skills, such as Metal Scion’s Brandish, require the usage
-                of specific tactics. In such cases, the requirement is displayed
-                under its name. Some abilities have the "One-shot" property,
-                which limits their activation to once per turn.
+                Some abilities, such as Metal Scion’s Brandish, require specific
+                tactics. In such cases, the requirement is displayed under its
+                name. Those with the "One-shot" property are limited to 1
+                activation to once per turn.
                 <br /> <br />
                 Activate Brandish.
               </div>
@@ -1381,33 +1564,35 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 By striking Gold’s Mana Scion, Silver’s Metal Scion has targeted
-                the latter. <strong>Targeting</strong> occurs when an enemy unit
-                is designated as the recipient of an attack or status
-                affliction. And it so happens that Mana Scions have a skill that
-                can be activated in response.
+                the latter.{" "}
+                <strong>
+                  Targeting occurs when an enemy unit is designated as the
+                  recipient of an attack or status affliction
+                </strong>
+                . And it so happens that Mana Scions have a skill that can be
+                activated in response.
               </div>
             );
 
           case "Learn1.137":
             return (
               <div>
-                Displaying a triangular ruby icon,{" "}
-                <strong>contingent skills</strong> enable timely reactions to
-                certain events.
-                <br /> <br />
-                (Reminder: You can view a card by clicking on its magnifying
-                glass icon.)
+                <strong>Contingent skills</strong> can be identified by their
+                triangular ruby icons.
+                <br />
+                <br />
+                Exclusive to contingent skills is the{" "}
+                <strong>contingency</strong> property, which specifies
+                conditions for its activation.
               </div>
             );
 
           case "Learn1.138":
             return (
               <div>
-                Exclusive to contingent skills is the{" "}
-                <strong>contingency</strong> property, which specifies
-                conditions for its activation. Unlike other skills, contingent
-                skills can be activated during any phase of either Sovereign’s
-                turn, but only if the contingency is satisfied.
+                Unlike other skills, contingent skills can be activated during
+                any phase of either Sovereign’s turn, but only if the
+                contingency is satisfied.
               </div>
             );
 
@@ -1417,10 +1602,14 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 “Aegis”, the contingent skill of Mana Scions, can be activated
-                when they or an adjacent ally is targeted.
+                when they or an adjacent ally is targeted. Activate it.
                 <br />
                 <br />
-                Activate it.
+                <strong>
+                  Reminder: You can click on the magnifying glass icon at the
+                  top right corner of a card to view it up close. Use this
+                  opportunity to view its icons and read its effect text.
+                </strong>
               </div>
             );
 

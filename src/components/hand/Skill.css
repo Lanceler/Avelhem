@@ -113,7 +113,7 @@
 
 .demoBlocker {
     pointer-events: none;
-    cursor: not-allowed;
+    /* cursor: not-allowed; */
 }
 
 @keyframes demoGlow {

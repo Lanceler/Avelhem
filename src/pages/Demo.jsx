@@ -117,10 +117,18 @@ export default function Demo() {
   const demoNextRevealed = () => {
     switch (demoGuide) {
       case "Learn1.1.1":
+      case "Learn1.1.2":
+      case "Learn1.1.3":
+      case "Learn1.1.4":
+      case "Learn1.1.5":
+      case "Learn1.1.6":
       case "Learn1.3":
       case "Learn1.5":
       case "Learn1.6":
+      case "Learn1.8.1":
+      case "Learn1.8.2":
       case "Learn1.9":
+      case "Learn1.13":
       case "Learn1.14":
       case "Learn1.16":
       case "Learn1.17":
@@ -144,6 +152,13 @@ export default function Demo() {
       case "Learn1.78":
       case "Learn1.79":
       case "Learn1.79.1":
+      case "Learn1.79.2":
+      case "Learn1.79.3":
+      case "Learn1.79.4":
+      case "Learn1.79.5":
+      case "Learn1.79.6":
+      case "Learn1.79.7":
+      case "Learn1.79.8":
       case "Learn1.81":
       case "Learn1.98":
       case "Learn1.99":
@@ -203,6 +218,26 @@ export default function Demo() {
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
       case "Learn1.1.1":
+        dispatch(updateDemo("Learn1.1.2"));
+        break;
+
+      case "Learn1.1.2":
+        dispatch(updateDemo("Learn1.1.3"));
+        break;
+
+      case "Learn1.1.3":
+        dispatch(updateDemo("Learn1.1.4"));
+        break;
+
+      case "Learn1.1.4":
+        dispatch(updateDemo("Learn1.1.5"));
+        break;
+
+      case "Learn1.1.5":
+        dispatch(updateDemo("Learn1.1.6"));
+        break;
+
+      case "Learn1.1.6":
         dispatch(updateDemo("Learn1.2"));
         setCurrentPlayer("host");
         break;
@@ -219,8 +254,20 @@ export default function Demo() {
         dispatch(updateDemo("Learn1.7"));
         break;
 
+      case "Learn1.8.1":
+        dispatch(updateDemo("Learn1.8.2"));
+        break;
+
+      case "Learn1.8.2":
+        dispatch(updateDemo("Learn1.9"));
+        break;
+
       case "Learn1.9":
         dispatch(updateDemo("Learn1.10"));
+        break;
+
+      case "Learn1.13":
+        dispatch(updateDemo("Learn1.13.1"));
         break;
 
       case "Learn1.14":
@@ -312,6 +359,34 @@ export default function Demo() {
         break;
 
       case "Learn1.79.1":
+        dispatch(updateDemo("Learn1.79.2"));
+        break;
+
+      case "Learn1.79.2":
+        dispatch(updateDemo("Learn1.79.3"));
+        break;
+
+      case "Learn1.79.3":
+        dispatch(updateDemo("Learn1.79.4"));
+        break;
+
+      case "Learn1.79.4":
+        dispatch(updateDemo("Learn1.79.5"));
+        break;
+
+      case "Learn1.79.5":
+        dispatch(updateDemo("Learn1.79.6"));
+        break;
+
+      case "Learn1.79.6":
+        dispatch(updateDemo("Learn1.79.7"));
+        break;
+
+      case "Learn1.79.7":
+        dispatch(updateDemo("Learn1.79.8"));
+        break;
+
+      case "Learn1.79.8":
         dispatch(updateDemo("Learn1.80"));
         break;
 

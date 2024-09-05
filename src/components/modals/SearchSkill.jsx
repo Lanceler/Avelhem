@@ -324,70 +324,75 @@ const SearchSkill = (props) => {
         <br />
 
         <div className="modalContent">
-          <div className="scrollable scrollable-y-only">
-            {localGameState[self].skillFloat > 0 && (
-              <>
-                <h3>Floating skills</h3>
-                <div className="fourColumn">
-                  {floatingRepertoire.map((usableSkill, i) => (
-                    <div
-                      key={i}
-                      className={`scionSkills ${
-                        selectedSkill === i ? "selectedSkill" : ""
-                      } ${
-                        canClick("Skill Card", usableSkill, i)
-                          ? "demoClick"
-                          : ""
-                      }`}
-                      onClick={() => {
-                        handleClick(canSearch(usableSkill.id), i);
-                        handleUpdateDemoGuide();
-                      }}
-                    >
-                      <Skill
-                        i={i}
-                        usableSkill={usableSkill}
-                        canActivateSkill={canSearch(usableSkill.id)}
-                      />
-                    </div>
-                  ))}
-                </div>
-              </>
-            )}
+          <div
+            className="scrollable scrollable-y-only"
+            style={{ pointerEvents: "all" }}
+          >
+            <div className={`${demoGuide ? "demoBlocker" : ""}`}>
+              {localGameState[self].skillFloat > 0 && (
+                <>
+                  <h3>Floating skills</h3>
+                  <div className="fourColumn">
+                    {floatingRepertoire.map((usableSkill, i) => (
+                      <div
+                        key={i}
+                        className={`scionSkills ${
+                          selectedSkill === i ? "selectedSkill" : ""
+                        } ${
+                          canClick("Skill Card", usableSkill, i)
+                            ? "demoClick"
+                            : ""
+                        }`}
+                        onClick={() => {
+                          handleClick(canSearch(usableSkill.id), i);
+                          handleUpdateDemoGuide();
+                        }}
+                      >
+                        <Skill
+                          i={i}
+                          usableSkill={usableSkill}
+                          canActivateSkill={canSearch(usableSkill.id)}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
 
-            {localGameState[self].skillFloat > 0 && (
-              <h3>Non-floating skills</h3>
-            )}
-            <div
-              className={`fourColumn  ${
-                localGameState[self].skillFloat > 0 ? "decreased-height" : ""
-              } `}
-            >
-              {searchRerpertoire.map((usableSkill, i) => (
-                <div
-                  key={i + localGameState[self].skillFloat}
-                  className={`scionSkills ${
-                    selectedSkill === i + localGameState[self].skillFloat
-                      ? "selectedSkill"
-                      : ""
-                  } ${
-                    canClick("Skill Card", usableSkill, i) ? "demoClick" : ""
-                  }`}
-                  onClick={() => {
-                    handleClick(
-                      canSearch(usableSkill.id),
-                      i + localGameState[self].skillFloat
-                    );
-                    handleUpdateDemoGuide();
-                  }}
-                >
-                  <Skill
-                    i={i + localGameState[self].skillFloat}
-                    usableSkill={usableSkill}
-                    canActivateSkill={canSearch(usableSkill.id)}
-                  />
-                </div>
-              ))}
+              {localGameState[self].skillFloat > 0 && (
+                <h3>Non-floating skills</h3>
+              )}
+              <div
+                className={`fourColumn  ${
+                  localGameState[self].skillFloat > 0 ? "decreased-height" : ""
+                } `}
+              >
+                {searchRerpertoire.map((usableSkill, i) => (
+                  <div
+                    key={i + localGameState[self].skillFloat}
+                    className={`scionSkills ${
+                      selectedSkill === i + localGameState[self].skillFloat
+                        ? "selectedSkill"
+                        : ""
+                    } ${
+                      canClick("Skill Card", usableSkill, i) ? "demoClick" : ""
+                    }`}
+                    onClick={() => {
+                      handleClick(
+                        canSearch(usableSkill.id),
+                        i + localGameState[self].skillFloat
+                      );
+                      handleUpdateDemoGuide();
+                    }}
+                  >
+                    <Skill
+                      i={i + localGameState[self].skillFloat}
+                      usableSkill={usableSkill}
+                      canActivateSkill={canSearch(usableSkill.id)}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

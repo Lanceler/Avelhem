@@ -359,7 +359,8 @@ const BoardArea = (props) => {
     if (
       [
         "Learn1.3",
-        "Learn1.9",
+        "Learn1.8.1",
+        "Learn1.70",
         "Learn1.136",
         "Learn1.157",
         "Learn1.161",
@@ -372,6 +373,7 @@ const BoardArea = (props) => {
       [
         "Learn1.6",
         "Learn1.10",
+        "Learn1.71",
         "Learn1.137",
         "Learn1.158",
         "Learn1.163",
@@ -5066,6 +5068,8 @@ const BoardArea = (props) => {
                 {infoPopUp && (
                   <InfoPopUp info={infoPopUp} setInfoPopUp={setInfoPopUp} />
                 )}
+
+                {magnifiedSkill && <ZoomCard cardInfo={magnifiedSkill} />}
               </>
             </div>
           </div>
@@ -5103,7 +5107,7 @@ const BoardArea = (props) => {
         </div>
       )}
 
-      {magnifiedSkill && <ZoomCard cardInfo={magnifiedSkill} />}
+      {/* {magnifiedSkill && <ZoomCard cardInfo={magnifiedSkill} />} */}
 
       {openContingencySettings && (
         <ContingencySettings

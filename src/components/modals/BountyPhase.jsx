@@ -295,8 +295,11 @@ const BountyPhase = (props) => {
 
         <br />
 
-        <div className="scrollable scrollable-y-only ">
-          <div className="bountySection">
+        <div
+          className="scrollable scrollable-y-only"
+          style={{ pointerEvents: "all" }}
+        >
+          <div className={`bountySection ${demoGuide ? "demoBlocker" : ""}`}>
             <h3 className="modalChoiceName2">Frontier</h3>
             <div className="modalContent">
               <div

@@ -59,6 +59,10 @@ export default function Rules() {
               <Link to="/rules/units">
                 <button>Units</button>
               </Link>
+              <br />
+              <Link to="/rules/cards">
+                <button>Avelhem & skill cards</button>
+              </Link>
             </div>
           )}
 
@@ -229,7 +233,7 @@ export default function Rules() {
                 they occupy a zone on the board; zones cannot host more than a
                 single unit. Each Sovereign can have up to 8 units in play at a
                 time, and no more than 2 ally Scions can have the same class.
-                For more information, visit the detailed{" "}
+                For more information, visit the{" "}
                 <Link to="/rules/units">Units page</Link>.
               </p>
               <br />
@@ -289,31 +293,34 @@ export default function Rules() {
                 upon the conclusion of their effects, unless stated otherwise.
                 When a repertoire is depleted, its corresponding vestige is
                 shuffled to replenish it. For more information, visit the
-                detailed <Link to="/rules/units"> Cards page</Link>.
+                <Link to="/rules/units"> Cards page</Link>.
               </p>
               <br />
               <br />
               <h3>Avelhems</h3>
               <p>
-                Avelhems are cards that Sovereigns can activate to ascend their
-                pawns to Scions of a specified class. The icon at an Avelhem’s
-                top left corner reflects its corresponding Scion class. All
-                Avelhems have the same resonance, which is an additional effect
-                that is applied only if the card is resonated (activated with an
-                identical copy or valid substitute).
+                Avelhems are the game’s namesake, and they refer to the power
+                and authority over the elements of creation. In this game, they
+                take the form of cards that Sovereigns can activate to ascend
+                their pawns to Scions of a specified class. The icon at an
+                Avelhem’s top left corner reflects its corresponding Scion
+                class. All Avelhems have the same resonance, which is an
+                additional effect that is applied only if the card is resonated
+                (activated with an identical copy or valid substitute).
               </p>
               <br />
               <br />
               <h3>Skills</h3>
               <p>
-                Skill cards offer a wider variety of effects that can activated
-                by Sovereigns, as well as units. The aspect of a skill,
-                indicated by the icon at its top left corner, identifies its
-                exclusive activator. For example, a Sovereign skill (represented
-                by a crown icon aspect) can only be activated by a Sovereign.
+                Skills are the applications of powers granted by Avelhems. These
+                cards offer a wider variety of effects that can activated by
+                Sovereigns, as well as units. The aspect of a skill, indicated
+                by the icon at its top left corner, identifies its exclusive
+                activator. For example, a Sovereign skill (represented by a
+                crown icon aspect) can only be activated by a Sovereign.
                 Likewise, a Lightning skill can only be activated by a Lightning
                 Scion. Skills also have methods, represented by the gems below
-                their aspect icons, that can impact its activation.
+                their aspect icons, that can impact their activation.
               </p>
               <br />
               <br />
@@ -536,8 +543,42 @@ export default function Rules() {
                 Aether is granted to a unit upon their deployment. Aethers are
                 primarily spent to perform and mitigate Aether-blasts, and some
                 effects provide other means to utilize or influence them. A
-                unit’s Aether can be restored after it is spent or removed, but
-                they cannot possess more than 1.
+                unit’s Aether can be restored after it is spent or removed.
+                Units cannot possess more than 1 Aether.
+              </p>
+              <br />
+              <br />
+
+              <h3>Boost</h3>
+              <p>
+                Boosts are temporary benefits that can improve a unit’s
+                performance. Boosts expire upon their application or at the
+                Final Phase if unutilized. Units muted by a status have their
+                boosts negated.
+              </p>
+              <br />
+              <br />
+
+              <h3>Status</h3>
+              <p>
+                Statuses affect units in various ways. There are 2 kinds of
+                statuses: enhancements provide advantages, while afflictions
+                apply disadvantages. For more information, visit the{" "}
+                <Link to="/rules/statuses">Statuses page</Link>.
+              </p>
+              <br />
+              <br />
+
+              <h3 className="rules-anathema">Anathema</h3>
+              <p>
+                Anathema is a Scion’s punishment for using their Avelhem to slay
+                a fellow Demigod or human. When a Scion eliminates another Scion
+                or pawn, they suffer Anathema for 2 turns. The affliction is
+                delayed until the unit has resolved all the effects they have
+                activated. For example, suppose a Scion activates a skill card
+                that lets them attack and then perform an additional effect. If
+                the skill’s attack eliminates an enemy, Anathema will be delayed
+                until the entire skill is finished.
               </p>
               <br />
               <br />
@@ -551,6 +592,69 @@ export default function Rules() {
                   src={UnitTokens}
                   className="rules-unit-token"
                   alt="From left to right: Pawn, Metal Scion, Fire Scion"
+                />
+              </div>
+
+              <br />
+              <div className="rules-return">
+                <Link to="/rules/">
+                  <button className="home-banner-button">Return</button>
+                </Link>
+              </div>
+            </div>
+          )}
+
+          {id === "cards" && (
+            <div className="rules-text">
+              <h2>Cards</h2>
+              <p>
+                Cards belong to two categories: Avelhems and skills, each with
+                its own repertoire (deck) and vestige (discard pile). Cards can
+                be activated from one’s hand, and they are sent to the vestige
+                upon the conclusion of their effects, unless stated otherwise.
+                When a repertoire is depleted, its corresponding vestige is
+                shuffled to replenish it. For more information, visit the
+                <Link to="/rules/units"> Cards page</Link>.
+              </p>
+              <br />
+              <br />
+              <h3>Avelhems</h3>
+              <p>
+                Avelhems are the game’s namesake, and they refer to the power
+                and authority over the elements of creation. In this game, they
+                take the form of cards that Sovereigns can activate to ascend
+                their pawns to Scions of a specified class. The icon at an
+                Avelhem’s top left corner reflects its corresponding Scion
+                class. All Avelhems have the same resonance, which is an
+                additional effect that is applied only if the card is resonated
+                (activated with an identical copy or valid substitute).
+              </p>
+              <br />
+              <br />
+              <h3>Skills</h3>
+              <p>
+                Skills are the applications of powers granted by Avelhems. These
+                cards offer a wider variety of effects that can activated by
+                Sovereigns, as well as units. The aspect of a skill, indicated
+                by the icon at its top left corner, identifies its exclusive
+                activator. For example, a Sovereign skill (represented by a
+                crown icon aspect) can only be activated by a Sovereign.
+                Likewise, a Lightning skill can only be activated by a Lightning
+                Scion. Skills also have methods, represented by the gems below
+                their aspect icons, that can impact their activation.
+              </p>
+              <br />
+              <br />
+              <div className="rules-image-container">
+                <div className="rules-image-desc">
+                  From left to right: Plant Avelhem, Sovereign skill, &
+                  Lightning skill cards
+                </div>
+
+                <img
+                  src={SkillAnatomy}
+                  className="rules-skill-anatomy"
+                  alt="Left: Plant Avelhem card; Right: Reminiscence, a Standard Sovereign skill card"
                 />
               </div>
 

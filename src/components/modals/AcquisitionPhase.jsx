@@ -190,7 +190,7 @@ const AcquisitionPhase = (props) => {
         break;
 
       case "Learn1.8":
-        dispatch(updateDemo("Learn1.9"));
+        dispatch(updateDemo("Learn1.8.1"));
         break;
 
       case "Learn1.83":

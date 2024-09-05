@@ -30,7 +30,7 @@ export default function LogIn() {
       >
         <div className="login-box">
           <form onSubmit={handleSubmit}>
-            <h2>Log in</h2>
+            <h2>Log In</h2>
             <div className="login-input">
               <input
                 required
