@@ -3434,9 +3434,8 @@ const BoardArea = (props) => {
           case "Fated Rivalry3":
             return (
               <>
-                {self === lastRes.unit.player && !hideModal && (
-                  <YouMayNoYes
-                    unit={lastRes.unit}
+                {self === lastRes.player && !hideModal && (
+                  <SelectCustomChoice
                     details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}

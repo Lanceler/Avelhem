@@ -226,25 +226,17 @@
 
 /* //////////////////////////// */
 
-@media screen and (max-width: 600px) {
-
-    
-    .zoom-card-image {
+@media screen and (max-width: 600px) {    
+    .zoom-card-image-small {
         width: 90vw;
         height: auto;
     }
-
-
 }
 
 
 @media screen and (max-height: 600px) {
-
-
-    .zoom-card-image {
+    .zoom-card-image-small {
         width: auto;
         height: 90vh;
     }
-
-
 }

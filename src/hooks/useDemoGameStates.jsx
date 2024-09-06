@@ -657,7 +657,8 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 Simply put, the Execution Phase is where the Initiator and their
-                units can activate cards and use tactics.
+                units perform actions using tactics and activate the effects of
+                cards and abilities.
               </div>
             );
 

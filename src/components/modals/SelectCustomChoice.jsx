@@ -16,7 +16,7 @@ const SelectCustomChoice = (props) => {
   const dispatch = useDispatch();
 
   const [selectedChoice, setSelectedChoice] = useState(null);
-  const { allBurstSkills } = useCardDatabase();
+  const { allBurstSkills, getScionSet } = useCardDatabase();
 
   useEffect(() => {
     setSelectedChoice(null);
@@ -246,6 +246,13 @@ const SelectCustomChoice = (props) => {
       ChoiceFirstMessage = "Recover then reveal 1 burst skill.";
       ChoiceSecondMessage =
         "Search for any skill; if successful, reveal and discard it.";
+      break;
+
+    case "Fated Rivalry":
+      canFirstChoice = true;
+      canSecondChoice = true;
+      ChoiceFirstMessage = "Draw 2 skills.";
+      ChoiceSecondMessage = "Search for 1 non-burst skill of their class.";
       break;
   }
 
@@ -766,6 +773,32 @@ const SelectCustomChoice = (props) => {
               specMessage: `${
                 self === "host" ? "Gold" : "Silver"
               } Sovereign has searched for, revealed, and discarded a skill.`,
+            },
+          });
+        }
+        break;
+
+      case "Fated Rivalry":
+        if (selectedChoice === 1) {
+          newGameState = drawSkill(newGameState);
+          newGameState = drawSkill(newGameState);
+        } else {
+          newGameState.currentResolution.push({
+            resolution: "Search Skill",
+            player: self,
+            details: {
+              restriction: getScionSet(props.details.unit.unitClass),
+              exclusion: allBurstSkills(),
+              searchTitle: "Fated Rivalry",
+              searchMessage: "Search for 1 non-burst skill of their class",
+              outcome: "Add",
+              revealTitle: null,
+              revealMessage: null,
+              messageTitle: "Fated Rivalry",
+              message: "Your opponent has searched for a skill.",
+              specMessage: `${
+                self === "host" ? "Gold" : "Silver"
+              } Sovereign has searched for a skill.`,
             },
           });
         }

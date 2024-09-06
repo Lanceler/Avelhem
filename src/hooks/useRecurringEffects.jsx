@@ -2348,10 +2348,6 @@ export const useRecurringEffects = () => {
       case victim.enhancements.ward > 0:
         delete victim.enhancements.ward;
         break;
-      case victim.unitClass === "Land Scion" &&
-        victim.hp > 1 &&
-        !isMuted(victim):
-        break;
       case victim.unitClass === "Lightning Scion" &&
         victim.charges > 2 &&
         !isMuted(victim):

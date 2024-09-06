@@ -658,13 +658,11 @@ export const useSovereignSkillEffects = () => {
       newGameState.currentResolution.push({
         resolution: "Sovereign Contingent Skill",
         resolution2: "Fated Rivalry3",
-        unit: unit1,
+        player: self,
         details: {
-          reason: "Fated Rivalry",
           title: "Fated Rivalry",
-          message: "You may search for 1 non-burst skill of their class.",
-          no: "Skip",
-          yes: "Search",
+          reason: "Fated Rivalry",
+          unit: unit1,
         },
       });
     }

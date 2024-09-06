@@ -576,8 +576,9 @@ export default function Repertoire() {
       </div>
 
       {isLoading && <Loading />}
-
-      {magnifiedSkill && <ZoomCard cardInfo={magnifiedSkill} />}
+      {magnifiedSkill && (
+        <ZoomCard cardInfo={magnifiedSkill} repertoire={true} />
+      )}
     </div>
   );
 }

@@ -18,7 +18,12 @@ const ZoomCard = (props) => {
     <>
       <div className="modal-backdrop">
         <div className="zoom-body">
-          <img src={image} className="zoom-card-image" />
+          <img
+            src={image}
+            className={`zoom-card-image ${
+              props.repertoire ? "zoom-card-image-small" : ""
+            }`}
+          />
 
           <div
             className="modal-backdrop2"

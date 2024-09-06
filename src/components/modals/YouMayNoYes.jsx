@@ -7,7 +7,7 @@ import { updateDemo } from "../../redux/demoGuide";
 
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
-import { useCardDatabase } from "../../hooks/useCardDatabase";
+// import { useCardDatabase } from "../../hooks/useCardDatabase";
 
 const YouMayNoYes = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
@@ -16,7 +16,7 @@ const YouMayNoYes = (props) => {
 
   const dispatch = useDispatch();
 
-  const { allBurstSkills, getScionSet } = useCardDatabase();
+  // const { allBurstSkills, getScionSet } = useCardDatabase();
 
   const {
     drawAvelhem,
@@ -427,28 +427,6 @@ const YouMayNoYes = (props) => {
           resolution: "Deploying Pawn",
           zoneIds: getVacantFrontier(),
         });
-        break;
-
-      case "Fated Rivalry":
-        newGameState.currentResolution.push({
-          resolution: "Search Skill",
-          player: self,
-          details: {
-            restriction: getScionSet(unit.unitClass),
-            exclusion: allBurstSkills(),
-            searchTitle: "Fated Rivalry",
-            searchMessage: "Search for 1 non-burst skill of their class",
-            outcome: "Add",
-            revealTitle: null,
-            revealMessage: null,
-            messageTitle: "Fated Rivalry",
-            message: "Your opponent has searched for a skill.",
-            specMessage: `${
-              self === "host" ? "Gold" : "Silver"
-            } Sovereign has searched for a skill.`,
-          },
-        });
-
         break;
 
       case "Continue Game":

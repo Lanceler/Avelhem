@@ -330,10 +330,9 @@ const UnitInfo = (props) => {
               1 “Crystallization”.
             </p>
 
-            <p className="unitInfo-text-heading2">2. Earthen Safeguard</p>
-            <p className="unitInfo-text-desc">⬩You are immune to Root.</p>
+            <p className="unitInfo-text-heading2">2. Salt the Earth</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩If your HP is above 1, you are immune to Paralysis.
+              ⬩You are immune to Root.
             </p>
           </>
         );
