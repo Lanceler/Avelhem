@@ -384,7 +384,7 @@ const BountyPhase = (props) => {
 
           {/* space */}
 
-          <div className="bountySection">
+          <div className={`bountySection ${demoGuide ? "demoBlocker" : ""}`}>
             <h3 className="modalChoiceName2">Acquisition Phase</h3>
             <div className="modalContent">
               <div
@@ -414,7 +414,7 @@ const BountyPhase = (props) => {
               </div>
 
               <div
-                className={`modal-option-outline${
+                className={`modal-option-outline ${
                   selectedChoice === 5 ? "selected-modal-option" : ""
                 } `}
                 onClick={() => handleSelect(5, canAcquisition[1])}
@@ -467,7 +467,7 @@ const BountyPhase = (props) => {
 
           {/* space */}
 
-          <div className="bountySection">
+          <div className={`bountySection ${demoGuide ? "demoBlocker" : ""}`}>
             <h3 className="modalChoiceName2">Coordination Phase</h3>
             <div className="modalContent">
               <div
@@ -522,7 +522,7 @@ const BountyPhase = (props) => {
 
           {/* space */}
 
-          <div className="bountySection">
+          <div className={`bountySection ${demoGuide ? "demoBlocker" : ""}`}>
             <h3 className="modalChoiceName2">
               Tactics{" "}
               <svg
@@ -618,7 +618,7 @@ const BountyPhase = (props) => {
 
           {/* space */}
 
-          <div className="bountySection">
+          <div className={`bountySection ${demoGuide ? "demoBlocker" : ""}`}>
             <h3 className="modalChoiceName2">Avelhem</h3>
             <div className="modalContent">
               <div
@@ -700,6 +700,7 @@ const BountyPhase = (props) => {
               </div>
             </div>
           </div>
+          {/* space */}
         </div>
 
         <div className="modalBottomButton">

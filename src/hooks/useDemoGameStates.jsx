@@ -546,8 +546,8 @@ export const useDemoGameStates = () => {
                 The titular Avelhems refer to the powers bestowed upon mortals
                 that grant them divine authority over specific facets of
                 creation. In this game, they are represented by cards that can
-                be activated to ascend pawns to Scions, who possess abilities
-                and other effects that thematically apply their facet.
+                be activated to ascend pawns to Scions with abilities and
+                effects that thematically apply their facet.
               </div>
             );
 
@@ -611,7 +611,8 @@ export const useDemoGameStates = () => {
                 Tactics determine the actions that can be taken, each providing
                 a few options. There are overlaps between different tactics to
                 some degree, but each tactic excels in its own speciality. For
-                example, both these tactics allow units to move.
+                example, both these tactics allow units to move, but the latter
+                does it better.
                 <br />
                 <br />
                 Click on Proceed.
@@ -890,8 +891,8 @@ export const useDemoGameStates = () => {
           case "Learn1.45":
             return (
               <div>
-                Once utilized, tactics are expended and are no longer available
-                for further use.
+                In general, tactics are no longer available for further use once
+                utilized.
                 <br />
                 <br />
                 That said, the Mobilize tactic has a feature that allows it to
@@ -1067,8 +1068,8 @@ export const useDemoGameStates = () => {
                 Crystallization’s second sub-effect is optional, as it was
                 qualified by the phrase “you may”. The activator can opt to
                 spend a skill to gain <strong>Shield</strong>, which is an
-                enhancement (positive status) that protects the unit from the
-                next attack they would receive.
+                enhancement (positive status) that protects them from the next
+                attack they would receive.
               </div>
             );
 
@@ -1203,16 +1204,16 @@ export const useDemoGameStates = () => {
               <div>
                 The Execution Phase is where the Initiator and their units can
                 activate cards they’ve accumulated and perform actions using the
-                tactics from the previous phases. This is also where units can
-                activate their abilities.
+                tactics obtained during the previous phases. This is also where
+                units can activate their abilities.
               </div>
             );
 
           case "Learn1.79.8":
             return (
               <div>
-                Lastly, the Final Phase wraps up the turn, forcing the Initiator
-                to forfeit unused tactics, discard excess cards, and tick down
+                Lastly, the Final Phase wraps up the turn. The Initiator
+                forfeits unused tactics, discards excess cards, and ticks down
                 the statuses affecting their units.
               </div>
             );
@@ -1354,7 +1355,7 @@ export const useDemoGameStates = () => {
                 only its primary sub-effects.
                 <br /> <br />
                 To resonate a skill, activate it with a resonator, which can be
-                either an indentical copy or a card that functions as a valid
+                either an identical copy or a card that functions as a valid
                 substitute.
               </div>
             );
@@ -1484,7 +1485,7 @@ export const useDemoGameStates = () => {
                 Some abilities, such as Metal Scion’s Brandish, require specific
                 tactics. In such cases, the requirement is displayed under its
                 name. Those with the "One-shot" property are limited to 1
-                activation to once per turn.
+                activation per turn.
                 <br /> <br />
                 Activate Brandish.
               </div>
@@ -1515,7 +1516,7 @@ export const useDemoGameStates = () => {
           case "Learn1.129":
             return (
               <div>
-                Sovereigns cannot use the Assault tactic.
+                Sovereigns cannot use the Assault tactic to perform any actions.
                 <br /> <br />
                 Click on your Metal Scion to open their personal menu, then
                 click on the tactics button at the upper right. This time, click
@@ -1530,19 +1531,20 @@ export const useDemoGameStates = () => {
                 it provides the exclusive option to strike.
                 <br /> <br />
                 When a unit strikes, it attacks an adjacent enemy. If their
-                attack eliminates the enemy, they move to the zone the latter
-                was occupying.
+                attack eliminates the enemy, they must move to the zone the
+                latter was occupying.
               </div>
             );
 
           case "Learn1.131":
             return (
               <div>
-                When a unit suffers an attack, they lose HP equal to its AP
-                (Attack Power). By default, attacks have 1 AP; thus, units tend
-                to be eliminated by a single attack. The “Penetrator” talent of
-                Metal Scions increases the AP of their attacks for every
-                Sharpness they possess.
+                When a unit suffers an attack, they lose HP equal to its Attack
+                Ppwer (AP). By default, attacks have 1 AP; thus, units tend to
+                be eliminated by a single attack.
+                <br /> <br />
+                The “Penetrator” talent of Metal Scions increases the AP of
+                their attacks for every Sharpness they possess.
               </div>
             );
 
@@ -1603,7 +1605,7 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 “Aegis”, the contingent skill of Mana Scions, can be activated
-                when they or an adjacent ally is targeted. Activate it.
+                when they or an adjacent ally is targeted. Try activating it.
                 <br />
                 <br />
                 <strong>
@@ -1895,7 +1897,7 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 Cultivate to draw 1 skill, which is guaranteed to be the Tea For
-                Two that was floated via Vengeful Legacy.
+                Two that you floated when you activated Vengeful Legacy.
               </div>
             );
 
