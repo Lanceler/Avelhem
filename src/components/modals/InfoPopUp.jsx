@@ -57,8 +57,7 @@ const InfoPopUp = (props) => {
             </div>
             <ol className="infoPopUp-list">
               <li className="unitInfo-text-desc">
-                ⬩Deploy a pawn in your frontier. ⬩If upgraded, you may draw 1
-                Avelhem.
+                ⬩Deploy a pawn in your frontier.
               </li>
               <li className="unitInfo-text-desc">
                 ⬩Spend 6 FD to gain an Assault tactic.
