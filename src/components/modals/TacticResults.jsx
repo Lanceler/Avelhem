@@ -49,7 +49,7 @@ const TacticResults = (props) => {
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
       case "Learn1.13.1":
-        dispatch(updateDemo("Learn1.14"));
+        dispatch(updateDemo("Learn1.13.2"));
         break;
 
       case "Learn1.88":

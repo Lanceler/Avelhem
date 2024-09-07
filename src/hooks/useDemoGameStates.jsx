@@ -462,6 +462,16 @@ export const useDemoGameStates = () => {
               </div>
             );
 
+          case "Learn1.1.5.1":
+            return (
+              <div>
+                You can find the repertoires (decks) to the right of the board.
+                The cards with the red borders are skills, while those with the
+                gold borders are Avelhems. The repertoires on top are your
+                opponent’s, while the pair below is yours.
+              </div>
+            );
+
           case "Learn1.1.6":
             return (
               <div>
@@ -619,6 +629,15 @@ export const useDemoGameStates = () => {
               </div>
             );
 
+          case "Learn1.13.2":
+            return (
+              <div>
+                Tactics are displayed between your and your opponent’s
+                repertoires. At a later phase, you will be able to click and
+                activate them.
+              </div>
+            );
+
           case "Learn1.14":
             return (
               <div>
@@ -635,7 +654,8 @@ export const useDemoGameStates = () => {
               <div>
                 Sovereigns start the game with 3 FD.{" "}
                 <strong>
-                  2 FD is obtained as consolation when an ally unit is
+                  <br />
+                  <br />2 FD is obtained as consolation when an ally unit is
                   eliminated.
                 </strong>{" "}
                 <br />
@@ -648,8 +668,8 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 The first 4 phases prepare the Initiator for the{" "}
-                <strong>Execution Phase</strong>. There’s a lot you can do in
-                this phase, and these can be performed in any sequence and
+                <strong>Execution Phase</strong>. There’s a lot that can be done
+                in this phase, and these can be performed in any sequence and
                 frequency, as long as you have the resources.
               </div>
             );
@@ -705,8 +725,8 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 When a card concludes its effects, it is sent to its respective
-                vestige (discard pile). You are allowed to view the contents of
-                your own vestiges at any time.
+                vestige (discard pile). You (and only you) are allowed to view
+                the contents of your own vestiges at any time.
                 <br />
                 <br />
                 Click on either vestige to view its contents, then close it.
@@ -1019,6 +1039,24 @@ export const useDemoGameStates = () => {
               </div>
             );
 
+          case "Learn1.65.1":
+            return (
+              <div>
+                For example, “Chain Lightning” has the Lightning aspect. This
+                icon is identical to what you’d find on a Lightning Scion unit
+                token. Only a Lightning Scion can activate this skill, and its
+                effect is written in their perspective.
+              </div>
+            );
+
+          case "Learn1.65.2":
+            return (
+              <div>
+                On the other hand, “Reminiscence” is a Sovereign skill. Its
+                aspect is represented by a crown.
+              </div>
+            );
+
           case "Learn1.66":
             return (
               <div>
@@ -1051,8 +1089,7 @@ export const useDemoGameStates = () => {
                 <br />
                 <strong>
                   Reminder: You can click on the magnifying glass icon at the
-                  top right corner of a card to view it up close. Use this
-                  opportunity to view its icons and read its effect text.
+                  top right corner of a card to view it up close.
                 </strong>
               </div>
             );
@@ -2196,7 +2233,8 @@ export const useDemoGameStates = () => {
                 Displaying a hexagonal amethyst icon,{" "}
                 <strong>burst skills</strong> unleash powerful effects.{" "}
                 <strong>
-                  Burst skills are shattered (removed from play) rather than
+                  Their activation is as simple as standard skills. However,
+                  burst skills are shattered (removed from play) rather than
                   discarded upon the conclusion of their effects.
                 </strong>
               </div>

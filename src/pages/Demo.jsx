@@ -121,6 +121,7 @@ export default function Demo() {
       case "Learn1.1.3":
       case "Learn1.1.4":
       case "Learn1.1.5":
+      case "Learn1.1.5.1":
       case "Learn1.1.6":
       case "Learn1.3":
       case "Learn1.5":
@@ -129,6 +130,7 @@ export default function Demo() {
       case "Learn1.8.2":
       case "Learn1.9":
       case "Learn1.13":
+      case "Learn1.13.2":
       case "Learn1.14":
       case "Learn1.16":
       case "Learn1.17":
@@ -144,6 +146,8 @@ export default function Demo() {
       case "Learn1.53":
       case "Learn1.64":
       case "Learn1.65":
+      case "Learn1.65.1":
+      case "Learn1.65.2":
       case "Learn1.66":
       case "Learn1.70":
       case "Learn1.71":
@@ -238,6 +242,10 @@ export default function Demo() {
         break;
 
       case "Learn1.1.5":
+        dispatch(updateDemo("Learn1.1.5.1"));
+        break;
+
+      case "Learn1.1.5.1":
         dispatch(updateDemo("Learn1.1.6"));
         break;
 
@@ -272,6 +280,10 @@ export default function Demo() {
 
       case "Learn1.13":
         dispatch(updateDemo("Learn1.13.1"));
+        break;
+
+      case "Learn1.13.2":
+        dispatch(updateDemo("Learn1.14"));
         break;
 
       case "Learn1.14":
@@ -331,6 +343,14 @@ export default function Demo() {
         break;
 
       case "Learn1.65":
+        dispatch(updateDemo("Learn1.65.1"));
+        break;
+
+      case "Learn1.65.1":
+        dispatch(updateDemo("Learn1.65.2"));
+        break;
+
+      case "Learn1.65.2":
         dispatch(updateDemo("Learn1.66"));
         break;
 

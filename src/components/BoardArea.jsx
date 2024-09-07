@@ -83,6 +83,8 @@ import PileOfCards from "./displays/PileOfCards";
 import LoadingImage from "./displays/LoadingImage";
 import { AnimatePresence, motion } from "framer-motion";
 
+import DemoImage from "./displays/DemoImage";
+
 const BoardArea = (props) => {
   let gameDoc = props.demo ? null : doc(db, "gameInfo", props.gameId);
 
@@ -362,6 +364,7 @@ const BoardArea = (props) => {
       [
         "Learn1.3",
         "Learn1.8.1",
+        "Learn1.13.2",
         "Learn1.70",
         "Learn1.136",
         "Learn1.157",
@@ -375,6 +378,7 @@ const BoardArea = (props) => {
       [
         "Learn1.6",
         "Learn1.10",
+        "Learn1.14",
         "Learn1.71",
         "Learn1.137",
         "Learn1.158",
@@ -5030,6 +5034,20 @@ const BoardArea = (props) => {
                 </div>
 
                 {currentResolutionPrompt()}
+
+                {[
+                  "Learn1.8.1",
+                  "Learn1.8.2",
+                  "Learn1.65",
+                  "Learn1.65.1",
+                  "Learn1.65.2",
+                  "Learn1.66",
+                  "Learn1.104",
+                  "Learn1.105",
+                  "Learn1.137",
+                  "Learn1.138",
+                ].includes(demoGuide) && <DemoImage />}
+
                 {unitInfor !== null && (
                   <UnitInfo unit={unitInfor} setUnitInfor={setUnitInfor} />
                 )}
