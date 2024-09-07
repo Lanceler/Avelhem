@@ -40,13 +40,13 @@ export const useUnitAbilityEffects = () => {
       unit: unit,
     });
 
-    newGameState.currentResolution.push({
-      resolution: "Discard Skill",
-      unit: unit,
-      player: self,
-      message: "Spend 1 skill",
-      restriction: null,
-    });
+    // newGameState.currentResolution.push({
+    //   resolution: "Discard Skill",
+    //   unit: unit,
+    //   player: self,
+    //   message: "Spend 1 skill",
+    //   restriction: null,
+    // });
 
     return newGameState;
   };

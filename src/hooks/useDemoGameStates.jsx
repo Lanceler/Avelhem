@@ -679,9 +679,9 @@ export const useDemoGameStates = () => {
           case "Learn1.18":
             return (
               <div>
-                To activate an Avelhem, raise your Avelhem hand by clicking on
-                any of its cards, then click on the specific one you want to
-                use.
+                To activate an Avelhem, raise your Avelhem hand (found at the
+                lower right corner) by clicking on any of its cards, then click
+                on the specific one you want to use.
               </div>
             );
 
@@ -1101,7 +1101,8 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 This screen will display the details pertaining to the selected
-                unit, including their innate talents and abilities.
+                unit, including their innate talents (passive effects) and
+                abilities (active effects).
                 <br />
                 <br />
                 (Abilities will be demonstrated next turn.)
@@ -1148,7 +1149,8 @@ export const useDemoGameStates = () => {
                 <br />
                 <br />
                 If the Initiator’s hand has more than 8 skills, they must
-                selectively discard the excess. <br />
+                selectively discard the excess.
+                <br />
                 <br />
                 Unused tactics are also forfeited.
               </div>
@@ -1162,6 +1164,17 @@ export const useDemoGameStates = () => {
                 present circumstances, only this step is applicable: the
                 duration of your Land Scion’s Shield will decrement from 2 turns
                 to 1.
+              </div>
+            );
+
+          case "Learn1.79.1.1":
+            return (
+              <div>
+                Lastly, once the previous steps are done, the game will apply
+                scoring. Units score when the occupy the enemy’s base (the
+                furthest row on their side of the board) at the very end of the
+                Final Phase. Units that have scored remain on the board, but
+                they cannot be interacted with nor score again.
               </div>
             );
 
@@ -1223,6 +1236,10 @@ export const useDemoGameStates = () => {
                 Lastly, the Final Phase wraps up the turn. The Initiator
                 discards excess cards, forfeits unused tactics, and ticks down
                 the statuses affecting their units.
+                <br />
+                <br />
+                If the game does not conclude due to the Initiator’s victory,
+                their opponent takes the following turn.
               </div>
             );
 
@@ -1305,12 +1322,12 @@ export const useDemoGameStates = () => {
           case "Learn1.98":
             return (
               <div>
-                <strong>Conduction</strong>, the debut talent of Metal Scions,
-                allows them to search for then float “Magnetic Shockwave”, which
-                is the standard skill of their class. This is similar to the
-                Mountain Stance talent of Land Scions, but there are some
-                differences. First, Conduction is not modular; it has no
-                alternate effect.
+                <strong>Conduction</strong>, the debut talent (passive effect)
+                of Metal Scions, allows them to search for then float “Magnetic
+                Shockwave”, which is the standard skill of their class. This is
+                similar to the Mountain Stance talent of Land Scions, but there
+                are some differences. First, Conduction is not modular; it has
+                no alternate effect.
               </div>
             );
 
@@ -1533,7 +1550,8 @@ export const useDemoGameStates = () => {
           case "Learn1.129":
             return (
               <div>
-                Sovereigns cannot use the Assault tactic to perform any actions.
+                Sovereigns cannot use the Assault tactic to perform any actions,
+                so let’s demonstrate it with units.
                 <br /> <br />
                 Click on your Metal Scion to open their personal menu, then
                 click on the tactics button at the upper right. This time, click
@@ -1750,8 +1768,8 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 When they are eliminated, Mana Scions can search for a non-burst
-                Mana skill (burst is the fourth and final skill method, which
-                will be discussed later).
+                Mana skill and add it to their hand. (Burst is the fourth and
+                final skill method, which will be discussed later.)
                 <br /> <br />
                 Search for another copy of Aegis.
               </div>
@@ -1771,7 +1789,7 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 When an event triggers both a talent and a contingent skill, the
-                former activates first. The activation of a talent does not
+                talent activates first. The activation of a talent does not
                 hinder the activation of a contingent skill.
               </div>
             );
@@ -1806,6 +1824,10 @@ export const useDemoGameStates = () => {
           case "Learn1.167":
             return (
               <div>
+                Tea For Two has been floated, evinced by the rotated card on the
+                top of your skill repertoire.
+                <br />
+                <br />
                 Ravager is visually represented by a rising red aura. Unlike
                 Shield and Ward, it has a permanent duration.
                 <br />
@@ -2255,23 +2277,18 @@ export const useDemoGameStates = () => {
               <div>
                 As you may recall, cards in the vestige can be viewed by their
                 owners at any time. Shattered skills, on the other hand, can
-                been viewed by anyone.
-                <br />
-                <br />
-                Technically, shattered skills are not placed in the vestige.
-                However, for the sake of convenience, you can find your (or your
-                opponent’s) shattered skills by viewing the vestige.
+                been viewed by anyone. Technically, shattered skills are not
+                placed in the vestige. However, for the sake of convenience, you
+                can find your (or your opponent’s) shattered skills by viewing
+                it.
               </div>
             );
 
           case "Learn1.229.2":
             return (
               <div>
-                Shattered skills are displayed separately from cards that are in
-                the vestige.
-                <br />
-                <br />
-                Close the display to proceed.
+                Shattered skills are displayed below and separately from cards
+                that are in the vestige. Close the display to proceed.
               </div>
             );
 

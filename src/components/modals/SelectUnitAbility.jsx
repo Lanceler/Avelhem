@@ -55,7 +55,7 @@ const SelectUnitAbility = (props) => {
           ),
           abilityText: (
             <>
-              <div className="abilityText ">⬩Spend 1 skill to strike.</div>
+              <div className="abilityText ">⬩Strike.</div>
             </>
           ),
         },
@@ -402,9 +402,8 @@ const SelectUnitAbility = (props) => {
       case "Fire Scion":
         switch (i) {
           case 0:
-            return (
-              canStrike(unit) && newGameState[unit.player].skillHand.length > 0
-            );
+            return canStrike(unit);
+            // && newGameState[unit.player].skillHand.length > 0
           case 1:
             return (
               !unit.temporary.usedFieryHeart &&

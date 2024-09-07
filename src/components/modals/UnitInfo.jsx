@@ -50,9 +50,7 @@ const UnitInfo = (props) => {
                 <img src={InvokeSmall} className="unitInfo-tactic-icon" />
               </span>
             </p>
-            <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Spend 1 skill to strike.
-            </p>
+            <p className="unitInfo-text-desc unitInfo-text-last">⬩Strike.</p>
 
             <p className="unitInfo-text-heading2">2. Fiery Heart (One-shot)</p>
             <p className="unitInfo-text-desc">

@@ -291,7 +291,7 @@ const BoardArea = (props) => {
           setImagesLoaded(totalImages);
           setTimeout(() => {
             setLoadingImages(false);
-          }, 1750);
+          }, 750);
           return loaded;
         }
 
@@ -4716,7 +4716,7 @@ const BoardArea = (props) => {
                     key="LoadingImage"
                     exit={{
                       opacity: 0,
-                      transition: { duration: 3.75 },
+                      transition: { duration: 0.75 },
                     }}
                     className="loading-image"
                   >

@@ -296,7 +296,7 @@ export default function Game() {
             key="BoardArea"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 2.5 }}
+            transition={{ duration: 0.75 }}
             // exit={{ opacity: 0, transition: { duration: 0.75 } }}
           >
             <BoardArea

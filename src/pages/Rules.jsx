@@ -389,7 +389,7 @@ export default function Rules() {
               </p>
               <ul>
                 <li>
-                  Artifice: Spend 1 FD to select up to 4 skills from your hand;
+                  Artifice: Spend 1 FD to select up to 5 skills from your hand;
                   place them at the bottom of your repertoire, then draw the
                   same number.
                 </li>

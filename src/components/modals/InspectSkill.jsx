@@ -220,7 +220,7 @@ const InspectSkill = (props) => {
                       onClick={() => {
                         handleClick(
                           canSelect(usableSkill.id),
-                          +localGameState[self].skillFloat
+                          i + localGameState[self].skillFloat
                         );
                         // handleUpdateDemoGuide();
                       }}
