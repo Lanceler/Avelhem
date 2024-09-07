@@ -157,6 +157,9 @@ const InfoPopUp = (props) => {
                 Use 1 instance to deploy a pawn in your frontier.
               </li>
             </ol>
+            <div className="unitInfo-text-heading2">
+              <em>Note: Rally provides 2 (3 if upgraded) instances.</em>
+            </div>
           </>
         );
 

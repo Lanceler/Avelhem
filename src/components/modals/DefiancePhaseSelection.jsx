@@ -56,9 +56,8 @@ const DefiancePhaseSelection = (props) => {
             reason: "Artifice",
             title: "Defiance: Artifice",
             message:
-              "Place up to 4 skills from your hand at the bottom of your repertoire, then draw the same number. Skills selected earlier will be placed below subsequent ones.",
-            // "Test.",
-            count: 4,
+              "Place up to 5 skills from your hand at the bottom of your repertoire, then draw the same number. Skills selected earlier will be placed below subsequent ones.",
+            count: 5,
           },
         });
         break;
@@ -206,7 +205,7 @@ const DefiancePhaseSelection = (props) => {
   const defianceOptions = [
     {
       title: "Artifice",
-      desc: "Place up to 4 skills at the bottom of your repertoire, then draw the same number.",
+      desc: "Place up to 5 skills at the bottom of your repertoire, then draw the same number.",
     },
     {
       title: "Backtrack",

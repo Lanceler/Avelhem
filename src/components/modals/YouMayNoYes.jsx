@@ -499,7 +499,7 @@ const YouMayNoYes = (props) => {
         break;
 
       case "Learn1.216.1":
-        dispatch(updateDemo("Learn1.217"));
+        dispatch(updateDemo("Learn1.216.2"));
         break;
 
       case "Learn1.264":

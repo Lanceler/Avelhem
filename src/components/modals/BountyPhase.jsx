@@ -549,9 +549,12 @@ const BountyPhase = (props) => {
                 >
                   <div className="modalBountyContents">
                     <h4 className="modalChoiceText modalBountyText">
-                      Upgrade Advance:
+                      {/* Upgrade Advance:
                       <br />
-                      After deploying a pawn, you may draw <br /> 1 Avelhem
+                      After deploying a pawn, you may draw <br /> 1 Avelhem */}
+                      Upgrade Rally:
+                      <br />
+                      Increase instances to 3
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
                       {localGameState[self].bountyUpgrades.tactics > 0

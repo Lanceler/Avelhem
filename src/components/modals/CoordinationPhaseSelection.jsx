@@ -56,8 +56,7 @@ const CoordinationPhaseSelection = (props) => {
       abilityText: (
         <>
           <div className=" ">
-            ⬩Gain 1 <img src={RallySmall} style={{ height: 21 }} /> with 2
-            instances.
+            ⬩Gain 1 <img src={RallySmall} style={{ height: 21 }} />.
           </div>
           <div className=" ">
             ⬩{upgrade < 2 && <>If upgraded: </>}
@@ -131,7 +130,13 @@ const CoordinationPhaseSelection = (props) => {
         break;
 
       case 2:
-        newGameState.tactics[0] = { face: "Rally", stock: 2, limit: 2 };
+        const rallyCount =
+          newGameState[self].bountyUpgrades.tactics >= 1 ? 3 : 2;
+        newGameState.tactics[0] = {
+          face: "Rally",
+          stock: rallyCount,
+          limit: rallyCount,
+        };
         if (upgrade >= 2) {
           newGameState = drawAvelhem(newGameState);
           newGameState.tactics[1] = { face: "Advance", stock: 1, limit: 1 };

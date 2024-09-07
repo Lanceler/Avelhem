@@ -71,7 +71,9 @@ const SelectUnitAbility = (props) => {
           abilityText: (
             <>
               <div className="abilityText ">
-                ⬩Spend 1 skill to purge an adjacent ally’s Frostbite and Burn.
+                ⬩Purge an adjacent ally’s Frostbite and Burn. Alternatively,
+                spend 1 skill to gain a boost: the duration of your next
+                Anathema is reduced to 1 turn.
               </div>
             </>
           ),
@@ -406,8 +408,8 @@ const SelectUnitAbility = (props) => {
           case 1:
             return (
               !unit.temporary.usedFieryHeart &&
-              newGameState[unit.player].skillHand.length > 0 &&
-              getZonesWithAllies(unit, 1, false).length > 0
+              (newGameState[unit.player].skillHand.length > 0 ||
+                getZonesWithAllies(unit, 1, false).length > 0)
             );
         }
 

@@ -648,9 +648,9 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 The first 4 phases prepare the Initiator for the{" "}
-                <strong>Execution Phase</strong>. Several options are available
-                in this phase, and they can be performed in any sequence and
-                frequency, provided there are sufficient resources.
+                <strong>Execution Phase</strong>. There’s a lot you can do in
+                this phase, and these can be performed in any sequence and
+                frequency, as long as you have the resources.
               </div>
             );
 
@@ -663,16 +663,22 @@ export const useDemoGameStates = () => {
               </div>
             );
 
-          case "Learn1.18":
+          case "Learn1.17.1":
             return (
               <div>
                 Let’s start by activating an Avelhem card.{" "}
                 <strong>
                   Avelhems are activated by Sovereigns, and they are primarily
                   used to ascend pawns to Scions of a specified class.
-                </strong>
-                <br />
-                <br />
+                </strong>{" "}
+                Unlike pawns, Scions have the benefit of being able to activate
+                abilities, talents, and skill cards.
+              </div>
+            );
+
+          case "Learn1.18":
+            return (
+              <div>
                 To activate an Avelhem, raise your Avelhem hand by clicking on
                 any of its cards, then click on the specific one you want to
                 use.
@@ -740,7 +746,7 @@ export const useDemoGameStates = () => {
                 <br />
                 Pick the option that allows you to spend any skill from your
                 hand to search for the “Crystallization” skill from your
-                repertoire (deck).
+                repertoire.
               </div>
             );
 
@@ -762,8 +768,7 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 Spend Transcendence.
-                <br />
-                <br />
+                <br /> <br />
                 <strong>
                   Note: At any time during the demo, you can click on the
                   magnifying glass icon at the top right corner of a card to
@@ -776,11 +781,12 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 <strong>Search</strong> in an effect that allows Sovereigns to
-                view the contents of their repertoire in an attempt to locate a
-                card and add it to their hand (unless stated otherwise).
-                Searches are subject to restrictions; a search is considered
-                successful if it yields an eligible card. (Ineligible cards will
-                be greyed out.)
+                view the contents of their repertoire (deck) in an attempt to
+                locate a card and add it to their hand (unless stated
+                otherwise). Searches are subject to restrictions; a search is
+                considered successful if it yields an eligible card.
+                <br /> <br />
+                Ineligible cards will be greyed out in the selection.
               </div>
             );
 
@@ -805,6 +811,7 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 Now let us go over the use of tactics, starting with Advance.
+                Sovereigns can activate tactics by clicking on them.
                 <br />
                 <br />
                 Click on the Advance tactic below.
@@ -815,9 +822,9 @@ export const useDemoGameStates = () => {
           case "Learn1.36":
             return (
               <div>
-                As a Sovereign, you have these 3 options when utilizing an
-                Advance tactic. In most situations, deploying a pawn would be
-                the only available option.
+                As a Sovereign, you choose between 3 actions when using an
+                Advance tactic. Currently, only the option to deploy a pawn is
+                available.
                 <br />
                 <br />
                 <strong>
@@ -1080,8 +1087,9 @@ export const useDemoGameStates = () => {
           case "Learn1.74":
             return (
               <div>
-                There is nothing left to do in this Execution Phase. But before
-                moving on, let us go over another unit feature.
+                Another thing you can do in the Execution Phase is activate a
+                unit’s ability, which will be demonstrated next turn. But before
+                moving on, let us go over another feature.
                 <br />
                 <br />
                 Click on your Land Scion to open their personal menu, then click
@@ -1213,7 +1221,7 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 Lastly, the Final Phase wraps up the turn. The Initiator
-                forfeits unused tactics, discards excess cards, and ticks down
+                discards excess cards, forfeits unused tactics, and ticks down
                 the statuses affecting their units.
               </div>
             );
@@ -1229,7 +1237,7 @@ export const useDemoGameStates = () => {
                   When the board is red, the game is waiting for your input to
                   proceed
                 </strong>
-                , which tends to be when it is your turn -- but there are
+                . This is usually the case when it is your turn, but there are
                 occasions when Sovereigns are prompted during their opponent’s
                 turn. Conversely,{" "}
                 <strong>black corresponds to your opponent.</strong>
@@ -1334,6 +1342,15 @@ export const useDemoGameStates = () => {
           case "Learn1.103":
             return (
               <div>Activate Conduction and search for Magnetic Shockwave.</div>
+            );
+
+          case "Learn1.103.1":
+            return (
+              <div>
+                As you can see, the topmost card of your skill repertoire is
+                rotated. The card count also indicates the number of floating
+                skills inside a parenthesis.
+              </div>
             );
 
           case "Learn1.104":
@@ -1450,7 +1467,7 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 The Invoke tactic does not provide units with any actions. That
-                said, some Scion classes can nonetheless utilize it.
+                said, some Scions can still utilize it.
                 <br /> <br />
                 For example, Metal Scions possess an ability that can be
                 activated via Invoke.
@@ -1472,8 +1489,8 @@ export const useDemoGameStates = () => {
               <div>
                 <strong>Abilities</strong> are class-exclusive effects that can
                 be activated during one’s Execution Phase. They are akin to
-                skills, but they do not rely on the possession of specific
-                cards.
+                skills, but they are more accessible as they can be activated
+                without the possession of specific cards.
               </div>
             );
 
@@ -1497,8 +1514,8 @@ export const useDemoGameStates = () => {
               <div>
                 Search for “Frenzy Blade”.
                 <br /> <br />
-                This will shuffle your repertoire. But as mentioned earlier, the
-                floating Magnetic Shockwave will retain its position.
+                The repertoire is shuffled every search. But as previously
+                mentioned, floating cards will retain their positions.
               </div>
             );
 
@@ -1540,11 +1557,11 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 When a unit suffers an attack, they lose HP equal to its Attack
-                Ppwer (AP). By default, attacks have 1 AP; thus, units tend to
+                Power (AP). By default, attacks have 1 AP; thus, units tend to
                 be eliminated by a single attack.
                 <br /> <br />
-                The “Penetrator” talent of Metal Scions increases the AP of
-                their attacks for every Sharpness they possess.
+                On that note, the “Penetrator” talent of Metal Scions increases
+                the AP of their attacks for every Sharpness they possess.
               </div>
             );
 
@@ -1621,7 +1638,7 @@ export const useDemoGameStates = () => {
               <div>
                 Aegis has 2 sub-effects, the first of which draws a skill if the
                 activator is the targeted unit. (This has been automatically
-                applied: you have drawn “Tea For Two”)
+                applied: you have drawn “Tea For Two”.)
                 <br /> <br />
                 The second is modular, offering the choice to provide Shield or
                 Ward at the cost of 1 skill.
@@ -1637,7 +1654,8 @@ export const useDemoGameStates = () => {
                 <strong>or affliction</strong> (negative status) that the unit
                 would receive from an enemy.
                 <br /> <br />
-                In this situation, Shield suffices for protection.
+                In this situation, Shield suffices for protection and is more
+                economical.
               </div>
             );
 
@@ -1658,7 +1676,7 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 Unfortunately for the Mana Scion, the Metal Scion also has a
-                contingent skill relevant to the situation: Frenzy Blade can be
+                contingent skill fit for the situation: Frenzy Blade can be
                 activated when an adjacent enemy survives an attack.
                 <br /> <br />
                 Activate it.
@@ -1735,7 +1753,7 @@ export const useDemoGameStates = () => {
                 Mana skill (burst is the fourth and final skill method, which
                 will be discussed later).
                 <br /> <br />
-                Search for Aegis.
+                Search for another copy of Aegis.
               </div>
             );
 
@@ -1947,17 +1965,21 @@ export const useDemoGameStates = () => {
           case "Learn1.190":
             return (
               <div>
-                Press The Attack is a resonant Sovereign skill that converts 2
-                Advance tactics into 2 Assaults. This effect is mandatory; thus,
-                you must have 2 unused Advance tactics to activate it.
+                A crown icon represents the aspect of Sovereign skills.
+                <br />
+                <br />
+                Press The Attack is a Sovereign skill that converts 2 Advance
+                tactics into 2 Assaults. This effect is mandatory; thus, you
+                must have 2 unused Advance tactics to activate it.
               </div>
             );
 
           case "Learn1.191":
             return (
               <div>
-                You do not have a second copy of Press The Attack, but you can
-                still resonate it with a valid substitute.
+                Press The Attack is also resonant skill. Although you do not
+                have another copy of it, you can still resonate it using a valid
+                substitute.
               </div>
             );
 
@@ -1967,7 +1989,8 @@ export const useDemoGameStates = () => {
               <div>
                 Tea For Two is a standard Sovereign skill with a{" "}
                 <strong>substitute</strong> property that allows it to serve as
-                a resonator for any Avelhem or resonant skill instead.
+                a resonator for any Avelhem or resonant skill. If used as a
+                resonator, it will not apply its primary effect.
                 <br />
                 <br />
                 (Reminder: You can click on the magnifying glass icon to view
@@ -1978,7 +2001,7 @@ export const useDemoGameStates = () => {
           case "Learn1.194":
             return (
               <div>
-                Press the Attack has converted your tactics.
+                Press The Attack has converted your tactics.
                 <br />
                 <br />
                 As per its second sub-effect, draw 2 Avelhems.
@@ -2074,8 +2097,9 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 The skill you drew is “Glacial Torrent”, the burst skill of
-                Water Scions. Speaking of which, promote your pawn by resonating
-                your Water Avelhems.
+                Water Scions. Speaking of which, ascend your central pawn into a
+                Water Scion. Like resonant skills, Avelhems can also be
+                resonated.
               </div>
             );
 
@@ -2121,6 +2145,19 @@ export const useDemoGameStates = () => {
               </div>
             );
 
+          case "Learn1.216.2":
+            return (
+              <div>
+                Like your Mana Scion, your Water Scion is enhanced with the
+                Ravager status. This is represented by the rising red aura.
+                Units enhanced with Ravager are immune to Anathema.
+                <br />
+                <br />
+                (Reminder: Scions are afflicted with 2 turns of Anathema when
+                they eliminate an enemy.)
+              </div>
+            );
+
           case "Learn1.217":
           case "Learn1.218":
           case "Learn1.219":
@@ -2135,11 +2172,9 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 Displaying a hexagonal amethyst icon,{" "}
-                <strong>burst skills</strong> unleash powerful effects. Like
-                standard and resonant skills, they can only be activated during
-                the Execution Phase. What distinguishes them is the fact that{" "}
+                <strong>burst skills</strong> unleash powerful effects.{" "}
                 <strong>
-                  burst skills are shattered (removed from play) rather than
+                  Burst skills are shattered (removed from play) rather than
                   discarded upon the conclusion of their effects.
                 </strong>
               </div>
@@ -2212,6 +2247,31 @@ export const useDemoGameStates = () => {
                 making them all the more valuable. (Avelhems and non-burst Scion
                 skills are allowed up to 4 copies, while Sovereign skills are
                 allowed up to 2.)
+              </div>
+            );
+
+          case "Learn1.229.1":
+            return (
+              <div>
+                As you may recall, cards in the vestige can be viewed by their
+                owners at any time. Shattered skills, on the other hand, can
+                been viewed by anyone.
+                <br />
+                <br />
+                Technically, shattered skills are not placed in the vestige.
+                However, for the sake of convenience, you can find your (or your
+                opponent’s) shattered skills by viewing the vestige.
+              </div>
+            );
+
+          case "Learn1.229.2":
+            return (
+              <div>
+                Shattered skills are displayed separately from cards that are in
+                the vestige.
+                <br />
+                <br />
+                Close the display to proceed.
               </div>
             );
 

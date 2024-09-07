@@ -36,13 +36,13 @@ const SelectSovereignTactic = (props) => {
               <div className="abilityText ">
                 ⬩Deploy a pawn in your frontier.
               </div>
-              <div className="abilityText ">
+              {/* <div className="abilityText ">
                 ⬩
                 {newGameState[self].bountyUpgrades.tactics < 1 && (
                   <>If upgraded: </>
                 )}
                 You may draw 1 Avelhem.
-              </div>
+              </div> */}
             </>
           ),
         },
@@ -244,20 +244,20 @@ const SelectSovereignTactic = (props) => {
           case 0:
             updateData = false;
 
-            if (newGameState[self].bountyUpgrades.tactics >= 1) {
-              newGameState.currentResolution.push({
-                resolution: "Misc.",
-                resolution2: "Advance Avelhem Draw",
-                player: self,
-                details: {
-                  reason: "Advance Avelhem Draw",
-                  title: "Advance Tactic",
-                  message: "You may draw 1 Avelhem.",
-                  no: "Skip",
-                  yes: "Draw",
-                },
-              });
-            }
+            // if (newGameState[self].bountyUpgrades.tactics >= 1) {
+            //   newGameState.currentResolution.push({
+            //     resolution: "Misc.",
+            //     resolution2: "Advance Avelhem Draw",
+            //     player: self,
+            //     details: {
+            //       reason: "Advance Avelhem Draw",
+            //       title: "Advance Tactic",
+            //       message: "You may draw 1 Avelhem.",
+            //       no: "Skip",
+            //       yes: "Draw",
+            //     },
+            //   });
+            // }
 
             newGameState.currentResolution.push({
               resolution: "Deploying Pawn",

@@ -82,6 +82,9 @@ const PileOfCards = (props) => {
           team === "host" &&
           stack.length
         );
+
+      case "Learn1.229.1":
+        return ["skillVestige"].includes(pile) && team === "host";
     }
   };
 
@@ -89,6 +92,10 @@ const PileOfCards = (props) => {
     switch (demoGuide) {
       case "Learn1.20.1":
         dispatch(updateDemo("Learn1.20.2"));
+        break;
+
+      case "Learn1.229.1":
+        dispatch(updateDemo("Learn1.229.2"));
         break;
     }
   };

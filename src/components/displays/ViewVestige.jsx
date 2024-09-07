@@ -56,12 +56,21 @@ const ViewVestige = (props) => {
       case "Learn1.20.2":
         return true;
     }
+
+    switch (demoGuide) {
+      case "Learn1.229.2":
+        return true;
+    }
   };
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
       case "Learn1.20.2":
         dispatch(updateDemo("Learn1.21"));
+        break;
+
+      case "Learn1.229.2":
+        dispatch(updateDemo("Learn1.230"));
         break;
     }
   };
@@ -91,7 +100,10 @@ const ViewVestige = (props) => {
 
           <br />
 
-          <div className="scrollable scrollable-y-only">
+          <div
+            className="scrollable scrollable-y-only"
+            style={{ pointerEvents: "all" }}
+          >
             {props.team === self && !props.spectator && (
               <div className="fourColumn">
                 {reverseVestige.map((usableSkill, i) => (

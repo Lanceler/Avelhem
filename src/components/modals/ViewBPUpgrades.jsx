@@ -124,8 +124,7 @@ const ViewBPUpgrades = (props) => {
 
                   {upgrades.tactics >= 1 && (
                     <p className="unitInfo-text-desc">
-                      1. Advance upgraded: may draw 1 Avelhem after deploying a
-                      pawn.
+                      1. Rally upgraded: instances raised from 2 to 3.
                     </p>
                   )}
                   {upgrades.tactics >= 2 && (

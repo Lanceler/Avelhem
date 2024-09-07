@@ -271,7 +271,7 @@ const SearchSkill = (props) => {
         break;
 
       case "Learn1.103":
-        dispatch(updateDemo("Learn1.104"));
+        dispatch(updateDemo("Learn1.103.1"));
         break;
 
       case "Learn1.124":

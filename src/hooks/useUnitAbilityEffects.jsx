@@ -88,15 +88,18 @@ export const useUnitAbilityEffects = () => {
       resolution: "Unit Ability",
       resolution2: "Fiery Heart1",
       unit: unit,
+      details: {
+        reason: "Fiery Heart",
+      },
     });
 
-    newGameState.currentResolution.push({
-      resolution: "Discard Skill",
-      unit: unit,
-      player: self,
-      message: "Spend 1 skill",
-      restriction: null,
-    });
+    // newGameState.currentResolution.push({
+    //   resolution: "Discard Skill",
+    //   unit: unit,
+    //   player: self,
+    //   message: "Spend 1 skill",
+    //   restriction: null,
+    // });
 
     return newGameState;
   };
@@ -105,7 +108,7 @@ export const useUnitAbilityEffects = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
-    //end "Fiery Heart "
+    //end "Fiery Heart2"
     newGameState.currentResolution.pop();
 
     enterSelectUnitMode(
@@ -116,6 +119,18 @@ export const useUnitAbilityEffects = () => {
       "fiery heart",
       null
     );
+
+    return newGameState;
+  };
+
+  const fieryHeart3 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Fiery Heart3"
+    newGameState.currentResolution.pop();
+
+    unit.boosts.fieryHeart = true;
 
     return newGameState;
   };
@@ -752,6 +767,7 @@ export const useUnitAbilityEffects = () => {
     afterburner2,
     fieryHeart1,
     fieryHeart2,
+    fieryHeart3,
     hydrotherapy1,
     hydrotherapy2,
     airDash1,

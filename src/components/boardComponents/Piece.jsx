@@ -381,6 +381,14 @@ export const Piece = (props) => {
             </>
           )}
 
+          {props.unit.unitClass === "Fire Scion" && (
+            <>
+              {props.unit.boosts.fieryHeart === true && (
+                <div className="fiery-heart" style={{ left: 29 }}></div>
+              )}
+            </>
+          )}
+
           {props.unit.unitClass === "Water Scion" && (
             <>
               {props.unit.boosts.glacialTorrent === 1 && (

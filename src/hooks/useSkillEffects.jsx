@@ -608,7 +608,7 @@ export const useSkillEffects = () => {
 
     unit.aether = 1;
 
-    const zonesWithEnemies = getZonesWithEnemies(unit, 1);
+    const zonesWithEnemies = getZonesWithEnemies(unit, 2);
     let shieldedEnemyZones = [];
 
     for (let z of zonesWithEnemies) {
@@ -629,7 +629,7 @@ export const useSkillEffects = () => {
           reason: "Gale Conjuration Purge",
           title: "Gale Conjuration",
           message:
-            "You may purge an adjacent enemy’s Shield and Ward. This cannot affect Wind Scions.",
+            "You may purge the Shield and Ward of an enemy within 2 spaces.",
           no: "Skip",
           yes: "Purge",
           zones: shieldedEnemyZones,

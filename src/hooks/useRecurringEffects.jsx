@@ -2033,6 +2033,24 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const applyAnathema = (unit) => {
+    unit.temporary.activation -= 1;
+
+    if (
+      unit.temporary.activation === 0 &&
+      unit.temporary.anathemaDelay === true
+    ) {
+      delete unit.temporary.anathemaDelay;
+      unit.afflictions.anathema = unit.boosts.fieryHeart ? 1 : 2;
+
+      unit.boosts = {};
+      delete unit.enhancements.disruption;
+      delete unit.enhancements.overgrowth;
+    }
+
+    return unit;
+  };
+
   const applyBurn = (newGameState, victimInfo) => {
     //Update info
     let victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
@@ -5480,6 +5498,7 @@ export const useRecurringEffects = () => {
     activateThunderThaumaturge,
     activateVengefulLegacy,
     activateViridianGrave,
+    applyAnathema,
     applyBurn,
     applyBurnDamage,
     applyDamage,

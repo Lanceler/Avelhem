@@ -56,7 +56,9 @@ const UnitInfo = (props) => {
 
             <p className="unitInfo-text-heading2">2. Fiery Heart (One-shot)</p>
             <p className="unitInfo-text-desc">
-              ⬩Spend 1 skill to purge an adjacent ally’s Frostbite and Burn.
+              ⬩Purge an adjacent ally’s Frostbite and Burn. Alternatively, spend
+              1 skill to gain a boost: the duration of your next Anathema is
+              reduced to 1 turn.
             </p>
           </>
         );
@@ -701,6 +703,7 @@ const UnitInfo = (props) => {
               )}
 
               {(unit.boosts.ambidexterity ||
+                unit.boosts.fieryHeart ||
                 unit.boosts.glacialTorrent ||
                 unit.boosts.galeConjuration ||
                 unit.boosts.mountainStance ||
@@ -718,6 +721,15 @@ const UnitInfo = (props) => {
                       <p className="unitInfo-text-desc unitInfo-text-last">
                         ⬩Next standard skill activated is retained upon
                         conclusion.
+                      </p>
+                    </>
+                  )}
+
+                  {unit.boosts.fieryHeart && (
+                    <>
+                      <p className="unitInfo-text-heading2">Fiery Heart</p>
+                      <p className="unitInfo-text-desc unitInfo-text-last">
+                        ⬩Duration of next Anathema is reduced to 1 turn.
                       </p>
                     </>
                   )}

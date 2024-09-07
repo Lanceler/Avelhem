@@ -122,6 +122,7 @@ const BoardArea = (props) => {
     activatePitfallTrap,
     activateViridianGrave,
     activateSymphonicScreech,
+    applyAnathema,
     applyBurn,
     applyBurnDamage,
     applyDamage,
@@ -220,6 +221,7 @@ const BoardArea = (props) => {
     afterburner2,
     fieryHeart1,
     fieryHeart2,
+    fieryHeart3,
     hydrotherapy1,
     hydrotherapy2,
     coldEmbrace1,
@@ -1157,19 +1159,6 @@ const BoardArea = (props) => {
               </>
             );
 
-          // case "Acquisition Phase: Cultivate":
-          //   return (
-          //     <>
-          //       {self === lastRes.player && !hideModal && (
-          //         <YouMaySpend1Skill
-          //           details={lastRes.details}
-          //           updateFirebase={updateFirebase}
-          //           hideOrRevealModale={hideOrRevealModale}
-          //         />
-          //       )}
-          //     </>
-          //   );
-
           case "Battle Cry":
             return (
               <>
@@ -1220,8 +1209,28 @@ const BoardArea = (props) => {
             break;
 
           case "Fiery Heart1":
+            return (
+              <>
+                {self === lastRes.unit.player && !hideModal && (
+                  <SelectCustomChoice
+                    unit={lastRes.unit}
+                    details={lastRes.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Fiery Heart2":
             if (self === lastRes.unit.player) {
               updateLocalState(fieryHeart2(lastRes.unit));
+            }
+            break;
+
+          case "Fiery Heart3":
+            if (self === lastRes.unit.player) {
+              updateLocalState(fieryHeart3(lastRes.unit));
             }
             break;
 
@@ -4245,16 +4254,13 @@ const BoardArea = (props) => {
         let galeConjurationEnemy =
           newGameState[selectedUnit.player].units[selectedUnit.unitIndex];
 
-        if (
-          galeConjurationEnemy.unitClass !== "Wind Scion" ||
-          isMuted(galeConjurationEnemy)
-        ) {
-          delete galeConjurationEnemy.enhancements.ward;
-          delete galeConjurationEnemy.enhancements.shield;
+        delete galeConjurationEnemy.enhancements.ward;
+        delete galeConjurationEnemy.enhancements.shield;
+        delete galeConjurationEnemy.enhancements.disruption;
 
-          newGameState[selectedUnit.player].units[selectedUnit.unitIndex] =
-            galeConjurationEnemy;
-        }
+        newGameState[selectedUnit.player].units[selectedUnit.unitIndex] =
+          galeConjurationEnemy;
+
         break;
 
       case "symphonic screech":
@@ -4475,19 +4481,7 @@ const BoardArea = (props) => {
         let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
         if (unit) {
-          unit.temporary.activation -= 1;
-
-          if (
-            unit.temporary.activation === 0 &&
-            unit.temporary.anathemaDelay === true
-          ) {
-            delete unit.temporary.anathemaDelay;
-            unit.afflictions.anathema = 2;
-
-            unit.boosts = {};
-            delete unit.enhancements.disruption;
-            delete unit.enhancements.overgrowth;
-          }
+          unit = applyAnathema(unit);
         }
       }
 
@@ -4536,19 +4530,7 @@ const BoardArea = (props) => {
         let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
         if (unit) {
-          unit.temporary.activation -= 1;
-
-          if (
-            unit.temporary.activation === 0 &&
-            unit.temporary.anathemaDelay === true
-          ) {
-            delete unit.temporary.anathemaDelay;
-            unit.afflictions.anathema = 2;
-
-            unit.boosts = {};
-            delete unit.enhancements.disruption;
-            delete unit.enhancements.overgrowth;
-          }
+          unit = applyAnathema(unit);
         }
       }
 
@@ -4595,19 +4577,7 @@ const BoardArea = (props) => {
     newGameState.currentResolution.pop();
 
     if (unit) {
-      unit.temporary.activation -= 1;
-
-      if (
-        unit.temporary.activation === 0 &&
-        unit.temporary.anathemaDelay === true
-      ) {
-        delete unit.temporary.anathemaDelay;
-        unit.afflictions.anathema = 2;
-
-        unit.boosts = {};
-        delete unit.enhancements.disruption;
-        delete unit.enhancements.overgrowth;
-      }
+      unit = applyAnathema(unit);
     }
 
     newGameState.activatingUnit.pop();
@@ -4617,7 +4587,6 @@ const BoardArea = (props) => {
     }
 
     dispatch(updateState(newGameState));
-
     updateFirebase(newGameState);
   };
 
@@ -4781,7 +4750,11 @@ const BoardArea = (props) => {
                       <>
                         <div
                           className={`demo-instructions ${
-                            ["Learn1.76.1", "Learn1.118"].includes(demoGuide)
+                            [
+                              "Learn1.76.1",
+                              "Learn1.118",
+                              "Learn1.229.2",
+                            ].includes(demoGuide)
                               ? "demo-short"
                               : ""
                           }`}
