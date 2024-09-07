@@ -1816,9 +1816,8 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 Only 1 contingent skill can be activated in response to a
-                triggering event. In the event that both Sovereigns possess
-                eligible contingent skills, the Initiator yields priority to
-                their opponent.
+                triggering event. If both Sovereigns possess eligible contingent
+                skills, the Initiator yields priority to their opponent.
               </div>
             );
 
@@ -1861,8 +1860,7 @@ export const useDemoGameStates = () => {
           case "Learn1.167":
             return (
               <div>
-                Tea For Two has been floated, evinced by the rotated card on the
-                top of your skill repertoire.
+                Tea For Two has been floated, evinced by the rotated card.
                 <br />
                 <br />
                 Ravager is visually represented by a rising red aura. Unlike
