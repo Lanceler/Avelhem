@@ -33,6 +33,10 @@ const CoordinationPhaseSelection = (props) => {
       abilityText: (
         <>
           <div className="">⬩Roll 2 tactical dice.</div>
+          <div className=" ">
+            ⬩{upgrade < 3 && <>If upgraded: </>}
+            Gain 1 FD.
+          </div>
         </>
       ),
     },
@@ -108,6 +112,13 @@ const CoordinationPhaseSelection = (props) => {
           resolution: "Misc.",
           resolution2: "Tactic Results",
         });
+
+        if (upgrade >= 3) {
+          newGameState[self].fateDefiances = Math.min(
+            6,
+            newGameState[self].fateDefiances + 1
+          );
+        }
 
         dispatch(updateState(newGameState));
         props.updateFirebase(newGameState);

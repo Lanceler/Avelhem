@@ -4952,10 +4952,18 @@ export const useRecurringEffects = () => {
   };
 
   const triggerAscensionAlly = (newGameState, unit, scionClass, method) => {
+    if (newGameState.skipAscensionTrigger) {
+      return false;
+    }
+
     return triggerMatchMadeInHeaven(newGameState, unit, scionClass, method);
   };
 
   const triggerAscensionEnemy = (newGameState, unit, scionClass, method) => {
+    if (newGameState.skipAscensionTrigger) {
+      return false;
+    }
+
     return triggerFatedRivalry(newGameState, unit, scionClass, method);
   };
 

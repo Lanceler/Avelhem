@@ -164,12 +164,12 @@ const BountyPhase = (props) => {
     props.hideOrRevealModale();
   };
 
-  const frontierCosts = [4, 5, 10];
+  const frontierCosts = [3, 5, 10];
   const acquisitionCosts = [2, 2, 3];
-  const coordinationCosts = [3, 4];
+  const coordinationCosts = [2, 2, 3];
   const tacticsCosts = [2, 2, 3];
   const avelhemCosts = [2, 2, 3];
-  const victoryCosts = [10, 5];
+  // const victoryCosts = [10, 5];
 
   const canFrontier = [
     localGameState[self].bountyPoints >= frontierCosts[0] &&
@@ -194,8 +194,8 @@ const BountyPhase = (props) => {
       localGameState[self].bountyUpgrades.coordination === 0,
     localGameState[self].bountyPoints >= coordinationCosts[1] &&
       localGameState[self].bountyUpgrades.coordination === 1,
-    // localGameState[self].bountyPoints >= coordinationCosts[2] &&
-    //   localGameState[self].bountyUpgrades.coordination === 2,
+    localGameState[self].bountyPoints >= coordinationCosts[2] &&
+      localGameState[self].bountyUpgrades.coordination === 2,
   ];
 
   const canTactics = [
@@ -220,13 +220,13 @@ const BountyPhase = (props) => {
       localGameState[self].bountyUpgrades.avelhem === 3,
   ];
 
-  const canVictory = [
-    localGameState[self].bountyPoints >= victoryCosts[0] &&
-      localGameState[self].bountyUpgrades.victory === 0,
-    localGameState[self].score === 2 &&
-      localGameState[self].bountyPoints >= victoryCosts[1] &&
-      localGameState[self].bountyUpgrades.victory === 1,
-  ];
+  // const canVictory = [
+  //   localGameState[self].bountyPoints >= victoryCosts[0] &&
+  //     localGameState[self].bountyUpgrades.victory === 0,
+  //   localGameState[self].score === 2 &&
+  //     localGameState[self].bountyPoints >= victoryCosts[1] &&
+  //     localGameState[self].bountyUpgrades.victory === 1,
+  // ];
 
   const canClick = (element1, element2) => {
     switch (demoGuide) {
@@ -517,6 +517,32 @@ const BountyPhase = (props) => {
                   </div>
                 </div>
               </div>
+
+              <div
+                className={`modal-option-outline ${
+                  selectedChoice === 9 ? "selected-modal-option" : ""
+                } `}
+                onClick={() => handleSelect(9, canCoordination[2])}
+              >
+                <div
+                  className={`modal-option-content modal-option-content-2 ${
+                    canCoordination[2] ? "" : "disabled-modal-option-content"
+                  } `}
+                >
+                  <div className="modalBountyContents">
+                    <h4 className="modalChoiceText modalBountyText">
+                      Upgrade Assent:
+                      <br />
+                      Gain 1 FD
+                    </h4>
+                    <h4 className="modalChoiceText modalBountyText modalCost">
+                      {localGameState[self].bountyUpgrades.coordination > 2
+                        ? "Purchased"
+                        : `Cost: ${coordinationCosts[2]} BP`}
+                    </h4>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -549,9 +575,6 @@ const BountyPhase = (props) => {
                 >
                   <div className="modalBountyContents">
                     <h4 className="modalChoiceText modalBountyText">
-                      {/* Upgrade Advance:
-                      <br />
-                      After deploying a pawn, you may draw <br /> 1 Avelhem */}
                       Upgrade Rally:
                       <br />
                       Increase instances to 3

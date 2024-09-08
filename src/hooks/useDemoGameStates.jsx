@@ -195,6 +195,7 @@ export const useDemoGameStates = () => {
           activatingSkill: [],
           turnPlayer: null,
           turnPhase: null,
+          skipAscensionTrigger: true,
         };
 
       case "learn":
