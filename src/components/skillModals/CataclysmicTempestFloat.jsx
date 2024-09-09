@@ -47,10 +47,6 @@ const CataclysmicTempestFloat = (props) => {
       newGameState[self].skillHand.splice(i, 1);
     }
 
-    // console.log(newGameState[self].skillFloat);
-    // console.log(newGameState[self].skillRepertoire);
-    // console.log(newGameState[self].skillHand);
-
     dispatch(updateState(newGameState));
     props.updateFirebase(newGameState);
   };
@@ -97,12 +93,10 @@ const CataclysmicTempestFloat = (props) => {
 
         {message()}
 
+        <br />
+
         <div className="modalContent">
-          <div
-            className={`fourColumn scrollable scrollable-y-only ${
-              localGameState[self].skillFloat > 0 ? "decreased-height" : ""
-            } `}
-          >
+          <div className={`fourColumn scrollable scrollable-y-only`}>
             {hand.map((usableSkill, i) => (
               <div
                 key={i}

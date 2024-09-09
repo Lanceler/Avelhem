@@ -68,29 +68,6 @@ const SelectSkillReveal = (props) => {
     let revealMessage = "";
 
     switch (props.details.reason) {
-      case "Purification":
-        newGameState.currentResolution.push({
-          resolution: "Search Skill",
-          player: self,
-          details: {
-            restriction: usableSkills[selectedSkill].id,
-            exclusion: [],
-            searchTitle: "Purification",
-            searchMessage: "Search for then float the skill you revealed",
-            outcome: "Float",
-            revealTitle: null,
-            revealMessage: null,
-            messageTitle: null,
-            message: null,
-            specMessage: null,
-          },
-        });
-
-        revealTitle = "Purification";
-        revealMessage = "Your opponent has revealed 1 Water Skill";
-
-        break;
-
       case "Healing Rain":
         let healingRainUnit =
           newGameState[props.details.victim.player].units[
@@ -101,7 +78,6 @@ const SelectSkillReveal = (props) => {
 
         revealTitle = "Healing Rain";
         revealMessage = "Your opponent has revealed 1 Water Skill";
-
         break;
 
       case "Symphonic Screech":
@@ -113,7 +89,7 @@ const SelectSkillReveal = (props) => {
       case "Cataclysmic Tempest":
         newGameState.currentResolution.push({
           resolution: "Wind Skill",
-          resolution2: "Cataclysmic Tempest6.5",
+          resolution2: "Cataclysmic Tempest7",
           unit: unit,
         });
 

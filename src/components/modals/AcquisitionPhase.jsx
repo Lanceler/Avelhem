@@ -135,20 +135,6 @@ const AcquisitionPhase = (props) => {
         newGameState = drawSkill(newGameState);
         newGameState = nextPhase(newGameState);
 
-        // if (newGameState[self].bountyUpgrades.acquisition >= 3) {
-        //   newGameState.currentResolution.push({
-        //     resolution: "Misc.",
-        //     resolution2: "Acquisition Phase: Cultivate",
-        //     player: self,
-        //     details: {
-        //       title: "Cultivate",
-        //       message: "You may spend 1 skill to draw again.",
-        //       restriction: null,
-        //       reason: "Cultivate",
-        //     },
-        //   });
-        // }
-
         if (
           newGameState[self].bountyUpgrades.acquisition >= 3 &&
           newGameState[self].skillVestige.includes("SX-01") &&

@@ -4579,31 +4579,6 @@ export const useRecurringEffects = () => {
     }
   };
 
-  const selectEnemiesAfflicted = (
-    unitInfo,
-    range,
-    tactic,
-    reason,
-    special,
-    affliction
-  ) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    newGameState.currentResolution.pop();
-
-    if (unit !== null && !isMuted(unit)) {
-      enterSelectUnitMode(
-        getZonesWithEnemiesAfflicted(unit, range, affliction),
-        unit,
-        newGameState,
-        tactic,
-        reason,
-        special
-      );
-    }
-  };
-
   const selectEnemiesRooted = (unitInfo, range, tactic, reason, special) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
@@ -5584,7 +5559,6 @@ export const useRecurringEffects = () => {
     selectDarkHalo,
     selectDestine,
     selectEnemies,
-    selectEnemiesAfflicted,
     selectEnemiesRooted,
     selectFatedRivalry,
     selectFrenzyBladeActivator,

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useRecurringEffects } from "./useRecurringEffects";
 
 export const useSkillEffects = () => {
@@ -9,7 +9,6 @@ export const useSkillEffects = () => {
 
   const {
     blast,
-    canBlast,
     canMove,
     canStrike,
     drawSkill,
@@ -283,19 +282,6 @@ export const useSkillEffects = () => {
 
     newGameState.currentResolution.push({
       resolution: "Water Skill",
-      resolution2: "Purification2",
-      unit: unit,
-      details: {
-        title: "Purification",
-        message:
-          "You may reveal 1 non-burst Water skill to search for then float an identical skill.",
-        restriction: ["02-01", "02-02", "02-03"],
-        reason: "Purification",
-      },
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Water Skill",
       resolution2: "Purification1",
       unit: unit,
       details: {
@@ -323,7 +309,7 @@ export const useSkillEffects = () => {
       if (resonator !== "SA-02") {
         newGameState.currentResolution.push({
           resolution: "Misc.",
-          resolution2: "Retain resonant skill unit",
+          resolution2: "May float resonant skill unit",
           unit: unit,
           player: unit.player,
           skill: "02-02",
@@ -408,6 +394,25 @@ export const useSkillEffects = () => {
         },
       });
     }
+
+    return newGameState;
+  };
+
+  const frigidBreathR3 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Frigid BreathR3" resolution
+    newGameState.currentResolution.pop();
+
+    enterSelectUnitMode(
+      getZonesWithEnemiesAfflicted(unit, 1, "frostbite"),
+      unit,
+      newGameState,
+      null,
+      "blast",
+      null
+    );
 
     return newGameState;
   };
@@ -822,9 +827,11 @@ export const useSkillEffects = () => {
     newGameState.currentResolution.pop();
 
     if (unit && !isMuted(unit) && getZonesWithEnemies(unit, 1).length > 0) {
+      let adjacentEnemies = getZonesWithEnemiesAfflicted(unit, 1, "paralysis");
+
       if (
         newGameState[self].skillHand.length > 0 &&
-        getZonesWithEnemiesAfflicted(unit, 1, "paralysis").length > 0
+        adjacentEnemies.length > 0
       ) {
         newGameState.currentResolution.push({
           resolution: "Wind Skill",
@@ -836,11 +843,30 @@ export const useSkillEffects = () => {
               "You may reveal 1 Wind skill to blast an adjacent paralyzed enemy.",
             restriction: ["03-01", "03-02", "03-03", "03-04"],
             reason: "Cataclysmic Tempest",
-            adjacentEnemies: getZonesWithEnemiesAfflicted(unit, 1, "paralysis"),
+            // adjacentEnemies: adjacentEnemies,
           },
         });
       }
     }
+
+    return newGameState;
+  };
+
+  const cataclysmicTempest5 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Cataclysmic Tempest7" resolution
+    newGameState.currentResolution.pop();
+
+    enterSelectUnitMode(
+      getZonesWithEnemiesAfflicted(unit, 1, "paralysis"),
+      unit,
+      newGameState,
+      null,
+      "blast",
+      null
+    );
 
     return newGameState;
   };
@@ -2349,6 +2375,8 @@ export const useSkillEffects = () => {
         return frigidBreath2(a);
       case "frigidBreathR2":
         return frigidBreathR2(a);
+      case "frigidBreathR3":
+        return frigidBreathR3(a);
       case "healingRain1":
         return healingRain1(a, b);
       case "glacialTorrent1":
@@ -2375,6 +2403,8 @@ export const useSkillEffects = () => {
         return cataclysmicTempest3(a);
       case "cataclysmicTempest4":
         return cataclysmicTempest4(a);
+      case "cataclysmicTempest5":
+        return cataclysmicTempest5(a);
 
       //Land
       case "crystallization1":

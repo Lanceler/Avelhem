@@ -162,7 +162,6 @@ const BoardArea = (props) => {
     selectDarkHalo,
     selectDestine,
     selectEnemies,
-    selectEnemiesAfflicted,
     selectEnemiesRooted,
     selectFatedRivalry,
     selectFrenzyBladeActivator,
@@ -1758,20 +1757,6 @@ const BoardArea = (props) => {
             }
             break;
 
-          case "Purification2":
-            return (
-              <>
-                {self === lastRes.unit.player && !hideModal && (
-                  <SelectSkillReveal
-                    unit={lastRes.unit}
-                    details={lastRes.details}
-                    updateFirebase={updateFirebase}
-                    hideOrRevealModale={hideOrRevealModale}
-                  />
-                )}
-              </>
-            );
-
           case "Activating Frigid Breath":
             if (self === lastRes.unit.player) {
               updateLocalState(
@@ -1834,14 +1819,7 @@ const BoardArea = (props) => {
 
           case "Frigid BreathR3":
             if (self === lastRes.unit.player) {
-              selectEnemiesAfflicted(
-                lastRes.unit,
-                1,
-                null,
-                "blast",
-                null,
-                "frostbite"
-              );
+              resolutionUpdate(applySkill("frigidBreathR3", lastRes.unit));
             }
             break;
 
@@ -2145,16 +2123,9 @@ const BoardArea = (props) => {
               </>
             );
 
-          case "Cataclysmic Tempest6.5":
+          case "Cataclysmic Tempest7":
             if (self === lastRes.unit.player) {
-              selectEnemiesAfflicted(
-                lastRes.unit,
-                1,
-                null,
-                "blast",
-                null,
-                "paralysis"
-              );
+              resolutionUpdate(applySkill("cataclysmicTempest5", lastRes.unit));
             }
             break;
         }
