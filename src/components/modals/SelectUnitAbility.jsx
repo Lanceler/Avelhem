@@ -71,9 +71,9 @@ const SelectUnitAbility = (props) => {
           abilityText: (
             <>
               <div className="abilityText ">
-                ⬩Purge an adjacent ally’s Frostbite and Burn. Alternatively,
-                spend 1 skill to gain a boost: the duration of your next
-                Anathema is reduced to 1 turn.
+                ⬩Purge an adjacent ally’s Frostbite and Burn or spend 1 skill to
+                gain a boost: the duration of your next Anathema is reduced to 1
+                turn.
               </div>
             </>
           ),
@@ -403,7 +403,7 @@ const SelectUnitAbility = (props) => {
         switch (i) {
           case 0:
             return canStrike(unit);
-            // && newGameState[unit.player].skillHand.length > 0
+          // && newGameState[unit.player].skillHand.length > 0
           case 1:
             return (
               !unit.temporary.usedFieryHeart &&

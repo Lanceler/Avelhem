@@ -402,7 +402,7 @@ const BountyPhase = (props) => {
                     <h4 className="modalChoiceText modalBountyText">
                       Upgrade Beseech:
                       <br />
-                      Gain 1 FD
+                      You may draw an additional Avelhem
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
                       {localGameState[self].bountyUpgrades.acquisition > 0
@@ -507,7 +507,7 @@ const BountyPhase = (props) => {
                 >
                   <div className="modalBountyContents">
                     <h4 className="modalChoiceText modalBountyText">
-                      Upgrade Convene: Gain 1 Advance tactic and draw 1 Avelhem
+                      Upgrade Convene: Gain 1 Advance tactic
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
                       {localGameState[self].bountyUpgrades.coordination > 1
@@ -660,8 +660,7 @@ const BountyPhase = (props) => {
                 >
                   <div className="modalBountyContents">
                     <h4 className="modalChoiceText modalBountyText">
-                      When your pawns ascend via Avelhem, grant them Shield for
-                      2 turns
+                      Avelhem resonance grants the unit Shield for 2 turns
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
                       {localGameState[self].bountyUpgrades.avelhem > 0

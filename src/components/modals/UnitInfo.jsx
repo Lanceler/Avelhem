@@ -54,9 +54,9 @@ const UnitInfo = (props) => {
 
             <p className="unitInfo-text-heading2">2. Fiery Heart (One-shot)</p>
             <p className="unitInfo-text-desc">
-              ⬩Purge an adjacent ally’s Frostbite and Burn. Alternatively, spend
-              1 skill to gain a boost: the duration of your next Anathema is
-              reduced to 1 turn.
+              ⬩Purge an adjacent ally’s Frostbite and Burn or spend 1 skill to
+              gain a boost: the duration of your next Anathema is reduced to 1
+              turn.
             </p>
           </>
         );

@@ -9,6 +9,7 @@ import RulesImg from "../assets/others/Rules.png";
 import Setup from "../assets/rules/Setup.png";
 import UnitTokens from "../assets/rules/UnitTokens.png";
 import SkillAnatomy from "../assets/rules/SkillAnatomy.png";
+import SkillAnatomySet from "../assets/rules/SkillAnatomySet.png";
 
 import "./Rules.css";
 
@@ -19,23 +20,21 @@ export default function Rules() {
   const { getBannerImage } = useGetImages();
 
   useEffect(() => {
-    if (!id || !["overview", "units", "cards"].includes(id)) {
+    if (
+      !id ||
+      !["overview", "units", "cards", "actions", "statuses"].includes(id)
+    ) {
       navigate("/rules");
     }
   }, []);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [id]);
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, [id]);
 
   return (
     <div className="rule-body">
-      <div
-        className="rule-content"
-        // style={{
-        //   backgroundImage: `url(${getBannerImage("WindBG")})`,
-        // }}
-      >
+      <div className="rule-content">
         <div
           className="rules-bg"
           style={{
@@ -218,20 +217,20 @@ export default function Rules() {
               <br />
               <div className="rules-image-container">
                 <div className="rules-image-desc">
-                  Game state at setup (virtual simulator)
+                  Gamestate at setup (virtual simulator)
                 </div>
                 <img
                   src={Setup}
                   className="rules-skill-anatomy"
-                  alt="Game state at setup"
+                  alt="Gamestate at setup"
                 />
               </div>
               <hr></hr>
               <h2>Units</h2>
               <p>
                 Units are the Sovereigns’ subservient soldiers. When in play,
-                they occupy a zone on the board; zones cannot host more than a
-                single unit. Each Sovereign can have up to 8 units in play at a
+                they occupy a zone on the board. (Zones can only have 1
+                occupant.) Each Sovereign can have up to 8 units in play at a
                 time, and no more than 2 ally Scions can have the same class.
                 For more information, visit the{" "}
                 <Link to="/rules/units">Units page</Link>.
@@ -314,13 +313,13 @@ export default function Rules() {
               <p>
                 Skills are the applications of powers granted by Avelhems. These
                 cards offer a wider variety of effects that can activated by
-                Sovereigns, as well as units. The aspect of a skill, indicated
-                by the icon at its top left corner, identifies its exclusive
-                activator. For example, a Sovereign skill (represented by a
-                crown icon aspect) can only be activated by a Sovereign.
-                Likewise, a Lightning skill can only be activated by a Lightning
-                Scion. Skills also have methods, represented by the gems below
-                their aspect icons, that can impact their activation.
+                Sovereigns, as well as units. A skill’s aspect, represented by
+                the icon at its top-left corner, identifies who can exclusively
+                activate it. For example, a Sovereign skill (which has a crown
+                icon) can only be activated by a Sovereign. Likewise, a
+                Lightning skill can only be activated by a Lightning Scion.
+                Skills also have methods, represented by the gems below their
+                aspect icons, that can impact their activation.
               </p>
               <br />
               <br />
@@ -473,8 +472,8 @@ export default function Rules() {
               <h2>Units</h2>
               <p>
                 Units are the Sovereigns’ subservient soldiers. When in play,
-                they occupy a zone on the board; zones cannot host more than a
-                single unit. Each Sovereign can have up to 8 units in play at a
+                they occupy a zone on the board. (Zones can only have 1
+                occupant.) Each Sovereign can have up to 8 units in play at a
                 time, and no more than 2 ally Scions can have the same class.
               </p>
               <br />
@@ -520,7 +519,7 @@ export default function Rules() {
               <p>
                 Scions have 2 unique abilities, which are special actions they
                 can manually activate. Some abilities require a tactic to be
-                used. Abilities with the “one-shot” property can only be
+                used. Abilities with the “One-shot” property can only be
                 activated once per turn.
               </p>
               <br />
@@ -533,7 +532,11 @@ export default function Rules() {
                 they ascend or deploy, or an elimination talent, which activates
                 when they are eliminated. A pawn’s capability to ascend is tied
                 to their “Apotheosis” talent; thus, they cannot ascend if they
-                are afflicted with a status that mutes (disables talents).
+                are afflicted with a status that mutes (disables talents). Some
+                talents are triggered by events. If an event triggers both a
+                talent and a contingent skill (see{" "}
+                <Link to="/rules/cards">Cards</Link>), the talent activates
+                first.
               </p>
               <br />
               <br />
@@ -541,10 +544,12 @@ export default function Rules() {
               <h3>Aether</h3>
               <p>
                 Aether is granted to a unit upon their deployment. Aethers are
-                primarily spent to perform and mitigate Aether-blasts, and some
-                effects provide other means to utilize or influence them. A
-                unit’s Aether can be restored after it is spent or removed.
-                Units cannot possess more than 1 Aether.
+                primarily spent to perform and mitigate Aether-blasts (for more
+                information, visit the{" "}
+                <Link to="/rules/actions">Actions page</Link>), and some effects
+                provide other means to utilize or influence them. A unit’s
+                Aether can be restored after it is spent or removed. Units
+                cannot possess more than 1 Aether.
               </p>
               <br />
               <br />
@@ -613,8 +618,7 @@ export default function Rules() {
                 be activated from one’s hand, and they are sent to the vestige
                 upon the conclusion of their effects, unless stated otherwise.
                 When a repertoire is depleted, its corresponding vestige is
-                shuffled to replenish it. For more information, visit the
-                <Link to="/rules/units"> Cards page</Link>.
+                shuffled to replenish it.
               </p>
               <br />
               <br />
@@ -635,14 +639,9 @@ export default function Rules() {
               <p>
                 Skills are the applications of powers granted by Avelhems. These
                 cards offer a wider variety of effects that can activated by
-                Sovereigns, as well as units. The aspect of a skill, indicated
-                by the icon at its top left corner, identifies its exclusive
-                activator. For example, a Sovereign skill (represented by a
-                crown icon aspect) can only be activated by a Sovereign.
-                Likewise, a Lightning skill can only be activated by a Lightning
-                Scion. Skills also have methods, represented by the gems below
-                their aspect icons, that can impact their activation.
+                Sovereigns, as well as units.
               </p>
+
               <br />
               <br />
               <div className="rules-image-container">
@@ -655,6 +654,100 @@ export default function Rules() {
                   src={SkillAnatomy}
                   className="rules-skill-anatomy"
                   alt="Left: Plant Avelhem card; Right: Reminiscence, a Standard Sovereign skill card"
+                />
+              </div>
+
+              <br />
+              <br />
+
+              <h3>Aspects</h3>
+              <p>
+                A skill’s aspect, represented by the icon at its top-left
+                corner, identifies who can exclusively activate it. For example,
+                a Sovereign skill (which has a crown icon) can only be activated
+                by a Sovereign. Likewise, a Lightning skill can only be
+                activated by a Lightning Scion.
+              </p>
+
+              <br />
+              <br />
+              <h3>Method</h3>
+              <p>
+                A skill’s method is represented by the icon below its aspect.
+                The method of a skill determines the mechanics of its
+                activation. A Scion’s skill set consists of 4 cards, 1 for each
+                method: standard, resonant, contingent, and burst.
+              </p>
+
+              <br />
+
+              <p>
+                <strong>Standard</strong>
+                <br />
+                Standard skills, indicated by blue circular sapphires, are the
+                simplest to activate. Following the general card mechanics, they
+                can only be activated during the Execution Phase when there is
+                no other effect ongoing, and they are sent to the vestige after
+                concluding their effects.
+              </p>
+
+              <br />
+
+              <p>
+                <strong>Resonant</strong>
+                <br />
+                Resonant skills, indicated by rectangular alexandrites, also
+                follow the general card mechanics. Like Avelhem cards, they have
+                a “resonance” listed after their primary effect. Resonances are
+                additional effects that are applied when the cards are resonated
+                (activated with a “resonator”, which can be either an identical
+                card or valid substitute).
+              </p>
+
+              <br />
+
+              <p>
+                <strong>Contingent</strong>
+                <br />
+                Contingent skills, indicated by triangular rubies, have a
+                “contingency” listed before their effects. Unlike other cards,
+                contingent skills can be activated outside the owner’s Execution
+                Phase and even while other effects are ongoing, but only when
+                their contingencies are satisfied. Only 1 contingent skill can
+                be activated in response to an event that triggers it. In the
+                event that both Sovereigns have a contingent skill that can be
+                activated, the Initiator (the Sovereign whose turn it currently
+                is), yields priority to their opponent. If an event triggers
+                both a talent (see <Link to="/rules/units">Units</Link>) and a
+                contingent skill, the talent activates first.
+              </p>
+
+              <br />
+
+              <p>
+                <strong>Burst</strong>
+                <br />
+                Burst skills, indicated by cracking amethysts, return to
+                observing the general card mechanics. Unlike other cards, burst
+                skills are shattered (removed from play) rather than discarded
+                after they conclude their effects. Discarding them via any other
+                means (such as spending) would still send them to the vestige.
+              </p>
+
+              <br />
+
+              <br />
+
+              <div className="rules-image-container">
+                <div className="rules-image-desc">
+                  From left to right: Fire standard, resonant, contingent, &
+                  burst skills
+                </div>
+
+                <img
+                  src={SkillAnatomySet}
+                  className="rules-skill-anatomy"
+                  alt="From left to right: Fire standard, resonant, contingent, & burst skills"
                 />
               </div>
 

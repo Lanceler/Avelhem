@@ -387,6 +387,7 @@ export const useDemoGameStates = () => {
           activatingUnit: [],
           turnPhase: null,
           currentResolution: [],
+          skipAscensionTrigger: true,
         };
 
       default:
@@ -805,9 +806,8 @@ export const useDemoGameStates = () => {
                 view the contents of their repertoire (deck) in an attempt to
                 locate a card and add it to their hand (unless stated
                 otherwise). Searches are subject to restrictions; a search is
-                considered successful if it yields an eligible card.
-                <br /> <br />
-                Ineligible cards will be greyed out in the selection.
+                considered successful if it yields an eligible card. Ineligible
+                cards will be greyed out in the selection.
               </div>
             );
 
@@ -2112,10 +2112,10 @@ export const useDemoGameStates = () => {
               <div>
                 Some searches are restricted to an aspect (such as Ambiance
                 Assimilation being limited to Mana Skills), but this does not
-                require a full revelation either. The legitimacy of the search
-                can be proven by displaying the aspect icon at the corner of the
-                card, concealing the rest of the information. For the same
-                reason, the simulator skips this.
+                require a full revelation either. In a physical game, the
+                legitimacy of the search can be proven by displaying the aspect
+                icon at the corner of the card, concealing the rest of the
+                information. For the same reason, the simulator skips this.
                 <br />
                 <br />
               </div>
@@ -2155,9 +2155,11 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 The skill you drew is “Glacial Torrent”, the burst skill of
-                Water Scions. Speaking of which, ascend your central pawn into a
-                Water Scion. Like resonant skills, Avelhems can also be
-                resonated.
+                Water Scions.
+                <br />
+                <br />
+                Speaking of which, ascend your central pawn into a Water Scion.
+                Like resonant skills, Avelhems can also be resonated.
               </div>
             );
 
@@ -2395,9 +2397,10 @@ export const useDemoGameStates = () => {
           case "Learn1.241":
             return (
               <div>
-                Water Scions have a talent that allows them to bypass Shield
-                when attacking frostbitten enemies. Therefore, even though the
-                Metal Scion had shield, their HP was still reduced.
+                The “Clear as Crystal” talent of Water Scions allows them to
+                bypass Shield when attacking frostbitten enemies. Therefore,
+                even though the Metal Scion had shield, their HP was still
+                reduced.
               </div>
             );
 
@@ -2502,8 +2505,8 @@ export const useDemoGameStates = () => {
           case "Learn1.263":
             return (
               <div>
-                The pawn no longer possesses their Aether; thus, they are prone
-                to the next Aether-blast.
+                When an Aether-blast connects against an enemy possessing
+                Aether, they are given the option to mitigate it.
                 <br />
                 <br />
                 Switch player.
@@ -2517,7 +2520,9 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 Attacks have 1 AP by default; thus, the damage dealt by the
-                Aether-blast was reduced to 0. <br />
+                Aether-blast was reduced to 0. The pawn no longer possesses
+                their Aether; thus, they are prone to the next Aether-blast.
+                <br />
                 <br />
                 Due to the mitigation, the Water Scion regained the Aether they
                 spent on their attack.
@@ -2576,7 +2581,8 @@ export const useDemoGameStates = () => {
           case "Learn1.275":
             return (
               <div>
-                And that concludes the interactive portion of the tutorial.
+                <strong>Victory has been achieved!</strong> And that concludes
+                the interactive portion of the tutorial.
                 <br />
                 <br />
                 It is worth noting that should the game proceed after a unit

@@ -29,9 +29,18 @@ const DemoImage = (props) => {
       case "Learn1.105":
         return "SB-02";
 
+      case "Learn1.113":
+        return "07-02";
+
       case "Learn1.137":
       case "Learn1.138":
         return "04-03";
+
+      case "Learn1.201":
+        return "AmbianceAssimilation";
+
+      case "Learn1.205":
+        return "SA-02";
     }
   };
 

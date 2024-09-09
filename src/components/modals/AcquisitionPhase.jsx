@@ -44,7 +44,7 @@ const AcquisitionPhase = (props) => {
           <div className=" ">⬩Draw 2 Avelhems.</div>
           <div className=" ">
             ⬩{upgrade < 1 && <>If upgraded: </>}
-            Gain 1 FD.
+            You may draw 1 Avelhem.
           </div>
         </>
       ),
@@ -110,14 +110,22 @@ const AcquisitionPhase = (props) => {
         newGameState = drawAvelhem(newGameState);
         newGameState = drawAvelhem(newGameState);
 
-        if (upgrade >= 1) {
-          newGameState[self].fateDefiances = Math.min(
-            6,
-            newGameState[self].fateDefiances + 1
-          );
-        }
-
         newGameState = nextPhase(newGameState);
+
+        if (upgrade >= 1) {
+          newGameState.currentResolution.push({
+            resolution: "Misc.",
+            resolution2: "Beseech - Upgraded",
+            player: self,
+            details: {
+              reason: "Beseech Draw",
+              title: "Beseech",
+              message: "You may draw 1 Avelhem.",
+              no: "Skip",
+              yes: "Draw",
+            },
+          });
+        }
 
         dispatch(updateState(newGameState));
         props.updateFirebase(newGameState);

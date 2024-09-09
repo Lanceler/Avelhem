@@ -77,7 +77,7 @@ const ViewBPUpgrades = (props) => {
 
                   {upgrades.acquisition >= 1 && (
                     <p className="unitInfo-text-desc">
-                      1. Beseech grants 1 FD.
+                      1. May draw 1 additional Avelhem via Beseech.
                     </p>
                   )}
                   {upgrades.acquisition >= 2 && (
@@ -108,8 +108,12 @@ const ViewBPUpgrades = (props) => {
                   )}
                   {upgrades.coordination >= 2 && (
                     <p className="unitInfo-text-desc">
-                      2. Convene upgraded: gain 1 Advance tactic and draw 1
-                      Avelhem.
+                      2. Convene upgraded: gain 1 Advance tactic.
+                    </p>
+                  )}
+                  {upgrades.coordination >= 3 && (
+                    <p className="unitInfo-text-desc">
+                      3. Assent upgraded: gain 1 FD.
                     </p>
                   )}
                   <br />
@@ -150,7 +154,7 @@ const ViewBPUpgrades = (props) => {
 
                   {upgrades.avelhem >= 1 && (
                     <p className="unitInfo-text-desc">
-                      1. Units ascending via Avelhems gain Shield for 2 turns.
+                      1. Avelhem resonance grants Shield for 2 turns.
                     </p>
                   )}
                   {upgrades.avelhem >= 2 && (

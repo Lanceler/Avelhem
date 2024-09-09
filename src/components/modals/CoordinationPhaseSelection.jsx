@@ -64,8 +64,7 @@ const CoordinationPhaseSelection = (props) => {
           </div>
           <div className=" ">
             ⬩{upgrade < 2 && <>If upgraded: </>}
-            Gain 1 <img src={AdvanceSmall} style={{ height: 21 }} /> and draw 1
-            Avelhem.
+            Gain 1 <img src={AdvanceSmall} style={{ height: 21 }} />.
           </div>
         </>
       ),
@@ -149,7 +148,6 @@ const CoordinationPhaseSelection = (props) => {
           limit: rallyCount,
         };
         if (upgrade >= 2) {
-          newGameState = drawAvelhem(newGameState);
           newGameState.tactics[1] = { face: "Advance", stock: 1, limit: 1 };
         } else {
           newGameState.tactics[1] = { face: "Null", stock: 0, limit: 1 };

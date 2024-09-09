@@ -1014,6 +1014,19 @@ const BoardArea = (props) => {
             }
             break;
 
+          case "Beseech - Upgraded":
+            return (
+              <>
+                {self === lastRes.player && !hideModal && (
+                  <YouMayNoYes
+                    details={lastRes.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
           case "Tactic Results":
             return (
               <>
@@ -5044,8 +5057,11 @@ const BoardArea = (props) => {
                   "Learn1.66",
                   "Learn1.104",
                   "Learn1.105",
+                  "Learn1.113",
                   "Learn1.137",
                   "Learn1.138",
+                  "Learn1.201",
+                  "Learn1.205",
                 ].includes(demoGuide) && <DemoImage />}
 
                 {unitInfor !== null && (

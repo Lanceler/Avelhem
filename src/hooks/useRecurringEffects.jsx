@@ -2534,12 +2534,12 @@ export const useRecurringEffects = () => {
     }
 
     switch (method) {
-      case "Avelhem":
-        if (newGameState[unit.player].bountyUpgrades.avelhem > 0)
-          unit.enhancements.shield
-            ? (unit.enhancements.shield = Math.max(2, unit.enhancements.shield))
-            : (unit.enhancements.shield = 2);
-        break;
+      // case "Avelhem":
+      //   if (newGameState[unit.player].bountyUpgrades.avelhem > 0)
+      //     unit.enhancements.shield
+      //       ? (unit.enhancements.shield = Math.max(2, unit.enhancements.shield))
+      //       : (unit.enhancements.shield = 2);
+      //   break;
 
       case "Fated Rivalry":
         newGameState.currentResolution.push({
@@ -2653,6 +2653,11 @@ export const useRecurringEffects = () => {
     newGameState.currentResolution.pop();
 
     unit.enhancements.ravager = true;
+
+    if (newGameState[unit.player].bountyUpgrades.avelhem > 0)
+      unit.enhancements.shield
+        ? (unit.enhancements.shield = Math.max(2, unit.enhancements.shield))
+        : (unit.enhancements.shield = 2);
 
     if (resonator === "SA-02") {
       newGameState = drawSkill(newGameState);
@@ -4963,7 +4968,6 @@ export const useRecurringEffects = () => {
     if (newGameState.skipAscensionTrigger) {
       return false;
     }
-
     return triggerFatedRivalry(newGameState, unit, scionClass, method);
   };
 

@@ -83,6 +83,11 @@ const YouMayNoYes = (props) => {
         newGameState = endExecutionPhase2();
         break;
 
+      case "Beseech Draw": //"Beseech - Upgraded"
+        newGameState = drawAvelhem(newGameState);
+
+        break;
+
       case "Mitigate Aether-Blast": //"Mitigating Aether-Blast"
         newGameState.activatingTarget.pop();
         newGameState = aetherBlastYes(newGameState, props.attacker, unit);

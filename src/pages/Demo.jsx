@@ -775,18 +775,18 @@ export default function Demo() {
         ];
         break;
 
-      case "Learn1.20.1":
-      case "Learn1.34":
-      case "Learn1.104":
-        duplicateDemoGameState.currentResolution.pop();
-        duplicateDemoGameState.currentResolution.pop();
-        duplicateDemoGameState.activatingSkill.pop();
-        duplicateDemoGameState.activatingUnit = [];
-        break;
+      // case "Learn1.20.1":
+      // case "Learn1.34":
+      // case "Learn1.104":
+      //   duplicateDemoGameState.currentResolution.pop();
+      //   duplicateDemoGameState.currentResolution.pop();
+      //   duplicateDemoGameState.activatingSkill.pop();
+      //   duplicateDemoGameState.activatingUnit = [];
+      //   break;
 
-      case "Learn1.165":
-        duplicateDemoGameState.currentResolution.pop();
-        break;
+      // case "Learn1.165":
+      //   duplicateDemoGameState.currentResolution.pop();
+      //   break;
 
       case "Learn1.88":
         duplicateDemoGameState.tactics = [
@@ -864,9 +864,9 @@ export default function Demo() {
         duplicateDemoGameState.host.skillRepertoire[g - 6] = "05-04";
         break;
 
-      case "Learn1.216.1":
-        duplicateDemoGameState.currentResolution.pop();
-        break;
+      // case "Learn1.216.1":
+      //   duplicateDemoGameState.currentResolution.pop();
+      //   break;
 
       case "Learn1.249":
         duplicateDemoGameState.currentResolution.pop();
