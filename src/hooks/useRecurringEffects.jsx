@@ -2773,7 +2773,7 @@ export const useRecurringEffects = () => {
         return canActivateSkill(unit, skill);
 
       case "05-02":
-        return unit.charge > 0 && canMove(unit); // needs ONE charge
+        return canActivateSkill(unit, skill);
 
       case "06-02":
         return canDiffusionR(unit);
@@ -4579,24 +4579,6 @@ export const useRecurringEffects = () => {
     }
   };
 
-  const selectEnemiesRooted = (unitInfo, range, tactic, reason, special) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    newGameState.currentResolution.pop();
-
-    if (unit !== null && !isMuted(unit)) {
-      enterSelectUnitMode(
-        getZonesWithEnemiesRooted(unit, range),
-        unit,
-        newGameState,
-        tactic,
-        reason,
-        special
-      );
-    }
-  };
-
   const selectFatedRivalry = (enemyUnit) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -4735,34 +4717,6 @@ export const useRecurringEffects = () => {
       newGameState,
       null,
       "pitfall trap",
-      null
-    );
-  };
-
-  const selectSowAndReapStriker = (unit) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    //end "Select Sow and Reap Striker"
-    newGameState.currentResolution.pop();
-
-    const zonesWithAllies = getZonesWithAllies(unit, 1, false);
-    let adjacentStrikers = [];
-
-    for (let z of zonesWithAllies) {
-      const zone = zones[Math.floor(z / 5)][z % 5];
-      const ally = newGameState[zone.player].units[zone.unitIndex];
-
-      if (canSowAndReapBlast(ally) && canStrike(ally)) {
-        adjacentStrikers.push(z);
-      }
-    }
-
-    enterSelectUnitMode(
-      adjacentStrikers,
-      unit,
-      newGameState,
-      null,
-      "sow and reap striker",
       null
     );
   };
@@ -5452,19 +5406,6 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
-  const aetherBlastYes = (newGameState, attacker, victim) => {
-    // newGameState.currentResolution.pop();
-    newGameState.currentResolution[
-      newGameState.currentResolution.length - 1
-    ].special = "Aether-blast-blocked";
-
-    newGameState[victim.player].units[victim.unitIndex].aether = 0;
-
-    newGameState[attacker.player].units[attacker.unitIndex].aether = 1;
-
-    return newGameState;
-  };
-
   return {
     activateAegis,
     activateAvelhem,
@@ -5559,13 +5500,11 @@ export const useRecurringEffects = () => {
     selectDarkHalo,
     selectDestine,
     selectEnemies,
-    selectEnemiesRooted,
     selectFatedRivalry,
     selectFrenzyBladeActivator,
     selectHealingRainActivator,
     selectMatchMadeInHeavenPawn,
     selectPitfallTrapActivator,
-    selectSowAndReapStriker,
     selectSymphonicScreechActivator,
     selectVengefulLegacy,
     selectViridianGraveActivator,
@@ -5590,6 +5529,5 @@ export const useRecurringEffects = () => {
     uponDebutTalents,
     aetherBlast,
     aetherBlastMitigate,
-    aetherBlastYes,
   };
 };

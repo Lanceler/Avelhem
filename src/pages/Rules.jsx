@@ -60,7 +60,15 @@ export default function Rules() {
               </Link>
               <br />
               <Link to="/rules/cards">
-                <button>Avelhem & skill cards</button>
+                <button>Cards</button>
+              </Link>
+              <br />
+              <Link to="/rules/actions">
+                <button>Actions</button>
+              </Link>
+              <br />
+              <Link to="/rules/statuses">
+                <button>Statuses</button>
               </Link>
             </div>
           )}
@@ -183,8 +191,9 @@ export default function Rules() {
               </h3>
               <p>
                 The host is assigned the gold unit tokens and given the choice
-                of playing first or second (they have the option of choosing
-                randomly). Their opponent is assigned the silver unit tokens.
+                of playing first or second (they also have the option of
+                choosing randomly). Their opponent is assigned the silver unit
+                tokens.
               </p>
               <br />
               <br />
@@ -291,8 +300,8 @@ export default function Rules() {
                 be activated from one’s hand, and they are sent to the vestige
                 upon the conclusion of their effects, unless stated otherwise.
                 When a repertoire is depleted, its corresponding vestige is
-                shuffled to replenish it. For more information, visit the
-                <Link to="/rules/units"> Cards page</Link>.
+                shuffled to replenish it. For more information, visit the{" "}
+                <Link to="/rules/cards">Cards page</Link>.
               </p>
               <br />
               <br />
@@ -303,9 +312,7 @@ export default function Rules() {
                 take the form of cards that Sovereigns can activate to ascend
                 their pawns to Scions of a specified class. The icon at an
                 Avelhem’s top left corner reflects its corresponding Scion
-                class. All Avelhems have the same resonance, which is an
-                additional effect that is applied only if the card is resonated
-                (activated with an identical copy or valid substitute).
+                class.
               </p>
               <br />
               <br />
@@ -313,13 +320,13 @@ export default function Rules() {
               <p>
                 Skills are the applications of powers granted by Avelhems. These
                 cards offer a wider variety of effects that can activated by
-                Sovereigns, as well as units. A skill’s aspect, represented by
-                the icon at its top-left corner, identifies who can exclusively
-                activate it. For example, a Sovereign skill (which has a crown
-                icon) can only be activated by a Sovereign. Likewise, a
-                Lightning skill can only be activated by a Lightning Scion.
-                Skills also have methods, represented by the gems below their
-                aspect icons, that can impact their activation.
+                Sovereigns, as well as units. The icon at the top left corner of
+                a skill card represents its aspect, which determines who can
+                exclusively activate it. For example, a Sovereign skill (which
+                has a crown icon) can only be activated by a Sovereign.
+                Likewise, a Lightning skill can only be activated by a Lightning
+                Scion. The gem below a skill’s aspect is its method, which
+                determines mechanics of its activation.
               </p>
               <br />
               <br />
@@ -447,23 +454,15 @@ export default function Rules() {
                   one-by-one in any desired sequence.
                 </li>
                 <li>
-                  Score if applicable. A unit scores when they occupy a zone in
-                  the opponent’s base at the end of the Final Phase. Units can
-                  score only once. Units that have scored stay on the board and
-                  are still counted in their Sovereign’s unit limits, but they
-                  can no longer be interacted with. If the Initiator scores with
-                  enough units to meet the victory objective, they win the game.
-                  Otherwise, their opponent commences the next turn as the
-                  Initiator.
+                  Score if applicable. A unit scores the first time they occupy
+                  a zone in the opponent’s base at the end of the Final Phase.
+                  Units that have scored stay on the board and are still counted
+                  in their Sovereign’s unit limits, but they can no longer be
+                  interacted with. If the Initiator scores with enough units to
+                  meet the victory objective, they win the game. Otherwise,
+                  their opponent commences the next turn as the Initiator.
                 </li>
               </ol>
-              <br />
-
-              <div className="rules-return">
-                <Link to="/rules/">
-                  <button className="home-banner-button">Return</button>
-                </Link>
-              </div>
             </div>
           )}
 
@@ -544,9 +543,8 @@ export default function Rules() {
               <h3>Aether</h3>
               <p>
                 Aether is granted to a unit upon their deployment. Aethers are
-                primarily spent to perform and mitigate Aether-blasts (for more
-                information, visit the{" "}
-                <Link to="/rules/actions">Actions page</Link>), and some effects
+                primarily spent to perform and mitigate Aether-blasts (see{" "}
+                <Link to="/rules/actions">Actions</Link>), and some effects
                 provide other means to utilize or influence them. A unit’s
                 Aether can be restored after it is spent or removed. Units
                 cannot possess more than 1 Aether.
@@ -583,7 +581,7 @@ export default function Rules() {
                 activated. For example, suppose a Scion activates a skill card
                 that lets them attack and then perform an additional effect. If
                 the skill’s attack eliminates an enemy, Anathema will be delayed
-                until the entire skill is finished.
+                until the entire skill has concluded.
               </p>
               <br />
               <br />
@@ -599,13 +597,6 @@ export default function Rules() {
                   alt="From left to right: Pawn, Metal Scion, Fire Scion"
                 />
               </div>
-
-              <br />
-              <div className="rules-return">
-                <Link to="/rules/">
-                  <button className="home-banner-button">Return</button>
-                </Link>
-              </div>
             </div>
           )}
 
@@ -618,7 +609,10 @@ export default function Rules() {
                 be activated from one’s hand, and they are sent to the vestige
                 upon the conclusion of their effects, unless stated otherwise.
                 When a repertoire is depleted, its corresponding vestige is
-                shuffled to replenish it.
+                shuffled to replenish it. Sovereigns cannot view the contents of
+                their repertoires unless they are performing a search or
+                inspection. Sovereigns are allowed to view the contents of their
+                own vestiges at any time.
               </p>
               <br />
               <br />
@@ -629,9 +623,10 @@ export default function Rules() {
                 take the form of cards that Sovereigns can activate to ascend
                 their pawns to Scions of a specified class. The icon at an
                 Avelhem’s top left corner reflects its corresponding Scion
-                class. All Avelhems have the same resonance, which is an
-                additional effect that is applied only if the card is resonated
-                (activated with an identical copy or valid substitute).
+                class. Sovereigns can resonate Avelhems by activating them with
+                a resonator, which can be either an identical copy or a valid
+                substitute. When a card is resonated, its resonance will be
+                applied as an additional effect.
               </p>
               <br />
               <br />
@@ -662,80 +657,115 @@ export default function Rules() {
 
               <h3>Aspects</h3>
               <p>
-                A skill’s aspect, represented by the icon at its top-left
-                corner, identifies who can exclusively activate it. For example,
-                a Sovereign skill (which has a crown icon) can only be activated
-                by a Sovereign. Likewise, a Lightning skill can only be
-                activated by a Lightning Scion.
+                The icon at the top left corner of a skill card represents its
+                aspect, which determines who can exclusively activate it. For
+                example, a Sovereign skill (which has a crown icon) can only be
+                activated by a Sovereign. Likewise, a Lightning skill can only
+                be activated by a Lightning Scion.
               </p>
 
               <br />
               <br />
               <h3>Method</h3>
               <p>
-                A skill’s method is represented by the icon below its aspect.
-                The method of a skill determines the mechanics of its
-                activation. A Scion’s skill set consists of 4 cards, 1 for each
-                method: standard, resonant, contingent, and burst.
+                The gem below a skill’s aspect is its method, which determines
+                mechanics of its activation. A Scion’s skill set consists of 4
+                cards, 1 for each method: standard, resonant, contingent, and
+                burst.
               </p>
 
               <br />
 
               <p>
                 <strong>Standard</strong>
-                <br />
-                Standard skills, indicated by blue circular sapphires, are the
-                simplest to activate. Following the general card mechanics, they
-                can only be activated during the Execution Phase when there is
-                no other effect ongoing, and they are sent to the vestige after
-                concluding their effects.
+                <ul>
+                  <li>
+                    Standard skills, indicated by blue circular sapphires, are
+                    the simplest to activate.
+                  </li>
+                  <li>
+                    They follow all general card mechanics: they can only be
+                    activated during the Execution Phase when there is no other
+                    effect ongoing, and they are sent to the vestige after
+                    concluding their effects.
+                  </li>
+                </ul>
               </p>
 
               <br />
 
               <p>
                 <strong>Resonant</strong>
-                <br />
-                Resonant skills, indicated by rectangular alexandrites, also
-                follow the general card mechanics. Like Avelhem cards, they have
-                a “resonance” listed after their primary effect. Resonances are
-                additional effects that are applied when the cards are resonated
-                (activated with a “resonator”, which can be either an identical
-                card or valid substitute).
+                <ul>
+                  <li>
+                    Resonant skills, indicated by rectangular alexandrites, also
+                    follow the general card mechanics.
+                  </li>
+                  <li>
+                    Like Avelhems, they possess resonances, which are extra
+                    effects that activate if they are resonated (activated with
+                    an identical card or valid substitute). The additional card
+                    that is paired with them is referred to as their
+                    “resonator.”
+                  </li>
+                </ul>
               </p>
 
               <br />
 
               <p>
                 <strong>Contingent</strong>
-                <br />
-                Contingent skills, indicated by triangular rubies, have a
-                “contingency” listed before their effects. Unlike other cards,
-                contingent skills can be activated outside the owner’s Execution
-                Phase and even while other effects are ongoing, but only when
-                their contingencies are satisfied. Only 1 contingent skill can
-                be activated in response to an event that triggers it. In the
-                event that both Sovereigns have a contingent skill that can be
-                activated, the Initiator (the Sovereign whose turn it currently
-                is), yields priority to their opponent. If an event triggers
-                both a talent (see <Link to="/rules/units">Units</Link>) and a
-                contingent skill, the talent activates first.
+                <ul>
+                  <li>
+                    Contingent skills, indicated by triangular rubies, have a
+                    “contingency” listed before their effects.
+                  </li>
+                  <li>
+                    As the exception to the rules, contingent skills can be
+                    activated outside the owner’s Execution Phase and even while
+                    other effects are ongoing, but only at the moment their
+                    contingencies are satisfied.
+                  </li>
+                  <li>
+                    When an effect is interrupted by a contingent skill, it will
+                    resume — if possible — after the latter concludes.
+                  </li>
+                  <li>
+                    Only 1 contingent skill can be activated in response to a
+                    triggering event. If both Sovereigns have contingent skills
+                    that were simultaneously triggered, the Initiator (the
+                    Sovereign whose turn it currently is), yields priority to
+                    their opponent.
+                  </li>
+                  <li>
+                    If an event triggers both a talent (see{" "}
+                    <Link to="/rules/units">Units</Link>) and a contingent
+                    skill, the talent activates first.
+                  </li>
+                </ul>
               </p>
 
               <br />
 
               <p>
                 <strong>Burst</strong>
-                <br />
-                Burst skills, indicated by cracking amethysts, return to
-                observing the general card mechanics. Unlike other cards, burst
-                skills are shattered (removed from play) rather than discarded
-                after they conclude their effects. Discarding them via any other
-                means (such as spending) would still send them to the vestige.
+                <ul>
+                  <li>
+                    Burst skills, indicated by cracking amethysts, return to
+                    observing the general card mechanics with one major
+                    deviation.
+                  </li>
+                  <li>
+                    Unlike other cards, burst skills are shattered (removed from
+                    play) rather than discarded after they conclude their
+                    effects. Discarding them via any other means (such as
+                    spending) would still send them to the vestige.
+                  </li>
+                  <li>Shattered skills are revealed to both Sovereigns.</li>
+                </ul>
               </p>
 
               <br />
-
               <br />
 
               <div className="rules-image-container">
@@ -750,13 +780,18 @@ export default function Rules() {
                   alt="From left to right: Fire standard, resonant, contingent, & burst skills"
                 />
               </div>
+            </div>
+          )}
 
+          {id && (
+            <div className="rules-text">
               <br />
               <div className="rules-return">
                 <Link to="/rules/">
                   <button className="home-banner-button">Return</button>
                 </Link>
               </div>
+              <br />
             </div>
           )}
         </div>

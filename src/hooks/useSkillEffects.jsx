@@ -10,6 +10,7 @@ export const useSkillEffects = () => {
   const {
     blast,
     canMove,
+    canSowAndReapBlast,
     canStrike,
     drawSkill,
     enterSelectUnitMode,
@@ -17,6 +18,7 @@ export const useSkillEffects = () => {
     getZonesWithAllies,
     getZonesWithEnemies,
     getZonesWithEnemiesAfflicted,
+    getZonesWithEnemiesRooted,
     isAdjacent,
     isMuted,
     isRooted,
@@ -361,7 +363,7 @@ export const useSkillEffects = () => {
           restriction: null,
           title: "Frigid Breath",
           message:
-            "You may float 1 skill to freeze an adjacent enemy for 2 turns.",
+            "You may float 1 skill to freeze an adjacent enemy for 1 turn.",
         },
       });
     }
@@ -1273,13 +1275,10 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    //use 2 charges if not resonating
+    //use 2 charges
     unit.charge -= 2;
 
     if (resonator) {
-      //use 1 charge if resonating, so add it back
-      unit.charge += 1;
-
       if (resonator !== "SA-02") {
         newGameState.currentResolution.push({
           resolution: "Misc.",
@@ -1345,23 +1344,23 @@ export const useSkillEffects = () => {
     //end "Zip And ZapR1" resolution
     newGameState.currentResolution.pop();
 
-    if (
-      unit !== null &&
-      !isMuted(unit) &&
-      getZonesWithEnemies(unit, 1).length > 0
-    ) {
-      newGameState.currentResolution.push({
-        resolution: "Lightning Skill",
-        resolution2: "Zip And ZapR2",
-        unit: unit,
-        details: {
-          reason: "Zip and Zap Blast",
-          title: "Zip and Zap",
-          message: "You may blast an adjacent enemy.",
-          no: "Skip",
-          yes: "Blast",
-        },
-      });
+    if (unit !== null && !isMuted(unit)) {
+      unit.charge += 1;
+
+      if (getZonesWithEnemies(unit, 1).length > 0) {
+        newGameState.currentResolution.push({
+          resolution: "Lightning Skill",
+          resolution2: "Zip And ZapR2",
+          unit: unit,
+          details: {
+            reason: "Zip and Zap Blast",
+            title: "Zip and Zap",
+            message: "You may blast an adjacent enemy.",
+            no: "Skip",
+            yes: "Blast",
+          },
+        });
+      }
     }
 
     return newGameState;
@@ -1431,7 +1430,7 @@ export const useSkillEffects = () => {
         details: {
           title: "Thunder Thaumaturge",
           message:
-            "You may spend 1 skill to recover 1 Lightning skill other than “Thunder Thaumaturge”.",
+            "You may spend 1 skill to recover then float 1 Lightning skill other than “Thunder Thaumaturge”.",
           restriction: null,
           reason: "Thunder Thaumaturge",
         },
@@ -2107,6 +2106,76 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
+  const sowAndReap3 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Sow and Reap Blast" resolution
+    newGameState.currentResolution.pop();
+
+    enterSelectUnitMode(
+      getZonesWithEnemiesRooted(unit, 1),
+      unit,
+      newGameState,
+      null,
+      "blast",
+      "sowAndReapBlast"
+    );
+
+    return newGameState;
+  };
+
+  const sowAndReap4 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Select Sow and Reap Striker" resolution
+    newGameState.currentResolution.pop();
+
+    const zonesWithAllies = getZonesWithAllies(unit, 1, false);
+    let adjacentStrikers = [];
+
+    for (let z of zonesWithAllies) {
+      const zones = JSON.parse(newGameState.zones);
+      const zone = zones[Math.floor(z / 5)][z % 5];
+      const ally = newGameState[zone.player].units[zone.unitIndex];
+
+      if (canSowAndReapBlast(ally) && canStrike(ally)) {
+        adjacentStrikers.push(z);
+      }
+    }
+
+    enterSelectUnitMode(
+      adjacentStrikers,
+      unit,
+      newGameState,
+      null,
+      "sow and reap striker",
+      null
+    );
+
+    return newGameState;
+  };
+
+  const sowAndReap5 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Sow and Reap Strike" resolution
+    newGameState.currentResolution.pop();
+
+    enterSelectUnitMode(
+      getZonesWithEnemiesRooted(unit, 1),
+      unit,
+      newGameState,
+      null,
+      "strike",
+      "null"
+    );
+
+    return newGameState;
+  };
+
   const efflorescence1 = (unitInfo, resonator) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
@@ -2493,6 +2562,12 @@ export const useSkillEffects = () => {
         return sowAndReap1(a);
       case "sowAndReap2":
         return sowAndReap2(a);
+      case "sowAndReap3":
+        return sowAndReap3(a);
+      case "sowAndReap4":
+        return sowAndReap4(a);
+      case "sowAndReap5":
+        return sowAndReap5(a);
       case "efflorescence1":
         return efflorescence1(a, b);
       case "efflorescenceR2":

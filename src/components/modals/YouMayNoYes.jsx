@@ -27,7 +27,6 @@ const YouMayNoYes = (props) => {
     getVacantAdjacentZones,
     getVacantFrontier,
     getZonesWithEnemies,
-    aetherBlastYes,
   } = useRecurringEffects();
 
   const handleViewBoard = () => {
@@ -85,12 +84,20 @@ const YouMayNoYes = (props) => {
 
       case "Beseech Draw": //"Beseech - Upgraded"
         newGameState = drawAvelhem(newGameState);
-
         break;
 
       case "Mitigate Aether-Blast": //"Mitigating Aether-Blast"
         newGameState.activatingTarget.pop();
-        newGameState = aetherBlastYes(newGameState, props.attacker, unit);
+
+        newGameState.currentResolution[
+          newGameState.currentResolution.length - 1
+        ].special = "Aether-blast-blocked";
+
+        unit.aether = 0;
+
+        newGameState[props.attacker.player].units[
+          props.attacker.unitIndex
+        ].aether = 1;
         break;
 
       case "Advance Avelhem Draw": //"Advance Avelhem Draw"
@@ -259,7 +266,7 @@ const YouMayNoYes = (props) => {
           newGameState,
           null,
           "blast",
-          "Lightning Scion"
+          null
         );
         break;
 

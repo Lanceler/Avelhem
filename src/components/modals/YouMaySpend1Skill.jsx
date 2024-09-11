@@ -179,8 +179,8 @@ const YouMaySpend1Skill = (props) => {
           player: self,
           restriction: ["05-01", "05-02", "05-04"],
           message:
-            "Recover 1 Lightning skill other than “Thunder Thaumaturge”.",
-          outcome: "Add",
+            "Recover then float 1 Lightning skill other than “Thunder Thaumaturge”.",
+          outcome: "Float",
         });
         break;
 

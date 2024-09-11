@@ -162,13 +162,11 @@ const BoardArea = (props) => {
     selectDarkHalo,
     selectDestine,
     selectEnemies,
-    selectEnemiesRooted,
     selectFatedRivalry,
     selectFrenzyBladeActivator,
     selectHealingRainActivator,
     selectMatchMadeInHeavenPawn,
     selectPitfallTrapActivator,
-    selectSowAndReapStriker,
     selectSymphonicScreechActivator,
     selectVengefulLegacy,
     selectViridianGraveActivator,
@@ -1793,7 +1791,7 @@ const BoardArea = (props) => {
 
           case "Frigid Breath4":
             if (self === lastRes.unit.player) {
-              selectEnemies(lastRes.unit, 1, null, "freeze2", null);
+              selectEnemies(lastRes.unit, 1, null, "freeze1", null);
             }
             break;
 
@@ -2920,25 +2918,19 @@ const BoardArea = (props) => {
 
           case "Sow and Reap Blast":
             if (self === lastRes.unit.player) {
-              selectEnemiesRooted(
-                lastRes.unit,
-                1,
-                null,
-                "blast",
-                "sowAndReapBlast"
-              );
+              resolutionUpdate(applySkill("sowAndReap3", lastRes.unit));
             }
             break;
 
           case "Select Sow and Reap Striker":
             if (self === lastRes.unit.player) {
-              selectSowAndReapStriker(lastRes.unit);
+              resolutionUpdate(applySkill("sowAndReap4", lastRes.unit));
             }
             break;
 
           case "Sow and Reap Strike":
             if (self === lastRes.unit.player) {
-              selectEnemiesRooted(lastRes.unit, 1, null, "strike", null);
+              resolutionUpdate(applySkill("sowAndReap5", lastRes.unit));
             }
             break;
 
