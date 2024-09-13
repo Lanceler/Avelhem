@@ -1603,7 +1603,7 @@ const BoardArea = (props) => {
 
           case "Ignition Propulsion1":
             if (self === lastRes.unit.player) {
-              selectEnemies(lastRes.unit, 1, null, "strike", "Fire Scion");
+              selectEnemies(lastRes.unit, 1, null, "strike", null);
             }
             break;
 
@@ -1623,7 +1623,7 @@ const BoardArea = (props) => {
 
           case "Conflagration1":
             if (self === lastRes.unit.player) {
-              selectEnemies(lastRes.unit, 1, null, "blast", "Fire Scion");
+              selectEnemies(lastRes.unit, 1, null, "blast", null);
             }
             break;
 
@@ -4190,14 +4190,10 @@ const BoardArea = (props) => {
         break;
 
       case "kleptothermy enemy":
-        let kleptoVictim =
-          newGameState[selectedUnit.player].units[selectedUnit.unitIndex];
+        newGameState[selectedUnit.player].units[
+          selectedUnit.unitIndex
+        ].aether = 0;
 
-        if (kleptoVictim.unitClass !== "Water Scion" || isMuted(kleptoVictim)) {
-          newGameState[selectedUnit.player].units[
-            selectedUnit.unitIndex
-          ].aether = 0;
-        }
         break;
 
       case "hydrotherapy":

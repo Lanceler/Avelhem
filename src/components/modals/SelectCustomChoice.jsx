@@ -92,8 +92,7 @@ const SelectCustomChoice = (props) => {
       canSecondChoice = getZonesWithEnemies(unit, 1).length > 0;
       ChoiceFirstMessage =
         "Restore your Aether or that of an ally within 2 spaces.";
-      ChoiceSecondMessage =
-        "Purge an adjacent enemy’s Aether. This cannot affect Water Scions.";
+      ChoiceSecondMessage = "Purge an adjacent enemy’s Aether.";
       break;
 
     case "Cold Embrace":

@@ -2139,17 +2139,6 @@ export const useRecurringEffects = () => {
       case ["Geomancy", "Surge", "Diffusion"].includes(special):
         aP = 2;
         break;
-      case special === "Fire Scion" &&
-        victim.unitClass === "Fire Scion" &&
-        !isMuted(victim):
-        aP = 0;
-        break;
-
-      case special === "Lightning Scion" &&
-        victim.unitClass === "Lightning Scion" &&
-        !isMuted(victim):
-        aP = 0;
-        break;
 
       default: //apply AP modifiers
         if (attacker.boosts.galeConjuration) {
@@ -2366,20 +2355,8 @@ export const useRecurringEffects = () => {
       case victim.enhancements.ward > 0:
         delete victim.enhancements.ward;
         break;
-      case victim.unitClass === "Lightning Scion" &&
-        victim.charges > 2 &&
-        !isMuted(victim):
-        break;
-      case ["Upheaval", "Pitfall Trap"].includes(special) &&
+      case ["Upheaval", "Pitfall Trap", "Geomancy"].includes(special) &&
         ["Land Scion"].includes(victim.unitClass) &&
-        !isMuted(victim):
-        break;
-      case special === "Cataclysmic Tempest" &&
-        victim.unitClass === "Wind Scion" &&
-        !isMuted(victim):
-        break;
-      case special === "Geomancy" &&
-        victim.unitClass === "Land Scion" &&
         !isMuted(victim):
         break;
       case ["ChainLightningParalysis", "Thunder Thaumaturge"].includes(
@@ -4515,14 +4492,7 @@ export const useRecurringEffects = () => {
     //end "Chain Lightning5"
     newGameState.currentResolution.pop();
 
-    enterSelectUnitMode(
-      zones,
-      unit,
-      newGameState,
-      null,
-      "blast",
-      "Lightning Scion"
-    );
+    enterSelectUnitMode(zones, unit, newGameState, null, "blast", null);
   };
 
   const selectDarkHalo = () => {

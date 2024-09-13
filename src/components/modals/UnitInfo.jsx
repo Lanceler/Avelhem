@@ -283,8 +283,7 @@ const UnitInfo = (props) => {
             <p className="unitInfo-text-heading2">1. Kleptothermy</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
               ⬩Upon your debut, restore your Aether or that of an ally within 2
-              spaces. Alternatively, purge an adjacent enemy’s Aether; this
-              cannot affect Water Scions.
+              spaces. Alternatively, purge an adjacent enemy’s Aether.
             </p>
 
             <p className="unitInfo-text-heading2">2. Clear as Crystal</p>
@@ -331,8 +330,9 @@ const UnitInfo = (props) => {
             </p>
 
             <p className="unitInfo-text-heading2">2. Salt the Earth</p>
+            <p className="unitInfo-text-desc">⬩You are immune to Root.</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩You are immune to Root.
+              ⬩You are immune to Paralysis due to Land skills.
             </p>
           </>
         );
@@ -348,7 +348,7 @@ const UnitInfo = (props) => {
             <p className="unitInfo-text-heading2">2. Defibrillation</p>
             <p className="unitInfo-text-desc ">⬩You are immune to Frostbite.</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩If you have 3 Charges, you are immune to Paralysis.
+              ⬩You are immune to Paralysis due to Lightning skills.
             </p>
           </>
         );

@@ -69,7 +69,6 @@ import FatedRivalry from "../assets/skillcards/FatedRivalry.jpg";
 import MatchMadeInHeaven from "../assets/skillcards/MatchMadeInHeaven.jpg";
 import VengefulLegacy from "../assets/skillcards/VengefulLegacy.jpg";
 import BlackBusinessCard from "../assets/skillcards/BlackBusinessCard.jpg";
-import Coalescence from "../assets/skillcards/Coalescence.jpg";
 import Transcendence from "../assets/skillcards/Transcendence.jpg";
 
 import Pawn from "../assets/scionIcons/Pawn.png";
@@ -229,7 +228,7 @@ export const useGetImages = () => {
     MatchMadeInHeaven,
     VengefulLegacy,
     BlackBusinessCard,
-    Coalescence,
+    // Coalescence,
     Transcendence,
     Pawn,
     FireScion,
@@ -572,8 +571,8 @@ export const useGetImages = () => {
       case "SC-05":
         return BlackBusinessCard;
 
-      case "SD-01":
-        return Coalescence;
+      // case "SD-01":
+      //   return Coalescence;
 
       default:
         return "";

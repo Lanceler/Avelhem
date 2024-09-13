@@ -524,25 +524,23 @@ export const useSkillEffects = () => {
     //end "Aerial Impetus Purge" resolution
     newGameState.currentResolution.pop();
 
-    if (!(unit.unitClass === "Wind Scion" && !isMuted(unit))) {
-      unit.aether = 0;
-      delete unit.enhancements.shield;
+    unit.aether = 0;
+    delete unit.enhancements.shield;
 
-      if (canMove(unit)) {
-        newGameState.currentResolution.push({
-          resolution: "Wind Skill",
-          resolution2: "Aerial Impetus Purge Move",
-          player: self,
-          unit: unit,
-          details: {
-            reason: "Aerial Impetus Purge Move",
-            title: "Aerial Impetus",
-            message: "You may force them to move to an adjacent zone.",
-            no: "Skip",
-            yes: "Move",
-          },
-        });
-      }
+    if (canMove(unit)) {
+      newGameState.currentResolution.push({
+        resolution: "Wind Skill",
+        resolution2: "Aerial Impetus Purge Move",
+        player: self,
+        unit: unit,
+        details: {
+          reason: "Aerial Impetus Purge Move",
+          title: "Aerial Impetus",
+          message: "You may force them to move to an adjacent zone.",
+          no: "Skip",
+          yes: "Move",
+        },
+      });
     }
 
     return newGameState;
