@@ -229,34 +229,6 @@ export const Piece = (props) => {
                 </>
               )}
 
-              {props.unit.unitClass === "Mana Scion" && (
-                <>
-                  {props.unit.enhancements.disruption === 1 && (
-                    <div
-                      className="disruptionCounter"
-                      style={{ left: 20 }}
-                    ></div>
-                  )}
-                  {props.unit.enhancements.disruption > 1 && (
-                    <>
-                      <div
-                        className="disruptionCounter"
-                        style={{ left: 20 }}
-                      ></div>
-                      <div
-                        className="disruptionCounter"
-                        style={{ left: 38 }}
-                      ></div>
-                    </>
-                  )}
-                </>
-              )}
-
-              {/* Mana Scion: Disruption */}
-              {/* {props.unit.enhancements.disruption > 0 && (
-                <div className="disruption animating"></div>
-              )} */}
-
               {/* Plant Scion: Overgrowth */}
               {props.unit.enhancements.overgrowth === true && (
                 <div className="overgrowth animating"></div>
@@ -415,6 +387,20 @@ export const Piece = (props) => {
             <>
               {props.unit.boosts.mountainStance === true && (
                 <div className="mountain-stance" style={{ left: 29 }}></div>
+              )}
+            </>
+          )}
+
+          {props.unit.unitClass === "Mana Scion" && (
+            <>
+              {props.unit.enhancements.disruption === 1 && (
+                <div className="disruptionCounter" style={{ left: 20 }}></div>
+              )}
+              {props.unit.enhancements.disruption > 1 && (
+                <>
+                  <div className="disruptionCounter" style={{ left: 20 }}></div>
+                  <div className="disruptionCounter" style={{ left: 38 }}></div>
+                </>
               )}
             </>
           )}

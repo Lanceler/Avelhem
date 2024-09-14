@@ -1740,8 +1740,8 @@ export const useSkillEffects = () => {
       resolution: "Discard Skill",
       unit: unit,
       player: self,
-      message: "Spend 1 skill",
-      restriction: null,
+      message: "Spend 1 Mana skill",
+      restriction: ["06-01", "06-02", "06-03"],
     });
 
     return newGameState;

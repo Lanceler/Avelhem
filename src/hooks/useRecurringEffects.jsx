@@ -2902,7 +2902,9 @@ export const useRecurringEffects = () => {
       case "06-03":
         return false;
       case "06-04":
-        return localGameState[self].skillHand.length >= 2; // need 2 cards: skill itself + 1 discard
+        return ["06-01", "06-02", "06-03"].some((s) =>
+          localGameState[self].skillHand.includes(s)
+        );
 
       case "07-01":
         return getZonesWithEnemies(unit, 1).length > 0 ? true : false;

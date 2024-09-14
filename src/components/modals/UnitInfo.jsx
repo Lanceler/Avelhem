@@ -311,8 +311,8 @@ const UnitInfo = (props) => {
               ⬩Your deployment and movements bypass motion contingent skills.
             </p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Your and your adjacent allies’ activations bypass “Symphonic
-              Screech”.
+              ⬩Your and your adjacent allies’ skill activations bypass
+              “Symphonic Screech”.
             </p>
           </>
         );
