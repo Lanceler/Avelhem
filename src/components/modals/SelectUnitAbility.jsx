@@ -106,7 +106,8 @@ const SelectUnitAbility = (props) => {
           abilityText: (
             <>
               <div className="abilityText ">
-                ⬩Purge an adjacent ally’s Paralysis, Frostbite, and Burn.
+                ⬩Purge an adjacent ally’s turn-based afflictions (except
+                Anathema).
               </div>
               <div className="abilityText ">⬩Draw 1 skill.</div>
             </>
@@ -377,8 +378,8 @@ const SelectUnitAbility = (props) => {
           abilityText: (
             <>
               <div className="abilityText ">
-                ⬩Spend 1 Blossom to purge your or an adjacent ally’s Paralysis,
-                Frostbite, and Burn.
+                ⬩Spend 1 Blossom to purge your or an adjacent ally’s turn-based
+                afflictions (except Anathema).
               </div>
             </>
           ),

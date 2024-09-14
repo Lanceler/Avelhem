@@ -73,7 +73,8 @@ const UnitInfo = (props) => {
               </span>
             </p>
             <p className="unitInfo-text-desc">
-              ⬩Purge an adjacent ally’s Paralysis, Frostbite, and Burn.
+              ⬩Purge an adjacent ally’s turn-based afflictions (except
+              Anathema).
             </p>
             <p className="unitInfo-text-desc unitInfo-text-last">
               ⬩Draw 1 skill.
@@ -238,8 +239,8 @@ const UnitInfo = (props) => {
 
             <p className="unitInfo-text-heading2">2. Ambrosia</p>
             <p className="unitInfo-text-desc">
-              ⬩Spend 1 Blossom to purge your or an adjacent ally’s Paralysis,
-              Burn, and Frostbite.
+              ⬩Spend 1 Blossom to purge your or an adjacent ally’s turn-based
+              afflictions (except Anathema).
             </p>
           </>
         );
@@ -283,7 +284,7 @@ const UnitInfo = (props) => {
             <p className="unitInfo-text-heading2">1. Kleptothermy</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
               ⬩Upon your debut, restore your Aether or that of an ally within 2
-              spaces. Alternatively, purge an adjacent enemy’s Aether.
+              spaces; or purge an adjacent enemy’s Aether.
             </p>
 
             <p className="unitInfo-text-heading2">2. Clear as Crystal</p>
@@ -325,8 +326,8 @@ const UnitInfo = (props) => {
               <span className="unitInfo-tactic-group2">
                 <img src={AdvanceSmall} className="unitInfo-tactic-icon2" />
               </span>{" "}
-              to activate “Fortify”. Alternatively, spend 1 skill to search for
-              1 “Crystallization”.
+              to activate “Fortify”; or spend 1 skill to search for 1
+              “Crystallization”.
             </p>
 
             <p className="unitInfo-text-heading2">2. Salt the Earth</p>
