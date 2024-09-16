@@ -8,8 +8,8 @@ import { useGetImages } from "../hooks/useGetImages";
 import RulesImg from "../assets/others/Rules.png";
 import Setup from "../assets/rules/Setup.png";
 import UnitTokens from "../assets/rules/UnitTokens.png";
-import SkillAnatomy from "../assets/rules/SkillAnatomy.png";
-import SkillAnatomySet from "../assets/rules/SkillAnatomySet.png";
+import SkillDisplay from "../assets/rules/SkillDisplay.png";
+import SkillSetDisplay from "../assets/rules/SkillSetDisplay.png";
 
 import "./Rules.css";
 
@@ -22,7 +22,14 @@ export default function Rules() {
   useEffect(() => {
     if (
       !id ||
-      !["overview", "units", "cards", "actions", "statuses"].includes(id)
+      ![
+        "summary",
+        "units",
+        "cards",
+        "tactics",
+        "statuses",
+        "keywords",
+      ].includes(id)
     ) {
       navigate("/rules");
     }
@@ -51,7 +58,7 @@ export default function Rules() {
 
           {!id && (
             <div className="rules-text">
-              <Link to="/rules/overview">
+              <Link to="/rules/summary">
                 <button>Overview & Summary</button>
               </Link>
               <br />
@@ -63,17 +70,21 @@ export default function Rules() {
                 <button>Cards</button>
               </Link>
               <br />
-              <Link to="/rules/actions">
-                <button>Actions</button>
+              <Link to="/rules/tactics">
+                <button>Tactics</button>
               </Link>
               <br />
               <Link to="/rules/statuses">
                 <button>Statuses</button>
               </Link>
+              <br />
+              <Link to="/rules/keywords">
+                <button>Keywords</button>
+              </Link>
             </div>
           )}
 
-          {id === "overview" && (
+          {id === "summary" && (
             <div className="rules-text">
               <h2>Overview</h2>
               <p>
@@ -155,7 +166,7 @@ export default function Rules() {
                   </li>
                 </ul>
               </ol>
-              <hr></hr>
+              <hr />
               <h2>Setup</h2>
               <p>
                 In this website, users can host a game through the Create Game
@@ -164,19 +175,21 @@ export default function Rules() {
                 joined, third parties can use the same link to spectate.
               </p>
               <br />
-              <p>The following steps are performed when starting a game:</p>
+              <p>
+                Sovereigns perform the following steps when starting a game:
+              </p>
               <br />
-              <br />
+
               <h3>1. Agree on the score objective.</h3>
               <p>
                 By default, the game is a race to score 1 point. Whenever
                 victory is achieved, the Sovereigns may opt to continue the game
                 by raising the objective by 1, up to a maximum of 5. It is
-                recommended that Sovereigns agree beforehand on the score
-                objective, as it may influence strategies and repertoire
+                recommended that Sovereigns agree on a final score objective
+                beforehand, as it may influence strategies and repertoire
                 creation.
               </p>
-              <br />
+
               <br />
               <h3>2. Select repertoires.</h3>
               <p>
@@ -185,7 +198,7 @@ export default function Rules() {
                 repertoires must contain exactly 20 and 60 cards, respectively.
               </p>
               <br />
-              <br />
+
               <h3>
                 3. Distribute unit tokens and decide who plays the first turn.
               </h3>
@@ -196,7 +209,7 @@ export default function Rules() {
                 tokens.
               </p>
               <br />
-              <br />
+
               <h3>4. Choose sides and deploy pawns.</h3>
               <p>
                 The board is oriented with 10 rows and 5 columns. Sovereigns
@@ -204,16 +217,20 @@ export default function Rules() {
                 each of them designated as their base. Pawns are deployed on the
                 1st, 3rd, and 5th columns of the 4th row from each Sovereign’s
                 side.
+                <br />
+                (Note: Units are deployed with Aether; in a physical
+                implementation, these would be represented by one of the
+                miscellaneous tokens.)
               </p>
               <br />
-              <br />
-              <h3>5. Set both Sovereigns’ Fate Defiance (FD) counters to 3.</h3>
+
+              <h3>5. Set Fate Defiance (FD) counters to 3.</h3>
               <p>
                 A Sovereign’s FD, as well as their BP, is displayed between
                 their Avelhem and skill repertoires.
               </p>
               <br />
-              <br />
+
               <h3>6. Shuffle repertoires and draw skill cards.</h3>
               <p>
                 After shuffling, both Sovereigns draw 4 skill cards. The
@@ -230,11 +247,11 @@ export default function Rules() {
                 </div>
                 <img
                   src={Setup}
-                  className="rules-skill-anatomy"
+                  className="rules-skill-display"
                   alt="Gamestate at setup"
                 />
               </div>
-              <hr></hr>
+              <hr />
               <h2>Units</h2>
               <p>
                 Units are the Sovereigns’ subservient soldiers. When in play,
@@ -245,7 +262,6 @@ export default function Rules() {
                 <Link to="/rules/units">Units page</Link>.
               </p>
               <br />
-              <br />
               <h3>Deployment</h3>
               <p>
                 With the exception of the pawns in the start of the game, units
@@ -253,7 +269,6 @@ export default function Rules() {
                 includes the first 3 rows from their side of the board.
                 Sovereigns can spend BP to expand their frontier.
               </p>
-              <br />
               <br />
               <h3>Health Points (HP)</h3>
               <p>
@@ -263,15 +278,13 @@ export default function Rules() {
                 being 1.
               </p>
               <br />
-              <br />
               <h3>Elimination</h3>
               <p>
                 Units are eliminated and removed from play when their HP is
                 depleted. Sovereigns receive 2 FD when their units are
-                eliminated and are awarded 1 BP when they eliminate their
+                eliminated, and they are awarded 1 BP when they eliminate their
                 opponent’s units.
               </p>
-              <br />
               <br />
               <h3>Class and Ascension</h3>
               <p>
@@ -292,7 +305,7 @@ export default function Rules() {
                   alt="From left to right: Pawn, Metal Scion, Fire Scion"
                 />
               </div>
-              <hr></hr>
+              <hr />
               <h2>Cards</h2>
               <p>
                 Cards belong to two categories: Avelhems and skills, each with
@@ -304,17 +317,14 @@ export default function Rules() {
                 <Link to="/rules/cards">Cards page</Link>.
               </p>
               <br />
-              <br />
               <h3>Avelhems</h3>
               <p>
-                Avelhems are the game’s namesake, and they refer to the power
-                and authority over the elements of creation. In this game, they
-                take the form of cards that Sovereigns can activate to ascend
-                their pawns to Scions of a specified class. The icon at an
-                Avelhem’s top left corner reflects its corresponding Scion
-                class.
+                The titular Avelhems refer to the power and authority over the
+                elements of creation. In this game, they take the form of cards
+                that Sovereigns can activate to ascend their pawns to Scions of
+                a specified class. The icon at an Avelhem’s top left corner
+                reflects its corresponding Scion class.
               </p>
-              <br />
               <br />
               <h3>Skills</h3>
               <p>
@@ -337,19 +347,18 @@ export default function Rules() {
                 </div>
 
                 <img
-                  src={SkillAnatomy}
-                  className="rules-skill-anatomy"
+                  src={SkillDisplay}
+                  className="rules-skill-display"
                   alt="Left: Plant Avelhem card; Right: Reminiscence, a Standard Sovereign skill card"
                 />
               </div>
-              <hr></hr>
+              <hr />
               <h2>Turn Structure</h2>
               <p>
                 Sovereigns alternate taking turns consisting of multiple phases.
                 The Initiator refers to the Sovereign whose turn it currently
                 is.
               </p>
-              <br />
               <br />
               <h3>Acquisition Phase</h3>
               <p>
@@ -372,7 +381,6 @@ export default function Rules() {
                 is earned primarily by eliminating enemy units. (See Bounty
                 Phase Catalog for details.)
               </p>
-              <br />
               <br />
               <h3>Coordination Phase</h3>
               <p>
@@ -423,19 +431,26 @@ export default function Rules() {
                 the resources are sufficient:
               </p>
               <ul>
-                <li>Activate an Avelhem or Sovereign skill card.</li>
-                <li>Activate a unit’s skill card.</li>
-                <li>Activate a unit’s ability.</li>
-                <li>Use a tactic to perform a Sovereign action.</li>
-
-                <li>Use a tactic to perform a unit action.</li>
+                <li>
+                  Activate an Avelhem or skill card (
+                  <Link to="/rules/cards">See Cards</Link>).
+                </li>
+                <li>
+                  Use a tactic to perform an action (
+                  <Link to="/rules/tactics">See Tactics</Link>).
+                </li>
+                <li>
+                  Activate a unit’s ability (
+                  <Link to="/rules/units">See Units</Link>).
+                </li>
               </ul>
+              <br />
               <p>
-                When there are no ongoing actions or effects, the Initiator can
-                conclude their Execution Phase.
+                When there are no ongoing effects, the Initiator can conclude
+                their Execution Phase.
               </p>
               <br />
-              <br />
+
               <h3>Final Phase</h3>
               <p>
                 The Final Phase wraps up the Initiator’s turn. During this
@@ -448,19 +463,37 @@ export default function Rules() {
 
                 <li>
                   Decrease the durations of their units’ turn-based statuses by
-                  1. The Burn affliction is decreased first, followed by all
-                  other statuses simultaneously. If multiple of their units are
-                  afflicted with Burn, the Initiator must decrease them
-                  one-by-one in any desired sequence.
+                  1.
+                  <ul>
+                    <li>
+                      The Burn affliction is decreased first, followed by all
+                      other statuses simultaneously.
+                    </li>
+                    <li>
+                      If multiple of the Initiator’s units are afflicted with
+                      Burn, they may decrease them in any desired sequence.
+                    </li>
+                  </ul>
                 </li>
                 <li>
                   Score if applicable. A unit scores the first time they occupy
                   a zone in the opponent’s base at the end of the Final Phase.
-                  Units that have scored stay on the board and are still counted
-                  in their Sovereign’s unit limits, but they can no longer be
-                  interacted with. If the Initiator scores with enough units to
-                  meet the victory objective, they win the game. Otherwise,
-                  their opponent commences the next turn as the Initiator.
+                  <ul>
+                    <li>
+                      When the Initiator’s unit scores, they gain 2 BP, while
+                      their opponent receives 6 FD.
+                    </li>
+                    <li>
+                      Units that have scored stay on the board and are still
+                      counted in their Sovereign’s unit limits, but they can no
+                      longer be interacted with.
+                    </li>
+                    <li>
+                      If the Initiator scores with enough units to meet the
+                      victory objective, they win the game. Otherwise, their
+                      opponent commences the next turn as the Initiator.
+                    </li>
+                  </ul>
                 </li>
               </ol>
             </div>
@@ -476,7 +509,6 @@ export default function Rules() {
                 time, and no more than 2 ally Scions can have the same class.
               </p>
               <br />
-              <br />
               <h3>Deployment</h3>
               <p>
                 With the exception of the pawns in the start of the game, units
@@ -484,7 +516,6 @@ export default function Rules() {
                 includes the first 3 rows from their side of the board.
                 Sovereigns can spend BP to expand their frontier.
               </p>
-              <br />
               <br />
               <h3>Health Points (HP)</h3>
               <p>
@@ -495,23 +526,21 @@ export default function Rules() {
                 heart-shaped icon at the bottom left side of a unit.
               </p>
               <br />
-              <br />
               <h3>Elimination</h3>
               <p>
                 Units are eliminated and removed from play when their HP is
                 depleted. Sovereigns receive 2 FD when their units are
-                eliminated and are awarded 1 BP when they eliminate their
+                eliminated, and they are awarded 1 BP when they eliminate their
                 opponent’s units.
               </p>
               <br />
-              <br />
+
               <h3>Class and Ascension</h3>
               <p>
                 A unit’s class defines its capabilities. Units start as pawns
                 and can ascend to Scions with access to class-exclusive
                 abilities, talents, and skills.
               </p>
-              <br />
               <br />
 
               <h3>Abilities</h3>
@@ -521,7 +550,6 @@ export default function Rules() {
                 used. Abilities with the “One-shot” property can only be
                 activated once per turn.
               </p>
-              <br />
               <br />
 
               <h3>Talents</h3>
@@ -538,18 +566,14 @@ export default function Rules() {
                 first.
               </p>
               <br />
-              <br />
 
               <h3>Aether</h3>
               <p>
-                Aether is granted to a unit upon their deployment. Aethers are
+                Aether is granted to a unit upon their deployment, and it is
                 primarily spent to perform and mitigate Aether-blasts (see{" "}
-                <Link to="/rules/actions">Actions</Link>), and some effects
-                provide other means to utilize or influence them. A unit’s
-                Aether can be restored after it is spent or removed. Units
-                cannot possess more than 1 Aether.
+                <Link to="/rules/tactics">Tactics</Link>). Units cannot possess
+                more than 1 Aether.
               </p>
-              <br />
               <br />
 
               <h3>Boost</h3>
@@ -560,7 +584,6 @@ export default function Rules() {
                 boosts negated.
               </p>
               <br />
-              <br />
 
               <h3>Status</h3>
               <p>
@@ -569,7 +592,6 @@ export default function Rules() {
                 apply disadvantages. For more information, visit the{" "}
                 <Link to="/rules/statuses">Statuses page</Link>.
               </p>
-              <br />
               <br />
 
               <h3 className="rules-anathema">Anathema</h3>
@@ -618,15 +640,15 @@ export default function Rules() {
               <br />
               <h3>Avelhems</h3>
               <p>
-                Avelhems are the game’s namesake, and they refer to the power
-                and authority over the elements of creation. In this game, they
-                take the form of cards that Sovereigns can activate to ascend
-                their pawns to Scions of a specified class. The icon at an
-                Avelhem’s top left corner reflects its corresponding Scion
-                class. Sovereigns can resonate Avelhems by activating them with
-                a resonator, which can be either an identical copy or a valid
-                substitute. When a card is resonated, its resonance will be
-                applied as an additional effect.
+                The titular Avelhems refer to the power and authority over the
+                elements of creation. In this game, they take the form of cards
+                that Sovereigns can activate to ascend their pawns to Scions of
+                a specified class. The icon at an Avelhem’s top left corner
+                reflects its corresponding Scion class. Sovereigns can resonate
+                Avelhems by activating them with a resonator, which can be
+                either an identical copy or a valid substitute. When a card is
+                resonated, its resonance will be applied as an additional
+                effect.
               </p>
               <br />
               <br />
@@ -646,8 +668,8 @@ export default function Rules() {
                 </div>
 
                 <img
-                  src={SkillAnatomy}
-                  className="rules-skill-anatomy"
+                  src={SkillDisplay}
+                  className="rules-skill-display"
                   alt="Left: Plant Avelhem card; Right: Reminiscence, a Standard Sovereign skill card"
                 />
               </div>
@@ -775,11 +797,153 @@ export default function Rules() {
                 </div>
 
                 <img
-                  src={SkillAnatomySet}
-                  className="rules-skill-anatomy"
+                  src={SkillSetDisplay}
+                  className="rules-skill-display"
                   alt="From left to right: Fire standard, resonant, contingent, & burst skills"
                 />
               </div>
+            </div>
+          )}
+
+          {id === "tactics" && (
+            <div className="rules-text">
+              <h2>Tactics</h2>
+              <p>
+                Tactics are resources provided every turn, and they represent
+                the opportunity to actualize an action. Tactics are obtained
+                during the Coordination Phase and can be rerolled during the
+                Defiance Phase. Unused tactics do not carry over to subsequent
+                turns.
+              </p>
+              <br />
+              <p>
+                There are 5 tactics, each offering a unique set of options for
+                Sovereigns and units.
+              </p>
+              <br />
+
+              <h3>Advance</h3>
+              <ul>
+                <li>Roll chance: 2 / 6</li>
+                <li>
+                  Sovereign Actions:
+                  <ul>
+                    <li>Deploy a pawn.</li>
+                    <li>Spend 6 FD to convert to an Assault tactic.</li>
+                    <li>
+                      Float 1 skill to deploy a Scion.{" "}
+                      <em>(Must be unlocked via Bounty Phase.)</em>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  Units Actions:
+                  <ul>
+                    <li>Traverse (move to a vacant adjacent zone).</li>
+                    <li>Aether-blast an adjacent enemy.</li>
+                  </ul>
+                </li>
+              </ul>
+
+              <br />
+
+              <h3>Mobilize</h3>
+              <ul>
+                <li>Roll chance: 2 / 6</li>
+                <li>
+                  Mobilize provides 3 instances; actions are performed using
+                  instances rather than the entire tactic.
+                </li>
+                <li>
+                  Sovereign Action:
+                  <ul>
+                    <li>Spend 2 instances to draw 1 skill.</li>
+                  </ul>
+                </li>
+                <li>
+                  Units Action:
+                  <ul>
+                    <li>
+                      Spend 1 instance to traverse (move to a vacant adjacent
+                      zone).
+                    </li>
+                    <li>
+                      Note: A unit cannot use an individual Mobilize tactic more
+                      than once. (For example, a unit that traverses using 1
+                      Mobilize instance cannot use the remaining instances of
+                      the same tactic to traverse again, but they are allowed to
+                      traverse via a second Mobilize tactic.)
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+
+              <br />
+
+              <h3>Assault</h3>
+              <ul>
+                <li>Roll chance: 1 / 6</li>
+                <li>There are no Sovereign actions.</li>
+                <li>
+                  Units Actions:
+                  <ul>
+                    <li>Traverse (move to a vacant adjacent zone).</li>
+                    <li>
+                      Strike (attack an adjacent enemy, then move to their zone
+                      if they were eliminated).
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+
+              <br />
+
+              <h3>Invoke</h3>
+              <ul>
+                <li>Roll chance: 1 / 6</li>
+                <li>
+                  Sovereign Actions:
+                  <ul>
+                    <li>Draw 3 Avelhems.</li>
+                    <li>Draw 2 skills.</li>
+                    <li>Gain 2 FD and recover up to 1 “Transcendence”.</li>
+                  </ul>
+                </li>
+                <li>There are no unit actions.</li>
+              </ul>
+
+              <br />
+
+              <h3>Rally</h3>
+              <ul>
+                <li>Roll chance: 0; obtainable only via Convene</li>
+                <li>
+                  Rally provides 2 instances; actions are performed using
+                  instances rather than the entire tactic.
+                </li>
+                <li>
+                  Sovereign Action:
+                  <ul>
+                    <li>Spend 1 instance to deploy a pawn.</li>
+                  </ul>
+                </li>
+                <li>There are no unit actions.</li>
+              </ul>
+
+              <br />
+              <br />
+
+              {/* <div className="rules-image-container">
+                <div className="rules-image-desc">
+                  From left to right: Advance, Mobilize, Assault, Invoke, Rally
+                </div>
+
+                <img
+                  src={}
+                  className="rules-skill-display"
+                  alt="From left to right: Advance, Mobilize, Assault, Invoke, Rally"
+                />
+              </div> */}
             </div>
           )}
 

@@ -44,8 +44,8 @@ export default function Home() {
               </div>
               <div className="home-banner-text">
                 <Link
-                  to="/rules"
-                  // to="/"
+                  // to="/rules"
+                  to="/"
                 >
                   <button className="home-banner-button">
                     Rulebook (To do)

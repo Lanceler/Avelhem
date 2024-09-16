@@ -2936,12 +2936,12 @@ export const useRecurringEffects = () => {
       }
 
       const vestige = localGameState[self].skillVestige;
-
       for (let skill of vestige) {
-        if (skill[0] === "S" && skill !== "SA-01") {
+        if (skill[0] === "S") {
           return true;
         }
       }
+
       return false;
     };
 

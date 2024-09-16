@@ -107,14 +107,14 @@
 
 }
 
-.rules-skill-anatomy, .rules-unit-token{
+.rules-skill-display, .rules-unit-token{
     position: relative;
     max-width: 95%;
 
     /* background-color: aqua; */
 }
 
-.rules-skill-anatomy {
+.rules-skill-display {
     width: 1000px;
 }
 

@@ -27,15 +27,11 @@ export const useSovereignSkillEffects = () => {
 
     newGameState[self].fateDefiances -= 3;
 
-    let recoverableSkills = [...sovereignSkillList()].filter(
-      (x) => x !== "SA-01"
-    );
-
     newGameState.currentResolution.push({
       resolution: "Recover Skill",
       player: self,
-      restriction: recoverableSkills,
-      message: "Recover 1 Sovereign skill other than “Heir’s Endeavor”.",
+      restriction: [...sovereignSkillList()],
+      message: "Spend 3 FD to recover 1 Sovereign skill.",
       outcome: "Add",
     });
 

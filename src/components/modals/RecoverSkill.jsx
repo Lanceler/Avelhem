@@ -58,7 +58,7 @@ const RecoverSkill = (props) => {
           title = "Efflorescence";
           break;
 
-        case "Recover 1 Lightning skill other than “Thunder Thaumaturge”.":
+        case "Recover then float 1 Lightning skill other than “Thunder Thaumaturge”.":
           title = "Thunder Thaumaturge";
           break;
 
