@@ -10,6 +10,9 @@ import Setup from "../assets/rules/Setup.png";
 import UnitTokens from "../assets/rules/UnitTokens.png";
 import SkillDisplay from "../assets/rules/SkillDisplay.png";
 import SkillSetDisplay from "../assets/rules/SkillSetDisplay.png";
+import SkillSubstitute from "../assets/rules/SkillSubstitute.png";
+import DiceFaces from "../assets/rules/DiceFaces.png";
+import StatusSkill from "../assets/rules/StatusSkill.png";
 
 import "./Rules.css";
 
@@ -55,7 +58,6 @@ export default function Rules() {
               <img src={RulesImg} className="page-title" />
             </Link>
           </div>
-
           {!id && (
             <div className="rules-text">
               <Link to="/rules/summary">
@@ -83,7 +85,6 @@ export default function Rules() {
               </Link>
             </div>
           )}
-
           {id === "summary" && (
             <div className="rules-text">
               <h2>Overview</h2>
@@ -498,7 +499,6 @@ export default function Rules() {
               </ol>
             </div>
           )}
-
           {id === "units" && (
             <div className="rules-text">
               <h2>Units</h2>
@@ -587,9 +587,10 @@ export default function Rules() {
 
               <h3>Status</h3>
               <p>
-                Statuses affect units in various ways. There are 2 kinds of
-                statuses: enhancements provide advantages, while afflictions
-                apply disadvantages. For more information, visit the{" "}
+                Statuses are conditions that influence units. Positive statuses
+                are called enhancements, while negative ones are called
+                afflictions. Some last for a set number of turns, while others
+                persist indefinitely. For more information, visit the{" "}
                 <Link to="/rules/statuses">Statuses page</Link>.
               </p>
               <br />
@@ -598,12 +599,12 @@ export default function Rules() {
               <p>
                 Anathema is a Scion’s punishment for using their Avelhem to slay
                 a fellow Demigod or human. When a Scion eliminates another Scion
-                or pawn, they suffer Anathema for 2 turns. The affliction is
-                delayed until the unit has resolved all the effects they have
-                activated. For example, suppose a Scion activates a skill card
-                that lets them attack and then perform an additional effect. If
-                the skill’s attack eliminates an enemy, Anathema will be delayed
-                until the entire skill has concluded.
+                or pawn, they are afflicted with Anathema for 2 turns. The
+                affliction is delayed until the unit has resolved all the
+                effects they have activated. For example, suppose a Scion
+                activates a skill card that lets them attack and then perform an
+                additional effect. If the skill’s attack eliminates an enemy,
+                Anathema will be delayed until the entire skill has concluded.
               </p>
               <br />
               <br />
@@ -621,7 +622,6 @@ export default function Rules() {
               </div>
             </div>
           )}
-
           {id === "cards" && (
             <div className="rules-text">
               <h2>Cards</h2>
@@ -637,7 +637,6 @@ export default function Rules() {
                 own vestiges at any time.
               </p>
               <br />
-              <br />
               <h3>Avelhems</h3>
               <p>
                 The titular Avelhems refer to the power and authority over the
@@ -650,7 +649,6 @@ export default function Rules() {
                 resonated, its resonance will be applied as an additional
                 effect.
               </p>
-              <br />
               <br />
               <h3>Skills</h3>
               <p>
@@ -686,7 +684,6 @@ export default function Rules() {
                 be activated by a Lightning Scion.
               </p>
 
-              <br />
               <br />
               <h3>Method</h3>
               <p>
@@ -725,10 +722,9 @@ export default function Rules() {
                   </li>
                   <li>
                     Like Avelhems, they possess resonances, which are extra
-                    effects that activate if they are resonated (activated with
-                    an identical card or valid substitute). The additional card
-                    that is paired with them is referred to as their
-                    “resonator.”
+                    effects that are applied if they are resonated (activated
+                    with a resonator, which can be either an identical card or
+                    valid substitute).
                   </li>
                 </ul>
               </p>
@@ -783,7 +779,10 @@ export default function Rules() {
                     effects. Discarding them via any other means (such as
                     spending) would still send them to the vestige.
                   </li>
-                  <li>Shattered skills are revealed to both Sovereigns.</li>
+                  <li>
+                    Shattered skills are set aside where they are revealed to
+                    both Sovereigns.
+                  </li>
                 </ul>
               </p>
 
@@ -802,18 +801,44 @@ export default function Rules() {
                   alt="From left to right: Fire standard, resonant, contingent, & burst skills"
                 />
               </div>
+
+              <br />
+              <br />
+
+              <h3>Substitute</h3>
+              <p>
+                Some skills have a “Substitute” property that allows them to
+                function as a resonator for certain cards. When used this way,
+                these skills provide alternative effects in place of their
+                primary ones. For example, Heir’s Endeavor as a resonator can
+                only resonate with Sovereign skills, and it allows the activator
+                to inspect skills when the resonance concludes, while its effect
+                of recovering a Sovereign skill is ignored.
+              </p>
+
+              <br />
+              <br />
+
+              <div className="rules-image-container">
+                <div className="rules-image-desc">
+                  Skills with substitute properties
+                </div>
+
+                <img
+                  src={SkillSubstitute}
+                  className="rules-skill-display"
+                  alt="Skills with substitute properties"
+                />
+              </div>
             </div>
           )}
-
           {id === "tactics" && (
             <div className="rules-text">
               <h2>Tactics</h2>
               <p>
                 Tactics are resources provided every turn, and they represent
-                the opportunity to actualize an action. Tactics are obtained
-                during the Coordination Phase and can be rerolled during the
-                Defiance Phase. Unused tactics do not carry over to subsequent
-                turns.
+                the opportunity to actualize an action. Unused tactics do not
+                carry over to subsequent turns.
               </p>
               <br />
               <p>
@@ -869,10 +894,10 @@ export default function Rules() {
                     </li>
                     <li>
                       Note: A unit cannot use an individual Mobilize tactic more
-                      than once. (For example, a unit that traverses using 1
+                      than once. For example, a unit that traverses using 1
                       Mobilize instance cannot use the remaining instances of
                       the same tactic to traverse again, but they are allowed to
-                      traverse via a second Mobilize tactic.)
+                      traverse via a second Mobilize tactic.
                     </li>
                   </ul>
                 </li>
@@ -883,7 +908,7 @@ export default function Rules() {
               <h3>Assault</h3>
               <ul>
                 <li>Roll chance: 1 / 6</li>
-                <li>There are no Sovereign actions.</li>
+                <li>Assault does not provide any Sovereign actions.</li>
                 <li>
                   Units Actions:
                   <ul>
@@ -909,7 +934,7 @@ export default function Rules() {
                     <li>Gain 2 FD and recover up to 1 “Transcendence”.</li>
                   </ul>
                 </li>
-                <li>There are no unit actions.</li>
+                <li>Invoke does not provide any unit actions.</li>
               </ul>
 
               <br />
@@ -927,23 +952,108 @@ export default function Rules() {
                     <li>Spend 1 instance to deploy a pawn.</li>
                   </ul>
                 </li>
-                <li>There are no unit actions.</li>
+                <li>Rally does not provide any unit actions.</li>
               </ul>
 
               <br />
+              <h2>Other Uses</h2>
+              <p>
+                In addition to the actions discussed above, the activation of
+                some abilities and the effects of some skills require tactics.
+              </p>
+
+              <br />
               <br />
 
-              {/* <div className="rules-image-container">
+              <div className="rules-image-container">
                 <div className="rules-image-desc">
-                  From left to right: Advance, Mobilize, Assault, Invoke, Rally
+                  From left to right: Advance, Mobilize, Assault, Invoke, &
+                  Rally
                 </div>
 
                 <img
-                  src={}
+                  src={DiceFaces}
                   className="rules-skill-display"
-                  alt="From left to right: Advance, Mobilize, Assault, Invoke, Rally"
+                  alt="From left to right: Advance, Mobilize, Assault, Invoke, & Rally"
                 />
-              </div> */}
+              </div>
+            </div>
+          )}
+          {id === "statuses" && (
+            <div className="rules-text">
+              <h2>Statuses</h2>
+              <p>
+                Statuses are conditions that influence units. Positive statuses
+                are called enhancements, while negative ones are called
+                afflictions. In the physical implementation of the game,
+                miscellaneous tokens would represent statuses; in the digital
+                simulator, various visual assets are used instead.
+              </p>
+              <br />
+
+              <h3>Duration</h3>
+              <p>
+                The duration of a turn-based status is stated with the effect or
+                mechanic that applies it. In the absence of an explicit
+                duration, the status persists indefinitely. For example, Frigid
+                Breath can freeze (apply frostbite) enemy units for 1 turn,
+                while Efflorescence grants the activator Overgrowth
+                indefinitely.
+              </p>
+
+              <br />
+              <p>
+                Turn-based statuses decrease in duration during the Final Phase,
+                after excess cards are discarded. If present, the Burn
+                affliction is always the first status to tick down, followed by
+                all other statuses simultaneously. If multiple units are
+                afflicted with Burn, the Sovereign chooses the order in which
+                Burn expires for each unit.
+              </p>
+              <br />
+
+              <h3>Removal</h3>
+              <p>
+                Statuses are removed either through purge or expiration. Purge
+                refers to a keyword found in certain effects or mechanics that
+                explicitly remove specific statuses. Expiration occurs when the
+                duration of a status reaches 0 — typically at the end of the
+                Final Phase. The distinction between purge and expiration
+                matters solely for the Burn affliction, as Burn causes damage to
+                the affected unit only if it expires.
+                {/* Note: update with Infect and Avian passive */}
+              </p>
+
+              <br />
+              <br />
+
+              <div className="rules-image-container">
+                <div className="rules-image-desc">
+                  A skill that can apply a temporary status (left) & a skill
+                  that can apply an indefinite status (right)
+                </div>
+
+                <img
+                  src={StatusSkill}
+                  className="rules-skill-display"
+                  alt="A skill that can apply a temporary status & a skill
+                  that can apply an indefinite status"
+                />
+              </div>
+
+              <br />
+              <br />
+
+              <h3>Enhancements</h3>
+              <ul>
+                <li>Ravager:</li>
+              </ul>
+              <br />
+
+              <h3>Afflictions</h3>
+              <ul>
+                <li>Anathema:</li>
+              </ul>
             </div>
           )}
 
