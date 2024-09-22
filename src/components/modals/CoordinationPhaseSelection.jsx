@@ -113,9 +113,9 @@ const CoordinationPhaseSelection = (props) => {
         });
 
         if (upgrade >= 3) {
-          newGameState[self].fateDefiances = Math.min(
+          newGameState[self].fateDefiance = Math.min(
             6,
-            newGameState[self].fateDefiances + 1
+            newGameState[self].fateDefiance + 1
           );
         }
 

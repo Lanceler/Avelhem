@@ -100,7 +100,7 @@ export default function MyGames() {
             tactics: 0,
             avelhem: 0,
           },
-          fateDefiances: 3,
+          fateDefiance: 3,
           score: 0,
         };
 

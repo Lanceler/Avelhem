@@ -105,7 +105,7 @@ export const useRecurringEffects = () => {
   const activateAvelhemRecover = (newGameState, avelhem) => {
     //newGameState.currentResolution.pop() <--not needed
 
-    newGameState[self].fateDefiances -= 3;
+    newGameState[self].fateDefiance -= 3;
 
     const scionClass = avelhemToScion(avelhem);
 
@@ -2435,7 +2435,7 @@ export const useRecurringEffects = () => {
           );
 
           //Enemy gains 6 FD
-          newGameState.host.fateDefiances = 6;
+          newGameState.host.fateDefiance = 6;
         } else if (unit.row === 0 && self === "host") {
           //Host scores
           //Grant score
@@ -2449,7 +2449,7 @@ export const useRecurringEffects = () => {
           );
 
           //Enemy gains 6 FD
-          newGameState.guest.fateDefiances = 6;
+          newGameState.guest.fateDefiance = 6;
         }
       }
     }
@@ -2931,7 +2931,7 @@ export const useRecurringEffects = () => {
 
   const canActivateSovereignSkill = (skill) => {
     const canHeirsEndeavor = () => {
-      if (localGameState[self].fateDefiances < 3) {
+      if (localGameState[self].fateDefiance < 3) {
         return false;
       }
 
@@ -2991,7 +2991,7 @@ export const useRecurringEffects = () => {
         return hasTactic(["Invoke"]);
 
       case "SB-04": // Fervent Prayer
-        return localGameState[self].fateDefiances >= 2;
+        return localGameState[self].fateDefiance >= 2;
 
       case "SB-05": // Press the Attack
         return canPressTheAttack();
@@ -3348,10 +3348,10 @@ export const useRecurringEffects = () => {
 
     let newZoneInfo = JSON.parse(newGameState.zones);
 
-    // Grant Fate Defiances
-    newGameState[victim.player].fateDefiances = Math.min(
+    // Grant Fate Defiance
+    newGameState[victim.player].fateDefiance = Math.min(
       6,
-      newGameState[victim.player].fateDefiances + 2
+      newGameState[victim.player].fateDefiance + 2
     );
 
     // Grant Bounty Points
@@ -4376,9 +4376,9 @@ export const useRecurringEffects = () => {
       10,
       newGameState[enemy].bountyPoints + 3
     );
-    newGameState[enemy].fateDefiances = Math.min(
+    newGameState[enemy].fateDefiance = Math.min(
       6,
-      newGameState[enemy].fateDefiances + 6
+      newGameState[enemy].fateDefiance + 6
     );
 
     return newGameState;

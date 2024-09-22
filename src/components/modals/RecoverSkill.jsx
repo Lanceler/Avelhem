@@ -108,7 +108,7 @@ const RecoverSkill = (props) => {
     }
 
     if (props.cost === "1 FD") {
-      newGameState[self].fateDefiances -= 1;
+      newGameState[self].fateDefiance -= 1;
     }
 
     dispatch(updateState(newGameState));

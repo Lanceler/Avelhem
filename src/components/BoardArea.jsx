@@ -4868,7 +4868,7 @@ const BoardArea = (props) => {
                       <div className="resource-points">
                         <div className="fd-counter">
                           {" "}
-                          FD: {localGameState[enemy].fateDefiances} / 6{" "}
+                          FD: {localGameState[enemy].fateDefiance} / 6{" "}
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 512 512"
@@ -4946,7 +4946,7 @@ const BoardArea = (props) => {
                       </div>
                       <div className="resource-points">
                         <div className="fd-counter">
-                          FD: {localGameState[self].fateDefiances} / 6{" "}
+                          FD: {localGameState[self].fateDefiance} / 6{" "}
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 512 512"

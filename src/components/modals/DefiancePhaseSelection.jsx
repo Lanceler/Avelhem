@@ -44,7 +44,7 @@ const DefiancePhaseSelection = (props) => {
     switch (selectedChoice) {
       case 1:
         //DO NOT spend FD
-        //newGameState[self].fateDefiances -= defianceCosts[0]
+        //newGameState[self].fateDefiance -= defianceCosts[0]
 
         updateData = false;
 
@@ -64,7 +64,7 @@ const DefiancePhaseSelection = (props) => {
 
       case 2:
         //Spend FD
-        newGameState[self].fateDefiances -= defianceCosts[1];
+        newGameState[self].fateDefiance -= defianceCosts[1];
 
         //reroll tactics
         newGameState = assignTactics(newGameState, rollTactic(), rollTactic());
@@ -81,7 +81,7 @@ const DefiancePhaseSelection = (props) => {
 
       case 3:
         //Spend FD
-        newGameState[self].fateDefiances -= defianceCosts[2];
+        newGameState[self].fateDefiance -= defianceCosts[2];
 
         //reroll tactics
 
@@ -95,7 +95,7 @@ const DefiancePhaseSelection = (props) => {
 
       case 4:
         //DO NOT spend FD
-        //newGameState[self].fateDefiances -= defianceCosts[3]
+        //newGameState[self].fateDefiance -= defianceCosts[3]
 
         updateData = false;
 
@@ -109,7 +109,7 @@ const DefiancePhaseSelection = (props) => {
 
       case 5:
         //Spend FD
-        newGameState[self].fateDefiances -= defianceCosts[4];
+        newGameState[self].fateDefiance -= defianceCosts[4];
 
         //end defiance Phase
         newGameState = endDefiancePhase(newGameState);
@@ -137,7 +137,7 @@ const DefiancePhaseSelection = (props) => {
 
       case 6:
         //Spend FD
-        newGameState[self].fateDefiances -= defianceCosts[5];
+        newGameState[self].fateDefiance -= defianceCosts[5];
 
         //draw 1 skill
         newGameState = drawSkill(newGameState);
@@ -185,21 +185,21 @@ const DefiancePhaseSelection = (props) => {
 
   const canSelect = [
     //Artifice
-    newGameState[self].fateDefiances >= defianceCosts[0] &&
+    newGameState[self].fateDefiance >= defianceCosts[0] &&
       newGameState[self].skillHand.length > 0,
     //Backtrack
-    newGameState[self].fateDefiances >= defianceCosts[1] &&
+    newGameState[self].fateDefiance >= defianceCosts[1] &&
       newGameState.tactics.length > 1,
     //Curate
-    newGameState[self].fateDefiances >= defianceCosts[2] &&
+    newGameState[self].fateDefiance >= defianceCosts[2] &&
       newGameState.tactics.length > 1,
     //Destine
-    newGameState[self].fateDefiances >= defianceCosts[3] && canDestine(),
+    newGameState[self].fateDefiance >= defianceCosts[3] && canDestine(),
 
     //Ex Machina
-    newGameState[self].fateDefiances >= defianceCosts[4],
+    newGameState[self].fateDefiance >= defianceCosts[4],
     //Finesse
-    newGameState[self].fateDefiances >= defianceCosts[5],
+    newGameState[self].fateDefiance >= defianceCosts[5],
   ];
 
   const defianceOptions = [
@@ -283,7 +283,7 @@ const DefiancePhaseSelection = (props) => {
       <div className="modal ">
         <div className="modalHeader">
           <div className="modalTitle">
-            Defiance Phase (FD: {localGameState[self].fateDefiances})
+            Defiance Phase (FD: {localGameState[self].fateDefiance})
           </div>
           <div className="modalButton">
             <button className="redButton" onClick={() => handleViewBoard()}>

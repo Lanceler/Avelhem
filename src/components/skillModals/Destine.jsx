@@ -66,7 +66,7 @@ const Destine = (props) => {
 
     if (props.reason === "Destine") {
       //Spend FD
-      newGameState[self].fateDefiances -= props.defianceCost;
+      newGameState[self].fateDefiance -= props.defianceCost;
 
       //send selected skill to vestige
       newGameState[self].skillVestige.push(

@@ -138,7 +138,7 @@ const AcquisitionPhase = (props) => {
         if (
           newGameState[self].bountyUpgrades.acquisition >= 3 &&
           newGameState[self].skillVestige.includes("SX-01") &&
-          newGameState[self].fateDefiances > 0
+          newGameState[self].fateDefiance > 0
         ) {
           newGameState.currentResolution.push({
             resolution: "Recover Skill",

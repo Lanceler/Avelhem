@@ -13,6 +13,7 @@ import SkillSetDisplay from "../assets/rules/SkillSetDisplay.png";
 import SkillSubstitute from "../assets/rules/SkillSubstitute.png";
 import DiceFaces from "../assets/rules/DiceFaces.png";
 import StatusSkill from "../assets/rules/StatusSkill.png";
+import EffectSkill from "../assets/rules/EffectSkill.png";
 
 import "./Rules.css";
 
@@ -25,14 +26,9 @@ export default function Rules() {
   useEffect(() => {
     if (
       !id ||
-      ![
-        "summary",
-        "units",
-        "cards",
-        "tactics",
-        "statuses",
-        "keywords",
-      ].includes(id)
+      !["summary", "units", "cards", "tactics", "statuses", "effects"].includes(
+        id
+      )
     ) {
       navigate("/rules");
     }
@@ -80,8 +76,8 @@ export default function Rules() {
                 <button>Statuses</button>
               </Link>
               <br />
-              <Link to="/rules/keywords">
-                <button>Keywords</button>
+              <Link to="/rules/effects">
+                <button>Effects</button>
               </Link>
             </div>
           )}
@@ -112,11 +108,16 @@ export default function Rules() {
               <br />
               <h3>Objective</h3>
               <p>
-                A Sovereign wins by moving one of their pieces to the opponent’s
-                end of the board. When victory is achieved, the Sovereigns may
-                opt to continue the game by raising the number of units required
-                for victory.
+                A Sovereign wins by moving a set number of their pieces to the
+                opponent’s end of the board.
               </p>
+              <br />
+              <p>
+                When victory is achieved, the Sovereigns may opt to continue the
+                game by raising the number of units required for victory, up to
+                a maximum of 5.
+              </p>
+
               <br />
               <br />
               <h3>Components</h3>
@@ -154,7 +155,7 @@ export default function Rules() {
                 <ul>
                   <li>
                     Displays upgrades and tallies Bounty Points and Fate
-                    Defiances
+                    Defiance
                   </li>
                 </ul>
 
@@ -181,7 +182,7 @@ export default function Rules() {
               </p>
               <br />
 
-              <h3>1. Agree on the score objective.</h3>
+              <h3>1. Agree on the score objective</h3>
               <p>
                 By default, the game is a race to score 1 point. Whenever
                 victory is achieved, the Sovereigns may opt to continue the game
@@ -192,7 +193,7 @@ export default function Rules() {
               </p>
 
               <br />
-              <h3>2. Select repertoires.</h3>
+              <h3>2. Select repertoires</h3>
               <p>
                 New accounts are provided 3 identical starter repertoires, which
                 can be customized in the Repertoires page. Avelhem and skill
@@ -201,7 +202,7 @@ export default function Rules() {
               <br />
 
               <h3>
-                3. Distribute unit tokens and decide who plays the first turn.
+                3. Distribute unit tokens and decide who plays the first turn
               </h3>
               <p>
                 The host is assigned the gold unit tokens and given the choice
@@ -211,7 +212,7 @@ export default function Rules() {
               </p>
               <br />
 
-              <h3>4. Choose sides and deploy pawns.</h3>
+              <h3>4. Choose sides and deploy pawns</h3>
               <p>
                 The board is oriented with 10 rows and 5 columns. Sovereigns
                 take their positions on opposite sides, with the row closest to
@@ -225,14 +226,14 @@ export default function Rules() {
               </p>
               <br />
 
-              <h3>5. Set Fate Defiance (FD) counters to 3.</h3>
+              <h3>5. Set Fate Defiance (FD) counters to 3</h3>
               <p>
                 A Sovereign’s FD, as well as their BP, is displayed between
                 their Avelhem and skill repertoires.
               </p>
               <br />
 
-              <h3>6. Shuffle repertoires and draw skill cards.</h3>
+              <h3>6. Shuffle repertoires and draw skill cards</h3>
               <p>
                 After shuffling, both Sovereigns draw 4 skill cards. The
                 Sovereign who plays the first turn adds 1 copy of
@@ -311,11 +312,11 @@ export default function Rules() {
               <p>
                 Cards belong to two categories: Avelhems and skills, each with
                 its own repertoire (deck) and vestige (discard pile). Cards can
-                be activated from one’s hand, and they are sent to the vestige
-                upon the conclusion of their effects, unless stated otherwise.
-                When a repertoire is depleted, its corresponding vestige is
-                shuffled to replenish it. For more information, visit the{" "}
-                <Link to="/rules/cards">Cards page</Link>.
+                be activated from the hand to apply their effects and are sent
+                to the vestige once those effects conclude, unless otherwise
+                specified. When a repertoire is depleted, its corresponding
+                vestige is shuffled to replenish it. For more information, visit
+                the <Link to="/rules/cards">Cards page</Link>.
               </p>
               <br />
               <h3>Avelhems</h3>
@@ -539,7 +540,9 @@ export default function Rules() {
               <p>
                 A unit’s class defines its capabilities. Units start as pawns
                 and can ascend to Scions with access to class-exclusive
-                abilities, talents, and skills.
+                abilities, talents, and skills. A pawn’s capability to ascend is
+                tied to their “Apotheosis” talent; thus, they cannot ascend if
+                they are muted (see <Link to="/rules/statuses">Statuses</Link>).
               </p>
               <br />
 
@@ -548,20 +551,16 @@ export default function Rules() {
                 Scions have 2 unique abilities, which are special actions they
                 can manually activate. Some abilities require a tactic to be
                 used. Abilities with the “One-shot” property can only be
-                activated once per turn.
+                activated once per turn; this limit applies to units
+                individually.
               </p>
               <br />
 
               <h3>Talents</h3>
               <p>
                 Each class has 2 unique talents that provide passive effects.
-                Scions have either a debut talent, which activates the moment
-                they ascend or deploy, or an elimination talent, which activates
-                when they are eliminated. A pawn’s capability to ascend is tied
-                to their “Apotheosis” talent; thus, they cannot ascend if they
-                are afflicted with a status that mutes (disables talents). Some
-                talents are triggered by events. If an event triggers both a
-                talent and a contingent skill (see{" "}
+                Some talents are triggered by events. If an event triggers both
+                a talent and a contingent skill (see{" "}
                 <Link to="/rules/cards">Cards</Link>), the talent activates
                 first.
               </p>
@@ -576,7 +575,7 @@ export default function Rules() {
               </p>
               <br />
 
-              <h3>Boost</h3>
+              <h3>Boosts</h3>
               <p>
                 Boosts are temporary benefits that can improve a unit’s
                 performance. Boosts expire upon their application or at the
@@ -589,8 +588,7 @@ export default function Rules() {
               <p>
                 Statuses are conditions that influence units. Positive statuses
                 are called enhancements, while negative ones are called
-                afflictions. Some last for a set number of turns, while others
-                persist indefinitely. For more information, visit the{" "}
+                afflictions. For more information, visit the{" "}
                 <Link to="/rules/statuses">Statuses page</Link>.
               </p>
               <br />
@@ -628,8 +626,12 @@ export default function Rules() {
               <p>
                 Cards belong to two categories: Avelhems and skills, each with
                 its own repertoire (deck) and vestige (discard pile). Cards can
-                be activated from one’s hand, and they are sent to the vestige
-                upon the conclusion of their effects, unless stated otherwise.
+                be activated from the hand to apply their effects and are sent
+                to the vestige once those effects conclude, unless otherwise
+                specified.
+              </p>
+              <br />
+              <p>
                 When a repertoire is depleted, its corresponding vestige is
                 shuffled to replenish it. Sovereigns cannot view the contents of
                 their repertoires unless they are performing a search or
@@ -643,11 +645,14 @@ export default function Rules() {
                 elements of creation. In this game, they take the form of cards
                 that Sovereigns can activate to ascend their pawns to Scions of
                 a specified class. The icon at an Avelhem’s top left corner
-                reflects its corresponding Scion class. Sovereigns can resonate
-                Avelhems by activating them with a resonator, which can be
-                either an identical copy or a valid substitute. When a card is
-                resonated, its resonance will be applied as an additional
-                effect.
+                reflects its corresponding Scion class.
+              </p>
+              <br />
+              <p>
+                Sovereigns can resonate Avelhems by activating them together
+                with a resonator, which can be either an identical card or a
+                valid substitute. When a card is resonated, its resonance will
+                be applied as an additional effect.
               </p>
               <br />
               <h3>Skills</h3>
@@ -698,16 +703,14 @@ export default function Rules() {
               <p>
                 <strong>Standard</strong>
                 <ul>
-                  <li>
-                    Standard skills, indicated by blue circular sapphires, are
-                    the simplest to activate.
-                  </li>
+                  <li>Standard skills are the simplest to activate.</li>
                   <li>
                     They follow all general card mechanics: they can only be
                     activated during the Execution Phase when there is no other
                     effect ongoing, and they are sent to the vestige after
                     concluding their effects.
                   </li>
+                  <li>Their icon is a circular blue sapphire.</li>
                 </ul>
               </p>
 
@@ -717,14 +720,16 @@ export default function Rules() {
                 <strong>Resonant</strong>
                 <ul>
                   <li>
-                    Resonant skills, indicated by rectangular alexandrites, also
-                    follow the general card mechanics.
+                    Resonant skills also follow the general card mechanics.
                   </li>
                   <li>
                     Like Avelhems, they possess resonances, which are extra
                     effects that are applied if they are resonated (activated
                     with a resonator, which can be either an identical card or
                     valid substitute).
+                  </li>
+                  <li>
+                    Their icon is a rectangular green and purple alexandrite.
                   </li>
                 </ul>
               </p>
@@ -735,8 +740,8 @@ export default function Rules() {
                 <strong>Contingent</strong>
                 <ul>
                   <li>
-                    Contingent skills, indicated by triangular rubies, have a
-                    “contingency” listed before their effects.
+                    Contingent skills have a “contingency” listed before their
+                    effects.
                   </li>
                   <li>
                     As the exception to the rules, contingent skills can be
@@ -760,6 +765,7 @@ export default function Rules() {
                     <Link to="/rules/units">Units</Link>) and a contingent
                     skill, the talent activates first.
                   </li>
+                  <li>Their icon is a triangular red ruby.</li>
                 </ul>
               </p>
 
@@ -769,9 +775,8 @@ export default function Rules() {
                 <strong>Burst</strong>
                 <ul>
                   <li>
-                    Burst skills, indicated by cracking amethysts, return to
-                    observing the general card mechanics with one major
-                    deviation.
+                    Burst skills observe the general card mechanics with one
+                    major deviation.
                   </li>
                   <li>
                     Unlike other cards, burst skills are shattered (removed from
@@ -783,6 +788,7 @@ export default function Rules() {
                     Shattered skills are set aside where they are revealed to
                     both Sovereigns.
                   </li>
+                  <li>Their icon is a hexagonal purple amethyst.</li>
                 </ul>
               </p>
 
@@ -812,8 +818,8 @@ export default function Rules() {
                 these skills provide alternative effects in place of their
                 primary ones. For example, Heir’s Endeavor as a resonator can
                 only resonate with Sovereign skills, and it allows the activator
-                to inspect skills when the resonance concludes, while its effect
-                of recovering a Sovereign skill is ignored.
+                to inspect skills when the resonance concludes, while its
+                primary effect of recovering a Sovereign skill is ignored.
               </p>
 
               <br />
@@ -836,9 +842,11 @@ export default function Rules() {
             <div className="rules-text">
               <h2>Tactics</h2>
               <p>
-                Tactics are resources provided every turn, and they represent
-                the opportunity to actualize an action. Unused tactics do not
-                carry over to subsequent turns.
+                Tactics are resources representing opportunities to execute
+                actions. They are obtained during the Coordination Phase, where
+                certain options either guarantee specific tactics or provide
+                random ones through dice rolls. Unused tactics do not carry over
+                to the next turn.
               </p>
               <br />
               <p>
@@ -846,7 +854,6 @@ export default function Rules() {
                 Sovereigns and units.
               </p>
               <br />
-
               <h3>Advance</h3>
               <ul>
                 <li>Roll chance: 2 / 6</li>
@@ -869,9 +876,7 @@ export default function Rules() {
                   </ul>
                 </li>
               </ul>
-
               <br />
-
               <h3>Mobilize</h3>
               <ul>
                 <li>Roll chance: 2 / 6</li>
@@ -892,19 +897,19 @@ export default function Rules() {
                       Spend 1 instance to traverse (move to a vacant adjacent
                       zone).
                     </li>
-                    <li>
-                      Note: A unit cannot use an individual Mobilize tactic more
-                      than once. For example, a unit that traverses using 1
-                      Mobilize instance cannot use the remaining instances of
-                      the same tactic to traverse again, but they are allowed to
-                      traverse via a second Mobilize tactic.
-                    </li>
                   </ul>
                 </li>
               </ul>
-
               <br />
-
+              <pr>
+                Note: A unit cannot use an individual Mobilize tactic more than
+                once. For example, a unit that traverses using 1 Mobilize
+                instance cannot use the remaining instances of the same tactic
+                to traverse again, but they are allowed to traverse via a second
+                Mobilize tactic.
+              </pr>
+              <br />
+              <br />
               <h3>Assault</h3>
               <ul>
                 <li>Roll chance: 1 / 6</li>
@@ -920,9 +925,7 @@ export default function Rules() {
                   </ul>
                 </li>
               </ul>
-
               <br />
-
               <h3>Invoke</h3>
               <ul>
                 <li>Roll chance: 1 / 6</li>
@@ -936,9 +939,7 @@ export default function Rules() {
                 </li>
                 <li>Invoke does not provide any unit actions.</li>
               </ul>
-
               <br />
-
               <h3>Rally</h3>
               <ul>
                 <li>Roll chance: 0; obtainable only via Convene</li>
@@ -954,17 +955,14 @@ export default function Rules() {
                 </li>
                 <li>Rally does not provide any unit actions.</li>
               </ul>
-
               <br />
               <h2>Other Uses</h2>
               <p>
                 In addition to the actions discussed above, the activation of
                 some abilities and the effects of some skills require tactics.
               </p>
-
               <br />
               <br />
-
               <div className="rules-image-container">
                 <div className="rules-image-desc">
                   From left to right: Advance, Mobilize, Assault, Invoke, &
@@ -990,7 +988,6 @@ export default function Rules() {
                 simulator, various visual assets are used instead.
               </p>
               <br />
-
               <h3>Duration</h3>
               <p>
                 The duration of a turn-based status is stated with the effect or
@@ -1000,7 +997,6 @@ export default function Rules() {
                 while Efflorescence grants the activator Overgrowth
                 indefinitely.
               </p>
-
               <br />
               <p>
                 Turn-based statuses decrease in duration during the Final Phase,
@@ -1011,22 +1007,20 @@ export default function Rules() {
                 Burn expires for each unit.
               </p>
               <br />
-
               <h3>Removal</h3>
               <p>
                 Statuses are removed either through purge or expiration. Purge
                 refers to a keyword found in certain effects or mechanics that
-                explicitly remove specific statuses. Expiration occurs when the
-                duration of a status reaches 0 — typically at the end of the
-                Final Phase. The distinction between purge and expiration
-                matters solely for the Burn affliction, as Burn causes damage to
-                the affected unit only if it expires.
+                explicitly remove specific statuses. Purge also occurs when a
+                unit acquires immunity to a corresponding affliction. Expiration
+                occurs when the duration of a status drops to 0 — typically
+                during the Final Phase. The distinction between purge and
+                expiration matters solely for the Burn affliction, as Burn
+                causes damage to the affected unit only if it expires.
                 {/* Note: update with Infect and Avian passive */}
               </p>
-
               <br />
               <br />
-
               <div className="rules-image-container">
                 <div className="rules-image-desc">
                   A skill that can apply a temporary status (left) & a skill
@@ -1040,20 +1034,133 @@ export default function Rules() {
                   that can apply an indefinite status"
                 />
               </div>
-
               <br />
               <br />
-
               <h3>Enhancements</h3>
               <ul>
-                <li>Ravager:</li>
+                <li>
+                  <strong>Ravager</strong>: Grants the unit immunity to
+                  Anathema.
+                </li>
+                <li>
+                  <strong>Ward</strong>: Negates the next attack or affliction
+                  that targets the unit.
+                </li>
+                <li>
+                  <strong>Shield</strong>: Negates the next attack that targets
+                  the unit, unless they are enhanced with Ward.
+                </li>
+                <li>
+                  <strong>Disruption</strong>: Prevents enemies within 2 spaces
+                  from the unit from activating abilities and spending their
+                  Aether. Prevents enemies adjacent to the unit from activating
+                  non-burst skills. This status is purged if the unit is muted
+                  or not enhanced with Shield.
+                </li>
+                <li>
+                  <strong>Overgrowth</strong>: Enemies adjacent to the unit are
+                  afflicted with Root. This status is purged if the unit moves
+                  or has an affliction.
+                </li>
               </ul>
               <br />
-
               <h3>Afflictions</h3>
               <ul>
-                <li>Anathema:</li>
+                <li>
+                  <strong>Anathema</strong>: Mutes the unit.
+                </li>
+                <li>
+                  <strong>Paralysis</strong>: Mutes and immobilizes the unit.
+                </li>
+                <li>
+                  <strong>Frostbite</strong>: Mutes and immobilizes the unit.
+                </li>
+                <li>
+                  <strong>Burn</strong>: Grants the unit immunity to Frostbite.
+                  When this status expires, the unit loses 1 HP.
+                </li>
+                <li>
+                  <strong>Root</strong>: Prevents the unit from performing a
+                  strike. Forces the unit to spend 1 skill when they traverse or
+                  Aether-blast via tactical action. This status is purged if the
+                  unit is not adjacent to an enemy enhanced with Overgrowth.
+                </li>
               </ul>
+              <br />
+              <h3>Mute</h3>
+              <p>
+                Afflictions that mute units disable their powers: They cannot
+                attack, spend their Aether, nor activate skill cards, talents,
+                and abilities. Boosts (see <Link to="/rules/units">Units</Link>)
+                they possess and would receive are removed.
+              </p>
+              <br />
+
+              <p>
+                To put it simply, the only action muted units can perform is to
+                traverse.
+              </p>
+
+              <br />
+              <h3>Immobilize</h3>
+              <p>
+                Afflictions that immobilize units prevent them from performing
+                any action.
+              </p>
+            </div>
+          )}
+
+          {id === "effects" && (
+            <div className="rules-text">
+              <h2>Effects</h2>
+              <p>
+                Effects are instructions found in cards, actions, abilities, and
+                talents. They are divided into sub-effects, which are phrased in
+                the perspective of the entity performing them.
+              </p>
+              <br />
+
+              <p>
+                Sub-effects are mandatory unless qualified by the word “may”.
+                Effects cannot be activated if their mandatory sub-effects
+                cannot be accomplished. For example, a Sovereign cannot activate
+                Press the Attack unless they have 2 Advance tactics to convert.
+                Its subsequent sub-effects are optional.
+              </p>
+
+              <br />
+              <p>
+                Conditional sub-effects begin with the word “if” followed by a
+                statement; they apply only if the statement is true. Likewise,
+                these are mandatory in the absence of the word “may”. For
+                example, if a Mana Scion activates Aegis when they are targeted,
+                they must draw 1 skill.
+              </p>
+
+              <br />
+              <p>
+                {" "}
+                Modular sub-effects instruct the activator to choose between two
+                options. For example, if a Mana Scion activates Aegis, they must
+                either grant Shield or spend 1 skill to grant Ward (see{" "}
+                <Link to="/rules/statuses">Statuses</Link>). In the event they
+                cannot spend a skill, they must choose the former option.
+              </p>
+
+              <br />
+              <br />
+              <div className="rules-image-container">
+                <div className="rules-image-desc">
+                  A skill with optional sub-effects (left), & a skill with
+                  conditional and modular sub-effects (right)
+                </div>
+
+                <img
+                  src={EffectSkill}
+                  className="rules-skill-display"
+                  alt="Skills with mandatory, optional, conditional, and modular sub-effects"
+                />
+              </div>
             </div>
           )}
 

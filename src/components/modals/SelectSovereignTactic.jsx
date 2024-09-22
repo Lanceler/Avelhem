@@ -172,7 +172,7 @@ const SelectSovereignTactic = (props) => {
           case 0:
             return canDeploy();
           case 1:
-            return newGameState[self].fateDefiances >= 6;
+            return newGameState[self].fateDefiance >= 6;
           case 2:
             return (
               newGameState[self].bountyUpgrades.tactics >= 3 &&
@@ -267,7 +267,7 @@ const SelectSovereignTactic = (props) => {
             break;
 
           case 1:
-            newGameState[self].fateDefiances -= 6;
+            newGameState[self].fateDefiance -= 6;
 
             //Gain assault command
             newGameState.tactics[props.dice].stock += 1;
@@ -317,9 +317,9 @@ const SelectSovereignTactic = (props) => {
 
           case 2:
             //Gain FD
-            newGameState[self].fateDefiances = Math.min(
+            newGameState[self].fateDefiance = Math.min(
               6,
-              newGameState[self].fateDefiances + 2
+              newGameState[self].fateDefiance + 2
             );
 
             //Draw 1 Avelhem
