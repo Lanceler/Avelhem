@@ -423,7 +423,6 @@ export const useSovereignSkillEffects = () => {
     newGameState.currentResolution.push({
       resolution: "Sovereign Resonant Skill",
       resolution2: "Providence1",
-      //unit: null,
       details: {
         title: "Providence",
         message: "Use an Invoke tactic to draw 3 Avelhems and 3 skills.",

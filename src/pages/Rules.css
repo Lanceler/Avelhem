@@ -80,6 +80,10 @@
     filter: brightness(1.2);
 }
 
+.rules-text p{
+    /* max-width: 1000px; */
+}
+
 .rules-image-container{
     width: auto;
     padding-top: 20px;

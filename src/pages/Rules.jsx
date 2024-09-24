@@ -14,6 +14,7 @@ import SkillSubstitute from "../assets/rules/SkillSubstitute.png";
 import DiceFaces from "../assets/rules/DiceFaces.png";
 import StatusSkill from "../assets/rules/StatusSkill.png";
 import EffectSkill from "../assets/rules/EffectSkill.png";
+import InterruptSkill from "../assets/rules/InterruptSkill.png";
 
 import "./Rules.css";
 
@@ -26,9 +27,15 @@ export default function Rules() {
   useEffect(() => {
     if (
       !id ||
-      !["summary", "units", "cards", "tactics", "statuses", "effects"].includes(
-        id
-      )
+      ![
+        "summary",
+        "phases",
+        "units",
+        "cards",
+        "tactics",
+        "statuses",
+        "effects",
+      ].includes(id)
     ) {
       navigate("/rules");
     }
@@ -60,6 +67,10 @@ export default function Rules() {
                 <button>Overview & Summary</button>
               </Link>
               <br />
+              <Link to="/rules/phases">
+                <button>Phases</button>
+              </Link>
+              <br />
               <Link to="/rules/units">
                 <button>Units</button>
               </Link>
@@ -77,7 +88,7 @@ export default function Rules() {
               </Link>
               <br />
               <Link to="/rules/effects">
-                <button>Effects</button>
+                <button>Effects & Keywords</button>
               </Link>
             </div>
           )}
@@ -1089,10 +1100,11 @@ export default function Rules() {
               <br />
               <h3>Mute</h3>
               <p>
-                Afflictions that mute units disable their powers: They cannot
-                attack, spend their Aether, nor activate skill cards, talents,
-                and abilities. Boosts (see <Link to="/rules/units">Units</Link>)
-                they possess and would receive are removed.
+                Afflictions that mute units disable their powers. Muted units
+                cannot attack, spend Aether, or activate skill cards, talents,
+                and abilities. Any boosts (see{" "}
+                <Link to="/rules/units">Units</Link>) they possess or would
+                receive are removed.
               </p>
               <br />
 
@@ -1115,36 +1127,37 @@ export default function Rules() {
               <h2>Effects</h2>
               <p>
                 Effects are instructions found in cards, actions, abilities, and
-                talents. They are divided into sub-effects, which are phrased in
-                the perspective of the entity performing them.
+                talents. These are divided into sub-effects, written from the
+                perspective of the entity performing them. Sub-effects are
+                sequential and must be applied in the listed order.
               </p>
               <br />
 
               <p>
-                Sub-effects are mandatory unless qualified by the word “may”.
-                Effects cannot be activated if their mandatory sub-effects
-                cannot be accomplished. For example, a Sovereign cannot activate
-                Press the Attack unless they have 2 Advance tactics to convert.
-                Its subsequent sub-effects are optional.
+                Sub-effects are mandatory unless qualified by the word “may”. An
+                effect cannot be activated if its mandatory sub-effects cannot
+                be fulfilled. For example, a Sovereign cannot activate Press the
+                Attack unless they have 2 Advance tactics to convert. Its
+                subsequent sub-effects are optional.
               </p>
 
               <br />
               <p>
-                Conditional sub-effects begin with the word “if” followed by a
-                statement; they apply only if the statement is true. Likewise,
-                these are mandatory in the absence of the word “may”. For
-                example, if a Mana Scion activates Aegis when they are targeted,
-                they must draw 1 skill.
+                Conditional sub-effects begin with an “if” statement, which must
+                be true for it to apply. If the statement is false, only the
+                corresponding sub-effect is ignored. Likewise, these are
+                mandatory unless “may” is present. For example, if a Mana Scion
+                activates Aegis while they are targeted, they must draw 1 skill.
               </p>
 
               <br />
               <p>
-                {" "}
-                Modular sub-effects instruct the activator to choose between two
-                options. For example, if a Mana Scion activates Aegis, they must
-                either grant Shield or spend 1 skill to grant Ward (see{" "}
-                <Link to="/rules/statuses">Statuses</Link>). In the event they
-                cannot spend a skill, they must choose the former option.
+                Modular sub-effects present the activator a choice between two
+                options. Continuing from the previous example, if a Mana Scion
+                activates Aegis, they must either grant Shield or spend 1 skill
+                to grant Ward (see <Link to="/rules/statuses">Statuses</Link>)
+                to the targeted unit. If they cannot spend a skill, they must
+                choose the former option.
               </p>
 
               <br />
@@ -1159,6 +1172,38 @@ export default function Rules() {
                   src={EffectSkill}
                   className="rules-skill-display"
                   alt="Skills with mandatory, optional, conditional, and modular sub-effects"
+                />
+              </div>
+
+              <br />
+              <br />
+
+              <h2>Effect Interruption</h2>
+              <p>
+                Effects cannot be halted or interrupted, except by talents or
+                contingent skills. After the interruption's effects conclude,
+                the interrupted effect will resume if possible. For example, if
+                a Lightning Scion activates Zip and Zap and moves to a zone
+                adjacent to an enemy Land Scion, the Land Scion can activate
+                Pitfall Trap before the Lightning Scion can use the opportunity
+                to gain Shield from Zip and Zap’s second sub-effect. If Pitfall
+                Trap paralyzes or eliminates the Lightning Scion, Zip and Zap
+                will conclude prematurely, as its effects can no longer be
+                applied. However, if Pitfall Trap fails to incapacitate the
+                Lightning Scion, they will resume applying their skill’s effect.
+              </p>
+
+              <br />
+              <br />
+              <div className="rules-image-container">
+                <div className="rules-image-desc">
+                  Pitfall Trap (right) can interrupt Zip and Zap (left)
+                </div>
+
+                <img
+                  src={InterruptSkill}
+                  className="rules-skill-display"
+                  alt="Pitfall Trap (right) can interrupt Zip and Zap (left)"
                 />
               </div>
             </div>
