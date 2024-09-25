@@ -29,7 +29,7 @@ export default function Rules() {
       !id ||
       ![
         "summary",
-        "phases",
+        "turn-structure",
         "units",
         "cards",
         "tactics",
@@ -67,8 +67,8 @@ export default function Rules() {
                 <button>Overview & Summary</button>
               </Link>
               <br />
-              <Link to="/rules/phases">
-                <button>Phases</button>
+              <Link to="/rules/turn-structure">
+                <button>Turn Structure</button>
               </Link>
               <br />
               <Link to="/rules/units">
@@ -98,22 +98,23 @@ export default function Rules() {
               <p>
                 <em>Avelhem: War of the Sovereigns</em> is a board game set in a
                 fantastical realm where two players assume the roles of
-                Sovereigns vying for dominance.
+                Sovereigns, leading their armies on a grid-based battlefield.
               </p>
               <br />
               <p>
-                Sovereigns alternate taking turns consisting of multiple phases.
-                Each turn provides up to two tactics that can be used to perform
+                Sovereigns alternate taking turns consisting of six phases. Each
+                turn provides up to two tactics that can be used to perform
                 various actions such as drawing a card and deploying or moving a
                 unit. Sovereigns can accumulate cards over the course of
-                multiple turns and activate them at opportune moments to
-                supplement their limited actions.
+                multiple turns and activate them at opportune moments to extend
+                their limited actions.
               </p>
               <br />
               <p>
                 Units enter play as pawns capable of movement and attack. Pawns
-                can ascend to Scions, unlocking access to exclusive abilities,
-                talents, and skill cards with a variety of effects.
+                can ascend to Scions with elemental affinities, unlocking access
+                to exclusive abilities, talents, and skill cards with a variety
+                of effects.
               </p>
               <br />
               <br />
@@ -121,12 +122,6 @@ export default function Rules() {
               <p>
                 A Sovereign wins by moving a set number of their pieces to the
                 opponent’s end of the board.
-              </p>
-              <br />
-              <p>
-                When victory is achieved, the Sovereigns may opt to continue the
-                game by raising the number of units required for victory, up to
-                a maximum of 5.
               </p>
 
               <br />
@@ -149,8 +144,8 @@ export default function Rules() {
                 <li>Avelhem and skill cards</li>
                 <ul>
                   <li>
-                    The base game provides each Sovereign a playset consisting
-                    of 32 (8 unique) Avelhems and 136 (46 unique) skills
+                    The base game provides 2 playsets each consisting of 32 (8
+                    unique) Avelhems and 136 (46 unique) skills
                   </li>
                 </ul>
 
@@ -204,7 +199,7 @@ export default function Rules() {
               </p>
 
               <br />
-              <h3>2. Select repertoires</h3>
+              <h3>2. Select repertoires (decks)</h3>
               <p>
                 New accounts are provided 3 identical starter repertoires, which
                 can be customized in the Repertoires page. Avelhem and skill
@@ -231,7 +226,7 @@ export default function Rules() {
                 1st, 3rd, and 5th columns of the 4th row from each Sovereign’s
                 side.
                 <br />
-                (Note: Units are deployed with Aether; in a physical
+                (Note: Units acquire Aether when deployed; in a physical
                 implementation, these would be represented by one of the
                 miscellaneous tokens.)
               </p>
@@ -239,8 +234,8 @@ export default function Rules() {
 
               <h3>5. Set Fate Defiance (FD) counters to 3</h3>
               <p>
-                A Sovereign’s FD, as well as their BP, is displayed between
-                their Avelhem and skill repertoires.
+                In this digital simulator, a Sovereign’s FD, as well as their
+                BP, is displayed between their Avelhem and skill repertoires.
               </p>
               <br />
 
@@ -249,8 +244,8 @@ export default function Rules() {
                 After shuffling, both Sovereigns draw 4 skill cards. The
                 Sovereign who plays the first turn adds 1 copy of
                 “Transcendence” to their hand and places the other copy in their
-                vestige. The second Sovereigns adds 2 copies of “Transcendence”
-                to their hand.
+                vestige (discard pile). The second Sovereigns adds 2 copies of
+                “Transcendence” to their hand.
               </p>
               <br />
               <br />
@@ -265,6 +260,63 @@ export default function Rules() {
                 />
               </div>
               <hr />
+
+              <h2>Turn Structure</h2>
+              <p>
+                Sovereigns alternate taking turns, which consist of six phases.
+                The Initiator refers to the Sovereign whose turn it currently
+                is. For more information, visit the{" "}
+                <Link to="/rules/turn-structure">Turn Structure page</Link>.
+              </p>
+              <br />
+              <h3>Acquisition Phase</h3>
+              <p>
+                The Acquisition Phase begins the Initiator’s turn, offering the
+                opportunity to bolster their resources by deploying a pawn or
+                drawing cards.
+              </p>
+
+              <br />
+              <h3>Bounty Phase</h3>
+              <p>
+                During the Bounty Phase, the Initiator may spend Bounty Points
+                (BP) on permanent upgrades to move closer to victory.
+              </p>
+              <br />
+              <h3>Coordination Phase</h3>
+              <p>
+                The Coordination Phase provides the Initiator with tactics,
+                which determine their possible actions.
+              </p>
+
+              <br />
+              <h3>Defiance Phase</h3>
+              <p>
+                The Defiance Phase is where the Initiator can spend Fate
+                Defiance (FD) on immediate benefits that can improve their
+                current turn, such as rerolling unfavorable tactics or drawing
+                an additional skill card.
+              </p>
+
+              <br />
+              <h3>Execution Phase</h3>
+              <p>
+                The Execution Phase is where the Initiator and their units
+                perform actions and activate effects.
+              </p>
+
+              <br />
+
+              <h3>Final Phase</h3>
+              <p>
+                The Final Phase concludes the Initiator’s turn by resolving
+                tasks such as discarding excess cards and reducing the duration
+                of status conditions. If the game is not over, the other
+                Sovereign begins their turn as the new Initiator.
+              </p>
+
+              <hr />
+
               <h2>Units</h2>
               <p>
                 Units are the Sovereigns’ subservient soldiers. When in play,
@@ -365,19 +417,25 @@ export default function Rules() {
                   alt="Left: Plant Avelhem card; Right: Reminiscence, a Standard Sovereign skill card"
                 />
               </div>
-              <hr />
+            </div>
+          )}
+
+          {id === "turn-structure" && (
+            <div className="rules-text">
               <h2>Turn Structure</h2>
               <p>
-                Sovereigns alternate taking turns consisting of multiple phases.
-                The Initiator refers to the Sovereign whose turn it currently
-                is.
+                Sovereigns alternate taking turns consisting of six phases. The
+                Initiator refers to the Sovereign whose turn it currently is.
               </p>
               <br />
               <h3>Acquisition Phase</h3>
               <p>
-                The Acquisition Phase commences the Initiator’s turn, providing
-                the opportunity to bolster resources. During this phase, the
-                Initiator must choose 1 of the following:
+                The Acquisition Phase begins the Initiator’s turn, offering the
+                opportunity to bolster their resources.
+              </p>
+              <br />
+              <p>
+                During this phase, the Initiator must choose 1 of the following:
               </p>
               <ul>
                 <li>Appoint: Deploy a pawn in your frontier.</li>
@@ -388,18 +446,22 @@ export default function Rules() {
               <h3>Bounty Phase</h3>
               <p>
                 During the Bounty Phase, the Initiator may spend Bounty Points
-                (BP) on upgrades in tiered categories. Items in subsequent tiers
-                become available after their precedents have been purchased.
-                Multiple purchases are allowed, as long as BP is sufficient. BP
-                is earned primarily by eliminating enemy units. (See Bounty
-                Phase Catalog for details.)
+                (BP) on permanent upgrades to move closer to victory. These
+                upgrades are organized into tiered categories, with higher-tier
+                items becoming available once their prerequisites are purchased.
+                Multiple purchases can be made in a single turn, provided the
+                Initiator has sufficient BP.
               </p>
               <br />
               <h3>Coordination Phase</h3>
               <p>
-                The Coordination Phase provides the Initiator’s tactics, which
-                determine their possible actions. During this Phase, the
-                Initiator must choose 1 of the following:
+                The Coordination Phase provides the Initiator with tactics,
+                which determine their possible actions.
+              </p>
+
+              <br />
+              <p>
+                During this Phase, the Initiator must choose 1 of the following:
               </p>
               <ul>
                 <li>Assent: Roll 2 tactical dice.</li>
@@ -409,10 +471,13 @@ export default function Rules() {
               <br />
               <h3>Defiance Phase</h3>
               <p>
-                The Defiance Phase grants the Initiator the opportunity to spend
-                Fate Defiance (FD) on immediate benefits. FD is primarily
-                received as consolation when allied units are eliminated. During
-                this phase, the Initiator may choose 1 of the following:
+                The Defiance Phase is where the Initiator can spend Fate
+                Defiance (FD) on immediate benefits that can improve their
+                current turn.
+              </p>
+              <br />
+              <p>
+                During this phase, the Initiator may choose 1 of the following:
               </p>
               <ul>
                 <li>
@@ -439,9 +504,12 @@ export default function Rules() {
               <h3>Execution Phase</h3>
               <p>
                 The Execution Phase is where the Initiator and their units
-                perform actions and activate effects. The following can be
-                performed in any sequence, combination, and frequency, provided
-                the resources are sufficient:
+                perform actions and activate effects.
+              </p>
+              <br />
+              <p>
+                The following can be performed in any sequence, combination, and
+                frequency, provided the resources are sufficient:
               </p>
               <ul>
                 <li>
@@ -466,8 +534,8 @@ export default function Rules() {
 
               <h3>Final Phase</h3>
               <p>
-                The Final Phase wraps up the Initiator’s turn. During this
-                phase, the Initiator applies the following in sequence:
+                The Final Phase concludes the Initiator’s turn by making them
+                apply the following in sequence:
               </p>
               <ol>
                 <li>Forfeit unused tactics.</li>
@@ -475,8 +543,8 @@ export default function Rules() {
                 <li>Selectively discard skills in excess of 8 from hand.</li>
 
                 <li>
-                  Decrease the durations of their units’ turn-based statuses by
-                  1.
+                  Remove their units’ boosts and decrease the durations of their
+                  units’ turn-based statuses by 1.
                   <ul>
                     <li>
                       The Burn affliction is decreased first, followed by all
@@ -511,6 +579,7 @@ export default function Rules() {
               </ol>
             </div>
           )}
+
           {id === "units" && (
             <div className="rules-text">
               <h2>Units</h2>
@@ -1126,38 +1195,38 @@ export default function Rules() {
             <div className="rules-text">
               <h2>Effects</h2>
               <p>
-                Effects are instructions found in cards, actions, abilities, and
-                talents. These are divided into sub-effects, written from the
-                perspective of the entity performing them. Sub-effects are
-                sequential and must be applied in the listed order.
+                Effects are the instructions of cards, actions, abilities, and
+                talents. These are divided into sub-effects, applied
+                sequentially amd written from the perspective of the entity
+                performing them.
               </p>
               <br />
 
               <p>
-                Sub-effects are mandatory unless qualified by the word “may”. An
-                effect cannot be activated if its mandatory sub-effects cannot
-                be fulfilled. For example, a Sovereign cannot activate Press the
-                Attack unless they have 2 Advance tactics to convert. Its
-                subsequent sub-effects are optional.
+                Sub-effects are mandatory unless qualified by the phrase “you
+                may”. An effect cannot be activated if its mandatory sub-effects
+                cannot be fulfilled. For example, a Sovereign cannot activate
+                Press the Attack unless they have 2 Advance tactics to convert.
+                Its subsequent sub-effects are optional.
               </p>
 
               <br />
               <p>
                 Conditional sub-effects begin with an “if” statement, which must
                 be true for it to apply. If the statement is false, only the
-                corresponding sub-effect is ignored. Likewise, these are
-                mandatory unless “may” is present. For example, if a Mana Scion
-                activates Aegis while they are targeted, they must draw 1 skill.
+                corresponding sub-effect is ignored. For example, a Mana Scion
+                who activates Aegis will draw a skill only if they were
+                targeted.
               </p>
 
               <br />
               <p>
                 Modular sub-effects present the activator a choice between two
-                options. Continuing from the previous example, if a Mana Scion
-                activates Aegis, they must either grant Shield or spend 1 skill
-                to grant Ward (see <Link to="/rules/statuses">Statuses</Link>)
-                to the targeted unit. If they cannot spend a skill, they must
-                choose the former option.
+                options. Continuing from the previous example, Mana Scion who
+                activates Aegis must either grant Shield or spend 1 skill to
+                grant Ward (see <Link to="/rules/statuses">Statuses</Link>) to
+                the targeted unit. If they cannot spend a skill, they default to
+                the former option.
               </p>
 
               <br />
@@ -1180,17 +1249,17 @@ export default function Rules() {
 
               <h2>Effect Interruption</h2>
               <p>
-                Effects cannot be halted or interrupted, except by talents or
-                contingent skills. After the interruption's effects conclude,
-                the interrupted effect will resume if possible. For example, if
-                a Lightning Scion activates Zip and Zap and moves to a zone
-                adjacent to an enemy Land Scion, the Land Scion can activate
-                Pitfall Trap before the Lightning Scion can use the opportunity
-                to gain Shield from Zip and Zap’s second sub-effect. If Pitfall
-                Trap paralyzes or eliminates the Lightning Scion, Zip and Zap
-                will conclude prematurely, as its effects can no longer be
-                applied. However, if Pitfall Trap fails to incapacitate the
-                Lightning Scion, they will resume applying their skill’s effect.
+                Effects cannot be halted or interrupted, except by the
+                activations of talents and contingent skills. After the
+                interruption’s effects conclude, the interrupted effect will
+                resume if possible. For example, if a Lightning Scion activates
+                Zip and Zap and moves to a zone adjacent to an enemy Land Scion,
+                the Land Scion can activate Pitfall Trap before Zip and Zap’s
+                second sub-effect is performed. If Pitfall Trap paralyzes or
+                eliminates the Lightning Scion, Zip and Zap will conclude
+                prematurely, as its effects can no longer be applied. However,
+                if Pitfall Trap fails to incapacitate the Lightning Scion, they
+                will resume applying their skill’s effect.
               </p>
 
               <br />
