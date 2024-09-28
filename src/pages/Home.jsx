@@ -47,9 +47,7 @@ export default function Home() {
                   to="/rules"
                   // to="/"
                 >
-                  <button className="home-banner-button">
-                    Rulebook (To do)
-                  </button>
+                  <button className="home-banner-button">Rulebook</button>
                 </Link>
               </div>
             </div>

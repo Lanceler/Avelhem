@@ -221,6 +221,11 @@ export const Piece = (props) => {
             }}
           >
             <>
+              {/* deploy impact */}
+              <>
+                <div className="deployImpact"></div>
+              </>
+
               {/* Mana Scion: Disruption */}
               {props.unit.enhancements.disruption > 0 && (
                 <>

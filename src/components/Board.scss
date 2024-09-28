@@ -324,7 +324,12 @@
 
 @keyframes deploy {
     0% {
-        transform: scale(1.5);
+        transform: scale(1.45);
+        opacity: 90%;
+    }
+
+    65% {
+        transform: scale(1.5) translateY(-25%);
     }
 
     100% {

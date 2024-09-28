@@ -304,6 +304,50 @@
   }
 }
 
+
+.deployImpact {
+  
+  width: 60px;
+  height: 60px;
+  border: 1px solid white;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 100%;
+  opacity: 0%;
+  position: absolute;
+  z-index: -1;
+
+  animation: deployImpactAnimation 2.0s ease-out ;
+  
+}
+
+@keyframes deployImpactAnimation {
+  0%, 35% {
+    opacity: 100%;
+  }
+
+  36% {
+    transform: scale(0.99);
+    opacity: 100%;
+  }
+
+  80% {
+    opacity: 20%;
+
+  }
+
+  100% {
+    transform: scale(2.20);
+    opacity: 5%;
+  }
+
+
+}
+
+
+
+
+
+
 .disruption {
   width: 40px;
   height: 40px;

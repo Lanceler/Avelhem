@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import { useAuthContext } from "../hooks/useAuthContext";
@@ -15,12 +15,14 @@ import DiceFaces from "../assets/rules/DiceFaces.png";
 import StatusSkill from "../assets/rules/StatusSkill.png";
 import EffectSkill from "../assets/rules/EffectSkill.png";
 import InterruptSkill from "../assets/rules/InterruptSkill.png";
+import KeywordSkill from "../assets/rules/KeywordSkill.png";
 
 import "./Rules.css";
 
 export default function Rules() {
   const { id } = useParams(); //note: id was entered as the parameter in the routes of App.jsx
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { getBannerImage } = useGetImages();
 
@@ -41,9 +43,19 @@ export default function Rules() {
     }
   }, []);
 
-  // useEffect(() => {
-  //   window.scrollTo(0, 0);
-  // }, [id]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
+
+  useEffect(() => {
+    const elementId = location.hash.replace("#", "");
+    if (elementId) {
+      const element = document.getElementById(elementId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [location]);
 
   return (
     <div className="rule-body">
@@ -98,33 +110,32 @@ export default function Rules() {
               <p>
                 <em>Avelhem: War of the Sovereigns</em> is a board game set in a
                 fantastical realm where two players assume the roles of
-                Sovereigns, leading their armies on a grid-based battlefield.
+                Sovereigns controlling armies of demigods endowed with elemental
+                powers.
               </p>
               <br />
               <p>
-                Sovereigns alternate taking turns consisting of six phases. Each
-                turn provides up to two tactics that can be used to perform
-                various actions such as drawing a card and deploying or moving a
-                unit. Sovereigns can accumulate cards over the course of
-                multiple turns and activate them at opportune moments to extend
-                their limited actions.
+                Sovereigns take turns that consist of phases. Each turn allows
+                for the use of up to two tactics that enable various actions
+                such as drawing cards and deploying or moving units. Sovereigns
+                can accumulate cards and activate them at opportune moments to
+                supplement their limited tactics.
               </p>
               <br />
               <p>
                 Units enter play as pawns capable of movement and attack. Pawns
                 can ascend to Scions with elemental affinities, unlocking access
                 to exclusive abilities, talents, and skill cards with a variety
-                of effects.
+                of thematic effects.
               </p>
               <br />
-              <br />
+
               <h3>Objective</h3>
               <p>
                 A Sovereign wins by moving a set number of their pieces to the
                 opponent’s end of the board.
               </p>
 
-              <br />
               <br />
               <h3>Components</h3>
               <ol>
@@ -226,9 +237,9 @@ export default function Rules() {
                 1st, 3rd, and 5th columns of the 4th row from each Sovereign’s
                 side.
                 <br />
-                (Note: Units acquire Aether when deployed; in a physical
-                implementation, these would be represented by one of the
-                miscellaneous tokens.)
+                (Note: Units acquire Aether when they are deployed; in a
+                physical implementation, these would be represented by one of
+                the miscellaneous tokens.)
               </p>
               <br />
 
@@ -263,9 +274,9 @@ export default function Rules() {
 
               <h2>Turn Structure</h2>
               <p>
-                Sovereigns alternate taking turns, which consist of six phases.
-                The Initiator refers to the Sovereign whose turn it currently
-                is. For more information, visit the{" "}
+                Each turn consists of six phases. The Initiator refers to the
+                Sovereign whose turn it currently is. For more information,
+                visit the{" "}
                 <Link to="/rules/turn-structure">Turn Structure page</Link>.
               </p>
               <br />
@@ -424,8 +435,8 @@ export default function Rules() {
             <div className="rules-text">
               <h2>Turn Structure</h2>
               <p>
-                Sovereigns alternate taking turns consisting of six phases. The
-                Initiator refers to the Sovereign whose turn it currently is.
+                Each turn consists of six phases. The Initiator refers to the
+                Sovereign whose turn it currently is.
               </p>
               <br />
               <h3>Acquisition Phase</h3>
@@ -891,7 +902,7 @@ export default function Rules() {
               <br />
               <br />
 
-              <h3>Substitute</h3>
+              <h2>Substitute</h2>
               <p>
                 Some skills have a “Substitute” property that allows them to
                 function as a resonator for certain cards. When used this way,
@@ -901,19 +912,28 @@ export default function Rules() {
                 to inspect skills when the resonance concludes, while its
                 primary effect of recovering a Sovereign skill is ignored.
               </p>
+              <br />
+              <h2>Float</h2>
+              <p>
+                Some effects require or cause cards to be floated. When a card
+                is floated, it is placed on top of its repertoire and rotated by
+                90 degrees. When repertoires are shuffled, their floating cards
+                retain their positions on top.
+              </p>
 
               <br />
               <br />
 
               <div className="rules-image-container">
                 <div className="rules-image-desc">
-                  Skills with substitute properties
+                  Skills with substitute properties and effects that can float
+                  cards
                 </div>
 
                 <img
                   src={SkillSubstitute}
                   className="rules-skill-display"
-                  alt="Skills with substitute properties"
+                  alt="Skills with substitute properties and effects that can float cards"
                 />
               </div>
             </div>
@@ -951,7 +971,16 @@ export default function Rules() {
                 <li>
                   Units Actions:
                   <ul>
-                    <li>Traverse (move to a vacant adjacent zone).</li>
+                    <li>
+                      <a
+                        onClick={() => {
+                          navigate("/rules/effects#traverse");
+                        }}
+                      >
+                        Traverse
+                      </a>
+                      .
+                    </li>
                     <li>Aether-blast an adjacent enemy.</li>
                   </ul>
                 </li>
@@ -1195,38 +1224,43 @@ export default function Rules() {
             <div className="rules-text">
               <h2>Effects</h2>
               <p>
-                Effects are the instructions of cards, actions, abilities, and
-                talents. These are divided into sub-effects, applied
-                sequentially amd written from the perspective of the entity
-                performing them.
+                Effects are the instructions of cards, actions, abilities,
+                talents, and keywords. These are broken down into sub-effects,
+                typically consisting of single sentences. Sub-effects are
+                written from the perspective of the entity performing them. On
+                cards, sub-effects are separated by line breaks for clarity.
               </p>
               <br />
 
               <p>
-                Sub-effects are mandatory unless qualified by the phrase “you
-                may”. An effect cannot be activated if its mandatory sub-effects
-                cannot be fulfilled. For example, a Sovereign cannot activate
-                Press the Attack unless they have 2 Advance tactics to convert.
-                Its subsequent sub-effects are optional.
+                Sub-effects are mandatory by default; those qualified with the
+                phrase <em>“you may” </em>are optional. An effect cannot be
+                activated if its mandatory sub-effects cannot be fulfilled. For
+                example, a Sovereign cannot activate Press the Attack unless
+                they have 2 Advance tactics to convert. Its subsequent
+                sub-effects are optional.
               </p>
 
               <br />
               <p>
-                Conditional sub-effects begin with an “if” statement, which must
-                be true for it to apply. If the statement is false, only the
-                corresponding sub-effect is ignored. For example, a Mana Scion
-                who activates Aegis will draw a skill only if they were
-                targeted.
+                Conditional sub-effects have statements that begin with{" "}
+                <em>“if”</em> and are applied only when their statements are
+                true. A false statement will not prevent the activation of the
+                effect, but its corresponding sub-effect will be ignored. For
+                example, a Mana Scion who activates Aegis will draw a skill only
+                if they were targeted. Regardless, it will proceed to its next
+                sub-effect.
               </p>
 
               <br />
               <p>
                 Modular sub-effects present the activator a choice between two
-                options. Continuing from the previous example, Mana Scion who
-                activates Aegis must either grant Shield or spend 1 skill to
-                grant Ward (see <Link to="/rules/statuses">Statuses</Link>) to
-                the targeted unit. If they cannot spend a skill, they default to
-                the former option.
+                options. Either can be chosen, provided it can be accomplished.
+                Continuing from the previous example, a Mana Scion who activates
+                Aegis must either grant Shield or spend 1 skill to grant Ward
+                (see <Link to="/rules/statuses">Statuses</Link>) to the targeted
+                unit. If they cannot spend a skill, they default to the former
+                option.
               </p>
 
               <br />
@@ -1247,19 +1281,21 @@ export default function Rules() {
               <br />
               <br />
 
-              <h2>Effect Interruption</h2>
+              <h2>Interruption</h2>
               <p>
-                Effects cannot be halted or interrupted, except by the
-                activations of talents and contingent skills. After the
-                interruption’s effects conclude, the interrupted effect will
-                resume if possible. For example, if a Lightning Scion activates
-                Zip and Zap and moves to a zone adjacent to an enemy Land Scion,
-                the Land Scion can activate Pitfall Trap before Zip and Zap’s
-                second sub-effect is performed. If Pitfall Trap paralyzes or
-                eliminates the Lightning Scion, Zip and Zap will conclude
-                prematurely, as its effects can no longer be applied. However,
-                if Pitfall Trap fails to incapacitate the Lightning Scion, they
-                will resume applying their skill’s effect.
+                Effects cannot be stopped or interrupted unless a talent or
+                contingent skill is triggered and activated, which would then
+                apply its own effect. After the interruptions’ effects resolve,
+                the effect that was interrupted resumes, unless the aftermath of
+                the interruption has made it impossible to do so. For example,
+                if a Lightning Scion activates Zip and Zap and uses its first
+                sub-effect to move next to an enemy Land Scion, the Land Scion
+                can activate Pitfall Trap before the second sub-effect of Zip
+                and Zap applies. If Pitfall Trap paralyzes or eliminates the
+                Lightning Scion, Zip and Zap concludes abruptly since its
+                remaining sub-effects can no longer be applied. Conversely, if
+                Pitfall Trap fails to incapacitate the Lightning Scion, they
+                will resume applying the effect of Zip and Zap.
               </p>
 
               <br />
@@ -1275,6 +1311,197 @@ export default function Rules() {
                   alt="Pitfall Trap (right) can interrupt Zip and Zap (left)"
                 />
               </div>
+
+              <br />
+              <br />
+
+              <h2>Keywords</h2>
+              <p>
+                Keywords are effects compressed into single words for the sake
+                of brevity. These observe the same rules discussed earlier and
+                can appear within other effects. For example, the first
+                sub-effect of Arsenal Onslaught is simply “Strike”. This can be
+                restated and expanded as 3 sub-effects: “(1)Target an adjacent
+                enemy. (2)Attack them. (3)If the attack was lethal, move into
+                the zone they were occupying.”
+              </p>
+
+              <br />
+              <br />
+              <div className="rules-image-container">
+                <div className="rules-image-desc">Skills with keywords</div>
+
+                <img
+                  src={KeywordSkill}
+                  className="rules-skill-display"
+                  alt="Skills with keywords"
+                />
+              </div>
+
+              <br />
+              <br />
+
+              <h2>Unit Keywords</h2>
+              <p>Below is a list of keywords that influence units.</p>
+
+              <br />
+              <h3>Traverse</h3>
+              <ul>
+                <li>Move to an adjacent zone.</li>
+              </ul>
+              <br />
+              <h3>Strike</h3>
+              <ul>
+                <li>Target an adjacent enemy.</li>
+                <li>Attack them.</li>
+                <li>
+                  If the attack was lethal, move into the zone they were
+                  occupying.
+                </li>
+              </ul>
+
+              <br />
+              <h3>Spend</h3>
+              <ul>
+                <li>Decrease your quantity of the specified attribute.</li>
+                {/* <li>
+                  (Example: the Ballistic Armor ability of Metal Scions requires
+                  them to spend 2 turns of Shield or 2 turns Ward.)
+                </li> */}
+              </ul>
+
+              <br />
+
+              <p>
+                Note: The following keywords are always proceeded by a phrase
+                indicating the unit they must affect. For example, if a
+                sub-effect states “blast an adjacent enemy”, the first
+                sub-effect of blast changes from <em>“Target a unit”</em> into{" "}
+                <em>“Target an adjacent enemy”</em>.
+              </p>
+
+              <br />
+              <h3>Blast</h3>
+              <ul>
+                <li>Target a unit.</li>
+                <li>Attack them.</li>
+              </ul>
+
+              <br />
+              <h3>Aether-blast</h3>
+              <ul>
+                <li>
+                  Spend your Aether to blast a unit; when the attack occurs,
+                  they may spend their Aether to mitigate it.
+                </li>
+                <li>
+                  (Note: When Aether-blasts are mitigated, the attack’s AP is
+                  reduced by 1, but the attacker’s Aether is restored.)
+                </li>
+              </ul>
+
+              <br />
+              <h3>Paralyze</h3>
+              <ul>
+                <li>Target a unit.</li>
+                <li>Inflict them with Paralysis.</li>
+              </ul>
+
+              <br />
+              <h3>Ignite</h3>
+              <ul>
+                <li>Target a unit.</li>
+                <li>Inflict them with Burn.</li>
+              </ul>
+
+              <br />
+              <h3>Freeze</h3>
+              <ul>
+                <li>Target a unit.</li>
+                <li>Inflict them with Frostbite.</li>
+              </ul>
+
+              {/* <br />
+              <h3>Infect</h3>
+              <ul>
+                <li>Target a unit.</li>
+                <li>Inflict them with Infection.</li>
+              </ul> */}
+
+              <br />
+              <h3>Purge</h3>
+              <ul>
+                <li>Select a unit.</li>
+                <li>If they possess the specified attribute, remove it.</li>
+              </ul>
+
+              <br />
+
+              <h2>Card Keywords</h2>
+              <p>Below is a list of keywords that influence cards.</p>
+
+              <br />
+              <h3>Spend</h3>
+              <ul>
+                <li>Place a card from your hand into your vestige.</li>
+              </ul>
+
+              <br />
+              <h3>Float</h3>
+              <ul>
+                <li>
+                  Place a card from your hand (or another specified location) on
+                  top of your repertoire and rotate it 90 degrees.
+                </li>
+              </ul>
+
+              <br />
+              <h3>Search</h3>
+              <ul>
+                <li>
+                  View the contents of your repertoire. If a card matches the
+                  given criteria, you may add it to your hand (or another
+                  specified location).
+                </li>
+                <li>Shuffle the repertoire.</li>
+              </ul>
+
+              <br />
+              <h3>Inspect</h3>
+              <ul>
+                <li>
+                  View a specified number of cards from the top of a repertoire.
+                </li>
+                <li>
+                  Return them in their original order unless stated otherwise.
+                </li>
+              </ul>
+
+              <br />
+              <h3>Recover</h3>
+              <ul>
+                <li>
+                  Place a card from your vestige into your hand (or another
+                  specified location).
+                </li>
+              </ul>
+              <br />
+              <h3>Retain</h3>
+              <ul>
+                <li>
+                  After a card concludes its effects, return it to your hand
+                  instead of discarding it.
+                </li>
+              </ul>
+              <br />
+              <h3>Reveal</h3>
+              <ul>
+                <li>
+                  Show the front side of a card to your opponent and allow them
+                  to view its details for a short reasonable amount of time.
+                </li>
+              </ul>
+              {/*  */}
             </div>
           )}
 
