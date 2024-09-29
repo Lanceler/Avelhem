@@ -1496,7 +1496,7 @@ export const useSkillEffects = () => {
       unit: unit,
       details: {
         title: "Surge",
-        message: "Use an Assault tactic to restore your Aether.",
+        message: "Use an Assault tactic to traverse.",
         restriction: ["Assault"],
         stock: 1,
         reason: "Surge",

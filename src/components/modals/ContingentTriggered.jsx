@@ -299,7 +299,7 @@ const ContingentTriggered = (props) => {
     );
 
     switch (usableSkills[selectedSkill].id) {
-      //Motion
+      //Activation
       case "03-03":
         newGameState.currentResolution.push({
           resolution: "Wind Skill",

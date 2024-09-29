@@ -451,8 +451,15 @@ const BoardArea = (props) => {
     }
 
     switch (lastRes.resolution) {
+      // case "Animation Delay":
+      //   animationDelay();
+      //   break;
+
       case "Animation Delay":
-        animationDelay();
+        if (self === lastRes.priority) {
+          animationDelay();
+        }
+
         break;
 
       case "Acquisition Phase Selection":

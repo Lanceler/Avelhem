@@ -1296,7 +1296,7 @@ export const useRecurringEffects = () => {
   };
 
   const activateSymphonicScreech = (newGameState, unit, victim) => {
-    //remove symphonic screech from hand but do not discard
+    //remove Symphonic Screech from hand but do not discard
     newGameState[self].skillHand.splice(
       newGameState[self].skillHand.indexOf("03-03"),
       1
@@ -2034,7 +2034,10 @@ export const useRecurringEffects = () => {
   };
 
   const applyAnathema = (unit) => {
-    unit.temporary.activation -= 1;
+    if (unit.temporary.activation > 0) {
+      //if statement necessary because of Symphonic Screech
+      unit.temporary.activation -= 1;
+    }
 
     if (
       unit.temporary.activation === 0 &&
