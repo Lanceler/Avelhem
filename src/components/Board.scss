@@ -329,7 +329,11 @@
     }
 
     65% {
-        transform: scale(1.5) translateY(-25%);
+        transform: scale(1.5) translateY(-47.5%);
+    }
+
+    95% {
+        transform: translateY(10%);
     }
 
     100% {
