@@ -319,6 +319,8 @@ const SearchSkill = (props) => {
           </div>
         </div>
 
+        <br />
+
         <h3 style={{ maxWidth: 700 }}>{props.details.searchMessage}</h3>
 
         <br />

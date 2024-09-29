@@ -667,10 +667,7 @@ export const useSkillEffects = () => {
     newGameState.currentResolution.push(symphonicScreechConclusion);
 
     //activator can reveal 1 Wind skill to draw 1 floating skill
-    if (
-      // newGameState[self].skillFloat > 0 &&
-      newGameState[self].skillHand.length > 0
-    ) {
+    if (newGameState[self].skillHand.length > 0) {
       newGameState.currentResolution.push({
         resolution: "Wind Skill",
         resolution2: "Symphonic Screech2",

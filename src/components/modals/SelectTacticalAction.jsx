@@ -476,6 +476,8 @@ const SelectTacticalAction = (props) => {
           <div className="modalTitle">Tactical Action: {face}</div>
         </div>
 
+        <br />
+
         {message && (
           <>
             <h3 style={{ maxWidth: 700 }}>{message}</h3>

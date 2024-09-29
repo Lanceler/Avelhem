@@ -382,6 +382,8 @@ const YouMaySpend1Skill = (props) => {
           </div>
         </div>
 
+        <br />
+
         {props.details.message && (
           <>
             <h3 style={{ maxWidth: 700 }}>{props.details.message}</h3>

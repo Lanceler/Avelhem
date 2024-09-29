@@ -199,6 +199,8 @@ const SelectSkillReveal = (props) => {
           </div>
         </div>
 
+        <br />
+
         <h3 style={{ maxWidth: 700 }}>{props.details.message}</h3>
 
         <br />

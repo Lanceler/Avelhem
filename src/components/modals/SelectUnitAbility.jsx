@@ -955,6 +955,7 @@ const SelectUnitAbility = (props) => {
           <div className="modalTitle">{unit.unitClass} Abilities</div>
         </div>
 
+        <br />
         {message && <h3 style={{ maxWidth: 700 }}>{message}</h3>}
         <br />
 
