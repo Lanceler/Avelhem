@@ -305,11 +305,11 @@
 }
 
 
-.deployImpact {
+.deploy-impact {
   
-  width: 60px;
-  height: 60px;
-  border: 1px solid white;
+  width: 55px;
+  height: 55px;
+  border: 4.5px solid rgba(255, 255, 255, 0.7);
   background-color: rgba(255, 255, 255, 0.95);
   border-radius: 100%;
   opacity: 0%;
@@ -336,8 +336,9 @@
   }
 
   100% {
-    transform: scale(3.45);
+    transform: scale(3.0);
     opacity: 0;
+    background-color: rgba(255, 255, 255, 0.25);
   }
 
 

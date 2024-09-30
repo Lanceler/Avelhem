@@ -38,6 +38,9 @@ const InfoPopUp = (props) => {
 
       case "learn":
         return "Gameplay Tutorial";
+
+      case "tea":
+        return "Trial Over Tea";
     }
   };
 
@@ -375,6 +378,42 @@ const InfoPopUp = (props) => {
               <p>Estimated time: 20 to 30 minutes.</p>
               <br />
               <p>Close this message to get started.</p>
+            </div>
+          </div>
+        );
+
+      case "tea":
+        return (
+          <div>
+            <div className="unitInfo-text-desc">
+              <h4>
+                Trial Over Tea is a game mode that introduces a few house rules
+                to simplify gameplay:
+              </h4>
+
+              <ul className="infoPopUp-list2">
+                <li className="unitInfo-text-desc">
+                  Sovereigns play with identical repertoires and start with 5
+                  Bounty Points (BP).
+                </li>
+                <li className="unitInfo-text-desc">
+                  The skill repertoire size is reduced from 60 to 45 cards.
+                </li>
+                <li className="unitInfo-text-desc">
+                  The Avelhem repertoire size is reduced from 20 to 16 cards and
+                  includes 4 copies each of{" "}
+                  <strong>Fire, Water, Land, and Mana</strong> Avelhems.
+                </li>
+                <li className="unitInfo-text-desc">
+                  The Fate Defiance (FD) costs of Artifice and Backtrack are
+                  reduced from 1 to 0.
+                </li>
+                <li className="unitInfo-text-desc">
+                  Sovereigns can click on their own repertoires to view the
+                  contents. (The cards will be sorted and won’t reflect their
+                  actual order.)
+                </li>
+              </ul>
             </div>
           </div>
         );

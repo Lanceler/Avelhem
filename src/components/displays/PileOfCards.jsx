@@ -6,6 +6,7 @@ import { updateDemo } from "../../redux/demoGuide";
 
 import { useGetImages } from "../../hooks/useGetImages";
 import ViewVestige from "./ViewVestige";
+import ViewRepertoireTrial from "./ViewRepertoireTrial";
 
 const PileOfCards = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
@@ -71,6 +72,10 @@ const PileOfCards = (props) => {
       setShowPile("Skill");
     } else if (pile === "avelhemVestige") {
       setShowPile("Avelhem");
+    } else if (pile === "skillRepertoire" && localGameState.teaTrial) {
+      setShowPile("Skill Repertoire");
+    } else if (pile === "avelhemRepertoire" && localGameState.teaTrial) {
+      setShowPile("Avelhem Repertoire");
     }
   };
 
@@ -116,7 +121,12 @@ const PileOfCards = (props) => {
               pile-card 
               ${isFloating(i) ? "pile-floating" : ""} 
               ${isVestige ? "pile-vestige" : ""} 
-              ${team === enemy ? "pile-enemy" : ""}                       
+              ${team === enemy ? "pile-enemy" : ""}
+              ${
+                localGameState.teaTrial && !isVestige
+                  ? "pile-tea-repertoire"
+                  : ""
+              }
             `}
             style={{
               backgroundImage: `url(${getCardImage(cardBack)})`,
@@ -138,11 +148,20 @@ const PileOfCards = (props) => {
         )}
       </div>
 
-      {showPile !== null && (
+      {["Skill", "Avelhem"].includes(showPile) && (
         <ViewVestige
           setShowPile={setShowPile}
           team={team}
           vestige={showPile}
+          spectator={props.spectator}
+        />
+      )}
+
+      {["Skill Repertoire", "Avelhem Repertoire"].includes(showPile) && (
+        <ViewRepertoireTrial
+          setShowPile={setShowPile}
+          team={team}
+          repertoire={showPile}
           spectator={props.spectator}
         />
       )}

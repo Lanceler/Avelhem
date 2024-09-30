@@ -360,7 +360,7 @@ const Board = (props) => {
         localGameState.activatingTarget[
           localGameState.activatingTarget.length - 1
         ] !== null && (
-          <div className="board-piece" style={activatingTarget()}>
+          <div className="crosshair-initial" style={activatingTarget()}>
             <img src={getMiscImage("Crosshair")} className="crosshair" />
           </div>
         )}

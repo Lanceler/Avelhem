@@ -24,6 +24,8 @@ import BoardArea from "../components/BoardArea";
 
 import { AnimatePresence, motion } from "framer-motion";
 
+import InfoPopUp from "../components/modals/InfoPopUp";
+
 import "./Game.css";
 
 export default function Game() {
@@ -39,6 +41,10 @@ export default function Game() {
   const [userRole, setUserRole] = useState("");
   const [playerStatus, setPlayerStatus] = useState("");
   const [banner, setBanner] = useState({ title: "", buttonText: "" });
+  const [bannerImg, setBannerImg] = useState("Challenge");
+
+  const [infoPopUp, setInfoPopUp] = useState(null);
+  const [infoClosed, setInfoClosed] = useState(false);
 
   const queryString = useLocation().search;
   const queryParams = new URLSearchParams(queryString);
@@ -131,6 +137,12 @@ export default function Game() {
       setUserRole("guest");
     } else {
       setUserRole("spectator");
+    }
+
+    if (gameData && gameData.teaTrial && !infoClosed) {
+      setInfoPopUp("tea");
+      setInfoClosed(true);
+      setBannerImg("Tea");
     }
   }, [gameData, user.uid]);
 
@@ -270,7 +282,7 @@ export default function Game() {
             exit={{ opacity: 0, transition: { duration: 1.5 } }}
             className="game-banner"
             style={{
-              backgroundImage: `url(${getBannerImage("Challenge")})`,
+              backgroundImage: `url(${getBannerImage(bannerImg)})`,
             }}
           >
             <div className="game-banner-backdrop">
@@ -312,6 +324,10 @@ export default function Game() {
         <SelectRepertoire onSelectRepertoire={onSelectRepertoire} />
       )}
       {isLoading && <Loading />}
+
+      {infoPopUp && (
+        <InfoPopUp info={infoPopUp} setInfoPopUp={setInfoPopUp} mobile={true} />
+      )}
     </div>
   );
 }

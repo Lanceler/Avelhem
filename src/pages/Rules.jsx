@@ -109,31 +109,31 @@ export default function Rules() {
               <h2>Overview</h2>
               <p>
                 <em>Avelhem: War of the Sovereigns</em> is a board game set in a
-                fantastical realm where two players assume the roles of
-                Sovereigns controlling armies of demigods endowed with elemental
+                fantastical realm where two players take on the roles of
+                Sovereigns, leading armies of demigods bestowed with elemental
                 powers.
               </p>
               <br />
               <p>
-                Sovereigns take turns that consist of phases. Each turn allows
-                for the use of up to two tactics that enable various actions
-                such as drawing cards and deploying or moving units. Sovereigns
-                can accumulate cards and activate them at opportune moments to
-                supplement their limited tactics.
+                Each turn is divided into several phases during which Sovereigns
+                can use up to two tactics to perform various actions, such as
+                drawing cards and deploying units. Sovereigns can accumulate
+                cards and activate them at opportune moments to supplement their
+                limited tactics.
               </p>
               <br />
               <p>
-                Units enter play as pawns capable of movement and attack. Pawns
-                can ascend to Scions with elemental affinities, unlocking access
-                to exclusive abilities, talents, and skill cards with a variety
-                of thematic effects.
+                Units enter battle as pawns that can move and attack. With the
+                use of Avelhem cards, pawns can ascend to Scions with elemental
+                affinities that grant access to unique abilities, talents, and
+                skill cards that offer a range of thematic effects.
               </p>
               <br />
 
               <h3>Objective</h3>
               <p>
-                A Sovereign wins by moving a set number of their pieces to the
-                opponent’s end of the board.
+                A Sovereign wins by moving a designated number of their units to
+                the opponent’s end of the board.
               </p>
 
               <br />

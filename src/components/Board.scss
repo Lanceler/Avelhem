@@ -340,6 +340,22 @@
         transform: scale(1);
     }
 }
+
+.crosshair-initial {
+    transition: top 0.5s ease, left 0.5s ease;
+    animation: crosshair-ani 0.75s ease-in-out;
+}
+
+@keyframes crosshair-ani {
+    0% {
+        transform: scale(1.45) translateY(-20%);
+        opacity: 90%;
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
 //////////////////////////////////////////////////////////////
 
 @media screen and (max-width: 926px) and (orientation: landscape) {

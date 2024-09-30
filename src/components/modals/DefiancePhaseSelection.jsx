@@ -181,7 +181,14 @@ const DefiancePhaseSelection = (props) => {
     props.hideOrRevealModale();
   };
 
-  const defianceCosts = [1, 1, 2, 3, 3, 4];
+  const defianceCosts = [
+    localGameState.teaTrial ? 0 : 1,
+    localGameState.teaTrial ? 0 : 1,
+    2,
+    3,
+    3,
+    4,
+  ];
 
   const canSelect = [
     //Artifice

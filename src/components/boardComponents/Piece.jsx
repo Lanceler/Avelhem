@@ -223,7 +223,7 @@ export const Piece = (props) => {
             <>
               {/* deploy impact */}
               <>
-                <div className="deployImpact"></div>
+                <div className="deploy-impact"></div>
               </>
 
               {/* Mana Scion: Disruption */}

@@ -493,6 +493,65 @@ export const useCardDatabase = () => {
     ];
   };
 
+  const trialTeaAvelhems = [
+    //fire
+    1, 1, 1, 1,
+    //water
+    2, 2, 2, 2,
+    //land
+    4, 4, 4, 4,
+    //mana
+    6, 6, 6, 6,
+  ];
+
+  const trialTeaSkills = [
+    "01-01",
+    "01-01",
+    "01-01",
+    "01-01",
+    "01-02",
+    "01-02",
+    "01-02",
+    "01-02",
+    "01-03",
+    "01-03",
+    "01-04",
+    "02-01",
+    "02-01",
+    "02-01",
+    "02-01",
+    "02-02",
+    "02-02",
+    "02-02",
+    "02-02",
+    "02-03",
+    "02-03",
+    "02-04",
+    "04-01",
+    "04-01",
+    "04-01",
+    "04-01",
+    "04-02",
+    "04-02",
+    "04-02",
+    "04-02",
+    "04-03",
+    "04-03",
+    "04-04",
+    "06-03",
+    "06-03",
+    "06-03",
+    "06-03",
+    "SA-02",
+    "SA-02",
+    "SA-03",
+    "SA-03",
+    "SA-04",
+    "SA-04",
+    "SB-01",
+    "SB-01",
+  ];
+
   return {
     avelhemCardList,
     skillCardList,
@@ -504,5 +563,7 @@ export const useCardDatabase = () => {
     allBurstSkills,
     pressTheAttackList,
     sovereignSkillList,
+    trialTeaAvelhems,
+    trialTeaSkills,
   };
 };

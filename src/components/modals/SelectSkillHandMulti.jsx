@@ -131,7 +131,9 @@ const SelectSkillHandMulti = (props) => {
         newGameState.currentResolution.pop();
 
         //deduct FD
-        newGameState[self].fateDefiance -= 1;
+        if (!newGameState.teaTrial) {
+          newGameState[self].fateDefiance -= 1;
+        }
 
         // console.log(selectedSkills);
 

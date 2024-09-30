@@ -163,6 +163,7 @@ import InviteBanner from "../assets/banners/InviteBanner.jpg";
 import ChallengeBanner from "../assets/banners/ChallengeBanner.jpg";
 import MatchMadeBanner from "../assets/banners/MatchMadeBanner.jpg";
 import ForeshadowBanner from "../assets/banners/ForeshadowBanner.jpg";
+import TeaBanner from "../assets/banners/TeaBanner.jpg";
 
 import NightSky from "../assets/banners/NightSky.jpg";
 import MountainFields from "../assets/banners/MountainFields.jpg";
@@ -363,6 +364,9 @@ export const useGetImages = () => {
 
       case "Invite":
         return InviteBanner;
+
+      case "Tea":
+        return TeaBanner;
 
       //
 

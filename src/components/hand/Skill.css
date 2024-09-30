@@ -379,6 +379,12 @@
     cursor: pointer;
 }
 
+.pile-tea-repertoire:hover{
+    filter: brightness(110%);
+    cursor: pointer;
+}
+
+
 .pile-view-skill{
     width: 165px;
     height: 231px;
