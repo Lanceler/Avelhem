@@ -7,9 +7,6 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { useSelector, useDispatch } from "react-redux";
 import { updateMagnifiedSkill } from "../../redux/magnifySkill";
 import { updateState } from "../../redux/gameState";
-import { updateDemo } from "../../redux/demoGuide";
-
-import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import { useGetImages } from "../../hooks/useGetImages";
 
@@ -17,9 +14,6 @@ const ViewRepertoireTrial = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const { magnifiedSkill } = useSelector((state) => state.magnifiedSkill);
-  const { demoGuide } = useSelector((state) => state.demoGuide);
-
-  const { shuffleCards } = useRecurringEffects();
 
   const dispatch = useDispatch();
 
@@ -48,7 +42,7 @@ const ViewRepertoireTrial = (props) => {
   //shuffle display (for consistency with repertoire)
   const sortRepertoire = [...repertoire].sort();
 
-  console.log(sortRepertoire);
+  //   console.log(sortRepertoire);
 
   const handleSkip = () => {
     props.setShowPile(null);
