@@ -93,7 +93,7 @@ const ViewRepertoireTrial = (props) => {
                           <button
                             className="zoom-button"
                             onClick={() => {
-                              dispatch(updateMagnifiedSkill(usableSkill.id));
+                              dispatch(updateMagnifiedSkill(usableSkill));
                             }}
                           >
                             <FontAwesomeIcon icon={faMagnifyingGlass} />
@@ -117,7 +117,7 @@ const ViewRepertoireTrial = (props) => {
                       <button
                         className="zoom-button"
                         onClick={() => {
-                          dispatch(updateMagnifiedSkill(usableSkill.id));
+                          dispatch(updateMagnifiedSkill(usableSkill));
                         }}
                       >
                         <FontAwesomeIcon icon={faMagnifyingGlass} />

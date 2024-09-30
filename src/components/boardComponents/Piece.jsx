@@ -315,21 +315,57 @@ export const Piece = (props) => {
           {props.unit.unitClass === "Plant Scion" && (
             <>
               {props.unit.blossom === 1 && (
-                <div className="blossom" style={{ left: 12 }}></div>
+                <div
+                  className="blossom"
+                  style={{
+                    left: "33.33%",
+                    transform: "translateX(-50%) rotate(45deg)",
+                  }}
+                ></div>
               )}
 
               {props.unit.blossom === 2 && (
                 <>
-                  <div className="blossom" style={{ left: 29 }}></div>
-                  <div className="blossom" style={{ left: 12 }}></div>
+                  <div
+                    className="blossom"
+                    style={{
+                      left: "33.33%",
+                      transform: "translateX(-50%) rotate(45deg)",
+                    }}
+                  ></div>
+                  <div
+                    className="blossom"
+                    style={{
+                      left: "50%",
+                      transform: "rotate(45deg)",
+                    }}
+                  ></div>
                 </>
               )}
 
               {props.unit.blossom > 2 && (
                 <>
-                  <div className="blossom" style={{ left: 29 }}></div>
-                  <div className="blossom" style={{ left: 12 }}></div>
-                  <div className="blossom" style={{ left: 46 }}></div>
+                  <div
+                    className="blossom"
+                    style={{
+                      left: "20%",
+                      transform: "translateX(-50%) rotate(45deg)",
+                    }}
+                  ></div>
+                  <div
+                    className="blossom"
+                    style={{
+                      left: "50%",
+                      transform: " translateX(-50%)  rotate(45deg)",
+                    }}
+                  ></div>
+                  <div
+                    className="blossom"
+                    style={{
+                      left: "80%",
+                      transform: " translateX(-50%)  rotate(45deg)",
+                    }}
+                  ></div>
                 </>
               )}
             </>
@@ -338,21 +374,57 @@ export const Piece = (props) => {
           {props.unit.unitClass === "Lightning Scion" && (
             <>
               {props.unit.charge === 1 && (
-                <div className="charge" style={{ left: 12 }}></div>
+                <div
+                  className="charge"
+                  style={{
+                    left: "33.33%",
+                    transform: "translateX(-50%) rotate(45deg)",
+                  }}
+                ></div>
               )}
 
               {props.unit.charge === 2 && (
                 <>
-                  <div className="charge" style={{ left: 29 }}></div>
-                  <div className="charge" style={{ left: 12 }}></div>
+                  <div
+                    className="charge"
+                    style={{
+                      left: "33.33%",
+                      transform: "translateX(-50%) rotate(45deg)",
+                    }}
+                  ></div>
+                  <div
+                    className="charge"
+                    style={{
+                      left: "50%",
+                      transform: "rotate(45deg)",
+                    }}
+                  ></div>
                 </>
               )}
 
               {props.unit.charge > 2 && (
                 <>
-                  <div className="charge" style={{ left: 29 }}></div>
-                  <div className="charge" style={{ left: 12 }}></div>
-                  <div className="charge" style={{ left: 46 }}></div>
+                  <div
+                    className="charge"
+                    style={{
+                      left: "20%",
+                      transform: "translateX(-50%) rotate(45deg)",
+                    }}
+                  ></div>
+                  <div
+                    className="charge"
+                    style={{
+                      left: "50%",
+                      transform: " translateX(-50%)  rotate(45deg)",
+                    }}
+                  ></div>
+                  <div
+                    className="charge"
+                    style={{
+                      left: "80%",
+                      transform: " translateX(-50%)  rotate(45deg)",
+                    }}
+                  ></div>
                 </>
               )}
             </>
@@ -361,7 +433,13 @@ export const Piece = (props) => {
           {props.unit.unitClass === "Fire Scion" && (
             <>
               {props.unit.boosts.fieryHeart === true && (
-                <div className="fiery-heart" style={{ left: 29 }}></div>
+                <div
+                  className="fiery-heart"
+                  style={{
+                    left: "50%",
+                    transform: " translateX(-50%) rotate(45deg)",
+                  }}
+                ></div>
               )}
             </>
           )}
@@ -369,12 +447,30 @@ export const Piece = (props) => {
           {props.unit.unitClass === "Water Scion" && (
             <>
               {props.unit.boosts.glacialTorrent === 1 && (
-                <div className="glacial-torrent" style={{ left: 20 }}></div>
+                <div
+                  className="glacial-torrent"
+                  style={{
+                    left: "30%",
+                    transform: "translateX(-50%) rotate(45deg)",
+                  }}
+                ></div>
               )}
               {props.unit.boosts.glacialTorrent > 1 && (
                 <>
-                  <div className="glacial-torrent" style={{ left: 20 }}></div>
-                  <div className="glacial-torrent" style={{ left: 38 }}></div>
+                  <div
+                    className="glacial-torrent"
+                    style={{
+                      left: "30%",
+                      transform: "translateX(-50%) rotate(45deg)",
+                    }}
+                  ></div>
+                  <div
+                    className="glacial-torrent"
+                    style={{
+                      left: "70%",
+                      transform: "translateX(-50%) rotate(45deg)",
+                    }}
+                  ></div>
                 </>
               )}
             </>
@@ -383,7 +479,13 @@ export const Piece = (props) => {
           {props.unit.unitClass === "Wind Scion" && (
             <>
               {props.unit.boosts.galeConjuration === true && (
-                <div className="gale-conjuration" style={{ left: 29 }}></div>
+                <div
+                  className="gale-conjuration"
+                  style={{
+                    left: "50%",
+                    transform: " translateX(-50%)  rotate(45deg)",
+                  }}
+                ></div>
               )}
             </>
           )}
@@ -391,7 +493,13 @@ export const Piece = (props) => {
           {props.unit.unitClass === "Land Scion" && (
             <>
               {props.unit.boosts.mountainStance === true && (
-                <div className="mountain-stance" style={{ left: 29 }}></div>
+                <div
+                  className="mountain-stance"
+                  style={{
+                    left: "50%",
+                    transform: " translateX(-50%)  rotate(45deg)",
+                  }}
+                ></div>
               )}
             </>
           )}
@@ -399,12 +507,30 @@ export const Piece = (props) => {
           {props.unit.unitClass === "Mana Scion" && (
             <>
               {props.unit.enhancements.disruption === 1 && (
-                <div className="disruptionCounter" style={{ left: 20 }}></div>
+                <div
+                  className="disruptionCounter"
+                  style={{
+                    left: "30%",
+                    transform: "translateX(-50%) rotate(45deg)",
+                  }}
+                ></div>
               )}
               {props.unit.enhancements.disruption > 1 && (
                 <>
-                  <div className="disruptionCounter" style={{ left: 20 }}></div>
-                  <div className="disruptionCounter" style={{ left: 38 }}></div>
+                  <div
+                    className="disruptionCounter"
+                    style={{
+                      left: "30%",
+                      transform: "translateX(-50%) rotate(45deg)",
+                    }}
+                  ></div>
+                  <div
+                    className="disruptionCounter"
+                    style={{
+                      left: "70%",
+                      transform: "translateX(-50%) rotate(45deg)",
+                    }}
+                  ></div>
                 </>
               )}
             </>
@@ -413,12 +539,30 @@ export const Piece = (props) => {
           {props.unit.unitClass === "Metal Scion" && (
             <>
               {props.unit.sharpness === 1 && (
-                <div className="sharpness" style={{ left: 20 }}></div>
+                <div
+                  className="sharpness"
+                  style={{
+                    left: "30%",
+                    transform: "translateX(-50%) rotate(45deg)",
+                  }}
+                ></div>
               )}
               {props.unit.sharpness > 1 && (
                 <>
-                  <div className="sharpness" style={{ left: 20 }}></div>
-                  <div className="sharpness" style={{ left: 38 }}></div>
+                  <div
+                    className="sharpness"
+                    style={{
+                      left: "30%",
+                      transform: "translateX(-50%) rotate(45deg)",
+                    }}
+                  ></div>
+                  <div
+                    className="sharpness"
+                    style={{
+                      left: "70%",
+                      transform: "translateX(-50%) rotate(45deg)",
+                    }}
+                  ></div>
                 </>
               )}
             </>

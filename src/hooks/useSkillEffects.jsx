@@ -645,9 +645,10 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
-  const symphonicScreech1 = (unitInfo, victim) => {
+  const symphonicScreech1 = (unitInfo, victimInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+    let victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
 
     //end "Activating Symphonic Screech" resolution
     newGameState.currentResolution.pop();
@@ -656,6 +657,11 @@ export const useSkillEffects = () => {
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
+
+    //give victim activationCounter
+    victim.temporary.activation
+      ? (victim.temporary.activation += 1)
+      : (victim.temporary.activation = 1);
 
     //temporarily remove the skill conclusion of Screech
     const symphonicScreechConclusion = newGameState.currentResolution.pop();

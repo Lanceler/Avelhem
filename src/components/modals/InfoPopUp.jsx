@@ -402,7 +402,7 @@ const InfoPopUp = (props) => {
                 <li className="unitInfo-text-desc">
                   The Avelhem repertoire size is reduced from 20 to 16 cards and
                   includes 4 copies each of{" "}
-                  <strong>Fire, Water, Land, and Mana</strong> Avelhems.
+                  <strong>Fire, Land, Mana, and Metal</strong> Avelhems.
                 </li>
                 <li className="unitInfo-text-desc">
                   The Fate Defiance (FD) costs of Artifice and Backtrack are

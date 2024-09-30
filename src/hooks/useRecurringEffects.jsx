@@ -2034,10 +2034,12 @@ export const useRecurringEffects = () => {
   };
 
   const applyAnathema = (unit) => {
-    if (unit.temporary.activation > 0) {
-      //if statement necessary because of Symphonic Screech
-      unit.temporary.activation -= 1;
-    }
+    // if (unit.temporary.activation > 0) {
+    //   //if statement necessary because of Symphonic Screech <--- reworked code so not needed
+    //   unit.temporary.activation -= 1;
+    // }
+
+    unit.temporary.activation -= 1;
 
     if (
       unit.temporary.activation === 0 &&
