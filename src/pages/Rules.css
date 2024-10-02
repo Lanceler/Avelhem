@@ -5,6 +5,18 @@
     /* background-color: rgb(94, 0, 0); */
 }
 
+
+
+.rule-index li {
+    list-style-type: upper-roman;
+    font-size: 1.25rem;
+    color: goldenrod;
+    padding-bottom: 4px;
+}
+
+
+
+
 .rule-title {
     padding-top: 35px;
     height: 120px;
@@ -18,9 +30,7 @@
     -webkit-text-stroke: 1.25px #fdd700;
     text-shadow: rgb(0, 0, 0) 1px 0 2px;
 
-
-
-    background-color: rgba(0, 0, 0, 0.95);
+    /* background-color: rgba(0, 0, 0, 0.95); */
 }
 
 .rule-title img:hover{
@@ -58,11 +68,12 @@
     background-position: top;
     top: -150px;
     z-index: 1;
+    filter: brightness(.1);
 }
 
 .rules-text{
     color: #eee;
-    background-color: rgba(0, 0, 0, 0.95);
+    /* background-color: rgba(0, 0, 0, 0.95); */
     padding: 20px 80px;
     /* height: 1200px; */
 
@@ -83,6 +94,23 @@
 
 .rules-text p{
     /* max-width: 1000px; */
+}
+
+.rule-view-card{
+    color: rgb(180, 134, 64);
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.rule-view-card:hover {
+    color: rgb(231, 183, 110);
+    
+
+}
+
+.rules-text li {
+    padding-top: 2.5px;
+
 }
 
 .rules-image-container{

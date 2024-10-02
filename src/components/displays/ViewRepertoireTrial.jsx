@@ -127,6 +127,12 @@ const ViewRepertoireTrial = (props) => {
                 </div>
               </>
             )}
+
+            {(props.team !== self || props.spectator) && (
+              <>
+                <h3>No cards available for viewing.</h3>
+              </>
+            )}
           </div>
         </div>
       </div>

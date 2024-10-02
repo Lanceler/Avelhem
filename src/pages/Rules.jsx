@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 
+import "./Rules.css";
+
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useGetImages } from "../hooks/useGetImages";
 
@@ -17,7 +19,9 @@ import EffectSkill from "../assets/rules/EffectSkill.png";
 import InterruptSkill from "../assets/rules/InterruptSkill.png";
 import KeywordSkill from "../assets/rules/KeywordSkill.png";
 
-import "./Rules.css";
+import { useSelector, useDispatch } from "react-redux";
+import { updateMagnifiedSkill } from "../redux/magnifySkill";
+import ZoomCard from "../components/displays/ZoomCard";
 
 export default function Rules() {
   const { id } = useParams(); //note: id was entered as the parameter in the routes of App.jsx
@@ -25,6 +29,9 @@ export default function Rules() {
   const location = useLocation();
 
   const { getBannerImage } = useGetImages();
+
+  const { magnifiedSkill } = useSelector((state) => state.magnifiedSkill);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (
@@ -37,15 +44,16 @@ export default function Rules() {
         "tactics",
         "statuses",
         "effects",
+        "trial-over-tea",
       ].includes(id)
     ) {
       navigate("/rules");
     }
   }, []);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [id]);
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, [id]);
 
   useEffect(() => {
     const elementId = location.hash.replace("#", "");
@@ -75,33 +83,53 @@ export default function Rules() {
           </div>
           {!id && (
             <div className="rules-text">
-              <Link to="/rules/summary">
-                <button>Overview & Summary</button>
-              </Link>
-              <br />
-              <Link to="/rules/turn-structure">
-                <button>Turn Structure</button>
-              </Link>
-              <br />
-              <Link to="/rules/units">
-                <button>Units</button>
-              </Link>
-              <br />
-              <Link to="/rules/cards">
-                <button>Cards</button>
-              </Link>
-              <br />
-              <Link to="/rules/tactics">
-                <button>Tactics</button>
-              </Link>
-              <br />
-              <Link to="/rules/statuses">
-                <button>Statuses</button>
-              </Link>
-              <br />
-              <Link to="/rules/effects">
-                <button>Effects & Keywords</button>
-              </Link>
+              <ol className="rule-index">
+                <li>
+                  <Link to="/rules/summary">
+                    <h2>Overview & Summary</h2>
+                  </Link>
+                </li>
+
+                <li>
+                  <Link to="/rules/turn-structure">
+                    <h2>Turn Structure</h2>
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/rules/units">
+                    <h2>Units</h2>
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/rules/cards">
+                    <h2>Cards</h2>
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/rules/tactics">
+                    <h2>Tactics</h2>
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/rules/statuses">
+                    <h2>Statuses</h2>
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/rules/effects">
+                    <h2>Effects & Keywords</h2>
+                  </Link>
+                </li>
+                <li>
+                  <h2>Appendix (To-do)</h2>
+                </li>
+                <br />
+                <li>
+                  <Link to="/rules/trial-over-tea">
+                    <h2>Trial Over Tea</h2>
+                  </Link>
+                </li>
+              </ol>
             </div>
           )}
           {id === "summary" && (
@@ -274,8 +302,8 @@ export default function Rules() {
 
               <h2>Turn Structure</h2>
               <p>
-                Each turn consists of six phases. The Initiator refers to the
-                Sovereign whose turn it currently is. For more information,
+                The Initiator refers to the Sovereign whose turn it currently
+                is. Each turn consists of six phases. For more information,
                 visit the{" "}
                 <Link to="/rules/turn-structure">Turn Structure page</Link>.
               </p>
@@ -435,8 +463,8 @@ export default function Rules() {
             <div className="rules-text">
               <h2>Turn Structure</h2>
               <p>
-                Each turn consists of six phases. The Initiator refers to the
-                Sovereign whose turn it currently is.
+                The Initiator refers to the Sovereign whose turn it currently
+                is. Each turn consists of six phases.
               </p>
               <br />
               <h3>Acquisition Phase</h3>
@@ -775,9 +803,26 @@ export default function Rules() {
               <p>
                 The icon at the top left corner of a skill card represents its
                 aspect, which determines who can exclusively activate it. For
-                example, a Sovereign skill (which has a crown icon) can only be
-                activated by a Sovereign. Likewise, a Lightning skill can only
-                be activated by a Lightning Scion.
+                example, a Sovereign skill (which has a crown icon) such as{" "}
+                <span
+                  className="rule-view-card"
+                  onClick={() => {
+                    dispatch(updateMagnifiedSkill("SA-04"));
+                  }}
+                >
+                  Reminiscence
+                </span>{" "}
+                can only be activated by a Sovereign. Likewise, a Lightning
+                skill such as{" "}
+                <span
+                  className="rule-view-card"
+                  onClick={() => {
+                    dispatch(updateMagnifiedSkill("05-04"));
+                  }}
+                >
+                  Valiant Spark
+                </span>{" "}
+                can only be activated by a Lightning Scion.
               </p>
 
               <br />
@@ -801,7 +846,18 @@ export default function Rules() {
                     effect ongoing, and they are sent to the vestige after
                     concluding their effects.
                   </li>
-                  <li>Their icon is a circular blue sapphire.</li>
+                  <li>
+                    Their icon is a circular blue sapphire. For example, see{" "}
+                    <span
+                      className="rule-view-card"
+                      onClick={() => {
+                        dispatch(updateMagnifiedSkill("01-01"));
+                      }}
+                    >
+                      Ignition Propulsion
+                    </span>
+                    .
+                  </li>
                 </ul>
               </p>
 
@@ -821,6 +877,16 @@ export default function Rules() {
                   </li>
                   <li>
                     Their icon is a rectangular green and purple alexandrite.
+                    For example, see{" "}
+                    <span
+                      className="rule-view-card"
+                      onClick={() => {
+                        dispatch(updateMagnifiedSkill("01-02"));
+                      }}
+                    >
+                      Conflagration
+                    </span>
+                    .
                   </li>
                 </ul>
               </p>
@@ -856,7 +922,18 @@ export default function Rules() {
                     <Link to="/rules/units">Units</Link>) and a contingent
                     skill, the talent activates first.
                   </li>
-                  <li>Their icon is a triangular red ruby.</li>
+                  <li>
+                    Their icon is a triangular red ruby. For example, see{" "}
+                    <span
+                      className="rule-view-card"
+                      onClick={() => {
+                        dispatch(updateMagnifiedSkill("03-01"));
+                      }}
+                    >
+                      Blaze of Glory
+                    </span>
+                    .
+                  </li>
                 </ul>
               </p>
 
@@ -879,7 +956,18 @@ export default function Rules() {
                     Shattered skills are set aside where they are revealed to
                     both Sovereigns.
                   </li>
-                  <li>Their icon is a hexagonal purple amethyst.</li>
+                  <li>
+                    Their icon is a hexagonal purple amethyst. For example, see{" "}
+                    <span
+                      className="rule-view-card"
+                      onClick={() => {
+                        dispatch(updateMagnifiedSkill("01-04"));
+                      }}
+                    >
+                      Resplendence
+                    </span>
+                    .
+                  </li>
                 </ul>
               </p>
 
@@ -907,10 +995,19 @@ export default function Rules() {
                 Some skills have a “Substitute” property that allows them to
                 function as a resonator for certain cards. When used this way,
                 these skills provide alternative effects in place of their
-                primary ones. For example, Heir’s Endeavor as a resonator can
-                only resonate with Sovereign skills, and it allows the activator
-                to inspect skills when the resonance concludes, while its
-                primary effect of recovering a Sovereign skill is ignored.
+                primary ones. For example,{" "}
+                <span
+                  className="rule-view-card"
+                  onClick={() => {
+                    dispatch(updateMagnifiedSkill("SA-01"));
+                  }}
+                >
+                  Heir’s Endeavor
+                </span>{" "}
+                as a resonator can only resonate with Sovereign skills, and it
+                allows the activator to inspect skills when the resonance
+                concludes, while its primary effect of recovering a Sovereign
+                skill is ignored.
               </p>
               <br />
               <h2>Float</h2>
@@ -1101,10 +1198,25 @@ export default function Rules() {
               <p>
                 The duration of a turn-based status is stated with the effect or
                 mechanic that applies it. In the absence of an explicit
-                duration, the status persists indefinitely. For example, Frigid
-                Breath can freeze (apply frostbite) enemy units for 1 turn,
-                while Efflorescence grants the activator Overgrowth
-                indefinitely.
+                duration, the status persists indefinitely. For example,{" "}
+                <span
+                  className="rule-view-card"
+                  onClick={() => {
+                    dispatch(updateMagnifiedSkill("02-02"));
+                  }}
+                >
+                  Frigid Breath
+                </span>{" "}
+                can freeze (apply frostbite) enemy units for 1 turn, while{" "}
+                <span
+                  className="rule-view-card"
+                  onClick={() => {
+                    dispatch(updateMagnifiedSkill("08-02"));
+                  }}
+                >
+                  Efflorescence
+                </span>{" "}
+                grants the activator Overgrowth indefinitely.
               </p>
               <br />
               <p>
@@ -1127,6 +1239,21 @@ export default function Rules() {
                 expiration matters solely for the Burn affliction, as Burn
                 causes damage to the affected unit only if it expires.
                 {/* Note: update with Infect and Avian passive */}
+              </p>
+              <br />
+              <p>
+                Note: Eliminating a unit does not purge their statuses. For
+                example, the{" "}
+                <span
+                  className="rule-view-card"
+                  onClick={() => {
+                    dispatch(updateMagnifiedSkill("AmbianceAssimilation"));
+                  }}
+                >
+                  Ambiance Assimilation
+                </span>{" "}
+                talent of Mana Scions activates when they are eliminated. This
+                talent will not activated if they are muted by an affliction.
               </p>
               <br />
               <br />
@@ -1236,8 +1363,16 @@ export default function Rules() {
                 Sub-effects are mandatory by default; those qualified with the
                 phrase <em>“you may” </em>are optional. An effect cannot be
                 activated if its mandatory sub-effects cannot be fulfilled. For
-                example, a Sovereign cannot activate Press the Attack unless
-                they have 2 Advance tactics to convert. Its subsequent
+                example, a Sovereign cannot activate{" "}
+                <span
+                  className="rule-view-card"
+                  onClick={() => {
+                    dispatch(updateMagnifiedSkill("SB-05"));
+                  }}
+                >
+                  Press the Attack
+                </span>{" "}
+                unless they have 2 Advance tactics to convert. Its subsequent
                 sub-effects are optional.
               </p>
 
@@ -1247,18 +1382,34 @@ export default function Rules() {
                 <em>“if”</em> and are applied only when their statements are
                 true. A false statement will not prevent the activation of the
                 effect, but its corresponding sub-effect will be ignored. For
-                example, a Mana Scion who activates Aegis will draw a skill only
-                if they were targeted. Regardless, it will proceed to its next
-                sub-effect.
+                example, a Mana Scion who activates{" "}
+                <span
+                  className="rule-view-card"
+                  onClick={() => {
+                    dispatch(updateMagnifiedSkill("06-03"));
+                  }}
+                >
+                  Aegis
+                </span>{" "}
+                will draw a skill only if they were targeted. Regardless, it
+                will proceed to its next sub-effect.
               </p>
 
               <br />
               <p>
                 Modular sub-effects present the activator a choice between two
                 options. Either can be chosen, provided it can be accomplished.
-                Continuing from the previous example, a Mana Scion who activates
-                Aegis must either grant Shield or spend 1 skill to grant Ward
-                (see <Link to="/rules/statuses">Statuses</Link>) to the targeted
+                Continuing from the previous example, a Mana Scion who activates{" "}
+                <span
+                  className="rule-view-card"
+                  onClick={() => {
+                    dispatch(updateMagnifiedSkill("06-03"));
+                  }}
+                >
+                  Aegis
+                </span>{" "}
+                must either grant Shield or spend 1 skill to grant Ward (see{" "}
+                <Link to="/rules/statuses">Statuses</Link>) to the targeted
                 unit. If they cannot spend a skill, they default to the former
                 option.
               </p>
@@ -1288,14 +1439,31 @@ export default function Rules() {
                 apply its own effect. After the interruptions’ effects resolve,
                 the effect that was interrupted resumes, unless the aftermath of
                 the interruption has made it impossible to do so. For example,
-                if a Lightning Scion activates Zip and Zap and uses its first
-                sub-effect to move next to an enemy Land Scion, the Land Scion
-                can activate Pitfall Trap before the second sub-effect of Zip
-                and Zap applies. If Pitfall Trap paralyzes or eliminates the
-                Lightning Scion, Zip and Zap concludes abruptly since its
-                remaining sub-effects can no longer be applied. Conversely, if
-                Pitfall Trap fails to incapacitate the Lightning Scion, they
-                will resume applying the effect of Zip and Zap.
+                if a Lightning Scion activates{" "}
+                <span
+                  className="rule-view-card"
+                  onClick={() => {
+                    dispatch(updateMagnifiedSkill("05-02"));
+                  }}
+                >
+                  Zip and Zap
+                </span>{" "}
+                and uses its first sub-effect to move next to an enemy Land
+                Scion, the Land Scion can activate{" "}
+                <span
+                  className="rule-view-card"
+                  onClick={() => {
+                    dispatch(updateMagnifiedSkill("04-03"));
+                  }}
+                >
+                  Pitfall Trap
+                </span>{" "}
+                before the second sub-effect of Zip and Zap applies. If Pitfall
+                Trap paralyzes or eliminates the Lightning Scion, Zip and Zap
+                concludes abruptly since its remaining sub-effects can no longer
+                be applied. Conversely, if Pitfall Trap fails to incapacitate
+                the Lightning Scion, they will resume applying the effect of Zip
+                and Zap.
               </p>
 
               <br />
@@ -1320,10 +1488,18 @@ export default function Rules() {
                 Keywords are effects compressed into single words for the sake
                 of brevity. These observe the same rules discussed earlier and
                 can appear within other effects. For example, the first
-                sub-effect of Arsenal Onslaught is simply “Strike”. This can be
-                restated and expanded as 3 sub-effects: “(1)Target an adjacent
-                enemy. (2)Attack them. (3)If the attack was lethal, move into
-                the zone they were occupying.”
+                sub-effect of{" "}
+                <span
+                  className="rule-view-card"
+                  onClick={() => {
+                    dispatch(updateMagnifiedSkill("07-04"));
+                  }}
+                >
+                  Arsenal Onslaught
+                </span>{" "}
+                is simply “Strike”. This can be restated and expanded as 3
+                sub-effects: “(1)Target an adjacent enemy. (2)Attack them. (3)If
+                the attack was lethal, move into the zone they were occupying.”
               </p>
 
               <br />
@@ -1505,6 +1681,306 @@ export default function Rules() {
             </div>
           )}
 
+          {id === "trial-over-tea" && (
+            <div className="rules-text">
+              <h2>Trial Over Tea</h2>
+              <p>
+                Trial Over Tea is a game mode that introduces a few house rules
+                to simplify gameplay:
+              </p>
+              <ul>
+                <li>
+                  Sovereigns play with identical repertoires and start with 5
+                  Bounty Points (BP).
+                </li>
+                <li>
+                  The Avelhem repertoire size is reduced from 20 to 16 cards and
+                  includes 4 copies each of{" "}
+                  <strong>
+                    <span
+                      className="rule-view-card"
+                      onClick={() => {
+                        dispatch(updateMagnifiedSkill(1));
+                      }}
+                    >
+                      Fire
+                    </span>
+                    ,{" "}
+                    <span
+                      className="rule-view-card"
+                      onClick={() => {
+                        dispatch(updateMagnifiedSkill(4));
+                      }}
+                    >
+                      Land
+                    </span>
+                    ,{" "}
+                    <span
+                      className="rule-view-card"
+                      onClick={() => {
+                        dispatch(updateMagnifiedSkill(6));
+                      }}
+                    >
+                      Mana
+                    </span>
+                    , and{" "}
+                    <span
+                      className="rule-view-card"
+                      onClick={() => {
+                        dispatch(updateMagnifiedSkill(7));
+                      }}
+                    >
+                      Metal
+                    </span>
+                  </strong>{" "}
+                  Avelhems.
+                </li>
+                <li>
+                  The skill repertoire size is reduced from 60 to 45 cards.
+                </li>
+
+                <li>
+                  The Fate Defiance (FD) costs of Artifice and Backtrack are
+                  reduced from 1 to 0.
+                </li>
+                <li>
+                  Sovereigns can click on their own repertoires to view the
+                  contents. (The cards will be sorted and won’t reflect their
+                  actual order.)
+                </li>
+              </ul>
+              <br />
+              <br />
+              <h2>Unit & Skill Profiles</h2>
+              <br />
+              <h3>Fire Scion</h3>
+              <p>Fire Scions possess an attack-oriented skill set.</p>
+              <ul>
+                <li>
+                  As they enter play, their{" "}
+                  <span
+                    className="rule-view-card"
+                    onClick={() => {
+                      dispatch(updateMagnifiedSkill("FromTheAshes"));
+                    }}
+                  >
+                    From the Ashes
+                  </span>{" "}
+                  talent allows them to recover then float a Fire skill at the
+                  cost of any skill from their hand.
+                </li>
+                <li>
+                  Their{" "}
+                  <span
+                    className="rule-view-card"
+                    onClick={() => {
+                      dispatch(updateMagnifiedSkill("Afterburner"));
+                    }}
+                  >
+                    Afterburner
+                  </span>{" "}
+                  ability allows them to strike using an Invoke tactic, doubling
+                  their opportunity to attack.
+                </li>
+                <li>
+                  <span
+                    className="rule-view-card"
+                    onClick={() => {
+                      dispatch(updateMagnifiedSkill("01-01"));
+                    }}
+                  >
+                    Ignition Propulsion
+                  </span>{" "}
+                  and{" "}
+                  <span
+                    className="rule-view-card"
+                    onClick={() => {
+                      dispatch(updateMagnifiedSkill("01-02"));
+                    }}
+                  >
+                    Conflagration
+                  </span>{" "}
+                  are reliable attacks, but they cost an additional skill to
+                  use.
+                  <ul>
+                    <li>
+                      Consider opportunities to recover{" "}
+                      <span
+                        className="rule-view-card"
+                        onClick={() => {
+                          dispatch(updateMagnifiedSkill("01-04"));
+                        }}
+                      >
+                        Transcendence
+                      </span>
+                      , so you don’t spend valuable cards.
+                    </li>
+                    <li>
+                      Ignition Propulsion provides extra movement by using
+                      enemies as stepping stones. If enhanced with Ravager, Fire
+                      Scions can use multiple copies to move up to 4 times in
+                      one turn, which can an opportunity to score.
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <span
+                    className="rule-view-card"
+                    onClick={() => {
+                      dispatch(updateMagnifiedSkill("01-03"));
+                    }}
+                  >
+                    Blaze of Glory
+                  </span>
+                  , their contingent skill, is not included in this mode.
+                </li>
+                <li>
+                  Their burst skill{" "}
+                  <span
+                    className="rule-view-card"
+                    onClick={() => {
+                      dispatch(updateMagnifiedSkill("SX-01"));
+                    }}
+                  >
+                    Resplendence
+                  </span>{" "}
+                  is their sole defensive tool that increases their HP to 2 and
+                  grants them Shield. It can also be used to search for another
+                  Fire skill.
+                </li>
+              </ul>
+
+              <br />
+
+              <h3>Land Scion</h3>
+              <p>Land Scions boast the highest durability.</p>
+              <ul>
+                <li>
+                  {" "}
+                  As they enter play, their{" "}
+                  <span
+                    className="rule-view-card"
+                    onClick={() => {
+                      dispatch(updateMagnifiedSkill("MountainStance"));
+                    }}
+                  >
+                    Mountain Stance
+                  </span>{" "}
+                  talent allows them to spend 1 skill to search their repertoire
+                  for their Crystallization skill and add it to their hand,
+                  granting immediate access to extra HP.
+                  <ul>
+                    <li>
+                      Alternatively, it can be used to give them a boost that
+                      allows them to use an Advance tactic to activate their
+                      Fortify ability. (Reminder: boosts expire at the end of
+                      the turn.)
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  Their{" "}
+                  <span
+                    className="rule-view-card"
+                    onClick={() => {
+                      dispatch(updateMagnifiedSkill("Fortify"));
+                    }}
+                  >
+                    Fortify
+                  </span>{" "}
+                  ability allows allows them to use an Assault (or Advance if
+                  boosted by Mountain Stance) tactic to gain Shield for 2 turns.
+                  They may then float 1 skill to traverse or strike, as a unit
+                  normally would with this tactic.
+                </li>
+                <li>
+                  <span
+                    className="rule-view-card"
+                    onClick={() => {
+                      dispatch(updateMagnifiedSkill("04-01"));
+                    }}
+                  >
+                    Crystallization
+                  </span>{" "}
+                  raises their HP to 2 and gives them the option to float 1
+                  skill to gain Shield for 2 turns.
+                  <ul>
+                    <li>
+                      If your Land Scion unlikely to be attacked the following
+                      turn (for reasons such as the lack of enemies in the
+                      proximity), do not waste resources on gaining Shield.
+                    </li>
+                    <li>
+                      If you do not need to deal with a Shielded enemy urgently,
+                      consider waiting for their Shield to expire before
+                      dedicating resources to attack them. Do not bother
+                      attacking a Shielded unit if you cannot follow up with
+                      another attack to finish them off.
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  Their{" "}
+                  <span
+                    className="rule-view-card"
+                    onClick={() => {
+                      dispatch(updateMagnifiedSkill("04-02"));
+                    }}
+                  >
+                    Upheaval
+                  </span>{" "}
+                  ability can paralyze up to 2 adjacent enemies for 1 turn.
+                  Though it won’t eliminate them, it will limit your opponent’s
+                  opportunity to launch a counterattack when their turn rolls
+                  in.
+                </li>
+                <li>
+                  Their{" "}
+                  <span
+                    className="rule-view-card"
+                    onClick={() => {
+                      dispatch(updateMagnifiedSkill("04-03"));
+                    }}
+                  >
+                    Pitfall Trap
+                  </span>{" "}
+                  ability can paralyze units that move next to them, and it can
+                  follow up with a blast to add injury to insult. The mere
+                  existence of this skill puts your opponent on their guard,
+                  even if the card isn’t in your hand.
+                  <ul>
+                    <li>
+                      Land Scions can safely approach their counterparts, as
+                      they are immune to paralysis due to Land skills.
+                    </li>
+                    <li>
+                      Mana Scions have an ability that allows them to attack
+                      from 2 spaces away without fear of springing Land Scions’
+                      traps.
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  Their burst skill{" "}
+                  <span
+                    className="rule-view-card"
+                    onClick={() => {
+                      dispatch(updateMagnifiedSkill("04-04"));
+                    }}
+                  >
+                    Geomancy
+                  </span>{" "}
+                  ability can pa allows them to raise their HP to 3.
+                  Furthermore, it functions similarly as Ignition Propulsion: it
+                  can be used to attack and potentially move with no costs
+                  attached.
+                </li>
+              </ul>
+            </div>
+          )}
+
           {id && (
             <div className="rules-text">
               <br />
@@ -1518,6 +1994,9 @@ export default function Rules() {
           )}
         </div>
       </div>
+      {magnifiedSkill && (
+        <ZoomCard cardInfo={magnifiedSkill} repertoire={true} />
+      )}
     </div>
   );
 }

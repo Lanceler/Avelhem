@@ -199,7 +199,9 @@
   z-index: 397;
   pointer-events: none;
   top: 48px;
-  left: 48px;
+
+  left: 90%;
+  translate: -50%;
 }
 
 .fade-in-out {
@@ -221,8 +223,9 @@
   z-index: 398;
   pointer-events: none;
   top: 47.5px;
-  left: 20px;
-  /* filter: brightness(1.85)  ; */
+  left: 50%;
+  translate: -50%;
+  
   animation: scaleAnimation 1s ease-in-out infinite alternate;
 }
 
@@ -236,15 +239,21 @@
   z-index: 399;
   pointer-events: none;
   top: 50px;
-  left: -2px;
+  
+
+  left: 10%;
+  translate: -50%;
+
+
+
   filter: brightness(1.15) contrast(1.3);
 
-  /* animation: scaleAnimation 1s ease-in-out infinite alternate */
   animation: moveUpDownHP 1s ease-in-out infinite;
 }
 
 .hP-amount {
-  left: 3.75px;
+  /* left: 3.75px; */
+  left: 7.5%;
   color: #e8e8e8;
   font-size: 0.65em;
   font-weight: 500;
