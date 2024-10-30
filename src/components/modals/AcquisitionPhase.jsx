@@ -71,6 +71,11 @@ const AcquisitionPhase = (props) => {
       resolution: "Bounty Phase Selection",
     });
 
+    newGameState[self].bountyPoints = Math.min(
+      10,
+      newGameState[self].bountyPoints + 1
+    );
+
     return newGameState;
   };
 

@@ -160,7 +160,7 @@ const YouMayNoYes = (props) => {
         });
         break;
 
-      case "Gale Conjuration Purge": // "Gale ConjurationR2"
+      case "Gale Conjuration Purge": // "Gale Conjuration1"
         enterSelectUnitMode(
           props.details.zones,
           props.unit,
@@ -171,19 +171,23 @@ const YouMayNoYes = (props) => {
         );
         break;
 
+      case "Gale Conjuration Restore": // "Gale ConjurationR2"
+        enterSelectUnitMode(
+          props.details.zones,
+          props.unit,
+          newGameState,
+          null,
+          "gale conjuration restore",
+          "null"
+        );
+        break;
+
       case "Symphonic Screech Float": // "Symphonic Screech Float"
         updateData = true;
-        let backtrack = 2;
-        if (
-          newGameState.currentResolution[
-            newGameState.currentResolution.length - 1
-          ].resolution2 === "Symphonic Screech2"
-        ) {
-          backtrack = 3;
-        }
+        const backtrack = 2;
         newGameState.currentResolution[
           newGameState.currentResolution.length - backtrack
-        ].conclusion = "float";
+        ].skillConclusion = "float";
         break;
 
       case "Cataclysmic Tempest 2nd Paralyze": // "Cataclysmic Tempest3"
@@ -382,7 +386,7 @@ const YouMayNoYes = (props) => {
         updateData = true;
         newGameState.currentResolution[
           newGameState.currentResolution.length - 1
-        ].conclusion = "shuffle";
+        ].skillConclusion = "shuffle";
         break;
 
       case "Foreshadow Draw": //"Foreshadow Draw"

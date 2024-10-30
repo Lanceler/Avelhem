@@ -361,7 +361,7 @@ const SelectTacticViaEffect = (props) => {
 
       //Skills
 
-      case "Gale Conjuration":
+      case "Aerial Impetus":
         newGameState.tactics[i].stock = 4;
         newGameState.tactics[i].limit = 4;
         newGameState.tactics[i].face = "Mobilize";

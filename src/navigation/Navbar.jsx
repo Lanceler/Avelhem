@@ -52,7 +52,7 @@ const Navbar = () => {
           </div>
 
           <ul className={`nav-menu ${click ? "active" : ""}`}>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link
                 to="/demo/learn"
                 className="nav-links"
@@ -63,7 +63,7 @@ const Navbar = () => {
               >
                 Tutorial{" "}
               </Link>
-            </li>
+            </li> */}
 
             {/* <li className="nav-item">
               <span

@@ -213,6 +213,11 @@ export default function Home() {
                     <br /> With A Friend
                   </button>
                 </div>
+                <div className="home-banner-text">
+                  <Link to="/rules/trial-over-tea">
+                    <button className="home-banner-button">Rules</button>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

@@ -457,13 +457,10 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    //give unit ward and boosts
+    //give unit boost
     unit.boosts.glacialTorrent = 2;
 
-    unit.enhancements.ward
-      ? (unit.enhancements.ward = Math.max(3, unit.enhancements.ward))
-      : (unit.enhancements.ward = 3);
-
+    //inspect
     newGameState.currentResolution.push({
       resolution: "Water Skill",
       resolution2: "Glacial Torrent 1",
@@ -484,6 +481,27 @@ export const useSkillEffects = () => {
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
+
+    if (
+      (["Advance", "Invoke"].includes(newGameState.tactics[0].face) &&
+        newGameState.tactics[0].stock > 0) ||
+      (["Advance", "Invoke"].includes(newGameState.tactics[1].face) &&
+        newGameState.tactics[1].stock > 0)
+    ) {
+      newGameState.currentResolution.push({
+        resolution: "Wind Skill",
+        resolution2: "Aerial Impetus2",
+        details: {
+          title: "Aerial Impetus",
+          message:
+            "You may convert an Advance or Invoke tactic into Mobilize (4 instances).",
+          restriction: ["Advance", "Invoke"],
+          stock: 1,
+          reason: "Aerial Impetus",
+          canSkip: true,
+        },
+      });
+    }
 
     newGameState.currentResolution.push({
       resolution: "Wind Skill",
@@ -558,6 +576,7 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
+    //give unit boost
     unit.boosts.galeConjuration = true;
 
     if (resonator) {
@@ -579,23 +598,20 @@ export const useSkillEffects = () => {
       });
     }
 
-    if (
-      (["Advance", "Assault"].includes(newGameState.tactics[0].face) &&
-        newGameState.tactics[0].stock > 0) ||
-      (["Advance", "Assault"].includes(newGameState.tactics[1].face) &&
-        newGameState.tactics[1].stock > 0)
-    ) {
+    const zonesWithEnemies = getZonesWithEnemies(unit, 2);
+    if (zonesWithEnemies.length > 0) {
       newGameState.currentResolution.push({
         resolution: "Wind Skill",
         resolution2: "Gale Conjuration1",
+        unit: unit,
         details: {
+          reason: "Gale Conjuration Purge",
           title: "Gale Conjuration",
           message:
-            "You may convert an Advance or Assault tactic into Mobilize (4 instances).",
-          restriction: ["Advance", "Assault"],
-          stock: 1,
-          reason: "Gale Conjuration",
-          canSkip: true,
+            "You may purge the Shield of an enemy within 2 spaces; if they are adjacent, purge their Aether.",
+          no: "Skip",
+          yes: "Purge",
+          zones: zonesWithEnemies,
         },
       });
     }
@@ -606,38 +622,25 @@ export const useSkillEffects = () => {
   const galeConjurationR2 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-    const zones = JSON.parse(localGameState.zones);
 
     // end "Gale ConjurationR1"
     newGameState.currentResolution.pop();
 
     unit.aether = 1;
 
-    const zonesWithEnemies = getZonesWithEnemies(unit, 2);
-    let shieldedEnemyZones = [];
-
-    for (let z of zonesWithEnemies) {
-      const zone = zones[Math.floor(z / 5)][z % 5];
-      const enemy = newGameState[zone.player].units[zone.unitIndex];
-
-      if (enemy.enhancements.shield > 0 || enemy.enhancements.ward > 0) {
-        shieldedEnemyZones.push(z);
-      }
-    }
-
-    if (shieldedEnemyZones.length > 0) {
+    const zonesWithAllies = getZonesWithAllies(unit, 1, false);
+    if (zonesWithAllies.length > 0) {
       newGameState.currentResolution.push({
         resolution: "Wind Skill",
         resolution2: "Gale ConjurationR2",
         unit: unit,
         details: {
-          reason: "Gale Conjuration Purge",
+          reason: "Gale Conjuration Restore",
           title: "Gale Conjuration",
-          message:
-            "You may purge the Shield and Ward of an enemy within 2 spaces.",
+          message: "You may restore an adjacent ally’s Aether.",
           no: "Skip",
-          yes: "Purge",
-          zones: shieldedEnemyZones,
+          yes: "Restore",
+          zones: zonesWithAllies,
         },
       });
     }
@@ -672,6 +675,22 @@ export const useSkillEffects = () => {
     //return the skill conclusion of Screech
     newGameState.currentResolution.push(symphonicScreechConclusion);
 
+    if (!isAdjacent(unit, victim)) {
+      newGameState.currentResolution.push({
+        resolution: "Wind Skill",
+        resolution2: "Symphonic Screech Float",
+        unit: victim,
+        details: {
+          reason: "Symphonic Screech Float",
+          title: "Symphonic Screech",
+          message:
+            "Because your unit was not adjacent to the activator of Symphonic Screech, you may float the negated skill.",
+          no: "Skip",
+          yes: "Float",
+        },
+      });
+    }
+
     //activator can reveal 1 Wind skill to draw 1 floating skill
     if (newGameState[self].skillHand.length > 0) {
       newGameState.currentResolution.push({
@@ -683,21 +702,6 @@ export const useSkillEffects = () => {
           message: "You may reveal 1 Wind skill to draw 1 skill.",
           restriction: ["03-01", "03-02", "03-03", "03-04"],
           reason: "Symphonic Screech",
-        },
-      });
-    }
-
-    if (!isAdjacent(unit, victim)) {
-      newGameState.currentResolution.push({
-        resolution: "Wind Skill",
-        resolution2: "Symphonic Screech Float",
-        unit: victim,
-        details: {
-          reason: "Symphonic Screech Float",
-          title: "Symphonic Screech",
-          message: "You may float your negated skill.",
-          no: "Skip",
-          yes: "Float",
         },
       });
     }

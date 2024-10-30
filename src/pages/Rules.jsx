@@ -85,49 +85,31 @@ export default function Rules() {
             <div className="rules-text">
               <ol className="rule-index">
                 <li>
-                  <Link to="/rules/summary">
-                    <h2>Overview & Summary</h2>
-                  </Link>
+                  <Link to="/rules/summary">Overview & Summary</Link>
                 </li>
 
                 <li>
-                  <Link to="/rules/turn-structure">
-                    <h2>Turn Structure</h2>
-                  </Link>
+                  <Link to="/rules/turn-structure">Turn Structure</Link>
                 </li>
                 <li>
-                  <Link to="/rules/units">
-                    <h2>Units</h2>
-                  </Link>
+                  <Link to="/rules/units">Units</Link>
                 </li>
                 <li>
-                  <Link to="/rules/cards">
-                    <h2>Cards</h2>
-                  </Link>
+                  <Link to="/rules/cards">Cards</Link>
                 </li>
                 <li>
-                  <Link to="/rules/tactics">
-                    <h2>Tactics</h2>
-                  </Link>
+                  <Link to="/rules/tactics">Tactics</Link>
                 </li>
                 <li>
-                  <Link to="/rules/statuses">
-                    <h2>Statuses</h2>
-                  </Link>
+                  <Link to="/rules/statuses">Statuses</Link>
                 </li>
                 <li>
-                  <Link to="/rules/effects">
-                    <h2>Effects & Keywords</h2>
-                  </Link>
+                  <Link to="/rules/effects">Effects & Keywords</Link>
                 </li>
-                <li>
-                  <h2>Appendix (To-do)</h2>
-                </li>
+                <li>Appendix (To-do)</li>
                 <br />
                 <li>
-                  <Link to="/rules/trial-over-tea">
-                    <h2>Trial Over Tea</h2>
-                  </Link>
+                  <Link to="/rules/trial-over-tea">Trial Over Tea</Link>
                 </li>
               </ol>
             </div>
@@ -138,8 +120,8 @@ export default function Rules() {
               <p>
                 <em>Avelhem: War of the Sovereigns</em> is a board game set in a
                 fantastical realm where two players take on the roles of
-                Sovereigns, leading armies of demigods bestowed with elemental
-                powers.
+                Sovereigns, leading armies of demigods bestowed with authority
+                over creation.
               </p>
               <br />
               <p>
@@ -318,8 +300,9 @@ export default function Rules() {
               <br />
               <h3>Bounty Phase</h3>
               <p>
-                During the Bounty Phase, the Initiator may spend Bounty Points
-                (BP) on permanent upgrades to move closer to victory.
+                During the Bounty Phase, the Initiator receives 1 Bounty Point
+                (BP) and may purchase permanent upgrades to move closer to
+                victory.
               </p>
               <br />
               <h3>Coordination Phase</h3>
@@ -484,12 +467,12 @@ export default function Rules() {
               <br />
               <h3>Bounty Phase</h3>
               <p>
-                During the Bounty Phase, the Initiator may spend Bounty Points
-                (BP) on permanent upgrades to move closer to victory. These
-                upgrades are organized into tiered categories, with higher-tier
-                items becoming available once their prerequisites are purchased.
-                Multiple purchases can be made in a single turn, provided the
-                Initiator has sufficient BP.
+                During the Bounty Phase, the Initiator receives 1 Bounty Point
+                (BP) and may purchase permanent upgrades to move closer to
+                victory. These upgrades are organized into tiered categories,
+                with higher-tier items becoming available once their
+                prerequisites are purchased. Multiple purchases can be made in a
+                single turn, provided the Initiator has sufficient BP.
               </p>
               <br />
               <h3>Coordination Phase</h3>
@@ -1819,7 +1802,7 @@ export default function Rules() {
                       Ignition Propulsion provides extra movement by using
                       enemies as stepping stones. If enhanced with Ravager, Fire
                       Scions can use multiple copies to move up to 4 times in
-                      one turn, which can an opportunity to score.
+                      one turn, which can create an opportunity to score.
                     </li>
                   </ul>
                 </li>
@@ -1908,7 +1891,7 @@ export default function Rules() {
                   <ul>
                     <li>
                       If your Land Scion unlikely to be attacked the following
-                      turn (for reasons such as the lack of enemies in the
+                      turn (for reasons such as the lack of enemies in
                       proximity), do not waste resources on gaining Shield.
                     </li>
                     <li>
@@ -1922,7 +1905,6 @@ export default function Rules() {
                 </li>
 
                 <li>
-                  Their{" "}
                   <span
                     className="rule-view-card"
                     onClick={() => {
@@ -1931,13 +1913,11 @@ export default function Rules() {
                   >
                     Upheaval
                   </span>{" "}
-                  ability can paralyze up to 2 adjacent enemies for 1 turn.
-                  Though it won’t eliminate them, it will limit your opponent’s
-                  opportunity to launch a counterattack when their turn rolls
-                  in.
+                  can paralyze up to 2 adjacent enemies for 1 turn. Though it
+                  won’t eliminate them, it will limit the opponent’s opportunity
+                  to launch a counterattack when their turn rolls in.
                 </li>
                 <li>
-                  Their{" "}
                   <span
                     className="rule-view-card"
                     onClick={() => {
@@ -1946,10 +1926,10 @@ export default function Rules() {
                   >
                     Pitfall Trap
                   </span>{" "}
-                  ability can paralyze units that move next to them, and it can
-                  follow up with a blast to add injury to insult. The mere
-                  existence of this skill puts your opponent on their guard,
-                  even if the card isn’t in your hand.
+                  can paralyze units that move next to them, and it can follow
+                  up with a blast to add injury to insult. The mere existence of
+                  this skill puts opponents on their guard, even if the card
+                  isn’t in the hand.
                   <ul>
                     <li>
                       Land Scions can safely approach their counterparts, as
@@ -1972,10 +1952,262 @@ export default function Rules() {
                   >
                     Geomancy
                   </span>{" "}
-                  ability can pa allows them to raise their HP to 3.
-                  Furthermore, it functions similarly as Ignition Propulsion: it
-                  can be used to attack and potentially move with no costs
-                  attached.
+                  ability allows them to raise their HP to 3. Furthermore, it
+                  functions similarly as Ignition Propulsion: it can be used to
+                  attack and potentially move with no costs attached.
+                </li>
+              </ul>
+
+              <br />
+
+              <h3>Metal Scion</h3>
+              <p>Metal Scions specialize against durable opponents.</p>
+              <ul>
+                <li>
+                  {" "}
+                  As they enter play, their{" "}
+                  <span
+                    className="rule-view-card"
+                    onClick={() => {
+                      dispatch(updateMagnifiedSkill("Conduction"));
+                    }}
+                  >
+                    Conduction
+                  </span>{" "}
+                  talent allows them to search for their Magnetic Shockwave
+                  skill and put it on top of their repertoire.
+                </li>
+
+                <li>
+                  <span
+                    className="rule-view-card"
+                    onClick={() => {
+                      dispatch(updateMagnifiedSkill("07-02"));
+                    }}
+                  >
+                    Reinforce
+                  </span>{" "}
+                  can be used to gain 1 Sharpness or raise their HP to 2.
+                  <ul>
+                    <li>
+                      Their Penetrator talent increases the AP of their attacks
+                      for every Sharpness they possess; with 2 Sharpness, their
+                      strikes can bypass Shield.
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <span
+                    className="rule-view-card"
+                    onClick={() => {
+                      dispatch(updateMagnifiedSkill("07-01"));
+                    }}
+                  >
+                    Magnetic Shockwave
+                  </span>{" "}
+                  can paralyze 1 adjacent enemy, and its potency increases as
+                  the user invests in their Sharpness. 1 Sharpness allows them
+                  to paralyze another enemy, while 2 Sharpness allows them to
+                  blast a paralyzed enemy.
+                </li>
+
+                <li>
+                  <span
+                    className="rule-view-card"
+                    onClick={() => {
+                      dispatch(updateMagnifiedSkill("07-03"));
+                    }}
+                  >
+                    Frenzy Blade
+                  </span>{" "}
+                  can be activated when an adjacent enemy survives an attack.
+                  This is another source of Sharpness, and it allows them to
+                  attack the surviving enemy.
+                  <ul>
+                    <li>
+                      This is especially useful against sturdy Land Scions.
+                    </li>
+                    <li>
+                      Frenzy Blade is a great follow-up for Aether-blasts that
+                      were mitigated.
+                    </li>
+                    <li>
+                      Their{" "}
+                      <span
+                        className="rule-view-card"
+                        onClick={() => {
+                          dispatch(updateMagnifiedSkill("Brandish"));
+                        }}
+                      >
+                        Brandish
+                      </span>{" "}
+                      ability allows allows them to use an Invoke tactic to
+                      search for this skill.
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  Their burst skill{" "}
+                  <span
+                    className="rule-view-card"
+                    onClick={() => {
+                      dispatch(updateMagnifiedSkill("07-04"));
+                    }}
+                  >
+                    Arsenal Onslaught
+                  </span>{" "}
+                  allows them to strike up to 2 times, and it can even paralyze
+                  an enemy in between the attacks.
+                  <ul>
+                    <li>
+                      This can allow the user to move twice, provided that both
+                      attacks are lethal. Consider saving Arsenal Onslaught for
+                      the scoring maneuver.
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+
+              <br />
+
+              <h3>Mana Scion</h3>
+              <p>Mana Scions provide well-rounded utility.</p>
+              <ul>
+                <li>
+                  Unlike the previous classes, they do have a talent that
+                  activates when they enter play. Instead, their{" "}
+                  <span
+                    className="rule-view-card"
+                    onClick={() => {
+                      dispatch(updateMagnifiedSkill("AmbianceAssimilation"));
+                    }}
+                  >
+                    Ambiance Assimilation{" "}
+                  </span>
+                  activates when they are eliminated, allowing them to search
+                  for a Mana skill.
+                </li>
+
+                <li>
+                  Once per turn, they can activate{" "}
+                  <span
+                    className="rule-view-card"
+                    onClick={() => {
+                      dispatch(updateMagnifiedSkill("AmplifyAura"));
+                    }}
+                  >
+                    Amplify Aura
+                  </span>{" "}
+                  to convert their or an adjacent ally’s Aether into Shield for
+                  2 turns.
+                  <ul>
+                    <li>
+                      This pairs well with the Ballistic Armor ability of Metal
+                      Scions and the Aether-restoring effects of various
+                      classes.
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  They can use an Assault tactic to activate{" "}
+                  <span
+                    className="rule-view-card"
+                    onClick={() => {
+                      dispatch(updateMagnifiedSkill("ParticleBeam"));
+                    }}
+                  >
+                    Particle Beam
+                  </span>
+                  , which allows them to attack enemies within 2 spaces away and
+                  restores their Aether.
+                  <ul>
+                    <li>
+                      This is especially useful against Land Scions who are
+                      ready to spring their Pitfall Traps.
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <span
+                    className="rule-view-card"
+                    onClick={() => {
+                      dispatch(updateMagnifiedSkill("06-01"));
+                    }}
+                  >
+                    Surge
+                  </span>{" "}
+                  is a skill that requires an Assault tactic to activate. It
+                  allows the user to traverse, then follow up with another
+                  movement or strike.
+                  <ul>
+                    <li>
+                      These movements bypass motion contingent skills, which
+                      means Pitfall Trap cannot be activated in response.
+                    </li>
+                    <li>
+                      The strike has 2 AP, which gives it sufficient firepower
+                      against units that have raised their HP.
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <span
+                    className="rule-view-card"
+                    onClick={() => {
+                      dispatch(updateMagnifiedSkill("07-03"));
+                    }}
+                  >
+                    Frenzy Blade
+                  </span>{" "}
+                  can be activated when an adjacent enemy survives an attack.
+                  This is another source of Sharpness, and it allows them to
+                  attack the surviving enemy.
+                  <ul>
+                    <li>
+                      This is especially useful against sturdy Land Scions.
+                    </li>
+                    <li>
+                      Frenzy Blade is a great follow-up for Aether-blasts that
+                      were mitigated.
+                    </li>
+                    <li>
+                      Their{" "}
+                      <span
+                        className="rule-view-card"
+                        onClick={() => {
+                          dispatch(updateMagnifiedSkill("Brandish"));
+                        }}
+                      >
+                        Brandish
+                      </span>{" "}
+                      ability allows allows them to use an Invoke tactic to
+                      search for this skill.
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  Their burst skill{" "}
+                  <span
+                    className="rule-view-card"
+                    onClick={() => {
+                      dispatch(updateMagnifiedSkill("07-04"));
+                    }}
+                  >
+                    Arsenal Onslaught
+                  </span>{" "}
+                  allows them to strike up to 2 times, and it can even paralyze
+                  an enemy in between the attacks.
+                  <ul>
+                    <li>
+                      This can allow the user to move twice, provided that both
+                      attacks are lethal. Consider saving Arsenal Onslaught for
+                      the scoring maneuver.
+                    </li>
+                  </ul>
                 </li>
               </ul>
             </div>

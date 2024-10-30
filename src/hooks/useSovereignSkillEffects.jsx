@@ -13,8 +13,14 @@ export const useSovereignSkillEffects = () => {
   const { self, enemy } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const { avelhemToScion, canDeploy, drawAvelhem, drawSkill, isAdjacent } =
-    useRecurringEffects();
+  const {
+    avelhemToScion,
+    canDeploy,
+    drawAvelhem,
+    drawSkill,
+    grantRavager,
+    isAdjacent,
+  } = useRecurringEffects();
 
   const { getScionSet, pressTheAttackList, sovereignSkillList } =
     useCardDatabase();
@@ -751,20 +757,7 @@ export const useSovereignSkillEffects = () => {
     //end "Vengeful Legacy2" resolution
     newGameState.currentResolution.pop();
 
-    if (newGameState[self].skillHand.length > 0) {
-      newGameState.currentResolution.push({
-        resolution: "Sovereign Contingent Skill",
-        resolution2: "Vengeful Legacy Ravager",
-        unit: unit,
-        details: {
-          title: "Vengeful Legacy",
-          reason: "Vengeful Legacy Ravager",
-          restriction: null,
-          message: "You may float 1 skill to grant them Ravager.",
-        },
-      });
-    }
-
+    unit = grantRavager(unit);
     return newGameState;
   };
 

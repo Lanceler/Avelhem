@@ -19,7 +19,7 @@ const SelectResonatorSkill = (props) => {
 
   const [selectedSkill, setSelectedSkill] = useState(null);
 
-  const { activateSkillAndResonate, activateSovereignSkillAndResonate } =
+  const { activateSkill, activateSovereignSkillAndResonate } =
     useRecurringEffects();
 
   let usableSkills = [];
@@ -53,7 +53,7 @@ const SelectResonatorSkill = (props) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
     if (props.unit) {
-      newGameState = activateSkillAndResonate(
+      newGameState = activateSkill(
         newGameState,
         props.unit,
         props.skill.id,

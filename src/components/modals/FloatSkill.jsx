@@ -17,7 +17,7 @@ const FloatSkill = (props) => {
 
   const dispatch = useDispatch();
 
-  const { getVacantFrontier, grantRavager } = useRecurringEffects();
+  const { getVacantFrontier } = useRecurringEffects();
 
   const [selectedSkill, setSelectedSkill] = useState(null);
 
@@ -96,11 +96,6 @@ const FloatSkill = (props) => {
         newGameState[props.details.unit2.player].units[
           props.details.unit2.unitIndex
         ] = unit2;
-        break;
-
-      case "Vengeful Legacy Ravager":
-        unit = grantRavager(unit);
-        //newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
         break;
 
       case "Advance Deploy Scion":

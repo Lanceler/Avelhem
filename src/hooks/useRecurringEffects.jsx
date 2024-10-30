@@ -32,7 +32,7 @@ export const useRecurringEffects = () => {
       player: self,
       unit: unit,
       skill: "06-03",
-      conclusion: "discard",
+      skillConclusion: "discard",
     });
 
     newGameState.currentResolution.push({
@@ -45,24 +45,7 @@ export const useRecurringEffects = () => {
     newGameState.activatingSkill.push("06-03");
     newGameState.activatingUnit.push(unit);
 
-    if (triggerScreech(unit)) {
-      newGameState.currentResolution.push({
-        resolution: "Triggering Activation",
-        player: enemy,
-        activator: unit,
-        screech: true,
-      });
-
-      newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: enemy,
-      });
-    } else {
-      newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: self,
-      });
-    }
+    newGameState = applyScreech(unit, newGameState);
 
     return newGameState;
   };
@@ -74,7 +57,7 @@ export const useRecurringEffects = () => {
       resolution: "Avelhem Conclusion",
       player: self,
       avelhem: avelhem,
-      conclusion: "discard",
+      skillConclusion: "discard",
       resonator: resonator,
       resonatorConclusion: "discard",
     });
@@ -113,7 +96,7 @@ export const useRecurringEffects = () => {
       resolution: "Avelhem Conclusion",
       player: self,
       avelhem: avelhem,
-      conclusion: "discard",
+      skillConclusion: "discard",
     });
 
     newGameState.currentResolution.push({
@@ -150,7 +133,7 @@ export const useRecurringEffects = () => {
       player: self,
       unit: unit,
       skill: "03-01",
-      conclusion: conclusion,
+      skillConclusion: conclusion,
     });
 
     newGameState.currentResolution.push({
@@ -179,7 +162,7 @@ export const useRecurringEffects = () => {
       player: self,
       unit: unit,
       skill: "07-04",
-      conclusion: "shatter",
+      skillConclusion: "shatter",
     });
 
     newGameState.currentResolution.push({
@@ -207,7 +190,7 @@ export const useRecurringEffects = () => {
       resolution: "Skill Conclusion",
       player: self,
       skill: "SC-05",
-      conclusion: "discard",
+      skillConclusion: "discard",
     });
 
     newGameState.currentResolution.push({
@@ -236,7 +219,7 @@ export const useRecurringEffects = () => {
       player: self,
       unit: unit,
       skill: "01-03",
-      conclusion: "discard",
+      skillConclusion: "discard",
     });
 
     newGameState.currentResolution.push({
@@ -248,24 +231,7 @@ export const useRecurringEffects = () => {
     newGameState.activatingSkill.push("01-03");
     newGameState.activatingUnit.push(unit);
 
-    if (triggerScreech(unit)) {
-      newGameState.currentResolution.push({
-        resolution: "Triggering Activation",
-        player: enemy,
-        activator: unit,
-        screech: true,
-      });
-
-      newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: enemy,
-      });
-    } else {
-      newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: self,
-      });
-    }
+    newGameState = applyScreech(unit, newGameState);
 
     return newGameState;
   };
@@ -279,7 +245,7 @@ export const useRecurringEffects = () => {
       player: self,
       unit: unit,
       skill: "08-04",
-      conclusion: "shatter",
+      skillConclusion: "shatter",
     });
 
     newGameState.currentResolution.push({
@@ -308,7 +274,7 @@ export const useRecurringEffects = () => {
       player: self,
       unit: unit,
       skill: "03-04",
-      conclusion: "shatter",
+      skillConclusion: "shatter",
     });
 
     newGameState.currentResolution.push({
@@ -344,7 +310,7 @@ export const useRecurringEffects = () => {
       player: self,
       unit: unit,
       skill: "05-01",
-      conclusion: conclusion,
+      skillConclusion: conclusion,
     });
 
     newGameState.currentResolution.push({
@@ -356,74 +322,43 @@ export const useRecurringEffects = () => {
     newGameState.activatingSkill.push("05-01");
     newGameState.activatingUnit.push(unit);
 
-    if (triggerScreech(unit)) {
-      newGameState.currentResolution.push({
-        resolution: "Triggering Activation",
-        player: enemy,
-        activator: unit,
-        screech: true,
-      });
+    newGameState = applyScreech(unit, newGameState);
+
+    return newGameState;
+  };
+
+  const activateConflagration = (newGameState, unit, resonator = null) => {
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.activatingSkill.push("01-02");
+    newGameState.activatingUnit.push(unit);
+
+    if (resonator) {
+      //end Select Resonator resolution
+      newGameState.currentResolution.pop();
+
+      newGameState.activatingResonator.push(resonator);
 
       newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: enemy,
+        resolution: "Resonance Conclusion",
+        player: self,
+        unit: unit,
+        skill: "01-02",
+        skillConclusion: "discard",
+        resonator: resonator,
+        resonatorConclusion: "discard",
       });
     } else {
       newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: self,
+        resolution: "Skill Conclusion",
+        player: self,
+        unit: unit,
+        skill: "01-02",
+        skillConclusion: "discard",
       });
     }
 
-    return newGameState;
-  };
-
-  const activateConflagration = (newGameState, unit) => {
-    //end Select Skill resolution
-    newGameState.currentResolution.pop();
-
-    newGameState.currentResolution.push({
-      resolution: "Skill Conclusion",
-      player: self,
-      unit: unit,
-      skill: "01-02",
-      conclusion: "discard",
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Fire Skill",
-      resolution2: "Activating Conflagration",
-      unit: unit,
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Animation Delay",
-      priority: self,
-    });
-
-    newGameState.activatingSkill.push("01-02");
-    newGameState.activatingUnit.push(unit);
-
-    return newGameState;
-  };
-
-  const activateConflagrationAndResonate = (newGameState, unit, resonator) => {
-    //end Select Resonator resolution
-    newGameState.currentResolution.pop();
-
-    //end Select Skill resolution
-    newGameState.currentResolution.pop();
-
-    newGameState.currentResolution.push({
-      resolution: "Resonance Conclusion",
-      player: self,
-      unit: unit,
-      skill: "01-02",
-      skillConclusion: "discard",
-      resonator: resonator,
-      resonatorConclusion: "discard",
-    });
-
     newGameState.currentResolution.push({
       resolution: "Fire Skill",
       resolution2: "Activating Conflagration",
@@ -431,14 +366,7 @@ export const useRecurringEffects = () => {
       resonator: resonator,
     });
 
-    newGameState.currentResolution.push({
-      resolution: "Animation Delay",
-      priority: self,
-    });
-
-    newGameState.activatingSkill.push("01-02");
-    newGameState.activatingResonator.push(resonator);
-    newGameState.activatingUnit.push(unit);
+    newGameState = applyScreech(unit, newGameState);
 
     return newGameState;
   };
@@ -459,7 +387,7 @@ export const useRecurringEffects = () => {
       player: self,
       unit: unit,
       skill: "04-01",
-      conclusion: conclusion,
+      skillConclusion: conclusion,
     });
 
     newGameState.currentResolution.push({
@@ -471,74 +399,43 @@ export const useRecurringEffects = () => {
     newGameState.activatingSkill.push("04-01");
     newGameState.activatingUnit.push(unit);
 
-    if (triggerScreech(unit)) {
-      newGameState.currentResolution.push({
-        resolution: "Triggering Activation",
-        player: enemy,
-        activator: unit,
-        screech: true,
-      });
+    newGameState = applyScreech(unit, newGameState);
+
+    return newGameState;
+  };
+
+  const activateDiffusion = (newGameState, unit, resonator = null) => {
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.activatingSkill.push("06-02");
+    newGameState.activatingUnit.push(unit);
+
+    if (resonator) {
+      //end Select Resonator resolution
+      newGameState.currentResolution.pop();
+
+      newGameState.activatingResonator.push(resonator);
 
       newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: enemy,
+        resolution: "Resonance Conclusion",
+        player: self,
+        unit: unit,
+        skill: "06-02",
+        skillConclusion: "discard",
+        resonator: resonator,
+        resonatorConclusion: "discard",
       });
     } else {
       newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: self,
+        resolution: "Skill Conclusion",
+        player: self,
+        unit: unit,
+        skill: "06-02",
+        skillConclusion: "discard",
       });
     }
 
-    return newGameState;
-  };
-
-  const activateDiffusion = (newGameState, unit) => {
-    //end Select Skill resolution
-    newGameState.currentResolution.pop();
-
-    newGameState.currentResolution.push({
-      resolution: "Skill Conclusion",
-      player: self,
-      unit: unit,
-      skill: "06-02",
-      conclusion: "discard",
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Mana Skill",
-      resolution2: "Activating Diffusion",
-      unit: unit,
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Animation Delay",
-      priority: self,
-    });
-
-    newGameState.activatingSkill.push("06-02");
-    newGameState.activatingUnit.push(unit);
-
-    return newGameState;
-  };
-
-  const activateDiffusionAndResonate = (newGameState, unit, resonator) => {
-    //end Select Resonator resolution
-    newGameState.currentResolution.pop();
-
-    //end Select Skill resolution
-    newGameState.currentResolution.pop();
-
-    newGameState.currentResolution.push({
-      resolution: "Resonance Conclusion",
-      player: self,
-      unit: unit,
-      skill: "06-02",
-      skillConclusion: "discard",
-      resonator: resonator,
-      resonatorConclusion: "discard",
-    });
-
     newGameState.currentResolution.push({
       resolution: "Mana Skill",
       resolution2: "Activating Diffusion",
@@ -546,14 +443,7 @@ export const useRecurringEffects = () => {
       resonator: resonator,
     });
 
-    newGameState.currentResolution.push({
-      resolution: "Animation Delay",
-      priority: self,
-    });
-
-    newGameState.activatingSkill.push("06-02");
-    newGameState.activatingResonator.push(resonator);
-    newGameState.activatingUnit.push(unit);
+    newGameState = applyScreech(unit, newGameState);
 
     return newGameState;
   };
@@ -567,7 +457,7 @@ export const useRecurringEffects = () => {
       player: self,
       unit: unit,
       skill: "06-04",
-      conclusion: "shatter",
+      skillConclusion: "shatter",
     });
 
     newGameState.currentResolution.push({
@@ -587,51 +477,37 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
-  const activateEfflorescence = (newGameState, unit) => {
+  const activateEfflorescence = (newGameState, unit, resonator = null) => {
     //end Select Skill resolution
     newGameState.currentResolution.pop();
-
-    newGameState.currentResolution.push({
-      resolution: "Skill Conclusion",
-      player: self,
-      unit: unit,
-      skill: "08-02",
-      conclusion: "discard",
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Plant Skill",
-      resolution2: "Activating Efflorescence",
-      unit: unit,
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Animation Delay",
-      priority: self,
-    });
 
     newGameState.activatingSkill.push("08-02");
     newGameState.activatingUnit.push(unit);
 
-    return newGameState;
-  };
+    if (resonator) {
+      //end Select Resonator resolution
+      newGameState.currentResolution.pop();
 
-  const activateEfflorescenceAndResonate = (newGameState, unit, resonator) => {
-    //end Select Resonator resolution
-    newGameState.currentResolution.pop();
+      newGameState.activatingResonator.push(resonator);
 
-    //end Select Skill resolution
-    newGameState.currentResolution.pop();
-
-    newGameState.currentResolution.push({
-      resolution: "Resonance Conclusion",
-      player: self,
-      unit: unit,
-      skill: "08-02",
-      skillConclusion: "discard",
-      resonator: resonator,
-      resonatorConclusion: "discard",
-    });
+      newGameState.currentResolution.push({
+        resolution: "Resonance Conclusion",
+        player: self,
+        unit: unit,
+        skill: "08-02",
+        skillConclusion: "discard",
+        resonator: resonator,
+        resonatorConclusion: "discard",
+      });
+    } else {
+      newGameState.currentResolution.push({
+        resolution: "Skill Conclusion",
+        player: self,
+        unit: unit,
+        skill: "08-02",
+        skillConclusion: "discard",
+      });
+    }
 
     newGameState.currentResolution.push({
       resolution: "Plant Skill",
@@ -640,14 +516,7 @@ export const useRecurringEffects = () => {
       resonator: resonator,
     });
 
-    newGameState.currentResolution.push({
-      resolution: "Animation Delay",
-      priority: self,
-    });
-
-    newGameState.activatingSkill.push("08-02");
-    newGameState.activatingResonator.push(resonator);
-    newGameState.activatingUnit.push(unit);
+    newGameState = applyScreech(unit, newGameState);
 
     return newGameState;
   };
@@ -661,7 +530,7 @@ export const useRecurringEffects = () => {
       player: self,
       unit: null,
       skill: "SC-02",
-      conclusion: "discard",
+      skillConclusion: "discard",
     });
 
     newGameState.currentResolution.push({
@@ -686,7 +555,7 @@ export const useRecurringEffects = () => {
       player: self,
       unit: unit,
       skill: "07-03",
-      conclusion: "discard",
+      skillConclusion: "discard",
     });
 
     newGameState.currentResolution.push({
@@ -699,74 +568,43 @@ export const useRecurringEffects = () => {
     newGameState.activatingSkill.push("07-03");
     newGameState.activatingUnit.push(unit);
 
-    if (triggerScreech(unit)) {
-      newGameState.currentResolution.push({
-        resolution: "Triggering Activation",
-        player: enemy,
-        activator: unit,
-        screech: true,
-      });
+    newGameState = applyScreech(unit, newGameState);
+
+    return newGameState;
+  };
+
+  const activateFrigidBreath = (newGameState, unit, resonator = null) => {
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.activatingSkill.push("02-02");
+    newGameState.activatingUnit.push(unit);
+
+    if (resonator) {
+      //end Select Resonator resolution
+      newGameState.currentResolution.pop();
+
+      newGameState.activatingResonator.push(resonator);
 
       newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: enemy,
+        resolution: "Resonance Conclusion",
+        player: self,
+        unit: unit,
+        skill: "02-02",
+        skillConclusion: "discard",
+        resonator: resonator,
+        resonatorConclusion: "discard",
       });
     } else {
       newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: self,
+        resolution: "Skill Conclusion",
+        player: self,
+        unit: unit,
+        skill: "02-02",
+        skillConclusion: "discard",
       });
     }
 
-    return newGameState;
-  };
-
-  const activateFrigidBreath = (newGameState, unit) => {
-    //end Select Skill resolution
-    newGameState.currentResolution.pop();
-
-    newGameState.currentResolution.push({
-      resolution: "Skill Conclusion",
-      player: self,
-      unit: unit,
-      skill: "02-02",
-      conclusion: "discard",
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Water Skill",
-      resolution2: "Activating Frigid Breath",
-      unit: unit,
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Animation Delay",
-      priority: self,
-    });
-
-    newGameState.activatingSkill.push("02-02");
-    newGameState.activatingUnit.push(unit);
-
-    return newGameState;
-  };
-
-  const activateFrigidBreathAndResonate = (newGameState, unit, resonator) => {
-    //end Select Resonator resolution
-    newGameState.currentResolution.pop();
-
-    //end Select Skill resolution
-    newGameState.currentResolution.pop();
-
-    newGameState.currentResolution.push({
-      resolution: "Resonance Conclusion",
-      player: self,
-      unit: unit,
-      skill: "02-02",
-      skillConclusion: "discard",
-      resonator: resonator,
-      resonatorConclusion: "discard",
-    });
-
     newGameState.currentResolution.push({
       resolution: "Water Skill",
       resolution2: "Activating Frigid Breath",
@@ -774,67 +612,42 @@ export const useRecurringEffects = () => {
       resonator: resonator,
     });
 
-    newGameState.currentResolution.push({
-      resolution: "Animation Delay",
-      priority: self,
-    });
-
-    newGameState.activatingSkill.push("02-02");
-    newGameState.activatingResonator.push(resonator);
-    newGameState.activatingUnit.push(unit);
+    newGameState = applyScreech(unit, newGameState);
 
     return newGameState;
   };
 
-  const activateGaleConjuration = (newGameState, unit) => {
+  const activateGaleConjuration = (newGameState, unit, resonator = null) => {
     //end Select Skill resolution
     newGameState.currentResolution.pop();
-
-    newGameState.currentResolution.push({
-      resolution: "Skill Conclusion",
-      player: self,
-      unit: unit,
-      skill: "03-02",
-      conclusion: "discard",
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Wind Skill",
-      resolution2: "Activating Gale Conjuration",
-      unit: unit,
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Animation Delay",
-      priority: self,
-    });
 
     newGameState.activatingSkill.push("03-02");
     newGameState.activatingUnit.push(unit);
 
-    return newGameState;
-  };
+    if (resonator) {
+      //end Select Resonator resolution
+      newGameState.currentResolution.pop();
 
-  const activateGaleConjurationAndResonate = (
-    newGameState,
-    unit,
-    resonator
-  ) => {
-    //end Select Resonator resolution
-    newGameState.currentResolution.pop();
+      newGameState.activatingResonator.push(resonator);
 
-    //end Select Skill resolution
-    newGameState.currentResolution.pop();
-
-    newGameState.currentResolution.push({
-      resolution: "Resonance Conclusion",
-      player: self,
-      unit: unit,
-      skill: "03-02",
-      skillConclusion: "discard",
-      resonator: resonator,
-      resonatorConclusion: "discard",
-    });
+      newGameState.currentResolution.push({
+        resolution: "Resonance Conclusion",
+        player: self,
+        unit: unit,
+        skill: "03-02",
+        skillConclusion: "discard",
+        resonator: resonator,
+        resonatorConclusion: "discard",
+      });
+    } else {
+      newGameState.currentResolution.push({
+        resolution: "Skill Conclusion",
+        player: self,
+        unit: unit,
+        skill: "03-02",
+        skillConclusion: "discard",
+      });
+    }
 
     newGameState.currentResolution.push({
       resolution: "Wind Skill",
@@ -843,18 +656,8 @@ export const useRecurringEffects = () => {
       resonator: resonator,
     });
 
-    newGameState.currentResolution.push({
-      resolution: "Animation Delay",
-      priority: self,
-    });
-
-    newGameState.activatingSkill.push("03-02");
-    newGameState.activatingResonator.push(resonator);
-    newGameState.activatingUnit.push(unit);
-
     return newGameState;
   };
-
   const activateGeomancy = (newGameState, unit) => {
     //end Select Skill resolution
     newGameState.currentResolution.pop();
@@ -864,7 +667,7 @@ export const useRecurringEffects = () => {
       player: self,
       unit: unit,
       skill: "04-04",
-      conclusion: "shatter",
+      skillConclusion: "shatter",
     });
 
     newGameState.currentResolution.push({
@@ -893,7 +696,7 @@ export const useRecurringEffects = () => {
       player: self,
       unit: unit,
       skill: "02-04",
-      conclusion: "shatter",
+      skillConclusion: "shatter",
     });
 
     newGameState.currentResolution.push({
@@ -922,7 +725,7 @@ export const useRecurringEffects = () => {
       player: self,
       unit: unit,
       skill: "02-03",
-      conclusion: "discard",
+      skillConclusion: "discard",
     });
 
     newGameState.currentResolution.push({
@@ -935,24 +738,7 @@ export const useRecurringEffects = () => {
     newGameState.activatingSkill.push("02-03");
     newGameState.activatingUnit.push(unit);
 
-    if (triggerScreech(unit)) {
-      newGameState.currentResolution.push({
-        resolution: "Triggering Activation",
-        player: enemy,
-        activator: unit,
-        screech: true,
-      });
-
-      newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: enemy,
-      });
-    } else {
-      newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: self,
-      });
-    }
+    newGameState = applyScreech(unit, newGameState);
 
     return newGameState;
   };
@@ -960,6 +746,9 @@ export const useRecurringEffects = () => {
   const activateIgnitionPropulsion = (newGameState, unit) => {
     //end Select Skill resolution
     newGameState.currentResolution.pop();
+
+    newGameState.activatingSkill.push("01-01");
+    newGameState.activatingUnit.push(unit);
 
     let conclusion = "discard";
     if (unit.boosts.ambidexterity) {
@@ -973,37 +762,16 @@ export const useRecurringEffects = () => {
       player: self,
       unit: unit,
       skill: "01-01",
-      conclusion: conclusion,
+      skillConclusion: conclusion,
     });
 
     newGameState.currentResolution.push({
       resolution: "Fire Skill",
       resolution2: "Activating Ignition Propulsion",
-      // resolution: "Activating Ignition Propulsion",
       unit: unit,
     });
 
-    newGameState.activatingSkill.push("01-01");
-    newGameState.activatingUnit.push(unit);
-
-    if (triggerScreech(unit)) {
-      newGameState.currentResolution.push({
-        resolution: "Triggering Activation",
-        player: enemy,
-        activator: unit,
-        screech: true,
-      });
-
-      newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: enemy,
-      });
-    } else {
-      newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: self,
-      });
-    }
+    newGameState = applyScreech(unit, newGameState);
 
     return newGameState;
   };
@@ -1024,7 +792,7 @@ export const useRecurringEffects = () => {
       player: self,
       unit: unit,
       skill: "07-01",
-      conclusion: conclusion,
+      skillConclusion: conclusion,
     });
 
     newGameState.currentResolution.push({
@@ -1036,24 +804,7 @@ export const useRecurringEffects = () => {
     newGameState.activatingSkill.push("07-01");
     newGameState.activatingUnit.push(unit);
 
-    if (triggerScreech(unit)) {
-      newGameState.currentResolution.push({
-        resolution: "Triggering Activation",
-        player: enemy,
-        activator: unit,
-        screech: true,
-      });
-
-      newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: enemy,
-      });
-    } else {
-      newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: self,
-      });
-    }
+    newGameState = applyScreech(unit, newGameState);
 
     return newGameState;
   };
@@ -1067,7 +818,7 @@ export const useRecurringEffects = () => {
       player: self,
       unit: null,
       skill: "SC-03",
-      conclusion: "discard",
+      skillConclusion: "discard",
     });
 
     newGameState.currentResolution.push({
@@ -1092,7 +843,7 @@ export const useRecurringEffects = () => {
       player: self,
       unit: null,
       skill: "SC-01",
-      conclusion: "discard",
+      skillConclusion: "discard",
     });
 
     newGameState.currentResolution.push({
@@ -1117,7 +868,7 @@ export const useRecurringEffects = () => {
       player: self,
       unit: unit,
       skill: "04-03",
-      conclusion: "discard",
+      skillConclusion: "discard",
     });
 
     newGameState.currentResolution.push({
@@ -1130,24 +881,7 @@ export const useRecurringEffects = () => {
     newGameState.activatingSkill.push("04-03");
     newGameState.activatingUnit.push(unit);
 
-    if (triggerScreech(unit)) {
-      newGameState.currentResolution.push({
-        resolution: "Triggering Activation",
-        player: enemy,
-        activator: unit,
-        screech: true,
-      });
-
-      newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: enemy,
-      });
-    } else {
-      newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: self,
-      });
-    }
+    newGameState = applyScreech(unit, newGameState);
 
     return newGameState;
   };
@@ -1155,6 +889,9 @@ export const useRecurringEffects = () => {
   const activatePurification = (newGameState, unit) => {
     //end Select Skill resolution
     newGameState.currentResolution.pop();
+
+    newGameState.activatingSkill.push("02-01");
+    newGameState.activatingUnit.push(unit);
 
     let conclusion = "discard";
     if (unit.boosts.ambidexterity) {
@@ -1168,7 +905,7 @@ export const useRecurringEffects = () => {
       player: self,
       unit: unit,
       skill: "02-01",
-      conclusion: conclusion,
+      skillConclusion: conclusion,
     });
 
     newGameState.currentResolution.push({
@@ -1177,26 +914,7 @@ export const useRecurringEffects = () => {
       unit: unit,
     });
 
-    newGameState.activatingSkill.push("02-01");
-    newGameState.activatingUnit.push(unit);
-
-    if (triggerScreech(unit)) {
-      newGameState.currentResolution.push({
-        resolution: "Triggering Activation",
-        player: enemy,
-        activator: unit,
-        screech: true,
-      });
-      newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: enemy,
-      });
-    } else {
-      newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: self,
-      });
-    }
+    newGameState = applyScreech(unit, newGameState);
 
     return newGameState;
   };
@@ -1210,7 +928,7 @@ export const useRecurringEffects = () => {
       player: self,
       unit: unit,
       skill: "01-04",
-      conclusion: "shatter",
+      skillConclusion: "shatter",
     });
 
     newGameState.currentResolution.push({
@@ -1230,51 +948,37 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
-  const activateReinforce = (newGameState, unit) => {
+  const activateReinforce = (newGameState, unit, resonator = null) => {
     //end Select Skill resolution
     newGameState.currentResolution.pop();
-
-    newGameState.currentResolution.push({
-      resolution: "Skill Conclusion",
-      player: self,
-      unit: unit,
-      skill: "07-02",
-      conclusion: "discard",
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Metal Skill",
-      resolution2: "Activating Reinforce",
-      unit: unit,
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Animation Delay",
-      priority: self,
-    });
 
     newGameState.activatingSkill.push("07-02");
     newGameState.activatingUnit.push(unit);
 
-    return newGameState;
-  };
+    if (resonator) {
+      //end Select Resonator resolution
+      newGameState.currentResolution.pop();
 
-  const activateReinforceAndResonate = (newGameState, unit, resonator) => {
-    //end Select Resonator resolution
-    newGameState.currentResolution.pop();
+      newGameState.activatingResonator.push(resonator);
 
-    //end Select Skill resolution
-    newGameState.currentResolution.pop();
-
-    newGameState.currentResolution.push({
-      resolution: "Resonance Conclusion",
-      player: self,
-      unit: unit,
-      skill: "07-02",
-      skillConclusion: "discard",
-      resonator: resonator,
-      resonatorConclusion: "discard",
-    });
+      newGameState.currentResolution.push({
+        resolution: "Resonance Conclusion",
+        player: self,
+        unit: unit,
+        skill: "07-02",
+        skillConclusion: "discard",
+        resonator: resonator,
+        resonatorConclusion: "discard",
+      });
+    } else {
+      newGameState.currentResolution.push({
+        resolution: "Skill Conclusion",
+        player: self,
+        unit: unit,
+        skill: "07-02",
+        skillConclusion: "discard",
+      });
+    }
 
     newGameState.currentResolution.push({
       resolution: "Metal Skill",
@@ -1283,31 +987,18 @@ export const useRecurringEffects = () => {
       resonator: resonator,
     });
 
-    newGameState.currentResolution.push({
-      resolution: "Animation Delay",
-      priority: self,
-    });
-
-    newGameState.activatingSkill.push("07-02");
-    newGameState.activatingResonator.push(resonator);
-    newGameState.activatingUnit.push(unit);
+    newGameState = applyScreech(unit, newGameState);
 
     return newGameState;
   };
 
   const activateSymphonicScreech = (newGameState, unit, victim) => {
-    //remove Symphonic Screech from hand but do not discard
-    newGameState[self].skillHand.splice(
-      newGameState[self].skillHand.indexOf("03-03"),
-      1
-    );
-
     newGameState.currentResolution.push({
       resolution: "Skill Conclusion",
       player: self,
       unit: unit,
       skill: "03-03",
-      conclusion: "discard",
+      skillConclusion: "discard",
     });
 
     newGameState.currentResolution.push({
@@ -1328,91 +1019,63 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
-  const activateSkill = (newGameState, unit, skill) => {
+  const activateSkill = (newGameState, unit, skill, resonator) => {
     switch (skill) {
       case "01-01":
         return activateIgnitionPropulsion(newGameState, unit);
       case "01-02":
-        return activateConflagration(newGameState, unit);
+        return activateConflagration(newGameState, unit, resonator);
       case "01-04":
         return activateResplendence(newGameState, unit);
 
       case "02-01":
         return activatePurification(newGameState, unit);
       case "02-02":
-        return activateFrigidBreath(newGameState, unit);
+        return activateFrigidBreath(newGameState, unit, resonator);
       case "02-04":
         return activateGlacialTorrent(newGameState, unit);
 
       case "03-01":
         return activateAerialImpetus(newGameState, unit);
       case "03-02":
-        return activateGaleConjuration(newGameState, unit);
+        return activateGaleConjuration(newGameState, unit, resonator);
       case "03-04":
         return activateCataclysmicTempest(newGameState, unit);
 
       case "04-01":
         return activateCrystallization(newGameState, unit);
       case "04-02":
-        return activateUpheaval(newGameState, unit);
+        return activateUpheaval(newGameState, unit, resonator);
       case "04-04":
         return activateGeomancy(newGameState, unit);
 
       case "05-01":
         return activateChainLightning(newGameState, unit);
       case "05-02":
-        return activateZipAndZap(newGameState, unit);
+        return activateZipAndZap(newGameState, unit, resonator);
       case "05-04":
         return activateValiantSpark(newGameState, unit);
 
       case "06-01":
         return activateSurge(newGameState, unit);
       case "06-02":
-        return activateDiffusion(newGameState, unit);
+        return activateDiffusion(newGameState, unit, resonator);
       case "06-04":
         return activateDisruptionField(newGameState, unit);
 
       case "07-01":
         return activateMagneticShockwave(newGameState, unit);
       case "07-02":
-        return activateReinforce(newGameState, unit);
+        return activateReinforce(newGameState, unit, resonator);
       case "07-04":
         return activateArsenalOnslaught(newGameState, unit);
 
       case "08-01":
         return activateSowAndReap(newGameState, unit);
       case "08-02":
-        return activateEfflorescence(newGameState, unit);
+        return activateEfflorescence(newGameState, unit, resonator);
       case "08-04":
         return activateCastleOfThorns(newGameState, unit);
-
-      default:
-        return newGameState;
-    }
-  };
-
-  const activateSkillAndResonate = (newGameState, unit, skill, resonator) => {
-    switch (skill) {
-      case "01-02":
-        return activateConflagrationAndResonate(newGameState, unit, resonator);
-      case "02-02":
-        return activateFrigidBreathAndResonate(newGameState, unit, resonator);
-      case "03-02":
-        return activateGaleConjurationAndResonate(
-          newGameState,
-          unit,
-          resonator
-        );
-      case "04-02":
-        return activateUpheavalAndResonate(newGameState, unit, resonator);
-      case "05-02":
-        return activateZipAndZapAndResonate(newGameState, unit, resonator);
-      case "06-02":
-        return activateDiffusionAndResonate(newGameState, unit, resonator);
-      case "07-02":
-        return activateReinforceAndResonate(newGameState, unit, resonator);
-      case "08-02":
-        return activateEfflorescenceAndResonate(newGameState, unit, resonator);
 
       default:
         return newGameState;
@@ -1435,7 +1098,7 @@ export const useRecurringEffects = () => {
       player: self,
       unit: unit,
       skill: "08-01",
-      conclusion: conclusion,
+      skillConclusion: conclusion,
     });
 
     newGameState.currentResolution.push({
@@ -1447,24 +1110,7 @@ export const useRecurringEffects = () => {
     newGameState.activatingSkill.push("08-01");
     newGameState.activatingUnit.push(unit);
 
-    if (triggerScreech(unit)) {
-      newGameState.currentResolution.push({
-        resolution: "Triggering Activation",
-        player: enemy,
-        activator: unit,
-        screech: true,
-      });
-
-      newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: enemy,
-      });
-    } else {
-      newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: self,
-      });
-    }
+    newGameState = applyScreech(unit, newGameState);
 
     return newGameState;
   };
@@ -1476,7 +1122,7 @@ export const useRecurringEffects = () => {
         player: self,
         unit: null,
         skill: skill,
-        conclusion: "discard",
+        skillConclusion: "discard",
       });
 
       newGameState.currentResolution.push({
@@ -1723,7 +1369,7 @@ export const useRecurringEffects = () => {
       player: self,
       unit: unit,
       skill: "06-01",
-      conclusion: conclusion,
+      skillConclusion: conclusion,
     });
 
     newGameState.currentResolution.push({
@@ -1735,24 +1381,7 @@ export const useRecurringEffects = () => {
     newGameState.activatingSkill.push("06-01");
     newGameState.activatingUnit.push(unit);
 
-    if (triggerScreech(unit)) {
-      newGameState.currentResolution.push({
-        resolution: "Triggering Activation",
-        player: enemy,
-        activator: unit,
-        screech: true,
-      });
-
-      newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: enemy,
-      });
-    } else {
-      newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: self,
-      });
-    }
+    newGameState = applyScreech(unit, newGameState);
 
     return newGameState;
   };
@@ -1766,7 +1395,7 @@ export const useRecurringEffects = () => {
       player: self,
       unit: unit,
       skill: "05-03",
-      conclusion: "discard",
+      skillConclusion: "discard",
     });
 
     newGameState.currentResolution.push({
@@ -1779,74 +1408,43 @@ export const useRecurringEffects = () => {
     newGameState.activatingSkill.push("05-03");
     newGameState.activatingUnit.push(unit);
 
-    if (triggerScreech(unit)) {
-      newGameState.currentResolution.push({
-        resolution: "Triggering Activation",
-        player: enemy,
-        activator: unit,
-        screech: true,
-      });
+    newGameState = applyScreech(unit, newGameState);
+
+    return newGameState;
+  };
+
+  const activateUpheaval = (newGameState, unit, resonator = null) => {
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.activatingSkill.push("04-02");
+    newGameState.activatingUnit.push(unit);
+
+    if (resonator) {
+      //end Select Resonator resolution
+      newGameState.currentResolution.pop();
+
+      newGameState.activatingResonator.push(resonator);
 
       newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: enemy,
+        resolution: "Resonance Conclusion",
+        player: self,
+        unit: unit,
+        skill: "04-02",
+        skillConclusion: "discard",
+        resonator: resonator,
+        resonatorConclusion: "discard",
       });
     } else {
       newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: self,
+        resolution: "Skill Conclusion",
+        player: self,
+        unit: unit,
+        skill: "04-02",
+        skillConclusion: "discard",
       });
     }
 
-    return newGameState;
-  };
-
-  const activateUpheaval = (newGameState, unit) => {
-    //end Select Skill resolution
-    newGameState.currentResolution.pop();
-
-    newGameState.currentResolution.push({
-      resolution: "Skill Conclusion",
-      player: self,
-      unit: unit,
-      skill: "04-02",
-      conclusion: "discard",
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Land Skill",
-      resolution2: "Activating Upheaval",
-      unit: unit,
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Animation Delay",
-      priority: self,
-    });
-
-    newGameState.activatingSkill.push("04-02");
-    newGameState.activatingUnit.push(unit);
-
-    return newGameState;
-  };
-
-  const activateUpheavalAndResonate = (newGameState, unit, resonator) => {
-    //end Select Resonator resolution
-    newGameState.currentResolution.pop();
-
-    //end Select Skill resolution
-    newGameState.currentResolution.pop();
-
-    newGameState.currentResolution.push({
-      resolution: "Resonance Conclusion",
-      player: self,
-      unit: unit,
-      skill: "04-02",
-      skillConclusion: "discard",
-      resonator: resonator,
-      resonatorConclusion: "discard",
-    });
-
     newGameState.currentResolution.push({
       resolution: "Land Skill",
       resolution2: "Activating Upheaval",
@@ -1854,14 +1452,7 @@ export const useRecurringEffects = () => {
       resonator: resonator,
     });
 
-    newGameState.currentResolution.push({
-      resolution: "Animation Delay",
-      priority: self,
-    });
-
-    newGameState.activatingSkill.push("04-02");
-    newGameState.activatingResonator.push(resonator);
-    newGameState.activatingUnit.push(unit);
+    newGameState = applyScreech(unit, newGameState);
 
     return newGameState;
   };
@@ -1875,7 +1466,7 @@ export const useRecurringEffects = () => {
       player: self,
       unit: unit,
       skill: "05-04",
-      conclusion: "shatter",
+      skillConclusion: "shatter",
     });
 
     newGameState.currentResolution.push({
@@ -1903,7 +1494,7 @@ export const useRecurringEffects = () => {
       resolution: "Skill Conclusion",
       player: self,
       skill: "SC-04",
-      conclusion: "discard",
+      skillConclusion: "discard",
     });
 
     newGameState.currentResolution.push({
@@ -1933,7 +1524,7 @@ export const useRecurringEffects = () => {
       player: self,
       unit: unit,
       skill: "08-03",
-      conclusion: "discard",
+      skillConclusion: "discard",
     });
 
     newGameState.currentResolution.push({
@@ -1946,74 +1537,43 @@ export const useRecurringEffects = () => {
     newGameState.activatingSkill.push("08-03");
     newGameState.activatingUnit.push(unit);
 
-    if (triggerScreech(unit)) {
-      newGameState.currentResolution.push({
-        resolution: "Triggering Activation",
-        player: enemy,
-        activator: unit,
-        screech: true,
-      });
+    newGameState = applyScreech(unit, newGameState);
+
+    return newGameState;
+  };
+
+  const activateZipAndZap = (newGameState, unit, resonator = null) => {
+    //end Select Skill resolution
+    newGameState.currentResolution.pop();
+
+    newGameState.activatingSkill.push("05-02");
+    newGameState.activatingUnit.push(unit);
+
+    if (resonator) {
+      //end Select Resonator resolution
+      newGameState.currentResolution.pop();
+
+      newGameState.activatingResonator.push(resonator);
 
       newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: enemy,
+        resolution: "Resonance Conclusion",
+        player: self,
+        unit: unit,
+        skill: "05-02",
+        skillConclusion: "discard",
+        resonator: resonator,
+        resonatorConclusion: "discard",
       });
     } else {
       newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: self,
+        resolution: "Skill Conclusion",
+        player: self,
+        unit: unit,
+        skill: "05-02",
+        skillConclusion: "discard",
       });
     }
 
-    return newGameState;
-  };
-
-  const activateZipAndZap = (newGameState, unit) => {
-    //end Select Skill resolution
-    newGameState.currentResolution.pop();
-
-    newGameState.currentResolution.push({
-      resolution: "Skill Conclusion",
-      player: self,
-      unit: unit,
-      skill: "05-02",
-      conclusion: "discard",
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Lightning Skill",
-      resolution2: "Activating Zip and Zap",
-      unit: unit,
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Animation Delay",
-      priority: self,
-    });
-
-    newGameState.activatingSkill.push("05-02");
-    newGameState.activatingUnit.push(unit);
-
-    return newGameState;
-  };
-
-  const activateZipAndZapAndResonate = (newGameState, unit, resonator) => {
-    //end Select Resonator resolution
-    newGameState.currentResolution.pop();
-
-    //end Select Skill resolution
-    newGameState.currentResolution.pop();
-
-    newGameState.currentResolution.push({
-      resolution: "Resonance Conclusion",
-      player: self,
-      unit: unit,
-      skill: "05-02",
-      skillConclusion: "discard",
-      resonator: resonator,
-      resonatorConclusion: "discard",
-    });
-
     newGameState.currentResolution.push({
       resolution: "Lightning Skill",
       resolution2: "Activating Zip and Zap",
@@ -2021,14 +1581,7 @@ export const useRecurringEffects = () => {
       resonator: resonator,
     });
 
-    newGameState.currentResolution.push({
-      resolution: "Animation Delay",
-      priority: self,
-    });
-
-    newGameState.activatingSkill.push("05-02");
-    newGameState.activatingResonator.push(resonator);
-    newGameState.activatingUnit.push(unit);
+    newGameState = applyScreech(unit, newGameState);
 
     return newGameState;
   };
@@ -2473,6 +2026,29 @@ export const useRecurringEffects = () => {
       newGameState.turnCount = newGameState.turnCount + 1;
       newGameState.currentResolution.push({
         resolution: "Acquisition Phase Selection",
+      });
+    }
+
+    return newGameState;
+  };
+
+  const applyScreech = (unit, newGameState) => {
+    if (triggerScreech(unit)) {
+      newGameState.currentResolution.push({
+        resolution: "Triggering Activation",
+        player: enemy,
+        activator: unit,
+        screech: true,
+      });
+
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: enemy,
+      });
+    } else {
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: self,
       });
     }
 
@@ -5396,7 +4972,6 @@ export const useRecurringEffects = () => {
     activatePowerAtTheFinalHour,
     activatePitfallTrap,
     activateSkill,
-    activateSkillAndResonate,
     activateSovereignSkill,
     activateSovereignSkillAndResonate,
     activateSymphonicScreech,

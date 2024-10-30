@@ -181,6 +181,9 @@ const InfoPopUp = (props) => {
 
               <ul className="infoPopUp-list2">
                 <li className="unitInfo-text-desc">
+                  1 BP upon entering the Bounty Phase.
+                </li>
+                <li className="unitInfo-text-desc">
                   1 BP when an enemy is eliminated.
                 </li>
                 <li className="unitInfo-text-desc">

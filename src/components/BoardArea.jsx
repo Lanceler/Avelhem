@@ -839,7 +839,7 @@ const BoardArea = (props) => {
         if (self === lastRes.player) {
           avelhemConclusion(
             lastRes.avelhem,
-            lastRes.conclusion,
+            lastRes.skillConclusion,
             lastRes.resonator,
             lastRes.resonatorConclusion
           );
@@ -852,7 +852,7 @@ const BoardArea = (props) => {
             lastRes.player,
             lastRes.unit,
             lastRes.skill,
-            lastRes.conclusion
+            lastRes.skillConclusion
           );
         }
         break;
@@ -1966,6 +1966,19 @@ const BoardArea = (props) => {
             }
             break;
 
+          case "Aerial Impetus2":
+            return (
+              <>
+                {self === localGameState.turnPlayer && !hideModal && (
+                  <SelectTacticViaEffect
+                    details={lastRes.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
           case "Activating Gale Conjuration":
             if (self === lastRes.unit.player) {
               updateLocalState(
@@ -1977,8 +1990,9 @@ const BoardArea = (props) => {
           case "Gale Conjuration1":
             return (
               <>
-                {self === localGameState.turnPlayer && !hideModal && (
-                  <SelectTacticViaEffect
+                {self === lastRes.unit.player && !hideModal && (
+                  <YouMayNoYes
+                    unit={lastRes.unit}
                     details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
@@ -3496,20 +3510,6 @@ const BoardArea = (props) => {
             }
             break;
 
-          case "Vengeful Legacy Ravager":
-            return (
-              <>
-                {self === lastRes.unit.player && !hideModal && (
-                  <FloatSkill
-                    unit={lastRes.unit}
-                    details={lastRes.details}
-                    updateFirebase={updateFirebase}
-                    hideOrRevealModale={hideOrRevealModale}
-                  />
-                )}
-              </>
-            );
-
           case "Activating Black Business Card":
             if (self === lastRes.player) {
               updateLocalState(blackBusinessCard1());
@@ -3870,6 +3870,11 @@ const BoardArea = (props) => {
         resolution: "Bounty Phase Selection",
       });
 
+      newGameState[self].bountyPoints = Math.min(
+        10,
+        newGameState[self].bountyPoints + 1
+      );
+
       if (newGameState[self].bountyUpgrades.acquisition >= 2) {
         newGameState.currentResolution.push({
           resolution: "Misc.",
@@ -4155,10 +4160,6 @@ const BoardArea = (props) => {
 
         delete fieryHeartAlly.afflictions.burn;
         delete fieryHeartAlly.afflictions.frostbite;
-
-        newGameState[selectedUnit.player].units[selectedUnit.unitIndex] =
-          fieryHeartAlly;
-
         break;
 
       case "purification":
@@ -4180,10 +4181,6 @@ const BoardArea = (props) => {
             purificationAlly.enhancements.ward = 2;
           }
         }
-
-        newGameState[selectedUnit.player].units[selectedUnit.unitIndex] =
-          purificationAlly;
-
         break;
 
       case "healing rain":
@@ -4200,7 +4197,6 @@ const BoardArea = (props) => {
         newGameState[selectedUnit.player].units[
           selectedUnit.unitIndex
         ].aether = 0;
-
         break;
 
       case "hydrotherapy":
@@ -4210,10 +4206,6 @@ const BoardArea = (props) => {
         delete hydrotherapyAlly.afflictions.burn;
         delete hydrotherapyAlly.afflictions.frostbite;
         delete hydrotherapyAlly.afflictions.paralysis;
-
-        newGameState[selectedUnit.player].units[selectedUnit.unitIndex] =
-          hydrotherapyAlly;
-
         break;
 
       case "aerial impetus prompt":
@@ -4237,13 +4229,20 @@ const BoardArea = (props) => {
         let galeConjurationEnemy =
           newGameState[selectedUnit.player].units[selectedUnit.unitIndex];
 
-        delete galeConjurationEnemy.enhancements.ward;
         delete galeConjurationEnemy.enhancements.shield;
         delete galeConjurationEnemy.enhancements.disruption;
 
-        newGameState[selectedUnit.player].units[selectedUnit.unitIndex] =
-          galeConjurationEnemy;
+        if (isAdjacent(unit, galeConjurationEnemy)) {
+          galeConjurationEnemy.aether = 0;
+        }
 
+        break;
+
+      case "gale conjuration restore":
+        let galeConjurationAlly =
+          newGameState[selectedUnit.player].units[selectedUnit.unitIndex];
+
+        galeConjurationAlly.aether = 1;
         break;
 
       case "symphonic screech":
