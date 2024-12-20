@@ -452,7 +452,7 @@ const BountyPhase = (props) => {
                     <h4 className="modalChoiceText modalBountyText">
                       Upgrade Cultivate:
                       <br />
-                      You may spend 1 FD to recover 1 “Transcendence”
+                      You may recover 1 “Transcendence”
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
                       {localGameState[self].bountyUpgrades.acquisition > 2

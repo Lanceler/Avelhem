@@ -118,10 +118,10 @@ export default function Rules() {
             <div className="rules-text">
               <h2>Overview</h2>
               <p>
-                <em>Avelhem: War of the Sovereigns</em> is a board game set in a
-                fantastical realm where two players take on the roles of
-                Sovereigns, leading armies of demigods bestowed with authority
-                over creation.
+                <em>Avelhem: War of the Sovereigns</em> is a two-player board
+                game set in a fantastical realm where humanity has inherited the
+                Maker’s authority over creation. Players assume the roles of
+                Sovereigns, monarchs with dominion over other humans.
               </p>
               <br />
               <p>
@@ -301,8 +301,7 @@ export default function Rules() {
               <h3>Bounty Phase</h3>
               <p>
                 During the Bounty Phase, the Initiator receives 1 Bounty Point
-                (BP) and may purchase permanent upgrades to move closer to
-                victory.
+                (BP) and can access the BP shop.
               </p>
               <br />
               <h3>Coordination Phase</h3>
@@ -468,11 +467,11 @@ export default function Rules() {
               <h3>Bounty Phase</h3>
               <p>
                 During the Bounty Phase, the Initiator receives 1 Bounty Point
-                (BP) and may purchase permanent upgrades to move closer to
-                victory. These upgrades are organized into tiered categories,
-                with higher-tier items becoming available once their
-                prerequisites are purchased. Multiple purchases can be made in a
-                single turn, provided the Initiator has sufficient BP.
+                (BP) and accesses the BP shop, where they can spend BP on
+                upgrades. These are organized into tiered categories, with
+                higher-tier items becoming available once their prerequisites
+                are purchased. Multiple purchases can be made in a single turn,
+                provided the Initiator has sufficient BP.
               </p>
               <br />
               <h3>Coordination Phase</h3>

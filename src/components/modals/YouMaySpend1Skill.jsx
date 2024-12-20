@@ -148,6 +148,12 @@ const YouMaySpend1Skill = (props) => {
         });
         break;
 
+      case "Eternal Ember":
+        unit.afflictions.anathema = 1;
+        delete unit.temporary.anathemaDelay;
+        unit.boosts = {};
+        break;
+
       case "Resplendence":
         newGameState.currentResolution.push({
           resolution: "Fire Skill",
@@ -335,6 +341,14 @@ const YouMaySpend1Skill = (props) => {
 
     //end Discarding Skill resolution
     newGameState.currentResolution.pop();
+
+    if (props.details.reason === "Eternal Ember") {
+      let unit = newGameState[props.unit.player].units[props.unit.unitIndex];
+
+      unit.afflictions.anathema = 2;
+      delete unit.temporary.anathemaDelay;
+      unit.boosts = {};
+    }
 
     dispatch(updateState(newGameState));
     props.updateFirebase(newGameState);

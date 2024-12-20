@@ -1598,12 +1598,15 @@ export const useRecurringEffects = () => {
       unit.temporary.activation === 0 &&
       unit.temporary.anathemaDelay === true
     ) {
-      delete unit.temporary.anathemaDelay;
-      unit.afflictions.anathema = unit.boosts.fieryHeart ? 1 : 2;
-
-      unit.boosts = {};
-      delete unit.enhancements.disruption;
-      delete unit.enhancements.overgrowth;
+      if (unit.unitClass === "Fire Scion" && !isMuted(unit)) {
+        unit.temporary.eternalEmberActivation = true;
+      } else {
+        delete unit.temporary.anathemaDelay;
+        unit.afflictions.anathema = 2;
+        unit.boosts = {};
+        delete unit.enhancements.disruption;
+        delete unit.enhancements.overgrowth;
+      }
     }
 
     return unit;

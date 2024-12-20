@@ -57,7 +57,7 @@ const AcquisitionPhase = (props) => {
           <div className=" ">⬩Draw 1 skill.</div>
           <div className=" ">
             ⬩{upgrade < 3 && <>If upgraded: </>}
-            You may spend 1 FD to recover 1 “Transcendence”.
+            You may recover 1 “Transcendence”.
           </div>
         </>
       ),
@@ -142,17 +142,15 @@ const AcquisitionPhase = (props) => {
 
         if (
           newGameState[self].bountyUpgrades.acquisition >= 3 &&
-          newGameState[self].skillVestige.includes("SX-01") &&
-          newGameState[self].fateDefiance > 0
+          newGameState[self].skillVestige.includes("SX-01")
         ) {
           newGameState.currentResolution.push({
             resolution: "Recover Skill",
             player: self,
             restriction: ["SX-01"],
-            message: "You may spend 1 FD to recover 1 “Transcendence”",
+            message: "You may recover 1 “Transcendence”.",
             outcome: "Add",
             canSkip: true,
-            cost: "1 FD",
           });
         }
 

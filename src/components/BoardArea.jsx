@@ -811,7 +811,6 @@ const BoardArea = (props) => {
                 outcome={lastRes.outcome}
                 message={lastRes.message}
                 canSkip={lastRes.canSkip}
-                cost={lastRes.cost}
                 hideOrRevealModale={hideOrRevealModale}
                 updateFirebase={updateFirebase}
               />
@@ -1230,28 +1229,8 @@ const BoardArea = (props) => {
             break;
 
           case "Fiery Heart1":
-            return (
-              <>
-                {self === lastRes.unit.player && !hideModal && (
-                  <SelectCustomChoice
-                    unit={lastRes.unit}
-                    details={lastRes.details}
-                    updateFirebase={updateFirebase}
-                    hideOrRevealModale={hideOrRevealModale}
-                  />
-                )}
-              </>
-            );
-
-          case "Fiery Heart2":
             if (self === lastRes.unit.player) {
               updateLocalState(fieryHeart2(lastRes.unit));
-            }
-            break;
-
-          case "Fiery Heart3":
-            if (self === lastRes.unit.player) {
-              updateLocalState(fieryHeart3(lastRes.unit));
             }
             break;
 
@@ -1554,6 +1533,7 @@ const BoardArea = (props) => {
               </>
             );
 
+          case "Activating Eternal Ember":
           case "Activating From the Ashes":
           case "Activating Lightning Rod":
             return (
@@ -4459,16 +4439,42 @@ const BoardArea = (props) => {
         newGameState[player].skillHand.push(skill);
       }
 
+      newGameState.activatingSkill.pop();
+      newGameState.activatingUnit.pop();
+
       if (unitInfo) {
         let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
         if (unit) {
           unit = applyAnathema(unit);
         }
-      }
 
-      newGameState.activatingSkill.pop();
-      newGameState.activatingUnit.pop();
+        if (unit.temporary.eternalEmberActivation) {
+          delete unit.temporary.eternalEmberActivation;
+
+          newGameState.activatingUnit.push(unit);
+          newGameState.activatingSkill.push("EternalEmber");
+
+          newGameState.currentResolution.push({
+            resolution: "Unit Talent",
+            resolution2: "Talent Conclusion",
+            unit: unit,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Unit Talent",
+            resolution2: "Activating Eternal Ember",
+            unit: unit,
+            details: {
+              title: "Eternal Ember",
+              message:
+                "You may spend 1 skill to reduce the duration of Anathema to 1 turn.",
+              restriction: null,
+              reason: "Eternal Ember",
+            },
+          });
+        }
+      }
 
       dispatch(updateState(newGameState));
 
@@ -4508,11 +4514,41 @@ const BoardArea = (props) => {
         newGameState[player].skillHand.push(resonator);
       }
 
-      if (unitInfo !== null) {
+      newGameState.activatingSkill.pop();
+      newGameState.activatingUnit.pop();
+      newGameState.activatingResonator.pop();
+
+      if (unitInfo) {
         let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
         if (unit) {
           unit = applyAnathema(unit);
+        }
+
+        if (unit.temporary.eternalEmberActivation) {
+          delete unit.temporary.eternalEmberActivation;
+
+          newGameState.activatingUnit.push(unit);
+          newGameState.activatingSkill.push("EternalEmber");
+
+          newGameState.currentResolution.push({
+            resolution: "Unit Talent",
+            resolution2: "Talent Conclusion",
+            unit: unit,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Unit Talent",
+            resolution2: "Activating Eternal Ember",
+            unit: unit,
+            details: {
+              title: "Eternal Ember",
+              message:
+                "You may spend 1 skill to reduce the duration of Anathema to 1 turn.",
+              restriction: null,
+              reason: "Eternal Ember",
+            },
+          });
         }
       }
 
@@ -4520,10 +4556,6 @@ const BoardArea = (props) => {
       if (resonator === "SA-02") {
         newGameState = drawSkill(newGameState);
       }
-
-      newGameState.activatingSkill.pop();
-      newGameState.activatingUnit.pop();
-      newGameState.activatingResonator.pop();
 
       dispatch(updateState(newGameState));
 
@@ -4558,14 +4590,37 @@ const BoardArea = (props) => {
     //end "Tactic End"
     newGameState.currentResolution.pop();
 
-    if (unit) {
-      unit = applyAnathema(unit);
-    }
-
     newGameState.activatingUnit.pop();
-
     if (effect) {
       newGameState.activatingSkill.pop();
+    }
+
+    unit = applyAnathema(unit);
+
+    if (unit.temporary.eternalEmberActivation) {
+      delete unit.temporary.eternalEmberActivation;
+
+      newGameState.activatingUnit.push(unit);
+      newGameState.activatingSkill.push("EternalEmber");
+
+      newGameState.currentResolution.push({
+        resolution: "Unit Talent",
+        resolution2: "Talent Conclusion",
+        unit: unit,
+      });
+
+      newGameState.currentResolution.push({
+        resolution: "Unit Talent",
+        resolution2: "Activating Eternal Ember",
+        unit: unit,
+        details: {
+          title: "Eternal Ember",
+          message:
+            "You may spend 1 skill to reduce the duration of Anathema to 1 turn.",
+          restriction: null,
+          reason: "Eternal Ember",
+        },
+      });
     }
 
     dispatch(updateState(newGameState));

@@ -54,9 +54,7 @@ const UnitInfo = (props) => {
 
             <p className="unitInfo-text-heading2">2. Fiery Heart (One-shot)</p>
             <p className="unitInfo-text-desc">
-              ⬩Purge an adjacent ally’s Frostbite and Burn or spend 1 skill to
-              gain a boost: the duration of your next Anathema is reduced to 1
-              turn.
+              ⬩Spend 1 skill to purge an adjacent ally’s Frostbite and Burn.
             </p>
           </>
         );
@@ -273,7 +271,9 @@ const UnitInfo = (props) => {
 
             <p className="unitInfo-text-heading2">2. Eternal Ember</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩You are immune to Frostbite and Burn.
+              ⬩You are immune to Frostbite and Burn. ⬩When you would be
+              afflicted with Anathema, you may spend 1 skill to reduce its
+              duration to 1 turn.
             </p>
           </>
         );
@@ -635,7 +635,7 @@ const UnitInfo = (props) => {
                     </u>
                   </p>
 
-                  {unit.afflictions.anathema && (
+                  {unit.afflictions.anathema > 0 && (
                     <>
                       <p className="unitInfo-text-heading2">
                         Anathema ({unit.afflictions.anathema} turn
@@ -647,7 +647,7 @@ const UnitInfo = (props) => {
                     </>
                   )}
 
-                  {unit.afflictions.paralysis && (
+                  {unit.afflictions.paralysis > 0 && (
                     <>
                       <p className="unitInfo-text-heading2">
                         Paralysis ({unit.afflictions.paralysis} turn
@@ -659,7 +659,7 @@ const UnitInfo = (props) => {
                     </>
                   )}
 
-                  {unit.afflictions.frostbite && (
+                  {unit.afflictions.frostbite > 0 && (
                     <>
                       <p className="unitInfo-text-heading2">
                         Frostbite ({unit.afflictions.frostbite} turn
@@ -671,7 +671,7 @@ const UnitInfo = (props) => {
                     </>
                   )}
 
-                  {unit.afflictions.burn && (
+                  {unit.afflictions.burn > 0 && (
                     <>
                       <p className="unitInfo-text-heading2">
                         Burn ({unit.afflictions.burn} turn

@@ -57,13 +57,13 @@ const SelectCustomChoice = (props) => {
   let updateData = false;
 
   switch (props.details.reason) {
-    case "Fiery Heart":
-      canFirstChoice = getZonesWithAllies(unit, 1, false).length > 0;
-      canSecondChoice = newGameState[unit.player].skillHand.length > 0;
-      ChoiceFirstMessage = "Purge an adjacent ally’s Frostbite and Burn.";
-      ChoiceSecondMessage =
-        "Spend 1 skill to gain a boost: the duration of your next Anathema is reduced to 1 turn.";
-      break;
+    // case "Fiery Heart":
+    //   canFirstChoice = getZonesWithAllies(unit, 1, false).length > 0;
+    //   canSecondChoice = newGameState[unit.player].skillHand.length > 0;
+    //   ChoiceFirstMessage = "Purge an adjacent ally’s Frostbite and Burn.";
+    //   ChoiceSecondMessage =
+    //     "Spend 1 skill to gain a boost: the duration of your next Anathema is reduced to 1 turn.";
+    //   break;
 
     case "Purification":
       canFirstChoice = true;
@@ -291,29 +291,29 @@ const SelectCustomChoice = (props) => {
       //   }
       //   break;
 
-      case "Fiery Heart":
-        if (selectedChoice === 1) {
-          newGameState.currentResolution.push({
-            resolution: "Unit Ability",
-            resolution2: "Fiery Heart2",
-            unit: unit,
-          });
-        } else {
-          newGameState.currentResolution.push({
-            resolution: "Unit Ability",
-            resolution2: "Fiery Heart3",
-            unit: unit,
-          });
+      // case "Fiery Heart":
+      //   if (selectedChoice === 1) {
+      //     newGameState.currentResolution.push({
+      //       resolution: "Unit Ability",
+      //       resolution2: "Fiery Heart2",
+      //       unit: unit,
+      //     });
+      //   } else {
+      //     newGameState.currentResolution.push({
+      //       resolution: "Unit Ability",
+      //       resolution2: "Fiery Heart3",
+      //       unit: unit,
+      //     });
 
-          newGameState.currentResolution.push({
-            resolution: "Discard Skill",
-            unit: unit,
-            player: self,
-            message: "Spend 1 skill",
-            restriction: null,
-          });
-        }
-        break;
+      //     newGameState.currentResolution.push({
+      //       resolution: "Discard Skill",
+      //       unit: unit,
+      //       player: self,
+      //       message: "Spend 1 skill",
+      //       restriction: null,
+      //     });
+      //   }
+      //   break;
 
       case "Purification":
         if (selectedChoice === 1) {

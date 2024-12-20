@@ -31,6 +31,23 @@
     transform: translateY(-50%);
     overflow-y: auto;
     scrollbar-width: thin;
+    animation: modalDescent 0.55s ease-in-out;
+}
+
+
+@keyframes modalDescent {
+    0% {
+        top: -40%;
+        opacity: 0%;
+    }
+
+    30% {
+        opacity: 10%;
+    }
+
+    90% {
+        opacity: 70%;
+    }
 }
 
 .modalHeader {

@@ -566,8 +566,8 @@ export const useDemoGameStates = () => {
           case "Learn1.8.2":
             return (
               <div>
-                For your convenience, skills and Avelhems are held in separate
-                hands. The latter can found to the right of the former.
+                For convenience, skills and Avelhems are held in separate hands.
+                The latter is found to the right of the former.
               </div>
             );
 
@@ -575,9 +575,8 @@ export const useDemoGameStates = () => {
             return (
               <div>
                 Up next is the <strong>Bounty Phase</strong>, where the
-                Initiator can spend BP (Bounty Points) on permanent upgrades,
-                such as the additional effects shown during the Acquisition
-                Phase.
+                Initiator can spend BP (Bounty Points) on upgrades, such as the
+                additional effects shown during the Acquisition Phase.
               </div>
             );
 

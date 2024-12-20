@@ -44,6 +44,7 @@ const RecoverSkill = (props) => {
         "Recover then float 1 Plant skill other than “Efflorescence”.",
         "Recover 1 Lightning skill other than “Thunder Thaumaturge”.",
         "Recover then reveal 1 burst skill.",
+        "You may recover then float 1 skill that can grant a unit Ravager",
       ].includes(props.message)
     ) {
       let message = "Your opponent has recovered and revealed a skill.";
@@ -64,6 +65,10 @@ const RecoverSkill = (props) => {
 
         case "Recover then reveal 1 burst skill.":
           title = "Foreshadow";
+          break;
+
+        case "You may recover then float 1 skill that can grant a unit Ravager.":
+          title = "Black Business Card";
           break;
       }
 
@@ -105,10 +110,6 @@ const RecoverSkill = (props) => {
       } else {
         newGameState[self].skillVestige.push(skillToFloat);
       }
-    }
-
-    if (props.cost === "1 FD") {
-      newGameState[self].fateDefiance -= 1;
     }
 
     dispatch(updateState(newGameState));

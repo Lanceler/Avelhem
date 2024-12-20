@@ -772,6 +772,31 @@ export const useSovereignSkillEffects = () => {
       newGameState[self].bountyPoints + 2
     );
 
+    //recover Dark Halo or Vengeful Legacy
+    const ravagerSkills = ["SA-03", "SC-04"];
+
+    if (
+      !ravagerSkills.some((s) => newGameState[self].skillVestige.includes(s))
+    ) {
+      newGameState.currentResolution.push({
+        resolution: "Misc.",
+        resolution2: "Message To Player",
+        player: self,
+        title: "Black Business Card",
+        message: "You do not have any valid skills to recover.",
+      });
+    } else {
+      newGameState.currentResolution.push({
+        resolution: "Recover Skill",
+        player: self,
+        restriction: ravagerSkills,
+        message:
+          "You may recover then float 1 skill that can grant a unit Ravager.",
+        outcome: "Float",
+        canSkip: true,
+      });
+    }
+
     return newGameState;
   };
 
