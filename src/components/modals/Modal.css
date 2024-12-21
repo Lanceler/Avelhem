@@ -9,7 +9,16 @@
     z-index: 50000;
     /* bugged outside Firefox */
     /* backdrop-filter: blur(2px) */
+    animation: modalBDFadeIn 0.55s ease-in-out;
 }
+
+@keyframes modalBDFadeIn {
+    0% {
+        opacity: 0%;
+    }
+}
+
+
 
 .modal-backdrop2 {
     z-index: 501;
@@ -38,16 +47,8 @@
 @keyframes modalDescent {
     0% {
         top: -40%;
-        opacity: 0%;
     }
 
-    30% {
-        opacity: 10%;
-    }
-
-    90% {
-        opacity: 70%;
-    }
 }
 
 .modalHeader {
