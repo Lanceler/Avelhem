@@ -9,7 +9,7 @@
     z-index: 50000;
     /* bugged outside Firefox */
     /* backdrop-filter: blur(2px) */
-    animation: modalBDFadeIn 0.55s ease-in-out;
+    animation: modalBDFadeIn 0.35s ease-in-out;
 }
 
 @keyframes modalBDFadeIn {
@@ -40,7 +40,7 @@
     transform: translateY(-50%);
     overflow-y: auto;
     scrollbar-width: thin;
-    animation: modalDescent 0.55s ease-in-out;
+    /* animation: modalDescent 0.55s ease-in-out; */
 }
 
 

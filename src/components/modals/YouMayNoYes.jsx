@@ -197,7 +197,7 @@ const YouMayNoYes = (props) => {
           newGameState,
           null,
           "paralyze1",
-          null
+          "Cataclysmic Tempest"
         );
         break;
 

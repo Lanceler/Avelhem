@@ -164,7 +164,7 @@ const BountyPhase = (props) => {
     props.hideOrRevealModale();
   };
 
-  const frontierCosts = [4, 6, 10];
+  const frontierCosts = [6, 8, 10];
   const acquisitionCosts = [3, 3, 4];
   const coordinationCosts = [3, 3, 4];
   const tacticsCosts = [3, 3, 4];
