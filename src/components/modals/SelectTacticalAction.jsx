@@ -3,16 +3,15 @@ import "./Modal.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
-import { updateDemo } from "../../redux/demoGuide";
+import { updateDemoCount } from "../../redux/demoCount";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import InfoPopUp from "./InfoPopUp";
 
 const SelectTacticalAction = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
-  const { self, enemy } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
-
+  const { demoCount } = useSelector((state) => state.demoCount);
   const dispatch = useDispatch();
 
   const [selectedChoice, setSelectedChoice] = useState(null);
@@ -371,29 +370,28 @@ const SelectTacticalAction = (props) => {
     dispatch(updateState(newGameState));
   };
 
-  const canClick = (element, element2) => {
+  const canClick = (element1, element2) => {
     switch (demoGuide) {
-      case "Learn1.42":
-      case "Learn1.50":
-      case "Learn1.56":
-      case "Learn1.61":
-      case "Learn1.252":
-      case "Learn1.271":
-        return element === "Action" && element2 === 0;
+      case "Learn-overview":
+        switch (demoCount) {
+          case 49:
+          case 56:
+            return element1 === "Action" && element2 === 0;
 
-      case "Learn1.132":
-      case "Learn1.260":
-        return element === "Action" && element2 === 1;
+          case 50:
+          case 57:
+            return element1 === "Select Button";
+        }
 
-      case "Learn1.43":
-      case "Learn1.51":
-      case "Learn1.57":
-      case "Learn1.62":
-      case "Learn1.133":
-      case "Learn1.253":
-      case "Learn1.261":
-      case "Learn1.272":
-        return element === "Select Button";
+      // case "Learn1.271":
+      //   return element === "Action" && element2 === 0;
+
+      // case "Learn1.132":
+      // case "Learn1.260":
+      //   return element === "Action" && element2 === 1;
+
+      // case "Learn1.272":
+      //   return element === "Select Button";
 
       ///////////////////////
     }
@@ -401,71 +399,15 @@ const SelectTacticalAction = (props) => {
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
-      case "Learn1.42":
-        dispatch(updateDemo("Learn1.43"));
-        break;
-
-      case "Learn1.43":
-        dispatch(updateDemo("Learn1.44"));
-        break;
-
-      case "Learn1.50":
-        dispatch(updateDemo("Learn1.51"));
-        break;
-
-      case "Learn1.51":
-        dispatch(updateDemo("Learn1.52"));
-        break;
-
-      case "Learn1.56":
-        dispatch(updateDemo("Learn1.57"));
-        break;
-
-      case "Learn1.57":
-        dispatch(updateDemo("Learn1.58"));
-        break;
-
-      case "Learn1.61":
-        dispatch(updateDemo("Learn1.62"));
-        break;
-
-      case "Learn1.62":
-        dispatch(updateDemo("Learn1.63"));
-        break;
-
-      case "Learn1.132":
-        dispatch(updateDemo("Learn1.133"));
-        break;
-
-      case "Learn1.133":
-        dispatch(updateDemo("Learn1.134"));
-        break;
-
-      case "Learn1.252":
-        dispatch(updateDemo("Learn1.253"));
-        break;
-
-      case "Learn1.253":
-        dispatch(updateDemo("Learn1.254"));
-        break;
-
-      case "Learn1.260":
-        dispatch(updateDemo("Learn1.261"));
-        break;
-
-      case "Learn1.261":
-        dispatch(updateDemo("Learn1.262"));
-        break;
-
-      case "Learn1.271":
-        dispatch(updateDemo("Learn1.272"));
-        break;
-
-      case "Learn1.272":
-        dispatch(updateDemo("Learn1.273"));
-        break;
-
-      /////////////////////////
+      case "Learn-overview":
+        switch (demoCount) {
+          case 49:
+          case 50:
+          case 56:
+          case 57:
+            dispatch(updateDemoCount(demoCount + 1));
+            break;
+        }
     }
   };
 

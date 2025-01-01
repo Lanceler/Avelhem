@@ -36,38 +36,20 @@ const Tile = (props) => {
     }
   };
 
-  const canClick = (element1, element2) => {
+  const canClick = (element1) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
           case 39:
-            return element1 === "Tile" && element2 === 37;
+            return element1 === 37;
+          case 51:
+            return element1 === 27;
+          case 58:
+            return element1 === 22;
+
+          ////////////////////////////
         }
     }
-
-    // switch (demoGuide) {
-    //   case "Learn1.44":
-    //     return element === "Tile" && [27].includes(element2);
-
-    //   case "Learn1.52":
-    //     return element === "Tile" && [22].includes(element2);
-
-    //   case "Learn1.58":
-    //     return element === "Tile" && [26].includes(element2);
-
-    //   case "Learn1.63":
-    //     return element === "Tile" && [28].includes(element2);
-
-    //   case "Learn1.196":
-    //     return element === "Tile" && [27].includes(element2);
-
-    //   case "Learn1.254":
-    //     return element === "Tile" && [18].includes(element2);
-
-    //   case "Learn1.273":
-    //     return element === "Tile" && [3].includes(element2);
-
-    ////////////////////////////
   };
 
   const handleUpdateDemoGuide = () => {
@@ -75,6 +57,8 @@ const Tile = (props) => {
       case "Learn-overview":
         switch (demoCount) {
           case 39:
+          case 51:
+          case 58:
             dispatch(updateDemoCount(demoCount + 1));
             break;
         }
@@ -85,7 +69,7 @@ const Tile = (props) => {
     <div
       className={`${
         deployable || movable || unitSelectable ? "selectable" : ""
-      } ${canClick("Tile", props.zone.id) ? "demoClick" : ""}`}
+      } ${canClick(props.zone.id) ? "demoClick" : ""}`}
       onClick={() => {
         onClickTile();
         handleUpdateDemoGuide();

@@ -12,7 +12,6 @@ const AcquisitionPhase = (props) => {
   const { self } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
   const { demoCount } = useSelector((state) => state.demoCount);
-
   const dispatch = useDispatch();
 
   const [selectedChoice, setSelectedChoice] = useState(null);

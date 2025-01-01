@@ -133,7 +133,7 @@ export default function Demo() {
   };
 
   useEffect(() => {
-    if ([2, 7, 8, 11, 13, 21, 30].includes(demoCount)) {
+    if ([2, 7, 8, 11, 13, 21, 30, 46].includes(demoCount)) {
       scriptedDemo();
     }
   }, [demoCount]);
@@ -239,6 +239,7 @@ export default function Demo() {
             break;
 
           case 30:
+          case 46:
             duplicateDemoGameState.tactics = [
               { face: "Advance", limit: 1, stock: 1 },
               { face: "Mobilize", limit: 3, stock: 3 },

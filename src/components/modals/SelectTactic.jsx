@@ -4,6 +4,7 @@ import "./Modal.css";
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
 import { updateDemo } from "../../redux/demoGuide";
+import { updateDemoCount } from "../../redux/demoCount";
 
 import { useGetImages } from "../../hooks/useGetImages";
 
@@ -11,16 +12,13 @@ import InfoPopUp from "./InfoPopUp";
 
 const SelectTactic = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
-  const { self } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
-
+  const { demoCount } = useSelector((state) => state.demoCount);
   const dispatch = useDispatch();
 
   const { getTacticImage } = useGetImages();
 
   let canUseTactic = [false, false];
-
-  let skipMessage = "Return";
 
   const [infoPopUp, setInfoPopUp] = useState(null);
 
@@ -72,55 +70,32 @@ const SelectTactic = (props) => {
     }
   };
 
-  const canClick = (element, element2) => {
+  const canClick = (element1, element2) => {
     switch (demoGuide) {
-      case "Learn1.40":
-      case "Learn1.251":
-      case "Learn1.270":
-        return element2 === 0;
+      case "Learn-overview":
+        switch (demoCount) {
+          case 48:
+            return element2 === 0;
 
-      case "Learn1.49":
-      case "Learn1.55":
-      case "Learn1.60":
-      case "Learn1.129":
-      case "Learn1.259":
-        return element2 === 1;
+          case 55:
+            return element2 === 1;
+
+          case 62:
+            return element1 === "Return";
+        }
     }
   };
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
-      case "Learn1.40":
-        dispatch(updateDemo("Learn1.41"));
-        break;
-
-      case "Learn1.49":
-        dispatch(updateDemo("Learn1.50"));
-        break;
-
-      case "Learn1.55":
-        dispatch(updateDemo("Learn1.56"));
-        break;
-
-      case "Learn1.60":
-        dispatch(updateDemo("Learn1.61"));
-        break;
-
-      case "Learn1.129":
-        dispatch(updateDemo("Learn1.130"));
-        break;
-
-      case "Learn1.251":
-        dispatch(updateDemo("Learn1.252"));
-        break;
-
-      case "Learn1.259":
-        dispatch(updateDemo("Learn1.260"));
-        break;
-
-      case "Learn1.270":
-        dispatch(updateDemo("Learn1.271"));
-        break;
+      case "Learn-overview":
+        switch (demoCount) {
+          case 48:
+          case 55:
+          case 62:
+            dispatch(updateDemoCount(demoCount + 1));
+            break;
+        }
     }
   };
 
@@ -175,8 +150,14 @@ const SelectTactic = (props) => {
 
         <div className="modalBottomButton">
           {
-            <button className="redButton" onClick={() => handleSkip()}>
-              {skipMessage}
+            <button
+              className={`redButton ${canClick("Return") ? "demoClick" : ""}`}
+              onClick={() => {
+                handleSkip();
+                handleUpdateDemoGuide();
+              }}
+            >
+              Return
             </button>
           }
         </div>

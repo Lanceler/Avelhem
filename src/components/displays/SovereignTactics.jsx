@@ -45,7 +45,7 @@ const SovereignTactics = (props) => {
     setInfoPopUp("Tactics");
   };
 
-  const canClick = (element, element2) => {
+  const canClick = (element1, element2) => {
     // switch (demoGuide) {
     //   case "Learn1.34":
     //   case "Learn1.35":
@@ -67,6 +67,9 @@ const SovereignTactics = (props) => {
 
           case 42:
             return element2 === 1;
+
+          case 63:
+            return element1 === "?";
         }
     }
   };
@@ -77,6 +80,7 @@ const SovereignTactics = (props) => {
         switch (demoCount) {
           case 35:
           case 42:
+          case 63:
             dispatch(updateDemoCount(demoCount + 1));
             break;
         }

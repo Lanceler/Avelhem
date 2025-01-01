@@ -1,13 +1,9 @@
 import "./../Board.scss";
-import React, { useState, useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
-import { updateSelf, updateEnemy } from "../../redux/teams";
-import { updateDemo } from "../../redux/demoGuide";
-
+import { updateDemoCount } from "../../redux/demoCount";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
-
 import { useGetImages } from "../../hooks/useGetImages";
 
 import Tile from "./Tile";
@@ -16,8 +12,8 @@ import Piece from "./Piece";
 const Board = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
-  const { enemy } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
+  const { demoCount } = useSelector((state) => state.demoCount);
   const dispatch = useDispatch();
 
   const {
@@ -100,33 +96,45 @@ const Board = (props) => {
     }
   };
 
-  const canClick = (element, element2) => {
+  const canClick = (element) => {
     switch (demoGuide) {
-      case "Learn1.39":
-      case "Learn1.49":
-      case "Learn1.54":
-      case "Learn1.59":
-      case "Learn1.128":
-      case "Learn1.250":
-      case "Learn1.258":
-      case "Learn1.269":
-        return element === "Tactic Button";
+      case "Learn-overview":
+        switch (demoCount) {
+          case 47:
+          case 54:
+          case 61:
+            return element === "Tactic Button";
+        }
+    }
 
-      case "Learn1.67":
-      case "Learn1.106":
-      case "Learn1.217":
-      case "Learn1.230":
-        return element === "Skill Button";
+    // switch (demoGuide) {
 
-      case "Learn1.74":
-        return element === "Info Button";
+    //   case "Learn1.269":
+    //     return element=== "Tactic Button";
 
-      case "Learn1.120":
-      case "Learn1.235":
-      case "Learn1.242":
-        return element === "Ability Button";
+    //   case "Learn1.230":
+    //     return element === "Skill Button";
 
-      /////////////////////////////////////////
+    //   case "Learn1.74":
+    //     return element === "Info Button";
+
+    //   case "Learn1.242":
+    //     return element === "Ability Button";
+
+    //   /////////////////////////////////////////
+    // }
+  };
+
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+      case "Learn-overview":
+        switch (demoCount) {
+          case 47:
+          case 54:
+          case 61:
+            dispatch(updateDemoCount(demoCount + 1));
+            break;
+        }
     }
   };
 
@@ -269,7 +277,7 @@ const Board = (props) => {
             style={unitButtonPosition(expandedUnit)[0]}
             onClick={() => {
               handleUnitOptions("Info");
-              props.handleUpdateDemoGuide();
+              handleUpdateDemoGuide();
             }}
           >
             <div className="optionIcon">
@@ -292,7 +300,7 @@ const Board = (props) => {
                   style={unitButtonPosition(expandedUnit)[1]}
                   onClick={() => {
                     handleUnitOptions("Tactic");
-                    props.handleUpdateDemoGuide();
+                    handleUpdateDemoGuide();
                   }}
                 >
                   <div className="optionIcon">
@@ -311,7 +319,7 @@ const Board = (props) => {
                       style={unitButtonPosition(expandedUnit)[2]}
                       onClick={() => {
                         handleUnitOptions("Ability");
-                        props.handleUpdateDemoGuide();
+                        handleUpdateDemoGuide();
                       }}
                     >
                       <div className="optionIcon">
@@ -329,7 +337,7 @@ const Board = (props) => {
                       style={unitButtonPosition(expandedUnit)[3]}
                       onClick={() => {
                         handleUnitOptions("Skill");
-                        props.handleUpdateDemoGuide();
+                        handleUpdateDemoGuide();
                       }}
                     >
                       <div className="optionIcon">

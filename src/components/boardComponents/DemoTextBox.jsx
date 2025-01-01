@@ -51,6 +51,17 @@ const DemoTextBox = () => {
               top: "50%",
             };
 
+          //middle of board, slightly smaller
+          case 46:
+          case 47:
+            return {
+              top: "47.5%",
+              left: "37.5%",
+              transform: "translate(-50%, -50%)",
+              width: 620,
+              height: 210,
+            };
+
           //center of board; small
           case 12:
           case 40:
@@ -59,6 +70,15 @@ const DemoTextBox = () => {
               left: "30%",
               width: 350,
               height: 150,
+            };
+
+          //middle top right; slightly small
+          case 63:
+            return {
+              top: "36.5%",
+              left: "71.0%",
+              width: 620,
+              height: 175,
             };
 
           //middle right; slightly small
@@ -79,6 +99,13 @@ const DemoTextBox = () => {
               height: 160,
             };
 
+          case 64:
+            return {
+              top: "8.5%",
+              height: 130,
+              width: 550,
+            };
+
           default:
             return {
               top: "15%",
@@ -91,7 +118,8 @@ const DemoTextBox = () => {
   };
 
   const excludedshowNext = new Set([
-    7, 15, 16, 21, 22, 23, 24, 25, 28, 29, 30, 32, 37, 38, 39, 42, 44, 45,
+    7, 15, 16, 21, 22, 23, 24, 25, 28, 29, 30, 32, 35, 37, 38, 39, 42, 44, 45,
+    46, 47, 48, 49, 50, 51, 53, 54, 55, 56, 57, 58, 60, 61, 62, 63, 64,
   ]);
 
   const showNext = () => {
@@ -515,6 +543,132 @@ const DemoTextBox = () => {
           case 44:
           case 45:
             return <div>Draw a skill card.</div>;
+
+          case 46:
+          case 47:
+            return (
+              <div>
+                Units can also use tactics to perform their own actions. For the
+                sake of this demonstration, your tactics have been reset.
+                <br /> <br />
+                Click on your top center pawn to open their menu, then click on
+                top right button, which features a cube icon (representing a
+                tactical die).
+              </div>
+            );
+
+          case 48:
+            return <div>Click on the Advance tactic.</div>;
+
+          case 49:
+          case 50:
+            return (
+              <div>
+                Units can use the Advance tactic to traverse, which is a keyword
+                that means “move into a vacant adjacent zone”.
+                <br /> <br />
+                Click on the Traverse option.
+              </div>
+            );
+
+          case 51:
+            return (
+              <div>
+                Similar with deployment, zones eligible for movement are colored
+                blue. Also note that in case you change your mind, you can press
+                the cancel button at the top left corner.
+                <br /> <br />
+                Click on the zone ahead of your pawn to make them move.
+              </div>
+            );
+
+          case 52:
+            return (
+              <div>
+                As mentioned, some tactics have a little overlap. As with
+                Advance, Mobilize allows units to traverse—in fact, the latter
+                does it better as it allows for multiple movements.
+              </div>
+            );
+
+          case 53:
+          case 54:
+            return (
+              <div>
+                Let’s make your pawn use a tactic again. Click on them to open
+                their menu, then click on the top right button.
+              </div>
+            );
+
+          case 55:
+            return <div>Click on Mobilize.</div>;
+
+          case 56:
+          case 57:
+          case 58:
+            return (
+              <div>
+                Click on the traverse option, then make them move forward again.
+              </div>
+            );
+
+          case 59:
+            return (
+              <div>
+                A unit cannot use the same Mobilize tactic more than once. Since
+                your top center pawn has already moved via the Mobilize tactic,
+                they are barred from using its remaining instances.
+                <br /> <br />
+                (Clarification: A unit is allowed to traverse twice using 2
+                different Mobilize tactics.)
+              </div>
+            );
+
+          case 60:
+          case 61:
+            return (
+              <div>
+                To illustrate this point, click on that pawn again and open
+                their tactics menu.
+              </div>
+            );
+
+          case 62:
+            return (
+              <div>
+                As you can see, the Mobilize tactic is grayed out despite having
+                2 remaining instances.
+                <br /> <br />
+                Press Return.
+              </div>
+            );
+
+          case 63:
+            return (
+              <div>
+                The other actions you can perform with these tactics, as well as
+                the other tactics, will be discussed in a different tutorial.
+                That said, players can access the Tactics Guide by clicking on
+                the{" "}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                  className="question-icon3"
+                  style={{ fill: "goldenrod" }}
+                >
+                  <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM169.8 165.3c7.9-22.3 29.1-37.3 52.8-37.3h58.3c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24V250.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1H222.6c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z" />
+                </svg>{" "}
+                icon at the top right corner of the right tactic.
+              </div>
+            );
+
+          case 64:
+            return (
+              <div>
+                Feel free to skim through the Tactics Guide’s contents or close
+                it immediately.
+              </div>
+            );
 
           //=========================
         }

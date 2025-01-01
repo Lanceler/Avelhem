@@ -1,7 +1,7 @@
 import React from "react";
 import "./Modal.css";
 
-import { updateDemo } from "../../redux/demoGuide";
+import { updateDemoCount } from "../../redux/demoCount";
 
 import AdvanceSmall from "../../assets/diceIcons/AdvanceSmall.png";
 import MobilizeSmall from "../../assets/diceIcons/MobilizeSmall.png";
@@ -12,7 +12,7 @@ import RallySmall from "../../assets/diceIcons/RallySmall.png";
 import { useSelector, useDispatch } from "react-redux";
 const InfoPopUp = (props) => {
   const { demoGuide } = useSelector((state) => state.demoGuide);
-
+  const { demoCount } = useSelector((state) => state.demoCount);
   const dispatch = useDispatch();
 
   const handleCollapse = () => {
@@ -481,25 +481,24 @@ const InfoPopUp = (props) => {
     }
   };
 
-  const canClick = (element) => {
+  const canClick = (element1) => {
     switch (demoGuide) {
-      case "Learn1.1":
-      case "Learn1.118":
-        return element === "Close";
+      case "Learn-overview":
+        switch (demoCount) {
+          case 64:
+            return element1 === "Close";
+        }
     }
   };
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
-      case "Learn1.1":
-        dispatch(updateDemo("Learn1.1.1"));
-        break;
-
-      case "Learn1.118":
-        dispatch(updateDemo("Learn1.119"));
-        break;
-
-      /////////
+      case "Learn-overview":
+        switch (demoCount) {
+          case 64:
+            dispatch(updateDemoCount(demoCount + 1));
+            break;
+        }
     }
   };
 

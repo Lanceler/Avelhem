@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateDemo } from "../../redux/demoGuide";
+import { updateDemoCount } from "../../redux/demoCount";
 
 import "./Piece.css";
 
@@ -19,9 +19,8 @@ import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 import { useGetImages } from "../../hooks/useGetImages";
 
 export const Piece = (props) => {
-  const { localGameState } = useSelector((state) => state.gameState);
-  const { self } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
+  const { demoCount } = useSelector((state) => state.demoCount);
 
   const dispatch = useDispatch();
 
@@ -59,149 +58,34 @@ export const Piece = (props) => {
     }
   };
 
-  const canClick = (element, element2) => {
-    if (demoGuide) {
-      switch (true) {
-        case demoGuide.slice(0, 5) === "Learn":
-          switch (demoGuide) {
-            case "Learn1.20.01":
-            case "Learn1.39":
-            case "Learn1.49":
-            case "Learn1.134":
-            case "Learn1.141":
-            case "Learn1.211":
-            case "Learn1.217":
-            case "Learn1.230":
-            case "Learn1.235":
-            case "Learn1.242":
-            case "Learn1.250":
-            case "Learn1.258":
-              return (
-                element === "Unit" &&
-                element2.unitIndex === 1 &&
-                element2.player === "host"
-              );
+  const canClick = (element1, element2) => {
+    switch (demoGuide) {
+      case "Learn-overview":
+        switch (demoCount) {
+          case 46:
+          case 53:
+          case 60:
+            return (
+              element1 === "Unit" &&
+              element2.unitIndex === 1 &&
+              element2.player === "host"
+            );
 
-            case "Learn1.23.01":
-            case "Learn1.59":
-            case "Learn1.67":
-            case "Learn1.74":
-              return (
-                element === "Unit" &&
-                element2.unitIndex === 2 &&
-                element2.player === "host"
-              );
-
-            case "Learn1.54":
-              return (
-                element === "Unit" &&
-                element2.unitIndex === 0 &&
-                element2.player === "host"
-              );
-
-            case "Learn1.97":
-            case "Learn1.106":
-            case "Learn1.120":
-            case "Learn1.128":
-            case "Learn1.148":
-            case "Learn1.215":
-            case "Learn1.233":
-            case "Learn1.240":
-            case "Learn1.247":
-              return (
-                element === "Unit" &&
-                element2.unitIndex === 1 &&
-                element2.player === "guest"
-              );
-
-            case "Learn1.164.1":
-              return (
-                element === "Unit" &&
-                element2.unitIndex === 0 &&
-                element2.player === "host"
-              );
-
-            case "Learn1.262":
-              return (
-                element === "Unit" &&
-                element2.unitIndex === 0 &&
-                element2.player === "guest"
-              );
-
-            case "Learn1.269":
-              return (
-                element === "Unit" &&
-                element2.unitIndex === 3 &&
-                element2.player === "host"
-              );
-          }
-
-          break;
-
-        //////////////////////////////////////////////////
-      }
+          ///////
+        }
     }
   };
 
   const handleUpdateDemoGuide = () => {
-    if (demoGuide) {
-      switch (true) {
-        case demoGuide.slice(0, 5) === "Learn":
-          switch (demoGuide) {
-            case "Learn1.20.01":
-              dispatch(updateDemo("Learn1.20.1"));
-              break;
-
-            case "Learn1.23.01":
-              dispatch(updateDemo("Learn1.24"));
-              break;
-
-            case "Learn1.97":
-              dispatch(updateDemo("Learn1.98"));
-              break;
-
-            case "Learn1.134":
-              dispatch(updateDemo("Learn1.135"));
-              break;
-
-            case "Learn1.141":
-              dispatch(updateDemo("Learn1.142"));
-              break;
-
-            case "Learn1.148":
-              dispatch(updateDemo("Learn1.149"));
-              break;
-
-            case "Learn1.164.1":
-              dispatch(updateDemo("Learn1.165"));
-              break;
-
-            case "Learn1.211":
-              dispatch(updateDemo("Learn1.212"));
-              break;
-
-            case "Learn1.215":
-              dispatch(updateDemo("Learn1.216"));
-              break;
-
-            case "Learn1.233":
-              dispatch(updateDemo("Learn1.234"));
-              break;
-
-            case "Learn1.240":
-              dispatch(updateDemo("Learn1.241"));
-              break;
-
-            case "Learn1.247":
-              dispatch(updateDemo("Learn1.248"));
-              break;
-
-            case "Learn1.262":
-              dispatch(updateDemo("Learn1.263"));
-              break;
-          }
-          break;
-      }
+    switch (demoGuide) {
+      case "Learn-overview":
+        switch (demoCount) {
+          case 46:
+          case 53:
+          case 60:
+            dispatch(updateDemoCount(demoCount + 1));
+            break;
+        }
     }
   };
 
