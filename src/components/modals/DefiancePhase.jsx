@@ -3,7 +3,7 @@ import "./Modal.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
-import { updateDemo } from "../../redux/demoGuide";
+import { updateDemoCount } from "../../redux/demoCount";
 
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
@@ -13,6 +13,7 @@ const DefiancePhaseSelection = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
+  const { demoCount } = useSelector((state) => state.demoCount);
 
   const dispatch = useDispatch();
 
@@ -247,42 +248,37 @@ const DefiancePhaseSelection = (props) => {
 
   const canClick = (element1, element2) => {
     switch (demoGuide) {
-      case "Learn1.15":
-        return element1 === "skip";
-
-      case "Learn1.185":
-      case "Learn1.90":
-        return element1 === "select";
-
-      case "Learn1.89":
-        return element1 === "Curate";
-
-      case "Learn1.184":
-        return element1 === "Ex Machina";
+      case "Learn-overview":
+        switch (demoCount) {
+          case 32:
+            return element1 === "skip";
+        }
     }
+
+    // switch (demoGuide) {
+    //   case "Learn1.15":
+    //     return element1 === "skip";
+
+    //   case "Learn1.185":
+    //   case "Learn1.90":
+    //     return element1 === "select";
+
+    //   case "Learn1.89":
+    //     return element1 === "Curate";
+
+    //   case "Learn1.184":
+    //     return element1 === "Ex Machina";
+    // }
   };
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
-      case "Learn1.15":
-        dispatch(updateDemo("Learn1.16"));
-        break;
-
-      case "Learn1.89":
-        dispatch(updateDemo("Learn1.90"));
-        break;
-
-      case "Learn1.90":
-        dispatch(updateDemo("Learn1.91"));
-        break;
-
-      case "Learn1.184":
-        dispatch(updateDemo("Learn1.185"));
-        break;
-
-      case "Learn1.185":
-        dispatch(updateDemo("Learn1.186"));
-        break;
+      case "Learn-overview":
+        switch (demoCount) {
+          case 32:
+            dispatch(updateDemoCount(demoCount + 1));
+            break;
+        }
     }
   };
   return (

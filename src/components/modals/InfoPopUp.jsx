@@ -33,6 +33,9 @@ const InfoPopUp = (props) => {
       case "Aether-Blast Mitigation":
         return "Aether-Blast Mitigation";
 
+      case "Final Phase":
+        return "Final Phase Info.";
+
       case "game":
         return "Gameplay Demo";
 
@@ -251,6 +254,61 @@ const InfoPopUp = (props) => {
                 Mitigation occurs when the attack connects; therefore, it occurs
                 after trigger-based talents and contingent skills resolve.
               </p>
+            </div>
+          </div>
+        );
+
+      case "Final Phase":
+        return (
+          <div>
+            <div className="unitInfo-text-desc">
+              <p>
+                Ending the Execution Phase triggers the Final Phase, where the
+                Initiator performs the following in sequence:
+              </p>
+              <br />
+              <ol>
+                <li>Forfeit unused tactics.</li>
+                <li>
+                  Discard all Avelhems from hand. (They can retain 1 if they
+                  purchase the upgrade.)
+                </li>
+                <li>Selectively discard skills in excess of 8 from hand.</li>
+                <li>
+                  Remove their units’ boosts and decrease the durations of their
+                  units’ turn-based statuses by 1.
+                  <ul>
+                    <li>
+                      The Burn affliction is decreased first. If multiple units
+                      are afflicted with Burn, the Initiator may decrease them
+                      in any desired sequence.
+                    </li>
+                    <li>
+                      All other statuses are then decreased simultaneously.
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  Score if applicable. A unit scores the first time they occupy
+                  a zone in the opponent’s base at the end of the Final Phase.
+                  <ul>
+                    <li>
+                      When the Initiator’s unit scores, they gain 3 BP, while
+                      their opponent receives 6 FD.
+                    </li>
+                    <li>
+                      Units that have scored stay on the board and are still
+                      counted in their Sovereign’s unit limits, but they can no
+                      longer be interacted with.
+                    </li>
+                    <li>
+                      If the Initiator scores with enough units to meet the
+                      victory objective, they win the game. Otherwise, their
+                      opponent commences the next turn as the Initiator.
+                    </li>
+                  </ul>
+                </li>
+              </ol>
             </div>
           </div>
         );

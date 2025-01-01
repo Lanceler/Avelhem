@@ -4,12 +4,15 @@ import "./Modal.css";
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
 import { updateDemo } from "../../redux/demoGuide";
+import { updateDemoCount } from "../../redux/demoCount";
 
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 export default function SelectFirstPlayer(props) {
   const { localGameState } = useSelector((state) => state.gameState);
   const { demoGuide } = useSelector((state) => state.demoGuide);
+  const { demoCount } = useSelector((state) => state.demoCount);
+
   const dispatch = useDispatch();
 
   const { newUnitStats, shuffleCards } = useRecurringEffects();
@@ -19,13 +22,6 @@ export default function SelectFirstPlayer(props) {
   const getRandomFromArray = (arr) => {
     const randomIndex = Math.floor(Math.random() * arr.length);
     return arr[randomIndex];
-  };
-
-  const canClick = () => {
-    switch (demoGuide) {
-      case "Learn1.2":
-        return true;
-    }
   };
 
   const handleSetFirstPlayer = (choice) => {
@@ -70,32 +66,33 @@ export default function SelectFirstPlayer(props) {
       newGameState.guest.skillVestige.push("SX-01");
     }
 
-    newGameState.host.units = [
-      newUnitStats("host", 0, 6, 0, "Pawn"),
-      newUnitStats("host", 1, 6, 2, "Pawn"),
-      newUnitStats("host", 2, 6, 4, "Pawn"),
-    ];
+    const newZoneInfo = [...JSON.parse(localGameState.zones)];
 
-    newGameState.guest.units = [
-      newUnitStats("guest", 0, 3, 4, "Pawn"),
-      newUnitStats("guest", 1, 3, 2, "Pawn"),
-      newUnitStats("guest", 2, 3, 0, "Pawn"),
-    ];
+    if (!(demoGuide === "Learn-overview" && demoCount === 7)) {
+      newGameState.host.units = [
+        newUnitStats("host", 0, 6, 0, "Pawn"),
+        newUnitStats("host", 1, 6, 2, "Pawn"),
+        newUnitStats("host", 2, 6, 4, "Pawn"),
+      ];
+      newGameState.guest.units = [
+        newUnitStats("guest", 0, 3, 4, "Pawn"),
+        newUnitStats("guest", 1, 3, 2, "Pawn"),
+        newUnitStats("guest", 2, 3, 0, "Pawn"),
+      ];
 
-    let newZoneInfo = [...JSON.parse(localGameState.zones)];
-
-    newZoneInfo[6][0].player = "host";
-    newZoneInfo[6][0].unitIndex = 0;
-    newZoneInfo[6][2].player = "host";
-    newZoneInfo[6][2].unitIndex = 1;
-    newZoneInfo[6][4].player = "host";
-    newZoneInfo[6][4].unitIndex = 2;
-    newZoneInfo[3][0].player = "guest";
-    newZoneInfo[3][0].unitIndex = 2;
-    newZoneInfo[3][2].player = "guest";
-    newZoneInfo[3][2].unitIndex = 1;
-    newZoneInfo[3][4].player = "guest";
-    newZoneInfo[3][4].unitIndex = 0;
+      newZoneInfo[6][0].player = "host";
+      newZoneInfo[6][0].unitIndex = 0;
+      newZoneInfo[6][2].player = "host";
+      newZoneInfo[6][2].unitIndex = 1;
+      newZoneInfo[6][4].player = "host";
+      newZoneInfo[6][4].unitIndex = 2;
+      newZoneInfo[3][0].player = "guest";
+      newZoneInfo[3][0].unitIndex = 2;
+      newZoneInfo[3][2].player = "guest";
+      newZoneInfo[3][2].unitIndex = 1;
+      newZoneInfo[3][4].player = "guest";
+      newZoneInfo[3][4].unitIndex = 0;
+    }
 
     newGameState.zones = JSON.stringify(newZoneInfo);
 
@@ -109,11 +106,24 @@ export default function SelectFirstPlayer(props) {
     props.updateFirebase(newGameState);
   };
 
+  const canClick = () => {
+    switch (demoGuide) {
+      case "Learn-overview":
+        switch (demoCount) {
+          case 7:
+            return true;
+        }
+    }
+  };
+
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
-      case "Learn1.2":
-        dispatch(updateDemo("Learn1.3"));
-        break;
+      case "Learn-overview":
+        switch (demoCount) {
+          case 7:
+            dispatch(updateDemoCount(demoCount + 1));
+            break;
+        }
     }
   };
 

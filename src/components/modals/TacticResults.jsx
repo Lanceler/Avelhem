@@ -3,7 +3,7 @@ import "./Modal.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
-import { updateDemo } from "../../redux/demoGuide";
+import { updateDemoCount } from "../../redux/demoCount";
 
 import { useGetImages } from "../../hooks/useGetImages";
 
@@ -11,6 +11,7 @@ const TacticResults = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
+  const { demoCount } = useSelector((state) => state.demoCount);
 
   const dispatch = useDispatch();
 
@@ -38,31 +39,22 @@ const TacticResults = (props) => {
 
   const canClick = () => {
     switch (demoGuide) {
-      case "Learn1.13.1":
-      case "Learn1.88":
-      case "Learn1.93":
-      case "Learn1.183":
-        return true;
+      case "Learn-overview":
+        switch (demoCount) {
+          case 30:
+            return true;
+        }
     }
   };
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
-      case "Learn1.13.1":
-        dispatch(updateDemo("Learn1.13.2"));
-        break;
-
-      case "Learn1.88":
-        dispatch(updateDemo("Learn1.89"));
-        break;
-
-      case "Learn1.93":
-        dispatch(updateDemo("Learn1.94"));
-        break;
-
-      case "Learn1.183":
-        dispatch(updateDemo("Learn1.184"));
-        break;
+      case "Learn-overview":
+        switch (demoCount) {
+          case 30:
+            dispatch(updateDemoCount(demoCount + 1));
+            break;
+        }
     }
   };
 

@@ -3,7 +3,7 @@ import "./DisplayedCard.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
-import { updateDemo } from "../../redux/demoGuide";
+import { updateDemoCount } from "../../redux/demoCount";
 
 import { useGetImages } from "../../hooks/useGetImages";
 
@@ -13,6 +13,7 @@ const SovereignTactics = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
+  const { demoCount } = useSelector((state) => state.demoCount);
 
   const dispatch = useDispatch();
 
@@ -45,37 +46,40 @@ const SovereignTactics = (props) => {
   };
 
   const canClick = (element, element2) => {
+    // switch (demoGuide) {
+    //   case "Learn1.34":
+    //   case "Learn1.35":
+    //   case "Learn1.115":
+    //     return element2 === 0;
+
+    //   case "Learn1.46":
+    //     return element2 === 1;
+
+    //   case "Learn1.117":
+    //     return element === "?";
+    // }
+
     switch (demoGuide) {
-      case "Learn1.34":
-      case "Learn1.35":
-      case "Learn1.115":
-        return element2 === 0;
+      case "Learn-overview":
+        switch (demoCount) {
+          case 35:
+            return element2 === 0;
 
-      case "Learn1.46":
-        return element2 === 1;
-
-      case "Learn1.117":
-        return element === "?";
+          case 42:
+            return element2 === 1;
+        }
     }
   };
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
-      case "Learn1.34":
-        dispatch(updateDemo("Learn1.35"));
-        break;
-
-      case "Learn1.46":
-        dispatch(updateDemo("Learn1.47"));
-        break;
-
-      case "Learn1.115":
-        dispatch(updateDemo("Learn1.116"));
-        break;
-
-      case "Learn1.117":
-        dispatch(updateDemo("Learn1.118"));
-        break;
+      case "Learn-overview":
+        switch (demoCount) {
+          case 35:
+          case 42:
+            dispatch(updateDemoCount(demoCount + 1));
+            break;
+        }
     }
   };
 

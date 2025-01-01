@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../redux/gameState";
 import { updateSelf, updateEnemy } from "../redux/teams";
 import { updateDemo } from "../redux/demoGuide";
+import { updateDemoCount } from "../redux/demoCount";
 import { updateMagnifiedSkill } from "../redux/magnifySkill";
 
 import { db } from "../config/firebaseConfig";
@@ -18,8 +19,8 @@ import { useGetImages } from "../hooks/useGetImages";
 
 import AcquisitionPhase from "./modals/AcquisitionPhase";
 import BountyPhase from "./modals/BountyPhase";
-import CoordinationPhaseSelection from "./modals/CoordinationPhaseSelection";
-import DefiancePhaseSelection from "./modals/DefiancePhaseSelection";
+import CoordinationPhase from "./modals/CoordinationPhase";
+import DefiancePhase from "./modals/DefiancePhase";
 
 import SelectFirstPlayer from "./modals/SelectFirstPlayer";
 
@@ -83,6 +84,7 @@ import PileOfCards from "./displays/PileOfCards";
 import LoadingImage from "./displays/LoadingImage";
 import { AnimatePresence, motion } from "framer-motion";
 
+import DemoTextBox from "./boardComponents/DemoTextBox";
 import DemoImage from "./displays/DemoImage";
 
 const BoardArea = (props) => {
@@ -94,6 +96,7 @@ const BoardArea = (props) => {
   const { self } = useSelector((state) => state.teams);
   const { enemy } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
+  const { demoCount } = useSelector((state) => state.demoCount);
   const { magnifiedSkill } = useSelector((state) => state.magnifiedSkill);
 
   const [zones, setZones] = useState(null);
@@ -357,36 +360,14 @@ const BoardArea = (props) => {
   }, [localGameState, props.userRole]);
 
   useEffect(() => {
-    if (
-      [
-        "Learn1.3",
-        "Learn1.8.1",
-        "Learn1.13.2",
-        "Learn1.70",
-        "Learn1.136",
-        "Learn1.157",
-        "Learn1.161",
-        "Learn1.197",
-        "Learn1.220",
-      ].includes(demoGuide)
-    ) {
-      setHideModal(true);
-    } else if (
-      [
-        "Learn1.6",
-        "Learn1.10",
-        "Learn1.14",
-        "Learn1.71",
-        "Learn1.137",
-        "Learn1.158",
-        "Learn1.163",
-        "Learn1.198",
-        "Learn1.223",
-      ].includes(demoGuide)
-    ) {
-      setHideModal(false);
+    if (demoGuide === "Learn-overview") {
+      if ([8, 17].includes(demoCount)) {
+        setHideModal(true);
+      } else if ([15, 19].includes(demoCount)) {
+        setHideModal(false);
+      }
     }
-  }, [demoGuide]);
+  }, [demoCount]);
 
   //Gets data regarding zones and units
   useEffect(() => {
@@ -490,7 +471,7 @@ const BoardArea = (props) => {
         return (
           <>
             {self === localGameState.turnPlayer && !hideModal && (
-              <CoordinationPhaseSelection
+              <CoordinationPhase
                 updateFirebase={updateFirebase}
                 hideOrRevealModale={hideOrRevealModale}
               />
@@ -502,7 +483,7 @@ const BoardArea = (props) => {
         return (
           <>
             {self === localGameState.turnPlayer && !hideModal && (
-              <DefiancePhaseSelection
+              <DefiancePhase
                 updateFirebase={updateFirebase}
                 hideOrRevealModale={hideOrRevealModale}
               />
@@ -4651,8 +4632,6 @@ const BoardArea = (props) => {
         return element === "Cancel Button";
 
       case "Learn1.80":
-      case "Learn1.172":
-      case "Learn1.274":
         return element === "End Button";
 
       /////////////////////////////////////////
@@ -4661,77 +4640,6 @@ const BoardArea = (props) => {
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
-      case "Learn1.39":
-        dispatch(updateDemo("Learn1.40"));
-        break;
-
-      case "Learn1.54":
-        dispatch(updateDemo("Learn1.55"));
-        break;
-
-      case "Learn1.59":
-        dispatch(updateDemo("Learn1.60"));
-        break;
-
-      case "Learn1.67":
-        dispatch(updateDemo("Learn1.68"));
-        break;
-
-      case "Learn1.74":
-        dispatch(updateDemo("Learn1.75"));
-        break;
-
-      case "Learn1.80":
-        dispatch(updateDemo("Learn1.81"));
-        break;
-
-      case "Learn1.106":
-        dispatch(updateDemo("Learn1.107"));
-        break;
-
-      case "Learn1.120":
-        dispatch(updateDemo("Learn1.121"));
-        break;
-
-      case "Learn1.128":
-        dispatch(updateDemo("Learn1.129"));
-        break;
-
-      case "Learn1.172":
-        dispatch(updateDemo("Learn1.173"));
-        break;
-
-      case "Learn1.217":
-        dispatch(updateDemo("Learn1.218"));
-        break;
-
-      case "Learn1.230":
-        dispatch(updateDemo("Learn1.231"));
-        break;
-
-      case "Learn1.235":
-        dispatch(updateDemo("Learn1.236"));
-        break;
-
-      case "Learn1.242":
-        dispatch(updateDemo("Learn1.243"));
-        break;
-
-      case "Learn1.250":
-        dispatch(updateDemo("Learn1.251"));
-        break;
-
-      case "Learn1.258":
-        dispatch(updateDemo("Learn1.259"));
-        break;
-
-      case "Learn1.269":
-        dispatch(updateDemo("Learn1.270"));
-        break;
-
-      case "Learn1.274":
-        dispatch(updateDemo("Learn1.275"));
-        break;
     }
   };
 
@@ -4777,39 +4685,16 @@ const BoardArea = (props) => {
                       props.changeCurrentPlayer();
                       props.handleUpdateDemoGuide();
                     }}
+                    style={{
+                      visibility:
+                        demoGuide === "Learn-overview" ? "hidden" : "",
+                    }}
                   >
                     Switch Player
                   </button>
                 )}
-                {props.demoInstructions && (
-                  <>
-                    {demoGuide && (
-                      <>
-                        <div
-                          className={`demo-instructions ${
-                            [
-                              "Learn1.76.1",
-                              "Learn1.118",
-                              "Learn1.229.2",
-                            ].includes(demoGuide)
-                              ? "demo-short"
-                              : ""
-                          }`}
-                        >
-                          {props.getDemoInstructions()}
-                        </div>
-                        {props.demoNextRevealed() && (
-                          <button
-                            className="redButton demo-instructions-button demoClick"
-                            onClick={() => props.handleUpdateDemoGuide()}
-                          >
-                            Next
-                          </button>
-                        )}
-                      </>
-                    )}
-                  </>
-                )}
+
+                {demoGuide && <DemoTextBox />}
 
                 <div className="board-left">
                   <div className="board-left-buttons">
@@ -4820,17 +4705,28 @@ const BoardArea = (props) => {
                           localGameState.currentResolution[
                             localGameState.currentResolution.length - 1
                           ].resolution === "Execution Phase" && (
-                            <button
-                              className={`redButton ${
-                                canClick("End Button") ? "demoClick" : ""
-                              }`}
-                              onClick={() => {
-                                resolutionUpdate(endExecutionPhase());
-                                handleUpdateDemoGuide();
-                              }}
-                            >
-                              End Turn
-                            </button>
+                            <>
+                              <button
+                                className={`redButton ${
+                                  canClick("End Button") ? "demoClick" : ""
+                                }`}
+                                onClick={() => {
+                                  resolutionUpdate(endExecutionPhase());
+                                  handleUpdateDemoGuide();
+                                }}
+                              >
+                                End Turn
+                              </button>{" "}
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 512 512"
+                                className="question-icon"
+                                onClick={() => setInfoPopUp("Final Phase")}
+                                style={{ marginLeft: 10 }}
+                              >
+                                <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM169.8 165.3c7.9-22.3 29.1-37.3 52.8-37.3h58.3c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24V250.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1H222.6c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z" />
+                              </svg>
+                            </>
                           )}
 
                         {canCancel() && (
@@ -5068,21 +4964,8 @@ const BoardArea = (props) => {
 
                 {currentResolutionPrompt()}
 
-                {[
-                  "Learn1.8.1",
-                  "Learn1.8.2",
-                  "Learn1.65",
-                  "Learn1.65.1",
-                  "Learn1.65.2",
-                  "Learn1.66",
-                  "Learn1.104",
-                  "Learn1.105",
-                  "Learn1.113",
-                  "Learn1.137",
-                  "Learn1.138",
-                  "Learn1.201",
-                  "Learn1.205",
-                ].includes(demoGuide) && <DemoImage />}
+                {[10, 17, 18].includes(demoCount) &&
+                  demoGuide === "Learn-overview" && <DemoImage />}
 
                 {unitInfor !== null && (
                   <UnitInfo unit={unitInfor} setUnitInfor={setUnitInfor} />

@@ -16,6 +16,7 @@ import { useGetImages } from "../hooks/useGetImages";
 
 import { db } from "../config/firebaseConfig";
 import { updateDemo } from "../redux/demoGuide";
+import { updateDemoCount } from "../redux/demoCount";
 import { updatecontingencySettings } from "../redux/contingencySettings";
 
 import SelectRepertoire from "../components/modals/SelectRepertoire";
@@ -75,6 +76,7 @@ export default function Game() {
       })
     );
     updateDemo(null);
+    updateDemoCount(0);
   }, [dispatch]);
 
   useEffect(() => {

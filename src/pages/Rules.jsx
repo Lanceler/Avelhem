@@ -582,7 +582,7 @@ export default function Rules() {
                   a zone in the opponent’s base at the end of the Final Phase.
                   <ul>
                     <li>
-                      When the Initiator’s unit scores, they gain 2 BP, while
+                      When the Initiator’s unit scores, they gain 3 BP, while
                       their opponent receives 6 FD.
                     </li>
                     <li>

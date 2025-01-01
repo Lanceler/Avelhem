@@ -3,14 +3,15 @@ import "./Modal.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
-import { updateDemo } from "../../redux/demoGuide";
+import { updateDemoCount } from "../../redux/demoCount";
 
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 const SelectSovereignTactic = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
-  const { self, enemy } = useSelector((state) => state.teams);
+  const { self } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
+  const { demoCount } = useSelector((state) => state.demoCount);
 
   const dispatch = useDispatch();
 
@@ -322,9 +323,6 @@ const SelectSovereignTactic = (props) => {
               newGameState[self].fateDefiance + 2
             );
 
-            //Draw 1 Avelhem
-            // newGameState = drawAvelhem(newGameState);
-
             //Recover Transcendence
             if (newGameState[self].skillVestige.includes("SX-01")) {
               newGameState.currentResolution.push({
@@ -336,39 +334,6 @@ const SelectSovereignTactic = (props) => {
                 canSkip: true,
               });
             }
-            //NERFED: no longer rerolls
-            //reroll tactic
-            // const rerollInvoke = () => {
-            //   const mobilizeLimit =
-            //     newGameState[self].bountyUpgrades.tactics > 2 ? 4 : 3;
-
-            //   const dieFaces = [
-            //     { face: "Advance", stock: 1, limit: 1 },
-            //     { face: "Advance", stock: 1, limit: 1 },
-            //     {
-            //       face: "Mobilize",
-            //       stock: mobilizeLimit,
-            //       limit: mobilizeLimit,
-            //     },
-            //     {
-            //       face: "Mobilize",
-            //       stock: mobilizeLimit,
-            //       limit: mobilizeLimit,
-            //     },
-            //     {
-            //       face: "Mobilize",
-            //       stock: mobilizeLimit,
-            //       limit: mobilizeLimit,
-            //     },
-
-            //     //   { face: "Invoke", stock: 1, limit: 1 }, // replaced with 2nd Assault
-            //     { face: "Assault", stock: 1, limit: 1 },
-            //   ];
-
-            //   return dieFaces[Math.floor(Math.random() * dieFaces.length)];
-            // };
-
-            // newGameState.tactics[props.dice] = rerollInvoke();
 
             break;
         }
@@ -402,42 +367,45 @@ const SelectSovereignTactic = (props) => {
     dispatch(updateState(newGameState));
   };
 
-  const canClick = (element, element2) => {
+  const canClick = (element1, element2) => {
+    // switch (demoGuide) {
+    //   case "Learn1.35":
+    //     return element1 === "Tactic" && element2 === 0;
+
+    //   case "Learn1.36":
+    //     return element1 === "Select Button";
+
+    //   case "Learn1.38":
+    //   case "Learn1.48":
+    //   case "Learn1.116":
+    //     return element1 === "Return Button";
+    // }
+
     switch (demoGuide) {
-      case "Learn1.35":
-        return element === "Tactic" && element2 === 0;
+      case "Learn-overview":
+        switch (demoCount) {
+          case 37:
+          case 44:
+            return element2 === 0;
 
-      case "Learn1.36":
-        return element === "Select Button";
-
-      case "Learn1.38":
-      case "Learn1.48":
-      case "Learn1.116":
-        return element === "Return Button";
+          case 38:
+          case 45:
+            return element1 === "Select Button";
+        }
     }
   };
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
-      case "Learn1.35":
-        dispatch(updateDemo("Learn1.36"));
-        break;
-
-      case "Learn1.36":
-        dispatch(updateDemo("Learn1.37"));
-        break;
-
-      case "Learn1.38":
-        dispatch(updateDemo("Learn1.39"));
-        break;
-
-      case "Learn1.48":
-        dispatch(updateDemo("Learn1.49"));
-        break;
-
-      case "Learn1.116":
-        dispatch(updateDemo("Learn1.117"));
-        break;
+      case "Learn-overview":
+        switch (demoCount) {
+          case 37:
+          case 38:
+          case 44:
+          case 45:
+            dispatch(updateDemoCount(demoCount + 1));
+            break;
+        }
     }
   };
 

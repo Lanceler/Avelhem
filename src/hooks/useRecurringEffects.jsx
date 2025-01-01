@@ -3128,23 +3128,32 @@ export const useRecurringEffects = () => {
   const endExecutionPhase = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    if (newGameState[self].avelhemHand.length > 0) {
-      newGameState.currentResolution.push({
-        resolution: "Misc.",
-        resolution2: "End Execution Phase Confirm",
-        player: self,
-        details: {
-          reason: "End Execution Phase",
-          title: "End Execution Phase",
-          message:
-            "You have unused Avelhems. Do you still wish to end the Execution Phase?",
-          no: "Cancel",
-          yes: "End Turn",
-        },
-      });
-    } else {
-      return endExecutionPhase2();
-    }
+    const hasUnusedAvelhems =
+      (newGameState[self].bountyUpgrades.avelhem < 1 &&
+        newGameState[self].avelhemHand.length > 0) ||
+      (newGameState[self].bountyUpgrades.avelhem >= 1 &&
+        newGameState[self].avelhemHand.length > 1);
+
+    const message = hasUnusedAvelhems
+      ? "Unused Avelhems are discarded at the Final Phase. Do you still wish to end the Execution Phase?"
+      : "Are you sure you want to end the Execution Phase?";
+
+    // if (newGameState[self].avelhemHand.length > 0) {
+    newGameState.currentResolution.push({
+      resolution: "Misc.",
+      resolution2: "End Execution Phase Confirm",
+      player: self,
+      details: {
+        reason: "End Execution Phase",
+        title: "End Execution Phase",
+        message,
+        no: "Cancel",
+        yes: "End Turn",
+      },
+    });
+    // } else {
+    //   return endExecutionPhase2();
+    // }
 
     return newGameState;
   };

@@ -1,13 +1,13 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateDemo } from "../../redux/demoGuide";
+import { updateDemoCount } from "../../redux/demoCount";
 
 import "./Tile.css";
 
 const Tile = (props) => {
-  const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
+  const { demoCount } = useSelector((state) => state.demoCount);
 
   const dispatch = useDispatch();
 
@@ -36,64 +36,48 @@ const Tile = (props) => {
     }
   };
 
-  const canClick = (element, element2) => {
+  const canClick = (element1, element2) => {
     switch (demoGuide) {
-      case "Learn1.44":
-        return element === "Tile" && [27].includes(element2);
-
-      case "Learn1.52":
-        return element === "Tile" && [22].includes(element2);
-
-      case "Learn1.58":
-        return element === "Tile" && [26].includes(element2);
-
-      case "Learn1.63":
-        return element === "Tile" && [28].includes(element2);
-
-      case "Learn1.196":
-        return element === "Tile" && [27].includes(element2);
-
-      case "Learn1.254":
-        return element === "Tile" && [18].includes(element2);
-
-      case "Learn1.273":
-        return element === "Tile" && [3].includes(element2);
-
-      ////////////////////////////
+      case "Learn-overview":
+        switch (demoCount) {
+          case 39:
+            return element1 === "Tile" && element2 === 37;
+        }
     }
+
+    // switch (demoGuide) {
+    //   case "Learn1.44":
+    //     return element === "Tile" && [27].includes(element2);
+
+    //   case "Learn1.52":
+    //     return element === "Tile" && [22].includes(element2);
+
+    //   case "Learn1.58":
+    //     return element === "Tile" && [26].includes(element2);
+
+    //   case "Learn1.63":
+    //     return element === "Tile" && [28].includes(element2);
+
+    //   case "Learn1.196":
+    //     return element === "Tile" && [27].includes(element2);
+
+    //   case "Learn1.254":
+    //     return element === "Tile" && [18].includes(element2);
+
+    //   case "Learn1.273":
+    //     return element === "Tile" && [3].includes(element2);
+
+    ////////////////////////////
   };
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
-      case "Learn1.44":
-        dispatch(updateDemo("Learn1.45"));
-        break;
-
-      case "Learn1.52":
-        dispatch(updateDemo("Learn1.53"));
-        break;
-
-      case "Learn1.58":
-        dispatch(updateDemo("Learn1.59"));
-        break;
-
-      case "Learn1.63":
-        dispatch(updateDemo("Learn1.64"));
-        break;
-
-      case "Learn1.196":
-        dispatch(updateDemo("Learn1.197"));
-        break;
-
-      case "Learn1.254":
-        dispatch(updateDemo("Learn1.255"));
-        break;
-
-      case "Learn1.273":
-        dispatch(updateDemo("Learn1.274"));
-        break;
-
-      /////////////////////////////
+      case "Learn-overview":
+        switch (demoCount) {
+          case 39:
+            dispatch(updateDemoCount(demoCount + 1));
+            break;
+        }
     }
   };
 

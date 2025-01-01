@@ -3,7 +3,7 @@ import "./Modal.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
-import { updateDemo } from "../../redux/demoGuide";
+import { updateDemoCount } from "../../redux/demoCount";
 
 import InfoPopUp from "./InfoPopUp";
 
@@ -11,6 +11,7 @@ const BountyPhase = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
+  const { demoCount } = useSelector((state) => state.demoCount);
 
   const dispatch = useDispatch();
 
@@ -205,8 +206,6 @@ const BountyPhase = (props) => {
       localGameState[self].bountyUpgrades.tactics === 1,
     localGameState[self].bountyPoints >= tacticsCosts[2] &&
       localGameState[self].bountyUpgrades.tactics === 2,
-    localGameState[self].bountyPoints >= tacticsCosts[2] &&
-      localGameState[self].bountyUpgrades.tactics === 3,
   ];
 
   const canAvelhem = [
@@ -216,8 +215,6 @@ const BountyPhase = (props) => {
       localGameState[self].bountyUpgrades.avelhem === 1,
     localGameState[self].bountyPoints >= avelhemCosts[2] &&
       localGameState[self].bountyUpgrades.avelhem === 2,
-    localGameState[self].bountyPoints >= avelhemCosts[2] &&
-      localGameState[self].bountyUpgrades.avelhem === 3,
   ];
 
   // const canVictory = [
@@ -229,53 +226,54 @@ const BountyPhase = (props) => {
   // ];
 
   const canClick = (element1, element2) => {
+    // switch (demoGuide) {
+    //   case "Learn1.10":
+    //   case "Learn1.85":
+    //   case "Learn1.180":
+    //     return element1 === "proceed";
+
+    //   case "Learn1.177":
+    //   case "Learn1.179":
+    //     return element1 === "purchase";
+
+    //   case "Learn1.176":
+    //     return element1 === "Frontier" && element2 === 0;
+
+    //   case "Learn1.178":
+    //     return element1 === "Frontier" && element2 === 1;
+    // }
+
     switch (demoGuide) {
-      case "Learn1.10":
-      case "Learn1.85":
-      case "Learn1.180":
-        return element1 === "proceed";
+      case "Learn-overview":
+        switch (demoCount) {
+          case 21:
+            return element1 === "Acquisition" && element2 === 0;
 
-      case "Learn1.177":
-      case "Learn1.179":
-        return element1 === "purchase";
+          case 22:
+          case 24:
+            return element1 === "purchase";
 
-      case "Learn1.176":
-        return element1 === "Frontier" && element2 === 0;
+          case 23:
+            return element1 === "Acquisition" && element2 === 1;
 
-      case "Learn1.178":
-        return element1 === "Frontier" && element2 === 1;
+          case 25:
+            return element1 === "proceed";
+        }
     }
   };
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
-      case "Learn1.10":
-        dispatch(updateDemo("Learn1.11"));
-        break;
-
-      case "Learn1.85":
-        dispatch(updateDemo("Learn1.86"));
-        break;
-
-      case "Learn1.176":
-        dispatch(updateDemo("Learn1.177"));
-        break;
-
-      case "Learn1.177":
-        dispatch(updateDemo("Learn1.178"));
-        break;
-
-      case "Learn1.178":
-        dispatch(updateDemo("Learn1.179"));
-        break;
-
-      case "Learn1.179":
-        dispatch(updateDemo("Learn1.180"));
-        break;
-
-      case "Learn1.180":
-        dispatch(updateDemo("Learn1.181"));
-        break;
+      case "Learn-overview":
+        switch (demoCount) {
+          case 21:
+          case 22:
+          case 23:
+          case 24:
+          case 25:
+            dispatch(updateDemoCount(demoCount + 1));
+            break;
+        }
     }
   };
 
@@ -390,8 +388,10 @@ const BountyPhase = (props) => {
               <div
                 className={`modal-option-outline  ${
                   selectedChoice === 4 ? "selected-modal-option" : ""
-                } `}
-                onClick={() => handleSelect(4, canAcquisition[0])}
+                } ${canClick("Acquisition", 0) ? "demoClick" : ""}`}
+                onClick={() => {
+                  handleSelect(4, canAcquisition[0], handleUpdateDemoGuide());
+                }}
               >
                 <div
                   className={`modal-option-content modal-option-content-2 ${
@@ -416,8 +416,10 @@ const BountyPhase = (props) => {
               <div
                 className={`modal-option-outline ${
                   selectedChoice === 5 ? "selected-modal-option" : ""
-                } `}
-                onClick={() => handleSelect(5, canAcquisition[1])}
+                } ${canClick("Acquisition", 1) ? "demoClick" : ""}`}
+                onClick={() => {
+                  handleSelect(5, canAcquisition[1]), handleUpdateDemoGuide();
+                }}
               >
                 <div
                   className={`modal-option-content modal-option-content-2 ${

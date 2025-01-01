@@ -9,7 +9,7 @@ import RallySmall from "../../assets/diceIcons/RallySmall.png";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
-import { updateDemo } from "../../redux/demoGuide";
+import { updateDemoCount } from "../../redux/demoCount";
 
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
@@ -17,12 +17,13 @@ const CoordinationPhaseSelection = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
+  const { demoCount } = useSelector((state) => state.demoCount);
 
   const dispatch = useDispatch();
 
   const [selectedChoice, setSelectedChoice] = useState(null);
 
-  const { assignTactics, drawAvelhem, rollTactic } = useRecurringEffects();
+  const { assignTactics, rollTactic } = useRecurringEffects();
 
   let newGameState = JSON.parse(JSON.stringify(localGameState));
   const upgrade = newGameState[self].bountyUpgrades.coordination;
@@ -171,43 +172,38 @@ const CoordinationPhaseSelection = (props) => {
 
   const canClick = (element1, element2) => {
     switch (demoGuide) {
-      case "Learn1.11":
-      case "Learn1.86":
-      case "Learn1.181":
-        return element1 === "choice" && element2 === 0;
+      case "Learn-overview":
+        switch (demoCount) {
+          case 28:
+            return element1 === "choice" && element2 === 0;
 
-      case "Learn1.12":
-      case "Learn1.87":
-      case "Learn1.182":
-        return element1 === "select";
+          case 29:
+            return element1 === "select";
+        }
     }
+
+    // switch (demoGuide) {
+    //   case "Learn1.11":
+    //   case "Learn1.86":
+    //   case "Learn1.181":
+    //     return element1 === "choice" && element2 === 0;
+
+    //   case "Learn1.12":
+    //   case "Learn1.87":
+    //   case "Learn1.182":
+    //     return element1 === "select";
+    // }
   };
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
-      case "Learn1.11":
-        dispatch(updateDemo("Learn1.12"));
-        break;
-
-      case "Learn1.12":
-        dispatch(updateDemo("Learn1.13"));
-        break;
-
-      case "Learn1.86":
-        dispatch(updateDemo("Learn1.87"));
-        break;
-
-      case "Learn1.87":
-        dispatch(updateDemo("Learn1.88"));
-        break;
-
-      case "Learn1.181":
-        dispatch(updateDemo("Learn1.182"));
-        break;
-
-      case "Learn1.182":
-        dispatch(updateDemo("Learn1.183"));
-        break;
+      case "Learn-overview":
+        switch (demoCount) {
+          case 28:
+          case 29:
+            dispatch(updateDemoCount(demoCount + 1));
+            break;
+        }
     }
   };
 

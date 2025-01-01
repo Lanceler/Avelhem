@@ -3,7 +3,7 @@ import "./Modal.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
-import { updateDemo } from "../../redux/demoGuide";
+import { updateDemoCount } from "../../redux/demoCount";
 
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
@@ -11,6 +11,7 @@ const AcquisitionPhase = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
+  const { demoCount } = useSelector((state) => state.demoCount);
 
   const dispatch = useDispatch();
 
@@ -166,45 +167,26 @@ const AcquisitionPhase = (props) => {
 
   const canClick = (element1, element2) => {
     switch (demoGuide) {
-      case "Learn1.7":
-      case "Learn1.83":
-        return element2 === 1;
+      case "Learn-overview":
+        switch (demoCount) {
+          case 15:
+            return element2 === 1;
 
-      case "Learn1.174":
-        return element2 === 2;
-
-      case "Learn1.8":
-      case "Learn1.84":
-      case "Learn1.175":
-        return element1 === "button";
+          case 16:
+            return element1 === "button";
+        }
     }
   };
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
-      case "Learn1.7":
-        dispatch(updateDemo("Learn1.8"));
-        break;
-
-      case "Learn1.8":
-        dispatch(updateDemo("Learn1.8.1"));
-        break;
-
-      case "Learn1.83":
-        dispatch(updateDemo("Learn1.84"));
-        break;
-
-      case "Learn1.84":
-        dispatch(updateDemo("Learn1.85"));
-        break;
-
-      case "Learn1.174":
-        dispatch(updateDemo("Learn1.175"));
-        break;
-
-      case "Learn1.175":
-        dispatch(updateDemo("Learn1.176"));
-        break;
+      case "Learn-overview":
+        switch (demoCount) {
+          case 15:
+          case 16:
+            dispatch(updateDemoCount(demoCount + 1));
+            break;
+        }
     }
   };
 

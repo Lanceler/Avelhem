@@ -1,0 +1,44 @@
+.demo-text-box-area {
+    position: absolute;
+    z-index: 500000;
+    width: 700px;
+    /* height: 250px; */
+
+    top: 15%;
+    left: 75%;
+    transform: translate(-50%,-50%);
+
+
+    /* background-color: rgba(188, 14, 231, 0.562); */
+
+    display: flex;
+    flex-direction: column;
+}
+
+.demo-text-box{
+    height: 180px;
+    padding: 9px;
+    /* padding-bottom: 0px; */
+
+  
+
+    border: 4px solid goldenrod;
+    background-color: rgba(99, 3, 3, 0.925);
+    backdrop-filter: blur(2px);
+
+    color: rgb(255, 168, 6);
+    font-family: Arial, sans-serif;
+    font-size: 21.5px;
+    /* letter-spacing: 0.01em; */
+    line-height: 117%;
+
+}
+
+.demo-text-box-button{
+    position: relative;
+    
+
+    align-self: end;
+    margin: 6px;
+    
+}
