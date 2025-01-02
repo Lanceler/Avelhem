@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./Modal.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
-import { updateDemo } from "../../redux/demoGuide";
 import { updateDemoCount } from "../../redux/demoCount";
 
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
@@ -121,6 +120,7 @@ export default function SelectFirstPlayer(props) {
       case "Learn-overview":
         switch (demoCount) {
           case 7:
+            console.log("TEST");
             dispatch(updateDemoCount(demoCount + 1));
             break;
         }

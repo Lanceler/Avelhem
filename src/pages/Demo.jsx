@@ -281,6 +281,7 @@ export default function Demo() {
               demo={true}
               demoGame={id === "game"}
               gameState={demoGameState}
+              setDemoGameState={setDemoGameState}
               demoInstructions={true}
               changeCurrentPlayer={changeCurrentPlayer}
             />
@@ -296,7 +297,7 @@ export default function Demo() {
 
           {/* display demoGuide for debugging */}
 
-          {/* {demoGuide && <h1>{demoGuide}</h1> && <h2>{demoCount}</h2>} */}
+          {demoGuide && <h1>{demoGuide}</h1> && <h2>{demoCount}</h2>}
         </div>
       )}
     </>
