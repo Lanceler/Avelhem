@@ -3,7 +3,7 @@ import "./Modal.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
-import { updateDemo } from "../../redux/demoGuide";
+import { updateDemoCount } from "../../redux/demoCount";
 
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
@@ -13,7 +13,7 @@ const YouMayNoYes = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
-
+  const { demoCount } = useSelector((state) => state.demoCount);
   const dispatch = useDispatch();
 
   // const { allBurstSkills, getScionSet } = useCardDatabase();
@@ -78,8 +78,16 @@ const YouMayNoYes = (props) => {
 
     switch (props.details.reason) {
       case "End Execution Phase": //"End Execution Phase Confirm"
-        newGameState.currentResolution.pop();
-        newGameState = endExecutionPhase2();
+        if (demoCount === 125 && demoGuide === "Learn-overview") {
+          newGameState = drawSkill(newGameState);
+          newGameState = drawSkill(newGameState);
+          newGameState = drawSkill(newGameState);
+          newGameState = drawSkill(newGameState);
+          newGameState = drawSkill(newGameState);
+          newGameState = drawSkill(newGameState);
+        }
+
+        newGameState = endExecutionPhase2(newGameState);
         break;
 
       case "Beseech Draw": //"Beseech - Upgraded"
@@ -472,57 +480,28 @@ const YouMayNoYes = (props) => {
 
   const canClick = (element) => {
     switch (demoGuide) {
-      case "Learn1.101":
-      case "Learn1.158":
-      case "Learn1.173":
-      case "Learn1.193":
-      case "Learn1.194":
-      case "Learn1.195":
-      case "Learn1.264":
-        return element === "Yes Choice";
+      case "Learn-overview":
+        switch (demoCount) {
+          case 125:
+            return element === "Yes Choice";
 
-      case "Learn1.216.1":
-        return element === "No Choice";
+          // return element === "No Choice";
 
-      ///////////////
+          ////////////////////////////
+        }
     }
+
+    ///////////////
   };
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
-      case "Learn1.101":
-        dispatch(updateDemo("Learn1.102"));
-        break;
-
-      case "Learn1.158":
-        dispatch(updateDemo("Learn1.159"));
-        break;
-
-      case "Learn1.173":
-        dispatch(updateDemo("Learn1.173.1"));
-        break;
-
-      case "Learn1.193":
-        dispatch(updateDemo("Learn1.194"));
-        break;
-
-      case "Learn1.194":
-        dispatch(updateDemo("Learn1.195"));
-        break;
-
-      case "Learn1.195":
-        dispatch(updateDemo("Learn1.196"));
-        break;
-
-      case "Learn1.216.1":
-        dispatch(updateDemo("Learn1.216.2"));
-        break;
-
-      case "Learn1.264":
-        dispatch(updateDemo("Learn1.265"));
-        break;
-
-      ///////
+      case "Learn-overview":
+        switch (demoCount) {
+          case 125:
+            dispatch(updateDemoCount(demoCount + 1));
+            break;
+        }
     }
   };
 

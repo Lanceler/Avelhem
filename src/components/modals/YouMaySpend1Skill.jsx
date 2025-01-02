@@ -5,6 +5,7 @@ import "./Modal.css";
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
 import { updateDemo } from "../../redux/demoGuide";
+import { updateDemoCount } from "../../redux/demoCount";
 
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
@@ -14,7 +15,7 @@ const YouMaySpend1Skill = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
-
+  const { demoCount } = useSelector((state) => state.demoCount);
   const dispatch = useDispatch();
 
   const {
@@ -384,8 +385,15 @@ const YouMaySpend1Skill = (props) => {
     }
   };
 
+  const demoSkip = () => {
+    if (demoGuide === "Learn-overview" && demoCount === 110) {
+      handleSkip();
+    }
+  };
+
   return (
     <div className="modal-backdrop">
+      {demoSkip()}
       <div className="modal">
         <div className="modalHeader">
           <div className="modalTitle">{props.details.title}</div>

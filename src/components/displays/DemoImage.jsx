@@ -20,8 +20,17 @@ const DemoImage = (props) => {
           case 17:
             return 8;
 
-          case 18:
-            return null;
+          case 71:
+            return 7;
+
+          case 78:
+            return "FromTheAshes";
+
+          case 100:
+            return "01-01";
+
+          case 101:
+            return "SA-04";
         }
     }
   };

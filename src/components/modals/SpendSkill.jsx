@@ -4,7 +4,7 @@ import "./Modal.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
-import { updateDemo } from "../../redux/demoGuide";
+import { updateDemoCount } from "../../redux/demoCount";
 
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
@@ -14,7 +14,7 @@ const SpendSkill = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
-
+  const { demoCount } = useSelector((state) => state.demoCount);
   const dispatch = useDispatch();
 
   const { getZonesWithAllies, isMuted } = useRecurringEffects();
@@ -88,52 +88,32 @@ const SpendSkill = (props) => {
     props.hideOrRevealModale();
   };
 
-  const canClick = (element, element2) => {
+  const canClick = (element1, element2) => {
     switch (demoGuide) {
-      case "Learn1.28":
-      case "Learn1.111":
-      case "Learn1.151":
-        return element2.id === "SX-01";
+      case "Learn-overview":
+        switch (demoCount) {
+          case 107:
+            return element2.id === "SX-01";
 
-      case "Learn1.29":
-      case "Learn1.112":
-      case "Learn1.152":
-        return element === "Select Button";
-
-      //////////////////////
+          case 108:
+            return element1 === "Select Button";
+        }
     }
+
+    //////////////////////
   };
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
-      case "Learn1.28":
-        dispatch(updateDemo("Learn1.29"));
-        break;
-
-      case "Learn1.29":
-        dispatch(updateDemo("Learn1.30"));
-        break;
-
-      case "Learn1.111":
-        dispatch(updateDemo("Learn1.112"));
-        break;
-
-      case "Learn1.112":
-        dispatch(updateDemo("Learn1.113"));
-        break;
-
-      case "Learn1.151":
-        dispatch(updateDemo("Learn1.152"));
-        break;
-
-      case "Learn1.152":
-        dispatch(updateDemo("Learn1.153"));
-        break;
-
-      ////////////////////
+      case "Learn-overview":
+        switch (demoCount) {
+          case 107:
+          case 108:
+            dispatch(updateDemoCount(demoCount + 1));
+            break;
+        }
     }
   };
-
   return (
     <div className="modal-backdrop">
       <div className="modal">

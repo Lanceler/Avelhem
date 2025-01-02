@@ -78,6 +78,8 @@ const SelectTactic = (props) => {
             return element2 === 0;
 
           case 55:
+          case 67:
+          case 120:
             return element2 === 1;
 
           case 62:
@@ -93,6 +95,8 @@ const SelectTactic = (props) => {
           case 48:
           case 55:
           case 62:
+          case 67:
+          case 120:
             dispatch(updateDemoCount(demoCount + 1));
             break;
         }

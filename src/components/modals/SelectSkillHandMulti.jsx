@@ -4,6 +4,7 @@ import "./Modal.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
+import { updateDemoCount } from "../../redux/demoCount";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 import { useCardDatabase } from "../../hooks/useCardDatabase";
 
@@ -12,6 +13,8 @@ import SkillMultiSelect from "../hand/SkillMultiSelect";
 const SelectSkillHandMulti = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
+  const { demoGuide } = useSelector((state) => state.demoGuide);
+  const { demoCount } = useSelector((state) => state.demoCount);
   const dispatch = useDispatch();
 
   const { avelhemToScion, drawSkill, endDefiancePhase, rollTactic } =
@@ -358,6 +361,33 @@ const SelectSkillHandMulti = (props) => {
     props.hideOrRevealModale();
   };
 
+  const canClick = (element1, element2) => {
+    switch (demoGuide) {
+      case "Learn-overview":
+        switch (demoCount) {
+          case 127:
+            return element2 === 0;
+          case 128:
+            return element2 === 1;
+          case 129:
+            return element1 === "Button";
+        }
+    }
+  };
+
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+      case "Learn-overview":
+        switch (demoCount) {
+          case 127:
+          case 128:
+          case 129:
+            dispatch(updateDemoCount(demoCount + 1));
+            break;
+        }
+    }
+  };
+
   return (
     <div className="modal-backdrop">
       <div className="modal">
@@ -380,10 +410,12 @@ const SelectSkillHandMulti = (props) => {
               key={i}
               className={`scionSkills ${
                 selectedSkills.includes(i) ? "selectedSkill" : ""
-              }`}
+              }
+              ${canClick("Skill", i) ? "demoClick" : ""}
+              `}
               onClick={() => {
                 handleClick(canAdd(usableSkill), i);
-                // handleUpdateDemoGuide();
+                handleUpdateDemoGuide();
               }}
             >
               <SkillMultiSelect
@@ -415,7 +447,13 @@ const SelectSkillHandMulti = (props) => {
 
           {["Skill Hand Limit", "Battle Cry"].includes(props.details.reason) &&
             selectedSkills.length === props.details.count && (
-              <button className="redButton" onClick={() => handleSelect()}>
+              <button
+                className={`redButton ${canClick("Button") ? "demoClick" : ""}`}
+                onClick={() => {
+                  handleSelect();
+                  handleUpdateDemoGuide();
+                }}
+              >
                 {selectMessage}
               </button>
             )}

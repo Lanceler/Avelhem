@@ -396,36 +396,5 @@ export const useDemoGameStates = () => {
     }
   };
 
-  const getDemoInstructions = () => {
-    switch (demoGuide) {
-      case "Learn-overview":
-        switch (demoCount) {
-          case 1:
-            return (
-              <div>
-                <strong>Avelhem: War of the Sovereigns</strong> is a competitive
-                two-player board game. This tutorial will cover its basics and
-                familiarize you with its digital user interface.
-                <br />
-                <br />
-                To proceed through the tutorial, click on the object embedded in
-                a green glow.
-              </div>
-            );
-
-          case 2:
-            return (
-              <div>
-                Overview: Humanity has inherited the Maker’s authority over
-                creation; their wills empower and bend creation to their whims.
-                Players assume the roles of Sovereigns, ordained monarchs whose
-                dominion compels mankind itself; their goal is to enthrone their
-                royal bloodline as the one and only.
-              </div>
-            );
-        }
-    }
-  };
-
-  return { getDemoGameState, getDemoInstructions };
+  return { getDemoGameState };
 };

@@ -6,19 +6,15 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateMagnifiedSkill } from "../../redux/magnifySkill";
-import { updateState } from "../../redux/gameState";
-import { updateDemo } from "../../redux/demoGuide";
-
-import { useRecurringEffects } from "../../hooks/useRecurringEffects";
+import { updateDemoCount } from "../../redux/demoCount";
 
 import { useGetImages } from "../../hooks/useGetImages";
 
 const ViewVestige = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
-  const { self, enemy } = useSelector((state) => state.teams);
-  const { magnifiedSkill } = useSelector((state) => state.magnifiedSkill);
+  const { self } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
-
+  const { demoCount } = useSelector((state) => state.demoCount);
   const dispatch = useDispatch();
 
   const { getCardImage } = useGetImages();
@@ -53,25 +49,22 @@ const ViewVestige = (props) => {
 
   const canClick = () => {
     switch (demoGuide) {
-      case "Learn1.20.2":
-        return true;
-    }
-
-    switch (demoGuide) {
-      case "Learn1.229.2":
-        return true;
+      case "Learn-overview":
+        switch (demoCount) {
+          case 85:
+            return true;
+        }
     }
   };
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
-      case "Learn1.20.2":
-        dispatch(updateDemo("Learn1.21"));
-        break;
-
-      case "Learn1.229.2":
-        dispatch(updateDemo("Learn1.230"));
-        break;
+      case "Learn-overview":
+        switch (demoCount) {
+          case 85:
+            dispatch(updateDemoCount(demoCount + 1));
+            break;
+        }
     }
   };
 

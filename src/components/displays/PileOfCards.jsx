@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../hand/Skill.css";
 
 import { useSelector, useDispatch } from "react-redux";
-import { updateDemo } from "../../redux/demoGuide";
+import { updateDemoCount } from "../../redux/demoCount";
 
 import { useGetImages } from "../../hooks/useGetImages";
 import ViewVestige from "./ViewVestige";
@@ -12,12 +12,12 @@ const PileOfCards = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
+  const { demoCount } = useSelector((state) => state.demoCount);
+  const dispatch = useDispatch();
 
   const [floatingCards, setFloatingCards] = useState(0);
   const [shatteredCards, setShatteredCards] = useState(0);
   const [isVestige, setIsVestige] = useState(false);
-
-  const dispatch = useDispatch();
 
   const { getCardImage } = useGetImages();
 
@@ -80,28 +80,39 @@ const PileOfCards = (props) => {
   };
 
   const canClick = () => {
-    switch (demoGuide) {
-      case "Learn1.20.1":
-        return (
-          ["avelhemVestige", "skillVestige"].includes(pile) &&
-          team === "host" &&
-          stack.length
-        );
+    // switch (demoGuide) {
+    //   case "Learn1.20.1":
+    //     return (
+    //       ["avelhemVestige", "skillVestige"].includes(pile) &&
+    //       team === "host" &&
+    //       stack.length
+    //     );
 
-      case "Learn1.229.1":
-        return ["skillVestige"].includes(pile) && team === "host";
+    //   case "Learn1.229.1":
+    //     return ["skillVestige"].includes(pile) && team === "host";
+    // }
+
+    switch (demoGuide) {
+      case "Learn-overview":
+        switch (demoCount) {
+          case 84:
+            return pile === "avelhemVestige" && team === "host";
+
+          // return ["skillVestige"].includes(pile) && team === "host";
+
+          ///////
+        }
     }
   };
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
-      case "Learn1.20.1":
-        dispatch(updateDemo("Learn1.20.2"));
-        break;
-
-      case "Learn1.229.1":
-        dispatch(updateDemo("Learn1.229.2"));
-        break;
+      case "Learn-overview":
+        switch (demoCount) {
+          case 84:
+            dispatch(updateDemoCount(demoCount + 1));
+            break;
+        }
     }
   };
 

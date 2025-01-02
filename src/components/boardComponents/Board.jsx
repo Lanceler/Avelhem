@@ -96,33 +96,29 @@ const Board = (props) => {
     }
   };
 
-  const canClick = (element) => {
+  const canClick = (element1) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
           case 47:
           case 54:
           case 61:
-            return element === "Tactic Button";
+          case 66:
+          case 119:
+            return element1 === "Tactic Button";
+
+          case 87:
+            return element1 === "Ability Button";
+
+          case 95:
+            return element1 === "Info Button";
+
+          case 103:
+            return element1 === "Skill Button";
         }
+
+      //   /////////////////////////////////////////
     }
-
-    // switch (demoGuide) {
-
-    //   case "Learn1.269":
-    //     return element=== "Tactic Button";
-
-    //   case "Learn1.230":
-    //     return element === "Skill Button";
-
-    //   case "Learn1.74":
-    //     return element === "Info Button";
-
-    //   case "Learn1.242":
-    //     return element === "Ability Button";
-
-    //   /////////////////////////////////////////
-    // }
   };
 
   const handleUpdateDemoGuide = () => {
@@ -132,6 +128,11 @@ const Board = (props) => {
           case 47:
           case 54:
           case 61:
+          case 66:
+          case 87:
+          case 95:
+          case 103:
+          case 119:
             dispatch(updateDemoCount(demoCount + 1));
             break;
         }

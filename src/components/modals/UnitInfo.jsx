@@ -12,14 +12,15 @@ import MobilizeSmall from "../../assets/diceIcons/MobilizeSmall.png";
 import AssaultSmall from "../../assets/diceIcons/AssaultSmall.png";
 import InvokeSmall from "../../assets/diceIcons/InvokeSmall.png";
 
-import { updateDemo } from "../../redux/demoGuide";
+import { updateDemoCount } from "../../redux/demoCount";
 
 import { useCardDatabase } from "../../hooks/useCardDatabase";
 
 import { useSelector, useDispatch } from "react-redux";
 const UnitInfo = (props) => {
-  const { demoGuide } = useSelector((state) => state.demoGuide);
   const { self } = useSelector((state) => state.teams);
+  const { demoGuide } = useSelector((state) => state.demoGuide);
+  const { demoCount } = useSelector((state) => state.demoCount);
   const dispatch = useDispatch();
 
   const { getCardImage, getElementImage } = useGetImages();
@@ -405,22 +406,30 @@ const UnitInfo = (props) => {
     }
   };
 
-  const canClick = (element, element2) => {
+  const canClick = (element1, element2) => {
     switch (demoGuide) {
-      case "Learn1.76.1":
-        return element === "Collapse";
+      case "Learn-overview":
+        switch (demoCount) {
+          case 97:
+            return element2 === 0;
+
+          case 99:
+            return element1 === "Collapse";
+        }
     }
   };
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
-      case "Learn1.76.1":
-        dispatch(updateDemo("Learn1.77"));
-
-        break;
+      case "Learn-overview":
+        switch (demoCount) {
+          case 97:
+          case 99:
+            dispatch(updateDemoCount(demoCount + 1));
+            break;
+        }
     }
   };
-
   return (
     <div className="modal-backdrop">
       <div className="info-modal">
@@ -515,12 +524,14 @@ const UnitInfo = (props) => {
                     {skillSet.map((skill, i) => (
                       <div
                         key={i}
-                        className="unit-info-skill"
+                        className={`unit-info-skill                          
+                          ${canClick("Skill", i) ? "demoClick" : ""}`}
                         style={{
                           backgroundImage: `url(${getCardImage(skill)})`,
                         }}
                         onClick={() => {
                           dispatch(updateMagnifiedSkill(skill));
+                          handleUpdateDemoGuide();
                         }}
                       ></div>
                     ))}

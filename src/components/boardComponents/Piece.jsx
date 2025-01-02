@@ -21,7 +21,6 @@ import { useGetImages } from "../../hooks/useGetImages";
 export const Piece = (props) => {
   const { demoGuide } = useSelector((state) => state.demoGuide);
   const { demoCount } = useSelector((state) => state.demoCount);
-
   const dispatch = useDispatch();
 
   const { getElementImage } = useGetImages();
@@ -65,9 +64,36 @@ export const Piece = (props) => {
           case 46:
           case 53:
           case 60:
+          case 75:
+          case 92:
+          case 94:
+          case 102:
             return (
               element1 === "Unit" &&
               element2.unitIndex === 1 &&
+              element2.player === "host"
+            );
+
+          case 65:
+          case 83:
+          case 86:
+            return (
+              element1 === "Unit" &&
+              element2.unitIndex === 2 &&
+              element2.player === "host"
+            );
+
+          case 109:
+            return (
+              element1 === "Unit" &&
+              element2.unitIndex === 1 &&
+              element2.player === "guest"
+            );
+
+          case 118:
+            return (
+              element1 === "Unit" &&
+              element2.unitIndex === 4 &&
               element2.player === "host"
             );
 
@@ -83,6 +109,15 @@ export const Piece = (props) => {
           case 46:
           case 53:
           case 60:
+          case 65:
+          case 75:
+          case 83:
+          case 86:
+          case 92:
+          case 94:
+          case 102:
+          case 109:
+          case 118:
             dispatch(updateDemoCount(demoCount + 1));
             break;
         }

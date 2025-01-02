@@ -3,11 +3,12 @@ import "./Modal.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
-import { updateDemo } from "../../redux/demoGuide";
+import { updateDemoCount } from "../../redux/demoCount";
 
 const MessageToPlayer = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { demoGuide } = useSelector((state) => state.demoGuide);
+  const { demoCount } = useSelector((state) => state.demoCount);
 
   const dispatch = useDispatch();
 
@@ -19,9 +20,26 @@ const MessageToPlayer = (props) => {
     props.updateFirebase(newGameState);
   };
 
-  const canClick = (element) => {};
+  const canClick = () => {
+    switch (demoGuide) {
+      case "Learn-overview":
+        switch (demoCount) {
+          case 79:
+            return true;
+        }
+    }
+  };
 
-  const handleUpdateDemoGuide = () => {};
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+      case "Learn-overview":
+        switch (demoCount) {
+          case 79:
+            dispatch(updateDemoCount(demoCount + 1));
+            break;
+        }
+    }
+  };
 
   return (
     <div className="modal-backdrop">
@@ -38,9 +56,7 @@ const MessageToPlayer = (props) => {
 
         <div className="modalBottomButton">
           <button
-            className={`redButton ${
-              canClick("Proceed Button") ? "demoClick" : ""
-            }`}
+            className={`redButton ${canClick() ? "demoClick" : ""}`}
             onClick={() => {
               handleProceed();
               handleUpdateDemoGuide();

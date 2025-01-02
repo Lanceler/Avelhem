@@ -46,6 +46,10 @@ const Tile = (props) => {
             return element1 === 27;
           case 58:
             return element1 === 22;
+          case 70:
+            return element1 === 28;
+          case 123:
+            return element1 === 4;
 
           ////////////////////////////
         }
@@ -59,6 +63,8 @@ const Tile = (props) => {
           case 39:
           case 51:
           case 58:
+          case 70:
+          case 123:
             dispatch(updateDemoCount(demoCount + 1));
             break;
         }

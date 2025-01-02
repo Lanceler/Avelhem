@@ -2,7 +2,7 @@ import React from "react";
 import "./Skill.css";
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
-import { updateDemo } from "../../redux/demoGuide";
+import { updateDemoCount } from "../../redux/demoCount";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import { useGetImages } from "../../hooks/useGetImages";
@@ -12,7 +12,7 @@ const SelectedAvelhem = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
-
+  const { demoCount } = useSelector((state) => state.demoCount);
   const dispatch = useDispatch();
 
   const { getCardImage } = useGetImages();
@@ -92,35 +92,28 @@ const SelectedAvelhem = (props) => {
     props.setSelectedAvelhem(null);
   };
 
-  const canClick = (element) => {
+  const canClick = (element1) => {
     switch (demoGuide) {
-      case "Learn1.20":
-      case "Learn1.23":
-      case "Learn1.96":
-        return element === "Activate Button";
-
-      case "Learn1.208":
-        return element === "Resonate Button";
+      case "Learn-overview":
+        switch (demoCount) {
+          case 74:
+          case 82:
+            return element1 === "Activate Button";
+        }
     }
+
+    // return element === "Resonate Button";
   };
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
-      case "Learn1.20":
-        dispatch(updateDemo("Learn1.20.01"));
-        break;
-
-      case "Learn1.23":
-        dispatch(updateDemo("Learn1.23.01"));
-        break;
-
-      case "Learn1.96":
-        dispatch(updateDemo("Learn1.97"));
-        break;
-
-      case "Learn1.208":
-        dispatch(updateDemo("Learn1.209"));
-        break;
+      case "Learn-overview":
+        switch (demoCount) {
+          case 74:
+          case 82:
+            dispatch(updateDemoCount(demoCount + 1));
+            break;
+        }
     }
   };
 

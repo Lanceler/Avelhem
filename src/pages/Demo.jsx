@@ -24,7 +24,7 @@ export default function Demo() {
   const { id } = useParams(); //note: id was entered as the parameter in the routes of App.jsx
   const navigate = useNavigate();
 
-  const { getDemoGameState, getDemoInstructions } = useDemoGameStates();
+  const { getDemoGameState } = useDemoGameStates();
 
   const { demoGuide } = useSelector((state) => state.demoGuide);
   const { demoCount } = useSelector((state) => state.demoCount);
@@ -40,7 +40,7 @@ export default function Demo() {
 
   const [demoTitle, setDemoTitle] = useState("Gameplay Demo");
 
-  const { newUnitStats, shuffleCards } = useRecurringEffects();
+  const { newUnitStats } = useRecurringEffects();
 
   const [currentPlayer, setCurrentPlayer] = useState("host");
   const [infoPopUp, setInfoPopUp] = useState(null);
@@ -104,36 +104,18 @@ export default function Demo() {
     }
   };
 
-  const canClick = (element) => {
-    switch (demoGuide) {
-      case "Learn1.82":
-        return element === "Switch Player Button";
-    }
-  };
+  // const canClick = (element) => {
+  //   switch (demoGuide) {
+  //     case "Learn1.82":
+  //       return element === "Switch Player Button";
+  //   }
+  // };
 
-  const demoNextRevealed = () => {
-    switch (demoGuide) {
-      case "Learn1.1.1":
-        return true;
-    }
-  };
-
-  const handleUpdateDemoGuide = () => {
-    switch (demoGuide) {
-      case "Learn1.1.1":
-        dispatch(updateDemo("Learn1.1.2"));
-        break;
-
-      case "Learn1.277":
-        dispatch(updateDemo("Learn1.278"));
-        break;
-
-      ////////////////////////////////////////////
-    }
-  };
+  // const handleUpdateDemoGuide = () => {
+  // };
 
   useEffect(() => {
-    if ([2, 7, 8, 11, 13, 21, 30, 46].includes(demoCount)) {
+    if ([7, 8, 11, 21, 30, 46, 117].includes(demoCount)) {
       scriptedDemo();
     }
   }, [demoCount]);
@@ -144,11 +126,6 @@ export default function Demo() {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          case 2:
-            duplicateDemoGameState.host.fateDefiance = 0;
-            duplicateDemoGameState.guest.fateDefiance = 0;
-            break;
-
           case 7:
             setCurrentPlayer("host");
             break;
@@ -229,13 +206,8 @@ export default function Demo() {
 
             break;
 
-          case 13:
-            duplicateDemoGameState.host.fateDefiance = 3;
-            duplicateDemoGameState.guest.fateDefiance = 3;
-            break;
-
           case 21:
-            duplicateDemoGameState.host.bountyPoints = 7;
+            duplicateDemoGameState.host.bountyPoints = 6;
             break;
 
           case 30:
@@ -246,6 +218,22 @@ export default function Demo() {
             ];
             break;
 
+          case 117:
+            duplicateDemoGameState.host.units[4] = {
+              player: "host",
+              unitIndex: 4,
+              row: 1,
+              column: 3,
+              unitClass: "Pawn",
+              hp: 1,
+              aether: 1,
+              afflictions: {},
+              enhancements: {},
+              boosts: {},
+              temporary: {},
+            };
+
+            break;
             //////////////////////
 
             return (
@@ -293,12 +281,7 @@ export default function Demo() {
               demo={true}
               demoGame={id === "game"}
               gameState={demoGameState}
-              setDemoGameState={setDemoGameState}
               demoInstructions={true}
-              getDemoInstructions={getDemoInstructions}
-              demoNextRevealed={demoNextRevealed}
-              handleUpdateDemoGuide={handleUpdateDemoGuide}
-              canClick={canClick}
               changeCurrentPlayer={changeCurrentPlayer}
             />
           </div>
@@ -313,7 +296,7 @@ export default function Demo() {
 
           {/* display demoGuide for debugging */}
 
-          {demoGuide && <h1>{demoGuide}</h1> && <h2>{demoCount}</h2>}
+          {/* {demoGuide && <h1>{demoGuide}</h1> && <h2>{demoCount}</h2>} */}
         </div>
       )}
     </>

@@ -40,12 +40,12 @@ const VictoryScreen = (props) => {
 
   if (self === props.player) {
     message1 = "Victory is yours!";
-    message2 = `You scored with ${localGameState[self].score} unit${
+    message2 = `You’ve scored with ${localGameState[self].score} unit${
       localGameState[self].score > 1 ? "s" : ""
     }.`;
 
     if (localGameState[self].score < 5) {
-      message3 = `You may offer to continue the game by setting the score objective to ${
+      message3 = `You may offer to continue the game and set the objective to ${
         localGameState[self].score + 1
       }.`;
     }

@@ -376,24 +376,18 @@ const SelectTacticalAction = (props) => {
         switch (demoCount) {
           case 49:
           case 56:
+          case 68:
+          case 121:
             return element1 === "Action" && element2 === 0;
 
           case 50:
           case 57:
+          case 69:
+          case 122:
             return element1 === "Select Button";
+
+          ///////////////////////
         }
-
-      // case "Learn1.271":
-      //   return element === "Action" && element2 === 0;
-
-      // case "Learn1.132":
-      // case "Learn1.260":
-      //   return element === "Action" && element2 === 1;
-
-      // case "Learn1.272":
-      //   return element === "Select Button";
-
-      ///////////////////////
     }
   };
 
@@ -405,6 +399,10 @@ const SelectTacticalAction = (props) => {
           case 50:
           case 56:
           case 57:
+          case 68:
+          case 69:
+          case 121:
+          case 122:
             dispatch(updateDemoCount(demoCount + 1));
             break;
         }

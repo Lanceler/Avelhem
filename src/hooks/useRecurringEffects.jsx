@@ -3152,15 +3152,13 @@ export const useRecurringEffects = () => {
       },
     });
     // } else {
-    //   return endExecutionPhase2();
+    //   return endExecutionPhase2(newGameState);
     // }
 
     return newGameState;
   };
 
-  const endExecutionPhase2 = () => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
+  const endExecutionPhase2 = (newGameState) => {
     newGameState.turnPhase = "Final";
     newGameState.currentResolution.pop();
     newGameState.currentResolution.pop();

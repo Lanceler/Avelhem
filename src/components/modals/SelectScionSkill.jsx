@@ -3,7 +3,7 @@ import "./Modal.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
-import { updateDemo } from "../../redux/demoGuide";
+import { updateDemoCount } from "../../redux/demoCount";
 
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 import { useCardDatabase } from "../../hooks/useCardDatabase";
@@ -14,7 +14,7 @@ const SelectScionSkill = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
-
+  const { demoCount } = useSelector((state) => state.demoCount);
   const dispatch = useDispatch();
 
   const { activateSkill, canActivateResonance, canActivateSkill } =
@@ -100,67 +100,34 @@ const SelectScionSkill = (props) => {
     }
   };
 
-  const canClick = (element, element2) => {
+  const canClick = (element1, element2) => {
     switch (demoGuide) {
-      case "Learn1.69":
-      case "Learn1.219":
-      case "Learn1.232":
-        return element === "Select Button";
+      case "Learn-overview":
+        switch (demoCount) {
+          case 105:
+            return element2.id === "01-01";
 
-      case "Learn1.108":
-        return element === "Resonate Button";
+          case 106:
+            return element1 === "Select Button";
+        }
 
-      case "Learn1.68":
-        return element2.id === "04-01";
-
-      case "Learn1.107":
-        return element2.id === "07-02";
-
-      case "Learn1.218":
-        return element2.id === "02-04";
-
-      case "Learn1.231":
-        return element2.id === "02-02";
-
-      //////////////////////
+      //   /////////////////////////////////////////
     }
+
+    // return element1 === "Resonate Button";
+
+    //////////////////////
   };
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
-      case "Learn1.68":
-        dispatch(updateDemo("Learn1.69"));
-        break;
-
-      case "Learn1.69":
-        dispatch(updateDemo("Learn1.70"));
-        break;
-
-      case "Learn1.107":
-        dispatch(updateDemo("Learn1.108"));
-        break;
-
-      case "Learn1.108":
-        dispatch(updateDemo("Learn1.109"));
-        break;
-
-      case "Learn1.218":
-        dispatch(updateDemo("Learn1.219"));
-        break;
-
-      case "Learn1.219":
-        dispatch(updateDemo("Learn1.220"));
-        break;
-
-      case "Learn1.231":
-        dispatch(updateDemo("Learn1.232"));
-        break;
-
-      case "Learn1.232":
-        dispatch(updateDemo("Learn1.233"));
-        break;
-
-      ////////////////////
+      case "Learn-overview":
+        switch (demoCount) {
+          case 105:
+          case 106:
+            dispatch(updateDemoCount(demoCount + 1));
+            break;
+        }
     }
   };
 
