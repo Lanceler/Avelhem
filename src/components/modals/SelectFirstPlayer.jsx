@@ -120,7 +120,6 @@ export default function SelectFirstPlayer(props) {
       case "Learn-overview":
         switch (demoCount) {
           case 7:
-            console.log("TEST");
             dispatch(updateDemoCount(demoCount + 1));
             break;
         }

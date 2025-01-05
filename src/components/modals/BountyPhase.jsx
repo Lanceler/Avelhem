@@ -225,24 +225,61 @@ const BountyPhase = (props) => {
   //     localGameState[self].bountyUpgrades.victory === 1,
   // ];
 
+  const isPurchased = (i) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    switch (i) {
+      case 1:
+        return newGameState[self].bountyUpgrades.frontier >= 1;
+
+      case 2:
+        return newGameState[self].bountyUpgrades.frontier >= 2;
+
+      case 3:
+        return newGameState[self].bountyUpgrades.frontier >= 3;
+
+      case 4:
+        return newGameState[self].bountyUpgrades.acquisition >= 1;
+
+      case 5:
+        return newGameState[self].bountyUpgrades.acquisition >= 2;
+
+      case 6:
+        return newGameState[self].bountyUpgrades.acquisition >= 3;
+
+      case 7:
+        return newGameState[self].bountyUpgrades.coordination >= 1;
+
+      case 8:
+        return newGameState[self].bountyUpgrades.coordination >= 2;
+
+      case 9:
+        return newGameState[self].bountyUpgrades.coordination >= 3;
+
+      case 10:
+        return newGameState[self].bountyUpgrades.tactics >= 1;
+
+      case 11:
+        return newGameState[self].bountyUpgrades.tactics >= 2;
+
+      case 12:
+        return newGameState[self].bountyUpgrades.tactics >= 3;
+
+      case 14:
+        return newGameState[self].bountyUpgrades.avelhem >= 1;
+
+      case 15:
+        return newGameState[self].bountyUpgrades.avelhem >= 2;
+
+      case 16:
+        return newGameState[self].bountyUpgrades.avelhem >= 3;
+
+      default:
+        return;
+    }
+  };
+
   const canClick = (element1, element2) => {
-    // switch (demoGuide) {
-    //   case "Learn1.10":
-    //   case "Learn1.85":
-    //   case "Learn1.180":
-    //     return element1 === "proceed";
-
-    //   case "Learn1.177":
-    //   case "Learn1.179":
-    //     return element1 === "purchase";
-
-    //   case "Learn1.176":
-    //     return element1 === "Frontier" && element2 === 0;
-
-    //   case "Learn1.178":
-    //     return element1 === "Frontier" && element2 === 1;
-    // }
-
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
@@ -310,17 +347,18 @@ const BountyPhase = (props) => {
                 }}
               >
                 <div
-                  className={`modal-option-content modal-option-content-2 ${
-                    canFrontier[0] ? "" : "disabled-modal-option-content"
-                  } `}
+                  className={`modal-option-content modal-option-content-2 
+                    ${canFrontier[0] ? "" : "disabled-modal-option-content"}
+                    ${isPurchased(1) ? "purchased" : ""}
+                    `}
                 >
                   <div className="modalBountyContents">
                     <h4 className="modalChoiceText modalBountyText">
                       Expand your frontier to 4 rows.
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
-                      {localGameState[self].bountyUpgrades.frontier > 0
-                        ? "Purchased"
+                      {isPurchased(1)
+                        ? "PURCHASED"
                         : `Cost: ${frontierCosts[0]} BP`}
                     </h4>
                   </div>
@@ -339,15 +377,16 @@ const BountyPhase = (props) => {
                 <div
                   className={`modal-option-content modal-option-content-2 ${
                     canFrontier[1] ? "" : "disabled-modal-option-content"
-                  } `}
+                  }
+                  ${isPurchased(2) ? "purchased" : ""} `}
                 >
                   <div className="modalBountyContents">
                     <h4 className="modalChoiceText modalBountyText">
                       Expand your frontier to 5 rows.
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
-                      {localGameState[self].bountyUpgrades.frontier > 1
-                        ? "Purchased"
+                      {isPurchased(2)
+                        ? "PURCHASED"
                         : `Cost: ${frontierCosts[1]} BP`}
                     </h4>
                   </div>
@@ -363,15 +402,16 @@ const BountyPhase = (props) => {
                 <div
                   className={`modal-option-content modal-option-content-2 ${
                     canFrontier[2] ? "" : "disabled-modal-option-content"
-                  } `}
+                  }
+                    ${isPurchased(3) ? "purchased" : ""} `}
                 >
                   <div className="modalBountyContents">
                     <h4 className="modalChoiceText modalBountyText">
                       Expand your frontier to 6 rows.
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
-                      {localGameState[self].bountyUpgrades.frontier > 2
-                        ? "Purchased"
+                      {isPurchased(3)
+                        ? "PURCHASED"
                         : `Cost: ${frontierCosts[2]} BP`}
                     </h4>
                   </div>
@@ -396,7 +436,7 @@ const BountyPhase = (props) => {
                 <div
                   className={`modal-option-content modal-option-content-2 ${
                     canAcquisition[0] ? "" : "disabled-modal-option-content"
-                  } `}
+                  } ${isPurchased(4) ? "purchased" : ""}`}
                 >
                   <div className="modalBountyContents">
                     <h4 className="modalChoiceText modalBountyText">
@@ -405,8 +445,8 @@ const BountyPhase = (props) => {
                       You may draw an additional Avelhem
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
-                      {localGameState[self].bountyUpgrades.acquisition > 0
-                        ? "Purchased"
+                      {isPurchased(4)
+                        ? "PURCHASED"
                         : `Cost: ${acquisitionCosts[0]} BP`}
                     </h4>
                   </div>
@@ -424,15 +464,15 @@ const BountyPhase = (props) => {
                 <div
                   className={`modal-option-content modal-option-content-2 ${
                     canAcquisition[1] ? "" : "disabled-modal-option-content"
-                  } `}
+                  } ${isPurchased(5) ? "purchased" : ""}`}
                 >
                   <div className="modalBountyContents">
                     <h4 className="modalChoiceText modalBountyText">
                       Upgrade Appoint: Grant the pawn Shield for 2 turns
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
-                      {localGameState[self].bountyUpgrades.acquisition > 1
-                        ? "Purchased"
+                      {isPurchased(5)
+                        ? "PURCHASED"
                         : `Cost: ${acquisitionCosts[1]} BP`}
                     </h4>
                   </div>
@@ -448,7 +488,7 @@ const BountyPhase = (props) => {
                 <div
                   className={`modal-option-content modal-option-content-2 ${
                     canAcquisition[2] ? "" : "disabled-modal-option-content"
-                  } `}
+                  } ${isPurchased(6) ? "purchased" : ""}`}
                 >
                   <div className="modalBountyContents">
                     <h4 className="modalChoiceText modalBountyText">
@@ -457,8 +497,8 @@ const BountyPhase = (props) => {
                       You may recover 1 “Transcendence”
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
-                      {localGameState[self].bountyUpgrades.acquisition > 2
-                        ? "Purchased"
+                      {isPurchased(6)
+                        ? "PURCHASED"
                         : `Cost: ${acquisitionCosts[2]} BP`}
                     </h4>
                   </div>
@@ -481,15 +521,15 @@ const BountyPhase = (props) => {
                 <div
                   className={`modal-option-content modal-option-content-2 ${
                     canCoordination[0] ? "" : "disabled-modal-option-content"
-                  } `}
+                  } ${isPurchased(7) ? "purchased" : ""}`}
                 >
                   <div className="modalBountyContents">
                     <h4 className="modalChoiceText modalBountyText">
                       Upgrade Battle Cry: Roll 1 tactical die
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
-                      {localGameState[self].bountyUpgrades.coordination > 0
-                        ? "Purchased"
+                      {isPurchased(7)
+                        ? "PURCHASED"
                         : `Cost: ${coordinationCosts[0]} BP`}
                     </h4>
                   </div>
@@ -505,15 +545,15 @@ const BountyPhase = (props) => {
                 <div
                   className={`modal-option-content modal-option-content-2 ${
                     canCoordination[1] ? "" : "disabled-modal-option-content"
-                  } `}
+                  } ${isPurchased(8) ? "purchased" : ""} `}
                 >
                   <div className="modalBountyContents">
                     <h4 className="modalChoiceText modalBountyText">
                       Upgrade Convene: Gain 1 Advance tactic
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
-                      {localGameState[self].bountyUpgrades.coordination > 1
-                        ? "Purchased"
+                      {isPurchased(8)
+                        ? "PURCHASED"
                         : `Cost: ${coordinationCosts[1]} BP`}
                     </h4>
                   </div>
@@ -529,7 +569,7 @@ const BountyPhase = (props) => {
                 <div
                   className={`modal-option-content modal-option-content-2 ${
                     canCoordination[2] ? "" : "disabled-modal-option-content"
-                  } `}
+                  } ${isPurchased(9) ? "purchased" : ""}`}
                 >
                   <div className="modalBountyContents">
                     <h4 className="modalChoiceText modalBountyText">
@@ -538,8 +578,8 @@ const BountyPhase = (props) => {
                       Gain 1 FD
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
-                      {localGameState[self].bountyUpgrades.coordination > 2
-                        ? "Purchased"
+                      {isPurchased(9)
+                        ? "PURCHASED"
                         : `Cost: ${coordinationCosts[2]} BP`}
                     </h4>
                   </div>
@@ -573,7 +613,7 @@ const BountyPhase = (props) => {
                 <div
                   className={`modal-option-content modal-option-content-2 ${
                     canTactics[0] ? "" : "disabled-modal-option-content"
-                  } `}
+                  } ${isPurchased(10) ? "purchased" : ""}`}
                 >
                   <div className="modalBountyContents">
                     <h4 className="modalChoiceText modalBountyText">
@@ -582,8 +622,8 @@ const BountyPhase = (props) => {
                       Increase instances to 3
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
-                      {localGameState[self].bountyUpgrades.tactics > 0
-                        ? "Purchased"
+                      {isPurchased(10)
+                        ? "PURCHASED"
                         : `Cost: ${tacticsCosts[0]} BP`}
                     </h4>
                   </div>
@@ -599,7 +639,7 @@ const BountyPhase = (props) => {
                 <div
                   className={`modal-option-content modal-option-content-2 ${
                     canTactics[1] ? "" : "disabled-modal-option-content"
-                  } `}
+                  } ${isPurchased(11) ? "purchased" : ""} `}
                 >
                   <div className="modalBountyContents">
                     <h4 className="modalChoiceText modalBountyText">
@@ -608,8 +648,8 @@ const BountyPhase = (props) => {
                       Increase instances to 4
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
-                      {localGameState[self].bountyUpgrades.tactics > 1
-                        ? "Purchased"
+                      {isPurchased(11)
+                        ? "PURCHASED"
                         : `Cost: ${tacticsCosts[1]} BP`}
                     </h4>
                   </div>
@@ -625,7 +665,7 @@ const BountyPhase = (props) => {
                 <div
                   className={`modal-option-content modal-option-content-2 ${
                     canTactics[2] ? "" : "disabled-modal-option-content"
-                  } `}
+                  } ${isPurchased(12) ? "purchased" : ""}`}
                 >
                   <div className="modalBountyContents">
                     <h4 className="modalChoiceText modalBountyText">
@@ -634,8 +674,8 @@ const BountyPhase = (props) => {
                       Unlock “Deploy Scion”
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
-                      {localGameState[self].bountyUpgrades.tactics > 2
-                        ? "Purchased"
+                      {isPurchased(12)
+                        ? "PURCHASED"
                         : `Cost: ${tacticsCosts[2]} BP`}
                     </h4>
                   </div>
@@ -658,15 +698,15 @@ const BountyPhase = (props) => {
                 <div
                   className={`modal-option-content modal-option-content-2 ${
                     canAvelhem[0] ? "" : "disabled-modal-option-content"
-                  } `}
+                  } ${isPurchased(14) ? "purchased" : ""}`}
                 >
                   <div className="modalBountyContents">
                     <h4 className="modalChoiceText modalBountyText">
                       Avelhem resonance grants the unit Shield for 2 turns
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
-                      {localGameState[self].bountyUpgrades.avelhem > 0
-                        ? "Purchased"
+                      {isPurchased(14)
+                        ? "PURCHASED"
                         : `Cost: ${avelhemCosts[0]} BP`}
                     </h4>
                   </div>
@@ -682,7 +722,7 @@ const BountyPhase = (props) => {
                 <div
                   className={`modal-option-content modal-option-content-2 ${
                     canAvelhem[1] ? "" : "disabled-modal-option-content"
-                  } `}
+                  } ${isPurchased(15) ? "purchased" : ""}`}
                 >
                   <div className="modalBountyContents">
                     <h4 className="modalChoiceText modalBountyText">
@@ -691,8 +731,8 @@ const BountyPhase = (props) => {
                       </p>
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
-                      {localGameState[self].bountyUpgrades.avelhem > 1
-                        ? "Purchased"
+                      {isPurchased(15)
+                        ? "PURCHASED"
                         : `Cost: ${avelhemCosts[1]} BP`}
                     </h4>
                   </div>
@@ -708,7 +748,7 @@ const BountyPhase = (props) => {
                 <div
                   className={`modal-option-content modal-option-content-2 ${
                     canAvelhem[2] ? "" : "disabled-modal-option-content"
-                  } `}
+                  } ${isPurchased(16) ? "purchased" : ""} `}
                 >
                   <div className="modalBountyContents">
                     <h4 className="modalChoiceText modalBountyText">
@@ -718,8 +758,8 @@ const BountyPhase = (props) => {
                       </p>
                     </h4>
                     <h4 className="modalChoiceText modalBountyText modalCost">
-                      {localGameState[self].bountyUpgrades.avelhem > 2
-                        ? "Purchased"
+                      {isPurchased(16)
+                        ? "PURCHASED"
                         : `Cost: ${avelhemCosts[2]} BP`}
                     </h4>
                   </div>

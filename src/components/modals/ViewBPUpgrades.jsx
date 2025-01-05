@@ -1,15 +1,6 @@
 import React, { useState } from "react";
 import "./Modal.css";
 
-import { useGetImages } from "../../hooks/useGetImages";
-
-import { useRecurringEffects } from "../../hooks/useRecurringEffects";
-
-import AdvanceSmall from "../../assets/diceIcons/AdvanceSmall.png";
-import MobilizeSmall from "../../assets/diceIcons/MobilizeSmall.png";
-import AssaultSmall from "../../assets/diceIcons/AssaultSmall.png";
-import InvokeSmall from "../../assets/diceIcons/InvokeSmall.png";
-
 import InfoPopUp from "./InfoPopUp";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -87,8 +78,7 @@ const ViewBPUpgrades = (props) => {
                   )}
                   {upgrades.acquisition >= 3 && (
                     <p className="unitInfo-text-desc">
-                      3. May spend 1 FD to recover 1 “Transcendence” via
-                      Cultivate.
+                      3. May recover 1 “Transcendence” via Cultivate.
                     </p>
                   )}
                   <br />

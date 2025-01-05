@@ -44,6 +44,9 @@ const InfoPopUp = (props) => {
 
       case "tea":
         return "Trial Over Tea";
+
+      case "classes demo":
+        return "Class Exhibit";
     }
   };
 
@@ -190,7 +193,7 @@ const InfoPopUp = (props) => {
                   1 BP when an enemy is eliminated.
                 </li>
                 <li className="unitInfo-text-desc">
-                  2 BP when an ally scores.
+                  3 BP when an ally scores.
                 </li>
                 <li className="unitInfo-text-desc">
                   3 BP when the opponent’s skill repertoire is depleted.

@@ -198,7 +198,7 @@ const DemoTextBox = () => {
     }
   };
 
-  const excludedshowNext = new Set([
+  const learnOveriewExclude = new Set([
     7, 15, 16, 21, 22, 23, 24, 25, 28, 29, 30, 32, 35, 37, 38, 39, 42, 44, 45,
     46, 47, 48, 49, 50, 51, 53, 54, 55, 56, 57, 58, 60, 61, 62, 63, 64, 65, 66,
     67, 68, 69, 70, 72, 73, 74, 75, 79, 80, 81, 82, 83, 84, 85, 86, 87, 90, 91,
@@ -208,7 +208,7 @@ const DemoTextBox = () => {
 
   const showNext = () => {
     if (demoGuide === "Learn-overview") {
-      return !excludedshowNext.has(demoCount);
+      return !learnOveriewExclude.has(demoCount);
     }
     return true;
   };
@@ -1163,7 +1163,7 @@ const DemoTextBox = () => {
                 for the sake of another demonstration.
                 <br /> <br />
                 As a reminder, your objective is to move your pieces into your
-                base.
+                opponent’s base.
               </div>
             );
 
@@ -1178,8 +1178,8 @@ const DemoTextBox = () => {
                 Using your last Mobilize instance, move that pawn into the zone
                 above them.
                 <br /> <br />
-                Open their menu, click on the top right button, then click on
-                Mobilize, traverse, and the destination.
+                Open their tactics menu, then click on Mobilize, traverse, and
+                the destination.
               </div>
             );
 
@@ -1244,7 +1244,8 @@ const DemoTextBox = () => {
             return (
               <div>
                 Units that have scored stay on the board, but they cannot be
-                interacted with. They contribute to their owner’s unit limits.
+                interacted with and continue to contribute to their owner’s unit
+                limits.
                 <br /> <br />
                 Reminder: A Sovereign can have up to 8 units at a time, and no
                 more than 2 ally Scions can have the same class.

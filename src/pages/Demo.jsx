@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./Demo.css";
-
 import BoardArea from "../components/BoardArea";
-
 import InfoPopUp from "../components/modals/InfoPopUp";
-
 import { useDemoGameStates } from "../hooks/useDemoGameStates";
-
 import { useSelector, useDispatch } from "react-redux";
 import { updateDemo } from "../redux/demoGuide";
 import { updateDemoCount } from "../redux/demoCount";
@@ -59,7 +55,7 @@ export default function Demo() {
       })
     );
 
-    if (!id || !["game", "learn-overview", "fire"].includes(id)) {
+    if (!id || !["game", "learn-overview", "classes"].includes(id)) {
       // console.log(id);
       navigate("/demo/game");
     } else {
@@ -71,6 +67,7 @@ export default function Demo() {
           setCurrentPlayer("host");
           setDemoTitle("Gameplay Demo");
           dispatch(updateDemo(null));
+          dispatch(updateDemoCount(null));
           break;
 
         case "learn-overview":
@@ -91,6 +88,13 @@ export default function Demo() {
               Target: true,
             })
           );
+          break;
+
+        case "classes":
+          setInfoPopUp("classes demo");
+          setDemoTitle("Class Exhibit");
+          dispatch(updateDemo("Classes"));
+          dispatch(updateDemoCount(null));
           break;
       }
     }
@@ -257,7 +261,9 @@ export default function Demo() {
     <>
       {demoGameState && (
         <div
-          className={`demo-body ${demoGuide ? "demoBlocker" : ""}`}
+          className={`demo-body ${
+            ["Learn-overview"].includes(demoGuide) ? "demoBlocker" : ""
+          }`}
           style={{
             backgroundImage: `url(${getBannerImage("Heir")})`,
           }}
@@ -297,7 +303,7 @@ export default function Demo() {
 
           {/* display demoGuide for debugging */}
 
-          {demoGuide && <h1>{demoGuide}</h1> && <h2>{demoCount}</h2>}
+          {/* {demoGuide && <h1>{demoGuide}</h1> && <h2>{demoCount}</h2>} */}
         </div>
       )}
     </>

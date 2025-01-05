@@ -279,7 +279,7 @@
 
 
 .scrollable {
-    max-height: 550px;
+    max-height: 575px;
     overflow-y: auto;
     width: fit-content;
     /* max-width: 1000px; */
@@ -725,6 +725,11 @@
 
 .modal-option-content:not(.disabled-modal-option-content):hover {
     filter: brightness(1.2)
+}
+
+.purchased {
+    background: linear-gradient(to bottom, rgb(5, 31, 8), rgb(38, 112, 4) 60%, rgb(45, 185, 26) 100%);
+    cursor: default
 }
 
 .modal-option-header {

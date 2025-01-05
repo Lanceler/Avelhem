@@ -138,7 +138,7 @@ export default function Home() {
             <div className="home-banner-title">LEARN TO PLAY</div>
             <div className="home-banner-text-body">
               <div className="home-banner-text">
-                <Link to="/demo/learn">
+                <Link to="/demo/learn-overview">
                   <button className="home-banner-button">
                     Interactive Tutorial
                   </button>

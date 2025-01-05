@@ -8,13 +8,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 import { useGetImages } from "../../hooks/useGetImages";
-import { useCardDatabase } from "../../hooks/useCardDatabase";
 
 import { AnimatePresence, motion } from "framer-motion";
 
 const ActivatedSkills = () => {
   const { localGameState } = useSelector((state) => state.gameState);
-  const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
   const { getCardImage } = useGetImages();
 
