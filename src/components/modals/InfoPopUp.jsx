@@ -45,7 +45,7 @@ const InfoPopUp = (props) => {
       case "tea":
         return "Trial Over Tea";
 
-      case "classes demo":
+      case "classes":
         return "Class Exhibit";
     }
   };
@@ -461,7 +461,7 @@ const InfoPopUp = (props) => {
                   Bounty Points (BP).
                 </li>
                 <li className="unitInfo-text-desc">
-                  The skill repertoire size is reduced from 60 to 45 cards.
+                  The skill repertoire size is reduced from 60 to 40 cards.
                 </li>
                 <li className="unitInfo-text-desc">
                   The Avelhem repertoire size is reduced from 20 to 16 cards and
@@ -476,6 +476,30 @@ const InfoPopUp = (props) => {
                   Sovereigns can click on their own repertoires to view the
                   contents. (The cards will be sorted and won’t reflect their
                   actual order.)
+                </li>
+              </ul>
+            </div>
+          </div>
+        );
+
+      case "classes":
+        return (
+          <div>
+            <div className="unitInfo-text-desc">
+              <h4>This exhibit displays every unit class on the board.</h4>
+
+              <ul className="infoPopUp-list2">
+                <li className="unitInfo-text-desc">
+                  You can view a class’ details by clicking on the corresponding
+                  unit and opening their information page.
+                </li>
+                <li className="unitInfo-text-desc">
+                  The information page lists their talents, abilities, and skill
+                  set.
+                </li>
+                <li className="unitInfo-text-desc">
+                  Clicking on a skill card would display it for viewing; you can
+                  then click anywhere to close it.
                 </li>
               </ul>
             </div>

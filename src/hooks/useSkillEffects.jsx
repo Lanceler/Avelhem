@@ -1,5 +1,3 @@
-import React from "react";
-
 import { useSelector } from "react-redux";
 import { useRecurringEffects } from "./useRecurringEffects";
 
@@ -482,6 +480,11 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
+    //Wind Scions gain Cyclone when activating skill
+    unit.cyclone
+      ? (unit.cyclone = Math.min(2, unit.cyclone + 1))
+      : (unit.cyclone = 1);
+
     if (
       (["Advance", "Invoke"].includes(newGameState.tactics[0].face) &&
         newGameState.tactics[0].stock > 0) ||
@@ -576,8 +579,10 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    //give unit boost
-    unit.boosts.galeConjuration = true;
+    //Wind Scions gain Cyclone when activating skill
+    unit.cyclone
+      ? (unit.cyclone = Math.min(2, unit.cyclone + 1))
+      : (unit.cyclone = 1);
 
     if (resonator) {
       if (resonator !== "SA-02") {
@@ -598,23 +603,11 @@ export const useSkillEffects = () => {
       });
     }
 
-    const zonesWithEnemies = getZonesWithEnemies(unit, 2);
-    if (zonesWithEnemies.length > 0) {
-      newGameState.currentResolution.push({
-        resolution: "Wind Skill",
-        resolution2: "Gale Conjuration1",
-        unit: unit,
-        details: {
-          reason: "Gale Conjuration Purge",
-          title: "Gale Conjuration",
-          message:
-            "You may purge the Shield of an enemy within 2 spaces; if they are adjacent, purge their Aether.",
-          no: "Skip",
-          yes: "Purge",
-          zones: zonesWithEnemies,
-        },
-      });
-    }
+    newGameState.currentResolution.push({
+      resolution: "Wind Skill",
+      resolution2: "Gale Conjuration1",
+      unit: unit,
+    });
 
     return newGameState;
   };
@@ -660,6 +653,11 @@ export const useSkillEffects = () => {
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
+
+    //Wind Scions gain Cyclone when activating skill
+    unit.cyclone
+      ? (unit.cyclone = Math.min(2, unit.cyclone + 1))
+      : (unit.cyclone = 1);
 
     //give victim activationCounter
     victim.temporary.activation
@@ -728,6 +726,11 @@ export const useSkillEffects = () => {
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
+
+    //Wind Scions gain Cyclone when activating skill
+    unit.cyclone
+      ? (unit.cyclone = Math.min(2, unit.cyclone + 1))
+      : (unit.cyclone = 1);
 
     delete unit.temporary.previousTarget;
     unit.temporary.cataclysmicFloat = 0;
@@ -2242,49 +2245,6 @@ export const useSkillEffects = () => {
 
     return newGameState;
   };
-
-  // const efflorescenceR1 = (unitInfo, resonator) => {
-  //   let newGameState = JSON.parse(JSON.stringify(localGameState));
-  //   let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-  //   //end "Resonating Efflorescence" resolution
-  //   newGameState.currentResolution.pop();
-
-  //   //give unit activationCounter
-  //   unit.temporary.activation
-  //     ? (unit.temporary.activation += 1)
-  //     : (unit.temporary.activation = 1);
-
-  //       if (!unit.afflictions.burn) {
-  //         //burn would otherwise instantly purge overgrowth
-  //         unit.enhancements.overgrowth = true;
-  //       }
-
-  //       unit.blossom
-  //         ? (unit.blossom = Math.min(3, unit.blossom + 2))
-  //         : (unit.blossom = 2);
-
-  //   if (
-  //     ["08-01", "08-03", "08-04"].some((s) =>
-  //       newGameState[unit.player].skillVestige.includes(s)
-  //     )
-  //   ) {
-  //     newGameState.currentResolution.push({
-  //       resolution: "Plant Skill",
-  //       resolution2: "Efflorescence1",
-  //       unit: unit,
-  //       details: {
-  //         title: "Efflorescence",
-  //         message:
-  //           "You may spend 2 skills to recover then float 1 Plant skill other than “Efflorescence”. Select 1st skill.",
-  //         restriction: null,
-  //         reason: "Efflorescence1",
-  //       },
-  //     });
-  //   }
-
-  //   return newGameState;
-  // };
 
   const efflorescenceR2 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));

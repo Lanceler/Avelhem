@@ -219,37 +219,23 @@ export const useUnitAbilityEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    if (canMove(unit) || canBlast(unit)) {
-      newGameState.currentResolution.push({
-        resolution: "Unit Ability",
-        resolution2: "Reap the Whirlwind1",
-        player: self,
-        unit: unit,
-        details: {
-          reason: "Reap the Whirlwind",
-          title: "Reap the Whirlwind",
-          message: "You may traverse or blast an adjacent enemy.",
-          no: "Skip",
-          yes: "Proceed",
-        },
-      });
-    }
+    //spend Cyclone
+    unit.cyclone -= 2;
+
+    unit.temporary.usedReapTheWhirlwind = true;
 
     newGameState.currentResolution.push({
-      resolution: "Search Skill",
+      resolution: "Unit Ability",
+      resolution2: "Reap the Whirlwind1",
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Discard Skill",
+      unit: unit,
       player: self,
-      details: {
-        restriction: ["03-02"],
-        exclusion: [],
-        searchTitle: "Reap the Whirlwind",
-        searchMessage: "Search for 1 “Gale Conjuration”",
-        outcome: "Add",
-        revealTitle: null,
-        revealMessage: null,
-        messageTitle: null,
-        message: null,
-        specMessage: null,
-      },
+      message: "Spend 1 skill",
+      restriction: null,
     });
 
     return newGameState;

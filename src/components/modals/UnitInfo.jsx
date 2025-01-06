@@ -109,16 +109,10 @@ const UnitInfo = (props) => {
             </p>
 
             <p className="unitInfo-text-heading2">
-              2. Reap the Whirlwind{" "}
-              <span className="unitInfo-tactic-group">
-                <img src={AssaultSmall} className="unitInfo-tactic-icon" />
-              </span>
+              2. Reap the Whirlwind (One-shot)
             </p>
             <p className="unitInfo-text-desc">
-              ⬩Search for 1 “Gale Conjuration”.
-            </p>
-            <p className="unitInfo-text-desc">
-              ⬩You may traverse or blast an adjacent enemy.
+              ⬩Spend 1 skill and 2 Cyclones to blast an adjacent enemy.
             </p>
           </>
         );
@@ -311,9 +305,12 @@ const UnitInfo = (props) => {
             <p className="unitInfo-text-desc">
               ⬩Your deployment and movements bypass motion contingent skills.
             </p>
-            <p className="unitInfo-text-desc unitInfo-text-last">
+            <p className="unitInfo-text-desc">
               ⬩Your and your adjacent allies’ skill activations bypass
               “Symphonic Screech”.
+            </p>
+            <p className="unitInfo-text-desc unitInfo-text-last">
+              When you activate a skill, gain 1 Cyclone (Max. 2).
             </p>
           </>
         );
@@ -483,6 +480,12 @@ const UnitInfo = (props) => {
                       <p className="unitInfo-text-heading2">
                         Aether: {unit.aether ? "Present" : "None"}
                       </p>
+
+                      {unit.cyclone > 0 && (
+                        <p className="unitInfo-text-heading2">
+                          Cyclone: {unit.cyclone}
+                        </p>
+                      )}
 
                       {unit.charge > 0 && (
                         <p className="unitInfo-text-heading2">
@@ -713,9 +716,7 @@ const UnitInfo = (props) => {
               )}
 
               {(unit.boosts.ambidexterity ||
-                unit.boosts.fieryHeart ||
                 unit.boosts.glacialTorrent ||
-                unit.boosts.galeConjuration ||
                 unit.boosts.mountainStance ||
                 unit.boosts.valiantSpark) && (
                 <>
@@ -735,15 +736,6 @@ const UnitInfo = (props) => {
                     </>
                   )}
 
-                  {unit.boosts.fieryHeart && (
-                    <>
-                      <p className="unitInfo-text-heading2">Fiery Heart</p>
-                      <p className="unitInfo-text-desc unitInfo-text-last">
-                        ⬩Duration of next Anathema is reduced to 1 turn.
-                      </p>
-                    </>
-                  )}
-
                   {unit.boosts.glacialTorrent && (
                     <>
                       <p className="unitInfo-text-heading2">Glacial Torrent</p>
@@ -753,15 +745,6 @@ const UnitInfo = (props) => {
                           ? "2 abilties"
                           : "ability"}{" "}
                         without using a tactic.
-                      </p>
-                    </>
-                  )}
-
-                  {unit.boosts.galeConjuration && (
-                    <>
-                      <p className="unitInfo-text-heading2">Gale Conjuration</p>
-                      <p className="unitInfo-text-desc unitInfo-text-last">
-                        ⬩Next attack has 2 AP.
                       </p>
                     </>
                   )}

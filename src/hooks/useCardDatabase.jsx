@@ -1,5 +1,3 @@
-import React from "react";
-
 export const useCardDatabase = () => {
   const avelhemCardList = [
     {
@@ -523,9 +521,6 @@ export const useCardDatabase = () => {
     "04-03",
     "04-03",
     "04-04",
-    "06-01",
-    "06-01",
-    "06-01",
     "06-03",
     "06-03",
     "06-03",
@@ -548,8 +543,6 @@ export const useCardDatabase = () => {
     "SA-04",
     "SB-01",
     "SB-01",
-    "SB-05",
-    "SB-05",
   ];
 
   return {

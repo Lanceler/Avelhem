@@ -54,10 +54,6 @@ const YouMayNoYes = (props) => {
       newGameState.activatingTarget.pop();
     }
 
-    if (props.details.reason === "Advance Avelhem Draw") {
-      newGameState.currentResolution.pop();
-    }
-
     dispatch(updateState(newGameState));
     props.updateFirebase(newGameState);
   };
@@ -106,12 +102,6 @@ const YouMayNoYes = (props) => {
         newGameState[props.attacker.player].units[
           props.attacker.unitIndex
         ].aether = 1;
-        break;
-
-      case "Advance Avelhem Draw": //"Advance Avelhem Draw"
-        updateData = true;
-        newGameState = drawAvelhem(newGameState);
-        newGameState.currentResolution.pop();
         break;
 
       case "Conflagration Ignite": //"ConflagrationR2"
@@ -168,17 +158,6 @@ const YouMayNoYes = (props) => {
         });
         break;
 
-      case "Gale Conjuration Purge": // "Gale Conjuration1"
-        enterSelectUnitMode(
-          props.details.zones,
-          props.unit,
-          newGameState,
-          null,
-          "gale conjuration purge",
-          "null"
-        );
-        break;
-
       case "Gale Conjuration Restore": // "Gale ConjurationR2"
         enterSelectUnitMode(
           props.details.zones,
@@ -207,18 +186,6 @@ const YouMayNoYes = (props) => {
           "paralyze1",
           "Cataclysmic Tempest"
         );
-        break;
-
-      case "Reap the Whirlwind": //Reap the Whirlwind1
-        newGameState.currentResolution.push({
-          resolution: "Unit Ability",
-          resolution2: "Reap the Whirlwind2",
-          unit: unit,
-          details: {
-            title: "Reap the Whirlwind",
-            reason: "Reap the Whirlwind",
-          },
-        });
         break;
 
       case "Upheaval 2nd Paralyze": // "Upheaval3"
@@ -442,7 +409,6 @@ const YouMayNoYes = (props) => {
         break;
 
       case "Press the Attack Avelhem":
-        newGameState = drawAvelhem(newGameState);
         newGameState = drawAvelhem(newGameState);
         break;
 

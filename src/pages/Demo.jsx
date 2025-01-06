@@ -91,7 +91,7 @@ export default function Demo() {
           break;
 
         case "classes":
-          setInfoPopUp("classes demo");
+          setInfoPopUp("classes");
           setDemoTitle("Class Exhibit");
           dispatch(updateDemo("Classes"));
           dispatch(updateDemoCount(null));

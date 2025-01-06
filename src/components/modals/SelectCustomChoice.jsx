@@ -114,13 +114,6 @@ const SelectCustomChoice = (props) => {
       ChoiceSecondMessage = "Purge an adjacent enemy’s Aether and Shield.";
       break;
 
-    case "Reap the Whirlwind":
-      canFirstChoice = canMove(unit);
-      canSecondChoice = canBlast(unit);
-      ChoiceFirstMessage = "Traverse.";
-      ChoiceSecondMessage = "Blast an adjacent enemy.";
-      break;
-
     case "Upheaval":
       canFirstChoice =
         canMove(unit) &&
@@ -435,26 +428,6 @@ const SelectCustomChoice = (props) => {
             newGameState,
             null,
             "aerial impetus purge",
-            null
-          );
-        }
-        break;
-
-      case "Reap the Whirlwind":
-        if (selectedChoice === 1) {
-          newGameState = enterMoveMode(
-            getVacantAdjacentZones(unit),
-            unit,
-            newGameState,
-            null
-          );
-        } else {
-          enterSelectUnitMode(
-            getZonesWithEnemies(unit, 1),
-            unit,
-            newGameState,
-            null,
-            "blast",
             null
           );
         }

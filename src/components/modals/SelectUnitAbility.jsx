@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./Modal.css";
 
 import AdvanceSmall from "../../assets/diceIcons/AdvanceSmall.png";
@@ -157,17 +157,14 @@ const SelectUnitAbility = (props) => {
         {
           abilityName: "Reap the Whirlwind",
           abilityQualifier: (
-            <div className="abilityQualifier">
-              <img src={AssaultSmall} style={{ height: 35 }} />
+            <div className="modal-option-oneshot">
+              <em>One-shot</em>
             </div>
           ),
           abilityText: (
             <>
               <div className="abilityText ">
-                ⬩Search for 1 “Gale Conjuration”.
-              </div>
-              <div className="abilityText ">
-                ⬩You may traverse or blast an adjacent enemy.
+                Spend 1 skill and 2 Cyclones to blast an adjacent enemy.
               </div>
             </>
           ),
@@ -427,7 +424,12 @@ const SelectUnitAbility = (props) => {
               !unit.temporary.usedAirDash
             );
           case 1:
-            return true;
+            return (
+              unit.cyclone > 1 &&
+              newGameState[unit.player].skillHand.length > 0 &&
+              getZonesWithEnemies(unit, 1).length > 0 &&
+              !unit.temporary.usedReapTheWhirlwind
+            );
         }
 
       case "Land Scion":
@@ -644,18 +646,25 @@ const SelectUnitAbility = (props) => {
             },
           });
         } else if (selectedChoice === 1) {
+          updateData = true;
+          newGameState.activatingSkill.push("ReapTheWhirlwind");
+          newGameState.activatingUnit.push(unit);
+
+          newGameState.currentResolution.push({
+            resolution: "Tactic End",
+            unit: unit,
+            effect: true,
+          });
+
           newGameState.currentResolution.push({
             resolution: "Unit Ability",
-            resolution2: "Ability - select tactic",
+            resolution2: "Activating Reap the Whirlwind",
             unit: unit,
-            details: {
-              title: "Reap the Whirlwind",
-              message: "Use an Assault tactic.",
-              restriction: ["Assault"],
-              stock: 1,
-              reason: "Reap the Whirlwind",
-              canSkip: "Return",
-            },
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Animation Delay",
+            priority: self,
           });
         }
         break;

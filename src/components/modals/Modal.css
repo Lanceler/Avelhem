@@ -478,7 +478,7 @@
     padding: 7px;
     position: relative;
 
-    width: 350px;
+    width: 400px;
 
 }
 
@@ -523,13 +523,13 @@
     position: relative;
     display: flex;
     gap: 1rem;
-    height: 280px;
+    height: 300px;
 }
 
 .unitInfo-Talents {
     padding: 7px;
     position: relative;
-    width: 350px;
+    width: 400px;
 }
 
 .unitInfo-scroll {
@@ -839,7 +839,7 @@
 
 .info-modal {
     height: 700px;
-    width: 750px;
+    width: 800px;
     margin: 100px auto;
     background: rgba(255, 255, 255, 0.875);
     border-radius: 10px;

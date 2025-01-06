@@ -257,7 +257,8 @@ const SelectTacticalAction = (props) => {
               newGameState,
               props.dice,
               "aether-blast",
-              null
+              null,
+              true
             );
           } else {
             newGameState.currentResolution.push({
@@ -356,7 +357,8 @@ const SelectTacticalAction = (props) => {
             newGameState,
             props.dice,
             "strike",
-            null
+            null,
+            true
           );
         }
         break;

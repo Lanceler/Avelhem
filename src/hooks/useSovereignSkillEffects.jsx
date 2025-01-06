@@ -533,7 +533,7 @@ export const useSovereignSkillEffects = () => {
       details: {
         reason: "Press the Attack Avelhem",
         title: "Press the Attack",
-        message: "You may draw 2 Avelhems.",
+        message: "You may draw 1 Avelhems.",
         no: "Skip",
         yes: "Draw",
       },

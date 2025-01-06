@@ -1718,7 +1718,7 @@ export default function Rules() {
                   Avelhems.
                 </li>
                 <li>
-                  The skill repertoire size is reduced from 60 to 45 cards.
+                  The skill repertoire size is reduced from 60 to 40 cards.
                 </li>
 
                 <li>
@@ -1856,8 +1856,8 @@ export default function Rules() {
                     <li>
                       Alternatively, it can be used to give them a boost that
                       allows them to use an Advance tactic to activate their
-                      Fortify ability. (Reminder: boosts expire at the end of
-                      the turn.)
+                      Fortify ability, which normally requires an Assault
+                      tactic. (Reminder: boosts expire at the end of the turn.)
                     </li>
                   </ul>
                 </li>
@@ -1912,9 +1912,18 @@ export default function Rules() {
                   >
                     Upheaval
                   </span>{" "}
-                  can paralyze up to 2 adjacent enemies for 1 turn. Though it
-                  won’t eliminate them, it will limit the opponent’s opportunity
-                  to launch a counterattack when their turn rolls in.
+                  can paralyze up to 2 adjacent enemies for 1 turn.
+                  <ul>
+                    <li>
+                      Though it won’t eliminate them, it will limit the
+                      opponent’s opportunity to launch a counterattack when
+                      their turn rolls in.
+                    </li>
+                    <li>
+                      Paralysis also makes units more vulnerable to
+                      Aether-blasts.
+                    </li>
+                  </ul>
                 </li>
                 <li>
                   <span
@@ -1953,7 +1962,7 @@ export default function Rules() {
                   </span>{" "}
                   ability allows them to raise their HP to 3. Furthermore, it
                   functions similarly as Ignition Propulsion: it can be used to
-                  attack and potentially move with no costs attached.
+                  attack and potentially move but with no costs attached.
                 </li>
               </ul>
 
@@ -2071,7 +2080,10 @@ export default function Rules() {
               <br />
 
               <h3>Mana Scion</h3>
-              <p>Mana Scions provide well-rounded utility.</p>
+              <p>
+                Mana Scions provide well-rounded utility, but their role in this
+                mode focuses on defensive support.
+              </p>
               <ul>
                 <li>
                   Unlike the previous classes, they do have a talent that
@@ -2138,17 +2150,20 @@ export default function Rules() {
                   >
                     Surge
                   </span>{" "}
-                  is a skill that requires an Assault tactic to activate. It
-                  allows the user to traverse, then follow up with another
-                  movement or strike.
+                  and{" "}
+                  <span
+                    className="rule-view-card"
+                    onClick={() => {
+                      dispatch(updateMagnifiedSkill("06-02"));
+                    }}
+                  >
+                    Diffusion
+                  </span>{" "}
+                  are not included in this mode.
                   <ul>
                     <li>
-                      These movements bypass motion contingent skills, which
-                      means Pitfall Trap cannot be activated in response.
-                    </li>
-                    <li>
-                      The strike has 2 AP, which gives it sufficient firepower
-                      against units that have raised their HP.
+                      These powerful skills hindered by their dependecy on
+                      tactics.
                     </li>
                   </ul>
                 </li>
@@ -2157,55 +2172,42 @@ export default function Rules() {
                   <span
                     className="rule-view-card"
                     onClick={() => {
-                      dispatch(updateMagnifiedSkill("07-03"));
+                      dispatch(updateMagnifiedSkill("06-03"));
                     }}
                   >
-                    Frenzy Blade
+                    Aegis
                   </span>{" "}
-                  can be activated when an adjacent enemy survives an attack.
-                  This is another source of Sharpness, and it allows them to
-                  attack the surviving enemy.
+                  can be activated when they or an adjacent ally is targeted to
+                  protect them.
                   <ul>
+                    <li>Shield protects against attacks.</li>
                     <li>
-                      This is especially useful against sturdy Land Scions.
+                      Wards protect against attacks and status afflictions.
                     </li>
                     <li>
-                      Frenzy Blade is a great follow-up for Aether-blasts that
-                      were mitigated.
-                    </li>
-                    <li>
-                      Their{" "}
-                      <span
-                        className="rule-view-card"
-                        onClick={() => {
-                          dispatch(updateMagnifiedSkill("Brandish"));
-                        }}
-                      >
-                        Brandish
-                      </span>{" "}
-                      ability allows allows them to use an Invoke tactic to
-                      search for this skill.
+                      Consider accumulating copies to prepare for an
+                      unsurmountable push.
                     </li>
                   </ul>
                 </li>
                 <li>
-                  Their burst skill{" "}
+                  At the cost of 1 Mana skill, their burst skill{" "}
                   <span
                     className="rule-view-card"
                     onClick={() => {
-                      dispatch(updateMagnifiedSkill("07-04"));
+                      dispatch(updateMagnifiedSkill("06-04"));
                     }}
                   >
-                    Arsenal Onslaught
+                    Dirusption Field
                   </span>{" "}
-                  allows them to strike up to 2 times, and it can even paralyze
-                  an enemy in between the attacks.
+                  shuts down their enemies for 2 turns.
                   <ul>
                     <li>
-                      This can allow the user to move twice, provided that both
-                      attacks are lethal. Consider saving Arsenal Onslaught for
-                      the scoring maneuver.
+                      Enemies within 2 spaces from them cannot activate their
+                      abilities nor spend their Aether, preventing them from
+                      performing and even mitigating Aether-blasts.{" "}
                     </li>
+                    <li>Adjacent enemies cannot use non-burst skills.</li>
                   </ul>
                 </li>
               </ul>

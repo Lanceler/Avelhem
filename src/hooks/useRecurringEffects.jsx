@@ -1702,9 +1702,6 @@ export const useRecurringEffects = () => {
         break;
 
       default: //apply AP modifiers
-        if (attacker.boosts.galeConjuration) {
-          aP = 2;
-        }
         if (attacker.sharpness > 0) {
           aP += attacker.sharpness;
         }
@@ -1713,12 +1710,6 @@ export const useRecurringEffects = () => {
           aP = Math.max(0, aP - 1);
         }
         break;
-    }
-
-    //remove attacker's "next attack" boosts
-    if (attacker.boosts.galeConjuration) {
-      delete newGameState[attacker.player].units[attacker.unitIndex].boosts
-        .galeConjuration;
     }
 
     //reduce HP
@@ -2446,7 +2437,7 @@ export const useRecurringEffects = () => {
       case "02-01":
         return true;
       case "02-02":
-        return getZonesWithEnemies(unit, 2).length > 0 ? true : false;
+        return getZonesWithEnemies(unit, 2).length > 0;
       case "02-03":
         return false;
       case "02-04":
@@ -2455,23 +2446,23 @@ export const useRecurringEffects = () => {
       case "03-01":
         return canAerialImpetus(unit);
       case "03-02":
-        return true;
+        return getZonesWithEnemies(unit, 2).length > 0;
       case "03-03":
         return false;
       case "03-04":
-        return getZonesWithEnemies(unit, 1).length > 0 ? true : false;
+        return getZonesWithEnemies(unit, 1).length > 0;
 
       case "04-01":
         return true;
       case "04-02":
-        return getZonesWithEnemies(unit, 1).length > 0 ? true : false;
+        return getZonesWithEnemies(unit, 1).length > 0;
       case "04-03":
         return false;
       case "04-04":
         return true;
 
       case "05-01":
-        return getZonesWithEnemies(unit, 1).length > 0 ? true : false;
+        return getZonesWithEnemies(unit, 1).length > 0;
       case "05-02":
         return unit.charge > 1 && canMove(unit); // needs TWO charges
       case "05-03":
@@ -3285,7 +3276,8 @@ export const useRecurringEffects = () => {
     gameState,
     tactic,
     reason,
-    special
+    special,
+    canCancel
   ) => {
     let newGameState = null;
     if (gameState) {
@@ -3298,11 +3290,12 @@ export const useRecurringEffects = () => {
       resolution: "Selecting",
       resolution2: "Selecting Unit",
       player: self,
-      zoneIds: zoneIds,
-      unit: unit,
-      tactic: tactic,
-      reason: reason,
-      special: special,
+      zoneIds,
+      unit,
+      tactic,
+      reason,
+      special,
+      canCancel,
     });
 
     dispatch(updateState(newGameState));
@@ -4125,7 +4118,7 @@ export const useRecurringEffects = () => {
   };
 
   const selectEnemies = (unitInfo, range, tactic, reason, special) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    const newGameState = JSON.parse(JSON.stringify(localGameState));
     const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
     newGameState.currentResolution.pop();
@@ -4143,7 +4136,7 @@ export const useRecurringEffects = () => {
   };
 
   const selectFatedRivalry = (enemyUnit) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    const newGameState = JSON.parse(JSON.stringify(localGameState));
 
     //end "Selected Fated Rivalry"
     newGameState.currentResolution.pop();

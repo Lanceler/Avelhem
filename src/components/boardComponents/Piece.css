@@ -613,7 +613,7 @@
   animation: fadeInOut 2s infinite alternate;
 }
 
-.fiery-heart {
+/* .fiery-heart {
   transform: rotate(45deg);
   background: linear-gradient(
     22deg,
@@ -631,7 +631,7 @@
   animation: moveUpDown 0.95s ease-in-out infinite;
   pointer-events: none;
   z-index: 5;
-}
+} */
 
 .glacial-torrent {
   transform: rotate(45deg);
@@ -653,7 +653,7 @@
   z-index: 5;
 }
 
-.gale-conjuration {
+.cyclone {
   transform: rotate(45deg);
   background: linear-gradient(
     22deg,

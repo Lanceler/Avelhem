@@ -349,20 +349,6 @@ export const Piece = (props) => {
             </>
           )}
 
-          {props.unit.unitClass === "Fire Scion" && (
-            <>
-              {props.unit.boosts.fieryHeart === true && (
-                <div
-                  className="fiery-heart"
-                  style={{
-                    left: "50%",
-                    transform: " translateX(-50%) rotate(45deg)",
-                  }}
-                ></div>
-              )}
-            </>
-          )}
-
           {props.unit.unitClass === "Water Scion" && (
             <>
               {props.unit.boosts.glacialTorrent === 1 && (
@@ -397,14 +383,32 @@ export const Piece = (props) => {
 
           {props.unit.unitClass === "Wind Scion" && (
             <>
-              {props.unit.boosts.galeConjuration === true && (
+              {props.unit.cyclone === 1 && (
                 <div
-                  className="gale-conjuration"
+                  className="cyclone"
                   style={{
-                    left: "50%",
-                    transform: " translateX(-50%)  rotate(45deg)",
+                    left: "30%",
+                    transform: "translateX(-50%) rotate(45deg)",
                   }}
                 ></div>
+              )}
+              {props.unit.cyclone > 1 && (
+                <>
+                  <div
+                    className="cyclone"
+                    style={{
+                      left: "30%",
+                      transform: "translateX(-50%) rotate(45deg)",
+                    }}
+                  ></div>
+                  <div
+                    className="cyclone"
+                    style={{
+                      left: "70%",
+                      transform: "translateX(-50%) rotate(45deg)",
+                    }}
+                  ></div>
+                </>
               )}
             </>
           )}

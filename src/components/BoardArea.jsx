@@ -222,7 +222,6 @@ const BoardArea = (props) => {
     afterburner2,
     fieryHeart1,
     fieryHeart2,
-    fieryHeart3,
     hydrotherapy1,
     hydrotherapy2,
     coldEmbrace1,
@@ -255,11 +254,8 @@ const BoardArea = (props) => {
     } else {
       try {
         updateDoc(gameDoc, { gameState: newGameState });
-        // console.log("TRY");
       } catch (err) {
         console.log(err);
-        // console.log("ERR");
-        // console.log(newGameState);
       }
     }
   };
@@ -951,19 +947,6 @@ const BoardArea = (props) => {
               </>
             );
 
-          case "Advance Avelhem Draw":
-            return (
-              <>
-                {self === lastRes.player && !hideModal && (
-                  <YouMayNoYes
-                    details={lastRes.details}
-                    updateFirebase={updateFirebase}
-                    hideOrRevealModale={hideOrRevealModale}
-                  />
-                )}
-              </>
-            );
-
           case "Advance Deploy Scion: Choose Element":
             return (
               <>
@@ -1260,41 +1243,24 @@ const BoardArea = (props) => {
 
           case "Air Dash1":
             if (self === lastRes.unit.player) {
-              enterMoveModeViaSkill(
-                getVacant2SpaceZones(lastRes.unit),
-                lastRes.unit
+              updateLocalState(
+                enterMoveMode(
+                  getVacant2SpaceZones(lastRes.unit),
+                  lastRes.unit,
+                  null,
+                  null,
+                  false,
+                  true
+                )
               );
-              null; //setMovingSpecial("AirDash");
             }
             break;
 
           case "Reap the Whirlwind1":
-            return (
-              <>
-                {self === lastRes.unit.player && !hideModal && (
-                  <YouMayNoYes
-                    unit={lastRes.unit}
-                    details={lastRes.details}
-                    updateFirebase={updateFirebase}
-                    hideOrRevealModale={hideOrRevealModale}
-                  />
-                )}
-              </>
-            );
-
-          case "Reap the Whirlwind2":
-            return (
-              <>
-                {self === lastRes.unit.player && !hideModal && (
-                  <SelectCustomChoice
-                    unit={lastRes.unit}
-                    details={lastRes.details}
-                    updateFirebase={updateFirebase}
-                    hideOrRevealModale={hideOrRevealModale}
-                  />
-                )}
-              </>
-            );
+            if (self === lastRes.unit.player) {
+              selectEnemies(lastRes.unit, 1, null, "blast", null);
+            }
+            break;
 
           case "Activating Fortify":
             if (self === lastRes.unit.player) {
@@ -1948,18 +1914,16 @@ const BoardArea = (props) => {
             break;
 
           case "Gale Conjuration1":
-            return (
-              <>
-                {self === lastRes.unit.player && !hideModal && (
-                  <YouMayNoYes
-                    unit={lastRes.unit}
-                    details={lastRes.details}
-                    updateFirebase={updateFirebase}
-                    hideOrRevealModale={hideOrRevealModale}
-                  />
-                )}
-              </>
-            );
+            if (self === lastRes.unit.player) {
+              selectEnemies(
+                lastRes.unit,
+                2,
+                null,
+                "gale conjuration purge",
+                null
+              );
+            }
+            break;
 
           case "Gale ConjurationR1":
             if (self === lastRes.unit.player) {
@@ -2208,9 +2172,15 @@ const BoardArea = (props) => {
 
           case "UpheavalR3":
             if (self === lastRes.unit.player) {
-              enterMoveModeViaSkill(
-                getVacantAdjacentZones(lastRes.unit),
-                lastRes.unit
+              updateLocalState(
+                enterMoveMode(
+                  getVacantAdjacentZones(lastRes.unit),
+                  lastRes.unit,
+                  null,
+                  null,
+                  false,
+                  true
+                )
               );
             }
             break;
@@ -2387,9 +2357,15 @@ const BoardArea = (props) => {
 
           case "Zip And Zap1":
             if (self === lastRes.unit.player) {
-              enterMoveModeViaSkill(
-                getVacantAdjacentZones(lastRes.unit),
-                lastRes.unit
+              updateLocalState(
+                enterMoveMode(
+                  getVacantAdjacentZones(lastRes.unit),
+                  lastRes.unit,
+                  null,
+                  null,
+                  false,
+                  true
+                )
               );
             }
             break;
@@ -3733,24 +3709,22 @@ const BoardArea = (props) => {
   };
 
   const canCancel = () => {
+    const curRes = localGameState.currentResolution;
+
     if (
       self === localGameState.turnPlayer &&
-      localGameState.currentResolution.length > 0 &&
-      localGameState.currentResolution[
-        localGameState.currentResolution.length - 1
-      ].resolution === "Deploying Pawn"
+      curRes.length > 0 &&
+      curRes[curRes.length - 1].resolution === "Deploying Pawn"
     ) {
       return true;
     }
 
     if (
-      localGameState.currentResolution.length > 0 &&
-      localGameState.currentResolution[
-        localGameState.currentResolution.length - 1
-      ].resolution2 === "Moving Unit" &&
-      localGameState.currentResolution[
-        localGameState.currentResolution.length - 1
-      ].canCancel
+      curRes.length > 0 &&
+      ["Moving Unit", "Selecting Unit"].includes(
+        curRes[curRes.length - 1].resolution2
+      ) &&
+      curRes[curRes.length - 1].canCancel
     ) {
       return true;
     }
@@ -3769,13 +3743,6 @@ const BoardArea = (props) => {
     }
 
     newGameState.currentResolution.pop();
-
-    if (
-      newGameState.currentResolution[newGameState.currentResolution.length - 1]
-        .resolution2 === "Advance Avelhem Draw"
-    ) {
-      newGameState.currentResolution.pop();
-    }
 
     dispatch(updateState(newGameState));
 
@@ -3815,14 +3782,6 @@ const BoardArea = (props) => {
     newZoneInfo[r][c].unitIndex = newIndex;
     newGameState.zones = JSON.stringify(newZoneInfo);
 
-    if (
-      deployingPawn &&
-      newGameState.currentResolution[newGameState.currentResolution.length - 1]
-        .resolution2 !== "Advance Avelhem Draw"
-    ) {
-      newGameState.currentResolution.pop();
-    }
-
     if (localGameState.turnPhase === "Acquisition") {
       newGameState.turnPhase = "Bounty";
       // newGameState.currentResolution.pop();
@@ -3861,15 +3820,6 @@ const BoardArea = (props) => {
     setTileMode(null);
 
     updateFirebase(newGameState);
-  };
-
-  const enterMoveModeViaSkill = (zoneIds, unit) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    newGameState.currentResolution.pop();
-
-    updateLocalState(enterMoveMode(zoneIds, unit, newGameState, null));
-
-    dispatch(updateState(newGameState));
   };
 
   const hideOrRevealModale = () => {
@@ -4190,6 +4140,7 @@ const BoardArea = (props) => {
           newGameState[selectedUnit.player].units[selectedUnit.unitIndex];
 
         delete galeConjurationEnemy.enhancements.shield;
+        delete galeConjurationEnemy.enhancements.ward;
         delete galeConjurationEnemy.enhancements.disruption;
 
         if (isAdjacent(unit, galeConjurationEnemy)) {
