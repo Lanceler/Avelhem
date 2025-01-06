@@ -6,14 +6,12 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateMagnifiedSkill } from "../../redux/magnifySkill";
-import { updateState } from "../../redux/gameState";
 
 import { useGetImages } from "../../hooks/useGetImages";
 
 const ViewRepertoireTrial = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
-  const { magnifiedSkill } = useSelector((state) => state.magnifiedSkill);
 
   const dispatch = useDispatch();
 
@@ -25,17 +23,16 @@ const ViewRepertoireTrial = (props) => {
   switch (props.repertoire) {
     case "Skill Repertoire":
       repertoire = [...localGameState[props.team].skillRepertoire];
-      floatingRepertoire = repertoire.splice(
-        0,
-        localGameState[props.team].skillFloat
-      );
+      floatingRepertoire = repertoire
+        .reverse()
+        .splice(0, localGameState[props.team].skillFloat);
+      console.log(floatingRepertoire);
       break;
     case "Avelhem Repertoire":
       repertoire = [...localGameState[props.team].avelhemRepertoire];
-      floatingRepertoire = repertoire.splice(
-        0,
-        localGameState[props.team].avelhemFloat
-      );
+      floatingRepertoire = repertoire
+        .reverse()
+        .splice(0, localGameState[props.team].avelhemFloat);
       break;
   }
 

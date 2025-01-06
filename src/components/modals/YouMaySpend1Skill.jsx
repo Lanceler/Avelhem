@@ -198,14 +198,6 @@ const YouMaySpend1Skill = (props) => {
         //newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
         break;
 
-      case "Diffusion Shield":
-        newGameState.currentResolution.push({
-          resolution: "Mana Skill",
-          resolution2: "DiffusionR3",
-          unit: unit,
-        });
-        break;
-
       case "Arsenal Onslaught Attack":
         newGameState.currentResolution.push({
           resolution: "Metal Skill",

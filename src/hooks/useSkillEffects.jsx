@@ -1646,37 +1646,13 @@ export const useSkillEffects = () => {
     //end "DiffusionR1" resolution
     newGameState.currentResolution.pop();
 
-    if (
-      unit !== null &&
-      !isMuted(unit) &&
-      newGameState[unit.player].skillHand.length > 0
-    ) {
-      newGameState.currentResolution.push({
-        resolution: "Mana Skill",
-        resolution2: "DiffusionR2",
-        unit: unit,
-        details: {
-          title: "Diffusion",
-          message: "You may spend 1 skill to gain Shield for 2 turns.",
-          restriction: null,
-          reason: "Diffusion Shield",
-        },
-      });
+    if (unit !== null && !isMuted(unit)) {
+      unit.aether = 1;
+
+      unit.enhancements.shield
+        ? (unit.enhancements.shield = Math.max(2, unit.enhancements.shield))
+        : (unit.enhancements.shield = 2);
     }
-
-    return newGameState;
-  };
-
-  const diffusionR3 = (unitInfo) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    //end "DiffusionR3" resolution
-    newGameState.currentResolution.pop();
-
-    unit.enhancements.shield
-      ? (unit.enhancements.shield = Math.max(3, unit.enhancements.shield))
-      : (unit.enhancements.shield = 2);
 
     return newGameState;
   };
@@ -2493,8 +2469,6 @@ export const useSkillEffects = () => {
         return diffusion2(a);
       case "diffusionR2":
         return diffusionR2(a);
-      case "diffusionR3":
-        return diffusionR3(a);
       case "aegis1":
         return aegis1(a, b);
       case "disruptionField1":

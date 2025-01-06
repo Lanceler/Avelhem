@@ -303,14 +303,14 @@ const UnitInfo = (props) => {
 
             <p className="unitInfo-text-heading2">2. Sonic Breeze</p>
             <p className="unitInfo-text-desc">
-              ⬩Your deployment and movements bypass motion contingent skills.
+              ⬩When you activate a skill, gain 1 Cyclone (Max. 2).
             </p>
             <p className="unitInfo-text-desc">
-              ⬩Your and your adjacent allies’ skill activations bypass
-              “Symphonic Screech”.
+              ⬩Your deployment and movements bypass motion contingent skills.
             </p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              When you activate a skill, gain 1 Cyclone (Max. 2).
+              ⬩Your and your adjacent allies’ skill activations bypass
+              “Symphonic Screech”.
             </p>
           </>
         );

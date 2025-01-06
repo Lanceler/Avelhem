@@ -2578,26 +2578,6 @@ const BoardArea = (props) => {
             }
             break;
 
-          case "DiffusionR2":
-            return (
-              <>
-                {self === lastRes.unit.player && !hideModal && (
-                  <YouMaySpend1Skill
-                    unit={lastRes.unit}
-                    details={lastRes.details}
-                    updateFirebase={updateFirebase}
-                    hideOrRevealModale={hideOrRevealModale}
-                  />
-                )}
-              </>
-            );
-
-          case "DiffusionR3":
-            if (self === lastRes.unit.player) {
-              updateLocalState(applySkill("diffusionR3", lastRes.unit));
-            }
-            break;
-
           case "Select Aegis Activator":
             if (self === lastRes.player) {
               selectAegisActivator(lastRes.victim);
@@ -3833,6 +3813,10 @@ const BoardArea = (props) => {
         localGameState.currentResolution[
           localGameState.currentResolution.length - 1
         ];
+
+      if (lastRes.resolution === "Animation Delay") {
+        return lastRes.priority === self;
+      }
 
       if (lastRes.resolution2 === "Triggering Target") {
         return lastRes.victim.player === self;
