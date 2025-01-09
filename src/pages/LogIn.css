@@ -20,6 +20,7 @@
 
     background-size: cover;
     background-position: center;
+    
  
 }
 
@@ -33,6 +34,7 @@
     overflow: hidden;
 
     margin: 10px;
+ 
 
     box-shadow: 4px 4px 8px 4px rgba(0, 0, 0, 0.5);
 
@@ -222,6 +224,7 @@
 
 @media screen and (max-width: 700px) {
     .login-box {
-        scale: .85;
+        scale: .75;
+        margin-top: 30px;
     }
 }

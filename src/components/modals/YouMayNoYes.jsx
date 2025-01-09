@@ -123,7 +123,7 @@ const YouMayNoYes = (props) => {
         });
         break;
 
-      case "Blaze of Glory Draw": //"Blaze of Glory3"
+      case "Blaze of Glory Draw": //"Blaze of Glory5"
         unit.aether = 0;
         newGameState = drawSkill(newGameState);
         newGameState = drawSkill(newGameState);

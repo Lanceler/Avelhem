@@ -144,6 +144,7 @@ const BoardArea = (props) => {
     endDefiancePhase2,
     endExecutionPhase,
     enterMoveMode,
+    enterSelectUnitMode,
     getVacant2SpaceZones,
     getVacantAdjacentZones,
     grantRavager,
@@ -636,7 +637,7 @@ const BoardArea = (props) => {
 
       case "Apply Burn":
         if (self === lastRes.attacker.player) {
-          resolveApplyBurn(lastRes.attacker, lastRes.victim);
+          resolveApplyBurn(lastRes.attacker, lastRes.victim, lastRes.special);
         }
         break;
 
@@ -1588,7 +1589,7 @@ const BoardArea = (props) => {
 
           case "Blaze of Glory1":
             if (self === lastRes.unit.player) {
-              selectEnemies(lastRes.unit, 1, null, "ignite", null);
+              selectEnemies(lastRes.unit, 1, null, "ignite", "Blaze of Glory");
             }
             break;
 
@@ -1598,7 +1599,39 @@ const BoardArea = (props) => {
             }
             break;
 
+          case "Blaze of Glory2.5":
+            return (
+              <>
+                {self === lastRes.unit.player && !hideModal && (
+                  <SelectSkillReveal
+                    unit={lastRes.unit}
+                    details={lastRes.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
           case "Blaze of Glory3":
+            if (self === lastRes.unit.player) {
+              resolutionUpdate(
+                applySkill(
+                  "blazeOfGlory3",
+                  lastRes.unit,
+                  lastRes.adjacentEnemies
+                )
+              );
+            }
+            break;
+
+          case "Blaze of Glory4":
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("blazeOfGlory4", lastRes.unit));
+            }
+            break;
+
+          case "Blaze of Glory5":
             return (
               <>
                 {self === lastRes.unit.player && !hideModal && (
@@ -3762,6 +3795,10 @@ const BoardArea = (props) => {
     newZoneInfo[r][c].unitIndex = newIndex;
     newGameState.zones = JSON.stringify(newZoneInfo);
 
+    if (deployingPawn) {
+      newGameState.currentResolution.pop();
+    }
+
     if (localGameState.turnPhase === "Acquisition") {
       newGameState.turnPhase = "Bounty";
       // newGameState.currentResolution.pop();
@@ -3876,7 +3913,7 @@ const BoardArea = (props) => {
     dispatch(updateState(gameState));
   };
 
-  const resolveApplyBurn = (attackerInfo, victimInfo) => {
+  const resolveApplyBurn = (attackerInfo, victimInfo, special) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
     const attacker =
@@ -3885,7 +3922,7 @@ const BoardArea = (props) => {
     newGameState.currentResolution.pop();
 
     if (attacker !== null && !isMuted(attacker)) {
-      newGameState = applyBurn(newGameState, victimInfo, attackerInfo);
+      newGameState = applyBurn(newGameState, victimInfo, attackerInfo, special);
     }
 
     dispatch(updateState(newGameState));

@@ -1612,8 +1612,10 @@ export const useRecurringEffects = () => {
     return unit;
   };
 
-  const applyBurn = (newGameState, victimInfo) => {
+  const applyBurn = (newGameState, victimInfo, attackerInfo, special) => {
     //Update info
+    let attacker =
+      newGameState[attackerInfo.player].units[attackerInfo.unitIndex];
     let victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
 
     if (victim.enhancements.ward) {
@@ -1633,6 +1635,10 @@ export const useRecurringEffects = () => {
         .frostbite;
       delete newGameState[victim.player].units[victim.unitIndex].enhancements
         .overgrowth;
+    }
+
+    if (["Blaze of Glory"].includes(special)) {
+      attacker.temporary.previousTarget = victim.unitIndex;
     }
 
     return newGameState;

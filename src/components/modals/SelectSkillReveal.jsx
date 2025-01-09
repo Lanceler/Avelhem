@@ -68,6 +68,18 @@ const SelectSkillReveal = (props) => {
     let revealMessage = "";
 
     switch (props.details.reason) {
+      case "Blaze of Glory":
+        newGameState.currentResolution.push({
+          resolution: "Fire Skill",
+          resolution2: "Blaze of Glory3",
+          unit: props.unit,
+          adjacentEnemies: props.details.adjacentEnemies,
+        });
+
+        revealTitle = "Blaze of Glory";
+        revealMessage = "Your opponent has revealed 1 “Blaze of Glory”";
+        break;
+
       case "Healing Rain":
         let healingRainUnit =
           newGameState[props.details.victim.player].units[

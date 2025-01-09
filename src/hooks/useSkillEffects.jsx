@@ -161,6 +161,14 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
+    delete unit.temporary.previousTarget;
+
+    newGameState.currentResolution.push({
+      resolution: "Fire Skill",
+      resolution2: "Blaze of Glory4",
+      unit: unit,
+    });
+
     newGameState.currentResolution.push({
       resolution: "Fire Skill",
       resolution2: "Blaze of Glory2",
@@ -178,15 +186,71 @@ export const useSkillEffects = () => {
 
   const blazeOfGlory2 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
+    const zones = JSON.parse(newGameState.zones);
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Blaze of Glory2" resolution
+    newGameState.currentResolution.pop();
+
+    let adjacentEnemies = getZonesWithEnemies(unit, 1);
+    adjacentEnemies = adjacentEnemies.filter(
+      (z) =>
+        zones[Math.floor(z / 5)][z % 5].unitIndex !==
+        unit.temporary.previousTarget
+    );
+
+    if (unit !== null && !isMuted(unit)) {
+      if (adjacentEnemies.length > 0) {
+        //Ignite 2nd enemy
+        newGameState.currentResolution.push({
+          resolution: "Fire Skill",
+          resolution2: "Blaze of Glory2.5",
+          unit,
+          details: {
+            title: "Blaze of Glory",
+            message:
+              "You may reveal 1 “Blaze of Glory” to ignite a different adjacent enemy for 1 turn.",
+            restriction: ["01-03"],
+            reason: "Blaze of Glory",
+            adjacentEnemies,
+          },
+        });
+      }
+    }
+
+    return newGameState;
+  };
+
+  const blazeOfGlory3 = (unitInfo, adjacentEnemies) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Blaze of Glory 3" resolution
+    newGameState.currentResolution.pop();
+
+    enterSelectUnitMode(
+      adjacentEnemies,
+      unit,
+      newGameState,
+      null,
+      "ignite",
+      null
+    );
+
+    return newGameState;
+  };
+
+  const blazeOfGlory4 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
     const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
-    //end "Blaze of Glory2"
+    //end "Blaze of Glory4"
     newGameState.currentResolution.pop();
 
     if (unit && !isMuted(unit) && unit.aether > 0) {
       newGameState.currentResolution.push({
         resolution: "Fire Skill",
-        resolution2: "Blaze of Glory3",
+        resolution2: "Blaze of Glory5",
         unit: unit,
         details: {
           reason: "Blaze of Glory Draw",
@@ -2371,6 +2435,10 @@ export const useSkillEffects = () => {
         return blazeOfGlory1(a);
       case "blazeOfGlory2":
         return blazeOfGlory2(a);
+      case "blazeOfGlory3":
+        return blazeOfGlory3(a, b);
+      case "blazeOfGlory4":
+        return blazeOfGlory4(a);
       case "resplendence1":
         return resplendence1(a);
       case "resplendence2":
