@@ -67,7 +67,6 @@ const UnitInfo = (props) => {
               1. Hydrotherapy{" "}
               <span className="unitInfo-tactic-group">
                 <img src={AdvanceSmall} className="unitInfo-tactic-icon" />
-                <img src={AssaultSmall} className="unitInfo-tactic-icon" />
                 <img src={InvokeSmall} className="unitInfo-tactic-icon" />
               </span>
             </p>
@@ -76,7 +75,7 @@ const UnitInfo = (props) => {
               Anathema).
             </p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Draw 1 skill.
+              ⬩You may float 1 skill to search for 1 “Healing Rain”.
             </p>
 
             <p className="unitInfo-text-heading2">

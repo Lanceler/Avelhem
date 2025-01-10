@@ -58,6 +58,25 @@ const FloatSkill = (props) => {
         });
         break;
 
+      case "Hydrotherapy2":
+        newGameState.currentResolution.push({
+          resolution: "Search Skill",
+          player: self,
+          details: {
+            restriction: ["02-03"],
+            exclusion: [],
+            searchTitle: "Hydrotherapy",
+            searchMessage: "Search for 1 “Healing Rain”",
+            outcome: "Add",
+            revealTitle: null,
+            revealMessage: null,
+            messageTitle: null,
+            message: null,
+            specMessage: null,
+          },
+        });
+        break;
+
       case "Fortify":
         newGameState.currentResolution.push({
           resolution: "Unit Ability",

@@ -114,18 +114,6 @@ const SelectCustomChoice = (props) => {
       ChoiceSecondMessage = "Purge an adjacent enemy’s Aether and Shield.";
       break;
 
-    case "Upheaval":
-      canFirstChoice =
-        canMove(unit) &&
-        ["04-01", "04-02", "04-03", "04-04"].some((s) =>
-          localGameState[unit.player].skillHand.includes(s)
-        );
-
-      canSecondChoice = true;
-      ChoiceFirstMessage = "Reveal 1 Land skill to traverse.";
-      ChoiceSecondMessage = "Search for 1 non-burst Land skill.";
-      break;
-
     case "Geomancy":
       canFirstChoice = true;
       canSecondChoice = ["04-01", "04-02", "04-03"].some((s) =>
@@ -433,40 +421,40 @@ const SelectCustomChoice = (props) => {
         }
         break;
 
-      case "Upheaval":
-        if (selectedChoice === 1) {
-          newGameState.currentResolution.push({
-            resolution: "Land Skill",
-            resolution2: "UpheavalR2.5",
-            unit: unit,
-            details: {
-              title: "Upheaval",
-              message: "Reveal 1 Land skill to traverse.",
-              restriction: ["04-01", "04-02", "04-03", "04-04"],
-              reason: "Upheaval",
-            },
-          });
-        } else {
-          updateData = true;
+      // case "Upheaval":
+      //   if (selectedChoice === 1) {
+      //     newGameState.currentResolution.push({
+      //       resolution: "Land Skill",
+      //       resolution2: "UpheavalR2.5",
+      //       unit: unit,
+      //       details: {
+      //         title: "Upheaval",
+      //         message: "Reveal 1 Land skill to traverse.",
+      //         restriction: ["04-01", "04-02", "04-03", "04-04"],
+      //         reason: "Upheaval",
+      //       },
+      //     });
+      //   } else {
+      //     updateData = true;
 
-          newGameState.currentResolution.push({
-            resolution: "Search Skill",
-            player: self,
-            details: {
-              restriction: ["04-01", "04-02", "04-03"],
-              exclusion: [],
-              searchTitle: "Upheaval",
-              searchMessage: "Search for 1 non-burst Land skill",
-              outcome: "Add",
-              revealTitle: null,
-              revealMessage: null,
-              messageTitle: null,
-              message: null,
-              specMessage: null,
-            },
-          });
-        }
-        break;
+      //     newGameState.currentResolution.push({
+      //       resolution: "Search Skill",
+      //       player: self,
+      //       details: {
+      //         restriction: ["04-01", "04-02", "04-03"],
+      //         exclusion: [],
+      //         searchTitle: "Upheaval",
+      //         searchMessage: "Search for 1 non-burst Land skill",
+      //         outcome: "Add",
+      //         revealTitle: null,
+      //         revealMessage: null,
+      //         messageTitle: null,
+      //         message: null,
+      //         specMessage: null,
+      //       },
+      //     });
+      //   }
+      //   break;
 
       case "Geomancy":
         if (selectedChoice === 1) {

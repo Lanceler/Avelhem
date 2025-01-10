@@ -45,9 +45,9 @@ const VictoryScreen = (props) => {
     }.`;
 
     if (localGameState[self].score < 5) {
-      message3 = `You may offer to continue the game and set the objective to ${
+      message3 = `You may offer to set the objective to ${
         localGameState[self].score + 1
-      }.`;
+      } and continue the game.`;
     }
   } else if (enemy === props.player) {
     message1 = "Defeat...";

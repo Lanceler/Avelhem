@@ -199,6 +199,15 @@ const YouMayNoYes = (props) => {
         );
         break;
 
+      case "Upheaval Traverse": // "UpheavalR2"
+        newGameState = enterMoveMode(
+          getVacantAdjacentZones(unit),
+          unit,
+          newGameState,
+          null
+        );
+        break;
+
       case "Geomancy Strike": // "Geomancy2"
         enterSelectUnitMode(
           getZonesWithEnemies(props.unit, 1),

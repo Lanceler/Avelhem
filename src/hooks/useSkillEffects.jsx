@@ -1080,7 +1080,7 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
-  const upheavalR2 = (unitInfo) => {
+  const upheavalR1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
@@ -1095,8 +1095,29 @@ export const useSkillEffects = () => {
         resolution2: "UpheavalR2",
         unit: unit,
         details: {
+          reason: "Upheaval Traverse",
           title: "Upheaval",
-          reason: "Upheaval",
+          message: "You may traverse.",
+          no: "Skip",
+          yes: "Traverse",
+        },
+      });
+
+      newGameState.activatingUnit.push(unit);
+      newGameState.activatingSkill.push("MountainStance");
+      newGameState.currentResolution.push({
+        resolution: "Unit Talent",
+        resolution2: "Talent Conclusion",
+        unit: unit,
+      });
+
+      newGameState.currentResolution.push({
+        resolution: "Unit Talent",
+        resolution2: "Activating Mountain Stance",
+        unit: unit,
+        details: {
+          title: "Mountain Stance",
+          reason: "Mountain Stance",
         },
       });
     }
@@ -2493,8 +2514,8 @@ export const useSkillEffects = () => {
         return upheaval1(a, b);
       case "upheaval2":
         return upheaval2(a);
-      case "upheavalR2":
-        return upheavalR2(a);
+      case "upheavalR1":
+        return upheavalR1(a);
       case "pitfallTrap1":
         return pitfallTrap1(a, b);
       case "pitfallTrap2":

@@ -96,8 +96,6 @@ const SelectUnitAbility = (props) => {
             <div className="abilityQualifier">
               <img src={AdvanceSmall} style={{ height: 35 }} />
               {"\u00A0\u00A0or\u00A0\u00A0"}
-              <img src={AssaultSmall} style={{ height: 35 }} />
-              {"\u00A0\u00A0or\u00A0\u00A0"}
               <img src={InvokeSmall} style={{ height: 35 }} />
             </div>
           ),
@@ -107,7 +105,12 @@ const SelectUnitAbility = (props) => {
                 ⬩Purge an adjacent ally’s turn-based afflictions (except
                 Anathema).
               </div>
-              <div className="abilityText ">⬩Draw 1 skill.</div>
+              <div className="abilityText ">
+                ⬩You may float 1 skill to search for 1 “Healing Rain”.
+              </div>
+              <div>
+                <br />
+              </div>
             </>
           ),
         },
@@ -264,6 +267,9 @@ const SelectUnitAbility = (props) => {
               </div>
               <div className="abilityText ">⬩You may traverse.</div>
               <div className="abilityText ">⬩You may traverse or strike.</div>
+              <div>
+                <br />
+              </div>
             </>
           ),
         },
@@ -580,8 +586,8 @@ const SelectUnitAbility = (props) => {
               unit: unit,
               details: {
                 title: "Hydrotherapy",
-                message: "Use an Advance, Assault, or Invoke tactic.",
-                restriction: ["Advance", "Assault", "Invoke"],
+                message: "Use an Advance or Invoke tactic.",
+                restriction: ["Advance", "Invoke"],
                 stock: 1,
                 reason: "Hydrotherapy",
                 canSkip: "Return",

@@ -103,6 +103,7 @@ const DemoTextBox = () => {
           //bottom left
           case 5:
           case 6:
+          case 77:
             return {
               top: "75%",
               left: "30%",
@@ -651,7 +652,7 @@ const DemoTextBox = () => {
             return (
               <div>
                 Units can use the Advance tactic to traverse, which is a keyword
-                that means “move into a vacant adjacent zone”.
+                that means “move to a vacant adjacent zone”.
                 <br /> <br />
                 Click on the Traverse option.
               </div>
@@ -671,9 +672,10 @@ const DemoTextBox = () => {
           case 52:
             return (
               <div>
-                As mentioned, some tactics have a little overlap. As with
-                Advance, Mobilize allows units to traverse—in fact, the latter
-                does it better as it allows for multiple movements.
+                As mentioned, some tactics have a little overlap.
+                <br /> <br />
+                As with Advance, Mobilize allows units to traverse—in fact, the
+                latter does it better as it allows for multiple movements.
               </div>
             );
 
@@ -746,15 +748,15 @@ const DemoTextBox = () => {
                 >
                   <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM169.8 165.3c7.9-22.3 29.1-37.3 52.8-37.3h58.3c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24V250.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1H222.6c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z" />
                 </svg>{" "}
-                icon at the top right corner of the right tactic.
+                icon at the top right corner of the tactics.
               </div>
             );
 
           case 64:
             return (
               <div>
-                Feel free to skim through the Tactics Guide’s contents or close
-                it immediately.
+                Feel free to skim through the Tactics Guide or close it
+                immediately.
               </div>
             );
 
@@ -762,7 +764,7 @@ const DemoTextBox = () => {
           case 66:
             return (
               <div>
-                Since we still have remaining instances, let’s move another
+                Since you still have remaining instances, let’s move another
                 unit.
                 <br /> <br />
                 Make your right pawn move closer to the top center one. Open
@@ -926,8 +928,8 @@ const DemoTextBox = () => {
               <div>
                 On the other hand, some abilities do not require tactics, making
                 them more reliable and accessible. Amplify Aura is one such
-                example; it also has the “One-shot” property, which means that
-                it cannot be activated more than once per turn.
+                example; however, it also has the “One-shot” property, which
+                means that it cannot be activated more than once per turn.
               </div>
             );
 
@@ -1137,9 +1139,8 @@ const DemoTextBox = () => {
                 has concluded all their activated effects.
                 <br /> <br />
                 Therefore, even though the enemy was eliminated by the attack of
-                the skill card, they were not punished until after the Fire
-                Scion recovered their Aether (as per the skill’s last
-                sub-effect).
+                the skill card, the Fire Scion was not punished until after they
+                recovered their Aether (as per the skill’s last sub-effect).
               </div>
             );
 
@@ -1149,8 +1150,8 @@ const DemoTextBox = () => {
                 Anathema disables a Scion’s power (and afflicts them with
                 immense discomfort).
                 <br /> <br />
-                Punished Scions cannot activate abilities and skill cards, nor
-                will their talents trigger. They can still use tactics to
+                Punished Scions cannot activate abilities and skill cards, and
+                will their talents will trigger. They can still use tactics to
                 traverse but not attack.
               </div>
             );
@@ -1226,7 +1227,7 @@ const DemoTextBox = () => {
                 statuses affecting the Initiator’s units decrease by 1.
                 <br /> <br />
                 The durations of your Fire Scion’s Shield and Anathema have
-                decreased from 2 turns to 1. Their Shield icon is now blinking,
+                decreased from 2 turns to 1: Their Shield icon is now blinking,
                 and their Anathema aura has weakened.
               </div>
             );
@@ -1284,9 +1285,9 @@ const DemoTextBox = () => {
               <div>
                 And that covers the basics. Consider reading the rules or
                 playing the other tutorials for a deeper understanding of the
-                mechanics.
+                mechanics and its nuances.
                 <br /> <br />
-                End of overview tutorial.
+                End of Overview Tutorial.
               </div>
             );
 

@@ -150,13 +150,28 @@ export const useUnitAbilityEffects = () => {
     return newGameState;
   };
 
-  const hydrotherapy2 = () => {
+  const hydrotherapy2 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
     //end "Hydrotherapy1"
     newGameState.currentResolution.pop();
 
-    newGameState = drawSkill(newGameState);
+    // newGameState = drawSkill(newGameState);
+
+    if (newGameState[unit.player].skillHand.length > 0) {
+      newGameState.currentResolution.push({
+        resolution: "Unit Ability",
+        resolution2: "Hydrotherapy2",
+        unit: unit,
+        details: {
+          reason: "Hydrotherapy2",
+          restriction: null,
+          title: "Hydrotherapy",
+          message: "You may float 1 skill to search for 1 “Healing Rain”.",
+        },
+      });
+    }
 
     return newGameState;
   };

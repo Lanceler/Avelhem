@@ -1206,9 +1206,23 @@ const BoardArea = (props) => {
 
           case "Hydrotherapy1":
             if (self === lastRes.unit.player) {
-              updateLocalState(hydrotherapy2());
+              updateLocalState(hydrotherapy2(lastRes.unit));
             }
             break;
+
+          case "Hydrotherapy2":
+            return (
+              <>
+                {self === lastRes.unit.player && !hideModal && (
+                  <FloatSkill
+                    unit={lastRes.unit}
+                    details={lastRes.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
 
           case "Activating Cold Embrace":
             if (self === lastRes.unit.player) {
@@ -2171,7 +2185,7 @@ const BoardArea = (props) => {
 
           case "UpheavalR1":
             if (self === lastRes.unit.player) {
-              updateLocalState(applySkill("upheavalR2", lastRes.unit));
+              updateLocalState(applySkill("upheavalR1", lastRes.unit));
             }
             break;
 
@@ -2179,44 +2193,16 @@ const BoardArea = (props) => {
             return (
               <>
                 {self === lastRes.unit.player && !hideModal && (
-                  <SelectCustomChoice
+                  <YouMayNoYes
                     unit={lastRes.unit}
                     details={lastRes.details}
+                    setMovingSpecial={setMovingSpecial}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
                   />
                 )}
               </>
             );
-
-          case "UpheavalR2.5":
-            return (
-              <>
-                {self === lastRes.unit.player && !hideModal && (
-                  <SelectSkillReveal
-                    unit={lastRes.unit}
-                    details={lastRes.details}
-                    updateFirebase={updateFirebase}
-                    hideOrRevealModale={hideOrRevealModale}
-                  />
-                )}
-              </>
-            );
-
-          case "UpheavalR3":
-            if (self === lastRes.unit.player) {
-              updateLocalState(
-                enterMoveMode(
-                  getVacantAdjacentZones(lastRes.unit),
-                  lastRes.unit,
-                  null,
-                  null,
-                  false,
-                  true
-                )
-              );
-            }
-            break;
 
           case "Select Pitfall Trap Activator":
             if (self === lastRes.player) {
