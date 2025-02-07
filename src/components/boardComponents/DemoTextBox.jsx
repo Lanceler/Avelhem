@@ -299,7 +299,7 @@ const DemoTextBox = () => {
                 Either player can play the first turn, decided by any reasonable
                 means. Ultimately, the option is given to the host.
                 <br /> <br />
-                Click on “Go First”.
+                Click on Go First.
               </div>
             );
 
@@ -310,35 +310,33 @@ const DemoTextBox = () => {
                   The Initiator refers to the Sovereign whose turn it is.
                 </strong>
                 <br /> <br />
-                Once the first turn’s Initiator has been selected, both
-                Sovereigns shuffle their repertoires and draw 4 skill cards.
+                Once the first turn’s Initiator has been decided, both
+                Sovereigns shuffle their repertoires. The Initiator draws 5
+                cards, while their opponent draws 6.
               </div>
             );
 
           case 9:
             return (
               <div>
-                In addition, the Initiator adds 1 copy of “Transcendence” to
-                their hand and places another in their vestige (discard pile).
-                The other Sovereign adds 2 copies of Transcendence to their
-                hand, bringing their card count to 6 (opposed to your 5).
+                Each repertoire has its respective vestige (discard pile), which
+                would be placed to its right.
                 <br /> <br />
-                Each repertoire has its respective vestige, placed to its right.
-                When a repertoire is depleted, its vestige is shuffled to form a
-                new one.
+                Unlike some other games, decking out does not result to an
+                instant loss. When a repertoire is depleted, its vestige is
+                shuffled to form a new one.
               </div>
             );
 
           case 10:
             return (
               <div>
-                Transcendence is a special skill card that has no effect. As per
-                its text, it is revealed while in one’s hand.
+                No one is allowed to view the contents of their repertoires,
+                unless an effect allows them to.
                 <br /> <br />
-                Therefore, you can observe the two copies in your opponent’s
-                hand; likewise, your single copy is revealed to them. Also note
-                that your second copy is in the vestige, located to the right of
-                your skill repertoire.
+                Conversely, only the owner is allowed to view a vestige’s
+                contents, but everyone is privy to the number of cards it
+                contains.
               </div>
             );
 
@@ -450,7 +448,8 @@ const DemoTextBox = () => {
                 additional BP. You may make multiple purchases in a single
                 visit, provided your BP is sufficient.
                 <br /> <br />
-                Upgrade your Acquisition Phase twice, then proceed.
+                Upgrade your Acquisition Phase twice, then proceed. (Feel free
+                to scroll down to view the other categories.)
               </div>
             );
 
@@ -505,9 +504,9 @@ const DemoTextBox = () => {
                 Fate Defiance (FD) on immediate benefits, such as renewing their
                 hand or rerolling unfavorable tactics.
                 <br /> <br />
-                Sovereigns start the game with 3 FD, can hold up to 6 FD
-                (excesses gained are forfeited), and gain 2 FD as consolation
-                whenever their units are eliminated.
+                Sovereigns start the game with 3 FD and gain 2 FD as consolation
+                whenever their units are eliminated. They can hold up to 6 FD
+                (excesses gained are forfeited).
               </div>
             );
 
@@ -812,7 +811,7 @@ const DemoTextBox = () => {
               <div>
                 The zones of eligible units will be colored blue.
                 <br /> <br />
-                Click on your central pawn to ascend them.
+                Click on your topmost pawn to ascend them.
               </div>
             );
 
@@ -918,7 +917,7 @@ const DemoTextBox = () => {
                 Some abilities require the use of tactics. For example, Mana
                 Scions can use an Assault tactic to activate Particle Beam,
                 which lets them attack an enemy as far as 2 spaces away.
-                Normally, units use the Assault tactic to attack adjacent
+                Normally, units can use the Assault tactic to attack adjacent
                 enemies.
               </div>
             );
@@ -1057,9 +1056,11 @@ const DemoTextBox = () => {
                 Ignition Propulsion requires the activator to spend (discard) a
                 skill card from hand.
                 <br /> <br />
-                The “Transcendence” skill—which, if you recall, does not
-                nothing—is perfect for such situation, as it can be discarded in
-                lieu of useful cards. Spend it.
+                Spending skills is a recurring theme in a number of effects,
+                especially that of Fire Scions. The decision to part with or
+                keep a card can potentially alter the course of the game, so
+                choose carefully. For now, discard “Viridian Grave” (the third
+                skill).
               </div>
             );
 
@@ -1099,8 +1100,8 @@ const DemoTextBox = () => {
             return (
               <div>
                 And as mentioned earlier, you have gained 1 BP, while your
-                opponent has gained 2 additional FD (as they started with 3,
-                whichs brings their total to 5).
+                opponent has gained 2 additional FD (they started with 3, whichs
+                brings their total to 5).
               </div>
             );
 
@@ -1151,8 +1152,8 @@ const DemoTextBox = () => {
                 immense discomfort).
                 <br /> <br />
                 Punished Scions cannot activate abilities and skill cards, and
-                will their talents will trigger. They can still use tactics to
-                traverse but not attack.
+                their talents are disabled. They cannot attack, but they can
+                still use tactics to traverse.
               </div>
             );
 

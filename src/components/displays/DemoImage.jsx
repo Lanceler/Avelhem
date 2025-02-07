@@ -14,9 +14,6 @@ const DemoImage = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          case 10:
-            return "SX-01";
-
           case 17:
             return 8;
 

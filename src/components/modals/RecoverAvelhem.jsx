@@ -1,16 +1,19 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import "./Modal.css";
+import "./Modal2.scss";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
+import { updateDemo } from "../../redux/demoGuide";
 
 import Skill from "../hand/Skill";
 
 const RecoverAvelhem = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
-  const { self, enemy } = useSelector((state) => state.teams);
+  const { self } = useSelector((state) => state.teams);
+  const { demoGuide } = useSelector((state) => state.demoGuide);
   const dispatch = useDispatch();
 
   const {} = useRecurringEffects();
@@ -26,10 +29,10 @@ const RecoverAvelhem = (props) => {
   }
 
   const canRecover = (avelhem) => {
-    if (props.restriction === null) {
+    if (props.details.restriction === null) {
       return true;
     } else {
-      return props.restriction.includes(avelhem);
+      return props.details.restriction.includes(avelhem);
     }
   };
 
@@ -37,7 +40,7 @@ const RecoverAvelhem = (props) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     newGameState.currentResolution.pop();
 
-    if (props.outcome === "Add") {
+    if (props.details.outcome === "Add") {
       //add selected Avelhem from vestige to hand
       newGameState[self].avelhemHand.push(
         newGameState[self].avelhemVestige.splice(
@@ -45,7 +48,7 @@ const RecoverAvelhem = (props) => {
           1
         )[0]
       );
-    } else if (props.outcome === "Float") {
+    } else if (props.details.outcome === "Float") {
       //take selected card then put it at the top of deck (end of array)
       newGameState[self].avelhemRepertoire.push(
         newGameState[self].avelhemVestige.splice(
@@ -83,44 +86,62 @@ const RecoverAvelhem = (props) => {
     props.hideOrRevealModale();
   };
 
+  const canClick = (element, element2) => {
+    switch (
+      demoGuide
+      //////////////////
+    ) {
+    }
+  };
+
   return (
-    <div className="modal-backdrop">
-      <div className="modal">
-        <div className="modalHeader">
-          <div className="modalTitle">{props.message}</div>
-          <div className="modalButton">
-            <button className="redButton" onClick={() => handleViewBoard()}>
-              View
+    <div className="modalBackdrop">
+      <div className="modalV2">
+        <div className="modalHeader2">
+          <div className="modalTitle2">{props.details.title}</div>
+          <div className="modalButton2">
+            <button className="yellowButton" onClick={() => handleViewBoard()}>
+              View Board
             </button>
           </div>
         </div>
 
-        <div className="modalContent">
-          <div className="fourColumn scrollable scrollable-y-only">
+        <div className="modalContent2">
+          <div className="modalContentText">{props.details.message}</div>
+          <div className="modalContent4Column modalScrollableY">
             {recoverVestige.map((usableAvelhem, i) => (
               <div
                 key={i}
-                className={`scionSkills ${
-                  selectedAvelhem === i ? "selectedSkill" : ""
+                className={`modalOptionOutline modalCardOptionOutline ${
+                  selectedAvelhem === i ? "modalCardOptionOutlineSelected" : ""
                 }`}
                 onClick={() => {
                   handleClick(canRecover(usableAvelhem.id), i);
                   // handleUpdateDemoGuide();
                 }}
               >
-                <Skill
-                  i={i}
-                  usableSkill={usableAvelhem}
-                  canActivateSkill={canRecover(usableAvelhem.id)}
-                />
+                <div
+                  className={`modalCard 
+                   ${canClick("Avelhem Card", i) ? "demoClick" : ""}
+                    `}
+                  style={{
+                    boxShadow: selectedAvelhem === i ? "none" : "",
+                  }}
+                >
+                  <Skill
+                    i={i}
+                    usableSkill={usableAvelhem}
+                    canActivateSkill={canRecover(usableAvelhem.id)}
+                  />
+                </div>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="modalBottomButton">
+        <div className="modalFooter">
           {selectedAvelhem !== null && (
-            <button className="redButton" onClick={() => handleSelect()}>
+            <button className="redButton2" onClick={() => handleSelect()}>
               Select
             </button>
           )}

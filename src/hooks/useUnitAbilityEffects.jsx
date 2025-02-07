@@ -40,14 +40,6 @@ export const useUnitAbilityEffects = () => {
       unit: unit,
     });
 
-    // newGameState.currentResolution.push({
-    //   resolution: "Discard Skill",
-    //   unit: unit,
-    //   player: self,
-    //   message: "Spend 1 skill",
-    //   restriction: null,
-    // });
-
     return newGameState;
   };
 
@@ -93,9 +85,15 @@ export const useUnitAbilityEffects = () => {
     newGameState.currentResolution.push({
       resolution: "Discard Skill",
       unit: unit,
-      player: self,
-      message: "Spend 1 skill",
-      restriction: null,
+      player: unit.player,
+      canSkip: false,
+      details: {
+        title: "Fiery Heart",
+        message:
+          "Spend 1 skill to purge an adjacent ally’s Frostbite and Burn.",
+        restriction: null,
+        reason: "Fiery Heart",
+      },
     });
 
     return newGameState;
@@ -248,9 +246,14 @@ export const useUnitAbilityEffects = () => {
     newGameState.currentResolution.push({
       resolution: "Discard Skill",
       unit: unit,
-      player: self,
-      message: "Spend 1 skill",
-      restriction: null,
+      player: unit.player,
+      canSkip: false,
+      details: {
+        title: "Reap the Whirlwind",
+        message: "Spend 1 skill and 2 Cyclones to blast an adjacent enemy.",
+        restriction: null,
+        reason: "Reap the Whirlwind",
+      },
     });
 
     return newGameState;
@@ -278,10 +281,14 @@ export const useUnitAbilityEffects = () => {
       newGameState.currentResolution.push({
         resolution: "Recover Skill",
         player: self,
-        restriction: ["03-01", "03-02", "03-03"],
-        message: "You may recover then float 1 non-burst Wind skill.",
-        outcome: "Float",
         canSkip: true,
+        details: {
+          title: "Second Wind",
+          reason: "Second Wind",
+          restriction: ["03-01", "03-02", "03-03"],
+          message: "You may recover then float 1 non-burst Wind skill.",
+          outcome: "Float",
+        },
       });
     }
 
@@ -428,7 +435,7 @@ export const useUnitAbilityEffects = () => {
     }
 
     newGameState.currentResolution.push({
-      resolution: "Search Skill",
+      resolution: "Search Card",
       player: self,
       details: {
         restriction: ["05-01", "05-02", "05-03"],
@@ -496,9 +503,14 @@ export const useUnitAbilityEffects = () => {
     newGameState.currentResolution.push({
       resolution: "Discard Skill",
       unit: unit,
-      player: self,
-      message: "Spend 1 skill",
-      restriction: null,
+      player: unit.player,
+      canSkip: false,
+      details: {
+        title: "Particle Beam",
+        message: "Spend 1 skill to blast an enemy 2 spaces away.",
+        restriction: null,
+        reason: "Particle Beam",
+      },
     });
 
     return newGameState;
@@ -605,7 +617,7 @@ export const useUnitAbilityEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Search Skill",
+      resolution: "Search Card",
       player: self,
       details: {
         restriction: ["07-03"],
@@ -651,10 +663,15 @@ export const useUnitAbilityEffects = () => {
     newGameState.currentResolution.push({
       resolution: "Discard Skill",
       unit: unit,
-      player: self,
-      message:
-        "Spend 1 skill and either 2 turns Shield or 2 turns of Ward to blast an adjacent enemy",
-      restriction: null,
+      player: unit.player,
+      canSkip: false,
+      details: {
+        title: "Ballistic Armor",
+        message:
+          "Spend 1 skill and either 2 turns Shield or 2 turns of Ward to blast an adjacent enemy",
+        restriction: null,
+        reason: "Ballistic Armor",
+      },
     });
 
     return newGameState;
@@ -683,8 +700,14 @@ export const useUnitAbilityEffects = () => {
     newGameState.currentResolution.push({
       resolution: "Discard Skill",
       unit: unit,
-      player: self,
-      message: "Spend 2nd skill",
+      player: unit.player,
+      canSkip: false,
+      details: {
+        title: "Flourish",
+        message: "Choose the second skill to spend.",
+        restriction: null,
+        reason: "Flourish",
+      },
     });
 
     newGameState.currentResolution.push({
@@ -695,8 +718,14 @@ export const useUnitAbilityEffects = () => {
     newGameState.currentResolution.push({
       resolution: "Discard Skill",
       unit: unit,
-      player: self,
-      message: "Spend 1 skill",
+      player: unit.player,
+      canSkip: false,
+      details: {
+        title: "Flourish",
+        message: "Spend 2 skills to restore your Aether and gain Overgrowth.",
+        restriction: null,
+        reason: "Flourish",
+      },
     });
 
     return newGameState;

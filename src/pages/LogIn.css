@@ -2,13 +2,10 @@
     min-height: calc(100vh - 65px);
     height: fit-content;
     max-width: 1500px;
-    overflow: hidden;
-    
-  
+    overflow: hidden;  
 }
 
 .login-content{
-
     height: calc(100vh - 65px);
     width: 100vw;
     max-width: 1500px;
@@ -32,12 +29,8 @@
     background-image: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
     border-radius: 8px;
     overflow: hidden;
-
     margin: 10px;
- 
-
     box-shadow: 4px 4px 8px 4px rgba(0, 0, 0, 0.5);
-
 }
 
 

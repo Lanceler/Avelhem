@@ -10,7 +10,6 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { useGetImages } from "../../hooks/useGetImages";
 
 const Skill = (props) => {
-  const { magnifiedSkill } = useSelector((state) => state.magnifiedSkill);
   const dispatch = useDispatch();
 
   const { getCardImage } = useGetImages();

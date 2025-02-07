@@ -54,6 +54,12 @@ import Efflorescence from "../assets/skillcards/Efflorescence.jpg";
 import ViridianGrave from "../assets/skillcards/ViridianGrave.jpg";
 import CastleOfThorns from "../assets/skillcards/CastleOfThorns.jpg";
 
+import AvianAvelhem from "../assets/avelhemcards/AvianAvelhem.jpg";
+import RaptorBlitz from "../assets/skillcards/RaptorBlitz.jpg";
+import Reconnaissance from "../assets/skillcards/Reconnaissance.jpg";
+import GuardianWings from "../assets/skillcards/GuardianWings.jpg";
+import VanguardFleet from "../assets/skillcards/VanguardFleet.jpg";
+
 import HeirsEndeavor from "../assets/skillcards/HeirsEndeavor.jpg";
 import TeaForTwo from "../assets/skillcards/TeaForTwo.jpg";
 import DarkHalo from "../assets/skillcards/DarkHalo.jpg";
@@ -69,7 +75,6 @@ import FatedRivalry from "../assets/skillcards/FatedRivalry.jpg";
 import MatchMadeInHeaven from "../assets/skillcards/MatchMadeInHeaven.jpg";
 import VengefulLegacy from "../assets/skillcards/VengefulLegacy.jpg";
 import BlackBusinessCard from "../assets/skillcards/BlackBusinessCard.jpg";
-import Transcendence from "../assets/skillcards/Transcendence.jpg";
 
 import Pawn from "../assets/scionIcons/Pawn.png";
 import FireScion from "../assets/scionIcons/FireScion.png";
@@ -80,6 +85,7 @@ import LightningScion from "../assets/scionIcons/LightningScion.png";
 import ManaScion from "../assets/scionIcons/ManaScion.png";
 import MetalScion from "../assets/scionIcons/MetalScion.png";
 import PlantScion from "../assets/scionIcons/PlantScion.png";
+import AvianScion from "../assets/scionIcons/AvianScion.png";
 
 import Afterburner from "../assets/abilities/Afterburner.jpg";
 import FieryHeart from "../assets/abilities/FieryHeart.jpg";
@@ -149,6 +155,7 @@ import LightningBanner from "../assets/banners/LightningBanner.jpg";
 import ManaBanner from "../assets/banners/ManaBanner.jpg";
 import MetalBanner from "../assets/banners/MetalBanner.jpg";
 import PlantBanner from "../assets/banners/PlantBanner.jpg";
+import AvianBanner from "../assets/banners/AvianBanner.jpg";
 
 import FireBG from "../assets/banners/FireBG.jpg";
 import WaterBG from "../assets/banners/WaterBG.jpg";
@@ -231,7 +238,6 @@ export const useGetImages = () => {
     VengefulLegacy,
     BlackBusinessCard,
     // Coalescence,
-    Transcendence,
     Pawn,
     FireScion,
     WaterScion,
@@ -241,6 +247,7 @@ export const useGetImages = () => {
     ManaScion,
     MetalScion,
     PlantScion,
+    AvianScion,
     Afterburner,
     FieryHeart,
     EternalEmber,
@@ -350,6 +357,9 @@ export const useGetImages = () => {
       case "PlantBG":
         return PlantBG;
 
+      case "Avian":
+        return AvianBanner;
+
       //
 
       case "Challenge":
@@ -386,9 +396,6 @@ export const useGetImages = () => {
         return SkillCardBack;
       case "AvelhemCardBack":
         return AvelhemCardBack;
-
-      case "SX-01":
-        return Transcendence;
 
       case 1:
         return FireAvelhem;
@@ -582,6 +589,18 @@ export const useGetImages = () => {
       // case "SD-01":
       //   return Coalescence;
 
+      //expansion
+      case 9:
+        return AvianAvelhem;
+      case "09-01":
+        return RaptorBlitz;
+      case "09-02":
+        return Reconnaissance;
+      case "09-03":
+        return GuardianWings;
+      case "09-04":
+        return VanguardFleet;
+
       default:
         return "";
     }
@@ -615,6 +634,9 @@ export const useGetImages = () => {
 
       case "Plant Scion":
         return PlantScion;
+
+      case "Avian Scion":
+        return AvianScion;
 
       default:
         return null;

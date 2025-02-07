@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import "../modals/Modal.css";
+import "../modals/Modal2.scss";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
@@ -79,7 +79,7 @@ const FerventPrayerResonance = (props) => {
       player: enemy,
       avelhems: [...avelhemsToFloat].reverse(),
       title: "Fervent Prayer",
-      message: "Your opponent has floated the following:",
+      message: "Your opponent has recovered and floated the following:",
     });
 
     dispatch(updateState(newGameState));
@@ -109,33 +109,34 @@ const FerventPrayerResonance = (props) => {
     props.hideOrRevealModale();
   };
 
+  const canClick = (element, element2) => {};
+
+  const handleUpdateDemoGuide = () => {};
+
   return (
-    <div className="modal-backdrop">
-      <div className="modal">
-        <div className="modalHeader">
-          <div className="modalTitle">Fervent Prayer</div>
-          <div className="modalButton">
-            <button className="redButton" onClick={() => handleViewBoard()}>
-              View
+    <div className="modalBackdrop">
+      <div className="modalV2">
+        <div className="modalHeader2">
+          <div className="modalTitle2">Fervent Prayer</div>
+          <div className="modalButton2">
+            <button className="yellowButton" onClick={() => handleViewBoard()}>
+              View Board
             </button>
           </div>
         </div>
-
-        <h3>
-          Recover up to 3 different Avelhems, then reveal and float them. Cards
-          selected earlier will float above subsequent ones.
-        </h3>
-
-        <br />
-
-        <div className="modalContent">
-          {" "}
-          <div className="fourColumn scrollable scrollable-y-only">
+        <div className="modalContent2">
+          <div className="modalContentText" style={{ fontSize: 20 }}>
+            Recover up to 3 different Avelhems, then reveal and float them.
+            Cards selected earlier will float above subsequent ones.
+          </div>
+          <div className="modalContent4Column modalScrollableY">
             {avelhemVestige.map((usableSkill, i) => (
               <div
                 key={i}
-                className={`scionSkills ${
-                  selectedAvelhems.includes(i) ? "selectedSkill" : ""
+                className={`modalOptionOutline modalCardOptionOutline ${
+                  selectedAvelhems.includes(i)
+                    ? "modalCardOptionOutlineSelected"
+                    : ""
                 }`}
                 onClick={() => {
                   handleClick(
@@ -146,30 +147,39 @@ const FerventPrayerResonance = (props) => {
                   // handleUpdateDemoGuide();
                 }}
               >
-                <SkillMultiSelect
-                  i={i}
-                  usableSkill={usableSkill}
-                  canAdd={
-                    selectedAvelhems.includes(i) ||
-                    !selectedAvelhemIds.includes(avelhemVestige[i])
-                  }
-                  selectedSkills={selectedAvelhems}
-                  addLimit={selectLimit}
-                />
+                <div
+                  className={`modalCard 
+                   ${canClick("Avelhem Card", i) ? "demoClick" : ""}
+                    `}
+                  style={{
+                    boxShadow: selectedAvelhems.includes(i) ? "none" : "",
+                  }}
+                >
+                  <SkillMultiSelect
+                    i={i}
+                    usableSkill={usableSkill}
+                    canAdd={
+                      selectedAvelhems.includes(i) ||
+                      !selectedAvelhemIds.includes(avelhemVestige[i])
+                    }
+                    selectedSkills={selectedAvelhems}
+                    addLimit={selectLimit}
+                  />
+                </div>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="modalBottomButton">
+        <div className="modalFooter">
           {selectedAvelhems.length === 0 && (
-            <button className="redButton" onClick={() => handleSkip()}>
+            <button className="redButton2" onClick={() => handleSkip()}>
               {skipMessage}
             </button>
           )}
 
           {selectedAvelhems.length > 0 && (
-            <button className="redButton" onClick={() => handleSelect()}>
+            <button className="redButton2" onClick={() => handleSelect()}>
               {selectMessage}
             </button>
           )}

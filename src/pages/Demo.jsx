@@ -140,7 +140,7 @@ export default function Demo() {
               "01-01",
               "05-02",
               "08-03",
-              "SX-01",
+              "07-01",
             ];
 
             duplicateDemoGameState.guest.skillHand = [
@@ -148,8 +148,8 @@ export default function Demo() {
               "07-02",
               "SB-01",
               "SA-04",
-              "SX-01",
-              "SX-01",
+              "05-01",
+              "08-01",
             ];
 
             const a = duplicateDemoGameState.host.avelhemRepertoire.length;
@@ -169,14 +169,6 @@ export default function Demo() {
             duplicateDemoGameState.host.skillRepertoire[b - 7] = "05-02";
             duplicateDemoGameState.host.skillRepertoire[b - 8] = "04-03";
 
-            duplicateDemoGameState.guest.skillRepertoire[b - 1] = "01-03";
-            duplicateDemoGameState.guest.skillRepertoire[b - 2] = "05-03";
-            duplicateDemoGameState.guest.skillRepertoire[b - 3] = "SB-05";
-            duplicateDemoGameState.guest.skillRepertoire[b - 4] = "SC-01";
-            duplicateDemoGameState.guest.skillRepertoire[b - 5] = "SC-04";
-            duplicateDemoGameState.guest.skillRepertoire[b - 6] = "08-03";
-            duplicateDemoGameState.guest.skillRepertoire[b - 7] = "03-03";
-            duplicateDemoGameState.guest.skillRepertoire[b - 8] = "07-01";
             break;
 
           case 11:

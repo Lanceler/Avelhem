@@ -13,10 +13,9 @@ export default function SelectFirstPlayer(props) {
   const { demoCount } = useSelector((state) => state.demoCount);
 
   const dispatch = useDispatch();
-
   const { newUnitStats, shuffleCards } = useRecurringEffects();
 
-  let randomChoices = ["host", "guest"];
+  const randomChoices = ["host", "guest"];
 
   const getRandomFromArray = (arr) => {
     const randomIndex = Math.floor(Math.random() * arr.length);
@@ -25,44 +24,40 @@ export default function SelectFirstPlayer(props) {
 
   const handleSetFirstPlayer = (choice) => {
     const newGameState = JSON.parse(JSON.stringify(localGameState));
-
     newGameState.turnPlayer = choice;
 
+    // initialize host
     let hostSkillRepertoire = [...newGameState.host.skillRepertoire];
     hostSkillRepertoire = shuffleCards(hostSkillRepertoire);
-    let hostStartingHand = hostSkillRepertoire.splice(
-      hostSkillRepertoire.length - 4,
-      4
+    const hostStartingHand = hostSkillRepertoire.splice(
+      hostSkillRepertoire.length - 5,
+      5
     );
-
     newGameState.host.skillHand = hostStartingHand;
     newGameState.host.skillRepertoire = hostSkillRepertoire;
-
     let hostAvelhemRepertoire = [...newGameState.host.avelhemRepertoire];
     newGameState.host.avelhemRepertoire = shuffleCards(hostAvelhemRepertoire);
+
+    // initialize guest
     let guestSkillRepertoire = [...newGameState.guest.skillRepertoire];
     guestSkillRepertoire = shuffleCards(guestSkillRepertoire);
-
-    let guestStartingHand = guestSkillRepertoire.splice(
-      guestSkillRepertoire.length - 4,
-      4
+    const guestStartingHand = guestSkillRepertoire.splice(
+      guestSkillRepertoire.length - 5,
+      5
     );
 
     newGameState.guest.skillHand = guestStartingHand;
     newGameState.guest.skillRepertoire = guestSkillRepertoire;
-
     let guestAvelhemRepertoire = [...newGameState.guest.avelhemRepertoire];
     newGameState.guest.avelhemRepertoire = shuffleCards(guestAvelhemRepertoire);
 
-    newGameState.guest.skillHand.push("SX-01");
-    newGameState.host.skillHand.push("SX-01");
-
+    //extra draw for 2nd player
     if (choice === "host") {
-      newGameState.guest.skillHand.push("SX-01");
-      newGameState.host.skillVestige.push("SX-01");
+      newGameState.guest.skillHand.push(
+        newGameState.guest.skillRepertoire.pop()
+      );
     } else {
-      newGameState.host.skillHand.push("SX-01");
-      newGameState.guest.skillVestige.push("SX-01");
+      newGameState.host.skillHand.push(newGameState.host.skillRepertoire.pop());
     }
 
     const newZoneInfo = [...JSON.parse(localGameState.zones)];

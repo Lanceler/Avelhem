@@ -78,7 +78,7 @@ const ViewBPUpgrades = (props) => {
                   )}
                   {upgrades.acquisition >= 3 && (
                     <p className="unitInfo-text-desc">
-                      3. May recover 1 “Transcendence” via Cultivate.
+                      3. May spend 1 FD to draw another skill via Cultivate.
                     </p>
                   )}
                   <br />
@@ -154,7 +154,7 @@ const ViewBPUpgrades = (props) => {
                   )}
                   {upgrades.avelhem >= 3 && (
                     <p className="unitInfo-text-desc">
-                      3. Avelhems have an alternate effect: spend 3 FD to
+                      3. Avelhems have an alternate effect: spend 2 FD to
                       recover 1 skill with the matching aspect.
                     </p>
                   )}

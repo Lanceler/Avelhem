@@ -772,6 +772,32 @@
   z-index: 5;
 }
 
+/* .raptor-blitz {
+  transform: rotate(45deg);
+  background: linear-gradient(22deg,
+      #00001d,
+      #0a0c8d,
+      #2c29cc,
+      #e7900d,
+      #cfa311,
+      #f9ffa0);
+  border: 0.5px solid #000000de;
+  height: 7.5px;
+  width: 7.5px;
+  position: absolute;
+  animation: moveUpDown 0.95s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 5;
+} */
+
+
+
+
+
+
+
+
+
 @keyframes moveUpDown {
   0%,
   100% {

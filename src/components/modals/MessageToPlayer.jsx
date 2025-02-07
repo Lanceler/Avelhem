@@ -1,5 +1,5 @@
 import React from "react";
-import "./Modal.css";
+import "./Modal2.scss";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
@@ -42,21 +42,19 @@ const MessageToPlayer = (props) => {
   };
 
   return (
-    <div className="modal-backdrop">
-      <div className="modal">
-        <div className="modalHeader">
-          <div className="modalTitle">{props.title}</div>
+    <div className="modalBackdrop">
+      <div className="modalV2">
+        <div className="modalHeader2">
+          <div className="modalTitle2">{props.title}</div>
         </div>
 
-        <br />
-
-        <div className="modalContent">
-          <h3 style={{ maxWidth: 700 }}>{props.message}</h3>
+        <div className="modalContent2">
+          <div className="modalContentText">{props.message}</div>
         </div>
 
-        <div className="modalBottomButton">
+        <div className="modalFooter">
           <button
-            className={`redButton ${canClick() ? "demoClick" : ""}`}
+            className={`redButton2 ${canClick() ? "demoClick" : ""}`}
             onClick={() => {
               handleProceed();
               handleUpdateDemoGuide();

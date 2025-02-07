@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import "./Modal.css";
+import React, { useState } from "react";
+import "./Modal2.scss";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
@@ -7,12 +7,11 @@ import { updateDemoCount } from "../../redux/demoCount";
 
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
-const SelectSovereignTactic = (props) => {
+const SelectTacticalActionSovereign = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
   const { demoCount } = useSelector((state) => state.demoCount);
-
   const dispatch = useDispatch();
 
   const [selectedChoice, setSelectedChoice] = useState(null);
@@ -23,34 +22,29 @@ const SelectSovereignTactic = (props) => {
   let newGameState = JSON.parse(JSON.stringify(localGameState));
   let face = props.face;
 
-  let message = null;
-
-  let abilityDetails = [];
+  let optionDetails = [];
   switch (face) {
     case "Advance":
-      abilityDetails = [
+      optionDetails = [
         {
-          abilityName: "Deploy Pawn",
-          abilityQualifier: <div className="abilityQualifier"></div>,
-          abilityText: (
+          optionName: "Deploy Pawn",
+          optionQualifier: (
+            <div>
+              You can have up to <br /> 8 units in play.
+            </div>
+          ),
+          optionText: (
             <>
               <div className="abilityText ">
                 ⬩Deploy a pawn in your frontier.
               </div>
-              {/* <div className="abilityText ">
-                ⬩
-                {newGameState[self].bountyUpgrades.tactics < 1 && (
-                  <>If upgraded: </>
-                )}
-                You may draw 1 Avelhem.
-              </div> */}
             </>
           ),
         },
         {
-          abilityName: "Convert Tactic",
-          abilityQualifier: <div className="abilityQualifier"></div>,
-          abilityText: (
+          optionName: "Convert Tactic",
+          optionQualifier: null,
+          optionText: (
             <>
               <div className="abilityText ">
                 ⬩Spend 6 FD to gain an Assault tactic.
@@ -59,15 +53,20 @@ const SelectSovereignTactic = (props) => {
           ),
         },
         {
-          abilityName: "Deploy Scion",
-          abilityQualifier: (
-            <div className="abilityQualifier">
+          optionName: "Deploy Scion",
+          optionQualifier: (
+            <div>
               {newGameState[self].bountyUpgrades.tactics < 3 && (
-                <div style={{ fontSize: 20 }}>Must be unlocked</div>
+                <div>Must be unlocked</div>
+              )}
+              {newGameState[self].bountyUpgrades.tactics === 3 && (
+                <div>
+                  You can have up to <br /> 8 units in play.
+                </div>
               )}
             </div>
           ),
-          abilityText: (
+          optionText: (
             <>
               <div className="abilityText ">
                 ⬩Float 1 skill to deploy a Scion in your frontier.
@@ -79,14 +78,14 @@ const SelectSovereignTactic = (props) => {
       break;
 
     case "Mobilize":
-      abilityDetails = [
+      optionDetails = [
         {
-          abilityName: "Draw Skill",
-          abilityQualifier: <div className="abilityQualifier"></div>,
-          abilityText: (
+          optionName: "Draw Skill",
+          optionQualifier: null,
+          optionText: (
             <>
               <div className="abilityText ">
-                ⬩Spend 2 instances to draw 1 skill.
+                ⬩Use 2 instances to draw 1 skill.
               </div>
             </>
           ),
@@ -96,11 +95,11 @@ const SelectSovereignTactic = (props) => {
 
     case "Assault":
     case "Null":
-      abilityDetails = [
+      optionDetails = [
         {
-          abilityName: "Null",
-          abilityQualifier: <div className="abilityQualifier"></div>,
-          abilityText: (
+          optionName: "Null",
+          optionQualifier: null,
+          optionText: (
             <>
               <div className="abilityText ">No tactical actions available.</div>
             </>
@@ -110,35 +109,31 @@ const SelectSovereignTactic = (props) => {
       break;
 
     case "Invoke":
-      abilityDetails = [
+      optionDetails = [
         {
-          abilityName: "Draw Avelhem",
-          abilityQualifier: <div className="abilityQualifier"></div>,
-          abilityText: (
+          optionName: "Draw Avelhem",
+          optionQualifier: null,
+          optionText: (
             <>
               <div className="abilityText ">⬩Draw 3 Avelhems.</div>
             </>
           ),
         },
         {
-          abilityName: "Draw Skill",
-          abilityQualifier: <div className="abilityQualifier"></div>,
-          abilityText: (
+          optionName: "Draw Skill",
+          optionQualifier: null,
+          optionText: (
             <>
               <div className="abilityText ">⬩Draw 2 skills.</div>
             </>
           ),
         },
         {
-          abilityName: "Defy Fate",
-          abilityQualifier: <div className="abilityQualifier"></div>,
-          abilityText: (
+          optionName: "Defy Fate",
+          optionQualifier: null,
+          optionText: (
             <>
-              <div className="abilityText ">⬩Gain 2 FD.</div>
-              {/* <div className="abilityText ">⬩Draw 1 Avelhem.</div> */}
-              <div className="abilityText ">
-                ⬩You may recover 1 “Transcendence”.
-              </div>
+              <div className="abilityText ">⬩Gain 3 FD.</div>
             </>
           ),
         },
@@ -146,14 +141,18 @@ const SelectSovereignTactic = (props) => {
       break;
 
     case "Rally":
-      abilityDetails = [
+      optionDetails = [
         {
-          abilityName: "Deploy Pawn",
-          abilityQualifier: <div className="abilityQualifier"></div>,
-          abilityText: (
+          optionName: "Deploy Pawn",
+          optionQualifier: (
+            <div>
+              You can have up to <br /> 8 units in play.
+            </div>
+          ),
+          optionText: (
             <>
               <div className="abilityText ">
-                ⬩Spend 1 instance to deploy a pawn in your frontier.
+                ⬩Use 1 instance to deploy a pawn in your frontier.
               </div>
             </>
           ),
@@ -202,9 +201,6 @@ const SelectSovereignTactic = (props) => {
           case 1:
           case 2:
             return true;
-
-          // case 2:
-          //   return newGameState[self].bountyUpgrades.tactics > 0;
         }
         break;
 
@@ -305,20 +301,8 @@ const SelectSovereignTactic = (props) => {
             //Gain FD
             newGameState[self].fateDefiance = Math.min(
               6,
-              newGameState[self].fateDefiance + 2
+              newGameState[self].fateDefiance + 3
             );
-
-            //Recover Transcendence
-            if (newGameState[self].skillVestige.includes("SX-01")) {
-              newGameState.currentResolution.push({
-                resolution: "Recover Skill",
-                player: self,
-                restriction: ["SX-01"],
-                message: "You may recover 1 “Transcendence”",
-                outcome: "Add",
-                canSkip: true,
-              });
-            }
 
             break;
         }
@@ -353,19 +337,6 @@ const SelectSovereignTactic = (props) => {
   };
 
   const canClick = (element1, element2) => {
-    // switch (demoGuide) {
-    //   case "Learn1.35":
-    //     return element1 === "Tactic" && element2 === 0;
-
-    //   case "Learn1.36":
-    //     return element1 === "Select Button";
-
-    //   case "Learn1.38":
-    //   case "Learn1.48":
-    //   case "Learn1.116":
-    //     return element1 === "Return Button";
-    // }
-
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
@@ -395,49 +366,57 @@ const SelectSovereignTactic = (props) => {
   };
 
   return (
-    <div className="modal-backdrop">
-      <div className="modal">
-        <div className="modalHeader">
-          <div className="modalTitle">Tactical Action: {props.face}</div>
+    <div className="modalBackdrop">
+      <div className="modalV2">
+        <div className="modalHeader2">
+          <div className="modalTitle2">Tactical Action: {props.face}</div>
         </div>
 
-        {message && <h3>{message}</h3>}
-        <br />
+        <div className="modalContent2">
+          <div className="modalContentText">Choose 1:</div>
 
-        <div className="modalContent">
-          {abilityDetails.map((detail, i) => (
-            <div
-              key={i}
-              className={`modal-option-outline ${
-                selectedChoice === i ? "selected-modal-option" : ""
-              } ${canClick("Tactic", i) ? "demoClick" : ""}`}
-              onClick={() => {
-                handleChoice(i);
-                handleUpdateDemoGuide();
-              }}
-            >
+          <div className={`modalContent${optionDetails.length}Column`}>
+            {optionDetails.map((detail, i) => (
               <div
-                className={`modal-option-content ${
-                  canChoice(i) ? "" : "disabled-modal-option-content"
-                } `}
+                key={i}
+                className={`modalOptionOutline
+                  modalMediumOptionOutline
+                   ${
+                     selectedChoice === i
+                       ? "modalMediumOptionOutlineSelected"
+                       : ""
+                   } `}
+                onClick={() => {
+                  handleChoice(i);
+                  handleUpdateDemoGuide();
+                }}
               >
-                <div className="modal-option-header">
-                  <div className="modal-option-title ">
-                    {detail.abilityName}
+                <div
+                  className={`modalMedium ${
+                    canChoice(i) ? "" : "disabledModal"
+                  } 
+                  ${canClick("Tactic", i) ? "demoClick" : ""}`}
+                  style={{
+                    boxShadow: selectedChoice === i ? "none" : "",
+                  }}
+                >
+                  <div className="modalOptionHeader">
+                    <div className="modalOptionTitle">{detail.optionName}</div>
+                    <div className="modalOptionQualifier">
+                      {detail.optionQualifier}
+                    </div>
                   </div>
-
-                  <div>{detail.abilityQualifier}</div>
+                  <div className="modalOptionText">{detail.optionText}</div>
                 </div>
-                <div className="modalChoiceText ">{detail.abilityText}</div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
-        <div className="modalBottomButton">
+        <div className="modalFooter">
           {selectedChoice === null && (
             <button
-              className={`redButton ${
+              className={`redButton2 ${
                 canClick("Return Button") ? "demoClick" : ""
               }`}
               onClick={() => {
@@ -451,7 +430,7 @@ const SelectSovereignTactic = (props) => {
 
           {selectedChoice !== null && (
             <button
-              className={`redButton ${
+              className={`redButton2 ${
                 canClick("Select Button") ? "demoClick" : ""
               }`}
               onClick={() => {
@@ -468,4 +447,4 @@ const SelectSovereignTactic = (props) => {
   );
 };
 
-export default SelectSovereignTactic;
+export default SelectTacticalActionSovereign;

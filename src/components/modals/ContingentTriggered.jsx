@@ -460,42 +460,47 @@ const ContingentTriggered = (props) => {
   };
 
   return (
-    <div className="modal-backdrop">
-      <div className="modal">
-        <div className="modalHeader">
-          <div className="modalTitle">
-            Contigency Triggered: {props.contingencyType}{" "}
+    <div className="modalBackdrop">
+      <div className="modalV2">
+        <div className="modalHeader2">
+          <div className="modalTitle2">
+            Contigency Triggered: {props.contingencyType}
           </div>
-          <div className="modalButton">
-            <button className="redButton" onClick={() => handleViewBoard()}>
-              View
+          <div className="modalButton2">
+            <button className="yellowButton" onClick={() => handleViewBoard()}>
+              View Board
             </button>
           </div>
         </div>
-        <br />
-        <h3>{contingencyMessage}</h3>
-        <br />
 
-        <div className="scrollable scrollable-y-only">
-          <div className="fourColumn">
+        <div className="modalContent2">
+          <div className="modalContentText">{contingencyMessage}</div>
+          <div className="modalContent4Column modalScrollableY">
             {usableSkills.map((usableSkill, i) => (
               <div
                 key={i}
-                className={`scionSkills ${
-                  selectedSkill === i ? "selectedSkill" : ""
-                }
-                ${canClick("Skill Card", usableSkill) ? "demoClick" : ""}
-                `}
+                className={`modalOptionOutline modalCardOptionOutline ${
+                  selectedSkill === i ? "modalCardOptionOutlineSelected" : ""
+                }`}
                 onClick={() => {
                   handleClick(canActivateSkill(usableSkill.id), i);
                   handleUpdateDemoGuide();
                 }}
               >
-                <Skill
-                  i={i}
-                  usableSkill={usableSkill}
-                  canActivateSkill={canActivateSkill(usableSkill.id)}
-                />
+                <div
+                  className={`modalCard 
+                   ${canClick("Skill Card", usableSkill) ? "demoClick" : ""}
+                    `}
+                  style={{
+                    boxShadow: selectedSkill === i ? "none" : "",
+                  }}
+                >
+                  <Skill
+                    i={i}
+                    usableSkill={usableSkill}
+                    canActivateSkill={canActivateSkill(usableSkill.id)}
+                  />
+                </div>
               </div>
             ))}
           </div>

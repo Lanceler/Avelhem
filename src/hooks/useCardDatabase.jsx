@@ -48,6 +48,15 @@ export const useCardDatabase = () => {
       Method: "Avelhem",
       CardId: 8,
     },
+
+    ///expansion
+
+    {
+      Name: "Avian Avelhem",
+      Stock: 4,
+      Method: "Avelhem",
+      CardId: 9,
+    },
   ];
 
   const skillCardList = [
@@ -67,7 +76,7 @@ export const useCardDatabase = () => {
       CardId: "01-02",
     },
     {
-      Name: "Blaze Of Glory",
+      Name: "Blaze of Glory",
       Stock: 4,
       Aspect: "Fire",
       Method: "Contingent",
@@ -176,7 +185,7 @@ export const useCardDatabase = () => {
       CardId: "05-01",
     },
     {
-      Name: "Zip And Zap",
+      Name: "Zip and Zap",
       Stock: 4,
       Aspect: "Lightning",
       Method: "Resonant",
@@ -256,7 +265,7 @@ export const useCardDatabase = () => {
     },
     //plant
     {
-      Name: "Sow And Reap",
+      Name: "Sow and Reap",
       Stock: 4,
       Aspect: "Plant",
       Method: "Standard",
@@ -277,11 +286,41 @@ export const useCardDatabase = () => {
       CardId: "08-03",
     },
     {
-      Name: "Castle Of Thorns",
+      Name: "Castle of Thorns",
       Stock: 1,
       Aspect: "Plant",
       Method: "Burst",
       CardId: "08-04",
+    },
+
+    //avian
+    {
+      Name: "Raptor Blitz",
+      Stock: 4,
+      Aspect: "Avian",
+      Method: "Standard",
+      CardId: "09-01",
+    },
+    {
+      Name: "Reconnaissance",
+      Stock: 4,
+      Aspect: "Avian",
+      Method: "Resonant",
+      CardId: "09-02",
+    },
+    {
+      Name: "Guardian Wings",
+      Stock: 4,
+      Aspect: "Avian",
+      Method: "Contingent",
+      CardId: "09-03",
+    },
+    {
+      Name: "Vanguard Fleet",
+      Stock: 1,
+      Aspect: "Avian",
+      Method: "Burst",
+      CardId: "09-04",
     },
 
     //sovereign
@@ -293,7 +332,7 @@ export const useCardDatabase = () => {
       CardId: "SA-01",
     },
     {
-      Name: "Tea For Two",
+      Name: "Tea for Two",
       Stock: 2,
       Aspect: "Sovereign",
       Method: "Standard",
@@ -349,14 +388,14 @@ export const useCardDatabase = () => {
       CardId: "SB-04",
     },
     {
-      Name: "Press The Attack",
+      Name: "Press the Attack",
       Stock: 2,
       Aspect: "Sovereign",
       Method: "Resonant",
       CardId: "SB-05",
     },
     {
-      Name: "Power At The Final Hour",
+      Name: "Power at the Final Hour",
       Stock: 2,
       Aspect: "Sovereign",
       Method: "Contingent",
@@ -370,7 +409,7 @@ export const useCardDatabase = () => {
       CardId: "SC-02",
     },
     {
-      Name: "Match Made In Heaven",
+      Name: "Match Made in Heaven",
       Stock: 2,
       Aspect: "Sovereign",
       Method: "Contingent",
@@ -399,6 +438,8 @@ export const useCardDatabase = () => {
     // },
   ];
 
+  const skillCardListExpansion = ["09-01", "09-02", "09-03", "09-04"];
+
   const getScionSet = (unitClass) => {
     switch (unitClass) {
       case "Fire Scion":
@@ -417,6 +458,10 @@ export const useCardDatabase = () => {
         return ["07-01", "07-02", "07-03", "07-04"];
       case "Plant Scion":
         return ["08-01", "08-02", "08-03", "08-04"];
+
+      //Expansion
+      case "Avian Scion":
+        return ["09-01", "09-02", "09-03", "09-04"];
 
       default:
         return;
@@ -449,7 +494,8 @@ export const useCardDatabase = () => {
       "06-04",
       "07-04",
       "08-04",
-      "SD-01",
+      "09-04",
+      // "SD-01",
     ];
   };
 
@@ -466,12 +512,12 @@ export const useCardDatabase = () => {
       "07-01", //Magnetic Shockwave
       "07-03", //Frenzy Blade
       "08-01", //Sow and Reap
+      "09-01", //Raptor Blitz
     ];
   };
 
   const sovereignSkillList = () => {
     return [
-      "SX-01",
       "SA-01",
       "SA-02",
       "SA-03",
@@ -548,6 +594,7 @@ export const useCardDatabase = () => {
   return {
     avelhemCardList,
     skillCardList,
+    skillCardListExpansion,
     getScionSet,
     getAvelhemById,
     getAvelhemIndex,

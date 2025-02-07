@@ -16,6 +16,7 @@ export const useSkillEffects = () => {
     getZonesWithAllies,
     getZonesWithEnemies,
     getZonesWithEnemiesAfflicted,
+    getZonesWithEnemiesNoAether,
     getZonesWithEnemiesRooted,
     isAdjacent,
     isMuted,
@@ -50,9 +51,14 @@ export const useSkillEffects = () => {
     newGameState.currentResolution.push({
       resolution: "Discard Skill",
       unit: unit,
-      player: self,
-      message: "Spend 1 skill",
-      restriction: null,
+      player: unit.player,
+      canSkip: false,
+      details: {
+        title: "Ignition Propulsion",
+        message: "Spend 1 skill to strike.",
+        restriction: null,
+        reason: "Ignition Propulsion",
+      },
     });
 
     return newGameState;
@@ -112,9 +118,14 @@ export const useSkillEffects = () => {
     newGameState.currentResolution.push({
       resolution: "Discard Skill",
       unit: unit,
-      player: self,
-      message: "Spend 1 skill",
-      restriction: null,
+      player: unit.player,
+      canSkip: false,
+      details: {
+        title: "Conflagration",
+        message: "Spend 1 skill to blast an adjacent enemy.",
+        restriction: null,
+        reason: "Conflagration",
+      },
     });
 
     return newGameState;
@@ -1810,9 +1821,15 @@ export const useSkillEffects = () => {
     newGameState.currentResolution.push({
       resolution: "Discard Skill",
       unit: unit,
-      player: self,
-      message: "Spend 1 Mana skill",
-      restriction: ["06-01", "06-02", "06-03"],
+      player: unit.player,
+      canSkip: false,
+      details: {
+        title: "Disruption Field",
+        message:
+          "Spend 1 Mana skill to gain Disruption and Shield for 2 turns each.",
+        restriction: ["06-01", "06-02", "06-03"],
+        reason: "Disruption Field",
+      },
     });
 
     return newGameState;
@@ -2132,7 +2149,7 @@ export const useSkillEffects = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
-    //end "Activating Sow And Reap" resolution
+    //end "Activating Sow and Reap" resolution
     newGameState.currentResolution.pop();
 
     //give unit activationCounter
@@ -2439,6 +2456,50 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
+  const raptorBlitz1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Raptor Blitz" resolution
+    newGameState.currentResolution.pop();
+
+    //give unit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation += 1)
+      : (unit.temporary.activation = 1);
+
+    newGameState.currentResolution.push({
+      resolution: "Avian Skill",
+      resolution2: "Raptor Blitz1",
+      unit: unit,
+      details: {
+        title: "Raptor Blitz",
+        reason: "Raptor Blitz",
+      },
+    });
+
+    return newGameState;
+  };
+
+  const raptorBlitz2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Raptor Blitz2" resolution
+    newGameState.currentResolution.pop();
+
+    enterSelectUnitMode(
+      getZonesWithEnemiesNoAether(unit, 1),
+      unit,
+      newGameState,
+      null,
+      "blast",
+      null
+    );
+
+    return newGameState;
+  };
+
   //end of list
 
   const applySkill = (effect, a, b, c) => {
@@ -2606,6 +2667,12 @@ export const useSkillEffects = () => {
         return castleOfThorns1(a);
       case "castleOfThorns2":
         return castleOfThorns2(a);
+
+      //Avian
+      case "raptorBlitz1":
+        return raptorBlitz1(a);
+      case "raptorBlitz2":
+        return raptorBlitz2(a);
     }
   };
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Modal.css";
+import "./Modal2.scss";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
@@ -55,77 +55,66 @@ const TacticResults3 = (props) => {
     props.hideOrRevealModale();
   };
 
-  const canClick = (element, element2) => {
-    switch (demoGuide) {
-      case "Learn1.91":
-        return element === "tactic" && element2 === 2;
+  const canClick = (element, element2) => {};
 
-      case "Learn1.92":
-        return element === "disregard";
-    }
-  };
-
-  const handleUpdateDemoGuide = () => {
-    switch (demoGuide) {
-      case "Learn1.91":
-        dispatch(updateDemo("Learn1.92"));
-        break;
-
-      case "Learn1.92":
-        dispatch(updateDemo("Learn1.93"));
-        break;
-    }
-  };
+  const handleUpdateDemoGuide = () => {};
 
   return (
-    <div className="modal-backdrop">
-      <div className="modal">
-        <div className="modalHeader">
-          <div className="modalTitle">Dice Results</div>
-          <div className="modalButton">
-            <button className="redButton" onClick={() => handleViewBoard()}>
-              View
+    <div className="modalBackdrop">
+      <div className="modalV2">
+        <div className="modalHeader2">
+          <div className="modalTitle2">Dice Results</div>
+          <div className="modalButton2">
+            <button className="yellowButton" onClick={() => handleViewBoard()}>
+              View Board
             </button>
           </div>
         </div>
 
-        <h3>Disregard 1 tactic.</h3>
-        <br />
-        <div className="modalContent">
-          {props.reroll.map((tactic, index) => (
-            <div
-              className="center"
-              key={index}
-              onClick={() => {
-                handleSelect(index);
-                handleUpdateDemoGuide();
-              }}
-            >
-              <div
-                // className="tacticBG"
-                className={`tacticBG ${
-                  selectedChoice === index ? "selected-modal-option2" : ""
-                } ${canClick("tactic", index) ? "demoClick" : ""} `}
-              >
+        <div className="modalContent2">
+          <div className="modalContentText">Disregard 1 tactic.</div>
+
+          <div className="modalContent3Column">
+            {props.reroll.map((tactic, i) => (
+              <div className="modalTactics" key={i}>
                 <div
-                  key={index}
-                  className="tactic tacticSmall"
-                  style={{
-                    backgroundImage: `url(${getTacticImage(tactic.face)})`,
+                  className={`modalOptionOutline modalTacticOptionSmallOutline 
+                ${
+                  selectedChoice === i
+                    ? "modalTacticOptionSmallOutlineSelected"
+                    : ""
+                }`}
+                  onClick={() => {
+                    handleSelect(i);
+                    handleUpdateDemoGuide();
                   }}
-                ></div>
+                >
+                  <div
+                    className={`modalTacticSmall ${
+                      canClick("tactic", i) ? "demoClick" : ""
+                    }`}
+                    style={{
+                      boxShadow: selectedChoice === i ? "none" : "",
+                    }}
+                  >
+                    <div
+                      className="modalTacticImage"
+                      style={{
+                        backgroundImage: `url(${getTacticImage(tactic.face)})`,
+                      }}
+                    ></div>
+                  </div>
+                </div>
+                <h2 style={{ marginTop: 10 }}>{tactic.face}</h2>
               </div>
-              <h2 style={{ marginTop: 10 }}>{tactic.face}</h2>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
-        <br />
-
-        <div className="modalBottomButton">
+        <div className="modalFooter">
           {selectedChoice !== null && (
             <button
-              className={`redButton ${
+              className={`redButton2 ${
                 canClick("disregard") ? "demoClick" : ""
               }`}
               onClick={() => {

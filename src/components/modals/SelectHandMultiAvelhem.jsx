@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./Modal.css";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -8,7 +8,7 @@ import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import SkillMultiSelect from "../hand/SkillMultiSelect";
 
-const SelectAvelhemHandMulti = (props) => {
+const SelectHandMultiAvelhem = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
@@ -67,9 +67,6 @@ const SelectAvelhemHandMulti = (props) => {
         for (let i of selectedAvelhems) {
           newAvelhemHand.push(avelhemHand[i]);
         }
-
-        // console.log("newAvelhemHand");
-        // console.log(newAvelhemHand);
 
         //4. update vestige and hand
         newGameState[self].avelhemHand = [...newAvelhemHand];
@@ -138,54 +135,69 @@ const SelectAvelhemHandMulti = (props) => {
     props.hideOrRevealModale();
   };
 
+  const canClick = (element, element2) => {};
+
+  const handleUpdateDemoGuide = () => {};
+
   return (
-    <div className="modal-backdrop">
-      <div className="modal">
-        <div className="modalHeader">
-          <div className="modalTitle">{props.details.title}</div>
-          <div className="modalButton">
-            <button className="redButton" onClick={() => handleViewBoard()}>
-              View
+    <div className="modalBackdrop">
+      <div className="modalV2">
+        <div className="modalHeader2">
+          <div className="modalTitle2">{props.details.title}</div>
+          <div className="modalButton2">
+            <button className="yellowButton" onClick={() => handleViewBoard()}>
+              View Board
             </button>
           </div>
         </div>
 
-        <h3>{props.details.message}</h3>
+        <div className="modalContent2">
+          <div className="modalContentText">{props.details.message}</div>
 
-        <div className="modalContent">
-          <div className="fourColumn  scrollable scrollable-y-only">
+          <div className="modalContent4Column modalScrollableY">
             {avelhemHand.map((usableSkill, i) => (
               <div
                 key={i}
-                className={`scionSkills ${
-                  selectedAvelhems.includes(i) ? "selectedSkill" : ""
+                className={`modalOptionOutline modalCardOptionOutline ${
+                  selectedAvelhems.includes(i)
+                    ? "modalCardOptionOutlineSelected"
+                    : ""
                 }`}
                 onClick={() => {
                   handleClick(true, i);
                   // handleUpdateDemoGuide();
                 }}
               >
-                <SkillMultiSelect
-                  i={i}
-                  usableSkill={usableSkill}
-                  canAdd={true}
-                  selectedSkills={selectedAvelhems}
-                  addLimit={selectLimit}
-                />
+                <div
+                  className={`modalCard 
+                   ${canClick("Avelhem Card", i) ? "demoClick" : ""}
+                    `}
+                  style={{
+                    boxShadow: selectedAvelhems.includes(i) ? "none" : "",
+                  }}
+                >
+                  <SkillMultiSelect
+                    i={i}
+                    usableSkill={usableSkill}
+                    canAdd={true}
+                    selectedSkills={selectedAvelhems}
+                    addLimit={selectLimit}
+                  />
+                </div>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="modalBottomButton">
+        <div className="modalFooter">
           {canSkip && selectedAvelhems.length === 0 && (
-            <button className="redButton" onClick={() => handleSkip()}>
+            <button className="redButton2" onClick={() => handleSkip()}>
               {skipMessage}
             </button>
           )}
 
           {selectedAvelhems.length > 0 && (
-            <button className="redButton" onClick={() => handleSelect()}>
+            <button className="redButton2" onClick={() => handleSelect()}>
               {selectMessage}
             </button>
           )}
@@ -195,4 +207,4 @@ const SelectAvelhemHandMulti = (props) => {
   );
 };
 
-export default SelectAvelhemHandMulti;
+export default SelectHandMultiAvelhem;

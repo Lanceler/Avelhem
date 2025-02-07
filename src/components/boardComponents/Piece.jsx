@@ -491,6 +491,20 @@ export const Piece = (props) => {
             </>
           )}
 
+          {/* {props.unit.unitClass === "Avian Scion" && (
+            <>
+              {props.unit.boosts.raptorBlitz === true && (
+                <div
+                  className="raptor-blitz"
+                  style={{
+                    left: "50%",
+                    transform: " translateX(-50%)  rotate(45deg)",
+                  }}
+                ></div>
+              )}
+            </>
+          )} */}
+
           {/* burn */}
 
           {props.unit.afflictions.burn > 0 && (

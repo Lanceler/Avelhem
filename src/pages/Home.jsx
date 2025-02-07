@@ -82,6 +82,7 @@ export default function Home() {
           date: createTime,
           version: "0.0.1",
           teaTrial: true,
+          expansion: "Tea Trial",
           hostId: user.uid,
           hostName: user.displayName,
           guestId: null,

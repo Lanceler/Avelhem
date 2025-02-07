@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import "./Modal.css";
+import "./Modal2.scss";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
@@ -60,7 +61,7 @@ const FloatSkill = (props) => {
 
       case "Hydrotherapy2":
         newGameState.currentResolution.push({
-          resolution: "Search Skill",
+          resolution: "Search Card",
           player: self,
           details: {
             restriction: ["02-03"],
@@ -133,25 +134,15 @@ const FloatSkill = (props) => {
     }
 
     //send selected skill to repertoire
-    //Transcendence is discarded rather than floated
-    if (usableSkills[selectedSkill].id === "SX-01") {
-      newGameState[self].skillVestige.push(
-        ...newGameState[self].skillHand.splice(
-          usableSkills[selectedSkill].handIndex,
-          1
-        )
-      );
-    } else {
-      newGameState[self].skillRepertoire.push(
-        ...newGameState[self].skillHand.splice(
-          usableSkills[selectedSkill].handIndex,
-          1
-        )
-      );
+    newGameState[self].skillRepertoire.push(
+      ...newGameState[self].skillHand.splice(
+        usableSkills[selectedSkill].handIndex,
+        1
+      )
+    );
 
-      //Increase floating count
-      newGameState[self].skillFloat = newGameState[self].skillFloat + 1;
-    }
+    //Increase floating count
+    newGameState[self].skillFloat = newGameState[self].skillFloat + 1;
 
     dispatch(updateState(newGameState));
     props.updateFirebase(newGameState);
@@ -215,48 +206,56 @@ const FloatSkill = (props) => {
   };
 
   return (
-    <div className="modal-backdrop">
-      <div className="modal">
-        <div className="modalHeader">
-          <div className="modalTitle">{props.details.title}</div>
-          <div className="modalButton">
-            <button className="redButton" onClick={() => handleViewBoard()}>
-              View
+    <div className="modalBackdrop">
+      <div className="modalV2">
+        <div className="modalHeader2">
+          <div className="modalTitle2">{props.details.title}</div>
+          <div className="modalButton2">
+            <button className="yellowButton" onClick={() => handleViewBoard()}>
+              View Board
             </button>
           </div>
         </div>
 
-        <br />
+        <div className="modalContent2">
+          <div className="modalContentText">{props.details.message}</div>
 
-        <h3>{props.details.message}</h3>
-
-        <br />
-
-        <div className="fourColumn scrollable scrollable-y-only">
-          {usableSkills.map((usableSkill, i) => (
-            <div
-              key={i}
-              className={`scionSkills ${
-                selectedSkill === i ? "selectedSkill" : ""
-              } ${canClick("Skill Card", i) ? "demoClick" : ""}`}
-              onClick={() => {
-                handleClick(canBeFloated(usableSkill.id), i);
-                handleUpdateDemoGuide();
-              }}
-            >
-              <Skill
-                i={i}
-                usableSkill={usableSkill}
-                canActivateSkill={canBeFloated(usableSkill.id)}
-              />
-            </div>
-          ))}
+          <div className="modalContent4Column modalScrollableY">
+            {usableSkills.map((usableSkill, i) => (
+              <div
+                key={i}
+                className={`modalOptionOutline 
+                  modalCardOptionOutline ${
+                    selectedSkill === i ? "modalCardOptionOutlineSelected" : ""
+                  } `}
+                onClick={() => {
+                  handleClick(canBeFloated(usableSkill.id), i);
+                  handleUpdateDemoGuide();
+                }}
+              >
+                <div
+                  className={`modalCard 
+                   ${canClick("Skill Card", i) ? "demoClick" : ""}
+                    `}
+                  style={{
+                    boxShadow: selectedSkill === i ? "none" : "",
+                  }}
+                >
+                  <Skill
+                    i={i}
+                    usableSkill={usableSkill}
+                    canActivateSkill={canBeFloated(usableSkill.id)}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div className="modalBottomButton">
+        <div className="modalFooter">
           {!props.unSkippable && selectedSkill === null && (
             <button
-              className={`redButton ${
+              className={`redButton2 ${
                 canClick("Skip Button") ? "demoClick" : ""
               }`}
               onClick={() => {
@@ -270,7 +269,7 @@ const FloatSkill = (props) => {
 
           {selectedSkill !== null && (
             <button
-              className={`redButton ${
+              className={`redButton2 ${
                 canClick("Select Button") ? "demoClick" : ""
               }`}
               onClick={() => {

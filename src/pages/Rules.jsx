@@ -8,7 +8,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import { useGetImages } from "../hooks/useGetImages";
 
 import RulesImg from "../assets/others/Rules.png";
-import Setup from "../assets/rules/Setup.png";
+import Setup from "../assets/rules/Setup.jpg";
 import UnitTokens from "../assets/rules/UnitTokens.png";
 import SkillDisplay from "../assets/rules/SkillDisplay.png";
 import SkillSetDisplay from "../assets/rules/SkillSetDisplay.png";
@@ -51,9 +51,9 @@ export default function Rules() {
     }
   }, []);
 
-  // useEffect(() => {
-  //   window.scrollTo(0, 0);
-  // }, [id]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
 
   useEffect(() => {
     const elementId = location.hash.replace("#", "");
@@ -262,11 +262,8 @@ export default function Rules() {
 
               <h3>6. Shuffle repertoires and draw skill cards</h3>
               <p>
-                After shuffling, both Sovereigns draw 4 skill cards. The
-                Sovereign who plays the first turn adds 1 copy of
-                “Transcendence” to their hand and places the other copy in their
-                vestige (discard pile). The second Sovereigns adds 2 copies of
-                “Transcendence” to their hand.
+                After shuffling, both Sovereigns draw 5 skill cards. The
+                Sovereign who plays second draws an additional skill.
               </p>
               <br />
               <br />
@@ -516,10 +513,7 @@ export default function Rules() {
                   to the matching class.
                 </li>
                 <li>Ex Machina: Spend 3 FD to search for 1 Sovereign skill.</li>
-                <li>
-                  Finesse: Spend 4 FD to draw 1 skill. You may recover 1
-                  “Transcendence”.
-                </li>
+                <li>Finesse: Spend 3 FD to draw 1 skill.</li>
               </ul>
               <br />
               <h3>Execution Phase</h3>
@@ -1075,14 +1069,14 @@ export default function Rules() {
                 <li>
                   Sovereign Action:
                   <ul>
-                    <li>Spend 2 instances to draw 1 skill.</li>
+                    <li>Use 2 instances to draw 1 skill.</li>
                   </ul>
                 </li>
                 <li>
                   Units Action:
                   <ul>
                     <li>
-                      Spend 1 instance to traverse (move to a vacant adjacent
+                      Use 1 instance to traverse (move to a vacant adjacent
                       zone).
                     </li>
                   </ul>
@@ -1122,7 +1116,7 @@ export default function Rules() {
                   <ul>
                     <li>Draw 3 Avelhems.</li>
                     <li>Draw 2 skills.</li>
-                    <li>Gain 2 FD and recover up to 1 “Transcendence”.</li>
+                    <li>Gain 3 FD.</li>
                   </ul>
                 </li>
                 <li>Invoke does not provide any unit actions.</li>
@@ -1138,7 +1132,7 @@ export default function Rules() {
                 <li>
                   Sovereign Action:
                   <ul>
-                    <li>Spend 1 instance to deploy a pawn.</li>
+                    <li>Use 1 instance to deploy a pawn.</li>
                   </ul>
                 </li>
                 <li>Rally does not provide any unit actions.</li>
@@ -1786,18 +1780,6 @@ export default function Rules() {
                   use.
                   <ul>
                     <li>
-                      Consider opportunities to recover{" "}
-                      <span
-                        className="rule-view-card"
-                        onClick={() => {
-                          dispatch(updateMagnifiedSkill("01-04"));
-                        }}
-                      >
-                        Transcendence
-                      </span>
-                      , so you don’t spend valuable cards.
-                    </li>
-                    <li>
                       Ignition Propulsion provides extra movement by using
                       enemies as stepping stones. If enhanced with Ravager, Fire
                       Scions can use multiple copies to move up to 4 times in
@@ -1822,7 +1804,7 @@ export default function Rules() {
                   <span
                     className="rule-view-card"
                     onClick={() => {
-                      dispatch(updateMagnifiedSkill("SX-01"));
+                      dispatch(updateMagnifiedSkill("01-04"));
                     }}
                   >
                     Resplendence

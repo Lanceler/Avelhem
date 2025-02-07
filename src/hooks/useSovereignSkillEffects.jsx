@@ -36,9 +36,13 @@ export const useSovereignSkillEffects = () => {
     newGameState.currentResolution.push({
       resolution: "Recover Skill",
       player: self,
-      restriction: [...sovereignSkillList()],
-      message: "Spend 3 FD to recover 1 Sovereign skill.",
-      outcome: "Add",
+      details: {
+        title: "Heir’s Endeavor",
+        reason: "Heir’s Endeavor",
+        restriction: [...sovereignSkillList()],
+        message: "Spend 3 FD to recover 1 Sovereign skill.",
+        outcome: "Add",
+      },
     });
 
     return newGameState;
@@ -211,9 +215,20 @@ export const useSovereignSkillEffects = () => {
     //end "Foreshadow3" resolution
     newGameState.currentResolution.pop();
 
-    newGameState = drawSkill(newGameState);
-    newGameState = drawSkill(newGameState);
-
+    if (newGameState[self].skillFloat > 0) {
+      newGameState.currentResolution.push({
+        resolution: "Sovereign Standard Skill",
+        resolution2: "Foreshadow Draw",
+        player: self,
+        details: {
+          reason: "Foreshadow Draw",
+          title: "Foreshadow",
+          message: "You may draw another floating skill.",
+          no: "Skip",
+          yes: "Draw",
+        },
+      });
+    }
     return newGameState;
   };
 
@@ -250,15 +265,23 @@ export const useSovereignSkillEffects = () => {
       const skillCode = skill.substring(0, 2);
 
       newGameState.currentResolution.push({
-        resolution: "Search Avelhem",
+        resolution: "Search Card",
         player: self,
-        restriction: [parseInt(skillCode)],
-        message: `Search for 1 ${avelhemToScion(parseInt(skillCode)).replace(
-          "Scion",
-          "Avelhem"
-        )}.`,
-        outcome: "Add",
-        reveal: "Transmute",
+        details: {
+          avelhem: true,
+          restriction: [parseInt(skillCode)],
+          exclusion: [],
+          searchTitle: "Transmute",
+          searchMessage: `Search for 1 ${avelhemToScion(
+            parseInt(skillCode)
+          ).replace("Scion", "Avelhem")}.`,
+          outcome: "Add",
+          revealTitle: null,
+          revealMessage: null,
+          messageTitle: "Transmute",
+          message: null,
+          specMessage: null,
+        },
       });
     }
 
@@ -314,13 +337,16 @@ export const useSovereignSkillEffects = () => {
       case "Plant Scion":
         standardSkill = "08-01";
         break;
+      case "Avian Scion":
+        standardSkill = "09-01";
+        break;
 
       default:
         break;
     }
 
     newGameState.currentResolution.push({
-      resolution: "Search Skill",
+      resolution: "Search Card",
       player: self,
       details: {
         restriction: [standardSkill],
@@ -418,12 +444,6 @@ export const useSovereignSkillEffects = () => {
         resolution2: "ProvidenceR1",
         player: self,
       });
-
-      newGameState.currentResolution.push({
-        resolution: "Sovereign Resonant Skill",
-        resolution2: "Providence2",
-        player: self,
-      });
     }
 
     newGameState.currentResolution.push({
@@ -443,30 +463,6 @@ export const useSovereignSkillEffects = () => {
     return newGameState;
   };
 
-  const providence2 = () => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    //end "Providence2" resolution
-    newGameState.currentResolution.pop();
-
-    if (newGameState[self].skillVestige.includes("SX-01")) {
-      newGameState.currentResolution.push({
-        resolution: "Sovereign Resonant Skill",
-        resolution2: "Providence Recovery",
-        player: self,
-        details: {
-          reason: "Providence Recovery",
-          title: "Providence",
-          message: "You may recover 1 “Transcendence”.",
-          no: "Skip",
-          yes: "Recover",
-        },
-      });
-    }
-
-    return newGameState;
-  };
-
   const providenceR1 = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -475,7 +471,7 @@ export const useSovereignSkillEffects = () => {
 
     newGameState[self].fateDefiance = Math.min(
       6,
-      newGameState[self].fateDefiance + 2
+      newGameState[self].fateDefiance + 3
     );
 
     //Resonance also grants an advance tactic, but that will be handled via spending the invoke
@@ -491,7 +487,7 @@ export const useSovereignSkillEffects = () => {
 
     if (resonator) {
       newGameState.currentResolution.push({
-        resolution: "Search Skill",
+        resolution: "Search Card",
         player: self,
         details: {
           restriction: pressTheAttackList(),
@@ -533,7 +529,7 @@ export const useSovereignSkillEffects = () => {
       details: {
         reason: "Press the Attack Avelhem",
         title: "Press the Attack",
-        message: "You may draw 1 Avelhems.",
+        message: "You may draw 1 Avelhem.",
         no: "Skip",
         yes: "Draw",
       },
@@ -588,13 +584,17 @@ export const useSovereignSkillEffects = () => {
       newGameState.currentResolution.push({
         resolution: "Recover Skill",
         player: self,
-        restriction: getScionSet(unit.unitClass),
-        message: `You may recover 1 ${unit.unitClass.replace(
-          "Scion",
-          "skill"
-        )}.`,
-        outcome: "Add",
         canSkip: true,
+        details: {
+          title: "Power at the Final Hour",
+          reason: "Power at the Final Hour",
+          restriction: getScionSet(unit.unitClass),
+          message: `You may recover 1 ${unit.unitClass.replace(
+            "Scion",
+            "skill"
+          )}.`,
+          outcome: "Add",
+        },
       });
     } else {
       newGameState.currentResolution.push({
@@ -789,11 +789,15 @@ export const useSovereignSkillEffects = () => {
       newGameState.currentResolution.push({
         resolution: "Recover Skill",
         player: self,
-        restriction: ravagerSkills,
-        message:
-          "You may recover then float 1 skill that can grant a unit Ravager.",
-        outcome: "Float",
         canSkip: true,
+        details: {
+          title: "Black Business Card",
+          reason: "Black Business Card",
+          restriction: ravagerSkills,
+          message:
+            "You may recover then float 1 skill that can grant a unit Ravager.",
+          outcome: "Float",
+        },
       });
     }
 
@@ -816,7 +820,6 @@ export const useSovereignSkillEffects = () => {
     ambidexterity1,
     ambidexterityR1,
     providence1,
-    providence2,
     providenceR1,
     ferventPrayer1,
     ferventPrayerR1,

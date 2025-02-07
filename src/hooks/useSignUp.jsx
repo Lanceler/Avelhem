@@ -132,19 +132,19 @@ export const useSignUp = () => {
           ],
           repertoire2: [
             {
-              name: "Starter Repertoire 1",
+              name: "Starter Repertoire 4",
               skillRepertoire: starterSkillRepertoire,
               avelhemRepertoire: starterAvelhemRepertoire,
               description: "The default repertoire assigned to new accounts.",
             },
             {
-              name: "Starter Repertoire 2",
+              name: "Starter Repertoire 5",
               skillRepertoire: starterSkillRepertoire,
               avelhemRepertoire: starterAvelhemRepertoire,
               description: "The default repertoire assigned to new accounts.",
             },
             {
-              name: "Starter Repertoire 3",
+              name: "Starter Repertoire 6",
               skillRepertoire: starterSkillRepertoire,
               avelhemRepertoire: starterAvelhemRepertoire,
               description: "The default repertoire assigned to new accounts.",

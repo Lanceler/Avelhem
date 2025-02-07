@@ -44,6 +44,8 @@ export default function MyGames() {
     // getBannerImage("Sovereign"),
   ];
 
+  const bannerImages2 = [getBannerImage("Avian")];
+
   useEffect(() => {
     const interval = setInterval(() => {
       setBannerIndex((prevIndex) => (prevIndex + 1) % bannerImages.length);
@@ -52,7 +54,7 @@ export default function MyGames() {
     return () => clearInterval(interval); // Cleanup the interval on component unmount
   }, [bannerImages.length]);
 
-  const onCreateGame = async () => {
+  const onCreateGame = async (expansion) => {
     if (!isLoading) {
       setIsLoading(true);
 
@@ -107,6 +109,7 @@ export default function MyGames() {
         const createdGamesRef = collection(db, "gameInfo");
         const gameRef = await addDoc(createdGamesRef, {
           date: createTime,
+          expansion: expansion,
           version: "0.0.1",
           hostId: user.uid,
           hostName: user.displayName,
@@ -114,6 +117,7 @@ export default function MyGames() {
           guestName: null,
           gameState: {
             // eventLog: [],
+            expansion: expansion,
             activatingSkill: [],
             activatingTarget: [],
             activatingUnit: [],
@@ -159,7 +163,7 @@ export default function MyGames() {
           style={{
             backgroundImage: `url(${bannerImages[bannerIndex]})`,
           }}
-          onClick={() => onCreateGame()}
+          onClick={() => onCreateGame("Elemental Entree")}
         >
           <div className="create-game-fadingbanners">
             {bannerImages.map((url, z) => (
@@ -174,7 +178,6 @@ export default function MyGames() {
 
           <div className="create-game-banner-text">
             <div className="create-game-title">
-              {/* {"Elemental Entrée".toUpperCase()}*/}
               <>ELEMENTAL</>
               <br />
               <>ENTRÉE</>
@@ -187,18 +190,37 @@ export default function MyGames() {
         </div>
 
         <div
-          className="create-game-soon"
+          className="create-game-elemental"
           style={{
-            filter: "grayscale(0.8)",
-            // backgroundImage: `url(${[getMiscImage("LoadingBanner")]})`,
-            backgroundImage: `url(${[getBannerImage("Sovereign")]})`,
+            backgroundImage: `url(${[getBannerImage("Avian")]})`,
+            filter: "grayscale(0.9)",
           }}
+          // onClick={() => onCreateGame("Familiars’ Followup")}
         >
-          {/* <div className="create-game-title">???</div> */}
-          <div className="create-game-desc">
-            <strong>Expansion:</strong>
-            <br />
-            Coming Soon
+          <div className="create-game-fadingbanners">
+            {bannerImages2.map((url, z) => (
+              <img
+                key={url}
+                src={url}
+                className="banner-slide"
+                style={{ zIndex: z, opacity: `${z === bannerIndex ? 1 : 0}` }}
+              />
+            ))}
+          </div>
+
+          <div className="create-game-banner-text">
+            <div className="create-game-title">
+              {/* <>FAMILIARS’</>
+              <br />
+              <>FOLLOWUP</> */}
+              <>COMING</>
+              <br />
+              <>SOON</>
+            </div>
+            <div className="create-game-desc">
+              <strong>Expansion Including:</strong> <br />
+              Avian (& more to be added)
+            </div>
           </div>
         </div>
       </div>

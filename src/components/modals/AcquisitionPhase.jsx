@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Modal.css";
+import "./Modal2.scss";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
@@ -22,14 +23,18 @@ const AcquisitionPhase = (props) => {
   let newGameState = JSON.parse(JSON.stringify(localGameState));
   const upgrade = newGameState[self].bountyUpgrades.acquisition;
 
-  let abilityDetails = [
+  let optionDetails = [
     {
-      abilityName: "Appoint",
-
-      abilityText: (
+      optionName: "Appoint",
+      optionQualifier: (
+        <div>
+          You can have up to <br /> 8 units in play.
+        </div>
+      ),
+      optionText: (
         <>
-          <div className=" ">⬩Deploy a pawn in your frontier.</div>
-          <div className=" ">
+          <div>⬩Deploy a pawn in your frontier.</div>
+          <div>
             ⬩{upgrade < 2 && <>If upgraded: </>}
             Grant them Shield for 2 turns.
           </div>
@@ -37,12 +42,11 @@ const AcquisitionPhase = (props) => {
       ),
     },
     {
-      abilityName: "Beseech",
-
-      abilityText: (
+      optionName: "Beseech",
+      optionText: (
         <>
-          <div className=" ">⬩Draw 2 Avelhems.</div>
-          <div className=" ">
+          <div>⬩Draw 2 Avelhems.</div>
+          <div>
             ⬩{upgrade < 1 && <>If upgraded: </>}
             You may draw 1 Avelhem.
           </div>
@@ -50,14 +54,13 @@ const AcquisitionPhase = (props) => {
       ),
     },
     {
-      abilityName: "Cultivate",
-
-      abilityText: (
+      optionName: "Cultivate",
+      optionText: (
         <>
-          <div className=" ">⬩Draw 1 skill.</div>
-          <div className=" ">
+          <div>⬩Draw 1 skill.</div>
+          <div>
             ⬩{upgrade < 3 && <>If upgraded: </>}
-            You may recover 1 “Transcendence”.
+            You may spend 1 FD to draw 1 skill.
           </div>
         </>
       ),
@@ -142,15 +145,19 @@ const AcquisitionPhase = (props) => {
 
         if (
           newGameState[self].bountyUpgrades.acquisition >= 3 &&
-          newGameState[self].skillVestige.includes("SX-01")
+          newGameState[self].fateDefiance > 0
         ) {
           newGameState.currentResolution.push({
-            resolution: "Recover Skill",
+            resolution: "Misc.",
+            resolution2: "Cultivate - Upgraded",
             player: self,
-            restriction: ["SX-01"],
-            message: "You may recover 1 “Transcendence”.",
-            outcome: "Add",
-            canSkip: true,
+            details: {
+              reason: "Cultivate Draw",
+              title: "Cultivate",
+              message: "You may spend 1 FD to draw 1 Skill.",
+              no: "Skip",
+              yes: "Draw",
+            },
           });
         }
 
@@ -190,49 +197,62 @@ const AcquisitionPhase = (props) => {
   };
 
   return (
-    <div className="modal-backdrop">
-      <div className="modal">
-        <div className="modalHeader">
-          <div className="modalTitle">Acquisition Phase</div>
-          <div className="modalButton">
-            <button className="redButton" onClick={() => handleViewBoard()}>
-              View
+    <div className="modalBackdrop">
+      <div className="modalV2">
+        <div className="modalHeader2">
+          <div className="modalTitle2">Acquisition Phase</div>
+          <div className="modalButton2">
+            <button className="yellowButton" onClick={() => handleViewBoard()}>
+              View Board
             </button>
           </div>
         </div>
 
-        <br />
+        <div className="modalContent2">
+          <div className="modalContentText">Choose 1:</div>
 
-        <div className="modalContent">
-          {abilityDetails.map((detail, i) => (
-            <div
-              key={i}
-              className={`modal-option-outline ${
-                selectedChoice === i ? "selected-modal-option" : ""
-              } ${canClick("choice", i) ? "demoClick" : ""}`}
-              onClick={() => {
-                handleChoice(i);
-                handleUpdateDemoGuide();
-              }}
-            >
+          <div className="modalContent3Column">
+            {optionDetails.map((detail, i) => (
               <div
-                className={`modal-option-content ${
-                  canChoice(i) ? "" : "disabled-modal-option-content"
-                } `}
+                key={i}
+                className={`
+                  modalOptionOutline
+                  modalMediumOptionOutline ${
+                    selectedChoice === i
+                      ? "modalMediumOptionOutlineSelected"
+                      : ""
+                  }`}
+                onClick={() => {
+                  handleChoice(i);
+                  handleUpdateDemoGuide();
+                }}
               >
-                <div className="modal-option-header">
-                  <div className="modal-option-title">{detail.abilityName}</div>
+                <div
+                  className={`modalMedium 
+                    ${canChoice(i) ? "" : "disabledModal"} 
+                    ${canClick("choice", i) ? "demoClick" : ""}
+                    `}
+                  style={{
+                    boxShadow: selectedChoice === i ? "none" : "",
+                  }}
+                >
+                  <div className="modalOptionHeader">
+                    <div className="modalOptionTitle">{detail.optionName}</div>
+                    <div className="modalOptionQualifier">
+                      {detail.optionQualifier}
+                    </div>
+                  </div>
+                  <div className="modalOptionText">{detail.optionText}</div>
                 </div>
-                <div className="modal-option-text">{detail.abilityText}</div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
-        <div className="modalBottomButton">
+        <div className="modalFooter">
           {selectedChoice !== null && (
             <button
-              className={`redButton ${canClick("button") ? "demoClick" : ""}`}
+              className={`redButton2 ${canClick("button") ? "demoClick" : ""}`}
               onClick={() => {
                 handleSelect();
                 handleUpdateDemoGuide();

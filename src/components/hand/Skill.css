@@ -1,13 +1,9 @@
 .select-skill{
     width: 165px;
     height: 231px;
-    /* width: 180px;
-    height: 252px; */
-
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    margin: 1.5px;
     padding: 0 auto;
     background-size: cover;
     background-position: center;

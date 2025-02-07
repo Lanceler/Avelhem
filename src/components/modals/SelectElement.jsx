@@ -8,11 +8,11 @@ import { useGetImages } from "../../hooks/useGetImages";
 
 const SelectElement = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
-  const { self, enemy } = useSelector((state) => state.teams);
+  const { self } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
   const [selectedChoice, setSelectedChoice] = useState(null);
-  const { ascendPawn, canAscend, getZonesWithEnemies } = useRecurringEffects();
+  const { ascendPawn } = useRecurringEffects();
   const { getElementImage } = useGetImages();
 
   const aspects = [
@@ -25,6 +25,10 @@ const SelectElement = (props) => {
     "Metal Scion",
     "Plant Scion",
   ];
+
+  if (localGameState.expansion === "Familiars’ Followup") {
+    aspects.push("Avian Scion");
+  }
 
   let canSkip = false;
   if (props.details.reason === "Advance Deploy Scion") {
@@ -51,7 +55,7 @@ const SelectElement = (props) => {
 
   canDeployScion();
 
-  const canSelect = (choice) => {
+  const canChoice = (choice) => {
     switch (props.details.reason) {
       case "Power at the Final Hour":
       case "Advance Deploy Scion":
@@ -121,7 +125,7 @@ const SelectElement = (props) => {
   const handleSelect = (aspect) => {
     if (selectedChoice === aspect) {
       setSelectedChoice(null);
-    } else if (canSelect(aspect)) {
+    } else if (canChoice(aspect)) {
       setSelectedChoice(aspect);
     }
   };
@@ -138,34 +142,39 @@ const SelectElement = (props) => {
   };
 
   return (
-    <div className="modal-backdrop">
-      <div className="modal">
-        <div className="modalHeader">
-          <div className="modalTitle">{props.details.title}</div>
-          <div className="modalButton">
-            <button className="redButton" onClick={() => handleViewBoard()}>
-              View
+    <div className="modalBackdrop">
+      <div className="modalV2">
+        <div className="modalHeader2">
+          <div className="modalTitle2">{props.details.title}</div>
+          <div className="modalButton2">
+            <button className="yellowButton" onClick={() => handleViewBoard()}>
+              View Board
             </button>
           </div>
         </div>
 
-        <h3>{props.details.message}</h3>
+        <div className="modalContent2 modalScrollableY">
+          <div className="modalContentText">{props.details.message}</div>
 
-        <br />
-
-        <div className="modalContent">
-          <div className="fourColumn">
+          <div className="modalContent4Column">
             {aspects.map((aspect, i) => (
               <div
                 key={i}
                 onClick={() => handleSelect(aspect)}
-                className={` modal-option-outline 
-                  ${selectedChoice === aspect ? "selected-modal-option" : ""} `}
+                className={`modalOptionOutline
+                  modalElementOptionOutline
+                  ${
+                    selectedChoice === aspect
+                      ? "modalElementOptionOutlineSelected"
+                      : ""
+                  } `}
               >
                 <div
-                  className={`modal-option-content modal-option-content-3   ${
-                    canSelect(aspect) ? "" : "disabled-modal-option-content"
-                  }`}
+                  className={`modalElement
+                    ${canChoice(aspect) ? "" : "disabledModal"}`}
+                  style={{
+                    boxShadow: selectedChoice === aspect ? "none" : "",
+                  }}
                 >
                   <div className="modal-option-element">
                     <img
@@ -183,16 +192,16 @@ const SelectElement = (props) => {
           </div>
         </div>
 
-        <div className="modalBottomButton">
+        <div className="modalFooter">
           <div>
             {canSkip && selectedChoice === null && (
-              <button className="redButton" onClick={() => handleSkip()}>
+              <button className="redButton2" onClick={() => handleSkip()}>
                 Return
               </button>
             )}
 
             {selectedChoice !== null && (
-              <button className="redButton" onClick={() => handleProceed()}>
+              <button className="redButton2" onClick={() => handleProceed()}>
                 Select
               </button>
             )}

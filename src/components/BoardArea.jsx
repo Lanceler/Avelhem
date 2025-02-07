@@ -27,22 +27,19 @@ import InspectSkill from "./modals/InspectSkill";
 import MessageToPlayer from "./modals/MessageToPlayer";
 import RecoverAvelhem from "./modals/RecoverAvelhem";
 import RecoverSkill from "./modals/RecoverSkill";
-import SelectScionSkill from "./modals/SelectScionSkill";
-import SearchAvelhem from "./modals/SearchAvelhem";
-import SearchSkill from "./modals/SearchSkill";
+import ScionSkillSelect from "./modals/ScionSkillSelect";
+import SearchCard from "./modals/SearchCard";
 import SelectElement from "./modals/SelectElement";
-import SelectResonatorSkill from "./modals/SelectResonatorSkill";
-import SelectAvelhemHandMulti from "./modals/SelectAvelhemHandMulti";
-import SelectAvelhemResonator from "./modals/SelectAvelhemResonator";
-import SpendSkill from "./modals/SpendSkill";
-import SelectSkillHandMulti from "./modals/SelectSkillHandMulti";
-import SelectSkillReveal from "./modals/SelectSkillReveal";
+import SelectResonator from "./modals/SelectResonator";
+import SelectHandMultiAvelhem from "./modals/SelectHandMultiAvelhem";
+import SelectHandMultiSkill from "./modals/SelectHandMultiSkill";
+import RevealSkill from "./modals/RevealSkill";
 import SelectUnitAbility from "./modals/SelectUnitAbility";
 import SelectTacticalAction from "./modals/SelectTacticalAction";
-import SelectSovereignTactic from "./modals/SelectSovereignTactic";
+import SelectTacticalActionSovereign from "./modals/SelectTacticalActionSovereign";
 import TacticResults from "./modals/TacticResults";
 import TacticResults3 from "./modals/TacticResults3";
-import ViewRevealedSkill from "./modals/ViewRevealedSkill";
+import RevealedSkillView from "./modals/RevealedSkillView";
 import FloatSkill from "./modals/FloatSkill";
 import YouMaySpend1Skill from "./modals/YouMaySpend1Skill";
 import YouMayNoYes from "./modals/YouMayNoYes";
@@ -56,11 +53,10 @@ import SelectCustomChoice from "./modals/SelectCustomChoice";
 import GlacialTorrent from "./skillModals/GlacialTorrent";
 import CataclysmicTempestFloat from "./skillModals/CataclysmicTempestFloat";
 import FerventPrayerResonance from "./skillModals/FerventPrayerResonance";
-import Destine from "./skillModals/Destine";
 
 import ContingentTriggered from "./modals/ContingentTriggered";
 
-import MayFloatResonantSkill from "./skillModals/MayFloatResonantSkill";
+import FloatResonator from "./modals/FloatResonator";
 
 import ActivatedSkills from "./displays/ActivatedSkills";
 
@@ -200,7 +196,6 @@ const BoardArea = (props) => {
     ambidexterity1,
     ambidexterityR1,
     providence1,
-    providence2,
     providenceR1,
     ferventPrayer1,
     ferventPrayerR1,
@@ -411,7 +406,7 @@ const BoardArea = (props) => {
           return (
             <>
               {!hideModal && (
-                <ViewRevealedSkill
+                <RevealedSkillView
                   skill={lastRes.skill}
                   title={lastRes.title}
                   message={lastRes.specMessage}
@@ -493,7 +488,7 @@ const BoardArea = (props) => {
             return (
               <>
                 {self === lastRes.player && !hideModal && (
-                  <SelectSkillHandMulti
+                  <SelectHandMultiSkill
                     details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
@@ -506,11 +501,10 @@ const BoardArea = (props) => {
             return (
               <>
                 {self === lastRes.player && !hideModal && (
-                  <Destine
+                  <YouMaySpend1Skill
+                    details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
-                    reason="Destine"
-                    defianceCost={lastRes.defianceCost}
                   />
                 )}
               </>
@@ -549,7 +543,7 @@ const BoardArea = (props) => {
             return (
               <>
                 {self === lastRes.player && !hideModal && (
-                  <SelectAvelhemHandMulti
+                  <SelectHandMultiAvelhem
                     details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
@@ -562,7 +556,7 @@ const BoardArea = (props) => {
             return (
               <>
                 {self === lastRes.player && !hideModal && (
-                  <SelectSkillHandMulti
+                  <SelectHandMultiSkill
                     resonated={lastRes.resonated}
                     details={lastRes.details}
                     updateFirebase={updateFirebase}
@@ -688,7 +682,7 @@ const BoardArea = (props) => {
         return (
           <>
             {self === lastRes.player && (
-              <SelectResonatorSkill
+              <SelectResonator
                 unit={lastRes.unit}
                 skill={lastRes.skill}
                 hideOrRevealModale={hideOrRevealModale}
@@ -702,7 +696,7 @@ const BoardArea = (props) => {
         return (
           <>
             {self === lastRes.player && (
-              <SelectAvelhemResonator
+              <SelectResonator
                 avelhem={lastRes.avelhem}
                 updateFirebase={updateFirebase}
               />
@@ -716,46 +710,17 @@ const BoardArea = (props) => {
         }
         break;
 
-      case "You May Shuffle Avelhem":
-        return (
-          <>
-            {self === lastRes.player && !hideModal && (
-              <YouMayNoYes
-                details={lastRes.details}
-                updateFirebase={updateFirebase}
-                hideOrRevealModale={hideOrRevealModale}
-              />
-            )}
-          </>
-        );
-
       case "Avelhem Select Pawn":
         if (self === lastRes.player) {
           selectAvelhemPawn(lastRes.avelhem, lastRes.resonator);
         }
         break;
 
-      case "Search Avelhem":
+      case "Search Card":
         return (
           <>
             {self === lastRes.player && !hideModal && (
-              <SearchAvelhem
-                restriction={lastRes.restriction}
-                outcome={lastRes.outcome}
-                message={lastRes.message}
-                reveal={lastRes.reveal}
-                hideOrRevealModale={hideOrRevealModale}
-                updateFirebase={updateFirebase}
-              />
-            )}
-          </>
-        );
-
-      case "Search Skill":
-        return (
-          <>
-            {self === lastRes.player && !hideModal && (
-              <SearchSkill
+              <SearchCard
                 details={lastRes.details}
                 hideOrRevealModale={hideOrRevealModale}
                 updateFirebase={updateFirebase}
@@ -769,9 +734,7 @@ const BoardArea = (props) => {
           <>
             {self === lastRes.player && !hideModal && (
               <RecoverAvelhem
-                restriction={lastRes.restriction}
-                outcome={lastRes.outcome}
-                message={lastRes.message}
+                details={lastRes.details}
                 hideOrRevealModale={hideOrRevealModale}
                 updateFirebase={updateFirebase}
               />
@@ -784,9 +747,7 @@ const BoardArea = (props) => {
           <>
             {self === lastRes.player && !hideModal && (
               <RecoverSkill
-                restriction={lastRes.restriction}
-                outcome={lastRes.outcome}
-                message={lastRes.message}
+                details={lastRes.details}
                 canSkip={lastRes.canSkip}
                 hideOrRevealModale={hideOrRevealModale}
                 updateFirebase={updateFirebase}
@@ -799,12 +760,12 @@ const BoardArea = (props) => {
         return (
           <>
             {self === lastRes.player && !hideModal && (
-              <SpendSkill
-                updateFirebase={updateFirebase}
+              <YouMaySpend1Skill
                 unit={lastRes.unit}
                 player={lastRes.player}
-                message={lastRes.message}
-                restriction={lastRes.restriction}
+                canSkip={lastRes.canSkip}
+                details={lastRes.details}
+                updateFirebase={updateFirebase}
                 hideOrRevealModale={hideOrRevealModale}
               />
             )}
@@ -863,7 +824,7 @@ const BoardArea = (props) => {
             return (
               <>
                 {self === lastRes.unit.player && (
-                  <SelectScionSkill
+                  <ScionSkillSelect
                     updateFirebase={updateFirebase}
                     unit={lastRes.unit}
                   />
@@ -939,7 +900,7 @@ const BoardArea = (props) => {
             return (
               <>
                 {self === localGameState.turnPlayer && !hideModal && (
-                  <SelectSovereignTactic
+                  <SelectTacticalActionSovereign
                     dice={lastRes.dice}
                     face={lastRes.face}
                     updateFirebase={updateFirebase}
@@ -982,6 +943,7 @@ const BoardArea = (props) => {
             break;
 
           case "Beseech - Upgraded":
+          case "Cultivate - Upgraded":
             return (
               <>
                 {self === lastRes.player && !hideModal && (
@@ -1068,7 +1030,7 @@ const BoardArea = (props) => {
             return (
               <>
                 {self === lastRes.player && !hideModal && (
-                  <MayFloatResonantSkill
+                  <FloatResonator
                     player={lastRes.player}
                     skill={lastRes.skill}
                     resonator={lastRes.resonator}
@@ -1119,7 +1081,7 @@ const BoardArea = (props) => {
             return (
               <>
                 {self === lastRes.player && !hideModal && (
-                  <ViewRevealedSkill
+                  <RevealedSkillView
                     skill={lastRes.skill}
                     title={lastRes.title}
                     message={lastRes.message}
@@ -1147,7 +1109,7 @@ const BoardArea = (props) => {
             return (
               <>
                 {self === lastRes.player && !hideModal && (
-                  <SelectSkillHandMulti
+                  <SelectHandMultiSkill
                     details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
@@ -1481,6 +1443,7 @@ const BoardArea = (props) => {
         switch (lastRes.resolution2) {
           case "Activating Kleptothermy":
           case "Activating Mountain Stance":
+          case "Activating Everblooming":
             return (
               <>
                 {self === lastRes.unit.player && !hideModal && (
@@ -1513,7 +1476,6 @@ const BoardArea = (props) => {
           case "Activating Ambiance Assimilation":
           case "Activating Mana Feedback":
           case "Activating Conduction":
-          case "Activating Everblooming":
             return (
               <>
                 {self === lastRes.unit.player && !hideModal && (
@@ -1617,7 +1579,7 @@ const BoardArea = (props) => {
             return (
               <>
                 {self === lastRes.unit.player && !hideModal && (
-                  <SelectSkillReveal
+                  <RevealSkill
                     unit={lastRes.unit}
                     details={lastRes.details}
                     updateFirebase={updateFirebase}
@@ -1833,7 +1795,7 @@ const BoardArea = (props) => {
             return (
               <>
                 {self === lastRes.unit.player && !hideModal && (
-                  <SelectSkillReveal
+                  <RevealSkill
                     unit={lastRes.unit}
                     details={lastRes.details}
                     updateFirebase={updateFirebase}
@@ -2025,7 +1987,7 @@ const BoardArea = (props) => {
             return (
               <>
                 {self === lastRes.unit.player && !hideModal && (
-                  <SelectSkillReveal
+                  <RevealSkill
                     unit={lastRes.unit}
                     details={lastRes.details}
                     updateFirebase={updateFirebase}
@@ -2103,7 +2065,7 @@ const BoardArea = (props) => {
             return (
               <>
                 {self === lastRes.unit.player && !hideModal && (
-                  <SelectSkillReveal
+                  <RevealSkill
                     unit={lastRes.unit}
                     details={lastRes.details}
                     updateFirebase={updateFirebase}
@@ -2338,7 +2300,7 @@ const BoardArea = (props) => {
             return (
               <>
                 {self === lastRes.unit.player && !hideModal && (
-                  <SelectSkillReveal
+                  <RevealSkill
                     unit={lastRes.unit}
                     details={lastRes.details}
                     updateFirebase={updateFirebase}
@@ -2472,7 +2434,7 @@ const BoardArea = (props) => {
             return (
               <>
                 {self === lastRes.unit.player && !hideModal && (
-                  <SelectSkillReveal
+                  <RevealSkill
                     unit={lastRes.unit}
                     details={lastRes.details}
                     updateFirebase={updateFirebase}
@@ -2798,7 +2760,7 @@ const BoardArea = (props) => {
             return (
               <>
                 {self === lastRes.unit.player && !hideModal && (
-                  <SelectSkillReveal
+                  <RevealSkill
                     unit={lastRes.unit}
                     details={lastRes.details}
                     updateFirebase={updateFirebase}
@@ -2852,7 +2814,7 @@ const BoardArea = (props) => {
 
       case "Plant Skill":
         switch (lastRes.resolution2) {
-          case "Activating Sow And Reap":
+          case "Activating Sow and Reap":
             if (self === lastRes.unit.player) {
               updateLocalState(applySkill("sowAndReap1", lastRes.unit));
             }
@@ -2978,6 +2940,44 @@ const BoardArea = (props) => {
               updateLocalState(applySkill("castleOfThorns2", lastRes.unit));
             }
             break;
+        }
+        break;
+
+      case "Avian Skill":
+        switch (lastRes.resolution2) {
+          case "Activating Raptor Blitz":
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("raptorBlitz1", lastRes.unit));
+            }
+            break;
+
+          case "Raptor Blitz1":
+            return (
+              <>
+                {self === lastRes.unit.player && !hideModal && (
+                  <SelectCustomChoice
+                    unit={lastRes.unit}
+                    details={lastRes.details}
+                    updateFirebase={updateFirebase}
+                    hideOrRevealModale={hideOrRevealModale}
+                  />
+                )}
+              </>
+            );
+
+          case "Raptor Blitz Blast":
+            if (self === lastRes.unit.player) {
+              resolutionUpdate(applySkill("raptorBlitz2", lastRes.unit));
+            }
+            break;
+
+          case "Raptor Blitz Purge":
+            if (self === lastRes.unit.player) {
+              selectEnemies(lastRes.unit, 2, null, "raptor blitz purge", null);
+            }
+            break;
+
+          ///------------
         }
         break;
 
@@ -3128,7 +3128,7 @@ const BoardArea = (props) => {
             return (
               <>
                 {self === lastRes.player && !hideModal && (
-                  <SelectSkillHandMulti
+                  <SelectHandMultiSkill
                     resonated={lastRes.resonated}
                     details={lastRes.details}
                     updateFirebase={updateFirebase}
@@ -3194,25 +3194,6 @@ const BoardArea = (props) => {
               </>
             );
 
-          case "Providence2":
-            if (self === lastRes.player) {
-              updateLocalState(providence2(lastRes.resonator));
-            }
-            break;
-
-          case "Providence Recovery":
-            return (
-              <>
-                {self === lastRes.player && !hideModal && (
-                  <YouMayNoYes
-                    details={lastRes.details}
-                    updateFirebase={updateFirebase}
-                    hideOrRevealModale={hideOrRevealModale}
-                  />
-                )}
-              </>
-            );
-
           case "ProvidenceR1":
             if (self === lastRes.player) {
               updateLocalState(providenceR1(lastRes.resonator));
@@ -3242,7 +3223,7 @@ const BoardArea = (props) => {
             return (
               <>
                 {self === lastRes.player && !hideModal && (
-                  <SelectAvelhemHandMulti
+                  <SelectHandMultiAvelhem
                     details={lastRes.details}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
@@ -3273,9 +3254,10 @@ const BoardArea = (props) => {
             return (
               <>
                 {self === lastRes.player && !hideModal && (
-                  <ViewRevealedSkill
+                  <RevealedSkillView
                     avelhems={lastRes.avelhems}
                     multi={true}
+                    title={lastRes.title}
                     message={lastRes.message}
                     updateFirebase={updateFirebase}
                     hideOrRevealModale={hideOrRevealModale}
@@ -3389,7 +3371,7 @@ const BoardArea = (props) => {
               </>
             );
 
-          case "Activating Match Made In Heaven":
+          case "Activating Match Made in Heaven":
             if (self === lastRes.player) {
               updateLocalState(matchMadeInHeaven1(lastRes.unit));
             }
@@ -3669,25 +3651,6 @@ const BoardArea = (props) => {
 
       if (conclusion === "discard") {
         newGameState[self].avelhemVestige.push(avelhem);
-      } else if (conclusion === "shuffle") {
-        //insert avelhem into repertoire
-        newGameState[self].avelhemRepertoire.unshift(avelhem);
-
-        //shuffle repertoire, but retain floating order
-        const floaters = newGameState[self].avelhemRepertoire.splice(
-          newGameState[self].avelhemRepertoire.length -
-            newGameState[self].avelhemFloat,
-          newGameState[self].avelhemFloat
-        );
-
-        newGameState[self].avelhemRepertoire = shuffleCards(
-          newGameState[self].avelhemRepertoire
-        );
-
-        newGameState[self].avelhemRepertoire = [
-          ...newGameState[self].avelhemRepertoire,
-          ...floaters,
-        ];
       }
 
       if (resonator !== null && resonatorConclusion === "discard") {
@@ -4249,6 +4212,12 @@ const BoardArea = (props) => {
 
         break;
 
+      case "raptor blitz purge":
+        newGameState[selectedUnit.player].units[
+          selectedUnit.unitIndex
+        ].aether = 0;
+        break;
+
       case "ambidexterity":
         if (!isMuted(selectedUnit)) {
           newGameState[selectedUnit.player].units[
@@ -4697,7 +4666,7 @@ const BoardArea = (props) => {
 
                         {canCancel() && (
                           <button
-                            className={`redButton ${
+                            className={`yellowButton ${
                               canClick("Cancel Button") ? "demoClick" : ""
                             }`}
                             onClick={() => {
@@ -4711,14 +4680,14 @@ const BoardArea = (props) => {
 
                         {hideModal && (
                           <button
-                            className="redButton"
+                            className="yellowButton"
                             onClick={() => hideOrRevealModale()}
                             style={{
                               visibility:
                                 demoGuide === "Learn-overview" ? "hidden" : "",
                             }}
                           >
-                            Return to Message
+                            Return To Message
                           </button>
                         )}
 
@@ -4984,7 +4953,7 @@ const BoardArea = (props) => {
 
                 {currentResolutionPrompt()}
 
-                {[10, 17, 18, 71, 78, 100, 101, 114, 115, 116].includes(
+                {[17, 18, 71, 78, 100, 101, 114, 115, 116].includes(
                   demoCount
                 ) &&
                   demoGuide === "Learn-overview" && <DemoImage />}
@@ -5037,8 +5006,6 @@ const BoardArea = (props) => {
           </div>
         </div>
       )}
-
-      {/* {magnifiedSkill && <ZoomCard cardInfo={magnifiedSkill} />} */}
 
       {openContingencySettings && (
         <ContingencySettings

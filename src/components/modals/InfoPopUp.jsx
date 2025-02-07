@@ -144,9 +144,7 @@ const InfoPopUp = (props) => {
             <ol className="infoPopUp-list">
               <li className="unitInfo-text-desc">⬩Draw 3 Avelhems.</li>
               <li className="unitInfo-text-desc">⬩Draw 2 skills.</li>
-              <li className="unitInfo-text-desc">
-                ⬩Gain 2 FD. ⬩You may recover 1 “Transcendence”.
-              </li>
+              <li className="unitInfo-text-desc">⬩Gain 3 FD.</li>
             </ol>
 
             <br />

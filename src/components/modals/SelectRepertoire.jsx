@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Modal.css";
+import "./Modal2.scss";
 
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { db } from "../../config/firebaseConfig";
@@ -20,6 +21,11 @@ export default function SelectRepertoire(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [documentId, setDocumentId] = useState(null);
   const [repertoireList, setRepertoireList] = useState(null);
+  const [selectedChoice, setSelectedChoice] = useState(null);
+  const [selectedRep, setSelectedRep] = useState(null);
+  const [expansion, setExpansion] = useState("Elemental Entree");
+
+  console.log(props.expansion);
 
   //---Realtime data functionality below
   const userInfoRef = query(
@@ -53,8 +59,12 @@ export default function SelectRepertoire(props) {
 
       unsubscribe = onSnapshot(documentRef, (docSnapshot) => {
         if (docSnapshot.exists()) {
-          setRepertoireList(docSnapshot.data().repertoire);
-          // console.log("Change!");
+          if (props.expansion === "Familiars’ Followup") {
+            setRepertoireList(docSnapshot.data().repertoire2);
+            setExpansion("Familiars’ Followup");
+          } else {
+            setRepertoireList(docSnapshot.data().repertoire);
+          }
         } else {
           console.log("Document does not exist");
         }
@@ -66,26 +76,84 @@ export default function SelectRepertoire(props) {
     return () => unsubscribe?.();
   }, [documentId]);
 
+  useEffect(() => {
+    let unsubscribe;
+    if (documentId) {
+      let documentRef = doc(db, "userInfo", documentId);
+
+      unsubscribe = onSnapshot(documentRef, (docSnapshot) => {
+        if (docSnapshot.exists()) {
+          if (expansion === "Familiars’ Followup") {
+            setRepertoireList(docSnapshot.data().repertoire2);
+          } else {
+            setRepertoireList(docSnapshot.data().repertoire);
+          }
+          setSelectedRep(null);
+          setSelectedChoice(null);
+        } else {
+          console.log("Document does not exist");
+        }
+      });
+    }
+
+    //---Realtime data functionality above
+
+    return () => unsubscribe?.();
+  }, [expansion]);
+
+  const switchExpansion = () => {
+    if (expansion === "Familiars’ Followup") {
+      setExpansion("Elemental Entree");
+    } else {
+      setExpansion("Familiars’ Followup");
+    }
+  };
+
+  const handleChoice = (i, rep) => {
+    if (selectedChoice === i) {
+      setSelectedRep(null);
+      setSelectedChoice(null);
+    } else {
+      setSelectedRep(rep);
+      setSelectedChoice(i);
+    }
+  };
+
+  const handleSelect = () => {
+    props.onSelectRepertoire(selectedRep);
+  };
+
   return (
-    <div className="modal-backdrop">
-      <div className="modal">
-        <div className="modalHeader">
-          <div className="modalTitle">Select your repertoire</div>
+    <div className="modalBackdrop">
+      <div className="modalV2">
+        <div className="modalHeader2">
+          <div className="modalTitle2">Select Your Repertoire</div>
         </div>
 
-        <br />
+        <div className="modalContent2">
+          <div className="modalContentText">
+            Repertoire Selection: {expansion}
+          </div>
 
-        <div className="threeColumn column-centered">
-          {repertoireList &&
-            repertoireList.map((rep, index) => (
+          <div className="modalContent3Column">
+            {repertoireList?.map((rep, i) => (
               <div
-                key={index}
-                className="modal-option-outline"
-                onClick={() => props.onSelectRepertoire(rep)}
+                key={i}
+                className={`
+                modalOptionOutline 
+                modalRepertoireOptionOutline ${
+                  selectedChoice === i
+                    ? "modalRepertoireOptionOutlineSelected"
+                    : ""
+                }
+                `}
+                onClick={() => {
+                  handleChoice(i, rep);
+                }}
               >
-                <div className="repertoire-frame-select">
-                  <div className="modal-option-header">
-                    <div className="modal-option-title ">{rep.name}</div>
+                <div className="modalRepertoire">
+                  <div className="modalOptionHeader">
+                    <div className="modalOptionTitle">{rep.name}</div>
                   </div>
 
                   <div className="repertoire-text repertoire-desc repertoire-scrollable">
@@ -94,6 +162,25 @@ export default function SelectRepertoire(props) {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+
+        <div className="modalFooter">
+          {selectedChoice !== null && (
+            <button
+              className={`redButton2`}
+              onClick={() => {
+                handleSelect();
+              }}
+            >
+              Select
+            </button>
+          )}
+          {props.expansion === "Familiars’ Followup" && (
+            <button className={`redButton2`} onClick={() => switchExpansion()}>
+              Switch Selection
+            </button>
+          )}
         </div>
       </div>
     </div>

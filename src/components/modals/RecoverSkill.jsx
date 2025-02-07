@@ -28,10 +28,10 @@ const RecoverSkill = (props) => {
   }
 
   const canRecover = (skill) => {
-    if (props.restriction === null) {
+    if (props.details.restriction === null) {
       return true;
     } else {
-      return props.restriction.includes(skill);
+      return props.details.restriction.includes(skill);
     }
   };
 
@@ -45,7 +45,7 @@ const RecoverSkill = (props) => {
         "Recover 1 Lightning skill other than “Thunder Thaumaturge”.",
         "Recover then reveal 1 burst skill.",
         "You may recover then float 1 skill that can grant a unit Ravager",
-      ].includes(props.message)
+      ].includes(props.details.message)
     ) {
       let message = "Your opponent has recovered and revealed a skill.";
       let specMessage = `${
@@ -54,7 +54,7 @@ const RecoverSkill = (props) => {
 
       let title = "";
 
-      switch (props.message) {
+      switch (props.details.message) {
         case "Recover then float 1 Plant skill other than “Efflorescence”.":
           title = "Efflorescence";
           break;
@@ -86,7 +86,7 @@ const RecoverSkill = (props) => {
       });
     }
 
-    if (props.outcome === "Add") {
+    if (props.details.outcome === "Add") {
       //add selected skill from vestige to hand
       newGameState[self].skillHand.push(
         newGameState[self].skillVestige.splice(
@@ -94,22 +94,17 @@ const RecoverSkill = (props) => {
           1
         )[0]
       );
-    } else if (props.outcome === "Float") {
+    } else if (props.details.outcome === "Float") {
       const skillToFloat = newGameState[self].skillVestige.splice(
         newGameState[self].skillVestige.length - 1 - selectedSkill,
         1
       )[0];
 
-      if (skillToFloat !== "SX-01") {
-        //take selected card then put it at the top of deck (end of array)
-        //EXCEPTION: "Transcendence" (SX-01) cannot be put in repertoire
-        newGameState[self].skillRepertoire.push(skillToFloat);
+      //take selected card then put it at the top of deck (end of array)
+      newGameState[self].skillRepertoire.push(skillToFloat);
 
-        // increase floating count
-        newGameState[self].skillFloat = newGameState[self].skillFloat + 1;
-      } else {
-        newGameState[self].skillVestige.push(skillToFloat);
-      }
+      // increase floating count
+      newGameState[self].skillFloat = newGameState[self].skillFloat + 1;
     }
 
     dispatch(updateState(newGameState));
@@ -142,52 +137,60 @@ const RecoverSkill = (props) => {
   const handleUpdateDemoGuide = () => {};
 
   return (
-    <div className="modal-backdrop">
-      <div className="modal">
-        <div className="modalHeader">
-          <div className="modalTitle">{props.message}</div>
-          <div className="modalButton">
-            <button className="redButton" onClick={() => handleViewBoard()}>
-              View
+    <div className="modalBackdrop">
+      <div className="modalV2">
+        <div className="modalHeader2">
+          <div className="modalTitle2">{props.details.title}</div>
+          <div className="modalButton2">
+            <button className="yellowButton" onClick={() => handleViewBoard()}>
+              View Board
             </button>
           </div>
         </div>
 
-        <br />
-
-        <div className="modalContent">
-          <div className="fourColumn scrollable scrollable-y-only">
+        <div className="modalContent2">
+          <div className="modalContentText">{props.details.message}</div>
+          <div className="modalContent4Column modalScrollableY">
             {recoverVestige.map((usableSkill, i) => (
               <div
                 key={i}
-                className={`scionSkills ${
-                  selectedSkill === i ? "selectedSkill" : ""
-                } ${canClick("Skill Card", usableSkill) ? "demoClick" : ""}`}
+                className={`modalOptionOutline modalCardOptionOutline ${
+                  selectedSkill === i ? "modalCardOptionOutlineSelected" : ""
+                }`}
                 onClick={() => {
                   handleClick(canRecover(usableSkill.id), i);
                   handleUpdateDemoGuide();
                 }}
               >
-                <Skill
-                  i={i}
-                  usableSkill={usableSkill}
-                  canActivateSkill={canRecover(usableSkill.id)}
-                />
+                <div
+                  className={`modalCard 
+                   ${canClick("Skill Card", i) ? "demoClick" : ""}
+                    `}
+                  style={{
+                    boxShadow: selectedSkill === i ? "none" : "",
+                  }}
+                >
+                  <Skill
+                    i={i}
+                    usableSkill={usableSkill}
+                    canActivateSkill={canRecover(usableSkill.id)}
+                  />
+                </div>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="modalBottomButton">
+        <div className="modalFooter">
           {props.canSkip && selectedSkill === null && (
-            <button className="redButton" onClick={() => handleSkip()}>
+            <button className="redButton2" onClick={() => handleSkip()}>
               Skip
             </button>
           )}
 
           {selectedSkill !== null && (
             <button
-              className={`redButton ${
+              className={`redButton2 ${
                 canClick("Select Button") ? "demoClick" : ""
               }`}
               onClick={() => {

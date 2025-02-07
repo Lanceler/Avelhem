@@ -33,12 +33,8 @@ const CataclysmicTempestFloat = (props) => {
     newGameState.currentResolution.pop();
 
     for (let i of selectedSkills) {
-      if (hand[i].id === "SX-01") {
-        newGameState[self].skillVestige.push(hand[i].id);
-      } else {
-        newGameState[self].skillRepertoire.push(hand[i].id);
-        newGameState[self].skillFloat += 1;
-      }
+      newGameState[self].skillRepertoire.push(hand[i].id);
+      newGameState[self].skillFloat += 1;
     }
 
     const sortHandIndexes = [...selectedSkills].sort((a, b) => b - a);

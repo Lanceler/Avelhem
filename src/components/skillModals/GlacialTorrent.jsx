@@ -178,7 +178,7 @@ const GlacialTorrent1 = (props) => {
           <div className="scrollable scrollable-y-only">
             {localGameState[self].skillFloat > 0 && (
               <>
-                <h3>Floating skills</h3>
+                <h3>Floating cards</h3>
                 <div className="fourColumn">
                   {floatingRepertoire.map((usableSkill, i) => (
                     <div
@@ -204,9 +204,7 @@ const GlacialTorrent1 = (props) => {
               </>
             )}
 
-            {localGameState[self].skillFloat > 0 && (
-              <h3>Non-floating skills</h3>
-            )}
+            {localGameState[self].skillFloat > 0 && <h3>Non-floating cards</h3>}
             <div className="fourColumn">
               {inspectRerpertoire.map((usableSkill, i) => (
                 <div

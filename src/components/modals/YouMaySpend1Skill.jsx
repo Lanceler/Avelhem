@@ -19,6 +19,8 @@ const YouMaySpend1Skill = (props) => {
   const dispatch = useDispatch();
 
   const {
+    avelhemToScion,
+    canAscend,
     drawSkill,
     enterSelectUnitMode,
     getZonesWithAllies,
@@ -27,6 +29,12 @@ const YouMaySpend1Skill = (props) => {
   } = useRecurringEffects();
 
   const [selectedSkill, setSelectedSkill] = useState(null);
+
+  let SkipMessage = "Skip";
+
+  if (props.details.reason === "Destine") {
+    SkipMessage = "Return";
+  }
 
   let usableSkills = [];
   for (let i in localGameState[self].skillHand) {
@@ -37,6 +45,21 @@ const YouMaySpend1Skill = (props) => {
   }
 
   const canBeDiscarded = (skill) => {
+    if (props.details.reason === "Destine") {
+      //get aspect of skill
+      const skillCode = skill.substring(0, 2);
+
+      //if aspect is non-sovereign, check if can ascend
+      if (!isNaN(parseInt(skillCode))) {
+        if (
+          canAscend(localGameState, self, avelhemToScion(parseInt(skillCode)))
+        ) {
+          return true;
+        }
+      }
+      return false;
+    }
+
     if (props.details.restriction === null) {
       return true;
     }
@@ -63,18 +86,27 @@ const YouMaySpend1Skill = (props) => {
         newGameState.currentResolution.push({
           resolution: "Recover Skill",
           player: self,
-          restriction: ["08-01", "08-03", "08-04"],
-          message:
-            "Recover then float 1 Plant skill other than “Efflorescence”.",
-          outcome: "Float",
+          details: {
+            title: "Efflorescence",
+            reason: "Efflorescence",
+            restriction: ["08-01", "08-03", "08-04"],
+            message:
+              "Recover then float 1 Plant skill other than “Efflorescence”.",
+            outcome: "Float",
+          },
         });
 
         newGameState.currentResolution.push({
           resolution: "Discard Skill",
           unit: unit,
-          player: self,
-          message: "Choose 2nd skill to spend.",
-          restriction: null,
+          player: unit.player,
+          canSkip: false,
+          details: {
+            title: "Efflorescence",
+            message: "Choose the second skill to spend.",
+            restriction: null,
+            reason: "Efflorescence2",
+          },
         });
 
         newGameState.currentResolution.push({
@@ -92,13 +124,13 @@ const YouMaySpend1Skill = (props) => {
 
       case "Castle of Thorns1":
         newGameState.currentResolution.push({
-          resolution: "Search Skill",
+          resolution: "Search Card",
           player: self,
           details: {
             restriction: ["08-01", "08-02", "08-03"],
             exclusion: [],
             searchTitle: "Castle of Thorns",
-            searchMessage: "Search for 1 Plant skill”",
+            searchMessage: "Search for 1 Plant skill.",
             outcome: "Add",
             revealTitle: null,
             revealMessage: null,
@@ -113,9 +145,13 @@ const YouMaySpend1Skill = (props) => {
         newGameState.currentResolution.push({
           resolution: "Recover Skill",
           player: self,
-          restriction: ["08-01", "08-02", "08-03"],
-          message: "Recover 1 Plant skill",
-          outcome: "Add",
+          details: {
+            title: "Castle of Thorns",
+            reason: "Castle of Thorns",
+            restriction: ["08-01", "08-02", "08-03"],
+            message: "Recover 1 Plant skill.",
+            outcome: "Add",
+          },
         });
         break;
 
@@ -129,11 +165,9 @@ const YouMaySpend1Skill = (props) => {
 
   const handleSelect = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    let unit = null;
-    if (props.unit) {
-      unit = newGameState[props.unit.player].units[props.unit.unitIndex];
-    }
+    let unit = props.unit
+      ? newGameState[props.unit.player].units[props.unit.unitIndex]
+      : null;
 
     //end Discarding Skill resolution
     newGameState.currentResolution.pop();
@@ -143,9 +177,13 @@ const YouMaySpend1Skill = (props) => {
         newGameState.currentResolution.push({
           resolution: "Recover Skill",
           player: self,
-          restriction: ["01-01", "01-02", "01-03"],
-          message: "Recover then float 1 Fire skill",
-          outcome: "Float",
+          details: {
+            title: "From the Ashes",
+            reason: "From the Ashes",
+            restriction: ["01-01", "01-02", "01-03"],
+            message: "Recover then float 1 Fire skill.",
+            outcome: "Float",
+          },
         });
         break;
 
@@ -184,10 +222,14 @@ const YouMaySpend1Skill = (props) => {
         newGameState.currentResolution.push({
           resolution: "Recover Skill",
           player: self,
-          restriction: ["05-01", "05-02", "05-04"],
-          message:
-            "Recover then float 1 Lightning skill other than “Thunder Thaumaturge”.",
-          outcome: "Float",
+          details: {
+            title: "Thunder Thaumaturge",
+            reason: "Thunder Thaumaturge",
+            restriction: ["05-01", "05-02", "05-04"],
+            message:
+              "Recover then float 1 Lightning skill other than “Thunder Thaumaturge”.",
+            outcome: "Float",
+          },
         });
         break;
 
@@ -214,18 +256,27 @@ const YouMaySpend1Skill = (props) => {
         newGameState.currentResolution.push({
           resolution: "Recover Skill",
           player: self,
-          restriction: ["08-01", "08-03", "08-04"],
-          message:
-            "Recover then float 1 Plant skill other than “Efflorescence”.",
-          outcome: "Float",
+          details: {
+            title: "Efflorescence",
+            reason: "Efflorescence",
+            restriction: ["08-01", "08-03", "08-04"],
+            message:
+              "Recover then float 1 Plant skill other than “Efflorescence”.",
+            outcome: "Float",
+          },
         });
 
         newGameState.currentResolution.push({
           resolution: "Discard Skill",
           unit: unit,
-          player: self,
-          message: "Choose 2nd skill to spend.",
-          restriction: null,
+          player: unit.player,
+          canSkip: false,
+          details: {
+            title: "Efflorescence",
+            message: "Choose the second skill to spend.",
+            restriction: null,
+            reason: "Efflorescence2",
+          },
         });
 
         newGameState.currentResolution.push({
@@ -243,13 +294,13 @@ const YouMaySpend1Skill = (props) => {
 
       case "Castle of Thorns1":
         newGameState.currentResolution.push({
-          resolution: "Search Skill",
+          resolution: "Search Card",
           player: self,
           details: {
             restriction: ["08-01", "08-02", "08-03"],
             exclusion: [],
             searchTitle: "Castle of Thorns",
-            searchMessage: "Search for 1 Plant skill”",
+            searchMessage: "Search for 1 Plant skill.",
             outcome: "Add",
             revealTitle: null,
             revealMessage: null,
@@ -264,9 +315,13 @@ const YouMaySpend1Skill = (props) => {
         newGameState.currentResolution.push({
           resolution: "Recover Skill",
           player: self,
-          restriction: ["08-01", "08-02", "08-03"],
-          message: "Recover 1 Plant skill",
-          outcome: "Add",
+          details: {
+            title: "Castle of Thorns",
+            reason: "Castle of Thorns",
+            restriction: ["08-01", "08-02", "08-03"],
+            message: "Recover 1 Plant skill.",
+            outcome: "Add",
+          },
         });
         break;
 
@@ -301,6 +356,24 @@ const YouMaySpend1Skill = (props) => {
           "aether-blast",
           null
         );
+        break;
+
+      case "Destine":
+        //end Defiance Phase Selection
+        newGameState.currentResolution.pop();
+
+        //Spend FD
+        newGameState[self].fateDefiance -= props.details.defianceCost;
+
+        const skillCode = usableSkills[selectedSkill].id.substring(0, 2);
+
+        newGameState.currentResolution.push({
+          resolution: "Defiance Options",
+          resolution2: "Select Destine Pawn",
+          player: self,
+          scionClass: avelhemToScion(parseInt(skillCode)),
+        });
+
         break;
 
       default:
@@ -351,29 +424,28 @@ const YouMaySpend1Skill = (props) => {
     props.hideOrRevealModale();
   };
 
-  const canClick = (element, element2) => {
+  const canClick = (element1, element2) => {
     switch (demoGuide) {
-      case "Learn1.72":
-        return element === "Skill Card" && element2.id === "08-01";
+      case "Learn-overview":
+        switch (demoCount) {
+          case 107:
+            return element2 === 2;
 
-      case "Learn1.73":
-        return element === "Select Button";
-
-      //////////////////////////
+          case 108:
+            return element1 === "Select Button";
+        }
     }
   };
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
-      case "Learn1.72":
-        dispatch(updateDemo("Learn1.73"));
-        break;
-
-      case "Learn1.73":
-        dispatch(updateDemo("Learn1.74"));
-        break;
-
-      //////////////////////
+      case "Learn-overview":
+        switch (demoCount) {
+          case 107:
+          case 108:
+            dispatch(updateDemoCount(demoCount + 1));
+            break;
+        }
     }
   };
 
@@ -384,87 +456,85 @@ const YouMaySpend1Skill = (props) => {
   };
 
   return (
-    <div className="modal-backdrop">
+    <div className="modalBackdrop">
       {demoSkip()}
-      <div className="modal">
-        <div className="modalHeader">
-          <div className="modalTitle">{props.details.title}</div>
-          <div className="modalButton">
-            <button className="redButton" onClick={() => handleViewBoard()}>
-              View
+      <div className="modalV2">
+        <div className="modalHeader2">
+          <div className="modalTitle2">{props.details.title}</div>
+          <div className="modalButton2">
+            <button className="yellowButton" onClick={() => handleViewBoard()}>
+              View Board
             </button>
           </div>
         </div>
 
-        <br />
-
-        {props.details.message && (
-          <>
-            <h3 style={{ maxWidth: 700 }}>{props.details.message}</h3>
-          </>
-        )}
-
-        <br />
-
-        <div className="scrollable scrollable-y-only">
-          <div className="fourColumn">
+        <div className="modalContent2">
+          <div className="modalContentText">{props.details.message}</div>
+          <div className="modalContent4Column modalScrollableY">
             {usableSkills.map((usableSkill, i) => (
               <div
                 key={i}
-                className={`scionSkills ${
-                  selectedSkill === i ? "selectedSkill" : ""
-                } ${canClick("Skill Card", usableSkill) ? "demoClick" : ""}`}
+                className={`modalOptionOutline modalCardOptionOutline ${
+                  selectedSkill === i ? "modalCardOptionOutlineSelected" : ""
+                }`}
                 onClick={() => {
                   handleClick(canBeDiscarded(usableSkill.id), i);
                   handleUpdateDemoGuide();
                 }}
               >
-                <Skill
-                  i={i}
-                  usableSkill={usableSkill}
-                  canActivateSkill={canBeDiscarded(usableSkill.id)}
-                />
+                <div
+                  className={`modalCard 
+                   ${canClick("Skill Card", i) ? "demoClick" : ""}
+                    `}
+                  style={{
+                    boxShadow: selectedSkill === i ? "none" : "",
+                  }}
+                >
+                  <Skill
+                    i={i}
+                    usableSkill={usableSkill}
+                    canActivateSkill={canBeDiscarded(usableSkill.id)}
+                  />
+                </div>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="modalBottomButton">
-          <div className="multi-option-buttons">
-            {selectedSkill === null && (
-              <button
-                className={`redButton ${
-                  canClick("Skip Button") ? "demoClick" : ""
-                }`}
-                onClick={() => {
-                  handleSkip();
-                  handleUpdateDemoGuide();
-                }}
-              >
-                Skip
-              </button>
-            )}
+        <div className="modalFooter">
+          {props.canSkip !== false && selectedSkill === null && (
+            <button
+              className={`redButton2 ${
+                canClick("Skip Button") ? "demoClick" : ""
+              }`}
+              onClick={() => {
+                handleSkip();
+                handleUpdateDemoGuide();
+              }}
+            >
+              {SkipMessage}
+            </button>
+          )}
 
-            {selectedSkill === null && props.unit && props.unit.blossom > 0 && (
-              <button className="redButton" onClick={() => handleBlossom()}>
-                Spend 1 Blossom
-              </button>
-            )}
+          {selectedSkill === null && props.unit?.blossom > 0 && (
+            <button className="redButton2" onClick={() => handleBlossom()}>
+              Spend 1 Blossom
+            </button>
+          )}
 
-            {selectedSkill !== null && (
-              <button
-                className={`redButton ${
-                  canClick("Select Button") ? "demoClick" : ""
-                }`}
-                onClick={() => {
-                  handleSelect();
-                  handleUpdateDemoGuide();
-                }}
-              >
-                Select
-              </button>
-            )}
-          </div>
+          {selectedSkill !== null && (
+            <button
+              className={`redButton2 ${
+                canClick("Select Button") ? "demoClick" : ""
+              }`}
+              onClick={() => {
+                handleSelect();
+                handleUpdateDemoGuide();
+              }}
+            >
+              Select
+            </button>
+          )}
         </div>
       </div>
     </div>

@@ -1,9 +1,10 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import "./Modal.css";
+import { useState } from "react";
+import "./Modal2.scss";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
+import { updateDemo } from "../../redux/demoGuide";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import Skill from "../hand/Skill";
@@ -11,6 +12,7 @@ import Skill from "../hand/Skill";
 const InspectSkill = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
+  const { demoGuide } = useSelector((state) => state.demoGuide);
   const dispatch = useDispatch();
 
   const { shuffleCards } = useRecurringEffects();
@@ -156,97 +158,128 @@ const InspectSkill = (props) => {
     props.hideOrRevealModale();
   };
 
+  const canClick = (element1, element2, element3) => {};
+
+  const handleUpdateDemoGuide = () => {};
+
   return (
-    <div className="modal-backdrop">
-      <div className="modal">
-        <div className="modalHeader">
-          <div className="modalTitle">{props.details.title}</div>
-          <div className="modalButton">
-            <button className="redButton" onClick={() => handleViewBoard()}>
-              View
+    <div className="modalBackdrop">
+      <div className="modalV2">
+        <div className="modalHeader2">
+          <div className="modalTitle2">{props.details.title}</div>
+          <div className="modalButton2">
+            <button className="yellowButton" onClick={() => handleViewBoard()}>
+              View Board
             </button>
           </div>
         </div>
-        <h3>{props.details.message}</h3>
 
-        <br />
+        <div className="modalContent2">
+          <div className="modalContentText">{props.details.message}</div>
 
-        <div className="modalContent">
-          <div className="scrollable scrollable-y-only">
+          <div className={`modalScrollableY ${demoGuide ? "demoBlocker" : ""}`}>
             {localGameState[self].skillFloat > 0 && (
               <>
-                <h3>Floating skills</h3>
-                <div className="fourColumn">
+                <div className="modalContentText">Floating cards</div>
+                <div className="modalContent4Column">
                   {floatingRepertoire.map((usableSkill, i) => (
                     <div
                       key={i}
-                      className={`scionSkills ${
-                        selectedSkill === i ? "selectedSkill" : ""
+                      className={`modalOptionOutline modalCardOptionOutline ${
+                        selectedSkill === i
+                          ? "modalCardOptionOutlineSelected"
+                          : ""
                       }`}
                       onClick={() => {
                         handleClick(canSelect(usableSkill.id), i);
                         // handleUpdateDemoGuide();
                       }}
                     >
-                      <Skill
-                        i={i}
-                        usableSkill={usableSkill}
-                        canActivateSkill={canSelect(usableSkill.id)}
-                      />
+                      <div
+                        className={`modalCard 
+                          ${
+                            canClick("Skill Card", usableSkill, i)
+                              ? "demoClick"
+                              : ""
+                          }
+                          `}
+                        style={{
+                          boxShadow: selectedSkill === i ? "none" : "",
+                        }}
+                      >
+                        <Skill
+                          i={i}
+                          usableSkill={usableSkill}
+                          canActivateSkill={canSelect(usableSkill.id)}
+                        />
+                      </div>
                     </div>
                   ))}
                 </div>
               </>
             )}
 
-            {inspectRerpertoire.length > 0 && (
-              <>
-                <h3>Non-floating skills</h3>
+            {localGameState[self].skillFloat > 0 &&
+              inspectRerpertoire.length > 0 && (
+                <div className="modalContentText">Non-floating cards</div>
+              )}
+
+            <div className="modalContent4Column">
+              {inspectRerpertoire.map((usableSkill, i) => (
                 <div
-                  className={`fourColumn  ${
-                    localGameState[self].skillFloat > 0
-                      ? "decreased-height"
+                  key={i + localGameState[self].skillFloat}
+                  className={`modalOptionOutline modalCardOptionOutline ${
+                    selectedSkill === i + localGameState[self].skillFloat
+                      ? "modalCardOptionOutlineSelected"
                       : ""
-                  } `}
+                  }`}
+                  onClick={() => {
+                    handleClick(
+                      canSelect(usableSkill.id),
+                      i + localGameState[self].skillFloat
+                    );
+                    // handleUpdateDemoGuide();
+                  }}
                 >
-                  {inspectRerpertoire.map((usableSkill, i) => (
-                    <div
-                      key={i + localGameState[self].skillFloat}
-                      className={`scionSkills ${
+                  <div
+                    className={`modalCard ${
+                      canClick(
+                        "Skill Card",
+                        usableSkill,
+                        i + localGameState[self].skillFloat
+                      )
+                        ? "demoClick"
+                        : ""
+                    }
+                          `}
+                    style={{
+                      boxShadow:
                         selectedSkill === i + localGameState[self].skillFloat
-                          ? "selectedSkill"
-                          : ""
-                      }`}
-                      onClick={() => {
-                        handleClick(
-                          canSelect(usableSkill.id),
-                          i + localGameState[self].skillFloat
-                        );
-                        // handleUpdateDemoGuide();
-                      }}
-                    >
-                      <Skill
-                        i={i + localGameState[self].skillFloat}
-                        usableSkill={usableSkill}
-                        canActivateSkill={canSelect(usableSkill.id)}
-                      />
-                    </div>
-                  ))}
+                          ? "none"
+                          : "",
+                    }}
+                  >
+                    <Skill
+                      i={i + localGameState[self].skillFloat}
+                      usableSkill={usableSkill}
+                      canActivateSkill={canSelect(usableSkill.id)}
+                    />
+                  </div>
                 </div>
-              </>
-            )}
+              ))}
+            </div>
           </div>
         </div>
 
-        <div className="modalBottomButton">
+        <div className="modalFooter">
           {selectedSkill === null && (
-            <button className="redButton" onClick={() => handleSkip()}>
+            <button className="redButton2" onClick={() => handleSkip()}>
               Skip
             </button>
           )}
 
           {selectedSkill !== null && (
-            <button className="redButton" onClick={() => handleSelect()}>
+            <button className="redButton2" onClick={() => handleSelect()}>
               Select
             </button>
           )}

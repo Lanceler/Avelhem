@@ -32,7 +32,7 @@ const SelectedAvelhem = (props) => {
   const canRecover =
     yourTurn &&
     localGameState[self].bountyUpgrades.avelhem >= 3 &&
-    localGameState[self].fateDefiance >= 3 &&
+    localGameState[self].fateDefiance >= 2 &&
     getScionSet(scionClass).some((s) =>
       localGameState[self].skillVestige.includes(s)
     );

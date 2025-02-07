@@ -10,7 +10,7 @@ import { useCardDatabase } from "../../hooks/useCardDatabase";
 
 import SkillMultiSelect from "../hand/SkillMultiSelect";
 
-const SelectSkillHandMulti = (props) => {
+const SelectHandMultiSkill = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
@@ -166,14 +166,9 @@ const SelectSkillHandMulti = (props) => {
         // console.log(skillHand);
 
         //4. place selected skills at bottom of repertoire (start of array)
-        // if skill is "Transcendence" (SX-01), sent to vestige instead
         skillsToReturn.reverse();
         for (let skill of skillsToReturn) {
-          if (skill === "SX-01") {
-            newGameState[self].skillVestige.push(skill);
-          } else {
-            newGameState[self].skillRepertoire.unshift(skill);
-          }
+          newGameState[self].skillRepertoire.unshift(skill);
         }
 
         //5. for each returned skill, draw 1 skill
@@ -256,7 +251,7 @@ const SelectSkillHandMulti = (props) => {
           const skillCode = skill.substring(0, 2);
 
           newGameState.currentResolution.push({
-            resolution: "Search Skill",
+            resolution: "Search Card",
             player: self,
             details: {
               restriction: getScionSet(avelhemToScion(parseInt(skillCode))),
@@ -389,49 +384,58 @@ const SelectSkillHandMulti = (props) => {
   };
 
   return (
-    <div className="modal-backdrop">
-      <div className="modal">
-        <div className="modalHeader">
-          <div className="modalTitle">{props.details.title}</div>
-          <div className="modalButton">
-            <button className="redButton" onClick={() => handleViewBoard()}>
-              View
+    <div className="modalBackdrop">
+      <div className="modalV2">
+        <div className="modalHeader2">
+          <div className="modalTitle2">{props.details.title}</div>
+          <div className="modalButton2">
+            <button className="yellowButton" onClick={() => handleViewBoard()}>
+              View Board
             </button>
           </div>
         </div>
 
-        <h3>{props.details.message}</h3>
+        <div className="modalContent2">
+          <div className="modalContentText">{props.details.message}</div>
 
-        <br />
-
-        <div className="fourColumn  scrollable scrollable-y-only">
-          {skillHand.map((usableSkill, i) => (
-            <div
-              key={i}
-              className={`scionSkills ${
-                selectedSkills.includes(i) ? "selectedSkill" : ""
-              }
-              ${canClick("Skill", i) ? "demoClick" : ""}
-              `}
-              onClick={() => {
-                handleClick(canAdd(usableSkill), i);
-                handleUpdateDemoGuide();
-              }}
-            >
-              <SkillMultiSelect
-                i={i}
-                usableSkill={usableSkill}
-                canAdd={canAdd(usableSkill)}
-                selectedSkills={selectedSkills}
-                addLimit={selectLimit}
-              />
-            </div>
-          ))}
+          <div className="modalContent4Column modalScrollableY">
+            {skillHand.map((usableSkill, i) => (
+              <div
+                key={i}
+                className={`modalOptionOutline modalCardOptionOutline ${
+                  selectedSkills.includes(i)
+                    ? "modalCardOptionOutlineSelected"
+                    : ""
+                }`}
+                onClick={() => {
+                  handleClick(canAdd(usableSkill), i);
+                  handleUpdateDemoGuide();
+                }}
+              >
+                <div
+                  className={`modalCard 
+                   ${canClick("Skill", i) ? "demoClick" : ""}
+                    `}
+                  style={{
+                    boxShadow: selectedSkills.includes(i) ? "none" : "",
+                  }}
+                >
+                  <SkillMultiSelect
+                    i={i}
+                    usableSkill={usableSkill}
+                    canAdd={canAdd(usableSkill)}
+                    selectedSkills={selectedSkills}
+                    addLimit={selectLimit}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div className="modalBottomButton">
+        <div className="modalFooter">
           {canSkip && selectedSkills.length === 0 && (
-            <button className="redButton" onClick={() => handleSkip()}>
+            <button className="redButton2" onClick={() => handleSkip()}>
               {skipMessage}
             </button>
           )}
@@ -440,7 +444,7 @@ const SelectSkillHandMulti = (props) => {
             !["Skill Hand Limit", "Battle Cry"].includes(
               props.details.reason
             ) && (
-              <button className="redButton" onClick={() => handleSelect()}>
+              <button className="redButton2" onClick={() => handleSelect()}>
                 {selectMessage}
               </button>
             )}
@@ -448,7 +452,9 @@ const SelectSkillHandMulti = (props) => {
           {["Skill Hand Limit", "Battle Cry"].includes(props.details.reason) &&
             selectedSkills.length === props.details.count && (
               <button
-                className={`redButton ${canClick("Button") ? "demoClick" : ""}`}
+                className={`redButton2 ${
+                  canClick("Button") ? "demoClick" : ""
+                }`}
                 onClick={() => {
                   handleSelect();
                   handleUpdateDemoGuide();
@@ -463,4 +469,4 @@ const SelectSkillHandMulti = (props) => {
   );
 };
 
-export default SelectSkillHandMulti;
+export default SelectHandMultiSkill;

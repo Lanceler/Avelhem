@@ -12,25 +12,6 @@ const SkillHandBack = (props) => {
 
   let handNum = localGameState[props.team].skillHand.length;
 
-  let transcendenceCount = 0;
-
-  for (let i of localGameState[props.team].skillHand) {
-    if (i === "SX-01") {
-      transcendenceCount += 1;
-    }
-  }
-
-  const cardImage = (position) => {
-    if (
-      transcendenceCount > 0 &&
-      transcendenceCount > Math.min(5, handNum) - position
-    ) {
-      return `url(${getCardImage("SX-01")})`;
-    } else {
-      return `url(${getCardImage("SkillCardBack")})`;
-    }
-  };
-
   const cards = [1, 2, 3, 4, 5];
 
   const getMarginBottom = (i) => {
@@ -61,7 +42,7 @@ const SkillHandBack = (props) => {
             key={i}
             className={`hand-back-card`}
             style={{
-              backgroundImage: cardImage(i),
+              backgroundImage: `url(${getCardImage("SkillCardBack")})`,
               marginRight: 40 * (Math.min(5, handNum) - (2 * i - 1)),
               marginBottom: getMarginBottom(i),
               transform: `rotate(${

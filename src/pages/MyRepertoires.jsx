@@ -91,9 +91,9 @@ export default function MyRepertoires() {
           {userData &&
             userData.repertoire.map((rep, index) => (
               <Link
-                to={`/repertoire/${index}`}
+                to={`/repertoire/${index + 1}`}
                 className="repertoire-link"
-                key={index}
+                key={index + 1}
               >
                 <div className="black-border">
                   <div className="repertoire-frame">
@@ -105,6 +105,25 @@ export default function MyRepertoires() {
               </Link>
             ))}
         </div>
+
+        {/* <div className="repertoires-selection">
+          {userData &&
+            userData.repertoire2.map((rep, index) => (
+              <Link
+                to={`/repertoire/${index + 1 + 3}`}
+                className="repertoire-link"
+                key={index + 1}
+              >
+                <div className="black-border">
+                  <div className="repertoire-frame">
+                    <div className="repertoire-name">{rep.name}</div>
+
+                    <div className="repertoire-desc">{rep.description}</div>
+                  </div>
+                </div>
+              </Link>
+            ))}
+        </div> */}
       </div>
 
       {isLoading && <Loading />}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Modal.css";
+import "./Modal2.scss";
 
 import AdvanceSmall from "../../assets/diceIcons/AdvanceSmall.png";
 import MobilizeSmall from "../../assets/diceIcons/MobilizeSmall.png";
@@ -55,7 +55,7 @@ const SelectUnitAbility = (props) => {
           ),
           abilityText: (
             <>
-              <div className="abilityText ">⬩Strike.</div>
+              <div>⬩Strike.</div>
             </>
           ),
         },
@@ -70,7 +70,7 @@ const SelectUnitAbility = (props) => {
           ),
           abilityText: (
             <>
-              <div className="abilityText ">
+              <div>
                 ⬩Spend 1 skill to purge an adjacent ally’s Frostbite and Burn.
               </div>
             </>
@@ -101,13 +101,11 @@ const SelectUnitAbility = (props) => {
           ),
           abilityText: (
             <>
-              <div className="abilityText ">
+              <div>
                 ⬩Purge an adjacent ally’s turn-based afflictions (except
                 Anathema).
               </div>
-              <div className="abilityText ">
-                ⬩You may float 1 skill to search for 1 “Healing Rain”.
-              </div>
+              <div>⬩You may float 1 skill to search for 1 “Healing Rain”.</div>
               <div>
                 <br />
               </div>
@@ -125,7 +123,7 @@ const SelectUnitAbility = (props) => {
           ),
           abilityText: (
             <>
-              <div className="abilityText ">
+              <div>
                 ⬩Strike a frostbitten enemy or freeze an adjacent enemy for 2
                 turns.
               </div>
@@ -153,7 +151,7 @@ const SelectUnitAbility = (props) => {
           ),
           abilityText: (
             <>
-              <div className="abilityText ">⬩Move to a zone 2 spaces away.</div>
+              <div>⬩Move to a zone 2 spaces away.</div>
             </>
           ),
         },
@@ -166,7 +164,7 @@ const SelectUnitAbility = (props) => {
           ),
           abilityText: (
             <>
-              <div className="abilityText ">
+              <div>
                 Spend 1 skill and 2 Cyclones to blast an adjacent enemy.
               </div>
             </>
@@ -196,10 +194,8 @@ const SelectUnitAbility = (props) => {
           ),
           abilityText: (
             <>
-              <div className="abilityText ">⬩Gain Shield for 2 turns.</div>
-              <div className="abilityText ">
-                ⬩You may float 1 skill to traverse or strike.
-              </div>
+              <div>⬩Gain Shield for 2 turns.</div>
+              <div>⬩You may float 1 skill to traverse or strike.</div>
             </>
           ),
         },
@@ -217,8 +213,8 @@ const SelectUnitAbility = (props) => {
           ),
           abilityText: (
             <>
-              <div className="abilityText ">⬩Restore your Aether.</div>
-              <div className="abilityText ">⬩You may traverse.</div>
+              <div>⬩Restore your Aether.</div>
+              <div>⬩You may traverse.</div>
             </>
           ),
         },
@@ -248,8 +244,8 @@ const SelectUnitAbility = (props) => {
           ),
           abilityText: (
             <>
-              <div className="abilityText ">⬩Gain 1 Charge (Max. 3).</div>
-              <div className="abilityText ">⬩You may traverse.</div>
+              <div>⬩Gain 1 Charge (Max. 3).</div>
+              <div>⬩You may traverse.</div>
             </>
           ),
         },
@@ -262,11 +258,11 @@ const SelectUnitAbility = (props) => {
           ),
           abilityText: (
             <>
-              <div className="abilityText ">
+              <div>
                 ⬩Spend 3 Charges to search for then float 1 Lightning skill.
               </div>
-              <div className="abilityText ">⬩You may traverse.</div>
-              <div className="abilityText ">⬩You may traverse or strike.</div>
+              <div>⬩You may traverse.</div>
+              <div>⬩You may traverse or strike.</div>
               <div>
                 <br />
               </div>
@@ -287,10 +283,8 @@ const SelectUnitAbility = (props) => {
           ),
           abilityText: (
             <>
-              <div className="abilityText ">
-                ⬩Spend 1 skill to blast an enemy within 2 spaces.
-              </div>
-              <div className="abilityText ">⬩Restore your Aether.</div>
+              <div>⬩Spend 1 skill to blast an enemy within 2 spaces.</div>
+              <div>⬩Restore your Aether.</div>
             </>
           ),
         },
@@ -305,7 +299,7 @@ const SelectUnitAbility = (props) => {
           ),
           abilityText: (
             <>
-              <div className="abilityText ">
+              <div>
                 ⬩Convert your or an adjacent ally’s Aether into Shield for 2
                 turns.
               </div>
@@ -326,10 +320,8 @@ const SelectUnitAbility = (props) => {
           ),
           abilityText: (
             <>
-              <div className="abilityText ">⬩Search for 1 “Frenzy Blade”.</div>
-              <div className="abilityText ">
-                ⬩Draw 1 skill or restore your Aether.
-              </div>
+              <div>⬩Search for 1 “Frenzy Blade”.</div>
+              <div>⬩Draw 1 skill or restore your Aether.</div>
             </>
           ),
         },
@@ -344,7 +336,7 @@ const SelectUnitAbility = (props) => {
           ),
           abilityText: (
             <>
-              <div className="abilityText ">
+              <div>
                 ⬩Spend 1 skill and either 2 turns of Shield or 2 turns of Ward
                 to blast an adjacent enemy.
               </div>
@@ -367,7 +359,7 @@ const SelectUnitAbility = (props) => {
           ),
           abilityText: (
             <>
-              <div className="abilityText ">
+              <div>
                 ⬩Spend 2 skills to restore your Aether and gain Overgrowth.
               </div>
             </>
@@ -378,7 +370,7 @@ const SelectUnitAbility = (props) => {
           abilityQualifier: <div className="abilityQualifier"></div>,
           abilityText: (
             <>
-              <div className="abilityText ">
+              <div>
                 ⬩Spend 1 Blossom to purge your or an adjacent ally’s turn-based
                 afflictions (except Anathema).
               </div>
@@ -913,10 +905,6 @@ const SelectUnitAbility = (props) => {
     dispatch(updateState(newGameState));
   };
 
-  const handleViewBoard = () => {
-    props.hideOrRevealModale();
-  };
-
   const canClick = (element1, element2) => {
     switch (demoGuide) {
       case "Learn-overview":
@@ -945,57 +933,68 @@ const SelectUnitAbility = (props) => {
   };
 
   return (
-    <div className="modal-backdrop">
-      <div className="modal">
-        <div className="modalHeader">
-          <div className="modalTitle">{unit.unitClass} Abilities</div>
+    <div className="modalBackdrop">
+      <div className="modalV2">
+        <div className="modalHeader2">
+          <div className="modalTitle2">{unit.unitClass} Abilities</div>
         </div>
 
-        <br />
-        {message && <h3 style={{ maxWidth: 700 }}>{message}</h3>}
-        <br />
+        <div className="modalContent2">
+          <div className="modalContentText">{message}</div>
 
-        <div
-          className={`${
-            abilityDetails.length === 2 ? "twoColumn" : "oneAbility"
-          } column-centered`}
-        >
-          {abilityDetails.map((detail, i) => (
-            <div
-              key={i}
-              className={`modal-option-outline ${
-                selectedChoice === i ? "selected-modal-option" : ""
-              } ${canClick("Ability", i) ? "demoClick" : ""}`}
-              onClick={() => {
-                handleChoice(i);
-                handleUpdateDemoGuide();
-              }}
-            >
+          <div className="modalContent2Column">
+            {abilityDetails.map((detail, i) => (
               <div
-                className={`modal-option-content ${
-                  canChoice(i) ? "" : "disabled-modal-option-content"
-                } `}
+                key={i}
+                // className={`modal-option-outline ${
+                //   selectedChoice === i ? "selected-modal-option" : ""
+                // } ${canClick("Ability", i) ? "demoClick" : ""}`}
+                className={`
+                  modalOptionOutline
+                  modalMediumOptionOutline ${
+                    selectedChoice === i
+                      ? "modalMediumOptionOutlineSelected"
+                      : ""
+                  }`}
+                onClick={() => {
+                  handleChoice(i);
+                  handleUpdateDemoGuide();
+                }}
               >
-                <div className="modal-option-header modal-option-header-ability">
-                  <div
-                    className="modal-option-title"
-                    style={
-                      detail.abilityName === "Reap the Whirlwind"
-                        ? { fontSize: 30 }
-                        : {}
-                    }
-                  >
-                    {detail.abilityName}
-                  </div>
+                <div
+                  // className={`modal-option-content ${
+                  //   canChoice(i) ? "" : "disabled-modal-option-content"
+                  // } `}
 
-                  <div>{detail.abilityQualifier}</div>
-                </div>
-                <div className="modal-option-text scroll">
-                  {detail.abilityText}
+                  className={`modalMedium
+                    ${canChoice(i) ? "" : "disabledModal"} 
+                    ${canClick("Ability", i) ? "demoClick" : ""}
+                    `}
+                  style={{
+                    boxShadow: selectedChoice === i ? "none" : "",
+                  }}
+                >
+                  <div className="modal-option-header modal-option-header-ability">
+                    <div
+                      className="modal-option-title"
+                      style={
+                        detail.abilityName === "Reap the Whirlwind"
+                          ? { fontSize: 30 }
+                          : {}
+                      }
+                    >
+                      {detail.abilityName}
+                    </div>
+
+                    <div>{detail.abilityQualifier}</div>
+                  </div>
+                  <div className="modal-option-text scroll">
+                    {detail.abilityText}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         <div className="modalBottomButton">

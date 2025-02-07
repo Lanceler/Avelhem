@@ -26,6 +26,7 @@ const SelectCustomChoice = (props) => {
     blast,
     canBlast,
     canMove,
+    canRaptorBlitzBlast,
     canSowAndReapBlast,
     canSowAndReapStrike,
     canStrike,
@@ -57,14 +58,6 @@ const SelectCustomChoice = (props) => {
   let updateData = false;
 
   switch (props.details.reason) {
-    // case "Fiery Heart":
-    //   canFirstChoice = getZonesWithAllies(unit, 1, false).length > 0;
-    //   canSecondChoice = newGameState[unit.player].skillHand.length > 0;
-    //   ChoiceFirstMessage = "Purge an adjacent ally’s Frostbite and Burn.";
-    //   ChoiceSecondMessage =
-    //     "Spend 1 skill to gain a boost: the duration of your next Anathema is reduced to 1 turn.";
-    //   break;
-
     case "Purification":
       canFirstChoice = true;
       canSecondChoice = getZonesWithAllies(unit, 2, false).length > 0;
@@ -211,6 +204,25 @@ const SelectCustomChoice = (props) => {
       ChoiceSecondMessage = "Prompt an adjacent ally to strike a rooted enemy.";
       break;
 
+    case "Everblooming":
+      canSkip = true;
+      canFirstChoice = true;
+      canSecondChoice =
+        props.details.unitClone.blossom >= 2 &&
+        newGameState[self].skillVestige.includes("08-02");
+
+      ChoiceFirstMessage = "Draw 1 skill";
+      ChoiceSecondMessage =
+        "Spend 2 Blossoms to recover then float 1 “Efflorescence”.";
+      break;
+
+    case "Raptor Blitz":
+      canFirstChoice = canRaptorBlitzBlast(unit);
+      canSecondChoice = true;
+      ChoiceFirstMessage = "Blast an adjacent enemy that lacks Aether.";
+      ChoiceSecondMessage = "Purge the Aether of an enemy within 2 spaces.";
+      break;
+
     case "Tea for Two":
       canFirstChoice = true;
       canSecondChoice = true;
@@ -221,7 +233,7 @@ const SelectCustomChoice = (props) => {
     case "Reminiscence":
       canFirstChoice = newGameState[self].avelhemVestige.length > 0;
       canSecondChoice = newGameState[self].skillVestige.length > 0;
-      ChoiceFirstMessage = "Recover then float 1 Avelhem.";
+      ChoiceFirstMessage = "Recover 1 Avelhem.";
       ChoiceSecondMessage = "Recover then float 1 skill.";
       break;
 
@@ -269,30 +281,6 @@ const SelectCustomChoice = (props) => {
       //     //1st choice
       //   } else {
       //     //2nd choice
-      //   }
-      //   break;
-
-      // case "Fiery Heart":
-      //   if (selectedChoice === 1) {
-      //     newGameState.currentResolution.push({
-      //       resolution: "Unit Ability",
-      //       resolution2: "Fiery Heart2",
-      //       unit: unit,
-      //     });
-      //   } else {
-      //     newGameState.currentResolution.push({
-      //       resolution: "Unit Ability",
-      //       resolution2: "Fiery Heart3",
-      //       unit: unit,
-      //     });
-
-      //     newGameState.currentResolution.push({
-      //       resolution: "Discard Skill",
-      //       unit: unit,
-      //       player: self,
-      //       message: "Spend 1 skill",
-      //       restriction: null,
-      //     });
       //   }
       //   break;
 
@@ -421,41 +409,6 @@ const SelectCustomChoice = (props) => {
         }
         break;
 
-      // case "Upheaval":
-      //   if (selectedChoice === 1) {
-      //     newGameState.currentResolution.push({
-      //       resolution: "Land Skill",
-      //       resolution2: "UpheavalR2.5",
-      //       unit: unit,
-      //       details: {
-      //         title: "Upheaval",
-      //         message: "Reveal 1 Land skill to traverse.",
-      //         restriction: ["04-01", "04-02", "04-03", "04-04"],
-      //         reason: "Upheaval",
-      //       },
-      //     });
-      //   } else {
-      //     updateData = true;
-
-      //     newGameState.currentResolution.push({
-      //       resolution: "Search Skill",
-      //       player: self,
-      //       details: {
-      //         restriction: ["04-01", "04-02", "04-03"],
-      //         exclusion: [],
-      //         searchTitle: "Upheaval",
-      //         searchMessage: "Search for 1 non-burst Land skill",
-      //         outcome: "Add",
-      //         revealTitle: null,
-      //         revealMessage: null,
-      //         messageTitle: null,
-      //         message: null,
-      //         specMessage: null,
-      //       },
-      //     });
-      //   }
-      //   break;
-
       case "Geomancy":
         if (selectedChoice === 1) {
           unit.hp = Math.min(unit.hp + 1, 3);
@@ -463,9 +416,13 @@ const SelectCustomChoice = (props) => {
           newGameState.currentResolution.push({
             resolution: "Recover Skill",
             player: self,
-            restriction: ["04-01", "04-02", "04-03"],
-            message: "Recover 1 Land skill.",
-            outcome: "Add",
+            details: {
+              title: "Geomancy",
+              reason: "Geomancy",
+              restriction: ["04-01", "04-02", "04-03"],
+              message: "Recover 1 Land skill.",
+              outcome: "Add",
+            },
           });
         }
         break;
@@ -475,7 +432,7 @@ const SelectCustomChoice = (props) => {
           unit.boosts.mountainStance = true;
         } else {
           newGameState.currentResolution.push({
-            resolution: "Search Skill",
+            resolution: "Search Card",
             player: self,
             details: {
               restriction: ["04-01"],
@@ -495,8 +452,13 @@ const SelectCustomChoice = (props) => {
             resolution: "Discard Skill",
             unit: unit,
             player: unit.player,
-            message: "Spend 1 skill",
-            restriction: null,
+            canSkip: false,
+            details: {
+              title: "Mountain Stance",
+              message: "Spend 1 skill to search for 1 “Crystallization”.",
+              restriction: null,
+              reason: "Mountain Stance",
+            },
           });
         }
         break;
@@ -577,10 +539,15 @@ const SelectCustomChoice = (props) => {
 
           newGameState.currentResolution.push({
             resolution: "Discard Skill",
-            unit: props.unit,
-            player: self,
-            message: "Spend 1 skill",
-            restriction: null,
+            unit: unit,
+            player: unit.player,
+            canSkip: false,
+            details: {
+              title: "Aegis",
+              message: "Spend 1 skill to grant Ward for 1 turn.",
+              restriction: null,
+              reason: "Aegis",
+            },
           });
         }
 
@@ -597,12 +564,18 @@ const SelectCustomChoice = (props) => {
             : (unit.sharpness = 1);
         } else {
           unit.hp = Math.max(2, unit.hp);
+
           newGameState.currentResolution.push({
             resolution: "Discard Skill",
             unit: unit,
             player: unit.player,
-            message: "Spend 1 skill",
-            restriction: null,
+            canSkip: false,
+            details: {
+              title: "Reinforce",
+              message: "Spend 1 skill to gain 1 HP.",
+              restriction: null,
+              reason: "Reinforce",
+            },
           });
         }
         break;
@@ -619,9 +592,14 @@ const SelectCustomChoice = (props) => {
           newGameState.currentResolution.push({
             resolution: "Discard Skill",
             unit: unit,
-            player: self,
-            message: "Spend 1 skill",
-            restriction: null,
+            player: unit.player,
+            canSkip: false,
+            details: {
+              title: "Frenzy Blade",
+              message: "Spend 1 skill to gain Shield for 2 turns.",
+              restriction: null,
+              reason: "Frenzy Blade",
+            },
           });
         }
         break;
@@ -674,7 +652,6 @@ const SelectCustomChoice = (props) => {
           "blast",
           null
         );
-
         break;
 
       case "Sow and Reap":
@@ -690,6 +667,44 @@ const SelectCustomChoice = (props) => {
             resolution2: "Select Sow and Reap Striker",
             unit: unit,
             player: self,
+          });
+        }
+        break;
+
+      case "Everblooming":
+        if (selectedChoice === 1) {
+          newGameState = drawSkill(newGameState);
+        } else {
+          if (unit) {
+            unit.blossom -= 2;
+          }
+
+          newGameState.currentResolution.push({
+            resolution: "Recover Skill",
+            player: self,
+            details: {
+              title: "Everblooming",
+              reason: "Everblooming",
+              restriction: ["08-02"],
+              message: "Recover then float 1 “Efflorescence”.",
+              outcome: "Float",
+            },
+          });
+        }
+        break;
+
+      case "Raptor Blitz":
+        if (selectedChoice === 1) {
+          newGameState.currentResolution.push({
+            resolution: "Avian Skill",
+            resolution2: "Raptor Blitz Blast",
+            unit: unit,
+          });
+        } else {
+          newGameState.currentResolution.push({
+            resolution: "Avian Skill",
+            resolution2: "Raptor Blitz Purge",
+            unit: unit,
           });
         }
         break;
@@ -710,9 +725,15 @@ const SelectCustomChoice = (props) => {
         } else {
           newGameState.currentResolution.push({
             resolution: "Discard Skill",
-            player: self,
-            message: "Discard 1 skill.",
-            restriction: null,
+            unit: unit,
+            player: unit.player,
+            canSkip: false,
+            details: {
+              title: "Tea for Two",
+              message: "Discard 1 skill.",
+              restriction: null,
+              reason: "Tea for Two",
+            },
           });
         }
         break;
@@ -722,17 +743,25 @@ const SelectCustomChoice = (props) => {
           newGameState.currentResolution.push({
             resolution: "Recover Avelhem",
             player: self,
-            restriction: null,
-            message: "Recover then float 1 Avelhem.",
-            outcome: "Float",
+            details: {
+              title: "Reminiscence",
+              reason: "Reminiscence",
+              restriction: null,
+              message: "Recover 1 Avelhem.",
+              outcome: "Add",
+            },
           });
         } else {
           newGameState.currentResolution.push({
             resolution: "Recover Skill",
             player: self,
-            restriction: null,
-            message: "Recover then float 1 skill.",
-            outcome: "Float",
+            details: {
+              title: "Reminiscence",
+              reason: "Reminiscence",
+              restriction: null,
+              message: "Recover then float 1 skill.",
+              outcome: "Float",
+            },
           });
         }
         break;
@@ -742,13 +771,17 @@ const SelectCustomChoice = (props) => {
           newGameState.currentResolution.push({
             resolution: "Recover Skill",
             player: self,
-            restriction: allBurstSkills(),
-            message: "Recover then reveal 1 burst skill.",
-            outcome: "Add",
+            details: {
+              title: "Foreshadow",
+              reason: "Foreshadow",
+              restriction: allBurstSkills(),
+              message: "Recover then reveal 1 burst skill.",
+              outcome: "Add",
+            },
           });
         } else {
           newGameState.currentResolution.push({
-            resolution: "Search Skill",
+            resolution: "Search Card",
             player: self,
             details: {
               restriction: null,
@@ -776,7 +809,7 @@ const SelectCustomChoice = (props) => {
           newGameState = drawSkill(newGameState);
         } else {
           newGameState.currentResolution.push({
-            resolution: "Search Skill",
+            resolution: "Search Card",
             player: self,
             details: {
               restriction: getScionSet(props.details.unit.unitClass),
@@ -818,190 +851,120 @@ const SelectCustomChoice = (props) => {
   };
 
   const canClick = (element) => {
-    switch (demoGuide) {
-      case "Learn1.126":
-      case "Learn1.143":
-      case "Learn1.153":
-      case "Learn1.238":
-      case "Learn1.245":
-        return element === "1st Choice";
+    switch (
+      demoGuide
 
-      case "Learn1.25":
-      case "Learn1.109.1":
-      case "Learn1.149":
-      case "Learn1.213":
-        return element === "2nd Choice";
-
-      case "Learn1.26":
-      case "Learn1.110":
-      case "Learn1.127":
-      case "Learn1.144":
-      case "Learn1.150":
-      case "Learn1.154":
-      case "Learn1.214":
-      case "Learn1.239":
-      case "Learn1.246":
-        return element === "Select Button";
+      // case "Learn1.246":
+      //   return element === "Select Button";
 
       ///////////////////////
+    ) {
     }
   };
 
   const handleUpdateDemoGuide = () => {
-    switch (demoGuide) {
-      case "Learn1.25":
-        dispatch(updateDemo("Learn1.26"));
-        break;
+    switch (
+      demoGuide
 
-      case "Learn1.26":
-        dispatch(updateDemo("Learn1.27"));
-        break;
-
-      case "Learn1.109.1":
-        dispatch(updateDemo("Learn1.110"));
-        break;
-
-      case "Learn1.110":
-        dispatch(updateDemo("Learn1.111"));
-        break;
-
-      case "Learn1.126":
-        dispatch(updateDemo("Learn1.127"));
-        break;
-
-      case "Learn1.127":
-        dispatch(updateDemo("Learn1.128"));
-        break;
-
-      case "Learn1.143":
-        dispatch(updateDemo("Learn1.144"));
-        break;
-
-      case "Learn1.144":
-        dispatch(updateDemo("Learn1.145"));
-        break;
-
-      case "Learn1.149":
-        dispatch(updateDemo("Learn1.150"));
-        break;
-
-      case "Learn1.150":
-        dispatch(updateDemo("Learn1.151"));
-        break;
-
-      case "Learn1.151":
-        dispatch(updateDemo("Learn1.152"));
-        break;
-
-      case "Learn1.153":
-        dispatch(updateDemo("Learn1.154"));
-        break;
-
-      case "Learn1.154":
-        dispatch(updateDemo("Learn1.155"));
-        break;
-
-      case "Learn1.213":
-        dispatch(updateDemo("Learn1.214"));
-        break;
-
-      case "Learn1.214":
-        dispatch(updateDemo("Learn1.215"));
-        break;
-
-      case "Learn1.238":
-        dispatch(updateDemo("Learn1.239"));
-        break;
-
-      case "Learn1.239":
-        dispatch(updateDemo("Learn1.240"));
-        break;
-
-      case "Learn1.245":
-        dispatch(updateDemo("Learn1.246"));
-        break;
-
-      case "Learn1.246":
-        dispatch(updateDemo("Learn1.247"));
-        break;
+      // case "Learn1.246":
+      //   dispatch(updateDemo("Learn1.247"));
+      //   break;
 
       ///////////////////////
+    ) {
     }
   };
 
   return (
-    <div className="modal-backdrop">
-      <div className="modal">
-        <div className="modalHeader">
-          <div className="modalTitle">{props.details.title}</div>
-          <div className="modalButton">
-            <button className="redButton" onClick={() => handleViewBoard()}>
-              View
+    <div className="modalBackdrop">
+      <div className="modalV2">
+        <div className="modalHeader2">
+          <div className="modalTitle2">{props.details.title}</div>
+          <div className="modalButton2">
+            <button className="yellowButton" onClick={() => handleViewBoard()}>
+              View Board
             </button>
           </div>
         </div>
 
-        <br />
+        <div className="modalContent2">
+          <div className="modalContentText">Choose 1:</div>
 
-        <div className="modalContent">
-          <div
-            className={`modal-option-outline ${
-              selectedChoice === 1 ? "selected-modal-option" : ""
-            } ${canClick("1st Choice") ? "demoClick" : ""} `}
-            onClick={() => {
-              handleFirstChoice();
-              handleUpdateDemoGuide();
-            }}
-          >
+          <div className="modalContent2Column">
             <div
-              className={`modal-option-content modal-custom-choice ${
-                canFirstChoice ? "" : "disabled-modal-option-content"
-              } `}
+              className={`
+                  modalOptionOutline
+                  modalMediumOptionOutline ${
+                    selectedChoice === 1
+                      ? "modalMediumOptionOutlineSelected"
+                      : ""
+                  }`}
+              onClick={() => {
+                handleFirstChoice();
+                handleUpdateDemoGuide();
+              }}
             >
               <div
-                className="modal-option-text "
-                style={{ textAlign: "center" }}
+                className={`modalMedium modalMediumCenter
+                    ${canFirstChoice ? "" : "disabledModal"} 
+                    ${canClick("1st Choice") ? "demoClick" : ""}
+                    `}
+                style={{
+                  boxShadow: selectedChoice === 1 ? "none" : "",
+                }}
               >
-                {ChoiceFirstMessage}
+                <div
+                  className="modalOptionText"
+                  style={{ textAlign: "center" }}
+                >
+                  {ChoiceFirstMessage}
+                </div>
               </div>
             </div>
-          </div>
 
-          <div
-            className={`modal-option-outline ${
-              selectedChoice === 2 ? "selected-modal-option" : ""
-            } ${canClick("2nd Choice") ? "demoClick" : ""} `}
-            onClick={() => {
-              handleSecondChoice();
-              handleUpdateDemoGuide();
-            }}
-          >
             <div
-              className={`modal-option-content modal-custom-choice ${
-                canSecondChoice ? "" : "disabled-modal-option-content"
-              } `}
+              className={`
+                  modalOptionOutline
+                  modalMediumOptionOutline ${
+                    selectedChoice === 2
+                      ? "modalMediumOptionOutlineSelected"
+                      : ""
+                  }`}
+              onClick={() => {
+                handleSecondChoice();
+                handleUpdateDemoGuide();
+              }}
             >
               <div
-                className="modal-option-text "
-                style={{ textAlign: "center" }}
+                className={`modalMedium modalMediumCenter
+                    ${canSecondChoice ? "" : "disabledModal"} 
+                    ${canClick("2nd Choice") ? "demoClick" : ""}
+                    `}
+                style={{
+                  boxShadow: selectedChoice === 2 ? "none" : "",
+                }}
               >
-                {ChoiceSecondMessage}
+                <div
+                  className="modalOptionText"
+                  style={{ textAlign: "center" }}
+                >
+                  {ChoiceSecondMessage}
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="modalBottomButton">
+        <div className="modalFooter">
           {selectedChoice === null && canSkip && (
-            <button className="redButton" onClick={() => handleSkip()}>
+            <button className="redButton2" onClick={() => handleSkip()}>
               Skip
             </button>
           )}
 
           {selectedChoice !== null && (
-            // <button className="redButton" onClick={() => handleSelect()}>
             <button
-              className={`redButton ${
+              className={`redButton2 ${
                 canClick("Select Button") ? "demoClick" : ""
               }`}
               onClick={() => {

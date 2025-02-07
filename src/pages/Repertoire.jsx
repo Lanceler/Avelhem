@@ -43,8 +43,13 @@ export default function Repertoire() {
   const { magnifiedSkill } = useSelector((state) => state.magnifiedSkill);
   const dispatch = useDispatch();
 
-  const { avelhemCardList, skillCardList, getAvelhemIndex, getSkillIndex } =
-    useCardDatabase();
+  const {
+    avelhemCardList,
+    skillCardList,
+    skillCardListExpansion,
+    getAvelhemIndex,
+    getSkillIndex,
+  } = useCardDatabase();
   const [skillCardPool, setSkillCardPool] = useState(skillCardList);
   const [skillRepertoire, setSkillRepertoire] = useState([]);
   const [avelhemCardPool, setAvelhemCardPool] = useState(avelhemCardList);
@@ -178,7 +183,11 @@ export default function Repertoire() {
 
     let newAvelhemRepertoire = [];
     let newCardPool = [...avelhemCardPool];
-    for (let i of userData.repertoire[id].avelhemRepertoire) {
+
+    const userRepertoire =
+      id <= 3 ? userData.repertoire[id - 1] : userData.repertoire2[id - 1 - 3];
+
+    for (let i of userRepertoire.avelhemRepertoire) {
       //   let cardPoolIndex = i - 1;
       let cardPoolIndex = getAvelhemIndex(i);
 
@@ -206,11 +215,13 @@ export default function Repertoire() {
       fixedArray.push(i);
     }
 
-    // console.log(userData.repertoire[id].skillRepertoire);
-
     let newSkillRepertoire = [];
     let newCardPool = [...skillCardPool];
-    for (let i of userData.repertoire[id].skillRepertoire) {
+
+    const userRepertoire =
+      id <= 3 ? userData.repertoire[id - 1] : userData.repertoire2[id - 1 - 3];
+
+    for (let i of userRepertoire.skillRepertoire) {
       let cardPoolIndex = getSkillIndex(i);
 
       newSkillRepertoire.push({
@@ -270,16 +281,28 @@ export default function Repertoire() {
           }
         })
         .then(() => {
-          // console.log("EDITED");
-          const updatedRepertoire = [...results.repertoire];
+          if (id <= 3) {
+            const updatedRepertoire = [...results.repertoire];
 
-          updatedRepertoire[id].avelhemRepertoire = getAvelhemIndexes();
-          updatedRepertoire[id].skillRepertoire = getSkillIndexes();
-          updatedRepertoire[id].name = repertoireName;
-          updatedRepertoire[id].description = repertoireDescription;
+            updatedRepertoire[id - 1].avelhemRepertoire = getAvelhemIndexes();
+            updatedRepertoire[id - 1].skillRepertoire = getSkillIndexes();
+            updatedRepertoire[id - 1].name = repertoireName;
+            updatedRepertoire[id - 1].description = repertoireDescription;
 
-          const userDoc = doc(db, "userInfo", results.id);
-          updateDoc(userDoc, { repertoire: updatedRepertoire });
+            const userDoc = doc(db, "userInfo", results.id);
+            updateDoc(userDoc, { repertoire: updatedRepertoire });
+          } else {
+            const updatedRepertoire = [...results.repertoire2];
+
+            updatedRepertoire[id - 1 - 3].avelhemRepertoire =
+              getAvelhemIndexes();
+            updatedRepertoire[id - 1 - 3].skillRepertoire = getSkillIndexes();
+            updatedRepertoire[id - 1 - 3].name = repertoireName;
+            updatedRepertoire[id - 1 - 3].description = repertoireDescription;
+
+            const userDoc = doc(db, "userInfo", results.id);
+            updateDoc(userDoc, { repertoire2: updatedRepertoire });
+          }
 
           navigate("/repertoires");
         })
@@ -342,14 +365,22 @@ export default function Repertoire() {
 
   useEffect(() => {
     if (userData) {
-      if (![0, 1, 2].includes(id * 1)) {
+      if (![1, 2, 3, 4, 5, 6].includes(id * 1)) {
         // console.log(id);
         navigate("/repertoires");
       } else {
         handleReloadAvelhem();
         handleReloadSkill();
-        setRepertoireName(userData.repertoire[id].name);
-        setRepertoireDescription(userData.repertoire[id].description);
+
+        if (id <= 3) {
+          setRepertoireName(userData.repertoire[id - 1].name);
+          setRepertoireDescription(userData.repertoire[id - 1].description);
+        } else {
+          setRepertoireName(userData.repertoire2[id - 1 - 3].name);
+          setRepertoireDescription(
+            userData.repertoire2[id - 1 - 3].description
+          );
+        }
       }
     }
   }, [userData]);
@@ -482,12 +513,18 @@ export default function Repertoire() {
 
             <div className="avelhem-selection">
               {avelhemCardPool.map((card, index) => (
-                <CPAvelhemCard
-                  key={index}
-                  index={index}
-                  cardInfo={card}
-                  addToAvelhemRepertoire={addToAvelhemRepertoire}
-                />
+                <div
+                  style={{
+                    display: id < 4 && card.CardId > 8 ? "none" : "block",
+                  }}
+                >
+                  <CPAvelhemCard
+                    key={index}
+                    index={index}
+                    cardInfo={card}
+                    addToAvelhemRepertoire={addToAvelhemRepertoire}
+                  />
+                </div>
               ))}
             </div>
           </div>
@@ -563,12 +600,21 @@ export default function Repertoire() {
 
             <div className="skill-selection">
               {skillCardPool.map((card, index) => (
-                <CPSkillCard
-                  key={index}
-                  index={index}
-                  cardInfo={card}
-                  addToSkillRepertoire={addToSkillRepertoire}
-                />
+                <div
+                  style={{
+                    display:
+                      id < 4 && skillCardListExpansion.includes(card.CardId)
+                        ? "none"
+                        : "block",
+                  }}
+                >
+                  <CPSkillCard
+                    key={index}
+                    index={index}
+                    cardInfo={card}
+                    addToSkillRepertoire={addToSkillRepertoire}
+                  />
+                </div>
               ))}
             </div>
           </div>

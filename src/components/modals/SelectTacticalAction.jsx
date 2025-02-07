@@ -42,28 +42,24 @@ const SelectTacticalAction = (props) => {
       "You are rooted: You cannot strike, and you must spend 1 skill to traverse or Aether-blast via tactical action.";
   }
 
-  let abilityDetails = [];
+  let optionDetails = [];
   switch (face) {
     case "Advance":
-      abilityDetails = [
+      optionDetails = [
         {
-          abilityName: "Traverse",
-          abilityQualifier: <div className=""></div>,
-          abilityText: (
+          optionName: "Traverse",
+          optionText: (
             <>
               <div className=" ">⬩Move to a vacant adjacent zone.</div>
             </>
           ),
         },
         {
-          abilityName: "Aether-blast",
-          abilityQualifier: <div className=""></div>,
-          abilityText: (
+          optionName: "Aether-blast",
+
+          optionText: (
             <>
               <div className="">
-                {/* ⬩Spend your Aether to blast an adjacent enemy. <br /> <br /> */}
-                {/* (The enemy may spend their Aether and transfer it to the
-                attacker to reduce the attack’s AP by 1.) */}
                 ⬩Spend your Aether to blast an adjacent enemy. The enemy may
                 mitigate it.{" "}
                 <svg
@@ -83,11 +79,11 @@ const SelectTacticalAction = (props) => {
       break;
 
     case "Mobilize":
-      abilityDetails = [
+      optionDetails = [
         {
-          abilityName: "Traverse",
-          abilityQualifier: <div className=""></div>,
-          abilityText: (
+          optionName: "Traverse",
+
+          optionText: (
             <>
               <div className="">
                 ⬩Use 1 instance to move to a vacant adjacent zone.
@@ -99,20 +95,20 @@ const SelectTacticalAction = (props) => {
       break;
 
     case "Assault":
-      abilityDetails = [
+      optionDetails = [
         {
-          abilityName: "Traverse",
-          abilityQualifier: <div className=""></div>,
-          abilityText: (
+          optionName: "Traverse",
+
+          optionText: (
             <>
               <div className="">⬩Move to a vacant adjacent zone.</div>
             </>
           ),
         },
         {
-          abilityName: "Strike",
-          abilityQualifier: <div className=""></div>,
-          abilityText: (
+          optionName: "Strike",
+
+          optionText: (
             <>
               <div className=" ">⬩Attack an adjacent enemy.</div>
               <div className=" ">
@@ -412,62 +408,63 @@ const SelectTacticalAction = (props) => {
   };
 
   return (
-    <div className="modal-backdrop">
-      <div className="modal">
-        <div className="modalHeader">
-          <div className="modalTitle">Tactical Action: {face}</div>
+    <div className="modalBackdrop">
+      <div className="modalV2">
+        <div className="modalHeader2">
+          <div className="modalTitle2">Tactical Action: {face}</div>
         </div>
 
-        <br />
+        <div className="modalContent2">
+          <div className="modalContentText">{message}</div>
 
-        {message && (
-          <>
-            <h3 style={{ maxWidth: 700 }}>{message}</h3>
-          </>
-        )}
-
-        <br />
-
-        <div className="modalContent">
-          {abilityDetails.map((detail, i) => (
-            <div
-              key={i}
-              className={`modal-option-outline ${
-                selectedChoice === i ? "selected-modal-option" : ""
-              } ${canClick("Action", i) ? "demoClick" : ""}    `}
-              onClick={() => {
-                handleChoice(i);
-                handleUpdateDemoGuide();
-              }}
-            >
+          <div className={`modalContent${optionDetails.length}Column`}>
+            {optionDetails.map((detail, i) => (
               <div
-                className={`modal-option-content ${
-                  canChoice(i) ? "" : "disabled-modal-option-content"
-                } `}
+                key={i}
+                // className={`modal-option-outline ${
+                //   selectedChoice === i ? "selected-modal-option" : ""
+                // } ${canClick("Action", i) ? "demoClick" : ""}    `}
+                className={`modalOptionOutline
+                  modalMediumOptionOutline
+                   ${
+                     selectedChoice === i
+                       ? "modalMediumOptionOutlineSelected"
+                       : ""
+                   } `}
+                onClick={() => {
+                  handleChoice(i);
+                  handleUpdateDemoGuide();
+                }}
               >
-                <div className="modal-option-header modal-option-header-ability">
-                  <div className="modal-option-title ">
-                    {detail.abilityName}
+                <div
+                  className={`modalMedium ${
+                    canChoice(i) ? "" : "disabledModal"
+                  } 
+                  ${canClick("Action", i) ? "demoClick" : ""}`}
+                  style={{
+                    boxShadow: selectedChoice === i ? "none" : "",
+                  }}
+                >
+                  <div className="modalOptionHeader">
+                    <div className="modalOptionTitle">{detail.optionName}</div>
                   </div>
-
-                  <div>{detail.abilityQualifier}</div>
+                  <div className="modalOptionText">{detail.optionText}</div>
                 </div>
-                <div className="modalChoiceText">{detail.abilityText}</div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
-        <div className="modalBottomButton">
+        <div className="modalFooter">
           {selectedChoice === null && (
-            <button className="redButton" onClick={() => handleReturn()}>
+            <button className="redButton2" onClick={() => handleReturn()}>
               Return
             </button>
           )}
 
           {selectedChoice !== null && (
             <button
-              className={`redButton ${
+              className={`redButton2 ${
                 canClick("Select Button") ? "demoClick" : ""
               }`}
               onClick={() => {

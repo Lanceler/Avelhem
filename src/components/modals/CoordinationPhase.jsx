@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Modal.css";
+import "./Modal2.scss";
 
 import AdvanceSmall from "../../assets/diceIcons/AdvanceSmall.png";
 import MobilizeSmall from "../../assets/diceIcons/MobilizeSmall.png";
@@ -28,10 +29,10 @@ const CoordinationPhaseSelection = (props) => {
   let newGameState = JSON.parse(JSON.stringify(localGameState));
   const upgrade = newGameState[self].bountyUpgrades.coordination;
 
-  let abilityDetails = [
+  let optionDetails = [
     {
-      abilityName: "Assent",
-      abilityText: (
+      optionName: "Assent",
+      optionText: (
         <>
           <div className="">⬩Roll 2 tactical dice.</div>
           <div className=" ">
@@ -42,8 +43,8 @@ const CoordinationPhaseSelection = (props) => {
       ),
     },
     {
-      abilityName: "Battle Cry",
-      abilityText: (
+      optionName: "Battle Cry",
+      optionText: (
         <>
           <div className=" ">
             ⬩Spend 3 skills to gain 1{" "}
@@ -57,8 +58,8 @@ const CoordinationPhaseSelection = (props) => {
       ),
     },
     {
-      abilityName: "Convene",
-      abilityText: (
+      optionName: "Convene",
+      optionText: (
         <>
           <div className=" ">
             ⬩Gain 1 <img src={RallySmall} style={{ height: 21 }} />.
@@ -181,18 +182,6 @@ const CoordinationPhaseSelection = (props) => {
             return element1 === "select";
         }
     }
-
-    // switch (demoGuide) {
-    //   case "Learn1.11":
-    //   case "Learn1.86":
-    //   case "Learn1.181":
-    //     return element1 === "choice" && element2 === 0;
-
-    //   case "Learn1.12":
-    //   case "Learn1.87":
-    //   case "Learn1.182":
-    //     return element1 === "select";
-    // }
   };
 
   const handleUpdateDemoGuide = () => {
@@ -208,47 +197,53 @@ const CoordinationPhaseSelection = (props) => {
   };
 
   return (
-    <div className="modal-backdrop">
-      <div className="modal">
-        <div className="modalHeader">
-          <div className="modalTitle">Coordination Phase</div>
-          <div className="modalButton">
-            <button className="redButton" onClick={() => handleViewBoard()}>
-              View
+    <div className="modalBackdrop">
+      <div className="modalV2">
+        <div className="modalHeader2">
+          <div className="modalTitle2">Coordination Phase</div>
+          <div className="modalButton2">
+            <button className="yellowButton" onClick={() => handleViewBoard()}>
+              View Board
             </button>
           </div>
         </div>
 
-        <br />
+        <div className="modalContent2">
+          <div className="modalContentText">Choose 1:</div>
 
-        <div className="modalContent">
-          {abilityDetails.map((detail, i) => (
-            <div
-              key={i}
-              className={`modal-option-outline ${
-                selectedChoice === i ? "selected-modal-option" : ""
-              } ${canClick("choice", i) ? "demoClick" : ""}`}
-              onClick={() => {
-                handleChoice(i);
-                handleUpdateDemoGuide();
-              }}
-            >
+          <div className="modalContent3Column">
+            {optionDetails.map((detail, i) => (
               <div
-                className={`modal-option-content ${
-                  canChoice(i) ? "" : "disabled-modal-option-content"
-                } `}
+                key={i}
+                className={`modalOptionOutline 
+                    modalMediumOptionOutline ${
+                      selectedChoice === i
+                        ? "modalMediumOptionOutlineSelected"
+                        : ""
+                    }`}
+                onClick={() => {
+                  handleChoice(i);
+                  handleUpdateDemoGuide();
+                }}
               >
-                <div className="modal-option-header ">
-                  <div className="modal-option-title ">
-                    {detail.abilityName}
+                <div
+                  className={`modalMedium
+                    ${canChoice(i) ? "" : "disabledModal"}
+                    ${canClick("choice", i) ? "demoClick" : ""}
+                    `}
+                  style={{
+                    boxShadow: selectedChoice === i ? "none" : "",
+                  }}
+                >
+                  <div className="modalOptionHeader">
+                    <div className="modalOptionTitle">{detail.optionName}</div>
                   </div>
+                  <div className="modalOptionText">{detail.optionText}</div>
                 </div>
-                <div className="modal-option-text">{detail.abilityText}</div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-        <br />
         <h3
           style={{
             marginTop: "5px",
@@ -286,10 +281,10 @@ const CoordinationPhaseSelection = (props) => {
           </span>
         </h3>
 
-        <div className="modalBottomButton">
+        <div className="modalFooter">
           {selectedChoice !== null && (
             <button
-              className={`redButton ${canClick("select") ? "demoClick" : ""}`}
+              className={`redButton2 ${canClick("select") ? "demoClick" : ""}`}
               onClick={() => {
                 handleSelect();
                 handleUpdateDemoGuide();

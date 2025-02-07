@@ -63,33 +63,32 @@ const VictoryScreen = (props) => {
   };
 
   return (
-    <div className="modal-backdrop">
-      <div className="modal">
-        <div className="modalHeader">
-          <div className="modalTitle">Game Over</div>
-          <div className="modalButton">
-            <button className="redButton" onClick={() => handleViewBoard()}>
-              View
+    <div className="modalBackdrop">
+      <div className="modalV2">
+        <div className="modalHeader2">
+          <div className="modalTitle2">Game Over</div>
+          <div className="modalButton2">
+            <button className="yellowButton" onClick={() => handleViewBoard()}>
+              View Board
             </button>
           </div>
         </div>
 
-        <h3>{message1}</h3>
-        <h3>{message2}</h3>
-        <br />
-        {/* <h3>{message3}</h3> */}
+        <div className="modalContent2">
+          <div className="modalContentText">{message1}</div>
+          <div className="modalContentText">{message2}</div>
 
-        <div className="finalPhase-Button">
-          {!demoOverride() &&
-            self === props.player &&
-            localGameState[self].score < 5 && (
-              <button className="redButton" onClick={() => handleOffer()}>
-                {/* Offer to continue */}
-                {message3}
-              </button>
-            )}
+          <div className="finalPhase-Button">
+            {!demoOverride() &&
+              self === props.player &&
+              localGameState[self].score < 5 && (
+                <button className="redButton2" onClick={() => handleOffer()}>
+                  {message3}
+                </button>
+              )}
 
-          {demoOverride() && <div>{demoOverride()}</div>}
+            {demoOverride() && <div>{demoOverride()}</div>}
+          </div>
         </div>
       </div>
     </div>

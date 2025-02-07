@@ -291,6 +291,12 @@ export default function Game() {
               <div className="game-banner-title">{banner.title}</div>
               <div className="game-banner-text-body">
                 <div className="game-banner-text">
+                  <div className="game-banner-expansion">
+                    Set:
+                    <br />
+                    {gameData?.expansion}
+                  </div>
+
                   {banner.buttonText && (
                     <button
                       className="home-banner-button"
@@ -323,7 +329,10 @@ export default function Game() {
       </AnimatePresence>
 
       {playerStatus === "pick repertoire" && (
-        <SelectRepertoire onSelectRepertoire={onSelectRepertoire} />
+        <SelectRepertoire
+          onSelectRepertoire={onSelectRepertoire}
+          expansion={gameData.expansion}
+        />
       )}
       {isLoading && <Loading />}
 

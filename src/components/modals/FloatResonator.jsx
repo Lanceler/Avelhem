@@ -1,19 +1,12 @@
 import React from "react";
-import { useState } from "react";
-import "./SkillModal.css";
+import "./Modal2.scss";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
-import { useRecurringEffects } from "../../hooks/useRecurringEffects";
-
-import { useCardDatabase } from "../../hooks/useCardDatabase";
-import { useGetImages } from "../../hooks/useGetImages";
-
 import Skill from "../hand/Skill";
 
-const MayFloatResonantSkill = (props) => {
+const FloatResonator = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
-  const { self, enemy } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
   const handleDiscard = () => {
@@ -63,52 +56,49 @@ const MayFloatResonantSkill = (props) => {
   }
 
   return (
-    <div className="modal-backdrop">
-      <div className="modal">
-        <div className="modalHeader">
-          <div className="modalTitle">Resonance sub-effect</div>
-          <div className="modalButton">
-            <button className="redButton" onClick={() => handleViewBoard()}>
-              View
+    <div className="modalBackdrop">
+      <div className="modalV2">
+        <div className="modalHeader2">
+          <div className="modalTitle2">Resonance</div>
+          <div className="modalButton2">
+            <button className="yellowButton" onClick={() => handleViewBoard()}>
+              View Board
             </button>
           </div>
         </div>
-
-        <h3>You may float this skill.</h3>
-
-        <br />
-
-        {props.resonator === "SA-03" && (
-          <p style={{ maxWidth: "700px" }}>
-            <em>
-              When a skill resonates with Dark Halo, the sub-effect that would
-              retain or float it applies to the latter instead.
-            </em>
-          </p>
-        )}
-
-        <br />
-
-        <div className="view-revealed-skill">
-          {props.skill && (
-            <Skill usableSkill={{ id: revealedCard }} canActivateSkill={true} />
+        <div className="modalContent2">
+          <div className="modalContentText">You may float this skill.</div>
+          {props.resonator === "SA-03" && (
+            <div className="modalContentText">
+              <em>
+                *When a skill resonates with Dark Halo, the sub-effect that
+                would retain or float it applies to the latter instead.
+              </em>
+            </div>
           )}
+
+          <div className="modalContent1Column">
+            {props.skill && (
+              <Skill
+                usableSkill={{ id: revealedCard }}
+                canActivateSkill={true}
+              />
+            )}
+          </div>
         </div>
 
-        <div className="modalBottomButton">
-          <div className="multi-option-buttons">
-            <button className="redButton" onClick={() => handleDiscard()}>
-              Discard
-            </button>
+        <div className="modalFooter">
+          <button className="redButton2" onClick={() => handleDiscard()}>
+            Discard
+          </button>
 
-            <button className="redButton" onClick={() => handleFloat()}>
-              Float
-            </button>
-          </div>
+          <button className="redButton2" onClick={() => handleFloat()}>
+            Float
+          </button>
         </div>
       </div>
     </div>
   );
 };
 
-export default MayFloatResonantSkill;
+export default FloatResonator;

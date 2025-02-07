@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Modal.css";
+import "./Modal2.scss";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
@@ -10,7 +11,7 @@ import { useCardDatabase } from "../../hooks/useCardDatabase";
 
 import Skill from "../hand/Skill";
 
-const SelectScionSkill = (props) => {
+const ScionSkillSelect = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
@@ -132,83 +133,92 @@ const SelectScionSkill = (props) => {
   };
 
   return (
-    <div className="modal-backdrop">
-      <div className="modal">
-        <div className="modalHeader">
-          <div className="modalTitle">Activate Scion Skill</div>
-          <div className="modalButton"></div>
+    <div className="modalBackdrop">
+      <div className="modalV2">
+        <div className="modalHeader2">
+          <div className="modalTitle2">Activate Scion Skill</div>
+          <div className="modalButton2"></div>
         </div>
 
-        {usableSkills.length === 0 && <h3>No valid skills in hand.</h3>}
+        <div className="modalContent2">
+          <div className="modalContentText">
+            {usableSkills.length === 0 ? "No valid skills in hand." : ""}
+          </div>
 
-        <br />
-
-        <div className="fourColumn scrollable scrollable-y-only">
-          {usableSkills.map((usableSkill, i) => (
-            <div
-              key={i}
-              className={`scionSkills ${
-                selectedSkill === i ? "selectedSkill" : ""
-              } ${canClick("Skill Card", usableSkill) ? "demoClick" : ""}`}
-              onClick={() => {
-                handleClick(
-                  canActivateSkill(props.unit, usableSkill.id) ||
-                    canActivateResonance(props.unit, usableSkill.id),
-                  i
-                );
-                handleUpdateDemoGuide();
-              }}
-            >
-              <Skill
-                i={i}
-                usableSkill={usableSkill}
-                canActivateSkill={
-                  canActivateSkill(props.unit, usableSkill.id) ||
-                  canActivateResonance(props.unit, usableSkill.id)
-                }
-              />
-            </div>
-          ))}
+          <div className="modalContent4Column modalScrollableY">
+            {usableSkills.map((usableSkill, i) => (
+              <div
+                key={i}
+                className={`modalOptionOutline modalCardOptionOutline ${
+                  selectedSkill === i ? "modalCardOptionOutlineSelected" : ""
+                }`}
+                onClick={() => {
+                  handleClick(
+                    canActivateSkill(props.unit, usableSkill.id) ||
+                      canActivateResonance(props.unit, usableSkill.id),
+                    i
+                  );
+                  handleUpdateDemoGuide();
+                }}
+              >
+                <div
+                  className={`modalCard
+                   ${canClick("Skill Card", usableSkill) ? "demoClick" : ""}
+                    `}
+                  style={{
+                    boxShadow: selectedSkill === i ? "none" : "",
+                  }}
+                >
+                  <Skill
+                    i={i}
+                    usableSkill={usableSkill}
+                    canActivateSkill={
+                      canActivateSkill(props.unit, usableSkill.id) ||
+                      canActivateResonance(props.unit, usableSkill.id)
+                    }
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div className="modalBottomButton">
+        <div className="modalFooter">
           {selectedSkill === null && (
-            <button className="redButton noYes " onClick={() => handleReturn()}>
+            <button className="redButton2" onClick={() => handleReturn()}>
               Return
             </button>
           )}
 
-          <div className="multi-option-buttons">
-            {selectedSkill !== null &&
-              canActivateSkill(props.unit, usableSkills[selectedSkill].id) && (
-                <button
-                  className={`redButton ${
-                    canClick("Select Button") ? "demoClick" : ""
-                  }`}
-                  onClick={() => {
-                    handleSelect();
-                    handleUpdateDemoGuide();
-                  }}
-                >
-                  Select
-                </button>
-              )}
-
-            {canResonate && (
+          {selectedSkill !== null &&
+            canActivateSkill(props.unit, usableSkills[selectedSkill].id) && (
               <button
-                className={`redButton ${
-                  canClick("Resonate Button") ? "demoClick" : ""
+                className={`redButton2 ${
+                  canClick("Select Button") ? "demoClick" : ""
                 }`}
-                onClick={() => handleResonate()}
+                onClick={() => {
+                  handleSelect();
+                  handleUpdateDemoGuide();
+                }}
               >
-                Resonate
+                Select
               </button>
             )}
-          </div>
+
+          {canResonate && (
+            <button
+              className={`redButton2 ${
+                canClick("Resonate Button") ? "demoClick" : ""
+              }`}
+              onClick={() => handleResonate()}
+            >
+              Resonate
+            </button>
+          )}
         </div>
       </div>
     </div>
   );
 };
 
-export default SelectScionSkill;
+export default ScionSkillSelect;

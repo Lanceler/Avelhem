@@ -10,7 +10,7 @@ export const useRecurringEffects = () => {
   const { self, enemy } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const { getScionSet } = useCardDatabase();
+  const { getScionSet, getSkillById } = useCardDatabase();
 
   const [zones, setZones] = useState(null);
 
@@ -50,7 +50,7 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
-  const activateAvelhem = (newGameState, avelhem, resonator) => {
+  const activateAvelhem = (newGameState, avelhem, resonator = null) => {
     //newGameState.currentResolution.pop() <--not needed
 
     newGameState.currentResolution.push({
@@ -70,12 +70,9 @@ export const useRecurringEffects = () => {
     });
 
     newGameState.activatingSkill.push(avelhem);
-
-    if (resonator !== null) {
+    if (resonator) {
       newGameState.activatingResonator.push(resonator);
     }
-
-    //newGameState.activatingUnit.push(null);
 
     newGameState.currentResolution.push({
       resolution: "Animation Delay",
@@ -88,7 +85,7 @@ export const useRecurringEffects = () => {
   const activateAvelhemRecover = (newGameState, avelhem) => {
     //newGameState.currentResolution.pop() <--not needed
 
-    newGameState[self].fateDefiance -= 3;
+    newGameState[self].fateDefiance -= 2;
 
     const scionClass = avelhemToScion(avelhem);
 
@@ -102,9 +99,13 @@ export const useRecurringEffects = () => {
     newGameState.currentResolution.push({
       resolution: "Recover Skill",
       player: self,
-      restriction: getScionSet(scionClass),
-      message: `Recover 1 ${scionClass.replace(" Scion", "")} skill`,
-      outcome: "Add",
+      details: {
+        title: "Avelhem Alternate Effect",
+        reason: "Avelhem Alternate Effect",
+        restriction: getScionSet(scionClass),
+        message: `Recover 1 ${scionClass.replace(" Scion", "")} skill`,
+        outcome: "Add",
+      },
     });
 
     newGameState.activatingSkill.push(avelhem + "Alt");
@@ -113,71 +114,6 @@ export const useRecurringEffects = () => {
       resolution: "Animation Delay",
       priority: self,
     });
-
-    return newGameState;
-  };
-
-  const activateAerialImpetus = (newGameState, unit) => {
-    //end Select Skill resolution
-    newGameState.currentResolution.pop();
-
-    let conclusion = "discard";
-    if (unit.boosts.ambidexterity) {
-      conclusion = "retain";
-      delete newGameState[unit.player].units[unit.unitIndex].boosts
-        .ambidexterity;
-    }
-
-    newGameState.currentResolution.push({
-      resolution: "Skill Conclusion",
-      player: self,
-      unit: unit,
-      skill: "03-01",
-      skillConclusion: conclusion,
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Wind Skill",
-      resolution2: "Activating Aerial Impetus",
-      unit: unit,
-    });
-
-    newGameState.activatingSkill.push("03-01");
-    newGameState.activatingUnit.push(unit);
-
-    newGameState.currentResolution.push({
-      resolution: "Animation Delay",
-      priority: self,
-    });
-
-    return newGameState;
-  };
-
-  const activateArsenalOnslaught = (newGameState, unit) => {
-    //end Select Skill resolution
-    newGameState.currentResolution.pop();
-
-    newGameState.currentResolution.push({
-      resolution: "Skill Conclusion",
-      player: self,
-      unit: unit,
-      skill: "07-04",
-      skillConclusion: "shatter",
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Metal Skill",
-      resolution2: "Activating Arsenal Onslaught",
-      unit: unit,
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Animation Delay",
-      priority: self,
-    });
-
-    newGameState.activatingSkill.push("07-04");
-    newGameState.activatingUnit.push(unit);
 
     return newGameState;
   };
@@ -236,291 +172,6 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
-  const activateCastleOfThorns = (newGameState, unit) => {
-    //end Select Skill resolution
-    newGameState.currentResolution.pop();
-
-    newGameState.currentResolution.push({
-      resolution: "Skill Conclusion",
-      player: self,
-      unit: unit,
-      skill: "08-04",
-      skillConclusion: "shatter",
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Plant Skill",
-      resolution2: "Activating Castle of Thorns",
-      unit: unit,
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Animation Delay",
-      priority: self,
-    });
-
-    newGameState.activatingSkill.push("08-04");
-    newGameState.activatingUnit.push(unit);
-
-    return newGameState;
-  };
-
-  const activateCataclysmicTempest = (newGameState, unit) => {
-    //end Select Skill resolution
-    newGameState.currentResolution.pop();
-
-    newGameState.currentResolution.push({
-      resolution: "Skill Conclusion",
-      player: self,
-      unit: unit,
-      skill: "03-04",
-      skillConclusion: "shatter",
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Wind Skill",
-      resolution2: "Activating Cataclysmic Tempest",
-      unit: unit,
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Animation Delay",
-      priority: self,
-    });
-
-    newGameState.activatingSkill.push("03-04");
-    newGameState.activatingUnit.push(unit);
-
-    return newGameState;
-  };
-
-  const activateChainLightning = (newGameState, unit) => {
-    //end Select Skill resolution
-    newGameState.currentResolution.pop();
-
-    let conclusion = "discard";
-    if (unit.boosts.ambidexterity) {
-      conclusion = "retain";
-      delete newGameState[unit.player].units[unit.unitIndex].boosts
-        .ambidexterity;
-    }
-
-    newGameState.currentResolution.push({
-      resolution: "Skill Conclusion",
-      player: self,
-      unit: unit,
-      skill: "05-01",
-      skillConclusion: conclusion,
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Lightning Skill",
-      resolution2: "Activating Chain Lightning",
-      unit: unit,
-    });
-
-    newGameState.activatingSkill.push("05-01");
-    newGameState.activatingUnit.push(unit);
-
-    newGameState = applyScreech(unit, newGameState);
-
-    return newGameState;
-  };
-
-  const activateConflagration = (newGameState, unit, resonator = null) => {
-    //end Select Skill resolution
-    newGameState.currentResolution.pop();
-
-    newGameState.activatingSkill.push("01-02");
-    newGameState.activatingUnit.push(unit);
-
-    if (resonator) {
-      //end Select Resonator resolution
-      newGameState.currentResolution.pop();
-
-      newGameState.activatingResonator.push(resonator);
-
-      newGameState.currentResolution.push({
-        resolution: "Resonance Conclusion",
-        player: self,
-        unit: unit,
-        skill: "01-02",
-        skillConclusion: "discard",
-        resonator: resonator,
-        resonatorConclusion: "discard",
-      });
-    } else {
-      newGameState.currentResolution.push({
-        resolution: "Skill Conclusion",
-        player: self,
-        unit: unit,
-        skill: "01-02",
-        skillConclusion: "discard",
-      });
-    }
-
-    newGameState.currentResolution.push({
-      resolution: "Fire Skill",
-      resolution2: "Activating Conflagration",
-      unit: unit,
-      resonator: resonator,
-    });
-
-    newGameState = applyScreech(unit, newGameState);
-
-    return newGameState;
-  };
-
-  const activateCrystallization = (newGameState, unit) => {
-    //end Select Skill resolution
-    newGameState.currentResolution.pop();
-
-    let conclusion = "discard";
-    if (unit.boosts.ambidexterity) {
-      conclusion = "retain";
-      delete newGameState[unit.player].units[unit.unitIndex].boosts
-        .ambidexterity;
-    }
-
-    newGameState.currentResolution.push({
-      resolution: "Skill Conclusion",
-      player: self,
-      unit: unit,
-      skill: "04-01",
-      skillConclusion: conclusion,
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Land Skill",
-      resolution2: "Activating Crystallization",
-      unit: unit,
-    });
-
-    newGameState.activatingSkill.push("04-01");
-    newGameState.activatingUnit.push(unit);
-
-    newGameState = applyScreech(unit, newGameState);
-
-    return newGameState;
-  };
-
-  const activateDiffusion = (newGameState, unit, resonator = null) => {
-    //end Select Skill resolution
-    newGameState.currentResolution.pop();
-
-    newGameState.activatingSkill.push("06-02");
-    newGameState.activatingUnit.push(unit);
-
-    if (resonator) {
-      //end Select Resonator resolution
-      newGameState.currentResolution.pop();
-
-      newGameState.activatingResonator.push(resonator);
-
-      newGameState.currentResolution.push({
-        resolution: "Resonance Conclusion",
-        player: self,
-        unit: unit,
-        skill: "06-02",
-        skillConclusion: "discard",
-        resonator: resonator,
-        resonatorConclusion: "discard",
-      });
-    } else {
-      newGameState.currentResolution.push({
-        resolution: "Skill Conclusion",
-        player: self,
-        unit: unit,
-        skill: "06-02",
-        skillConclusion: "discard",
-      });
-    }
-
-    newGameState.currentResolution.push({
-      resolution: "Mana Skill",
-      resolution2: "Activating Diffusion",
-      unit: unit,
-      resonator: resonator,
-    });
-
-    newGameState = applyScreech(unit, newGameState);
-
-    return newGameState;
-  };
-
-  const activateDisruptionField = (newGameState, unit) => {
-    //end Select Skill resolution
-    newGameState.currentResolution.pop();
-
-    newGameState.currentResolution.push({
-      resolution: "Skill Conclusion",
-      player: self,
-      unit: unit,
-      skill: "06-04",
-      skillConclusion: "shatter",
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Mana Skill",
-      resolution2: "Activating Disruption Field",
-      unit: unit,
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Animation Delay",
-      priority: self,
-    });
-
-    newGameState.activatingSkill.push("06-04");
-    newGameState.activatingUnit.push(unit);
-
-    return newGameState;
-  };
-
-  const activateEfflorescence = (newGameState, unit, resonator = null) => {
-    //end Select Skill resolution
-    newGameState.currentResolution.pop();
-
-    newGameState.activatingSkill.push("08-02");
-    newGameState.activatingUnit.push(unit);
-
-    if (resonator) {
-      //end Select Resonator resolution
-      newGameState.currentResolution.pop();
-
-      newGameState.activatingResonator.push(resonator);
-
-      newGameState.currentResolution.push({
-        resolution: "Resonance Conclusion",
-        player: self,
-        unit: unit,
-        skill: "08-02",
-        skillConclusion: "discard",
-        resonator: resonator,
-        resonatorConclusion: "discard",
-      });
-    } else {
-      newGameState.currentResolution.push({
-        resolution: "Skill Conclusion",
-        player: self,
-        unit: unit,
-        skill: "08-02",
-        skillConclusion: "discard",
-      });
-    }
-
-    newGameState.currentResolution.push({
-      resolution: "Plant Skill",
-      resolution2: "Activating Efflorescence",
-      unit: unit,
-      resonator: resonator,
-    });
-
-    newGameState = applyScreech(unit, newGameState);
-
-    return newGameState;
-  };
-
   const activateFatedRivalry = (newGameState, unit) => {
     //end Triggering Target resolution
     // newGameState.currentResolution.pop() <-- NOT needed
@@ -573,149 +224,6 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
-  const activateFrigidBreath = (newGameState, unit, resonator = null) => {
-    //end Select Skill resolution
-    newGameState.currentResolution.pop();
-
-    newGameState.activatingSkill.push("02-02");
-    newGameState.activatingUnit.push(unit);
-
-    if (resonator) {
-      //end Select Resonator resolution
-      newGameState.currentResolution.pop();
-
-      newGameState.activatingResonator.push(resonator);
-
-      newGameState.currentResolution.push({
-        resolution: "Resonance Conclusion",
-        player: self,
-        unit: unit,
-        skill: "02-02",
-        skillConclusion: "discard",
-        resonator: resonator,
-        resonatorConclusion: "discard",
-      });
-    } else {
-      newGameState.currentResolution.push({
-        resolution: "Skill Conclusion",
-        player: self,
-        unit: unit,
-        skill: "02-02",
-        skillConclusion: "discard",
-      });
-    }
-
-    newGameState.currentResolution.push({
-      resolution: "Water Skill",
-      resolution2: "Activating Frigid Breath",
-      unit: unit,
-      resonator: resonator,
-    });
-
-    newGameState = applyScreech(unit, newGameState);
-
-    return newGameState;
-  };
-
-  const activateGaleConjuration = (newGameState, unit, resonator = null) => {
-    //end Select Skill resolution
-    newGameState.currentResolution.pop();
-
-    newGameState.activatingSkill.push("03-02");
-    newGameState.activatingUnit.push(unit);
-
-    if (resonator) {
-      //end Select Resonator resolution
-      newGameState.currentResolution.pop();
-
-      newGameState.activatingResonator.push(resonator);
-
-      newGameState.currentResolution.push({
-        resolution: "Resonance Conclusion",
-        player: self,
-        unit: unit,
-        skill: "03-02",
-        skillConclusion: "discard",
-        resonator: resonator,
-        resonatorConclusion: "discard",
-      });
-    } else {
-      newGameState.currentResolution.push({
-        resolution: "Skill Conclusion",
-        player: self,
-        unit: unit,
-        skill: "03-02",
-        skillConclusion: "discard",
-      });
-    }
-
-    newGameState.currentResolution.push({
-      resolution: "Wind Skill",
-      resolution2: "Activating Gale Conjuration",
-      unit: unit,
-      resonator: resonator,
-    });
-
-    return newGameState;
-  };
-  const activateGeomancy = (newGameState, unit) => {
-    //end Select Skill resolution
-    newGameState.currentResolution.pop();
-
-    newGameState.currentResolution.push({
-      resolution: "Skill Conclusion",
-      player: self,
-      unit: unit,
-      skill: "04-04",
-      skillConclusion: "shatter",
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Land Skill",
-      resolution2: "Activating Geomancy",
-      unit: unit,
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Animation Delay",
-      priority: self,
-    });
-
-    newGameState.activatingSkill.push("04-04");
-    newGameState.activatingUnit.push(unit);
-
-    return newGameState;
-  };
-
-  const activateGlacialTorrent = (newGameState, unit) => {
-    //end Select Skill resolution
-    newGameState.currentResolution.pop();
-
-    newGameState.currentResolution.push({
-      resolution: "Skill Conclusion",
-      player: self,
-      unit: unit,
-      skill: "02-04",
-      skillConclusion: "shatter",
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Water Skill",
-      resolution2: "Activating Glacial Torrent",
-      unit: unit,
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Animation Delay",
-      priority: self,
-    });
-
-    newGameState.activatingSkill.push("02-04");
-    newGameState.activatingUnit.push(unit);
-
-    return newGameState;
-  };
-
   const activateHealingRain = (newGameState, unit, victim) => {
     //end Triggering Survival Ally resolution
     // newGameState.currentResolution.pop() <-- NOT needed
@@ -743,72 +251,6 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
-  const activateIgnitionPropulsion = (newGameState, unit) => {
-    //end Select Skill resolution
-    newGameState.currentResolution.pop();
-
-    newGameState.activatingSkill.push("01-01");
-    newGameState.activatingUnit.push(unit);
-
-    let conclusion = "discard";
-    if (unit.boosts.ambidexterity) {
-      conclusion = "retain";
-      delete newGameState[unit.player].units[unit.unitIndex].boosts
-        .ambidexterity;
-    }
-
-    newGameState.currentResolution.push({
-      resolution: "Skill Conclusion",
-      player: self,
-      unit: unit,
-      skill: "01-01",
-      skillConclusion: conclusion,
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Fire Skill",
-      resolution2: "Activating Ignition Propulsion",
-      unit: unit,
-    });
-
-    newGameState = applyScreech(unit, newGameState);
-
-    return newGameState;
-  };
-
-  const activateMagneticShockwave = (newGameState, unit) => {
-    //end Select Skill resolution
-    newGameState.currentResolution.pop();
-
-    let conclusion = "discard";
-    if (unit.boosts.ambidexterity) {
-      conclusion = "retain";
-      delete newGameState[unit.player].units[unit.unitIndex].boosts
-        .ambidexterity;
-    }
-
-    newGameState.currentResolution.push({
-      resolution: "Skill Conclusion",
-      player: self,
-      unit: unit,
-      skill: "07-01",
-      skillConclusion: conclusion,
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Metal Skill",
-      resolution2: "Activating Magnetic Shockwave",
-      unit: unit,
-    });
-
-    newGameState.activatingSkill.push("07-01");
-    newGameState.activatingUnit.push(unit);
-
-    newGameState = applyScreech(unit, newGameState);
-
-    return newGameState;
-  };
-
   const activateMatchMadeInHeaven = (newGameState, unit) => {
     //end Triggering Ascension resolution
     // newGameState.currentResolution.pop() <-- NOT needed
@@ -823,7 +265,7 @@ export const useRecurringEffects = () => {
 
     newGameState.currentResolution.push({
       resolution: "Sovereign Contingent Skill",
-      resolution2: "Activating Match Made In Heaven",
+      resolution2: "Activating Match Made in Heaven",
       player: self,
       unit: unit,
     });
@@ -886,112 +328,6 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
-  const activatePurification = (newGameState, unit) => {
-    //end Select Skill resolution
-    newGameState.currentResolution.pop();
-
-    newGameState.activatingSkill.push("02-01");
-    newGameState.activatingUnit.push(unit);
-
-    let conclusion = "discard";
-    if (unit.boosts.ambidexterity) {
-      conclusion = "retain";
-      delete newGameState[unit.player].units[unit.unitIndex].boosts
-        .ambidexterity;
-    }
-
-    newGameState.currentResolution.push({
-      resolution: "Skill Conclusion",
-      player: self,
-      unit: unit,
-      skill: "02-01",
-      skillConclusion: conclusion,
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Water Skill",
-      resolution2: "Activating Purification",
-      unit: unit,
-    });
-
-    newGameState = applyScreech(unit, newGameState);
-
-    return newGameState;
-  };
-
-  const activateResplendence = (newGameState, unit) => {
-    //end Select Skill resolution
-    newGameState.currentResolution.pop();
-
-    newGameState.currentResolution.push({
-      resolution: "Skill Conclusion",
-      player: self,
-      unit: unit,
-      skill: "01-04",
-      skillConclusion: "shatter",
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Fire Skill",
-      resolution2: "Activating Resplendence",
-      unit: unit,
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Animation Delay",
-      priority: self,
-    });
-
-    newGameState.activatingSkill.push("01-04");
-    newGameState.activatingUnit.push(unit);
-
-    return newGameState;
-  };
-
-  const activateReinforce = (newGameState, unit, resonator = null) => {
-    //end Select Skill resolution
-    newGameState.currentResolution.pop();
-
-    newGameState.activatingSkill.push("07-02");
-    newGameState.activatingUnit.push(unit);
-
-    if (resonator) {
-      //end Select Resonator resolution
-      newGameState.currentResolution.pop();
-
-      newGameState.activatingResonator.push(resonator);
-
-      newGameState.currentResolution.push({
-        resolution: "Resonance Conclusion",
-        player: self,
-        unit: unit,
-        skill: "07-02",
-        skillConclusion: "discard",
-        resonator: resonator,
-        resonatorConclusion: "discard",
-      });
-    } else {
-      newGameState.currentResolution.push({
-        resolution: "Skill Conclusion",
-        player: self,
-        unit: unit,
-        skill: "07-02",
-        skillConclusion: "discard",
-      });
-    }
-
-    newGameState.currentResolution.push({
-      resolution: "Metal Skill",
-      resolution2: "Activating Reinforce",
-      unit: unit,
-      resonator: resonator,
-    });
-
-    newGameState = applyScreech(unit, newGameState);
-
-    return newGameState;
-  };
-
   const activateSymphonicScreech = (newGameState, unit, victim) => {
     newGameState.currentResolution.push({
       resolution: "Skill Conclusion",
@@ -1019,98 +355,63 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
-  const activateSkill = (newGameState, unit, skill, resonator) => {
-    switch (skill) {
-      case "01-01":
-        return activateIgnitionPropulsion(newGameState, unit);
-      case "01-02":
-        return activateConflagration(newGameState, unit, resonator);
-      case "01-04":
-        return activateResplendence(newGameState, unit);
-
-      case "02-01":
-        return activatePurification(newGameState, unit);
-      case "02-02":
-        return activateFrigidBreath(newGameState, unit, resonator);
-      case "02-04":
-        return activateGlacialTorrent(newGameState, unit);
-
-      case "03-01":
-        return activateAerialImpetus(newGameState, unit);
-      case "03-02":
-        return activateGaleConjuration(newGameState, unit, resonator);
-      case "03-04":
-        return activateCataclysmicTempest(newGameState, unit);
-
-      case "04-01":
-        return activateCrystallization(newGameState, unit);
-      case "04-02":
-        return activateUpheaval(newGameState, unit, resonator);
-      case "04-04":
-        return activateGeomancy(newGameState, unit);
-
-      case "05-01":
-        return activateChainLightning(newGameState, unit);
-      case "05-02":
-        return activateZipAndZap(newGameState, unit, resonator);
-      case "05-04":
-        return activateValiantSpark(newGameState, unit);
-
-      case "06-01":
-        return activateSurge(newGameState, unit);
-      case "06-02":
-        return activateDiffusion(newGameState, unit, resonator);
-      case "06-04":
-        return activateDisruptionField(newGameState, unit);
-
-      case "07-01":
-        return activateMagneticShockwave(newGameState, unit);
-      case "07-02":
-        return activateReinforce(newGameState, unit, resonator);
-      case "07-04":
-        return activateArsenalOnslaught(newGameState, unit);
-
-      case "08-01":
-        return activateSowAndReap(newGameState, unit);
-      case "08-02":
-        return activateEfflorescence(newGameState, unit, resonator);
-      case "08-04":
-        return activateCastleOfThorns(newGameState, unit);
-
-      default:
-        return newGameState;
-    }
-  };
-
-  const activateSowAndReap = (newGameState, unit) => {
+  const activateSkill = (newGameState, unit, skill, resonator = null) => {
     //end Select Skill resolution
     newGameState.currentResolution.pop();
 
-    let conclusion = "discard";
-    if (unit.boosts.ambidexterity) {
+    newGameState.activatingSkill.push(skill);
+    newGameState.activatingUnit.push(unit);
+
+    const skillData = getSkillById(skill);
+
+    let conclusion = skillData.Method === "Burst" ? "shatter" : "discard";
+
+    if (unit.boosts.ambidexterity && skillData.Method === "Standard") {
       conclusion = "retain";
       delete newGameState[unit.player].units[unit.unitIndex].boosts
         .ambidexterity;
     }
 
-    newGameState.currentResolution.push({
-      resolution: "Skill Conclusion",
-      player: self,
-      unit: unit,
-      skill: "08-01",
-      skillConclusion: conclusion,
-    });
+    if (resonator) {
+      //end Select Resonator resolution
+      newGameState.currentResolution.pop();
+
+      newGameState.activatingResonator.push(resonator);
+
+      newGameState.currentResolution.push({
+        resolution: "Resonance Conclusion",
+        player: self,
+        unit,
+        skill,
+        skillConclusion: conclusion,
+        resonator,
+        resonatorConclusion: "discard",
+      });
+    } else {
+      newGameState.currentResolution.push({
+        resolution: "Skill Conclusion",
+        player: self,
+        unit: unit,
+        skill,
+        skillConclusion: conclusion,
+      });
+    }
 
     newGameState.currentResolution.push({
-      resolution: "Plant Skill",
-      resolution2: "Activating Sow And Reap",
-      unit: unit,
+      resolution: skillData.Aspect + " Skill",
+      resolution2: "Activating " + skillData.Name,
+      unit,
+      resonator,
     });
 
-    newGameState.activatingSkill.push("08-01");
-    newGameState.activatingUnit.push(unit);
-
-    newGameState = applyScreech(unit, newGameState);
+    if (skillData.Aspect !== "Wind" && skillData.Method !== "Burst") {
+      newGameState = applyScreech(unit, newGameState);
+    } else {
+      newGameState.currentResolution.push({
+        resolution: "Animation Delay",
+        priority: self,
+      });
+    }
 
     return newGameState;
   };
@@ -1353,39 +654,6 @@ export const useRecurringEffects = () => {
     }
   };
 
-  const activateSurge = (newGameState, unit) => {
-    //end Select Skill resolution
-    newGameState.currentResolution.pop();
-
-    let conclusion = "discard";
-    if (unit.boosts.ambidexterity) {
-      conclusion = "retain";
-      delete newGameState[unit.player].units[unit.unitIndex].boosts
-        .ambidexterity;
-    }
-
-    newGameState.currentResolution.push({
-      resolution: "Skill Conclusion",
-      player: self,
-      unit: unit,
-      skill: "06-01",
-      skillConclusion: conclusion,
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Mana Skill",
-      resolution2: "Activating Surge",
-      unit: unit,
-    });
-
-    newGameState.activatingSkill.push("06-01");
-    newGameState.activatingUnit.push(unit);
-
-    newGameState = applyScreech(unit, newGameState);
-
-    return newGameState;
-  };
-
   const activateThunderThaumaturge = (newGameState, unit, attacker) => {
     //end Triggering Target resolution
     // newGameState.currentResolution.pop() <-- NOT needed
@@ -1409,79 +677,6 @@ export const useRecurringEffects = () => {
     newGameState.activatingUnit.push(unit);
 
     newGameState = applyScreech(unit, newGameState);
-
-    return newGameState;
-  };
-
-  const activateUpheaval = (newGameState, unit, resonator = null) => {
-    //end Select Skill resolution
-    newGameState.currentResolution.pop();
-
-    newGameState.activatingSkill.push("04-02");
-    newGameState.activatingUnit.push(unit);
-
-    if (resonator) {
-      //end Select Resonator resolution
-      newGameState.currentResolution.pop();
-
-      newGameState.activatingResonator.push(resonator);
-
-      newGameState.currentResolution.push({
-        resolution: "Resonance Conclusion",
-        player: self,
-        unit: unit,
-        skill: "04-02",
-        skillConclusion: "discard",
-        resonator: resonator,
-        resonatorConclusion: "discard",
-      });
-    } else {
-      newGameState.currentResolution.push({
-        resolution: "Skill Conclusion",
-        player: self,
-        unit: unit,
-        skill: "04-02",
-        skillConclusion: "discard",
-      });
-    }
-
-    newGameState.currentResolution.push({
-      resolution: "Land Skill",
-      resolution2: "Activating Upheaval",
-      unit: unit,
-      resonator: resonator,
-    });
-
-    newGameState = applyScreech(unit, newGameState);
-
-    return newGameState;
-  };
-
-  const activateValiantSpark = (newGameState, unit) => {
-    //end Select Skill resolution
-    newGameState.currentResolution.pop();
-
-    newGameState.currentResolution.push({
-      resolution: "Skill Conclusion",
-      player: self,
-      unit: unit,
-      skill: "05-04",
-      skillConclusion: "shatter",
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Lightning Skill",
-      resolution2: "Activating Valiant Spark",
-      unit: unit,
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Animation Delay",
-      priority: self,
-    });
-
-    newGameState.activatingSkill.push("05-04");
-    newGameState.activatingUnit.push(unit);
 
     return newGameState;
   };
@@ -1536,50 +731,6 @@ export const useRecurringEffects = () => {
 
     newGameState.activatingSkill.push("08-03");
     newGameState.activatingUnit.push(unit);
-
-    newGameState = applyScreech(unit, newGameState);
-
-    return newGameState;
-  };
-
-  const activateZipAndZap = (newGameState, unit, resonator = null) => {
-    //end Select Skill resolution
-    newGameState.currentResolution.pop();
-
-    newGameState.activatingSkill.push("05-02");
-    newGameState.activatingUnit.push(unit);
-
-    if (resonator) {
-      //end Select Resonator resolution
-      newGameState.currentResolution.pop();
-
-      newGameState.activatingResonator.push(resonator);
-
-      newGameState.currentResolution.push({
-        resolution: "Resonance Conclusion",
-        player: self,
-        unit: unit,
-        skill: "05-02",
-        skillConclusion: "discard",
-        resonator: resonator,
-        resonatorConclusion: "discard",
-      });
-    } else {
-      newGameState.currentResolution.push({
-        resolution: "Skill Conclusion",
-        player: self,
-        unit: unit,
-        skill: "05-02",
-        skillConclusion: "discard",
-      });
-    }
-
-    newGameState.currentResolution.push({
-      resolution: "Lightning Skill",
-      resolution2: "Activating Zip and Zap",
-      unit: unit,
-      resonator: resonator,
-    });
 
     newGameState = applyScreech(unit, newGameState);
 
@@ -2092,13 +1243,6 @@ export const useRecurringEffects = () => {
     }
 
     switch (method) {
-      // case "Avelhem":
-      //   if (newGameState[unit.player].bountyUpgrades.avelhem > 0)
-      //     unit.enhancements.shield
-      //       ? (unit.enhancements.shield = Math.max(2, unit.enhancements.shield))
-      //       : (unit.enhancements.shield = 2);
-      //   break;
-
       case "Fated Rivalry":
         newGameState.currentResolution.push({
           resolution: "Sovereign Contingent Skill",
@@ -2219,18 +1363,6 @@ export const useRecurringEffects = () => {
 
     if (resonator === "SA-02") {
       newGameState = drawSkill(newGameState);
-    } else {
-      newGameState.currentResolution.push({
-        resolution: "You May Shuffle Avelhem",
-        player: self,
-        details: {
-          reason: "Avelhem Resonance Shuffle",
-          title: "Avelhem Resonance",
-          message: "You may shuffle this Avelhem into your repertoire.",
-          no: "Discard",
-          yes: "Shuffle",
-        },
-      });
     }
 
     return newGameState;
@@ -2254,6 +1386,9 @@ export const useRecurringEffects = () => {
         return "Metal Scion";
       case 8:
         return "Plant Scion";
+
+      case 9:
+        return "Avian Scion";
       default:
         return null;
     }
@@ -2505,6 +1640,14 @@ export const useRecurringEffects = () => {
       case "08-04":
         return true;
 
+      case "09-01":
+        return getZonesWithEnemies(unit, 2).length > 0;
+
+      case "09-03":
+        return false;
+      case "09-04":
+        return true;
+
       default:
         return false;
     }
@@ -2730,6 +1873,22 @@ export const useRecurringEffects = () => {
       const enemy = localGameState[zone.player].units[zone.unitIndex];
 
       if (isRooted(enemy)) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
+  const canRaptorBlitzBlast = (unitInfo) => {
+    const adjacentEnemies = getZonesWithEnemies(unitInfo, 1);
+    const zones = JSON.parse(localGameState.zones);
+
+    for (let i of adjacentEnemies) {
+      const zone = zones[Math.floor(i / 5)][i % 5];
+      const enemy = localGameState[zone.player].units[zone.unitIndex];
+
+      if (!enemy.aether) {
         return true;
       }
     }
@@ -3084,11 +2243,9 @@ export const useRecurringEffects = () => {
             resolution2: "Activating Everblooming",
             unit: victim,
             details: {
-              reason: "Everblooming",
               title: "Everblooming",
-              message: "You may draw 1 skill.",
-              no: "Skip",
-              yes: "Draw",
+              reason: "Everblooming",
+              unitClone: victim, // Fungal Scion can trigger this talent, which will affect unit
             },
           });
 
@@ -3221,7 +2378,7 @@ export const useRecurringEffects = () => {
         details: {
           reason: "Skill Hand Limit",
           title: "Final Phase",
-          message: `Skill hand limit is 8 cards. Discard ${excessSkills} excess skill${
+          message: `The skill hand limit is 8 cards. Discard ${excessSkills} excess skill${
             excessSkills === 1 ? "" : "s"
           }.`,
           count: newGameState[self].skillHand.length - 8,
@@ -3570,6 +2727,28 @@ export const useRecurringEffects = () => {
         localGameState[enemyPlayer].units[
           zones[Math.floor(z / 5)][z % 5].unitIndex
         ].afflictions[affliction] > 0
+    );
+
+    return enemyZones;
+  };
+
+  const getZonesWithEnemiesNoAether = (unit, range) => {
+    const zones = JSON.parse(localGameState.zones);
+
+    let enemyPlayer = "";
+    if (unit.player === "host") {
+      enemyPlayer = "guest";
+    } else if (unit.player === "guest") {
+      enemyPlayer = "host";
+    }
+
+    let enemyZones = getZonesWithEnemies(unit, range);
+
+    enemyZones = enemyZones.filter(
+      (z) =>
+        localGameState[enemyPlayer].units[
+          zones[Math.floor(z / 5)][z % 5].unitIndex
+        ].aether === 0
     );
 
     return enemyZones;
@@ -3942,23 +3121,11 @@ export const useRecurringEffects = () => {
       newGameState[self].skillVestige
     );
 
-    //1.5 remove Transcendence (SX-01)
-    const newSkillDeck = newGameState[self].skillVestige.filter(
-      (s) => s !== "SX-01"
-    );
-    const transcendenceCount =
-      newGameState[self].skillVestige.length - newSkillDeck.length;
-
     //2. Copy vestige to repertoire
     newGameState[self].skillRepertoire = [...newSkillDeck];
 
     //3. Empty vestige
     newGameState[self].skillVestige = [];
-
-    //3.5 Retain Transcendence in vestige
-    for (let i = 0; i < transcendenceCount; i++) {
-      newGameState[self].skillVestige.push("SX-01");
-    }
 
     //4. Apply Penalty
     //If one’s skill repertoire is depleted, their opponent gains 6 FD and 3 BP.
@@ -5010,6 +4177,7 @@ export const useRecurringEffects = () => {
     canBallisticArmor,
     canDeploy,
     canDestine,
+    canRaptorBlitzBlast,
     canSowAndReapBlast,
     canSowAndReapStrike,
     canMove,
@@ -5037,6 +4205,7 @@ export const useRecurringEffects = () => {
     getZonesWithAllies,
     getZonesWithEnemies,
     getZonesWithEnemiesAfflicted,
+    getZonesWithEnemiesNoAether,
     getZonesWithEnemiesRooted,
     getZonesWithScions,
     grantRavager,

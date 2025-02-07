@@ -10,7 +10,7 @@ import { useGetImages } from "../../hooks/useGetImages";
 
 import Skill from "../hand/Skill";
 
-const ViewRevealedSkill = (props) => {
+const RevealedSkillView = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { demoGuide } = useSelector((state) => state.demoGuide);
 
@@ -49,45 +49,41 @@ const ViewRevealedSkill = (props) => {
   };
 
   return (
-    <div className="modal-backdrop">
-      <div className="modal">
-        <div className="modalHeader">
-          <div className="modalTitle">{props.title}</div>
-          <div className="modalButton">
-            <button className="redButton" onClick={() => handleViewBoard()}>
-              View
+    <div className="modalBackdrop">
+      <div className="modalV2">
+        <div className="modalHeader2">
+          <div className="modalTitle2">{props.title}</div>
+          <div className="modalButton2">
+            <button className="yellowButton" onClick={() => handleViewBoard()}>
+              View Board
             </button>
           </div>
         </div>
 
-        <br />
+        <div className="modalContent2">
+          <div className="modalContentText"> {props.message}</div>
 
-        <h3 style={{ maxWidth: 700 }}>{props.message}</h3>
-        <br />
-
-        <div className="view-revealed-skill">
-          {props.skill && (
-            <Skill usableSkill={{ id: props.skill }} canActivateSkill={true} />
-          )}
+          <div className="modalContent1Column">
+            {props.skill && (
+              <Skill
+                usableSkill={{ id: props.skill }}
+                canActivateSkill={true}
+              />
+            )}
+          </div>
 
           {props.avelhems && (
-            <div className="fourColumn scrollable scrollable-y-only">
+            <div className="modalContent3Column">
               {props.avelhems.map((avelhem, i) => (
-                <div
-                  key={i}
-                  className="revealed-skill"
-                  style={{
-                    backgroundImage: `url(${getCardImage(avelhem)})`,
-                  }}
-                ></div>
+                <Skill usableSkill={{ id: avelhem }} canActivateSkill={true} />
               ))}
             </div>
           )}
         </div>
 
-        <div className="modalBottomButton">
+        <div className="modalFooter">
           <button
-            className={`redButton ${
+            className={`redButton2 ${
               canClick("Proceed Button") ? "demoClick" : ""
             }`}
             onClick={() => {
@@ -103,4 +99,4 @@ const ViewRevealedSkill = (props) => {
   );
 };
 
-export default ViewRevealedSkill;
+export default RevealedSkillView;

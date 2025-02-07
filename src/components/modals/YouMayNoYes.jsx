@@ -90,6 +90,11 @@ const YouMayNoYes = (props) => {
         newGameState = drawAvelhem(newGameState);
         break;
 
+      case "Cultivate Draw": //"Cultivate - Upgraded"
+        newGameState[self].fateDefiance -= 1;
+        newGameState = drawSkill(newGameState);
+        break;
+
       case "Mitigate Aether-Blast": //"Mitigating Aether-Blast"
         newGameState.activatingTarget.pop();
 
@@ -132,7 +137,7 @@ const YouMayNoYes = (props) => {
       case "Resplendence": //Resplendence1
         updateData = true;
         newGameState.currentResolution.push({
-          resolution: "Search Skill",
+          resolution: "Search Card",
           player: self,
           details: {
             restriction: ["01-01", "01-02", "01-03"],
@@ -323,13 +328,13 @@ const YouMayNoYes = (props) => {
       case "Conduction":
         updateData = true;
         newGameState.currentResolution.push({
-          resolution: "Search Skill",
+          resolution: "Search Card",
           player: self,
           details: {
             restriction: ["07-01"],
             exclusion: [],
             searchTitle: "Conduction",
-            searchMessage: "Search for then float 1 “Magnetic Shockwave”",
+            searchMessage: "Search for then float 1 “Magnetic Shockwave”.",
             outcome: "Float",
             revealTitle: null,
             revealMessage: null,
@@ -344,13 +349,13 @@ const YouMayNoYes = (props) => {
         updateData = true;
 
         newGameState.currentResolution.push({
-          resolution: "Search Skill",
+          resolution: "Search Card",
           player: self,
           details: {
             restriction: ["06-01", "06-02", "06-03"],
             exclusion: [],
             searchTitle: "Ambiance Assimilation",
-            searchMessage: "Search for 1 non-burst Mana skill”",
+            searchMessage: "Search for 1 non-burst Mana skill",
             outcome: "Add",
             revealTitle: null,
             revealMessage: null,
@@ -362,29 +367,11 @@ const YouMayNoYes = (props) => {
         break;
 
       case "Mana Feedback": //Activating Mana Restructure
-      case "Everblooming": //"Activating Everblooming"
         newGameState = drawSkill(newGameState);
-        break;
-
-      case "Avelhem Resonance Shuffle":
-        updateData = true;
-        newGameState.currentResolution[
-          newGameState.currentResolution.length - 1
-        ].skillConclusion = "shuffle";
         break;
 
       case "Foreshadow Draw": //"Foreshadow Draw"
         newGameState = drawSkill(newGameState);
-        break;
-
-      case "Providence Recovery":
-        newGameState.currentResolution.push({
-          resolution: "Recover Skill",
-          player: self,
-          restriction: ["SX-01"],
-          message: "Recover 1 “Transcendence”",
-          outcome: "Add",
-        });
         break;
 
       case "Fervent Prayer":
@@ -481,48 +468,43 @@ const YouMayNoYes = (props) => {
   };
 
   return (
-    <div className="modal-backdrop">
-      <div className="modal">
-        <div className="modalHeader">
-          <div className="modalTitle">{props.details.title}</div>
-          <div className="modalButton">
-            <button className="redButton" onClick={() => handleViewBoard()}>
-              View
+    <div className="modalBackdrop">
+      <div className="modalV2">
+        <div className="modalHeader2">
+          <div className="modalTitle2">{props.details.title}</div>
+          <div className="modalButton2">
+            <button className="yellowButton" onClick={() => handleViewBoard()}>
+              View Board
             </button>
           </div>
         </div>
 
-        <br />
+        <div className="modalContent2">
+          <div className="modalContentText">{props.details.message}</div>
+        </div>
 
-        <h3 style={{ maxWidth: 700 }}>{props.details.message}</h3>
-        <br />
+        <div className="modalFooter">
+          <button
+            className={`redButton2 ${canClick("No Choice") ? "demoClick" : ""}`}
+            onClick={() => {
+              handleNo();
+              handleUpdateDemoGuide();
+            }}
+          >
+            {props.details.no}
+          </button>
 
-        <div className="modalBottomButton">
-          <div className="multi-option-buttons">
-            <button
-              className={`redButton ${
-                canClick("No Choice") ? "demoClick" : ""
-              }`}
-              onClick={() => {
-                handleNo();
-                handleUpdateDemoGuide();
-              }}
-            >
-              {props.details.no}
-            </button>
-
-            <button
-              className={`redButton ${
-                canClick("Yes Choice") ? "demoClick" : ""
-              }`}
-              onClick={() => {
-                handleYes();
-                handleUpdateDemoGuide();
-              }}
-            >
-              {props.details.yes}
-            </button>
-          </div>
+          <button
+            className={`redButton2 ${
+              canClick("Yes Choice") ? "demoClick" : ""
+            }`}
+            onClick={() => {
+              handleYes();
+              handleUpdateDemoGuide();
+            }}
+          >
+            {props.details.yes}
+          </button>
         </div>
       </div>
     </div>

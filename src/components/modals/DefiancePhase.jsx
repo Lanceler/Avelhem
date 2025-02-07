@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Modal.css";
+import "./Modal2.scss";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
@@ -104,7 +105,14 @@ const DefiancePhaseSelection = (props) => {
           resolution: "Defiance Options",
           resolution2: "Destine",
           player: self,
-          defianceCost: defianceCosts[3],
+          details: {
+            title: "Destine",
+            message:
+              "Spend 2 FD and 1 Scion skill to ascend an ally pawn to the matching class.",
+            restriction: null,
+            reason: "Destine",
+            defianceCost: defianceCosts[3],
+          },
         });
         break;
 
@@ -116,7 +124,7 @@ const DefiancePhaseSelection = (props) => {
         newGameState = endDefiancePhase(newGameState);
 
         newGameState.currentResolution.push({
-          resolution: "Search Skill",
+          resolution: "Search Card",
           player: self,
           details: {
             restriction: sovereignSkillList(),
@@ -145,18 +153,6 @@ const DefiancePhaseSelection = (props) => {
 
         //end defiance Phase
         newGameState = endDefiancePhase(newGameState);
-
-        if (newGameState[self].skillVestige.includes("SX-01")) {
-          newGameState.currentResolution.push({
-            resolution: "Recover Skill",
-            player: self,
-            restriction: ["SX-01"],
-            message: "You may recover 1 “Transcendence”",
-            outcome: "Add",
-            canSkip: true,
-          });
-        }
-
         break;
 
       default:
@@ -186,9 +182,9 @@ const DefiancePhaseSelection = (props) => {
     localGameState.teaTrial ? 0 : 1,
     localGameState.teaTrial ? 0 : 1,
     2,
+    2,
     3,
     3,
-    4,
   ];
 
   const canSelect = [
@@ -237,12 +233,7 @@ const DefiancePhaseSelection = (props) => {
     },
     {
       title: "Finesse",
-      desc: (
-        <>
-          Draw 1 skill. <br />
-          You may recover 1 “Transcendence”
-        </>
-      ),
+      desc: <>Draw 1 skill.</>,
     },
   ];
 
@@ -255,20 +246,8 @@ const DefiancePhaseSelection = (props) => {
         }
     }
 
-    // switch (demoGuide) {
-    //   case "Learn1.15":
-    //     return element1 === "skip";
-
-    //   case "Learn1.185":
-    //   case "Learn1.90":
-    //     return element1 === "select";
-
-    //   case "Learn1.89":
-    //     return element1 === "Curate";
-
     //   case "Learn1.184":
     //     return element1 === "Ex Machina";
-    // }
   };
 
   const handleUpdateDemoGuide = () => {
@@ -282,40 +261,43 @@ const DefiancePhaseSelection = (props) => {
     }
   };
   return (
-    <div className="modal-backdrop">
-      <div className="modal ">
-        <div className="modalHeader">
-          <div className="modalTitle">
+    <div className="modalBackdrop">
+      <div className="modalV2">
+        <div className="modalHeader2">
+          <div className="modalTitle2">
             Defiance Phase (FD: {localGameState[self].fateDefiance})
           </div>
-          <div className="modalButton">
-            <button className="redButton" onClick={() => handleViewBoard()}>
-              View
+          <div className="modalButton2">
+            <button className="yellowButton" onClick={() => handleViewBoard()}>
+              View Board
             </button>
           </div>
         </div>
 
-        <br />
+        <div className="modalContent2">
+          <div className="modalContentText">You may choose 1:</div>
 
-        <div className="modalContent">
-          <div className="threeColumn">
+          <div className="modalContent3Column">
             {defianceOptions.map((d, i) => (
               <div
                 key={i}
-                className={`modal-option-outline
-                  ${selectedChoice === 1 + i ? "selected-modal-option" : ""} 
-                  ${canClick(d.title) ? "demoClick" : ""}                     
-              
-              `}
+                className={`modalOptionOutline modalSmallOptionOutline
+                            ${
+                              selectedChoice === i + 1
+                                ? "modalSmallOptionOutlineSelected"
+                                : ""
+                            }`}
                 onClick={() => {
                   handleSelect(i + 1, canSelect[i]);
                   handleUpdateDemoGuide();
                 }}
               >
                 <div
-                  className={`modal-option-content modal-option-content-2 ${
-                    canSelect[i] ? "" : "disabled-modal-option-content"
-                  } `}
+                  className={`modalSmall ${canSelect[i] ? "" : "disabledModal"} 
+                   ${canClick(d.title) ? "demoClick" : ""}  `}
+                  style={{
+                    boxShadow: selectedChoice === i + 1 ? "none" : "",
+                  }}
                 >
                   <div className="modalDefianceContents">
                     <div className="modal-option-title">{d.title}</div>
@@ -333,10 +315,10 @@ const DefiancePhaseSelection = (props) => {
           </div>
         </div>
 
-        <div className="modalBottomButton">
+        <div className="modalFooter">
           {selectedChoice === null && (
             <button
-              className={`redButton ${canClick("skip") ? "demoClick" : ""}`}
+              className={`redButton2 ${canClick("skip") ? "demoClick" : ""}`}
               onClick={() => {
                 handleSkip();
                 handleUpdateDemoGuide();
@@ -348,7 +330,7 @@ const DefiancePhaseSelection = (props) => {
 
           {selectedChoice !== null && (
             <button
-              className={`redButton ${canClick("select") ? "demoClick" : ""}`}
+              className={`redButton2 ${canClick("select") ? "demoClick" : ""}`}
               onClick={() => {
                 handleProceed();
                 handleUpdateDemoGuide();
