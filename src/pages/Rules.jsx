@@ -262,8 +262,8 @@ export default function Rules() {
 
               <h3>6. Shuffle repertoires and draw skill cards</h3>
               <p>
-                After shuffling, both Sovereigns draw 5 skill cards. The
-                Sovereign who plays second draws an additional skill.
+                After shuffling, the Sovereign who goes first draw 5 skill
+                cards, while their opponent draws 6.
               </p>
               <br />
               <br />
@@ -903,7 +903,7 @@ export default function Rules() {
                     <span
                       className="rule-view-card"
                       onClick={() => {
-                        dispatch(updateMagnifiedSkill("03-01"));
+                        dispatch(updateMagnifiedSkill("01-03"));
                       }}
                     >
                       Blaze of Glory
