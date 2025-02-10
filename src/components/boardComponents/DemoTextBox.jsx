@@ -29,7 +29,7 @@ const DemoTextBox = () => {
               left: "50%",
               transform: "translate(-50%, -50%)",
               width: 650,
-              height: 200,
+              // height: 200,
             };
 
           //middle of board, slightly smaller
@@ -41,7 +41,7 @@ const DemoTextBox = () => {
               left: "37.5%",
               transform: "translate(-50%, -50%)",
               width: 620,
-              height: 210,
+              // height: 210,
             };
 
           //center of board; small
@@ -50,7 +50,7 @@ const DemoTextBox = () => {
               top: "50%",
               left: "30%",
               width: 350,
-              height: 150,
+              // height: 150,
             };
 
           //center of board; a bit small
@@ -59,7 +59,7 @@ const DemoTextBox = () => {
               top: "50%",
               left: "30%",
               width: 500,
-              height: 180,
+              // height: 180,
             };
 
           // top center of board, a bit smaller
@@ -70,7 +70,7 @@ const DemoTextBox = () => {
               top: "22%",
               left: "35%",
               width: 550,
-              height: 210,
+              // height: 210,
             };
 
           // top center of board; small
@@ -88,7 +88,7 @@ const DemoTextBox = () => {
               top: "20%",
               left: "35%",
               width: 350,
-              height: 150,
+              // height: 150,
             };
 
           // top center of board, a bit lower; small
@@ -97,7 +97,7 @@ const DemoTextBox = () => {
               top: "30%",
               left: "35%",
               width: 350,
-              height: 120,
+              // height: 120,
             };
 
           //bottom left
@@ -146,7 +146,7 @@ const DemoTextBox = () => {
               top: "36.5%",
               left: "71.0%",
               width: 620,
-              height: 175,
+              // height: 175,
             };
 
           //middle right; slightly small
@@ -162,7 +162,7 @@ const DemoTextBox = () => {
               top: "52%",
               left: "71.0%",
               width: 550,
-              height: 200,
+              // height: 200,
             };
 
           //lower right; small
@@ -172,7 +172,7 @@ const DemoTextBox = () => {
               top: "75%",
               left: "75%",
               width: 400,
-              height: 160,
+              // height: 160,
             };
 
           //top right smaller
@@ -183,8 +183,8 @@ const DemoTextBox = () => {
           case 128:
           case 129:
             return {
-              top: "8.5%",
-              height: 130,
+              top: "10.5%",
+              // height: 130,
               width: 550,
             };
 
@@ -308,7 +308,10 @@ const DemoTextBox = () => {
               <div>
                 <strong>
                   The Initiator refers to the Sovereign whose turn it is.
-                </strong>
+                </strong>{" "}
+                When you are in the position to make a move or decision, your
+                side will glow blue. On occasion, this can happen even during
+                your opponent’s turn.
                 <br /> <br />
                 Once the first turn’s Initiator has been decided, both
                 Sovereigns shuffle their repertoires. The Initiator draws 5
@@ -331,12 +334,11 @@ const DemoTextBox = () => {
           case 10:
             return (
               <div>
-                No one is allowed to view the contents of their repertoires,
-                unless an effect allows them to.
-                <br /> <br />
-                Conversely, only the owner is allowed to view a vestige’s
-                contents, but everyone is privy to the number of cards it
-                contains.
+                Everyone is privy to the number of cards in one’s hand,
+                repertoires (decks), and vestiges (discard piles). <br /> <br />
+                That said, no one is allowed to view the contents of a
+                repertoire, unless an effect allows them to. One may view the
+                contents of their own vestige at any time.
               </div>
             );
 
@@ -466,12 +468,12 @@ const DemoTextBox = () => {
             return (
               <div>
                 This phase offers 3 options. Sovereigns will often be choosing
-                Assent, which provides a pair of random tactics. Battle Cry and
-                Convene are more situational, as they guarantee certain tactics
-                but have costs or restrictions.
+                Assent, which provides a pair of random tactics.
                 <br /> <br />
-                Also note that these options can also be upgraded to provide
-                additional benefits.
+                (Battle Cry and Convene are more situational, as they guarantee
+                certain tactics but have costs or restrictions. Also note that
+                these options can also be upgraded to provide additional
+                benefits.)
               </div>
             );
 
@@ -1056,11 +1058,10 @@ const DemoTextBox = () => {
                 Ignition Propulsion requires the activator to spend (discard) a
                 skill card from hand.
                 <br /> <br />
-                Spending skills is a recurring theme in a number of effects,
-                especially that of Fire Scions. The decision to part with or
-                keep a card can potentially alter the course of the game, so
-                choose carefully. For now, discard “Viridian Grave” (the third
-                skill).
+                Spending skills is a recurring theme in a number of effects. The
+                decision to part with or keep a card can potentially alter the
+                course of the game, so choose carefully. For now, discard
+                “Viridian Grave” (the third skill).
               </div>
             );
 
@@ -1148,12 +1149,12 @@ const DemoTextBox = () => {
           case 116:
             return (
               <div>
-                Anathema disables a Scion’s power (and afflicts them with
-                immense discomfort).
+                Anathema disables a Scion’s power, disabling their abilities,
+                talents, and skill cards. (It also afflicts them with immense
+                discomfort.)
                 <br /> <br />
-                Punished Scions cannot activate abilities and skill cards, and
-                their talents are disabled. They cannot attack, but they can
-                still use tactics to traverse.
+                Punished Scions can still use tactics to traverse, but they
+                cannot attack.
               </div>
             );
 
@@ -1164,7 +1165,7 @@ const DemoTextBox = () => {
                 last phase, a pawn has been deployed on the 2nd row of the board
                 for the sake of another demonstration.
                 <br /> <br />
-                As a reminder, your objective is to move your pieces into your
+                As a reminder, your objective is to move your units into your
                 opponent’s base.
               </div>
             );

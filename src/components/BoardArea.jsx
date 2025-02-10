@@ -3824,6 +3824,39 @@ const BoardArea = (props) => {
     }
   };
 
+  const whoseTurnGlow = () => {
+    let x = "";
+
+    if (localGameState.currentResolution.length > 0) {
+      const lastRes =
+        localGameState.currentResolution[
+          localGameState.currentResolution.length - 1
+        ];
+
+      if (lastRes.resolution === "Animation Delay") {
+        x = lastRes.priority;
+      } else if (lastRes.resolution2 === "Triggering Target") {
+        x = lastRes.victim.player;
+      } else if (lastRes.player) {
+        x = lastRes.player;
+      } else if (lastRes.unit) {
+        x = lastRes.unit.player;
+      } else if (lastRes.attacker) {
+        x = lastRes.attacker.player;
+      } else {
+        x = localGameState.turnPlayer;
+      }
+
+      if (x === self) {
+        return "board-space-your-glow";
+      }
+
+      if (x === enemy) {
+        return "board-space-enemy-glow";
+      }
+    }
+  };
+
   const moveUnit = (unit, zoneId, special) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -4971,6 +5004,14 @@ const BoardArea = (props) => {
 
                 {magnifiedSkill && <ZoomCard cardInfo={magnifiedSkill} />}
               </>
+
+              {whoseTurnGlow() === "board-space-your-glow" && (
+                <div className={`${whoseTurnGlow()}`}></div>
+              )}
+
+              {whoseTurnGlow() === "board-space-enemy-glow" && (
+                <div className={`${whoseTurnGlow()}`}></div>
+              )}
             </div>
           </div>
 

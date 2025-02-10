@@ -1,14 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import "../modals/Modal.css";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-
 import { useSelector, useDispatch } from "react-redux";
-import { updateMagnifiedSkill } from "../../redux/magnifySkill";
 import { updateDemoCount } from "../../redux/demoCount";
 
 import { useGetImages } from "../../hooks/useGetImages";
+
+import Skill from "../hand/Skill";
 
 const ViewVestige = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
@@ -70,88 +68,77 @@ const ViewVestige = (props) => {
 
   return (
     <>
-      <div className="modal-backdrop">
-        <div className="modal">
-          <div className="modalHeader">
-            <div className="modalTitle">{`${props.vestige} Vestige`}</div>
-            <div className="modalButton">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 512 512"
-                className={` close-modal-button  ${
-                  canClick() ? "demoClick" : ""
-                }`}
+      <div className="modalBackdrop">
+        <div className="modalV2">
+          <div className="modalHeader2">
+            <div className="modalTitle2">{`${props.vestige} Vestige`}</div>
+            <div className="modalButton2">
+              <button
+                className={`yellowButton  ${canClick() ? "demoClick" : ""}`}
                 onClick={() => {
                   handleSkip();
                   handleUpdateDemoGuide();
                 }}
               >
-                <path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm121.6 313.1c4.7 4.7 4.7 12.3 0 17L338 377.6c-4.7 4.7-12.3 4.7-17 0L256 312l-65.1 65.6c-4.7 4.7-12.3 4.7-17 0L134.4 338c-4.7-4.7-4.7-12.3 0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3 0-17l39.6-39.6c4.7-4.7 12.3-4.7 17 0l65 65.7 65.1-65.6c4.7-4.7 12.3-4.7 17 0l39.6 39.6c4.7 4.7 4.7 12.3 0 17L312 256l65.6 65.1z" />
-              </svg>
+                Close
+              </button>
             </div>
           </div>
 
-          <br />
-
-          <div
-            className="scrollable scrollable-y-only"
-            style={{ pointerEvents: "all" }}
-          >
-            {props.team === self && !props.spectator && (
-              <div className="fourColumn">
-                {reverseVestige.map((usableSkill, i) => (
-                  <div
-                    key={i}
-                    className="scionSkills pile-view-skill"
-                    style={{
-                      backgroundImage: `url(${getCardImage(usableSkill.id)})`,
-                    }}
-                  >
-                    <button
-                      className="zoom-button"
-                      onClick={() => {
-                        dispatch(updateMagnifiedSkill(usableSkill.id));
-                      }}
-                    >
-                      <FontAwesomeIcon icon={faMagnifyingGlass} />
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {shattered.length > 0 && (
-              <>
-                <h3>Shattered skills:</h3>
-                <div className="fourColumn">
-                  {reverseShattered.map((usableSkill, i) => (
+          <div className="modalContent2">
+            <div className="modalScrollableY" style={{ pointerEvents: "all" }}>
+              {props.team === self && !props.spectator && (
+                <div className="modalContent4Column">
+                  {reverseVestige.map((usableSkill, i) => (
                     <div
                       key={i}
-                      className="scionSkills pile-view-skill"
-                      style={{
-                        backgroundImage: `url(${getCardImage(usableSkill.id)})`,
-                      }}
+                      className={`modalOptionOutline modalCardOptionOutline `}
                     >
-                      <button
-                        className="zoom-button"
-                        onClick={() => {
-                          dispatch(updateMagnifiedSkill(usableSkill.id));
-                        }}
+                      <div
+                        className={`modalCard 
+                          `}
                       >
-                        <FontAwesomeIcon icon={faMagnifyingGlass} />
-                      </button>
+                        <Skill
+                          usableSkill={usableSkill}
+                          canActivateSkill={true}
+                        />
+                      </div>
                     </div>
                   ))}
                 </div>
-              </>
-            )}
+              )}
 
-            {((props.team !== self || props.spectator) && shattered.length) ===
-              0 && (
-              <>
-                <h3>No cards available for viewing.</h3>
-              </>
-            )}
+              {shattered.length > 0 && (
+                <>
+                  <div className="modalContentText">Shattered skills:</div>
+                  <div className="modalContent4Column">
+                    {reverseShattered.map((usableSkill, i) => (
+                      <div
+                        key={i}
+                        className={`modalOptionOutline modalCardOptionOutline `}
+                      >
+                        <div
+                          className={`modalCard 
+                          `}
+                        >
+                          <Skill
+                            usableSkill={usableSkill}
+                            canActivateSkill={true}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
+
+              {((props.team !== self || props.spectator) &&
+                shattered.length) === 0 && (
+                <div className="modalContentText">
+                  No cards available for viewing.
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

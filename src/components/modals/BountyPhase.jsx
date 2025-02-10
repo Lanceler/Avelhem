@@ -302,7 +302,7 @@ const BountyPhase = (props) => {
   };
 
   const frontierBounty = {
-    category: "Frontier",
+    category: "Frontier (Deployment Area)",
     items: [
       {
         text: "Expand your frontier to 4 rows.",
