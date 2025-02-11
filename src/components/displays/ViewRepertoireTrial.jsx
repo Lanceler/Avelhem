@@ -28,7 +28,7 @@ const ViewRepertoireTrial = (props) => {
   }
 
   //shuffle display (for consistency with repertoire)
-  // const sortRepertoire = [...repertoire].sort();
+  repertoire = [...repertoire].sort();
 
   let floatingRepertoire = [];
   for (let c in fRepertoire) {
@@ -37,7 +37,7 @@ const ViewRepertoireTrial = (props) => {
 
   let sortRepertoire = [];
   for (let c in repertoire) {
-    sortRepertoire.unshift({ id: repertoire[c], repertoireIndex: c });
+    sortRepertoire.push({ id: repertoire[c], repertoireIndex: c });
   }
 
   const handleSkip = () => {

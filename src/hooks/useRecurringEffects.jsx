@@ -45,7 +45,7 @@ export const useRecurringEffects = () => {
     newGameState.activatingSkill.push("06-03");
     newGameState.activatingUnit.push(unit);
 
-    newGameState = applyScreech(unit, newGameState);
+    newGameState = applySymphonicScreech(unit, newGameState);
 
     return newGameState;
   };
@@ -167,7 +167,7 @@ export const useRecurringEffects = () => {
     newGameState.activatingSkill.push("01-03");
     newGameState.activatingUnit.push(unit);
 
-    newGameState = applyScreech(unit, newGameState);
+    newGameState = applySymphonicScreech(unit, newGameState);
 
     return newGameState;
   };
@@ -219,7 +219,7 @@ export const useRecurringEffects = () => {
     newGameState.activatingSkill.push("07-03");
     newGameState.activatingUnit.push(unit);
 
-    newGameState = applyScreech(unit, newGameState);
+    newGameState = applySymphonicScreech(unit, newGameState);
 
     return newGameState;
   };
@@ -246,7 +246,7 @@ export const useRecurringEffects = () => {
     newGameState.activatingSkill.push("02-03");
     newGameState.activatingUnit.push(unit);
 
-    newGameState = applyScreech(unit, newGameState);
+    newGameState = applySymphonicScreech(unit, newGameState);
 
     return newGameState;
   };
@@ -323,7 +323,7 @@ export const useRecurringEffects = () => {
     newGameState.activatingSkill.push("04-03");
     newGameState.activatingUnit.push(unit);
 
-    newGameState = applyScreech(unit, newGameState);
+    newGameState = applySymphonicScreech(unit, newGameState);
 
     return newGameState;
   };
@@ -405,7 +405,7 @@ export const useRecurringEffects = () => {
     });
 
     if (skillData.Aspect !== "Wind" && skillData.Method !== "Burst") {
-      newGameState = applyScreech(unit, newGameState);
+      newGameState = applySymphonicScreech(unit, newGameState);
     } else {
       newGameState.currentResolution.push({
         resolution: "Animation Delay",
@@ -676,7 +676,7 @@ export const useRecurringEffects = () => {
     newGameState.activatingSkill.push("05-03");
     newGameState.activatingUnit.push(unit);
 
-    newGameState = applyScreech(unit, newGameState);
+    newGameState = applySymphonicScreech(unit, newGameState);
 
     return newGameState;
   };
@@ -732,7 +732,7 @@ export const useRecurringEffects = () => {
     newGameState.activatingSkill.push("08-03");
     newGameState.activatingUnit.push(unit);
 
-    newGameState = applyScreech(unit, newGameState);
+    newGameState = applySymphonicScreech(unit, newGameState);
 
     return newGameState;
   };
@@ -1183,8 +1183,8 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
-  const applyScreech = (unit, newGameState) => {
-    if (triggerScreech(unit)) {
+  const applySymphonicScreech = (unit, newGameState) => {
+    if (triggerSymphonicScreech(unit)) {
       newGameState.currentResolution.push({
         resolution: "Triggering Activation",
         player: enemy,
@@ -3342,7 +3342,8 @@ export const useRecurringEffects = () => {
       if (
         unit.unitClass === "Metal Scion" &&
         !isMuted(unit) &&
-        !isDisrupted(unit, 1)
+        !isDisrupted(unit, 1) &&
+        !isRooted(unit)
       ) {
         zonesWithMetalScions.push(z);
       }
@@ -3683,7 +3684,8 @@ export const useRecurringEffects = () => {
       if (
         unit.unitClass === "Metal Scion" &&
         !isMuted(unit) &&
-        !isDisrupted(unit, 1)
+        !isDisrupted(unit, 1) &&
+        !isRooted(unit)
       ) {
         return true;
       }
@@ -3777,22 +3779,23 @@ export const useRecurringEffects = () => {
     return !isMuted(victim) && victim.unitClass === "Pawn" ? true : false;
   };
 
-  const triggerScreech = (unit) => {
+  const triggerSymphonicScreech = (unit) => {
     const zones = JSON.parse(localGameState.zones);
 
-    //if activator is Wind Scion or adjacent to an unmuted ally Wind Scion, Screech will not trigger
-    const allyZones = getZonesWithAllies(unit, 1, true);
+    //NERF: Wind Scions no longer block Screech
+    // //if activator is Wind Scion or adjacent to an unmuted ally Wind Scion, Screech will not trigger
+    // const allyZones = getZonesWithAllies(unit, 1, true);
 
-    for (let z of allyZones) {
-      const unitIndex = zones[Math.floor(z / 5)][z % 5].unitIndex;
+    // for (let z of allyZones) {
+    //   const unitIndex = zones[Math.floor(z / 5)][z % 5].unitIndex;
 
-      if (
-        localGameState[self].units[unitIndex].unitClass === "Wind Scion" &&
-        !isMuted(localGameState[self].units[unitIndex])
-      ) {
-        return false;
-      }
-    }
+    //   if (
+    //     localGameState[self].units[unitIndex].unitClass === "Wind Scion" &&
+    //     !isMuted(localGameState[self].units[unitIndex])
+    //   ) {
+    //     return false;
+    //   }
+    // }
 
     if (localGameState[enemy].skillHand.length) {
       const enemyZones = getZonesWithEnemies(unit, 2);
@@ -3992,7 +3995,7 @@ export const useRecurringEffects = () => {
           unit: unit,
           details: {
             title: "Lightning Rod",
-            message: "You may spend 1 skill to gain 1 Charge (Max.3).",
+            message: "You may spend 1 skill to gain 1 Charge.",
             restriction: null,
             reason: "Lightning Rod",
           },

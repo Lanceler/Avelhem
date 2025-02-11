@@ -35,9 +35,7 @@ const SelectTacticalActionSovereign = (props) => {
           ),
           optionText: (
             <>
-              <div className="abilityText ">
-                ⬩Deploy a pawn in your frontier.
-              </div>
+              <div className="">⬩Deploy a pawn in your frontier.</div>
             </>
           ),
         },
@@ -46,9 +44,7 @@ const SelectTacticalActionSovereign = (props) => {
           optionQualifier: null,
           optionText: (
             <>
-              <div className="abilityText ">
-                ⬩Spend 6 FD to gain an Assault tactic.
-              </div>
+              <div className="">⬩Spend 6 FD to gain an Assault tactic.</div>
             </>
           ),
         },
@@ -68,7 +64,7 @@ const SelectTacticalActionSovereign = (props) => {
           ),
           optionText: (
             <>
-              <div className="abilityText ">
+              <div className="">
                 ⬩Float 1 skill to deploy a Scion in your frontier.
               </div>
             </>
@@ -84,9 +80,7 @@ const SelectTacticalActionSovereign = (props) => {
           optionQualifier: null,
           optionText: (
             <>
-              <div className="abilityText ">
-                ⬩Use 2 instances to draw 1 skill.
-              </div>
+              <div className="">⬩Use 2 instances to draw 1 skill.</div>
             </>
           ),
         },
@@ -101,7 +95,7 @@ const SelectTacticalActionSovereign = (props) => {
           optionQualifier: null,
           optionText: (
             <>
-              <div className="abilityText ">No tactical actions available.</div>
+              <div className="">No tactical actions available.</div>
             </>
           ),
         },
@@ -115,7 +109,7 @@ const SelectTacticalActionSovereign = (props) => {
           optionQualifier: null,
           optionText: (
             <>
-              <div className="abilityText ">⬩Draw 3 Avelhems.</div>
+              <div className="">⬩Draw 3 Avelhems.</div>
             </>
           ),
         },
@@ -124,7 +118,7 @@ const SelectTacticalActionSovereign = (props) => {
           optionQualifier: null,
           optionText: (
             <>
-              <div className="abilityText ">⬩Draw 2 skills.</div>
+              <div className="">⬩Draw 2 skills.</div>
             </>
           ),
         },
@@ -133,7 +127,7 @@ const SelectTacticalActionSovereign = (props) => {
           optionQualifier: null,
           optionText: (
             <>
-              <div className="abilityText ">⬩Gain 3 FD.</div>
+              <div className="">⬩Gain 3 FD.</div>
             </>
           ),
         },
@@ -151,7 +145,7 @@ const SelectTacticalActionSovereign = (props) => {
           ),
           optionText: (
             <>
-              <div className="abilityText ">
+              <div className="">
                 ⬩Use 1 instance to deploy a pawn in your frontier.
               </div>
             </>

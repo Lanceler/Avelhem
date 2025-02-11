@@ -395,7 +395,7 @@ export const useDemoGameStates = () => {
         return {
           turnCount: 0,
           activatingUnit: [],
-          turnPlayer: "guest",
+          turnPlayer: "host",
           currentResolution: [{ resolution: " " }],
           activatingTarget: [],
           activatingResonator: [],

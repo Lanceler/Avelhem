@@ -22,6 +22,7 @@ export const useSkillEffects = () => {
     isMuted,
     isRooted,
     paralyze1,
+    strike,
   } = useRecurringEffects();
 
   const ignitionPropulsion1 = (unitInfo) => {
@@ -1330,19 +1331,28 @@ export const useSkillEffects = () => {
       //allies of victim
       let adjacentEnemies = getZonesWithAllies(victim, 1);
 
-      if (adjacentEnemies.length > 0) {
+      if (adjacentEnemies.length > 0 && unit.charge > 0) {
         newGameState.currentResolution.push({
           resolution: "Lightning Skill",
           resolution2: "Chain Lightning3",
           unit: unit,
           details: {
+            reason: "Chain Lightning Blast",
             title: "Chain Lightning",
             message:
-              "You may reveal 1 Lightning skill or spend 1 Charge to blast an enemy adjacent to the previous one.",
-            restriction: ["05-01", "05-02", "05-03", "05-04"],
-            reason: "Chain Lightning Blast",
+              "You may spend 1 Charge to blast an enemy adjacent to the initial one.",
+            no: "Skip",
+            yes: "Blast",
             adjacentEnemies: adjacentEnemies,
           },
+          // details: {
+          //   title: "Chain Lightning",
+          //   message:
+          //     "You may reveal 1 Lightning skill or spend 1 Charge to blast an enemy adjacent to the previous one.",
+          //   restriction: ["05-01", "05-02", "05-03", "05-04"],
+          //   reason: "Chain Lightning Blast",
+          //   adjacentEnemies: adjacentEnemies,
+          // },
         });
       }
     }
@@ -2021,7 +2031,6 @@ export const useSkillEffects = () => {
       details: {
         title: "Frenzy Blade",
         reason: "Frenzy Blade2",
-        victim: victimInfo,
       },
     });
 
@@ -2029,20 +2038,51 @@ export const useSkillEffects = () => {
       resolution: "Metal Skill",
       resolution2: "Frenzy Blade1",
       unit: unit,
-      details: {
-        title: "Frenzy Blade",
-        reason: "Frenzy Blade1",
-      },
+      victim: victimInfo,
     });
 
     return newGameState;
   };
 
-  const frenzyBlade2 = (unitInfo) => {
+  const frenzyBlade2 = (unitInfo, victim) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
-    //end "Frenzy Blade1.5" resolution
+    //end "Frenzy Blade 1" resolution
+    newGameState.currentResolution.pop();
+
+    newGameState = strike(newGameState, unit, victim, null);
+
+    return newGameState;
+  };
+
+  const frenzyBlade3 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Frenzy Blade 2" resolution
+    newGameState.currentResolution.pop();
+
+    if (unit !== null && !isMuted(unit)) {
+      newGameState.currentResolution.push({
+        resolution: "Metal Skill",
+        resolution2: "Frenzy Blade3",
+        unit: unit,
+        details: {
+          title: "Frenzy Blade",
+          reason: "Frenzy Blade3",
+        },
+      });
+    }
+
+    return newGameState;
+  };
+
+  const frenzyBlade4 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Frenzy Blade4" resolution
     newGameState.currentResolution.pop();
 
     unit.enhancements.shield
@@ -2638,7 +2678,11 @@ export const useSkillEffects = () => {
       case "frenzyBlade1":
         return frenzyBlade1(a, b);
       case "frenzyBlade2":
-        return frenzyBlade2(a);
+        return frenzyBlade2(a, b);
+      case "frenzyBlade3":
+        return frenzyBlade3(a);
+      case "frenzyBlade4":
+        return frenzyBlade4(a);
       case "arsenalOnslaught1":
         return arsenalOnslaught1(a);
       case "arsenalOnslaught2":

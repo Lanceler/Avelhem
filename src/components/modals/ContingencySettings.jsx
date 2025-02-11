@@ -24,7 +24,7 @@ const ContingencySettings = (props) => {
   };
 
   return (
-    <div className="modal-backdrop">
+    <div className="modalBackdrop">
       <div className={`info-modal ${props.demo ? "modal-mobile" : ""}`}>
         <div className="info-modal-header">
           <div className="info-modal-title">Contingency Settings</div>
@@ -41,10 +41,11 @@ const ContingencySettings = (props) => {
         </div>
 
         <div className="info-modal-contents scrollable">
+          <br />
           <div>
-            Whenever an event triggers a contingent skill that exists in the
-            game, Sovereigns will be prompted to respond, regardless of the
-            skill’s presence in their hand for the sake of bluffing.
+            For the sake of bluffing, Sovereigns will be prompted to respond
+            whenever the circumstances trigger an existing contingent skill,
+            regardless of the cards’s presence in their hand.
             <br></br>
             <br></br>
             This setting allows one to automatically skip the prompt if no such

@@ -37,26 +37,6 @@ const RevealSkill = (props) => {
     );
   }
 
-  const handleCharge = () => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = newGameState[props.unit.player].units[props.unit.unitIndex];
-
-    //end
-    newGameState.currentResolution.pop();
-
-    unit.charge -= 1;
-
-    newGameState.currentResolution.push({
-      resolution: "Lightning Skill",
-      resolution2: "Chain Lightning4",
-      unit: props.unit,
-      adjacentEnemies: props.details.adjacentEnemies,
-    });
-
-    dispatch(updateState(newGameState));
-    props.updateFirebase(newGameState);
-  };
-
   const handleSelect = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[props.unit.player].units[props.unit.unitIndex];
@@ -109,18 +89,18 @@ const RevealSkill = (props) => {
         revealMessage = "Your opponent has revealed 1 Wind Skill.";
         break;
 
-      case "Chain Lightning Blast":
-        newGameState.currentResolution.push({
-          resolution: "Lightning Skill",
-          resolution2: "Chain Lightning4",
-          unit: props.unit,
-          adjacentEnemies: props.details.adjacentEnemies,
-        });
+      // case "Chain Lightning Blast":
+      //   newGameState.currentResolution.push({
+      //     resolution: "Lightning Skill",
+      //     resolution2: "Chain Lightning4",
+      //     unit: props.unit,
+      //     adjacentEnemies: props.details.adjacentEnemies,
+      //   });
 
-        revealTitle = "Chain Lightning";
-        revealMessage = "Your opponent has revealed 1 Lightning Skill.";
+      //   revealTitle = "Chain Lightning";
+      //   revealMessage = "Your opponent has revealed 1 Lightning Skill.";
 
-        break;
+      //   break;
 
       case "Valiant Spark":
         unit.boosts.valiantSpark = true;
@@ -247,14 +227,6 @@ const RevealSkill = (props) => {
               Skip
             </button>
           )}
-
-          {selectedSkill === null &&
-            props.details.reason === "Chain Lightning Blast" &&
-            props.unit.charge > 0 && (
-              <button className="redButton2" onClick={() => handleCharge()}>
-                Spend 1 Charge
-              </button>
-            )}
 
           {selectedSkill !== null && (
             <button className="redButton2" onClick={() => handleSelect()}>

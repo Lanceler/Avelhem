@@ -2300,7 +2300,7 @@ const BoardArea = (props) => {
             return (
               <>
                 {self === lastRes.unit.player && !hideModal && (
-                  <RevealSkill
+                  <YouMayNoYes
                     unit={lastRes.unit}
                     details={lastRes.details}
                     updateFirebase={updateFirebase}
@@ -2309,6 +2309,18 @@ const BoardArea = (props) => {
                 )}
               </>
             );
+          // return (
+          //   <>
+          //     {self === lastRes.unit.player && !hideModal && (
+          //       <RevealSkill
+          //         unit={lastRes.unit}
+          //         details={lastRes.details}
+          //         updateFirebase={updateFirebase}
+          //         hideOrRevealModale={hideOrRevealModale}
+          //       />
+          //     )}
+          //   </>
+          // );
 
           case "Chain Lightning4":
             if (self === lastRes.unit.player) {
@@ -2699,26 +2711,21 @@ const BoardArea = (props) => {
             break;
 
           case "Frenzy Blade1":
-            return (
-              <>
-                {self === lastRes.unit.player && !hideModal && (
-                  <SelectCustomChoice
-                    unit={lastRes.unit}
-                    details={lastRes.details}
-                    updateFirebase={updateFirebase}
-                    hideOrRevealModale={hideOrRevealModale}
-                  />
-                )}
-              </>
-            );
-
-          case "Frenzy Blade1.5":
             if (self === lastRes.unit.player) {
-              updateLocalState(applySkill("frenzyBlade2", lastRes.unit));
+              //Do not use UpdateGameStateOnly
+              resolutionUpdate(
+                applySkill("frenzyBlade2", lastRes.unit, lastRes.victim)
+              );
             }
             break;
 
           case "Frenzy Blade2":
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("frenzyBlade3", lastRes.unit));
+            }
+            break;
+
+          case "Frenzy Blade3":
             return (
               <>
                 {self === lastRes.unit.player && !hideModal && (
@@ -2731,6 +2738,26 @@ const BoardArea = (props) => {
                 )}
               </>
             );
+
+          case "Frenzy Blade4":
+            if (self === lastRes.unit.player) {
+              updateLocalState(applySkill("frenzyBlade4", lastRes.unit));
+            }
+            break;
+
+          // case "Frenzy Blade2":
+          //   return (
+          //     <>
+          //       {self === lastRes.unit.player && !hideModal && (
+          //         <SelectCustomChoice
+          //           unit={lastRes.unit}
+          //           details={lastRes.details}
+          //           updateFirebase={updateFirebase}
+          //           hideOrRevealModale={hideOrRevealModale}
+          //         />
+          //       )}
+          //     </>
+          //   );
 
           case "Activating Arsenal Onslaught":
             if (self === lastRes.unit.player) {
@@ -3793,37 +3820,6 @@ const BoardArea = (props) => {
     setExpandedUnit(null);
   };
 
-  const isYourTurn = () => {
-    if (localGameState.currentResolution.length > 0) {
-      const lastRes =
-        localGameState.currentResolution[
-          localGameState.currentResolution.length - 1
-        ];
-
-      if (lastRes.resolution === "Animation Delay") {
-        return lastRes.priority === self;
-      }
-
-      if (lastRes.resolution2 === "Triggering Target") {
-        return lastRes.victim.player === self;
-      }
-
-      if (lastRes.player) {
-        return lastRes.player === self;
-      }
-
-      if (lastRes.unit) {
-        return lastRes.unit.player === self;
-      }
-
-      if (lastRes.attacker) {
-        return lastRes.attacker.player === self;
-      }
-
-      return localGameState.turnPlayer === self;
-    }
-  };
-
   const whoseTurnGlow = () => {
     let x = "";
 
@@ -3848,11 +3844,11 @@ const BoardArea = (props) => {
       }
 
       if (x === self) {
-        return "board-space-your-glow";
+        return "self";
       }
 
       if (x === enemy) {
-        return "board-space-enemy-glow";
+        return "enemy";
       }
     }
   };
@@ -4615,11 +4611,7 @@ const BoardArea = (props) => {
       {zones && localGameState && (
         <div className="board-contents">
           <div className="board-physical">
-            <div
-              className={`board-space ${
-                isYourTurn() ? "board-space-turn" : ""
-              }`}
-            >
+            <div className={`board-space`}>
               <AnimatePresence>
                 {!showContent && (
                   <motion.div
@@ -4754,11 +4746,7 @@ const BoardArea = (props) => {
                         : "",
                   }}
                 >
-                  <div
-                    className={`board-frame ${
-                      !isYourTurn() ? "board-frame-enemy" : ""
-                    }`}
-                  >
+                  <div className={`board-frame `}>
                     <Board
                       expandedUnit={expandedUnit}
                       setExpandedUnit={setExpandedUnit}
@@ -5005,12 +4993,12 @@ const BoardArea = (props) => {
                 {magnifiedSkill && <ZoomCard cardInfo={magnifiedSkill} />}
               </>
 
-              {whoseTurnGlow() === "board-space-your-glow" && (
-                <div className={`${whoseTurnGlow()}`}></div>
+              {whoseTurnGlow() === "self" && (
+                <div className={`board-space-your-glow`}></div>
               )}
 
-              {whoseTurnGlow() === "board-space-enemy-glow" && (
-                <div className={`${whoseTurnGlow()}`}></div>
+              {whoseTurnGlow() === "enemy" && (
+                <div className={`board-space-enemy-glow`}></div>
               )}
             </div>
           </div>

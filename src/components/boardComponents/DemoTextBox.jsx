@@ -237,10 +237,10 @@ const DemoTextBox = () => {
                 dominion and authority over creation, the power known as
                 Avelhem.
                 <br /> <br />
-                Players assume the roles of Sovereigns, ordained monarchs whose
-                Avelhems compel humankind itself. Impelled by grand ambitions,
-                the Sovereigns embark on conquest, hellbent on enthroning their
-                bloodline as the one and only.
+                <strong>Players assume the roles of Sovereigns</strong>,
+                ordained monarchs whose Avelhems compel humankind itself.
+                Impelled by grand ambitions, the Sovereigns embark on conquest,
+                hellbent on enthroning their bloodline as the one and only.
               </div>
             );
 
@@ -252,8 +252,8 @@ const DemoTextBox = () => {
                 closest to them as their respective bases.
                 <br /> <br />
                 To win, one must maneuver their units into the opponent’s base.
-                This can be achieved with tactics provided each turn, along with
-                the aid of skill cards and inherent abilities.
+                This can be achieved with tactics allocated each turn, along
+                with the aid of skill cards and inherent abilities.
               </div>
             );
 

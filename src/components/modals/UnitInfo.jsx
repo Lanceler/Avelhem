@@ -155,7 +155,7 @@ const UnitInfo = (props) => {
                 <img src={MobilizeSmall} className="unitInfo-tactic-mobilize" />
               </span>
             </p>
-            <p className="unitInfo-text-desc ">⬩Gain 1 Charge (Max. 3).</p>
+            <p className="unitInfo-text-desc ">⬩Gain 1 Charge.</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
               ⬩You may traverse.
             </p>
@@ -302,14 +302,12 @@ const UnitInfo = (props) => {
 
             <p className="unitInfo-text-heading2">2. Sonic Breeze</p>
             <p className="unitInfo-text-desc">
-              ⬩When you activate a skill, gain 1 Cyclone (Max. 2).
-            </p>
-            <p className="unitInfo-text-desc">
-              ⬩Your deployment and movements bypass motion contingent skills.
+              ⬩When you activate a skill, gain 1 Cyclone; you can have up to 2
+              Cyclones.
             </p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Your and your adjacent allies’ skill activations bypass
-              “Symphonic Screech”.
+              ⬩Your deployment and movements do not trigger motion contingent
+              skills.
             </p>
           </>
         );
@@ -340,7 +338,8 @@ const UnitInfo = (props) => {
           <>
             <p className="unitInfo-text-heading2">1. Lightning Rod</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Upon your debut, you may spend 1 skill to gain 1 Charge (Max. 3).
+              ⬩Upon your debut, you may spend 1 skill to gain 1 Charge; you can
+              have up to 3 Charges.
             </p>
 
             <p className="unitInfo-text-heading2">2. Defibrillation</p>
@@ -376,7 +375,8 @@ const UnitInfo = (props) => {
             </p>
             <p className="unitInfo-text-heading2">2. Penetrator</p>
             <p className="unitInfo-text-desc ">
-              ⬩Your attacks gain 1 AP for each Sharpness you have.
+              ⬩Your attacks gain 1 AP for each Sharpness you have; you can have
+              up to 2 Sharpness.
             </p>
             <p className="unitInfo-text-desc unitInfo-text-last">
               ⬩If you have 2 Sharpness, your strikes bypass Shield.

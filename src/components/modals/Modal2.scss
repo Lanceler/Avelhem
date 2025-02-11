@@ -157,12 +157,13 @@
     flex-direction: column;
     gap: 4px;
     text-align: left;
-    padding: 4px 6px 0px;
+    padding: 4px 12px 0px 15px;
     font-family: 'Arial', sans-serif;
     font-size: 22px;
     overflow-y: auto;
     scrollbar-color: rgb(255, 168, 7) rgba(92, 63, 52, 0);
     scrollbar-width: thin;
+    
 }
 
 .modalScrollableY {

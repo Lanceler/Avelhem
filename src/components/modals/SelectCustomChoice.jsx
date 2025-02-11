@@ -73,11 +73,8 @@ const SelectCustomChoice = (props) => {
       );
       ChoiceFirstMessage =
         "Restore their Aether and grant them Ward for 2 turns.";
-      ChoiceSecondMessage = (
-        <>
-          Reveal 1 Water skill <br /> to grant them 1 HP (Max. 2).
-        </>
-      );
+      ChoiceSecondMessage = "Reveal 1 Water skill to raise their HP to 2.";
+
       break;
 
     case "Kleptothermy":
@@ -112,7 +109,7 @@ const SelectCustomChoice = (props) => {
       canSecondChoice = ["04-01", "04-02", "04-03"].some((s) =>
         localGameState[self].skillVestige.includes(s)
       );
-      ChoiceFirstMessage = "Gain 1 HP (Max 3).";
+      ChoiceFirstMessage = "Raise your HP by 1 (Max 3).";
       ChoiceSecondMessage = "Recover 1 Land skill.";
       break;
 
@@ -157,22 +154,15 @@ const SelectCustomChoice = (props) => {
     case "Reinforce":
       canFirstChoice = true;
       canSecondChoice = newGameState[unit.player].skillHand.length > 0;
-      ChoiceFirstMessage = "Draw 1 skill and gain 1 Sharpness (Max. 2).";
-      ChoiceSecondMessage = "Spend 1 skill to gain 1 HP (Max. 2).";
+      ChoiceFirstMessage = "Draw 1 skill and gain 1 Sharpness.";
+      ChoiceSecondMessage = "Spend 1 skill to gain raise your HP to 2.";
       break;
 
-    case "Frenzy Blade1":
+    case "Frenzy Blade3":
       canFirstChoice = true;
       canSecondChoice = newGameState[self].skillHand.length > 0;
       ChoiceFirstMessage = "Draw 1 skill.";
       ChoiceSecondMessage = "Spend 1 skill to gain Shield for 2 turns.";
-      break;
-
-    case "Frenzy Blade2":
-      canFirstChoice = canStrike(unit);
-      canSecondChoice = true;
-      ChoiceFirstMessage = "Strike.";
-      ChoiceSecondMessage = "Blast.";
       break;
 
     case "Arsenal Onslaught":
@@ -324,7 +314,7 @@ const SelectCustomChoice = (props) => {
             unit: unit,
             details: {
               title: "Healing Rain",
-              message: "Reveal 1 Water skill to grant them 1 HP.",
+              message: "Reveal 1 Water skill to raise their HP to 2.",
               restriction: ["02-01", "02-02", "02-03", "02-04"],
               reason: "Healing Rain",
               victim: healingRainUnit,
@@ -572,7 +562,7 @@ const SelectCustomChoice = (props) => {
             canSkip: false,
             details: {
               title: "Reinforce",
-              message: "Spend 1 skill to gain 1 HP.",
+              message: "Spend 1 skill to raise your HP to 2.",
               restriction: null,
               reason: "Reinforce",
             },
@@ -580,13 +570,13 @@ const SelectCustomChoice = (props) => {
         }
         break;
 
-      case "Frenzy Blade1":
+      case "Frenzy Blade2":
         if (selectedChoice === 1) {
           newGameState = drawSkill(newGameState);
         } else {
           newGameState.currentResolution.push({
             resolution: "Metal Skill",
-            resolution2: "Frenzy Blade1.5",
+            resolution2: "Frenzy Blade4",
             unit: unit,
           });
           newGameState.currentResolution.push({
@@ -601,15 +591,6 @@ const SelectCustomChoice = (props) => {
               reason: "Frenzy Blade",
             },
           });
-        }
-        break;
-
-      case "Frenzy Blade2":
-        updateData = true;
-        if (selectedChoice === 1) {
-          newGameState = strike(newGameState, unit, props.details.victim, null);
-        } else {
-          newGameState = blast(newGameState, unit, props.details.victim, null);
         }
         break;
 

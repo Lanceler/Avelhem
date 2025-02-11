@@ -47,20 +47,20 @@ const SelectUnitAbility = (props) => {
     case "Fire Scion":
       abilityDetails = [
         {
-          abilityName: "Afterburner",
+          optionName: "Afterburner",
           abilityQualifier: (
             <div className="abilityQualifier">
               <img src={InvokeSmall} style={{ height: 35 }} />
             </div>
           ),
-          abilityText: (
+          optionText: (
             <>
               <div>⬩Strike.</div>
             </>
           ),
         },
         {
-          abilityName: "Fiery Heart",
+          optionName: "Fiery Heart",
           abilityQualifier: (
             <div className="abilityQualifier">
               <span className="abilityQualifier">
@@ -68,7 +68,7 @@ const SelectUnitAbility = (props) => {
               </span>
             </div>
           ),
-          abilityText: (
+          optionText: (
             <>
               <div>
                 ⬩Spend 1 skill to purge an adjacent ally’s Frostbite and Burn.
@@ -91,7 +91,7 @@ const SelectUnitAbility = (props) => {
 
       abilityDetails = [
         {
-          abilityName: "Hydrotherapy",
+          optionName: "Hydrotherapy",
           abilityQualifier: (
             <div className="abilityQualifier">
               <img src={AdvanceSmall} style={{ height: 35 }} />
@@ -99,7 +99,7 @@ const SelectUnitAbility = (props) => {
               <img src={InvokeSmall} style={{ height: 35 }} />
             </div>
           ),
-          abilityText: (
+          optionText: (
             <>
               <div>
                 ⬩Purge an adjacent ally’s turn-based afflictions (except
@@ -113,7 +113,7 @@ const SelectUnitAbility = (props) => {
           ),
         },
         {
-          abilityName: "Cold Embrace",
+          optionName: "Cold Embrace",
           abilityQualifier: (
             <div className="abilityQualifier">
               <img src={AssaultSmall} style={{ height: 35 }} />
@@ -121,7 +121,7 @@ const SelectUnitAbility = (props) => {
               <img src={InvokeSmall} style={{ height: 35 }} />
             </div>
           ),
-          abilityText: (
+          optionText: (
             <>
               <div>
                 ⬩Strike a frostbitten enemy or freeze an adjacent enemy for 2
@@ -136,7 +136,7 @@ const SelectUnitAbility = (props) => {
     case "Wind Scion":
       abilityDetails = [
         {
-          abilityName: "Air Dash",
+          optionName: "Air Dash",
           abilityQualifier: (
             <>
               <div className="modal-option-oneshot">
@@ -149,23 +149,23 @@ const SelectUnitAbility = (props) => {
               </div>
             </>
           ),
-          abilityText: (
+          optionText: (
             <>
               <div>⬩Move to a zone 2 spaces away.</div>
             </>
           ),
         },
         {
-          abilityName: "Reap the Whirlwind",
+          optionName: "Reap the Whirlwind",
           abilityQualifier: (
             <div className="modal-option-oneshot">
               <em>One-shot</em>
             </div>
           ),
-          abilityText: (
+          optionText: (
             <>
               <div>
-                Spend 1 skill and 2 Cyclones to blast an adjacent enemy.
+                ⬩Spend 1 skill and 2 Cyclones to blast an adjacent enemy.
               </div>
             </>
           ),
@@ -180,7 +180,7 @@ const SelectUnitAbility = (props) => {
 
       abilityDetails = [
         {
-          abilityName: "Fortify",
+          optionName: "Fortify",
           abilityQualifier: (
             <div className="abilityQualifier">
               <img src={AssaultSmall} style={{ height: 35 }} />{" "}
@@ -192,7 +192,7 @@ const SelectUnitAbility = (props) => {
               )}
             </div>
           ),
-          abilityText: (
+          optionText: (
             <>
               <div>⬩Gain Shield for 2 turns.</div>
               <div>⬩You may float 1 skill to traverse or strike.</div>
@@ -200,7 +200,7 @@ const SelectUnitAbility = (props) => {
           ),
         },
         {
-          abilityName: "Leyline Convergence",
+          optionName: "Leyline Convergence",
           abilityQualifier: (
             <>
               <div className="abilityQualifier"></div>
@@ -211,7 +211,7 @@ const SelectUnitAbility = (props) => {
               </div>
             </>
           ),
-          abilityText: (
+          optionText: (
             <>
               <div>⬩Restore your Aether.</div>
               <div>⬩You may traverse.</div>
@@ -228,7 +228,7 @@ const SelectUnitAbility = (props) => {
 
       abilityDetails = [
         {
-          abilityName: "Galvanize",
+          optionName: "Galvanize",
           abilityQualifier: (
             <>
               <div className="abilityQualifier">
@@ -242,21 +242,21 @@ const SelectUnitAbility = (props) => {
               </div>
             </>
           ),
-          abilityText: (
+          optionText: (
             <>
-              <div>⬩Gain 1 Charge (Max. 3).</div>
+              <div>⬩Gain 1 Charge.</div>
               <div>⬩You may traverse.</div>
             </>
           ),
         },
         {
-          abilityName: "Arc Flash",
+          optionName: "Arc Flash",
           abilityQualifier: (
             <div className="abilityQualifier">
               <img src={AssaultSmall} style={{ height: 35 }} />
             </div>
           ),
-          abilityText: (
+          optionText: (
             <>
               <div>
                 ⬩Spend 3 Charges to search for then float 1 Lightning skill.
@@ -275,13 +275,13 @@ const SelectUnitAbility = (props) => {
     case "Mana Scion":
       abilityDetails = [
         {
-          abilityName: "Particle Beam",
+          optionName: "Particle Beam",
           abilityQualifier: (
             <div className="abilityQualifier">
               <img src={AssaultSmall} style={{ height: 35 }} />
             </div>
           ),
-          abilityText: (
+          optionText: (
             <>
               <div>⬩Spend 1 skill to blast an enemy within 2 spaces.</div>
               <div>⬩Restore your Aether.</div>
@@ -289,7 +289,7 @@ const SelectUnitAbility = (props) => {
           ),
         },
         {
-          abilityName: "Amplify Aura",
+          optionName: "Amplify Aura",
           abilityQualifier: (
             <div className="abilityQualifier">
               <span className="abilityQualifier">
@@ -297,7 +297,7 @@ const SelectUnitAbility = (props) => {
               </span>
             </div>
           ),
-          abilityText: (
+          optionText: (
             <>
               <div>
                 ⬩Convert your or an adjacent ally’s Aether into Shield for 2
@@ -312,13 +312,13 @@ const SelectUnitAbility = (props) => {
     case "Metal Scion":
       abilityDetails = [
         {
-          abilityName: "Brandish",
+          optionName: "Brandish",
           abilityQualifier: (
             <div className="abilityQualifier">
               <img src={InvokeSmall} style={{ height: 35 }} />
             </div>
           ),
-          abilityText: (
+          optionText: (
             <>
               <div>⬩Search for 1 “Frenzy Blade”.</div>
               <div>⬩Draw 1 skill or restore your Aether.</div>
@@ -326,7 +326,7 @@ const SelectUnitAbility = (props) => {
           ),
         },
         {
-          abilityName: "Ballistic Armor",
+          optionName: "Ballistic Armor",
           abilityQualifier: (
             <div className="abilityQualifier">
               <span className="abilityQualifier">
@@ -334,7 +334,7 @@ const SelectUnitAbility = (props) => {
               </span>
             </div>
           ),
-          abilityText: (
+          optionText: (
             <>
               <div>
                 ⬩Spend 1 skill and either 2 turns of Shield or 2 turns of Ward
@@ -349,7 +349,7 @@ const SelectUnitAbility = (props) => {
     case "Plant Scion":
       abilityDetails = [
         {
-          abilityName: "Flourish",
+          optionName: "Flourish",
           abilityQualifier: (
             <div className="abilityQualifier">
               <span className="abilityQualifier">
@@ -357,7 +357,7 @@ const SelectUnitAbility = (props) => {
               </span>
             </div>
           ),
-          abilityText: (
+          optionText: (
             <>
               <div>
                 ⬩Spend 2 skills to restore your Aether and gain Overgrowth.
@@ -366,9 +366,9 @@ const SelectUnitAbility = (props) => {
           ),
         },
         {
-          abilityName: "Ambrosia",
+          optionName: "Ambrosia",
           abilityQualifier: <div className="abilityQualifier"></div>,
-          abilityText: (
+          optionText: (
             <>
               <div>
                 ⬩Spend 1 Blossom to purge your or an adjacent ally’s turn-based
@@ -976,21 +976,19 @@ const SelectUnitAbility = (props) => {
                 >
                   <div className="modal-option-header modal-option-header-ability">
                     <div
-                      className="modal-option-title"
+                      className="modalOptionTitle"
                       style={
-                        detail.abilityName === "Reap the Whirlwind"
-                          ? { fontSize: 30 }
+                        detail.optionName === "Reap the Whirlwind"
+                          ? { fontSize: 28 }
                           : {}
                       }
                     >
-                      {detail.abilityName}
+                      {detail.optionName}
                     </div>
 
                     <div>{detail.abilityQualifier}</div>
                   </div>
-                  <div className="modal-option-text scroll">
-                    {detail.abilityText}
-                  </div>
+                  <div className="modalOptionText">{detail.optionText}</div>
                 </div>
               </div>
             ))}

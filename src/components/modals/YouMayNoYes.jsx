@@ -244,6 +244,17 @@ const YouMayNoYes = (props) => {
         );
         break;
 
+      case "Chain Lightning Blast": // "Chain Lightning3"
+        unit.charge -= 1;
+        newGameState.currentResolution.push({
+          resolution: "Lightning Skill",
+          resolution2: "Chain Lightning4",
+          unit: props.unit,
+          adjacentEnemies: props.details.adjacentEnemies,
+        });
+
+        break;
+
       case "Zip and Zap Shield": // "Zip And Zap3"
         unit.charge -= 1;
         unit.enhancements.shield
