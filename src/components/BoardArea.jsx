@@ -2309,18 +2309,6 @@ const BoardArea = (props) => {
                 )}
               </>
             );
-          // return (
-          //   <>
-          //     {self === lastRes.unit.player && !hideModal && (
-          //       <RevealSkill
-          //         unit={lastRes.unit}
-          //         details={lastRes.details}
-          //         updateFirebase={updateFirebase}
-          //         hideOrRevealModale={hideOrRevealModale}
-          //       />
-          //     )}
-          //   </>
-          // );
 
           case "Chain Lightning4":
             if (self === lastRes.unit.player) {
@@ -4974,9 +4962,7 @@ const BoardArea = (props) => {
 
                 {currentResolutionPrompt()}
 
-                {[17, 18, 71, 78, 100, 101, 114, 115, 116].includes(
-                  demoCount
-                ) &&
+                {[17, 71, 78, 100, 101, 114, 115, 116].includes(demoCount) &&
                   demoGuide === "Learn-overview" && <DemoImage />}
 
                 {unitInfor !== null && (

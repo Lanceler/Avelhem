@@ -43,7 +43,7 @@ const DemoImage = (props) => {
             className={`zoom-card-image ${
               props.repertoire ? "zoom-card-image-small" : ""
             }`}
-            style={{ left: 50, transform: "translate(40%, -50%)" }}
+            style={{ left: 50, transform: "translate(25%, -50%)" }}
           />
         </div>
       </div>

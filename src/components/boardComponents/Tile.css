@@ -17,12 +17,12 @@
 }
 
 .selectable  .tile {
-    background: rgba(45, 194, 253, 0.9);
+    background: rgba(69, 223, 250, 0.9);
 
 }
 
 .selectable .tile:hover{
-background: rgb(107, 255, 48);
+background: rgb(221, 228, 124);
     cursor: pointer
 }
 

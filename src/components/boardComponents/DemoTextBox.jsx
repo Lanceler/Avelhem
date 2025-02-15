@@ -1,5 +1,5 @@
 import React from "react";
-import "./DemoTextBox.css";
+import "./DemoTextBox.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { updateDemoCount } from "../../redux/demoCount";
 
@@ -19,7 +19,7 @@ const DemoTextBox = () => {
               top: "35%",
               left: "50%",
               transform: "translate(-50%, -50%)",
-              width: 650,
+              width: 675,
             };
 
           //middle center, slightly raised; small
@@ -37,7 +37,7 @@ const DemoTextBox = () => {
           case 46:
           case 47:
             return {
-              top: "47.5%",
+              top: "42.5%",
               left: "37.5%",
               transform: "translate(-50%, -50%)",
               width: 620,
@@ -47,9 +47,9 @@ const DemoTextBox = () => {
           //center of board; small
           case 12:
             return {
-              top: "50%",
+              top: "53%",
               left: "30%",
-              width: 350,
+              width: 500,
               // height: 150,
             };
 
@@ -63,11 +63,12 @@ const DemoTextBox = () => {
             };
 
           // top center of board, a bit smaller
+          case 105:
+          case 106:
           case 113:
-          case 134:
           case 135:
             return {
-              top: "22%",
+              top: "17.5%",
               left: "35%",
               width: 550,
               // height: 210,
@@ -77,12 +78,8 @@ const DemoTextBox = () => {
           case 60:
           case 61:
           case 75:
-          case 94:
-          case 95:
           case 102:
           case 103:
-          case 105:
-          case 106:
           case 109:
             return {
               top: "20%",
@@ -113,11 +110,12 @@ const DemoTextBox = () => {
 
           //top left
           case 124:
+          case 134:
             return {
               top: "25%",
-              left: "20%",
+              left: "25%",
               transform: "translate(-50%, -50%)",
-              width: 500,
+              width: 700,
             };
 
           //bottom right
@@ -137,13 +135,14 @@ const DemoTextBox = () => {
           case 17:
             return {
               top: "50%",
+              left: "72.5%",
             };
 
           //middle top right; slightly small
           case 35:
           case 63:
             return {
-              top: "36.5%",
+              top: "32.5%",
               left: "71.0%",
               width: 620,
               // height: 175,
@@ -161,7 +160,7 @@ const DemoTextBox = () => {
             return {
               top: "52%",
               left: "71.0%",
-              width: 550,
+              width: 610,
               // height: 200,
             };
 
@@ -171,7 +170,7 @@ const DemoTextBox = () => {
             return {
               top: "75%",
               left: "75%",
-              width: 400,
+              width: 450,
               // height: 160,
             };
 
@@ -183,17 +182,16 @@ const DemoTextBox = () => {
           case 128:
           case 129:
             return {
-              top: "10.5%",
-              // height: 130,
+              top: "12.5%",
               width: 550,
             };
 
           default:
             return {
-              top: "15%",
-              left: "75%",
+              top: "20%",
+              left: "72.5%",
               transform: "translate(-50%, -50%)",
-              width: 700,
+              width: 750,
             };
         }
     }
@@ -221,24 +219,27 @@ const DemoTextBox = () => {
           case 1:
             return (
               <div>
-                <strong>Avelhem: War of the Sovereigns</strong> is a competitive
-                two-player board game. This tutorial will cover its basic
-                mechanics and familiarize you with its digital user interface.
+                <span className="goldText">Avelhem: War of the Sovereigns</span>{" "}
+                is a competitive two-player board game. This tutorial will cover
+                its basic mechanics and familiarize you with its digital user
+                interface.
                 <br /> <br />
                 To proceed through the tutorial, click on the object embedded in
-                a green glow.
+                a <span style={{ color: "#25d01c" }}>green glow</span>.
               </div>
             );
 
           case 2:
             return (
               <div>
-                <strong>Overview:</strong> Humanity has inherited the Maker’s
-                dominion and authority over creation, the power known as
-                Avelhem.
+                <span className="goldText">Overview:</span> Humanity has
+                inherited the Maker’s dominion and authority over creation, the
+                power known as Avelhem.
                 <br /> <br />
-                <strong>Players assume the roles of Sovereigns</strong>,
-                ordained monarchs whose Avelhems compel humankind itself.
+                <span className="goldText">
+                  Players assume the roles of the titular Sovereigns
+                </span>
+                , ordained monarchs whose Avelhems compel humankind itself.
                 Impelled by grand ambitions, the Sovereigns embark on conquest,
                 hellbent on enthroning their bloodline as the one and only.
               </div>
@@ -247,11 +248,16 @@ const DemoTextBox = () => {
           case 3:
             return (
               <div>
-                The game unfolds on a board with 10 rows and 5 columns.
+                <span className="goldText">
+                  The game unfolds on a board with 10 rows and 5 columns.
+                </span>{" "}
                 Sovereigns position at opposite sides and designate the rows
                 closest to them as their respective bases.
                 <br /> <br />
-                To win, one must maneuver their units into the opponent’s base.
+                <span className="goldText">
+                  To win, one must maneuver their units into the opponent’s
+                  base.
+                </span>{" "}
                 This can be achieved with tactics allocated each turn, along
                 with the aid of skill cards and inherent abilities.
               </div>
@@ -272,9 +278,9 @@ const DemoTextBox = () => {
           case 5:
             return (
               <div>
-                <strong>Setup:</strong> Sovereigns must construct 2 repertoires
-                (decks) that contain 60 skill cards & 20 Avelhem cards,
-                respectively.
+                <span className="goldText">Setup:</span> Sovereigns must
+                construct 2 repertoires (decks) that contain 60 skill cards & 20
+                Avelhem cards, respectively.
                 <br /> <br />
                 (In this website, accounts are provided starter repertoires,
                 which can be customized in the Repertoires page.)
@@ -285,11 +291,9 @@ const DemoTextBox = () => {
             return (
               <div>
                 You can find the repertoires (decks) to the right of the board.
+                <br /> <br />
                 The cards with the red borders are skills, while those with the
                 gold borders are Avelhems.
-                <br /> <br />
-                The repertoires above belong to your opponent, while the pair
-                below belongs to you.
               </div>
             );
 
@@ -306,28 +310,30 @@ const DemoTextBox = () => {
           case 8:
             return (
               <div>
-                <strong>
+                <span className="goldText">
                   The Initiator refers to the Sovereign whose turn it is.
-                </strong>{" "}
-                When you are in the position to make a move or decision, your
-                side will glow blue. On occasion, this can happen even during
-                your opponent’s turn.
+                </span>{" "}
+                Once the first Initiator is decided, both Sovereigns shuffle
+                their repertoires. The Initiator draws 5 cards, while their
+                opponent draws 6.
                 <br /> <br />
-                Once the first turn’s Initiator has been decided, both
-                Sovereigns shuffle their repertoires. The Initiator draws 5
-                cards, while their opponent draws 6.
+                Note: When you are in the position to make a move or decision,
+                your side will glow blue. On occasion, this can happen even
+                during your opponent’s turn.
               </div>
             );
 
           case 9:
             return (
               <div>
-                Each repertoire has its respective vestige (discard pile), which
-                would be placed to its right.
+                Each repertoire has its respective vestige (discard pile).
                 <br /> <br />
                 Unlike some other games, decking out does not result to an
-                instant loss. When a repertoire is depleted, its vestige is
-                shuffled to form a new one.
+                instant loss.{" "}
+                <span className="goldText">
+                  When a repertoire is depleted, its vestige is shuffled to form
+                  a new one.
+                </span>
               </div>
             );
 
@@ -335,7 +341,8 @@ const DemoTextBox = () => {
             return (
               <div>
                 Everyone is privy to the number of cards in one’s hand,
-                repertoires (decks), and vestiges (discard piles). <br /> <br />
+                repertoires (decks), and vestiges (discard piles).
+                <br /> <br />
                 That said, no one is allowed to view the contents of a
                 repertoire, unless an effect allows them to. One may view the
                 contents of their own vestige at any time.
@@ -345,27 +352,37 @@ const DemoTextBox = () => {
           case 11:
             return (
               <div>
-                Both Sovereigns then place pawns on the 1st, 3rd, and 5th
-                columns on the 4th row of their respective sides.
+                Both Sovereigns then{" "}
+                <span className="goldText">
+                  place pawns on the 1st, 3rd, and 5th columns on the 4th row
+                </span>{" "}
+                of their respective sides.
                 <br /> <br />
                 Gold units are assigned to the host, while silver units are
-                assigned to the guest. Pawns are represented by tokens featuring
-                plain white circles.
+                assigned to the guest.{" "}
+                <span className="goldText">
+                  Pawns are represented by tokens featuring plain white circles.
+                </span>
               </div>
             );
 
           case 12:
             return (
               <div>
-                Units are deployed with 1 HP and Aether. These are represented
-                by the pulsing heart and winged-diamond icons, respectively.
+                <span className="goldText">
+                  Units are deployed with 1 HP and Aether.
+                </span>{" "}
+                These are represented by the pulsing heart and winged-diamond
+                icons, respectively.
               </div>
             );
 
           case 13:
             return (
               <div>
-                Lastly, Sovereigns set their Fate Defiance (FD) to 3.
+                <span className="goldText">
+                  Lastly, Sovereigns set their Fate Defiance (FD) to 3.
+                </span>
                 <br /> <br />
                 Alongside Bounty Points (BP), this can be found between one’s
                 skill and Avelhem repertoires.
@@ -378,7 +395,8 @@ const DemoTextBox = () => {
                 With the setup complete, let us proceed to the turn structure.
                 <br /> <br />
                 To reiterate, the Initiator refers to the Sovereign whose turn
-                it currently is. Each turn has 6 phases.
+                it currently is.{" "}
+                <span className="goldText">Each turn has 6 phases.</span>
               </div>
             );
 
@@ -386,9 +404,10 @@ const DemoTextBox = () => {
           case 16:
             return (
               <div>
-                The first phase is the Acquisition Phase, where the Initiator is
-                presented options that involve deploying a pawn or drawings
-                cards.
+                The first phase is the{" "}
+                <span className="goldText">Acquisition Phase</span>
+                , where the Initiator is presented options that involve
+                deploying a pawn or drawings cards.
                 <br /> <br />
                 As you already have pawns on the board and skill cards in hand,
                 choose to draw 2 Avelhem cards via Beseech.
@@ -398,9 +417,12 @@ const DemoTextBox = () => {
           case 17:
             return (
               <div>
-                The titular Avelhems refer to the power that commands and
-                enhances creation. In this game, they are bestowed via cards
-                that ascend pawns to Scions of a specified class.
+                <span className="goldText">
+                  The titular Avelhems refer to the power that commands and
+                  enhances creation.
+                </span>{" "}
+                In this game, they are bestowed via cards that ascend pawns to
+                Scions of a specified class.
                 <br /> <br />
                 The icon at an Avelhem’s top left corner reflects its
                 corresponding class.
@@ -418,10 +440,16 @@ const DemoTextBox = () => {
           case 19:
             return (
               <div>
-                Up next is the Bounty Phase. The Initiator receives 1 Bounty
-                Point (BP) and accesses a shop, where they can spend BP on
-                upgrades that affect the game going forward.
-                <br /> <br />1 BP is also obtained by eliminating an enemy unit.
+                Up next is the <span className="goldText">Bounty Phase</span>.
+                <span className="goldText">
+                  The Initiator receives 1 Bounty Point (BP) and accesses a shop
+                </span>
+                , where they can spend BP on upgrades that affect the game going
+                forward.
+                <br /> <br />
+                <span className="goldText">
+                  1 BP is also obtained by eliminating an enemy unit.
+                </span>{" "}
                 Sovereigns can hold up to 10 BP; excesses gained are forfeited.
               </div>
             );
@@ -429,8 +457,7 @@ const DemoTextBox = () => {
           case 20:
             return (
               <div>
-                Upgrades are organized into tiered categories, each displayed as
-                a row.
+                Upgrades are placed into tiered categories presented in rows.
                 <br /> <br />
                 Higher-tier items are locked behind the purchase of the
                 preceding tier, located at their left. For example, you must
@@ -458,17 +485,24 @@ const DemoTextBox = () => {
           case 26:
             return (
               <div>
-                The third phase is the Coordination Phase, where the Initiator
-                obtains their tactics for the turn. Tactics are used to perform
-                actions.
+                The third phase is the{" "}
+                <span className="goldText">Coordination Phase</span>, where the
+                Initiator obtains their tactics for the turn.
+                <br /> <br />
+                <span className="goldText">
+                  Tactics are used to perform actions.
+                </span>
               </div>
             );
 
           case 27:
             return (
               <div>
-                This phase offers 3 options. Sovereigns will often be choosing
-                Assent, which provides a pair of random tactics.
+                This phase offers 3 options.{" "}
+                <span className="goldText">
+                  Sovereigns will often be choosing Assent, which provides a
+                  pair of random tactics.
+                </span>
                 <br /> <br />
                 (Battle Cry and Convene are more situational, as they guarantee
                 certain tactics but have costs or restrictions. Also note that
@@ -483,9 +517,12 @@ const DemoTextBox = () => {
               <div>
                 Choose Assent.
                 <br /> <br />
-                As noted below, tactical dice have 6 sides but 4 different
-                faces. 2 of these are twice as likely to appear as the others.
-                The Convene option provides an exclusive tactic that cannot be
+                As noted below,{" "}
+                <span className="goldText">
+                  tactical dice have 6 sides but 4 different faces.
+                </span>{" "}
+                2 of these are twice as likely to appear as the others. The
+                Convene option provides an exclusive tactic that cannot be
                 rolled, but it will not be covered in this tutorial.
               </div>
             );
@@ -502,13 +539,17 @@ const DemoTextBox = () => {
           case 31:
             return (
               <div>
-                The fourth phase is the Defiance Phase. The Initiator may spend
-                Fate Defiance (FD) on immediate benefits, such as renewing their
-                hand or rerolling unfavorable tactics.
+                The fourth phase is the{" "}
+                <span className="goldText">Defiance Phase</span>. Here, the
+                Initiator may spend Fate Defiance (FD) on immediate benefits,
+                such as renewing their hand or rerolling unfavorable tactics.
                 <br /> <br />
-                Sovereigns start the game with 3 FD and gain 2 FD as consolation
-                whenever their units are eliminated. They can hold up to 6 FD
-                (excesses gained are forfeited).
+                <span className="goldText">
+                  Sovereigns gain 2 FD as consolation when their units are
+                  eliminated.
+                </span>{" "}
+                They start the game with 3 and can hold up to 6 FD (excesses
+                gained are forfeited).
               </div>
             );
 
@@ -527,10 +568,13 @@ const DemoTextBox = () => {
           case 33:
             return (
               <div>
-                The fifth phase is the Execution Phase. Simply put, this is
-                where the Initiator—as well as their units—can activate effects
-                via cards, tactics, and abilities. It is akin to the “Main
-                Phase” of some other games.
+                The fifth phase is the{" "}
+                <span className="goldText">Execution Phase</span>. Simply put,{" "}
+                <span className="goldText">
+                  this is where the Initiator and their units can activate
+                  effects via cards, tactics, and abilities.
+                </span>{" "}
+                It is akin to the “Main Phase” of some other games.
                 <br /> <br />
                 There is no arbitrary limit nor strict sequence to these
                 activations. In other words, one could theoretically activate
@@ -544,9 +588,11 @@ const DemoTextBox = () => {
               <div>
                 Let’s start with using a tactic.
                 <br /> <br />
-                As mentioned earlier, tactics are used to perform actions. Each
-                type of tactic provides a different set of options with a little
-                overlap.
+                As mentioned earlier, tactics are used to perform actions.{" "}
+                <span className="goldText">
+                  Each type provides a different set of options with a little
+                  overlap.
+                </span>
               </div>
             );
 
@@ -561,9 +607,12 @@ const DemoTextBox = () => {
             return (
               <div>
                 As a Sovereign, you will mainly use the Advance tactic to deploy
-                a pawn on a zone in your frontier. The frontier initially
-                consists of the first 3 rows of your side of the board, and it
-                can be extended by spending BP on upgrades.
+                a pawn on a zone in your frontier.{" "}
+                <span className="goldText">
+                  The frontier initially consists of the first 3 rows of your
+                  side of the board
+                </span>
+                , and it can be extended by spending BP on upgrades.
                 <br /> <br />
                 Note: Sovereigns can have up to 8 units on the board.
               </div>
@@ -577,11 +626,10 @@ const DemoTextBox = () => {
             return (
               <div>
                 Zones eligible for deployment are colored blue; clicking on them
-                would instantly deploy the pawn. Deploy a new pawn on the 3rd
-                row and column.
+                would instantly deploy the pawn. In case you change your mind,
+                you can press Cancel by the top left corner of the board.
                 <br /> <br />
-                Note: In case you change your mind, there is a cancel button by
-                the top left corner of the board.
+                Deploy a new pawn on the 3rd row and column.
               </div>
             );
 
@@ -607,9 +655,11 @@ const DemoTextBox = () => {
           case 42:
             return (
               <div>
-                That said, the Mobilize tactic comes with 3 instances:
-                performing actions with this tactic consumes its instances
-                rather than its entirety.
+                That said, the Mobilize tactic comes with 3 instances:{" "}
+                <span className="goldText">
+                  performing actions with this tactic consumes its instances
+                  rather than its entirety.
+                </span>
                 <br /> <br />
                 To illustrate, click on the Mobilize tactic to the left of the
                 board.
@@ -636,8 +686,11 @@ const DemoTextBox = () => {
           case 47:
             return (
               <div>
-                Units can also use tactics to perform their own actions. For the
-                sake of this demonstration, your tactics have been reset.
+                Units can also use tactics to perform their own actions.{" "}
+                <span className="goldText">
+                  For the sake of this demonstration, your tactics have been
+                  reset.
+                </span>
                 <br /> <br />
                 Click on your top center pawn to open their menu, then click on
                 top right button, which features a cube icon (representing a
@@ -652,8 +705,13 @@ const DemoTextBox = () => {
           case 50:
             return (
               <div>
-                Units can use the Advance tactic to traverse, which is a keyword
-                that means “move to a vacant adjacent zone”.
+                Units can use the Advance tactic to{" "}
+                <span className="goldText">traverse</span>, which is a keyword
+                that means{" "}
+                <span className="goldText">
+                  “move to a vacant adjacent zone”
+                </span>
+                .
                 <br /> <br />
                 Click on the Traverse option.
               </div>
@@ -706,9 +764,11 @@ const DemoTextBox = () => {
           case 59:
             return (
               <div>
-                A unit cannot use the same Mobilize tactic more than once. Since
-                your top center pawn has already moved via the Mobilize tactic,
-                they are barred from using its remaining instances.
+                <span className="goldText">
+                  A unit cannot use the same Mobilize tactic more than once.
+                </span>{" "}
+                Since your top center pawn has already moved via the Mobilize
+                tactic, they are barred from using its remaining instances.
                 <br /> <br />
                 (Clarification: A unit is allowed to traverse twice using 2
                 different Mobilize tactics.)
@@ -820,10 +880,13 @@ const DemoTextBox = () => {
           case 76:
             return (
               <div>
-                Ascending pawns into Scions is the core feature of the game.
-                Pawns can only move and attack via tactics, while Scions can
-                also activate skill cards and abilities that thematically apply
-                their powers.
+                Ascending pawns into Scions is the game’s core feature. Pawns
+                can only use tactics to move and attack, while{" "}
+                <span className="goldText">
+                  Scions can also activate skill cards and abilities that
+                  thematically apply their powers
+                </span>
+                .
                 <br /> <br />
                 Each Sovereign can have up to 2 Scions of the same class in
                 play. For example, controlling 2 Fire Scions prevents you from
@@ -835,8 +898,10 @@ const DemoTextBox = () => {
           case 77:
             return (
               <div>
-                Scions also have class-exclusive talents, which are special
-                effects that automatically apply when applicable.
+                <span className="goldText">
+                  Scions also have class-exclusive talents, which are special
+                  effects that automatically apply when applicable.
+                </span>
                 <br /> <br />
                 In the case of Fire Scions, their “From the Ashes” talent
                 activates when they debut (enter play).
@@ -874,20 +939,26 @@ const DemoTextBox = () => {
           case 84:
             return (
               <div>
-                Cards are sent to their respective vestige when they conclude
-                their effects. You can view the contents of your own vestige at
-                any time by clicking on it.
+                <span className="goldText">
+                  Cards are sent to their respective vestige when they conclude
+                  their effects.
+                </span>{" "}
+                You can view the contents of your own vestige at any time by
+                clicking on it.
                 <br /> <br />
-                Click on your Avelhem vestige.
+                Click on your Avelhem vestige, located to the right of its
+                repertoire.
               </div>
             );
 
           case 85:
             return (
               <div>
-                Only the vestige’s owner can view its contents; however, the
-                number of cards it contains is public knowledge available to
-                everyone.
+                <span className="goldText">
+                  Only the vestige’s owner can view its contents
+                </span>
+                ; however, the number of cards it contains is public knowledge
+                available to everyone.
                 <br /> <br />
                 Close your Avelhem vestige.
               </div>
@@ -914,7 +985,9 @@ const DemoTextBox = () => {
           case 88:
             return (
               <div>
-                Each Scion class has 2 exclusive abilities.
+                <span className="goldText">
+                  Each Scion class has 2 exclusive abilities.
+                </span>
                 <br /> <br />
                 Some abilities require the use of tactics. For example, Mana
                 Scions can use an Assault tactic to activate Particle Beam,
@@ -941,10 +1014,12 @@ const DemoTextBox = () => {
           case 92:
             return (
               <div>
-                Amplify Aura allows a Mana Scion to convert their own or their
-                adjacent ally’s Aether into a Shield that lasts 2 turns. Shield
-                is a status condition that negates the next attack the unit
-                would receive.
+                <span className="goldText">
+                  Amplify Aura allows a Mana Scion to convert their own or their
+                  adjacent ally’s Aether into a Shield that lasts 2 turns.
+                </span>{" "}
+                Shield is a status condition that negates the next attack the
+                unit would receive.
                 <br /> <br />
                 Click on the Fire Scion to make them recipient of Amplify Aura’s
                 effect. Note: The ability card is for visual reference only; it
@@ -955,9 +1030,9 @@ const DemoTextBox = () => {
           case 93:
             return (
               <div>
-                Notice that the Fire Scion’s Aether icon (formerly located at
-                its bottom center) has disappeared, while a silver shield icon
-                has appeared at their bottom right.
+                Notice that the Fire Scion’s Aether icon (formerly located
+                beside the HP icon) has disappeared, while a silver shield icon
+                has appeared.
                 <br /> <br />
                 Note: This is but one of Aether’s applications, but this
                 attribute will be discussed in detail in a different tutorial.
@@ -1008,8 +1083,10 @@ const DemoTextBox = () => {
                 The last portion of Execution Phase demonstration is the
                 activation of Scion skill cards.
                 <br /> <br />
-                Scions can activate skill with aspects that match their class. A
-                skill card’s aspect can be found at its top left corner. For
+                <span className="goldText">
+                  Scions can activate skill with aspects that match their class.
+                </span>{" "}
+                A skill card’s aspect can be found at its top left corner. For
                 example, Ignition Propulsion is a Fire skill; only Fire Scions
                 can activate it.
               </div>
@@ -1049,14 +1126,21 @@ const DemoTextBox = () => {
 
           case 105:
           case 106:
-            return <div>Activate Ignition Propulsion.</div>;
+            return (
+              <div>
+                Scion skills can be thought of as abilities that require
+                specific cards to activate.
+                <br /> <br />
+                Activate Ignition Propulsion.
+              </div>
+            );
 
           case 107:
           case 108:
             return (
               <div>
                 Ignition Propulsion requires the activator to spend (discard) a
-                skill card from hand.
+                skill card from hand, in addition to the activated card.
                 <br /> <br />
                 Spending skills is a recurring theme in a number of effects. The
                 decision to part with or keep a card can potentially alter the
@@ -1075,8 +1159,11 @@ const DemoTextBox = () => {
           case 110:
             return (
               <div>
-                Attacking an enemy reduces their HP. The amount deducted is
-                equivalent to the attack’s AP (Attack Power).
+                <span className="goldText">
+                  Attacking an enemy reduces their HP.
+                </span>{" "}
+                The amount deducted is equivalent to the attack’s AP (Attack
+                Power).
                 <br /> <br />
                 HP and AP are 1 by default; therefore, it normally takes a
                 single attack to deplete a unit’s HP.
@@ -1086,14 +1173,15 @@ const DemoTextBox = () => {
           case 111:
             return (
               <div>
-                When a unit’s HP is depleted, they are eliminated and removed
-                from the board. Furthermore, the Sovereign who controls the
-                eliminated unit receives 2 FD, while their opponent receives 1
-                BP.
+                <span className="goldText">
+                  When a unit’s HP is reduced to 0, they are eliminated and
+                  removed from the board.
+                </span>{" "}
+                Furthermore, the Sovereign of the eliminated unit receives 2 FD,
+                while their opponent receives 1 BP.
                 <br /> <br />
-                Your Fire Scion has eliminated the enemy pawn. Since they
-                attacked via strike, they automatically moved into the zone the
-                victim was occupying.
+                When a unit eliminates an enemy via strike, they automatically
+                moved into the zone the victim was occupying.
               </div>
             );
 
@@ -1137,24 +1225,23 @@ const DemoTextBox = () => {
           case 115:
             return (
               <div>
-                The application of the Anathema is delayed until after the unit
-                has concluded all their activated effects.
+                Anathema disables Scion’s power, stripping them of their
+                abilities, talents, and skill cards.
                 <br /> <br />
-                Therefore, even though the enemy was eliminated by the attack of
-                the skill card, the Fire Scion was not punished until after they
-                recovered their Aether (as per the skill’s last sub-effect).
+                Punished Scions can still use tactics to traverse (move), but
+                they cannot attack.
               </div>
             );
 
           case 116:
             return (
               <div>
-                Anathema disables a Scion’s power, disabling their abilities,
-                talents, and skill cards. (It also afflicts them with immense
-                discomfort.)
+                The affliction of the Anathema is delayed until after the unit
+                has concluded all their activated effects.
                 <br /> <br />
-                Punished Scions can still use tactics to traverse, but they
-                cannot attack.
+                Therefore, even though the enemy was eliminated by the attack of
+                the skill card, the Fire Scion was not punished until after they
+                recovered their Aether (as per the skill’s last sub-effect).
               </div>
             );
 
@@ -1165,8 +1252,10 @@ const DemoTextBox = () => {
                 last phase, a pawn has been deployed on the 2nd row of the board
                 for the sake of another demonstration.
                 <br /> <br />
-                As a reminder, your objective is to move your units into your
-                opponent’s base.
+                <span className="goldText">
+                  As a reminder, your objective is to move your units into your
+                  opponent’s base.
+                </span>
               </div>
             );
 
@@ -1203,9 +1292,10 @@ const DemoTextBox = () => {
           case 126:
             return (
               <div>
-                The last phase is the Final Phase. During this phase, the
-                Initiator forfeits unused tactics and must discard any excess
-                cards from hand.
+                The last phase is the{" "}
+                <span className="goldText">Final Phase</span>. During this
+                phase, the Initiator forfeits unused tactics and must discard
+                any excess cards from hand.
                 <br /> <br />
                 The skill card limit is 8, while the Avelhem card limit is 0
                 (but it can be upgraded to 1).
