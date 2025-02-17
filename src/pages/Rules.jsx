@@ -1982,7 +1982,7 @@ export default function Rules() {
                     <li>
                       Their Penetrator talent increases the AP of their attacks
                       for every Sharpness they possess; with 2 Sharpness, their
-                      strikes can bypass Shield.
+                      strikes can pierce Shield.
                     </li>
                   </ul>
                 </li>

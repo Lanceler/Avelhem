@@ -86,7 +86,6 @@
   display: flex;
   position: absolute;
   font-size: small;
-  /* z-index: 400; */
 }
 
 .pieceOption:hover {

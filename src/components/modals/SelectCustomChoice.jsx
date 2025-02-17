@@ -190,7 +190,7 @@ const SelectCustomChoice = (props) => {
     case "Sow and Reap":
       canFirstChoice = canSowAndReapBlast(unit);
       canSecondChoice = canSowAndReapStrike(unit);
-      ChoiceFirstMessage = "Blast (bypass Shield) an adjacent rooted enemy.";
+      ChoiceFirstMessage = "Blast (pierce Shield) an adjacent rooted enemy.";
       ChoiceSecondMessage = "Prompt an adjacent ally to strike a rooted enemy.";
       break;
 

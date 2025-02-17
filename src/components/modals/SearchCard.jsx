@@ -25,15 +25,17 @@ const SearchCard = (props) => {
 
   const { allBurstSkills } = useCardDatabase();
 
+  let newGameState = JSON.parse(JSON.stringify(localGameState));
+
   let repertoire = [];
-  let cardFloat = null;
+  let cardFloat = 0;
 
   if (props.details.avelhem) {
-    repertoire = [...localGameState[self].avelhemRepertoire];
-    cardFloat = localGameState[self].avelhemFloat;
+    repertoire = [...newGameState[self].avelhemRepertoire];
+    cardFloat = newGameState[self].avelhemFloat;
   } else {
-    repertoire = [...localGameState[self].skillRepertoire];
-    cardFloat = localGameState[self].skillFloat;
+    repertoire = [...newGameState[self].skillRepertoire];
+    cardFloat = newGameState[self].skillFloat;
   }
 
   //reverse display, since last card is top of deck
@@ -67,7 +69,6 @@ const SearchCard = (props) => {
   };
 
   const handleSelect = () => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
     newGameState.currentResolution.pop();
 
     if (props.details.avelhem) {
@@ -134,6 +135,7 @@ const SearchCard = (props) => {
       }
 
       //shuffle repertoire, but retain floating order
+      cardFloat = newGameState[self].avelhemFloat;
       const floaters = newGameState[self].avelhemRepertoire.splice(
         newGameState[self].avelhemRepertoire.length - cardFloat,
         cardFloat
@@ -258,6 +260,7 @@ const SearchCard = (props) => {
       }
 
       //shuffle repertoire, but retain floating order
+      cardFloat = newGameState[self].skillFloat;
       const floaters = newGameState[self].skillRepertoire.splice(
         newGameState[self].skillRepertoire.length - cardFloat,
         cardFloat
@@ -278,23 +281,40 @@ const SearchCard = (props) => {
   };
 
   const handleSkip = () => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
     newGameState.currentResolution.pop();
 
     //shuffle repertoire, but retain floating order
-    const floaters = newGameState[self].skillRepertoire.splice(
-      newGameState[self].skillRepertoire.length - cardFloat,
-      cardFloat
-    );
+    if (props.details.avelhem) {
+      cardFloat = newGameState[self].avelhemFloat;
+      const floaters = newGameState[self].avelhemRepertoire.splice(
+        newGameState[self].avelhemRepertoire.length - cardFloat,
+        cardFloat
+      );
 
-    newGameState[self].skillRepertoire = shuffleCards(
-      newGameState[self].skillRepertoire
-    );
+      newGameState[self].avelhemRepertoire = shuffleCards(
+        newGameState[self].avelhemRepertoire
+      );
 
-    newGameState[self].skillRepertoire = [
-      ...newGameState[self].skillRepertoire,
-      ...floaters,
-    ];
+      newGameState[self].avelhemRepertoire = [
+        ...newGameState[self].avelhemRepertoire,
+        ...floaters,
+      ];
+    } else {
+      cardFloat = newGameState[self].skillFloat;
+      const floaters = newGameState[self].skillRepertoire.splice(
+        newGameState[self].skillRepertoire.length - cardFloat,
+        cardFloat
+      );
+
+      newGameState[self].skillRepertoire = shuffleCards(
+        newGameState[self].skillRepertoire
+      );
+
+      newGameState[self].skillRepertoire = [
+        ...newGameState[self].skillRepertoire,
+        ...floaters,
+      ];
+    }
 
     newGameState.currentResolution.push({
       resolution: "Misc.",

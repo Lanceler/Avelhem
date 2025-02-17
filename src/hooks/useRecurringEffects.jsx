@@ -3008,7 +3008,7 @@ export const useRecurringEffects = () => {
     const moverEnemy = mover.player === "host" ? "guest" : "host";
     if (
       newGameState[moverEnemy].skillHand.length > 0 &&
-      !["AerialImpetusAlly", "AirDash", "Surge"].includes(special) &&
+      !["AerialImpetusAlly"].includes(special) &&
       triggerMotion(mover, special)
     ) {
       newGameState.currentResolution.push({

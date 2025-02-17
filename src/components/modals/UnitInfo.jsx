@@ -286,7 +286,7 @@ const UnitInfo = (props) => {
               ⬩You are immune to Frostbite and Burn.
             </p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Your attacks against frostbitten enemies bypass Shield.
+              ⬩Your attacks against frostbitten enemies pierce Shield.
             </p>
           </>
         );
@@ -379,7 +379,7 @@ const UnitInfo = (props) => {
               up to 2 Sharpness.
             </p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩If you have 2 Sharpness, your strikes bypass Shield.
+              ⬩If you have 2 Sharpness, your strikes pierce Shield.
             </p>
           </>
         );
