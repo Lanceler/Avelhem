@@ -23,6 +23,7 @@ const DemoTextBox = () => {
             };
 
           //middle center, slightly raised; small
+          case 93:
           case 136:
             return {
               top: "30%",
@@ -63,6 +64,7 @@ const DemoTextBox = () => {
             };
 
           // top center of board, a bit smaller
+
           case 105:
           case 106:
           case 113:
@@ -133,6 +135,7 @@ const DemoTextBox = () => {
           case 9:
           case 10:
           case 17:
+          case 92:
             return {
               top: "50%",
               left: "72.5%",
@@ -239,9 +242,10 @@ const DemoTextBox = () => {
                 <span className="goldText">
                   Players assume the roles of the titular Sovereigns
                 </span>
-                , ordained monarchs whose Avelhems compel humankind itself.
-                Impelled by grand ambitions, the Sovereigns embark on conquest,
-                hellbent on enthroning their bloodline as the one and only.
+                , ordained monarchs whose Avelhems grant rulership over
+                humankind itself. Impelled by grand ambitions, the Sovereigns
+                embark on conquest, hellbent on enthroning their bloodline as
+                the one and only.
               </div>
             );
 
@@ -292,8 +296,9 @@ const DemoTextBox = () => {
               <div>
                 You can find the repertoires (decks) to the right of the board.
                 <br /> <br />
-                The cards with the red borders are skills, while those with the
-                gold borders are Avelhems.
+                The cards with the red borders are{" "}
+                <span className="goldText">skills</span>, while those with the
+                gold borders are <span className="goldText">Avelhems</span>.
               </div>
             );
 
@@ -314,8 +319,10 @@ const DemoTextBox = () => {
                   The Initiator refers to the Sovereign whose turn it is.
                 </span>{" "}
                 Once the first Initiator is decided, both Sovereigns shuffle
-                their repertoires. The Initiator draws 5 cards, while their
-                opponent draws 6.
+                their repertoires.{" "}
+                <span className="goldText">
+                  The Initiator draws 5 cards, while their opponent draws 6.
+                </span>
                 <br /> <br />
                 Note: When you are in the position to make a move or decision,
                 your side will glow blue. On occasion, this can happen even
@@ -340,12 +347,15 @@ const DemoTextBox = () => {
           case 10:
             return (
               <div>
-                Everyone is privy to the number of cards in one’s hand,
-                repertoires (decks), and vestiges (discard piles).
+                Everyone is privy to the number of cards in every location: all
+                hands, repertoires (decks), and vestiges (discard piles).
                 <br /> <br />
-                That said, no one is allowed to view the contents of a
-                repertoire, unless an effect allows them to. One may view the
-                contents of their own vestige at any time.
+                That said,{" "}
+                <span className="goldText">
+                  no one is allowed to view the contents of a repertoire
+                </span>
+                , unless an effect allows them to. One may view the contents of
+                their own vestige at any time.
               </div>
             );
 
@@ -358,11 +368,11 @@ const DemoTextBox = () => {
                 </span>{" "}
                 of their respective sides.
                 <br /> <br />
-                Gold units are assigned to the host, while silver units are
-                assigned to the guest.{" "}
                 <span className="goldText">
                   Pawns are represented by tokens featuring plain white circles.
-                </span>
+                </span>{" "}
+                Gold units are assigned to the host, while silver units are
+                assigned to the guest.
               </div>
             );
 
@@ -441,11 +451,11 @@ const DemoTextBox = () => {
             return (
               <div>
                 Up next is the <span className="goldText">Bounty Phase</span>.
+                <br /> <br />
                 <span className="goldText">
                   The Initiator receives 1 Bounty Point (BP) and accesses a shop
                 </span>
-                , where they can spend BP on upgrades that affect the game going
-                forward.
+                , where they can spend BP on upgrades.
                 <br /> <br />
                 <span className="goldText">
                   1 BP is also obtained by eliminating an enemy unit.
@@ -459,10 +469,13 @@ const DemoTextBox = () => {
               <div>
                 Upgrades are placed into tiered categories presented in rows.
                 <br /> <br />
-                Higher-tier items are locked behind the purchase of the
-                preceding tier, located at their left. For example, you must
-                expand your frontier to 4 rows before you can purchase the
-                expansion to 5 rows.
+                <span className="goldText">
+                  Higher-tier items are locked behind the purchase of the
+                  preceding tier
+                </span>
+                , located at their left. For example, you must expand your
+                frontier to 4 rows before you can purchase the expansion to 5
+                rows.
               </div>
             );
 
@@ -625,9 +638,12 @@ const DemoTextBox = () => {
           case 39:
             return (
               <div>
-                Zones eligible for deployment are colored blue; clicking on them
-                would instantly deploy the pawn. In case you change your mind,
-                you can press Cancel by the top left corner of the board.
+                <span className="goldText">
+                  Zones eligible for deployment are colored blue
+                </span>
+                ; clicking on one of them would instantly deploy the pawn. In
+                case you change your mind, you can press Cancel by the top left
+                corner of the board.
                 <br /> <br />
                 Deploy a new pawn on the 3rd row and column.
               </div>
@@ -636,7 +652,7 @@ const DemoTextBox = () => {
           case 40:
             return (
               <div>
-                As noted earlier, units are deployed with 1 HP and Aether,
+                As stated earlier, units are deployed with 1 HP and Aether,
                 represented by the pulsing heart and winged-diamond icons.
               </div>
             );
@@ -672,9 +688,12 @@ const DemoTextBox = () => {
                 As a Sovereign, you can use 2 Mobilize instances to draw 1 skill
                 card from the top of your repertoire.
                 <br /> <br />
-                Note: These instances must come from a single source; in other
-                words, you are not allowed to use 1 instance each from 2
-                Mobilize tactics.
+                Note: These{" "}
+                <span className="goldText">
+                  instances must come from a single source
+                </span>
+                ; in other words, you are not allowed to use 1 instance each
+                from 2 Mobilize tactics.
               </div>
             );
 
@@ -733,8 +752,11 @@ const DemoTextBox = () => {
               <div>
                 As mentioned, some tactics have a little overlap.
                 <br /> <br />
-                As with Advance, Mobilize allows units to traverse—in fact, the
-                latter does it better as it allows for multiple movements.
+                <span className="goldText">
+                  As with Advance, Mobilize allows units to traverse
+                </span>
+                —in fact, the latter does it better as it allows for multiple
+                movements.
               </div>
             );
 
@@ -805,7 +827,7 @@ const DemoTextBox = () => {
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 512 512"
                   className="question-icon3"
-                  style={{ fill: "goldenrod" }}
+                  style={{ fill: "#ffffe9" }}
                 >
                   <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM169.8 165.3c7.9-22.3 29.1-37.3 52.8-37.3h58.3c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24V250.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1H222.6c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z" />
                 </svg>{" "}
@@ -890,8 +912,8 @@ const DemoTextBox = () => {
                 <br /> <br />
                 Each Sovereign can have up to 2 Scions of the same class in
                 play. For example, controlling 2 Fire Scions prevents you from
-                ascending a pawn to another Fire Scion until either is
-                eliminated.
+                ascending a pawn to another Fire Scion until either is removed
+                from play.
               </div>
             );
 
@@ -899,9 +921,10 @@ const DemoTextBox = () => {
             return (
               <div>
                 <span className="goldText">
-                  Scions also have class-exclusive talents, which are special
-                  effects that automatically apply when applicable.
+                  Scions also have class-exclusive talents
                 </span>
+                , which are special effects that automatically activate when
+                applicable.
                 <br /> <br />
                 In the case of Fire Scions, their “From the Ashes” talent
                 activates when they debut (enter play).
@@ -913,10 +936,9 @@ const DemoTextBox = () => {
             return (
               <div>
                 This talent allows them to recover a Fire skill from the vestige
-                (discard pile) and float it (put it on top of the repertoire so
-                it becomes the next card drawn). Unfortunately, this effect is
-                currently not applicable, as your vestige does not contain any
-                Fire skills.
+                (discard pile) and float it (put it on top of the repertoire).
+                Since your vestige does not contain any Fire skills, this effect
+                is currently not applicable
                 <br /> <br />
                 Note: The talent card is for visual reference only; it is not a
                 game component.
@@ -992,8 +1014,8 @@ const DemoTextBox = () => {
                 Some abilities require the use of tactics. For example, Mana
                 Scions can use an Assault tactic to activate Particle Beam,
                 which lets them attack an enemy as far as 2 spaces away.
-                Normally, units can use the Assault tactic to attack adjacent
-                enemies.
+                (Normally, units can use the Assault tactic to attack adjacent
+                enemies.)
               </div>
             );
 
@@ -1022,8 +1044,10 @@ const DemoTextBox = () => {
                 unit would receive.
                 <br /> <br />
                 Click on the Fire Scion to make them recipient of Amplify Aura’s
-                effect. Note: The ability card is for visual reference only; it
-                is not a game component.
+                effect.
+                <br /> <br />
+                Note: The ability card is for visual reference only; it is not a
+                game component.
               </div>
             );
 
@@ -1140,7 +1164,7 @@ const DemoTextBox = () => {
             return (
               <div>
                 Ignition Propulsion requires the activator to spend (discard) a
-                skill card from hand, in addition to the activated card.
+                skill card from hand, in addition to the activated card itself.
                 <br /> <br />
                 Spending skills is a recurring theme in a number of effects. The
                 decision to part with or keep a card can potentially alter the
@@ -1240,8 +1264,9 @@ const DemoTextBox = () => {
                 has concluded all their activated effects.
                 <br /> <br />
                 Therefore, even though the enemy was eliminated by the attack of
-                the skill card, the Fire Scion was not punished until after they
-                recovered their Aether (as per the skill’s last sub-effect).
+                Ignition Propulsion, the Fire Scion was not punished until after
+                they recovered their Aether (as per the skill’s last
+                sub-effect).
               </div>
             );
 
