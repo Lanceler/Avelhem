@@ -106,6 +106,7 @@ export default function MyRepertoires() {
             ))}
         </div>
 
+        {/* EXPANSION BELOW */}
         {/* <div className="repertoires-selection">
           {userData &&
             userData.repertoire2.map((rep, index) => (

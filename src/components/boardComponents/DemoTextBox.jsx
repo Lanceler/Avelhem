@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./DemoTextBox.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { updateDemoCount } from "../../redux/demoCount";
@@ -8,10 +8,111 @@ const DemoTextBox = () => {
   const { demoCount } = useSelector((state) => state.demoCount);
   const dispatch = useDispatch();
 
+  const [tutorialIndex, setTutorialIndex] = useState(0);
+
+  useEffect(() => {
+    setTutorialIndex(demoCount);
+  }, [demoCount]);
+
+  const handleBack = () => {
+    switch (tutorialIndex) {
+      case 16:
+        setTutorialIndex(14);
+        break;
+      case 22:
+      case 23:
+      case 24:
+      case 25:
+        setTutorialIndex(20);
+        break;
+      case 29:
+        setTutorialIndex(27);
+        break;
+      case 38:
+        setTutorialIndex(36);
+        break;
+      case 45:
+        setTutorialIndex(43);
+        break;
+      case 47:
+        setTutorialIndex(45);
+        break;
+      case 50:
+        setTutorialIndex(48);
+        break;
+      case 54:
+        setTutorialIndex(52);
+        break;
+      case 57:
+      case 58:
+        setTutorialIndex(55);
+        break;
+      case 61:
+        setTutorialIndex(59);
+        break;
+      case 66:
+        setTutorialIndex(64);
+        break;
+      case 68:
+      case 69:
+      case 70:
+        setTutorialIndex(66);
+        break;
+      case 73:
+        setTutorialIndex(71);
+        break;
+      case 79:
+        setTutorialIndex(77);
+        break;
+      case 81:
+      case 82:
+      case 83:
+        setTutorialIndex(79);
+        break;
+      case 91:
+        setTutorialIndex(89);
+        break;
+      case 95:
+        setTutorialIndex(93);
+        break;
+      case 103:
+        setTutorialIndex(101);
+        break;
+      case 106:
+        setTutorialIndex(104);
+        break;
+      case 108:
+        setTutorialIndex(106);
+        break;
+      case 119:
+      case 120:
+      case 121:
+      case 122:
+      case 123:
+        setTutorialIndex(117);
+        break;
+      case 128:
+      case 129:
+        setTutorialIndex(126);
+        break;
+      default:
+        setTutorialIndex(tutorialIndex - 1);
+        break;
+    }
+  };
+
+  const handleForward = () => {
+    setTutorialIndex(tutorialIndex + 1);
+  };
+
+  const handleFastForward = () => {
+    setTutorialIndex(demoCount);
+  };
+
   const boxAreaStyle = () => {
     switch (demoGuide) {
       case "Learn-overview":
-        switch (demoCount) {
+        switch (tutorialIndex) {
           //middle center, slightly raised
           case 1:
           case 2:
@@ -38,7 +139,7 @@ const DemoTextBox = () => {
           case 46:
           case 47:
             return {
-              top: "42.5%",
+              top: "40%",
               left: "37.5%",
               transform: "translate(-50%, -50%)",
               width: 620,
@@ -64,7 +165,6 @@ const DemoTextBox = () => {
             };
 
           // top center of board, a bit smaller
-
           case 105:
           case 106:
           case 113:
@@ -110,6 +210,15 @@ const DemoTextBox = () => {
               width: 600,
             };
 
+          //middle left
+          case 107:
+          case 108:
+            return {
+              top: "50%",
+              left: "22.5%",
+              width: 600,
+            };
+
           //top left
           case 124:
           case 134:
@@ -143,7 +252,6 @@ const DemoTextBox = () => {
 
           //middle top right; slightly small
           case 35:
-          case 63:
             return {
               top: "32.5%",
               left: "71.0%",
@@ -158,6 +266,7 @@ const DemoTextBox = () => {
           case 84:
           case 86:
           case 87:
+          case 99:
           case 112:
           case 133:
             return {
@@ -169,6 +278,8 @@ const DemoTextBox = () => {
 
           //lower right; small
           case 18:
+          case 63:
+          case 64:
           case 72:
             return {
               top: "75%",
@@ -178,9 +289,7 @@ const DemoTextBox = () => {
             };
 
           //top right smaller
-          case 64:
           case 98:
-          case 99:
           case 127:
           case 128:
           case 129:
@@ -218,7 +327,7 @@ const DemoTextBox = () => {
   const getDemoInstructions = () => {
     switch (demoGuide) {
       case "Learn-overview":
-        switch (demoCount) {
+        switch (tutorialIndex) {
           case 1:
             return (
               <div>
@@ -228,7 +337,8 @@ const DemoTextBox = () => {
                 interface.
                 <br /> <br />
                 To proceed through the tutorial, click on the object embedded in
-                a <span style={{ color: "#25d01c" }}>green glow</span>.
+                a <span style={{ color: "#25d01c" }}>green glow</span>. You can
+                also use the arrow buttons below to revisit previous messages.
               </div>
             );
 
@@ -355,7 +465,7 @@ const DemoTextBox = () => {
                   no one is allowed to view the contents of a repertoire
                 </span>
                 , unless an effect allows them to. One may view the contents of
-                their own vestige at any time.
+                their own hand and vestiges at any time.
               </div>
             );
 
@@ -553,16 +663,17 @@ const DemoTextBox = () => {
             return (
               <div>
                 The fourth phase is the{" "}
-                <span className="goldText">Defiance Phase</span>. Here, the
-                Initiator may spend Fate Defiance (FD) on immediate benefits,
-                such as renewing their hand or rerolling unfavorable tactics.
+                <span className="goldText">Defiance Phase</span>. Here, the{" "}
+                <span className="goldText">
+                  Initiator may spend Fate Defiance (FD) on immediate benefits
+                </span>
+                , such as renewing their hand or rerolling unfavorable tactics.
                 <br /> <br />
                 <span className="goldText">
                   Sovereigns gain 2 FD as consolation when their units are
                   eliminated.
                 </span>{" "}
-                They start the game with 3 and can hold up to 6 FD (excesses
-                gained are forfeited).
+                They start the game with 3 and can hold up to 6.
               </div>
             );
 
@@ -652,8 +763,11 @@ const DemoTextBox = () => {
           case 40:
             return (
               <div>
-                As stated earlier, units are deployed with 1 HP and Aether,
-                represented by the pulsing heart and winged-diamond icons.
+                As stated earlier,{" "}
+                <span className="goldText">
+                  units are deployed with 1 HP and Aether
+                </span>
+                , represented by the pulsing heart and winged-diamond icons.
               </div>
             );
 
@@ -712,8 +826,7 @@ const DemoTextBox = () => {
                 </span>
                 <br /> <br />
                 Click on your top center pawn to open their menu, then click on
-                top right button, which features a cube icon (representing a
-                tactical die).
+                top right button, which features a cube icon.
               </div>
             );
 
@@ -847,8 +960,7 @@ const DemoTextBox = () => {
           case 66:
             return (
               <div>
-                Since you still have remaining instances, let’s move another
-                unit.
+                Since you have remaining instances, let’s move another unit.
                 <br /> <br />
                 Make your right pawn move closer to the top center one. Open
                 their menu, then click on the upper right button.
@@ -979,8 +1091,7 @@ const DemoTextBox = () => {
                 <span className="goldText">
                   Only the vestige’s owner can view its contents
                 </span>
-                ; however, the number of cards it contains is public knowledge
-                available to everyone.
+                ; however, the number of cards it contains is known to everyone.
                 <br /> <br />
                 Close your Avelhem vestige.
               </div>
@@ -1204,8 +1315,10 @@ const DemoTextBox = () => {
                 Furthermore, the Sovereign of the eliminated unit receives 2 FD,
                 while their opponent receives 1 BP.
                 <br /> <br />
-                When a unit eliminates an enemy via strike, they automatically
-                moved into the zone the victim was occupying.
+                <span className="goldText">
+                  When a unit eliminates an enemy via strike, they automatically
+                  move into the zone the victim was occupying.
+                </span>
               </div>
             );
 
@@ -1213,8 +1326,8 @@ const DemoTextBox = () => {
             return (
               <div>
                 And as mentioned earlier, you have gained 1 BP, while your
-                opponent has gained 2 additional FD (they started with 3, whichs
-                brings their total to 5).
+                opponent has gained 2 FD (they started with 3, which brings
+                their total to 5).
               </div>
             );
 
@@ -1240,9 +1353,11 @@ const DemoTextBox = () => {
                   </em>
                 </strong>
                 <br /> <br />
-                When a Scion (not pawn) eliminates another unit, they are
-                punished with the Anathema status for 2 turns. This is
-                represented by a dark purple aura flowing downward.
+                <span className="goldText">
+                  When a Scion (not pawn) eliminates another unit, they are
+                  punished with the Anathema status for 2 turns.
+                </span>{" "}
+                This is represented by a dark purple aura flowing downward.
               </div>
             );
 
@@ -1250,10 +1365,10 @@ const DemoTextBox = () => {
             return (
               <div>
                 Anathema disables Scion’s power, stripping them of their
-                abilities, talents, and skill cards.
+                abilities, talents, and access to skill cards. They also cannot
+                attack via any means.
                 <br /> <br />
-                Punished Scions can still use tactics to traverse (move), but
-                they cannot attack.
+                Punished Scions are only allowed to traverse.
               </div>
             );
 
@@ -1319,8 +1434,12 @@ const DemoTextBox = () => {
               <div>
                 The last phase is the{" "}
                 <span className="goldText">Final Phase</span>. During this
-                phase, the Initiator forfeits unused tactics and must discard
-                any excess cards from hand.
+                phase, the{" "}
+                <span className="goldText">
+                  Initiator forfeits unused tactics and must discard any excess
+                  cards from hand
+                </span>
+                .
                 <br /> <br />
                 The skill card limit is 8, while the Avelhem card limit is 0
                 (but it can be upgraded to 1).
@@ -1340,8 +1459,12 @@ const DemoTextBox = () => {
           case 130:
             return (
               <div>
-                After excess cards are discarded, the durations of turn-based
-                statuses affecting the Initiator’s units decrease by 1.
+                After excess cards are discarded,{" "}
+                <span className="goldText">
+                  the durations of turn-based statuses affecting the Initiator’s
+                  units decrease by 1
+                </span>
+                .
                 <br /> <br />
                 The durations of your Fire Scion’s Shield and Anathema have
                 decreased from 2 turns to 1: Their Shield icon is now blinking,
@@ -1352,9 +1475,12 @@ const DemoTextBox = () => {
           case 131:
             return (
               <div>
-                Lastly, the game performs a check: If the any of the Initiator’s
-                units are occupying their opponent’s base for the first time,
-                they will score.
+                Lastly, the game performs a check:{" "}
+                <span className="goldText">
+                  If the any of the Initiator’s units are occupying their
+                  opponent’s base for the first time, they will score
+                </span>
+                .
               </div>
             );
 
@@ -1384,7 +1510,7 @@ const DemoTextBox = () => {
               <div>
                 Lastly, if scoring causes the Initiator to meet the victory
                 requirement, they win. Otherwise, their opponent takes their
-                turn as the new Initiator.
+                turn as the Initiator.
               </div>
             );
 
@@ -1415,22 +1541,40 @@ const DemoTextBox = () => {
 
   return (
     <div className="demo-text-box-area" style={boxAreaStyle()}>
-      <div
-        className={`demo-text-box ${
-          [114, 115, 116].includes(demoCount) ? "demo-text-dark" : ""
-        }`}
-      >
-        {getDemoInstructions()}
-      </div>
+      <div className="demo-text-box">{getDemoInstructions()}</div>
 
-      <button
-        className={`redButton demo-text-box-button demoClick
-          ${[114, 115, 116].includes(demoCount) ? "demo-text-dark" : ""}`}
-        style={{ visibility: showNext() ? "" : "hidden" }}
-        onClick={() => dispatch(updateDemoCount(demoCount + 1))}
-      >
-        Next
-      </button>
+      <div className="demo-text-buttons">
+        <button
+          className="play-button"
+          disabled={tutorialIndex <= 1}
+          onClick={() => handleBack()}
+        >
+          <div className="triangle-left"></div>
+        </button>
+        <button
+          className="play-button"
+          onClick={() => handleForward()}
+          disabled={tutorialIndex >= demoCount}
+        >
+          <div className="triangle-right"></div>
+        </button>
+        <button
+          className="play-button"
+          onClick={() => handleFastForward()}
+          disabled={tutorialIndex >= demoCount}
+        >
+          <div className="triangle-right"></div>
+          <div className="triangle-right"></div>
+        </button>
+
+        <button
+          className={"redButton2 demo-text-box-button demoClick"}
+          style={{ visibility: showNext() ? "" : "hidden" }}
+          onClick={() => dispatch(updateDemoCount(demoCount + 1))}
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 };

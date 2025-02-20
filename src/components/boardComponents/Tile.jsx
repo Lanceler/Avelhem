@@ -49,7 +49,7 @@ const Tile = (props) => {
           case 70:
             return element1 === 28;
           case 123:
-            return element1 === 4;
+            return element1 === 3;
 
           ////////////////////////////
         }

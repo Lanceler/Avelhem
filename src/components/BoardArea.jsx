@@ -4962,7 +4962,7 @@ const BoardArea = (props) => {
 
                 {currentResolutionPrompt()}
 
-                {[17, 71, 78, 100, 101, 114, 115, 116].includes(demoCount) &&
+                {[17, 71, 78, 100, 101].includes(demoCount) &&
                   demoGuide === "Learn-overview" && <DemoImage />}
 
                 {unitInfor !== null && (
