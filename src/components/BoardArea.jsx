@@ -50,7 +50,6 @@ import SelectTactic from "./modals/SelectTactic";
 import SelectTacticViaEffect from "./modals/SelectTacticViaEffect";
 import SelectCustomChoice from "./modals/SelectCustomChoice";
 
-import GlacialTorrent from "./skillModals/GlacialTorrent";
 import CataclysmicTempestFloat from "./skillModals/CataclysmicTempestFloat";
 import FerventPrayerResonance from "./skillModals/FerventPrayerResonance";
 
@@ -1815,10 +1814,11 @@ const BoardArea = (props) => {
             return (
               <>
                 {self === lastRes.unit.player && !hideModal && (
-                  <GlacialTorrent
+                  <InspectSkill
                     unit={lastRes.unit}
-                    updateFirebase={updateFirebase}
+                    details={lastRes.details}
                     hideOrRevealModale={hideOrRevealModale}
+                    updateFirebase={updateFirebase}
                   />
                 )}
               </>

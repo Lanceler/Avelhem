@@ -8,6 +8,7 @@ import { updateDemo } from "../../redux/demoGuide";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import Skill from "../hand/Skill";
+import SkillMultiSelect from "../hand/SkillMultiSelect";
 
 const InspectSkill = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
@@ -15,22 +16,29 @@ const InspectSkill = (props) => {
   const { demoGuide } = useSelector((state) => state.demoGuide);
   const dispatch = useDispatch();
 
-  const { shuffleCards } = useRecurringEffects();
+  const { refillRepertoireSkill } = useRecurringEffects();
 
   const [selectedSkill, setSelectedSkill] = useState(null);
+  const [selectedSkills, setSelectedSkills] = useState([]);
 
-  let repertoire = [...localGameState[self].skillRepertoire];
+  const inspectCount = Math.min(
+    props.details.inspectionCount,
+    localGameState[self].skillRepertoire.length
+  );
+
+  let repertoire = [...localGameState[self].skillRepertoire].splice(
+    localGameState[self].skillRepertoire.length - inspectCount,
+    inspectCount
+  );
 
   //reverse display, since last card is top of deck
   let inspectRerpertoire = [];
   for (let c in repertoire) {
-    inspectRerpertoire.unshift({ id: repertoire[c], repertoireIndex: c });
+    inspectRerpertoire.unshift({
+      id: repertoire[c],
+      repertoireIndex: inspectCount - 1 - c,
+    });
   }
-
-  inspectRerpertoire = inspectRerpertoire.splice(
-    0,
-    props.details.inspectionCount
-  );
 
   const floatingRepertoire = inspectRerpertoire.splice(
     0,
@@ -47,10 +55,22 @@ const InspectSkill = (props) => {
 
   const handleClick = (canActivate, i) => {
     if (canActivate) {
-      if (selectedSkill === i) {
-        setSelectedSkill(null);
-      } else {
-        setSelectedSkill(i);
+      switch (props.details.select) {
+        case "Single":
+          if (selectedSkill === i) {
+            setSelectedSkill(null);
+          } else {
+            setSelectedSkill(i);
+          }
+          break;
+        case "Multi":
+          if (selectedSkills.includes(i)) {
+            selectedSkills.splice(selectedSkills.indexOf(i), 1);
+            setSelectedSkills([...selectedSkills]);
+          } else if (selectedSkills.length < props.details.selectLimit) {
+            setSelectedSkills([...selectedSkills, i]);
+          }
+          break;
       }
     }
   };
@@ -59,87 +79,84 @@ const InspectSkill = (props) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     newGameState.currentResolution.pop();
 
-    if (props.details.outcome === "Add") {
-      //add selected skill from repertoire to hand
-      newGameState[self].skillHand.push(
-        newGameState[self].skillRepertoire.splice(
-          newGameState[self].skillRepertoire.length - 1 - selectedSkill,
-          1
-        )[0]
-      );
+    switch (props.details.select) {
+      case "Single":
+        if (props.details.outcome === "Add") {
+          //add selected skill from repertoire to hand
+          newGameState[self].skillHand.push(
+            newGameState[self].skillRepertoire.splice(
+              newGameState[self].skillRepertoire.length - 1 - selectedSkill,
+              1
+            )[0]
+          );
 
-      // if the selected Skill was floating, decrease floating count
-      if (selectedSkill <= newGameState[self].skillFloat - 1) {
-        newGameState[self].skillFloat = newGameState[self].skillFloat - 1;
-      }
+          // if the selected Skill was floating, decrease floating count
+          if (selectedSkill <= newGameState[self].skillFloat - 1) {
+            newGameState[self].skillFloat -= 1;
+          }
 
-      //reset repertoire if empty
-      if (newGameState[self].skillRepertoire.length === 0) {
-        //1.Shuffle Vestige
-        newGameState[self].skillVestige = shuffleCards(
-          newGameState[self].skillVestige
-        );
+          //reset repertoire if empty
+          if (newGameState[self].skillRepertoire.length === 0) {
+            newGameState = refillRepertoireSkill(newGameState);
+          }
+        } else if (props.details.outcome === "Float") {
+          //take selected card then put it at the top of deck (end of array)
+          newGameState[self].skillRepertoire.push(
+            newGameState[self].skillRepertoire.splice(
+              newGameState[self].skillRepertoire.length - 1 - selectedSkill,
+              1
+            )[0]
+          );
 
-        //2. Copy vestige to repertoire
-        newGameState[self].skillRepertoire = [
-          ...newGameState[self].skillVestige.splice(
-            0,
-            newGameState[self].skillVestige.length
-          ),
-        ];
+          // if the selected Skill was NOT floating, increase floating count
+          if (selectedSkill > newGameState[self].skillFloat - 1) {
+            newGameState[self].skillFloat = newGameState[self].skillFloat + 1;
+          }
+        }
+        break;
 
-        //3. Empty vestige
-        newGameState[self].skillVestige = [];
-      }
-    } else if (props.details.outcome === "Float") {
-      //take selected card then put it at the top of deck (end of array)
-      newGameState[self].skillRepertoire.push(
-        newGameState[self].skillRepertoire.splice(
-          newGameState[self].skillRepertoire.length - 1 - selectedSkill,
-          1
-        )[0]
-      );
+      case "Multi":
+        if (props.details.outcome === "Add") {
+          if (props.details.reason === "Glacial Torrent") {
+            let unitInfo = props.unit;
+            let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+            unit.boosts.glacialTorrent = selectedSkills.length >= 2 ? 2 : 1;
+          }
 
-      // if the selected Skill was NOT floating, increase floating count
-      if (selectedSkill > newGameState[self].skillFloat - 1) {
-        newGameState[self].skillFloat = newGameState[self].skillFloat + 1;
-      }
+          let selection = [...floatingRepertoire, ...inspectRerpertoire];
+          let SelectedRepertoireIndexes = [];
+          for (let i of selectedSkills) {
+            SelectedRepertoireIndexes.push(selection[i].repertoireIndex);
+
+            // add selected cards to hand in order they were selected
+            newGameState[self].skillHand.push(selection[i].id);
+          }
+
+          SelectedRepertoireIndexes.sort((a, b) => b - a);
+
+          for (let i of SelectedRepertoireIndexes) {
+            // if the selected Skill was floating, decrease floating count
+            if (i <= newGameState[self].skillFloat - 1) {
+              newGameState[self].skillFloat -= 1;
+            }
+
+            //remove card from repertoire
+            newGameState[self].skillRepertoire.splice(
+              newGameState[self].skillRepertoire.length - 1 - i,
+              1
+            );
+          }
+
+          //reset repertoire if empty
+          if (newGameState[self].skillRepertoire.length === 0) {
+            newGameState = refillRepertoireSkill(newGameState);
+          }
+        }
+
+        break;
     }
 
     //INSPECTION DOES NOT SHUFFLE
-
-    switch (props.details.title) {
-      case "Heir’s Endeavor":
-        newGameState.currentResolution.push({
-          resolution: "Misc.",
-          resolution2: "Message To Player",
-          player: enemy,
-          title: "Heir’s Endeavor",
-          message:
-            "Your opponent has floated 1 Sovereign skill from their repertoire.",
-          specMessage: `${
-            self === "host" ? "Gold" : "Silver"
-          } Sovereign has floated 1 Sovereign skill from their repertoire.`,
-        });
-        break;
-
-      case "Arc Flash":
-        newGameState.currentResolution.push({
-          resolution: "Misc.",
-          resolution2: "Message To Player",
-          player: enemy,
-          title: "Arc Flash",
-          message:
-            "Your opponent has floated 1 Lightning skill from their repertoire.",
-          specMessage: `${
-            self === "host" ? "Gold" : "Silver"
-          } Sovereign has floated 1 Lightning skill from their repertoire.`,
-        });
-        break;
-
-      default:
-        break;
-    }
 
     dispatch(updateState(newGameState));
     props.updateFirebase(newGameState);
@@ -151,7 +168,26 @@ const InspectSkill = (props) => {
 
     //INSPECTION DOES NOT SHUFFLE
 
+    newGameState.currentResolution.push({
+      resolution: "Misc.",
+      resolution2: "Message To Player",
+      player: enemy,
+      title: props.details.title,
+      message:
+        "Your opponent inspected their repertoire without selecting a card.",
+      specMessage: `${
+        self === "host" ? "Gold" : "Silver"
+      } Sovereign inspected their repertoire without selecting a card.`,
+    });
+
+    if (props.details.reason === "Glacial Torrent") {
+      let unitInfo = props.unit;
+      let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+      unit.boosts.glacialTorrent = 1;
+    }
+
     dispatch(updateState(newGameState));
+    props.updateFirebase(newGameState);
   };
 
   const handleViewBoard = () => {
@@ -177,111 +213,236 @@ const InspectSkill = (props) => {
         <div className="modalContent2">
           <div className="modalContentText">{props.details.message}</div>
 
-          <div className={`modalScrollableY ${demoGuide ? "demoBlocker" : ""}`}>
-            {localGameState[self].skillFloat > 0 && (
-              <>
-                <div className="modalContentText">Floating cards</div>
-                <div className="modalContent4Column">
-                  {floatingRepertoire.map((usableSkill, i) => (
-                    <div
-                      key={i}
-                      className={`modalOptionOutline modalCardOptionOutline ${
-                        selectedSkill === i
-                          ? "modalCardOptionOutlineSelected"
-                          : ""
-                      }`}
-                      onClick={() => {
-                        handleClick(canSelect(usableSkill.id), i);
-                        // handleUpdateDemoGuide();
-                      }}
-                    >
+          {props.details.select === "Multi" ? (
+            <div
+              className={`modalScrollableY ${demoGuide ? "demoBlocker" : ""}`}
+            >
+              {localGameState[self].skillFloat > 0 && (
+                <>
+                  <div className="modalContentText">Floating cards</div>
+                  <div className="modalContent4Column">
+                    {floatingRepertoire.map((usableSkill, i) => (
                       <div
-                        className={`modalCard 
+                        key={i}
+                        className={`modalOptionOutline modalCardOptionOutline ${
+                          selectedSkills.includes(i)
+                            ? "modalCardOptionOutlineSelected"
+                            : ""
+                        }`}
+                        onClick={() => {
+                          handleClick(canSelect(usableSkill.id), i);
+                          // handleUpdateDemoGuide();
+                        }}
+                      >
+                        <div
+                          className={`modalCard 
                           ${
                             canClick("Skill Card", usableSkill, i)
                               ? "demoClick"
                               : ""
                           }
                           `}
-                        style={{
-                          boxShadow: selectedSkill === i ? "none" : "",
-                        }}
-                      >
-                        <Skill
-                          i={i}
-                          usableSkill={usableSkill}
-                          canActivateSkill={canSelect(usableSkill.id)}
-                        />
+                          style={{
+                            boxShadow: selectedSkills.includes(i) ? "none" : "",
+                          }}
+                        >
+                          <SkillMultiSelect
+                            i={i}
+                            usableSkill={usableSkill.id}
+                            canAdd={canSelect(usableSkill.id)}
+                            selectedSkills={selectedSkills}
+                            addLimit={props.details.selectLimit}
+                          />
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              </>
-            )}
-
-            {localGameState[self].skillFloat > 0 &&
-              inspectRerpertoire.length > 0 && (
-                <div className="modalContentText">Non-floating cards</div>
+                    ))}
+                  </div>
+                </>
               )}
 
-            <div className="modalContent4Column">
-              {inspectRerpertoire.map((usableSkill, i) => (
-                <div
-                  key={i + localGameState[self].skillFloat}
-                  className={`modalOptionOutline modalCardOptionOutline ${
-                    selectedSkill === i + localGameState[self].skillFloat
-                      ? "modalCardOptionOutlineSelected"
-                      : ""
-                  }`}
-                  onClick={() => {
-                    handleClick(
-                      canSelect(usableSkill.id),
-                      i + localGameState[self].skillFloat
-                    );
-                    // handleUpdateDemoGuide();
-                  }}
-                >
+              {localGameState[self].skillFloat > 0 &&
+                inspectRerpertoire.length > 0 && (
+                  <div className="modalContentText">Non-floating cards</div>
+                )}
+
+              <div className="modalContent4Column">
+                {inspectRerpertoire.map((usableSkill, i) => (
                   <div
-                    className={`modalCard ${
-                      canClick(
-                        "Skill Card",
-                        usableSkill,
+                    key={i + localGameState[self].skillFloat}
+                    className={`modalOptionOutline modalCardOptionOutline ${
+                      selectedSkills.includes(
                         i + localGameState[self].skillFloat
                       )
-                        ? "demoClick"
+                        ? "modalCardOptionOutlineSelected"
                         : ""
-                    }
-                          `}
-                    style={{
-                      boxShadow:
-                        selectedSkill === i + localGameState[self].skillFloat
-                          ? "none"
-                          : "",
+                    }`}
+                    onClick={() => {
+                      handleClick(
+                        canSelect(usableSkill.id),
+                        i + localGameState[self].skillFloat
+                      );
+                      // handleUpdateDemoGuide();
                     }}
                   >
-                    <Skill
-                      i={i + localGameState[self].skillFloat}
-                      usableSkill={usableSkill}
-                      canActivateSkill={canSelect(usableSkill.id)}
-                    />
+                    <div
+                      className={`modalCard ${
+                        canClick(
+                          "Skill Card",
+                          usableSkill,
+                          i + localGameState[self].skillFloat
+                        )
+                          ? "demoClick"
+                          : ""
+                      }
+                          `}
+                      style={{
+                        boxShadow: selectedSkills.includes(
+                          i + localGameState[self].skillFloat
+                        )
+                          ? "none"
+                          : "",
+                      }}
+                    >
+                      <SkillMultiSelect
+                        i={i + localGameState[self].skillFloat}
+                        usableSkill={usableSkill.id}
+                        canAdd={canSelect(usableSkill.id)}
+                        selectedSkills={selectedSkills}
+                        addLimit={props.details.selectLimit}
+                      />
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
+          ) : (
+            // non-multi
+            <div
+              className={`modalScrollableY ${demoGuide ? "demoBlocker" : ""}`}
+            >
+              {localGameState[self].skillFloat > 0 && (
+                <>
+                  <div className="modalContentText">Floating cards</div>
+                  <div className="modalContent4Column">
+                    {floatingRepertoire.map((usableSkill, i) => (
+                      <div
+                        key={i}
+                        className={`modalOptionOutline modalCardOptionOutline ${
+                          selectedSkill === i
+                            ? "modalCardOptionOutlineSelected"
+                            : ""
+                        }`}
+                        onClick={() => {
+                          handleClick(canSelect(usableSkill.id), i);
+                          // handleUpdateDemoGuide();
+                        }}
+                      >
+                        <div
+                          className={`modalCard 
+                          ${
+                            canClick("Skill Card", usableSkill, i)
+                              ? "demoClick"
+                              : ""
+                          }
+                          `}
+                          style={{
+                            boxShadow: selectedSkill === i ? "none" : "",
+                          }}
+                        >
+                          <Skill
+                            i={i}
+                            usableSkill={usableSkill}
+                            canActivateSkill={canSelect(usableSkill.id)}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
+
+              {localGameState[self].skillFloat > 0 &&
+                inspectRerpertoire.length > 0 && (
+                  <div className="modalContentText">Non-floating cards</div>
+                )}
+
+              <div className="modalContent4Column">
+                {inspectRerpertoire.map((usableSkill, i) => (
+                  <div
+                    key={i + localGameState[self].skillFloat}
+                    className={`modalOptionOutline modalCardOptionOutline ${
+                      selectedSkill === i + localGameState[self].skillFloat
+                        ? "modalCardOptionOutlineSelected"
+                        : ""
+                    }`}
+                    onClick={() => {
+                      handleClick(
+                        canSelect(usableSkill.id),
+                        i + localGameState[self].skillFloat
+                      );
+                      // handleUpdateDemoGuide();
+                    }}
+                  >
+                    <div
+                      className={`modalCard ${
+                        canClick(
+                          "Skill Card",
+                          usableSkill,
+                          i + localGameState[self].skillFloat
+                        )
+                          ? "demoClick"
+                          : ""
+                      }
+                          `}
+                      style={{
+                        boxShadow:
+                          selectedSkill === i + localGameState[self].skillFloat
+                            ? "none"
+                            : "",
+                      }}
+                    >
+                      <Skill
+                        i={i + localGameState[self].skillFloat}
+                        usableSkill={usableSkill}
+                        canActivateSkill={canSelect(usableSkill.id)}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="modalFooter">
-          {selectedSkill === null && (
-            <button className="redButton2" onClick={() => handleSkip()}>
-              Skip
-            </button>
-          )}
+          {props.details.select === "Multi" ? (
+            <>
+              {selectedSkills.length === 0 && (
+                <button className="redButton2" onClick={() => handleSkip()}>
+                  Skip
+                </button>
+              )}
 
-          {selectedSkill !== null && (
-            <button className="redButton2" onClick={() => handleSelect()}>
-              Select
-            </button>
+              {selectedSkills.length > 0 && (
+                <button className="redButton2" onClick={() => handleSelect()}>
+                  Select
+                </button>
+              )}
+            </>
+          ) : (
+            <>
+              {selectedSkill === null && (
+                <button className="redButton2" onClick={() => handleSkip()}>
+                  Skip
+                </button>
+              )}
+
+              {selectedSkill !== null && (
+                <button className="redButton2" onClick={() => handleSelect()}>
+                  Select
+                </button>
+              )}
+            </>
           )}
         </div>
       </div>

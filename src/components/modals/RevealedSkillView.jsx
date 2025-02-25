@@ -73,7 +73,7 @@ const RevealedSkillView = (props) => {
           </div>
 
           {props.avelhems && (
-            <div className="modalContent3Column">
+            <div className="modalContent3Column" style={{ gap: 10 }}>
               {props.avelhems.map((avelhem, i) => (
                 <Skill usableSkill={{ id: avelhem }} canActivateSkill={true} />
               ))}

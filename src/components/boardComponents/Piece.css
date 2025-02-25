@@ -140,8 +140,8 @@
 
 @keyframes frostbitefadeInOut2 {
   0%,
-  15% {
-    opacity: 0.45;
+  20% {
+    opacity: 0.25;
   }
 
   80%,

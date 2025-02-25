@@ -57,14 +57,15 @@ export const useSovereignSkillEffects = () => {
       resolution: "Misc.",
       resolution2: "Inspect Skill",
       player: self,
-
       details: {
         restriction: sovereignSkillList(),
-        outcome: "Float",
         title: "Heir’s Endeavor",
+        reason: "Heir’s Endeavor",
         message:
-          "Inspect 5 skills. You may float 1 Sovereign skill among them.",
-        inspectionCount: 5,
+          "Inspect 4 skills; you may add 1 Sovereign skill among them to your hand.",
+        inspectionCount: 4,
+        select: "Single",
+        outcome: "Add",
       },
     });
 

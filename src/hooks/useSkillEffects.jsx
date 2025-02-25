@@ -531,14 +531,22 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    //give unit boost
-    unit.boosts.glacialTorrent = 2;
-
     //inspect
     newGameState.currentResolution.push({
       resolution: "Water Skill",
       resolution2: "Glacial Torrent 1",
       unit: unit,
+      details: {
+        restriction: ["02-01", "02-02", "02-03"],
+        title: "Glacial Torrent",
+        reason: "Glacial Torrent",
+        message:
+          "Inspect 5 skills; you may add up to 3 Water skills among them to your hand.",
+        inspectionCount: 5,
+        select: "Multi",
+        selectLimit: 3,
+        outcome: "Add",
+      },
     });
 
     return newGameState;
