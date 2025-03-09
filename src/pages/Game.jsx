@@ -213,7 +213,11 @@ export default function Game() {
         } else if (!gameData.gameState.guest.skillRepertoire) {
           setPlayerStatus("wait enemy repertoire");
           setBanner({
-            title: "Waiting for opponent to select repertoire",
+            title: (
+              <>
+                Waiting for opponent <br /> to select repertoire
+              </>
+            ),
             buttonText: null,
           });
         } else {
@@ -225,7 +229,11 @@ export default function Game() {
         } else if (!gameData.gameState.host.skillRepertoire) {
           setPlayerStatus("wait enemy repertoire");
           setBanner({
-            title: "Waiting for opponent to select repertoire",
+            title: (
+              <>
+                Waiting for opponent <br /> to select repertoire
+              </>
+            ),
             buttonText: null,
           });
         } else {
@@ -234,7 +242,6 @@ export default function Game() {
       } else if (!gameData.guestId) {
         setPlayerStatus("join");
         setBanner({
-          // title: "ACCEPT CHALLENGE",
           title: (
             <>
               INVITED BY: <br />
@@ -269,69 +276,96 @@ export default function Game() {
     }
   };
 
+  const gameInvite = () => {
+    return (
+      <div className="game-banner-backdrop">
+        <div className="game-banner-title">{banner.title}</div>
+        <div className="game-banner-text-body">
+          <div className="game-banner-text">
+            <div className="game-banner-expansion">
+              Set: {gameData?.expansion}
+            </div>
+
+            {banner.buttonText && (
+              <button
+                className="game-banner-button"
+                onClick={() => bannerButton()}
+              >
+                {banner.buttonText}
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div
       className="game-body"
       style={{
-        backgroundImage: `url(${getBannerImage("MetalBG")})`,
-        // backgroundImage: `url(${getBannerImage("Challenge")})`,
+        backgroundImage: `url(${
+          gameData?.expansion === "Tea Trial"
+            ? getBannerImage("Tea")
+            : getBannerImage("Challenge")
+        })`,
       }}
     >
       <AnimatePresence>
-        {!["ready", "spectate"].includes(playerStatus) && (
-          <motion.div
-            key="game-banner"
-            exit={{ opacity: 0, transition: { duration: 1.5 } }}
-            className="game-banner"
-            style={{
-              backgroundImage: `url(${getBannerImage(bannerImg)})`,
-            }}
-          >
-            <div className="game-banner-backdrop">
-              <div className="game-banner-title">{banner.title}</div>
-              <div className="game-banner-text-body">
-                <div className="game-banner-text">
-                  <div className="game-banner-expansion">
-                    Set:
-                    <br />
-                    {gameData?.expansion}
-                  </div>
-
-                  {banner.buttonText && (
-                    <button
-                      className="home-banner-button"
-                      onClick={() => bannerButton()}
-                    >
-                      {banner.buttonText}
-                    </button>
-                  )}
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        )}
-
-        {["ready", "spectate"].includes(playerStatus) && (
-          <motion.div
-            key="BoardArea"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.75 }}
-            // exit={{ opacity: 0, transition: { duration: 0.75 } }}
-          >
-            <BoardArea
-              gameState={gameData.gameState}
-              gameId={gameData.id}
-              userRole={userRole}
-            />
-          </motion.div>
-        )}
+        <motion.div
+          key="BoardArea"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.75 }}
+        >
+          <BoardArea
+            gameState={gameData ? gameData.gameState : null}
+            gameId={gameData ? gameData.id : null}
+            userRole={userRole}
+            playerStatus={playerStatus}
+            gameInvite={gameInvite}
+          />
+        </motion.div>
       </AnimatePresence>
+
+      <div className="board-data">
+        {gameData?.gameState && (
+          <>
+            Initiator:{" "}
+            {gameData.gameState.turnPlayer !== null &&
+              gameData.gameState[gameData.gameState.turnPlayer].displayName}
+            <br />
+            Turn Count: {gameData.gameState.turnCount}
+            <br />
+            Phase: {gameData.gameState.turnPhase}
+            <br />
+            {gameData.gameState.currentResolution.length > 0 && (
+              <>
+                {
+                  gameData.gameState.currentResolution[
+                    gameData.gameState.currentResolution.length - 1
+                  ].resolution
+                }
+              </>
+            )}
+            <br />
+            {gameData.gameState.currentResolution.length > 0 && (
+              <>
+                {
+                  gameData.gameState.currentResolution[
+                    gameData.gameState.currentResolution.length - 1
+                  ].resolution2
+                }
+              </>
+            )}
+          </>
+        )}
+      </div>
 
       {playerStatus === "pick repertoire" && (
         <SelectRepertoire
           onSelectRepertoire={onSelectRepertoire}
-          expansion={gameData.expansion}
+          expansion={gameData ? gameData.expansion : null}
         />
       )}
       {isLoading && <Loading />}

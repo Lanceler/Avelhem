@@ -239,6 +239,9 @@ export const useSovereignSkillEffects = () => {
     //end "Activating Transmute" resolution
     newGameState.currentResolution.pop();
 
+    //spend FD
+    newGameState[self].fateDefiance -= 2;
+
     newGameState.currentResolution.push({
       resolution: "Sovereign Resonant Skill",
       resolution2: "Transmute1",

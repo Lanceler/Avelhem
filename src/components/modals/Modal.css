@@ -376,13 +376,6 @@
     color: rgb(255, 207, 86);
 }
 
-.bottomAnchor {
-    display: flex;
-    /* justify-content: flex-end; */
-    justify-content: space-around;
-    height: 100%;
-}
-
 .selectElementIcon {
     height: 120px;
     width: 120px;

@@ -1,18 +1,9 @@
 .demo-body {
-    /* min-height: 1200px;  */
+    min-height: 1270px; 
     user-select: none;
     background-size: cover;
     background-position: center;
-
-/*  background: linear-gradient(to bottom,
-        rgb(190, 189, 189) 0%,
-        rgb(224, 217, 217) 20%,
-        rgb(211, 205, 205) 40%,
-        rgb(187, 184, 184) 60%,
-        rgb(160, 157, 157) 80%,
-        rgb(114, 111, 111) 100%); */
-
-    /* background: aqua; */
+    scale: 1.0;
 }
 
 

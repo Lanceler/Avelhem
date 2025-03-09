@@ -113,12 +113,22 @@ const DemoTextBox = () => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (tutorialIndex) {
-          //middle center, slightly raised
+          //left center, slightly raised
           case 1:
           case 2:
             return {
               top: "35%",
-              left: "50%",
+              left: "30%",
+              transform: "translate(-50%, -50%)",
+              width: 675,
+            };
+
+          //bottom right, slightly raised
+          case 3:
+          case 85:
+            return {
+              top: "75%",
+              left: "75%",
               transform: "translate(-50%, -50%)",
               width: 675,
             };
@@ -1568,7 +1578,7 @@ const DemoTextBox = () => {
         </button>
 
         <button
-          className={"redButton2 demo-text-box-button demoClick"}
+          className={"redButton2 demo-text-box-button demo-button demoClick"}
           style={{ visibility: showNext() ? "" : "hidden" }}
           onClick={() => dispatch(updateDemoCount(demoCount + 1))}
         >

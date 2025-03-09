@@ -42,6 +42,11 @@ const SelectHandMultiSkill = (props) => {
       selectMessage = "Discard";
       break;
 
+    case "Cataclysmic Tempest":
+      canSkip = false;
+      selectMessage = "Float";
+      break;
+
     case "Transmute":
       canSkip = false;
       selectMessage = "Shuffle";
@@ -70,6 +75,22 @@ const SelectHandMultiSkill = (props) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     newGameState.currentResolution.pop();
 
+    //1. get list of selected cards
+    let selectedCards = [];
+    for (let i of selectedSkills) {
+      selectedCards.push(skillHand[i]);
+    }
+
+    //2. sort selected skills in descending order so they can be spliced smoothly
+    let sortedSelectedSkills = [...selectedSkills].sort((a, b) => b - a);
+
+    //3. remove selected skills from hand
+    for (let i of sortedSelectedSkills) {
+      skillHand.splice(i, 1);
+    }
+
+    newGameState[self].skillHand = [...skillHand];
+
     switch (props.details.reason) {
       case "Battle Cry":
         //1. gain assault tactic
@@ -97,36 +118,10 @@ const SelectHandMultiSkill = (props) => {
       //DO NOT break; it will discard skills just like "Skill Hand Limit"
 
       case "Skill Hand Limit":
-        //1. get list of cards to be discarded
-        let excessSkills = [];
-        for (let i of selectedSkills) {
-          excessSkills.push(skillHand[i]);
+        //1. discard selected Skills
+        for (let card of selectedCards) {
+          newGameState[self].skillVestige.push(card);
         }
-
-        // console.log(excessSkills);
-
-        //2. sort selected skills in descending order so they can be spliced smoothly
-        let sortedSelectedSkills2 = [...selectedSkills].sort((a, b) => b - a);
-
-        // console.log("sortedSelectedSkills2");
-        // console.log(sortedSelectedSkills2);
-
-        //3. remove selected skills from hand
-        for (let i of sortedSelectedSkills2) {
-          // console.log(i);
-          skillHand.splice(i, 1);
-        }
-
-        newGameState[self].skillHand = [...skillHand];
-
-        // console.log("skillHand");
-        // console.log(skillHand);
-
-        //4. discard selected Skills
-        for (let skill of excessSkills) {
-          newGameState[self].skillVestige.push(skill);
-        }
-
         break;
 
       case "Artifice":
@@ -138,117 +133,65 @@ const SelectHandMultiSkill = (props) => {
           newGameState[self].fateDefiance -= 1;
         }
 
-        // console.log(selectedSkills);
-
-        //1. get list of cards to be returned
-        let skillsToReturn = [];
-        for (let i of selectedSkills) {
-          skillsToReturn.push(skillHand[i]);
+        //1. place selected skills at bottom of repertoire (start of array)
+        selectedCards.reverse();
+        for (let card of selectedCards) {
+          newGameState[self].skillRepertoire.unshift(card);
         }
 
-        // console.log(skillsToReturn);
-
-        //2. sort selected skills in descending order so they can be spliced smoothly
-        let sortedSelectedSkills1 = [...selectedSkills].sort((a, b) => b - a);
-
-        // console.log("sortedSelectedSkills1");
-        // console.log(sortedSelectedSkills1);
-
-        //3. remove selected skills from hand
-        for (let i of sortedSelectedSkills1) {
-          // console.log(i);
-          skillHand.splice(i, 1);
-        }
-
-        newGameState[self].skillHand = [...skillHand];
-
-        // console.log("skillHand");
-        // console.log(skillHand);
-
-        //4. place selected skills at bottom of repertoire (start of array)
-        skillsToReturn.reverse();
-        for (let skill of skillsToReturn) {
-          newGameState[self].skillRepertoire.unshift(skill);
-        }
-
-        //5. for each returned skill, draw 1 skill
-
-        for (let skill of skillsToReturn) {
+        //2. for each returned skill, draw 1 skill
+        for (let card of selectedCards) {
           newGameState = drawSkill(newGameState);
         }
 
-        //6. End Defiance Phase
-
+        //3. End Defiance Phase
         newGameState = endDefiancePhase(newGameState);
 
-        //7. inform enemy Defiance Action
-
+        //4. inform enemy Defiance Action
         newGameState.currentResolution.push({
           resolution: "Misc.",
           resolution2: "Message To Player",
           player: enemy,
           title: "Defiance: Artifice",
-          message: `Your opponent has returned ${skillsToReturn.length} skills to their repertoire and drawn the same number.`,
+          message: `Your opponent has returned ${selectedCards.length} skills to their repertoire and drawn the same number.`,
           specMessage: `${
             self === "host" ? "Gold" : "Silver"
           } Sovereign has returned ${
-            skillsToReturn.length
+            selectedCards.length
           } skills to their repertoire and drawn the same number.`,
         });
+        break;
+
+      case "Cataclysmic Tempest":
+        //1. float selected cards
+        for (let card of selectedCards) {
+          newGameState[self].skillRepertoire.push(card);
+          newGameState[self].skillFloat += 1;
+        }
 
         break;
 
       case "Transmute":
-        // console.log(selectedSkills);
-
-        //1. get list of cards to be shuffled
-        let skillsToShuffle = [];
-        for (let i of selectedSkills) {
-          skillsToShuffle.push(skillHand[i]);
+        //1. place selected skills at bottom of repertoire (start of array)
+        selectedCards.reverse();
+        for (let card of selectedCards) {
+          newGameState[self].skillRepertoire.unshift(card);
         }
+        selectedCards.reverse();
 
-        // console.log(skillsToShuffle);
-
-        //2. sort selected skills in descending order so they can be spliced smoothly
-        let sortedSelectedSkills = [...selectedSkills].sort((a, b) => b - a);
-
-        // console.log("sortedSelectedSkills");
-        // console.log(sortedSelectedSkills);
-
-        //3. remove selected skills from hand
-        for (let i of sortedSelectedSkills) {
-          // console.log(i);
-          skillHand.splice(i, 1);
-        }
-
-        newGameState[self].skillHand = [...skillHand];
-
-        // console.log("skillHand");
-        // console.log(skillHand);
-
-        //4. place selected skills at bottom of repertoire (start of array)
-        newGameState[self].skillRepertoire = [
-          ...skillsToShuffle,
-          ...newGameState[self].skillRepertoire,
-        ];
-
-        // console.log("newGameState[self].skillRepertoire");
-        // console.log(newGameState[self].skillRepertoire);
-
-        //5. if resonated, do a search for Avelhems
+        //2. if resonated, do a search for Avelhems
         if (props.resonated === "resonated") {
           newGameState.currentResolution.push({
             resolution: "Sovereign Resonant Skill",
             resolution2: "TransmuteR1",
             player: self,
-            skillsToShuffle: skillsToShuffle,
+            skillsToShuffle: selectedCards,
           });
         }
 
-        //6. do a search for each revealed/shuffled skill
-
-        for (let skill of skillsToShuffle) {
-          const skillCode = skill.substring(0, 2);
+        //3. do a search for each revealed/shuffled skill
+        for (let card of selectedCards) {
+          const skillCode = card.substring(0, 2);
 
           newGameState.currentResolution.push({
             resolution: "Search Card",
@@ -270,42 +213,38 @@ const SelectHandMultiSkill = (props) => {
           });
         }
 
-        //7. inform enemy of aspects
-
+        //4. inform enemy of aspects
         let transmuteMessage = "";
         let specTransmuteMessage = "";
 
-        switch (skillsToShuffle.length) {
+        switch (selectedCards.length) {
           case 1:
             transmuteMessage = `Your opponent has revealed a skill with the following aspect: ${avelhemToScion(
-              parseInt(skillsToShuffle[0])
+              parseInt(selectedCards[0])
             ).replace(" Scion", "")}.`;
             specTransmuteMessage = `${
               self === "host" ? "Gold" : "Silver"
             } Sovereign has revealed a skill with the following aspect: ${avelhemToScion(
-              parseInt(skillsToShuffle[0])
+              parseInt(selectedCards[0])
             ).replace(" Scion", "")}.`;
-
             break;
+
           case 2:
             transmuteMessage = `Your opponent has revealed skills with the following aspects: ${avelhemToScion(
-              parseInt(skillsToShuffle[0])
+              parseInt(selectedCards[0])
             ).replace(" Scion", "")} and ${avelhemToScion(
-              parseInt(skillsToShuffle[1])
+              parseInt(selectedCards[1])
             ).replace(" Scion", "")}.`;
 
             specTransmuteMessage = `${
               self === "host" ? "Gold" : "Silver"
             } Sovereign has revealed skills with the following aspects: ${avelhemToScion(
-              parseInt(skillsToShuffle[0])
+              parseInt(selectedCards[0])
             ).replace(" Scion", "")} and ${avelhemToScion(
-              parseInt(skillsToShuffle[1])
+              parseInt(selectedCards[1])
             ).replace(" Scion", "")}.`;
-
             break;
         }
-
-        //console.log(transmuteMessage);
 
         newGameState.currentResolution.push({
           resolution: "Misc.",
@@ -315,7 +254,6 @@ const SelectHandMultiSkill = (props) => {
           message: transmuteMessage,
           specMessage: specTransmuteMessage,
         });
-
         break;
 
       default:
@@ -441,7 +379,7 @@ const SelectHandMultiSkill = (props) => {
           )}
 
           {selectedSkills.length > 0 &&
-            !["Skill Hand Limit", "Battle Cry"].includes(
+            !["Skill Hand Limit", "Battle Cry", "Cataclysmic Tempest"].includes(
               props.details.reason
             ) && (
               <button className="redButton2" onClick={() => handleSelect()}>
@@ -449,8 +387,10 @@ const SelectHandMultiSkill = (props) => {
               </button>
             )}
 
-          {["Skill Hand Limit", "Battle Cry"].includes(props.details.reason) &&
-            selectedSkills.length === props.details.count && (
+          {selectedSkills.length === props.details.count &&
+            ["Skill Hand Limit", "Battle Cry", "Cataclysmic Tempest"].includes(
+              props.details.reason
+            ) && (
               <button
                 className={`redButton2 ${
                   canClick("Button") ? "demoClick" : ""

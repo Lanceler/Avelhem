@@ -282,7 +282,40 @@ export default function Demo() {
               setDemoGameState={setDemoGameState}
               demoInstructions={true}
               changeCurrentPlayer={changeCurrentPlayer}
+              playerStatus={"ready"}
             />
+          </div>
+
+          <div className="board-data">
+            <>
+              Initiator:{" "}
+              {demoGameState.turnPlayer !== null &&
+                demoGameState[demoGameState.turnPlayer].displayName}
+              <br />
+              Turn Count: {demoGameState.turnCount}
+              <br />
+              Phase: {demoGameState.turnPhase}
+              <br />
+              {demoGameState.currentResolution.length > 0 && (
+                <>
+                  {
+                    demoGameState.currentResolution[
+                      demoGameState.currentResolution.length - 1
+                    ].resolution
+                  }
+                </>
+              )}
+              <br />
+              {demoGameState.currentResolution.length > 0 && (
+                <>
+                  {
+                    demoGameState.currentResolution[
+                      demoGameState.currentResolution.length - 1
+                    ].resolution2
+                  }
+                </>
+              )}
+            </>
           </div>
 
           {infoPopUp && (

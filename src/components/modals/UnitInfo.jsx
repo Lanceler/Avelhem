@@ -300,14 +300,13 @@ const UnitInfo = (props) => {
               Wind skill.
             </p>
 
-            <p className="unitInfo-text-heading2">2. Sonic Breeze</p>
+            <p className="unitInfo-text-heading2">2. Aeromancy</p>
             <p className="unitInfo-text-desc">
               ⬩When you activate a skill, gain 1 Cyclone; you can have up to 2
               Cyclones.
             </p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Your deployment and movements do not trigger motion contingent
-              skills.
+              ⬩Your motion does not trigger a contingency.
             </p>
           </>
         );

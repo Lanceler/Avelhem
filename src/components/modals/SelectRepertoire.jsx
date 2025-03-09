@@ -25,7 +25,7 @@ export default function SelectRepertoire(props) {
   const [selectedRep, setSelectedRep] = useState(null);
   const [expansion, setExpansion] = useState("Elemental Entree");
 
-  console.log(props.expansion);
+  // console.log(props.expansion);
 
   //---Realtime data functionality below
   const userInfoRef = query(

@@ -142,7 +142,11 @@ const ScionSkillSelect = (props) => {
 
         <div className="modalContent2">
           <div className="modalContentText">
-            {usableSkills.length === 0 ? "No valid skills in hand." : ""}
+            {usableSkills.length === 0
+              ? `No ${props.unit.unitClass
+                  .replace("Scion", "")
+                  .trim()} skills in hand.`
+              : ""}
           </div>
 
           <div className="modalContent4Column modalScrollableY">

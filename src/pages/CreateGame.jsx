@@ -178,8 +178,8 @@ export default function MyGames() {
 
           <div className="create-game-banner-text">
             <div className="create-game-title">
-              <>ELEMENTAL</>
-              <br />
+              <>ELEMENTAL </>
+              <br className="create-game-line-break" />
               <>ENTRÉE</>
             </div>
             <div className="create-game-desc">
@@ -210,11 +210,11 @@ export default function MyGames() {
 
           <div className="create-game-banner-text">
             <div className="create-game-title">
-              {/* <>FAMILIARS’</>
+              {/* <>FAMILIARS’ </>
               <br />
               <>FOLLOWUP</> */}
-              <>COMING</>
-              <br />
+              <>COMING </>
+              <br className="create-game-line-break" />
               <>SOON</>
             </div>
             <div className="create-game-desc">

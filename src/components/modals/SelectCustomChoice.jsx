@@ -706,8 +706,8 @@ const SelectCustomChoice = (props) => {
         } else {
           newGameState.currentResolution.push({
             resolution: "Discard Skill",
-            unit: unit,
-            player: unit.player,
+            unit: null,
+            player: self,
             canSkip: false,
             details: {
               title: "Tea for Two",

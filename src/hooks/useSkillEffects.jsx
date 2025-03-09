@@ -901,11 +901,27 @@ export const useSkillEffects = () => {
         newGameState[enemy].skillHand.length > 0
       ) {
         //5. Force enemy to float
+
+        const floatCount = Math.min(
+          unit.temporary.cataclysmicFloat,
+          newGameState[enemy].skillHand.length
+        );
+
+        const cataclysmicMessage =
+          floatCount === 1
+            ? "Float 1 skill."
+            : "Float 2 skills. The second selected skill will floated on top of the first.";
+
         newGameState.currentResolution.push({
           resolution: "Wind Skill",
           resolution2: "Cataclysmic Tempest Float",
-          floatCount: unit.temporary.cataclysmicFloat,
           player: enemy,
+          details: {
+            reason: "Cataclysmic Tempest",
+            title: "Cataclysmic Tempest",
+            message: cataclysmicMessage,
+            count: floatCount,
+          },
         });
       }
     }
@@ -937,7 +953,6 @@ export const useSkillEffects = () => {
               "You may reveal 1 Wind skill to blast an adjacent paralyzed enemy.",
             restriction: ["03-01", "03-02", "03-03", "03-04"],
             reason: "Cataclysmic Tempest",
-            // adjacentEnemies: adjacentEnemies,
           },
         });
       }

@@ -16,25 +16,7 @@
 }
 
 
-.board-data {
-    // position: absolute;
-    bottom: 0;
-    justify-items: flex-end;
-    margin-bottom: 0;
-    color: #eee;
-    padding: 20px 105px;
-    font-family: 'Merriweather', serif;
-    font-size: 1.5rem;
-    background: linear-gradient(to top, rgb(14, 14, 14), rgba(0, 0, 0, 0) 180%);
-    margin-top: auto;
 
-
-
-   // background-color: aqua;
-
-
-
-}
 
 
 .board-physical {
@@ -43,7 +25,10 @@
     justify-content: center;
     user-select: none;
     // background-color: aqua;
+
+    animation: turnFadeIn 0.85s linear;
 }
+
 
 
 .board-space {
@@ -55,7 +40,7 @@
     // padding-top: 10px;
     overflow: hidden;
     // background: linear-gradient(to bottom, rgba(31, 31, 31, 0.95), rgba(90, 90, 90, 0.95) 70%, rgba(141, 141, 141, 0.95) 100%);
-    background: linear-gradient(to bottom, rgba(85, 84, 84, 0.8), rgba(116, 116, 116, 0.8) 35%, rgba(230, 223, 223, 0.75) 100%);
+    background: linear-gradient(to bottom, rgba(85, 84, 84, 0.75), rgba(116, 116, 116, 0.8) 35%, rgba(230, 223, 223, 0.55) 100%);
     box-shadow: 4px 4px 8px 4px rgba(0, 0, 0, 0.5);
     scrollbar-color: rgb(255, 168, 7) rgba(92, 63, 52, 0);
     scrollbar-width: thin;
@@ -63,12 +48,8 @@
     transform: scale(0.875);
     // transition: background 0.5s ease;
 
-    // background: aqua;
 }
 
-// .board-space-turn {
-//     background: linear-gradient(to bottom, rgba(85, 84, 84, 0.8), rgba(116, 116, 116, 0.8) 35%, rgba(230, 223, 223, 0.75) 100%);
-// }
 
 .board-space-your-glow, .board-space-enemy-glow{
     background: linear-gradient(to bottom, 
@@ -97,21 +78,16 @@
 }
 
 
-
-
 .board-left {
     height: 100%;
     width: 20%;
-    /* background-color: aqua; */
 }
 
 .board-left .board-left-buttons {
     height: 10%;
     display: flex;
     justify-content: center;
-    align-items: center;
-
-    
+    align-items: center;   
 }
 
 .board-left .contingency-settings {

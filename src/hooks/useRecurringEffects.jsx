@@ -1706,7 +1706,7 @@ export const useRecurringEffects = () => {
         return true;
 
       case "SB-01": // Transmute
-        return hasScionSkill();
+        return hasScionSkill() && localGameState[self].fateDefiance >= 2;
 
       case "SB-02": // Ambidexterity
         return getZonesWithScions(self).length > 0;

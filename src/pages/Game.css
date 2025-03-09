@@ -1,19 +1,11 @@
 .game-body {
     user-select: none;
     background-size: cover;
-    background-position: 0px -100px;
-    min-height: 850px;
+    background-position: center;
+    min-height: 1140px;
     padding: 45px 0px 0px;
-
     scale: 1.0;
-
-    /* min-height: calc(100vh - 65px - 45px); */
     overflow: auto;
-
-    /* display: flex;
-    justify-content: center; */
-
-    /* background: aqua; */
 }
 
 
@@ -26,11 +18,9 @@
     background-size: cover;
     background-position: center;
     box-shadow: 4px 4px 15px 4px rgba(0, 0, 0, 0.45);    
-
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-
  }
 
 .game-banner-backdrop {
@@ -47,20 +37,17 @@
 }
 
 .game-banner-title {
-    font-size: 50px;
+    font-size: 70px;
     font-family: Alegreya, Georgia, Times New Roman, "serif";
     text-align: center;
-
     padding-top: 20px;
-    
-    text-shadow: rgb(0, 0, 0) 1px 0 2px;
+        text-shadow: rgb(0, 0, 0) 1px 0 2px;
     -webkit-text-stroke: 1.5px rgba(0, 0, 0, 0.75);  
 }
 
 .game-banner-text-body{
     margin-top: auto;
     margin-bottom: 10%;
-    /* background-color: aqua; */
 }
 
 .game-banner-text {
@@ -68,108 +55,47 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    
-
-    
-    /* background-color: rgb(0, 255, 128); */
-}
+    }
 
 .game-banner-expansion {
-    margin-bottom: 30px;
-
-    font-size: 35px;
+    margin-bottom: 35px;
+    font-size: 55px;
     font-family: Alegreya, Georgia, Times New Roman, "serif";
     text-shadow: rgb(0, 0, 0) 2px 0 4px;
     font-weight: 600;
     color: goldenrod;
-
 }
 
-/* /////////////////////////////////////////////////////////////////// */
-
-@media screen and (min-width: 501px) and (max-width: 1030px) {
-
-    .game-banner {
-        width: 90vw;
-    }
-
-    .game-banner-backdrop{
-        width: 75%;
-    }
-
+.game-banner-button {
+    font-size: 2.0rem;
+    padding: 8px;
+    color: white;
+    background-image: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
+    cursor: pointer;
+    border-radius: 8px;
+    border: 3px solid rgb(247, 200, 84);
+    min-width: 195px;
 }
 
-@media screen and (max-width: 500px) {
-
-    .game-body{
-        min-height: calc(100vh - 65px - 45px);
-    }
-
-
-    .game-banner {
-        margin: 10px auto;
-        height: 275px;
-        width: 90vw;
-        border: 6px ridge rgb(236, 180, 36);
-
-    }
-
-    .game-banner-backdrop {
-        width: 100%;
-        background: linear-gradient(to top, rgba(0, 0, 0, 0),
-                rgba(0, 0, 0, 0.15) 65%, rgba(0, 0, 0, 0.70) 110%);
-    }
-
-
-    .game-banner-title {
-        width: 100%;
-        font-size: 30px;
-        text-align: center;
-        padding-top: 10px;
-        margin-bottom: 10px;
-        text-shadow: rgb(0, 0, 0) 1px 1px 2px;
-        
-        -webkit-text-stroke: 1.0px rgb(0, 0, 0);
-
-        /* background-color: aqua; */
-
-    }
-
-    .home-banner-text-body {
-        margin-top: 35%;
-        height: 30%;
-        padding-left: 10px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        /* background-color: aqua; */
-    }
-
-    .home-banner-text {
-        /* height: 100%; */
-        width: 100%;
-        justify-content: start;
-        align-items: end;
-
-        /* background-color: aqua; */
-    }
-
-    .home-banner-button {
-        font-size: 12px;
-        padding: 4px;
-        border-radius: 6px;
-        border: 2px solid rgb(247, 200, 84);
-        min-width: 135px;
-    }
-
-
-.game-banner-expansion {
-    margin-bottom: 10px;
-
-    font-size: 15px;
+.game-banner-button:hover {
+    color: rgb(255, 207, 86);
+    filter: brightness(1.2);
 }
 
 
-
-
+.board-data {
+    position: absolute;
+    box-sizing: border-box;
+       max-width: 1500px;
+    width: 100%;
+    bottom: 0;
+    justify-items: flex-end;
+    margin-bottom: 0;
+    color: #eee;
+    padding: 20px 105px;
+    font-family: 'Merriweather', serif;
+    font-size: 28px;
+    background: linear-gradient(to top, rgb(14, 14, 14), rgba(0, 0, 0, 0) 180%);
+    /* margin-top: auto; */
+    min-height: 180px;
 }
