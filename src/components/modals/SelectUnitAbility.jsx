@@ -124,8 +124,7 @@ const SelectUnitAbility = (props) => {
           optionText: (
             <>
               <div>
-                ⬩Strike a frostbitten enemy or freeze an adjacent enemy for 2
-                turns.
+                ⬩Strike a frozen enemy or freeze an adjacent enemy for 2 turns.
               </div>
             </>
           ),

@@ -339,8 +339,11 @@ const SelectTacticViaEffect = (props) => {
       //Skills
 
       case "Aerial Impetus":
-        newGameState.tactics[i].stock = 4;
-        newGameState.tactics[i].limit = 4;
+        const mobilizeLimit =
+          newGameState[self].bountyUpgrades.tactics >= 2 ? 4 : 3;
+
+        newGameState.tactics[i].stock = mobilizeLimit;
+        newGameState.tactics[i].limit = mobilizeLimit;
         newGameState.tactics[i].face = "Mobilize";
         break;
 

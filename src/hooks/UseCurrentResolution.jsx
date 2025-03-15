@@ -75,6 +75,7 @@ const UseCurrentResolution = (props) => {
     selectEnemies,
     selectFatedRivalry,
     selectFrenzyBladeActivator,
+    selectGuardianWingsActivator,
     selectHealingRainActivator,
     selectMatchMadeInHeavenPawn,
     selectPitfallTrapActivator,
@@ -1918,7 +1919,7 @@ const UseCurrentResolution = (props) => {
           }
           break;
 
-        case "Glacial Torrent 1":
+        case "Glacial Torrent1":
           return (
             <>
               {self === lastRes.unit.player && !props.hideModal && (
@@ -3128,6 +3129,42 @@ const UseCurrentResolution = (props) => {
         case "Raptor Blitz Purge":
           if (self === lastRes.unit.player) {
             selectEnemies(lastRes.unit, 2, null, "raptor blitz purge", null);
+          }
+          break;
+
+        case "Activating Reconnaissance":
+          if (self === lastRes.unit.player) {
+            props.updateLocalState(
+              applySkill("reconnaissance1", lastRes.unit, lastRes.resonator)
+            );
+          }
+          break;
+
+        case "Reconnaissance1":
+          return (
+            <>
+              {self === lastRes.unit.player && !props.hideModal && (
+                <InspectSkill
+                  unit={lastRes.unit}
+                  details={lastRes.details}
+                  hideOrRevealModale={props.hideOrRevealModale}
+                  updateFirebase={props.updateFirebase}
+                />
+              )}
+            </>
+          );
+
+        case "Select Guardian Wings Activator":
+          if (self === lastRes.player) {
+            selectGuardianWingsActivator(lastRes.victim);
+          }
+          break;
+
+        case "Activating Guardian Wings":
+          if (self === lastRes.unit.player) {
+            props.updateLocalState(
+              applySkill("guardianWings1", lastRes.unit, lastRes.victim)
+            );
           }
           break;
 

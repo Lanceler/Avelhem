@@ -57,9 +57,7 @@ const BoardArea = (props) => {
   const { magnifiedSkill } = useSelector((state) => state.magnifiedSkill);
 
   const [zones, setZones] = useState(null);
-
   const [validZones, setValidZones] = useState([]);
-
   const [tileMode, setTileMode] = useState(false);
   const [deployClass, setDeployClass] = useState(null);
   const [selectUnitReason, setSelectUnitReason] = useState(null);
@@ -67,9 +65,7 @@ const BoardArea = (props) => {
   const [movingUnit, setMovingUnit] = useState(null);
   const [movingSpecial, setMovingSpecial] = useState(null);
   const [tacticUsed, setTacticUsed] = useState(null);
-
   const [expandedUnit, setExpandedUnit] = useState(null);
-
   const [hideModal, setHideModal] = useState(false);
 
   const [unitInfor, setUnitInfor] = useState(null);
@@ -78,31 +74,11 @@ const BoardArea = (props) => {
   const [openContingencySettings, setOpenContingencySettings] = useState(false);
 
   const {
-    activateAegis,
-    activateFrenzyBlade,
-    activateHealingRain,
-    activatePitfallTrap,
-    activateViridianGrave,
-    activateSymphonicScreech,
-    applyBurnDamage,
-    ascendPawn,
-    avelhemToScion,
-    blast,
     endExecutionPhase,
-    grantRavager,
-    freeze1,
-    freeze2,
-    ignite,
-    isAdjacent,
-    isMuted,
     move,
     newUnitStats,
-    paralyze1,
-    paralyze2,
-    strike,
     triggerMotion,
     uponDebutTalents,
-    aetherBlast,
   } = useRecurringEffects();
 
   const updateFirebase = (newGameState) => {
@@ -399,7 +375,6 @@ const BoardArea = (props) => {
 
   const moveUnit = (unit, zoneId, special) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
-
     newGameState = move(newGameState, unit, zoneId, special);
 
     if (tacticUsed !== null) {
@@ -420,400 +395,20 @@ const BoardArea = (props) => {
     setTileMode(null);
     setMovingUnit(null);
     setTacticUsed(null);
-
     dispatch(updateState(newGameState));
-
     updateFirebase(newGameState);
-  };
-
-  const resolutionUpdate = (gameState) => {
-    dispatch(updateState(gameState));
-    updateFirebase(gameState);
   };
 
   const updateLocalState = (gameState) => {
     dispatch(updateState(gameState));
   };
 
-  const selectUnit = (unit, selectedUnit, reason, special) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
+  const resolutionUpdate = (gameState) => {
+    updateLocalState(gameState);
+    updateFirebase(gameState);
+  };
 
-    if (tacticUsed !== null) {
-      newGameState.tactics[tacticUsed].stock--;
-    }
-
-    //end ""Selecting Unit"
-    newGameState.currentResolution.pop();
-
-    switch (reason) {
-      case "activate avelhem":
-        newGameState = ascendPawn(
-          newGameState,
-          selectedUnit,
-          avelhemToScion(special),
-          "Avelhem",
-          unit // repurposed to use as parameter for resonator
-        );
-        break;
-
-      case "aether-blast":
-        newGameState = aetherBlast(
-          newGameState,
-          newGameState[unit.player].units[unit.unitIndex],
-          selectedUnit
-        );
-        break;
-
-      case "blast":
-        newGameState = blast(
-          newGameState,
-          newGameState[unit.player].units[unit.unitIndex],
-          selectedUnit,
-          special
-        );
-        break;
-
-      case "strike":
-        newGameState = strike(
-          newGameState,
-          newGameState[unit.player].units[unit.unitIndex],
-          selectedUnit,
-          special
-        );
-        break;
-
-      case "ignite":
-        newGameState = ignite(
-          newGameState,
-          newGameState[unit.player].units[unit.unitIndex],
-          selectedUnit,
-          special
-        );
-        break;
-
-      case "burn damage":
-        newGameState = applyBurnDamage(newGameState, selectedUnit);
-
-        break;
-
-      case "paralyze1":
-        newGameState = paralyze1(
-          newGameState,
-          newGameState[unit.player].units[unit.unitIndex],
-          selectedUnit,
-          special
-        );
-        break;
-
-      case "paralyze2":
-        newGameState = paralyze2(
-          newGameState,
-          newGameState[unit.player].units[unit.unitIndex],
-          selectedUnit,
-          special
-        );
-        break;
-
-      case "freeze1":
-        newGameState = freeze1(
-          newGameState,
-          newGameState[unit.player].units[unit.unitIndex],
-          selectedUnit,
-          special
-        );
-        break;
-
-      case "freeze2":
-        newGameState = freeze2(
-          newGameState,
-          newGameState[unit.player].units[unit.unitIndex],
-          selectedUnit,
-          special
-        );
-        break;
-
-      case "fiery heart":
-        let fieryHeartAlly =
-          newGameState[selectedUnit.player].units[selectedUnit.unitIndex];
-
-        delete fieryHeartAlly.afflictions.burn;
-        delete fieryHeartAlly.afflictions.frostbite;
-        break;
-
-      case "purification":
-        let purificationAlly =
-          newGameState[selectedUnit.player].units[selectedUnit.unitIndex];
-
-        delete purificationAlly.afflictions.paralysis;
-        delete purificationAlly.afflictions.frostbite;
-        delete purificationAlly.afflictions.burn;
-        delete purificationAlly.afflictions.infection;
-
-        if (isAdjacent(unit, purificationAlly)) {
-          if (purificationAlly.enhancements.ward > 0) {
-            purificationAlly.enhancements.ward = Math.max(
-              purificationAlly.enhancements.ward,
-              2
-            );
-          } else {
-            purificationAlly.enhancements.ward = 2;
-          }
-        }
-        break;
-
-      case "healing rain":
-        newGameState = activateHealingRain(newGameState, selectedUnit, unit);
-        break;
-
-      case "kleptothermy ally":
-        newGameState[selectedUnit.player].units[
-          selectedUnit.unitIndex
-        ].aether = 1;
-        break;
-
-      case "kleptothermy enemy":
-        newGameState[selectedUnit.player].units[
-          selectedUnit.unitIndex
-        ].aether = 0;
-        break;
-
-      case "hydrotherapy":
-        let hydrotherapyAlly =
-          newGameState[selectedUnit.player].units[selectedUnit.unitIndex];
-
-        delete hydrotherapyAlly.afflictions.burn;
-        delete hydrotherapyAlly.afflictions.frostbite;
-        delete hydrotherapyAlly.afflictions.paralysis;
-        break;
-
-      case "aerial impetus prompt":
-        newGameState.currentResolution.push({
-          resolution: "Wind Skill",
-          resolution2: "Aerial Impetus Prompt",
-          unit: selectedUnit,
-        });
-        break;
-
-      case "aerial impetus purge":
-        newGameState.currentResolution.push({
-          resolution: "Wind Skill",
-          resolution2: "Aerial Impetus Purge",
-          unit: unit,
-          victim: selectedUnit,
-        });
-        break;
-
-      case "gale conjuration purge":
-        let galeConjurationEnemy =
-          newGameState[selectedUnit.player].units[selectedUnit.unitIndex];
-
-        delete galeConjurationEnemy.enhancements.shield;
-        delete galeConjurationEnemy.enhancements.ward;
-        delete galeConjurationEnemy.enhancements.disruption;
-
-        if (isAdjacent(unit, galeConjurationEnemy)) {
-          galeConjurationEnemy.aether = 0;
-        }
-
-        break;
-
-      case "gale conjuration restore":
-        let galeConjurationAlly =
-          newGameState[selectedUnit.player].units[selectedUnit.unitIndex];
-
-        galeConjurationAlly.aether = 1;
-        break;
-
-      case "symphonic screech":
-        newGameState = activateSymphonicScreech(
-          newGameState,
-          selectedUnit,
-          unit
-        );
-        break;
-
-      case "pitfall trap":
-        newGameState = activatePitfallTrap(newGameState, selectedUnit, unit);
-        break;
-
-      case "aegis":
-        newGameState = activateAegis(newGameState, selectedUnit, unit);
-        break;
-
-      case "amplify aura":
-        newGameState[selectedUnit.player].units[
-          selectedUnit.unitIndex
-        ].aether = 0;
-
-        if (
-          newGameState[selectedUnit.player].units[selectedUnit.unitIndex]
-            .enhancements.shield > 0
-        ) {
-          newGameState[selectedUnit.player].units[
-            selectedUnit.unitIndex
-          ].enhancements.shield = Math.max(
-            newGameState[selectedUnit.player].units[selectedUnit.unitIndex]
-              .enhancements.shield,
-            2
-          );
-        } else {
-          newGameState[selectedUnit.player].units[
-            selectedUnit.unitIndex
-          ].enhancements.shield = 2;
-        }
-        break;
-
-      case "frenzy blade":
-        newGameState = activateFrenzyBlade(newGameState, selectedUnit, unit);
-        break;
-
-      case "sow and reap striker":
-        //give SelectedUnit activationCounter
-        let striker =
-          newGameState[selectedUnit.player].units[selectedUnit.unitIndex];
-        striker.temporary.activation
-          ? (striker.temporary.activation += 1)
-          : (striker.temporary.activation = 1);
-
-        newGameState[selectedUnit.player].units[selectedUnit.unitIndex] =
-          striker;
-
-        newGameState.activatingUnit.push(striker);
-
-        newGameState.currentResolution.push({
-          resolution: "Tactic End",
-          unit: selectedUnit,
-        });
-
-        newGameState.currentResolution.push({
-          resolution: "Plant Skill",
-          resolution2: "Sow and Reap Strike",
-          unit: selectedUnit,
-        });
-
-        break;
-
-      case "viridian grave":
-        newGameState = activateViridianGrave(newGameState, selectedUnit, unit);
-        break;
-
-      case "ambrosia":
-        let ambrosiaAlly =
-          newGameState[selectedUnit.player].units[selectedUnit.unitIndex];
-
-        delete ambrosiaAlly.afflictions.burn;
-        delete ambrosiaAlly.afflictions.frostbite;
-        delete ambrosiaAlly.afflictions.paralysis;
-
-        newGameState[selectedUnit.player].units[selectedUnit.unitIndex] =
-          ambrosiaAlly;
-
-        break;
-
-      case "raptor blitz purge":
-        newGameState[selectedUnit.player].units[
-          selectedUnit.unitIndex
-        ].aether = 0;
-        break;
-
-      case "ambidexterity":
-        if (!isMuted(selectedUnit)) {
-          newGameState[selectedUnit.player].units[
-            selectedUnit.unitIndex
-          ].boosts.ambidexterity = true;
-        }
-
-        if (special === "resonated") {
-          newGameState.currentResolution.push({
-            resolution: "Sovereign Resonant Skill",
-            resolution2: "AmbidexterityR1",
-            player: self,
-            unit: selectedUnit,
-          });
-        }
-
-        if (
-          (localGameState.tactics[0].face === "Advance" &&
-            localGameState.tactics[0].stock > 0) ||
-          (localGameState.tactics[1].face === "Advance" &&
-            localGameState.tactics[1].stock > 0)
-        ) {
-          newGameState.currentResolution.push({
-            resolution: "Sovereign Resonant Skill",
-            resolution2: "Ambidexterity Conversion",
-            details: {
-              title: "Ambidexterity",
-              message: "You may convert an Advance tactic into Invoke.",
-              restriction: ["Advance"],
-              stock: 1,
-              reason: "Ambidexterity",
-              canSkip: true,
-            },
-          });
-        }
-        break;
-
-      case "dark halo":
-        newGameState[selectedUnit.player].units[selectedUnit.unitIndex] =
-          grantRavager(
-            newGameState[selectedUnit.player].units[selectedUnit.unitIndex]
-          );
-        break;
-
-      case "fated rivalry":
-        newGameState = ascendPawn(
-          newGameState,
-          selectedUnit,
-          unit.unitClass,
-          "Fated Rivalry",
-          null,
-          unit
-        );
-        break;
-
-      case "match made in heaven":
-        newGameState = ascendPawn(
-          newGameState,
-          selectedUnit,
-          unit.unitClass,
-          "Match Made in Heaven",
-          null,
-          unit
-        );
-        break;
-
-      case "vengeful legacy":
-        newGameState.currentResolution.push({
-          resolution: "Sovereign Contingent Skill",
-          resolution2: "Vengeful Legacy2",
-          player: self,
-          unit: selectedUnit,
-        });
-
-        newGameState = ascendPawn(
-          newGameState,
-          selectedUnit,
-          unit.unitClass,
-          "Vengeful Legacy",
-          null,
-          unit
-        );
-        break;
-
-      case "destine":
-        newGameState = ascendPawn(
-          newGameState,
-          selectedUnit,
-          special,
-          "Destine",
-          null
-        );
-        break;
-
-      default:
-        break;
-    }
-
+  const selectUnitEnd = (gameState) => {
     setValidZones([]);
     setTileMode(null);
     setSelectUnitReason(null);
@@ -821,9 +416,7 @@ const BoardArea = (props) => {
     setMovingUnit(null);
     setMovingSpecial(null);
     setTacticUsed(null);
-
-    dispatch(updateState(newGameState));
-    updateFirebase(newGameState);
+    resolutionUpdate(gameState);
   };
 
   //=========================
@@ -858,7 +451,7 @@ const BoardArea = (props) => {
       {zones && localGameState && (
         <div className="board-contents">
           <div className="board-physical">
-            <div className={`board-space`}>
+            <div className="board-space">
               {!["ready", "spectate"].includes(props.playerStatus) && (
                 <>{props.gameInvite()}</>
               )}
@@ -1015,10 +608,11 @@ const BoardArea = (props) => {
                           tileMode={tileMode}
                           selectUnitReason={selectUnitReason}
                           selectUnitSpecial={selectUnitSpecial}
+                          selectUnitEnd={selectUnitEnd}
                           zones={zones}
                           validZones={validZones}
-                          selectUnit={selectUnit}
                           deployClass={deployClass}
+                          tacticUsed={tacticUsed}
                           updateLocalState={updateLocalState}
                         />
                       </div>

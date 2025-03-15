@@ -34,6 +34,7 @@ const ContingentTriggered = (props) => {
     triggerBlazeOfGlory,
     triggerFatedRivalry,
     triggerFrenzyBlade,
+    triggerGuardianWings,
     triggerHealingRain,
     triggerMatchMadeInHeaven,
     triggerPitfallTrap,
@@ -151,6 +152,9 @@ const ContingentTriggered = (props) => {
       case "06-03":
         return triggerAegis(props.victim);
 
+      case "09-03":
+        return triggerGuardianWings(props.victim);
+
       default:
         return false;
     }
@@ -189,7 +193,7 @@ const ContingentTriggered = (props) => {
       break;
 
     case "Target":
-      contingentSkills.push(...["01-03", "05-03", "06-03"]);
+      contingentSkills.push(...["01-03", "05-03", "06-03", "09-03"]);
       filterSkills();
       contingencySkip(props.contingencyType);
 
@@ -208,10 +212,6 @@ const ContingentTriggered = (props) => {
 
         case "paralyze1":
           targetType = "paralyze (1 turn)";
-          break;
-
-        case "paralyze2":
-          targetType = "paralyze (2 turns)";
           break;
 
         case "freeze1":
@@ -391,6 +391,15 @@ const ContingentTriggered = (props) => {
         });
         break;
 
+      case "09-03":
+        newGameState.currentResolution.push({
+          resolution: "Avian Skill",
+          resolution2: "Select Guardian Wings Activator",
+          victim: props.victim,
+          player: self,
+        });
+        break;
+
       default:
         break;
     }
@@ -475,6 +484,11 @@ const ContingentTriggered = (props) => {
 
         <div className="modalContent2">
           <div className="modalContentText">{contingencyMessage}</div>
+          {usableSkills.length === 0 && (
+            <div className="modalContentText">
+              No applicable contingent skills in hand.
+            </div>
+          )}
           <div className="modalContent4Column modalScrollableY">
             {usableSkills.map((usableSkill, i) => (
               <div

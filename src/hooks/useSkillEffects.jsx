@@ -455,7 +455,7 @@ export const useSkillEffects = () => {
     if (
       unit !== null &&
       !isMuted(unit) &&
-      getZonesWithEnemiesAfflicted(unit, 1, "frostbite").length > 0
+      getZonesWithEnemiesAfflicted(unit, 1, "frost").length > 0
     ) {
       newGameState.currentResolution.push({
         resolution: "Water Skill",
@@ -464,7 +464,7 @@ export const useSkillEffects = () => {
         details: {
           reason: "Frigid Breath Blast",
           title: "Frigid Breath",
-          message: "You may blast an adjacent frostbitten enemy.",
+          message: "You may blast an adjacent frozen enemy.",
           no: "Skip",
           yes: "Blast",
         },
@@ -482,7 +482,7 @@ export const useSkillEffects = () => {
     newGameState.currentResolution.pop();
 
     enterSelectUnitMode(
-      getZonesWithEnemiesAfflicted(unit, 1, "frostbite"),
+      getZonesWithEnemiesAfflicted(unit, 1, "frost"),
       unit,
       newGameState,
       null,
@@ -534,7 +534,7 @@ export const useSkillEffects = () => {
     //inspect
     newGameState.currentResolution.push({
       resolution: "Water Skill",
-      resolution2: "Glacial Torrent 1",
+      resolution2: "Glacial Torrent1",
       unit: unit,
       details: {
         restriction: ["02-01", "02-02", "02-03"],
@@ -581,7 +581,7 @@ export const useSkillEffects = () => {
         details: {
           title: "Aerial Impetus",
           message:
-            "You may convert an Advance or Invoke tactic into Mobilize (4 instances).",
+            "You may reroll an Advance or Invoke tactic into a Mobilize tactic.",
           restriction: ["Advance", "Invoke"],
           stock: 1,
           reason: "Aerial Impetus",
@@ -2563,6 +2563,83 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
+  const reconnaissance1 = (unitInfo, resonator) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Reconnaissance" resolution
+    newGameState.currentResolution.pop();
+
+    //give unit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation += 1)
+      : (unit.temporary.activation = 1);
+
+    if (resonator) {
+      if (resonator !== "SA-02") {
+        newGameState.currentResolution.push({
+          resolution: "Misc.",
+          resolution2: "May float resonant skill unit",
+          unit: unit,
+          player: unit.player,
+          skill: "09-02",
+          resonator: resonator,
+        });
+      }
+
+      newGameState.currentResolution.push({
+        resolution: "Avian Skill",
+        resolution2: "ReconnaissanceR1",
+        unit: unit,
+      });
+    }
+
+    newGameState.currentResolution.push({
+      resolution: "Avian Skill",
+      resolution2: "Reconnaissance1",
+      unit: unit,
+      details: {
+        restriction: null,
+        title: "Reconnaissance",
+        reason: "Reconnaissance",
+        message:
+          "Inspect 5 skills; you may place any of them at the bottom of your repertoire. Skills selected earlier will be placed below subsequent ones.",
+        inspectionCount: 5,
+        select: "Multi",
+        selectLimit: 5,
+        outcome: "Reconnaissance",
+      },
+    });
+
+    return newGameState;
+  };
+
+  const guardianWings1 = (unitInfo, victimInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+    let victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
+
+    //end "Activating Guardian Wings" resolution
+    newGameState.currentResolution.pop();
+
+    //give unit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation += 1)
+      : (unit.temporary.activation = 1);
+
+    newGameState[victimInfo.player].units[victimInfo.unitIndex] = victim;
+
+    if (unit.unitIndex === victim.unitIndex) {
+      unit.aether = 1;
+    }
+
+    victim.enhancements.shield
+      ? (victim.enhancements.shield = Math.max(1, victim.enhancements.shield))
+      : (victim.enhancements.shield = 2);
+
+    return newGameState;
+  };
+
   //end of list
 
   const applySkill = (effect, a, b, c) => {
@@ -2740,6 +2817,10 @@ export const useSkillEffects = () => {
         return raptorBlitz1(a);
       case "raptorBlitz2":
         return raptorBlitz2(a);
+      case "reconnaissance1":
+        return reconnaissance1(a, b);
+      case "guardianWings1":
+        return guardianWings1(a, b);
     }
   };
 

@@ -1183,7 +1183,7 @@ export default function Rules() {
                 >
                   Frigid Breath
                 </span>{" "}
-                can freeze (apply frostbite) enemy units for 1 turn, while{" "}
+                can freeze (apply frost) enemy units for 1 turn, while{" "}
                 <span
                   className="rule-view-card"
                   onClick={() => {

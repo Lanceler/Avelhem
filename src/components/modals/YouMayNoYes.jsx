@@ -230,7 +230,7 @@ const YouMayNoYes = (props) => {
           props.unit,
           newGameState,
           null,
-          "paralyze2",
+          "paralyze1",
           "Geomancy"
         );
         break;

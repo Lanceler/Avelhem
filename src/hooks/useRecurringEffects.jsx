@@ -224,6 +224,33 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const activateGuardianWings = (newGameState, unit, victim) => {
+    //end Triggering Target resolution
+    // newGameState.currentResolution.pop() <-- NOT needed
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      unit: unit,
+      skill: "09-03",
+      skillConclusion: "discard",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Avian Skill",
+      resolution2: "Activating Guardian Wings",
+      unit: unit,
+      victim: victim,
+    });
+
+    newGameState.activatingSkill.push("09-03");
+    newGameState.activatingUnit.push(unit);
+
+    newGameState = applySymphonicScreech(unit, newGameState);
+
+    return newGameState;
+  };
+
   const activateHealingRain = (newGameState, unit, victim) => {
     //end Triggering Survival Ally resolution
     // newGameState.currentResolution.pop() <-- NOT needed
@@ -780,10 +807,10 @@ export const useRecurringEffects = () => {
     ) {
       newGameState[victim.player].units[victim.unitIndex].afflictions.burn = 1;
 
-      //burn gives frostbite immunity and purges overgrowth
+      //burn gives frost immunity and purges overgrowth
 
       delete newGameState[victim.player].units[victim.unitIndex].afflictions
-        .frostbite;
+        .frost;
       delete newGameState[victim.player].units[victim.unitIndex].enhancements
         .overgrowth;
     }
@@ -834,8 +861,7 @@ export const useRecurringEffects = () => {
     //checkBypassShield
     let bypassShield = false;
     switch (true) {
-      case victim.afflictions.frostbite > 0 &&
-        attacker.unitClass === "Water Scion":
+      case victim.afflictions.frost > 0 && attacker.unitClass === "Water Scion":
         bypassShield = true;
         break;
       case attacker.sharpness === 2 && type === "strike":
@@ -1004,23 +1030,21 @@ export const useRecurringEffects = () => {
       )
     ) {
       if (
-        newGameState[victim.player].units[victim.unitIndex].afflictions
-          .frostbite > 0
+        newGameState[victim.player].units[victim.unitIndex].afflictions.frost >
+        0
       ) {
-        newGameState[victim.player].units[
-          victim.unitIndex
-        ].afflictions.frostbite = Math.max(
-          newGameState[victim.player].units[victim.unitIndex].afflictions
-            .frostbite,
-          duration
-        );
+        newGameState[victim.player].units[victim.unitIndex].afflictions.frost =
+          Math.max(
+            newGameState[victim.player].units[victim.unitIndex].afflictions
+              .frost,
+            duration
+          );
       } else {
-        newGameState[victim.player].units[
-          victim.unitIndex
-        ].afflictions.frostbite = duration;
+        newGameState[victim.player].units[victim.unitIndex].afflictions.frost =
+          duration;
       }
 
-      //frostbite purges boosts, disruption, overgrowth
+      //frost purges boosts, disruption, overgrowth
       newGameState[victim.player].units[victim.unitIndex].boosts = {};
       delete newGameState[victim.player].units[victim.unitIndex].enhancements
         .disruption;
@@ -1456,25 +1480,16 @@ export const useRecurringEffects = () => {
           localGameState[unit.player].skillHand.length > 2
         );
 
-      case "02-02":
-        return canActivateSkill(unit, skill);
-
-      case "03-02":
-        return canActivateSkill(unit, skill);
-
-      case "04-02":
-        return canActivateSkill(unit, skill);
-
-      case "05-02":
-        return canActivateSkill(unit, skill);
-
       case "06-02":
         return canDiffusionR(unit);
 
+      case "02-02":
+      case "03-02":
+      case "04-02":
+      case "05-02":
       case "07-02":
-        return canActivateSkill(unit, skill);
-
       case "08-02":
+      case "09-02":
         return canActivateSkill(unit, skill);
 
       default:
@@ -1642,6 +1657,9 @@ export const useRecurringEffects = () => {
 
       case "09-01":
         return getZonesWithEnemies(unit, 2).length > 0;
+
+      case "09-02":
+        return true;
 
       case "09-03":
         return false;
@@ -1992,7 +2010,7 @@ export const useRecurringEffects = () => {
 
         unit.afflictions.anathema ? unit.afflictions.anathema-- : null;
         unit.afflictions.paralysis ? unit.afflictions.paralysis-- : null;
-        unit.afflictions.frostbite ? unit.afflictions.frostbite-- : null;
+        unit.afflictions.frost ? unit.afflictions.frost-- : null;
 
         unit.enhancements.shield ? unit.enhancements.shield-- : null;
         unit.enhancements.ward ? unit.enhancements.ward-- : null;
@@ -2914,7 +2932,7 @@ export const useRecurringEffects = () => {
     if (
       unit.enhancements.score ||
       afflictions.paralysis ||
-      afflictions.frostbite ||
+      afflictions.frost ||
       afflictions.infection
     ) {
       return true;
@@ -2930,7 +2948,7 @@ export const useRecurringEffects = () => {
       unit.enhancements.score ||
       afflictions.anathema ||
       afflictions.paralysis ||
-      afflictions.frostbite ||
+      afflictions.frost ||
       afflictions.infection
     ) {
       return true;
@@ -3068,32 +3086,6 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
-  const paralyze2 = (newGameState, attacker, victim, special) => {
-    newGameState.currentResolution.push({
-      resolution: "Apply Paralysis",
-      attacker: attacker,
-      victim: victim,
-      special: special,
-      type: "paralyze2",
-      duration: 2,
-    });
-
-    //to do in the future: consider bypass Target
-    if (triggerTarget(attacker, victim, "paralyze2")) {
-      newGameState.currentResolution.push({
-        resolution: "Triggering Contingent Skill",
-        resolution2: "Triggering Target",
-        attacker: attacker,
-        victim: victim,
-        type: "paralyze2",
-      });
-
-      newGameState.activatingTarget.push(victim);
-    }
-
-    return newGameState;
-  };
-
   const refillRepertoireAvelhem = (newGameState) => {
     //If deck empties, shuffle discard pile into it.
 
@@ -3161,6 +3153,10 @@ export const useRecurringEffects = () => {
 
   const selectAegisActivator = (victim) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    if (!zones) {
+      return;
+    }
 
     //end "Select Aegis Activator"
     newGameState.currentResolution.pop();
@@ -3329,6 +3325,10 @@ export const useRecurringEffects = () => {
   const selectFrenzyBladeActivator = (victim) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
+    if (!zones) {
+      return;
+    }
+
     //end "Select Frenzy Blade Activator"
     newGameState.currentResolution.pop();
 
@@ -3359,8 +3359,48 @@ export const useRecurringEffects = () => {
     );
   };
 
+  const selectGuardianWingsActivator = (victim) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    if (!zones) {
+      return;
+    }
+
+    //end "Select Guardian Wings Activator"
+    newGameState.currentResolution.pop();
+
+    const zonesWithAllies = getZonesWithAllies(victim, 2, true);
+    let zonesWithAvianScions = [];
+
+    for (let z of zonesWithAllies) {
+      const zone = zones[Math.floor(z / 5)][z % 5];
+      const unit = newGameState[zone.player].units[zone.unitIndex];
+
+      if (
+        unit.unitClass === "Avian Scion" &&
+        !isMuted(unit) &&
+        !isDisrupted(unit, 1)
+      ) {
+        zonesWithAvianScions.push(z);
+      }
+    }
+
+    enterSelectUnitMode(
+      zonesWithAvianScions,
+      victim,
+      newGameState,
+      null,
+      "guardian wings",
+      null
+    );
+  };
+
   const selectHealingRainActivator = (victim) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    if (!zones) {
+      return;
+    }
 
     //end "Select Healing Rain Activator"
     newGameState.currentResolution.pop();
@@ -3394,6 +3434,10 @@ export const useRecurringEffects = () => {
   const selectMatchMadeInHeavenPawn = (unit) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
+    if (!zones) {
+      return;
+    }
+
     //end "Select Match Made in Heaven Pawn"
     newGameState.currentResolution.pop();
 
@@ -3421,6 +3465,10 @@ export const useRecurringEffects = () => {
 
   const selectPitfallTrapActivator = (mover) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    if (!zones) {
+      return;
+    }
 
     //end "Select Pitfall Trap Activator"
     newGameState.currentResolution.pop();
@@ -3454,6 +3502,10 @@ export const useRecurringEffects = () => {
   const selectSymphonicScreechActivator = (activator) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
+    if (!zones) {
+      return;
+    }
+
     //end "Select Symphonic Screech Activator"
     newGameState.currentResolution.pop();
 
@@ -3486,6 +3538,10 @@ export const useRecurringEffects = () => {
   const selectVengefulLegacy = (victim) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
+    if (!zones) {
+      return;
+    }
+
     //end "Select Vengeful Legacy"
     newGameState.currentResolution.pop();
 
@@ -3513,6 +3569,10 @@ export const useRecurringEffects = () => {
 
   const selectViridianGraveActivator = (victim) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    if (!zones) {
+      return;
+    }
 
     //end "Select Viridian Grave Activator"
     newGameState.currentResolution.pop();
@@ -3694,6 +3754,26 @@ export const useRecurringEffects = () => {
     return false;
   };
 
+  const triggerGuardianWings = (victim) => {
+    const zones = JSON.parse(localGameState.zones);
+    const alliesInRange = getZonesWithAllies(victim, 2, true); // includes self
+
+    for (let i of alliesInRange) {
+      const zone = zones[Math.floor(i / 5)][i % 5];
+      const unit = localGameState[zone.player].units[zone.unitIndex];
+
+      if (
+        unit.unitClass === "Avian Scion" &&
+        !isMuted(unit) &&
+        !isDisrupted(unit, 1)
+      ) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
   const triggerHealingRain = (victim) => {
     const zones = JSON.parse(localGameState.zones);
     const alliesInRange = getZonesWithAllies(victim, 2, true); // includes self
@@ -3827,7 +3907,8 @@ export const useRecurringEffects = () => {
     if (
       triggerBlazeOfGlory(victim, type) ||
       triggerThunderThaumaturge(attacker, victim) ||
-      triggerAegis(victim)
+      triggerAegis(victim) ||
+      triggerGuardianWings(victim)
     ) {
       return true;
     }
@@ -4147,6 +4228,7 @@ export const useRecurringEffects = () => {
     activateHealingRain,
     activateFatedRivalry,
     activateFrenzyBlade,
+    activateGuardianWings,
     activateMatchMadeInHeaven,
     activatePowerAtTheFinalHour,
     activatePitfallTrap,
@@ -4221,7 +4303,6 @@ export const useRecurringEffects = () => {
     move,
     newUnitStats,
     paralyze1,
-    paralyze2,
     refillRepertoireAvelhem,
     refillRepertoireSkill,
     rollTactic,
@@ -4236,6 +4317,7 @@ export const useRecurringEffects = () => {
     selectFatedRivalry,
     selectFrenzyBladeActivator,
     selectHealingRainActivator,
+    selectGuardianWingsActivator,
     selectMatchMadeInHeavenPawn,
     selectPitfallTrapActivator,
     selectSymphonicScreechActivator,
@@ -4249,6 +4331,7 @@ export const useRecurringEffects = () => {
     triggerBlazeOfGlory,
     triggerFatedRivalry,
     triggerFrenzyBlade,
+    triggerGuardianWings,
     triggerHealingRain,
     triggerMatchMadeInHeaven,
     triggerMotion,

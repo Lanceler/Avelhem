@@ -105,7 +105,7 @@
   opacity: 0.8;
 }
 
-.frostbite {
+.frost {
   /* z-index: 397; */
   z-index: 4;
   top: -3.5px;
@@ -119,11 +119,11 @@
   filter: saturate(2.5);
 }
 
-.frostbite-1 {
-  animation: frostbitefadeInOut 3s ease infinite alternate;
+.frost-1 {
+  animation: frostfadeInOut 3s ease infinite alternate;
 }
 
-@keyframes frostbitefadeInOut {
+@keyframes frostfadeInOut {
   0%,
   25% {
     opacity: 0;
@@ -134,11 +134,11 @@
   }
 }
 
-.frostbite-2 {
-  animation: frostbitefadeInOut2 3s ease infinite alternate;
+.frost-2 {
+  animation: frostfadeInOut2 3s ease infinite alternate;
 }
 
-@keyframes frostbitefadeInOut2 {
+@keyframes frostfadeInOut2 {
   0%,
   20% {
     opacity: 0.25;

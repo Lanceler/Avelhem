@@ -87,10 +87,10 @@ const SelectCustomChoice = (props) => {
 
     case "Cold Embrace":
       canFirstChoice =
-        getZonesWithEnemiesAfflicted(unit, 1, "frostbite").length > 0 &&
+        getZonesWithEnemiesAfflicted(unit, 1, "frost").length > 0 &&
         canStrike(unit);
       canSecondChoice = getZonesWithEnemies(unit, 1).length > 0;
-      ChoiceFirstMessage = "Strike a frostbitten enemy.";
+      ChoiceFirstMessage = "Strike a frozen enemy.";
       ChoiceSecondMessage = "Freeze an adjacent enemy for 2 turns.";
       break;
 
@@ -348,7 +348,7 @@ const SelectCustomChoice = (props) => {
       case "Cold Embrace":
         if (selectedChoice === 1) {
           enterSelectUnitMode(
-            getZonesWithEnemiesAfflicted(unit, 1, "frostbite"),
+            getZonesWithEnemiesAfflicted(unit, 1, "frost"),
             unit,
             newGameState,
             null,

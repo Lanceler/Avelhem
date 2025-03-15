@@ -513,16 +513,14 @@ export const Piece = (props) => {
             </>
           )}
 
-          {/* frostbite */}
+          {/* frost */}
 
-          {props.unit.afflictions.frostbite > 0 && (
+          {props.unit.afflictions.frost > 0 && (
             <>
               <img
                 src={FrostbiteGif}
-                className={`frostbite ${
-                  props.unit.afflictions.frostbite == 1
-                    ? "frostbite-1"
-                    : "frostbite-2"
+                className={`frost ${
+                  props.unit.afflictions.frost == 1 ? "frost-1" : "frost-2"
                 }`}
               />
             </>

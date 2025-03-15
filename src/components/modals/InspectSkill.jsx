@@ -151,7 +151,46 @@ const InspectSkill = (props) => {
           if (newGameState[self].skillRepertoire.length === 0) {
             newGameState = refillRepertoireSkill(newGameState);
           }
+        } else if (props.details.outcome === "Reconnaissance") {
+          let selection = [...floatingRepertoire, ...inspectRerpertoire];
+          let SelectedRepertoireIndexes = [];
+
+          selectedSkills.reverse();
+          for (let i of selectedSkills) {
+            SelectedRepertoireIndexes.push(selection[i].repertoireIndex);
+
+            // place selected skills at bottom of repertoire (start of array)
+            newGameState[self].skillRepertoire.unshift(selection[i].id);
+          }
+
+          SelectedRepertoireIndexes.sort((a, b) => b - a);
+
+          for (let i of SelectedRepertoireIndexes) {
+            // if the selected Skill was floating, decrease floating count
+            if (i <= newGameState[self].skillFloat - 1) {
+              newGameState[self].skillFloat -= 1;
+            }
+
+            //remove card from repertoire
+            newGameState[self].skillRepertoire.splice(
+              newGameState[self].skillRepertoire.length - 1 - i,
+              1
+            );
+          }
         }
+
+        newGameState.currentResolution.push({
+          resolution: "Misc.",
+          resolution2: "Message To Player",
+          player: enemy,
+          title: props.details.title,
+          message: `Your opponent placed ${selectedSkills.length} skills at the bottom of their repertoire.`,
+          specMessage: `${
+            self === "host" ? "Gold" : "Silver"
+          } Sovereign placed ${
+            selectedSkills.length
+          } skills at the bottom of their repertoire.`,
+        });
 
         break;
     }

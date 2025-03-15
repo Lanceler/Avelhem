@@ -86,8 +86,7 @@ const UnitInfo = (props) => {
               </span>
             </p>
             <p className="unitInfo-text-desc">
-              ⬩Strike a frostbitten enemy or freeze an adjacent enemy for 2
-              turns.
+              ⬩Strike a frozen enemy or freeze an adjacent enemy for 2 turns.
             </p>
           </>
         );
@@ -286,7 +285,7 @@ const UnitInfo = (props) => {
               ⬩You are immune to Frostbite and Burn.
             </p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Your attacks against frostbitten enemies pierce Shield.
+              ⬩Your attacks against frozen enemies pierce Shield.
             </p>
           </>
         );
@@ -645,7 +644,7 @@ const UnitInfo = (props) => {
 
               {(unit.afflictions.anathema ||
                 unit.afflictions.paralysis ||
-                unit.afflictions.frostbite ||
+                unit.afflictions.frost ||
                 unit.afflictions.burn ||
                 isRooted(unit)) && (
                 <>
@@ -679,11 +678,11 @@ const UnitInfo = (props) => {
                     </>
                   )}
 
-                  {unit.afflictions.frostbite > 0 && (
+                  {unit.afflictions.frost > 0 && (
                     <>
                       <p className="unitInfo-text-heading2">
-                        Frostbite ({unit.afflictions.frostbite} turn
-                        {unit.afflictions.frostbite > 1 ? "s" : ""})
+                        Frostbite ({unit.afflictions.frost} turn
+                        {unit.afflictions.frost > 1 ? "s" : ""})
                       </p>
                       <p className="unitInfo-text-desc unitInfo-text-last">
                         ⬩<em>Frostbitten</em>, muted, and immobilized.
