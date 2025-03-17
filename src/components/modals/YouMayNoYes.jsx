@@ -38,7 +38,6 @@ const YouMayNoYes = (props) => {
     [
       "Mana Feedback",
       "Mitigate Aether-Blast",
-      "Fervent Prayer",
       "Press the Attack Avelhem",
     ].includes(props.details.reason)
   ) {
@@ -383,36 +382,6 @@ const YouMayNoYes = (props) => {
 
       case "Foreshadow Draw": //"Foreshadow Draw"
         newGameState = drawSkill(newGameState);
-        break;
-
-      case "Fervent Prayer":
-        newGameState = drawAvelhem(newGameState);
-
-        const ferventPrayerLimit = props.details.limit;
-
-        let ferventPrayerMessage = `You may draw 1 Avelhem up to ${
-          ferventPrayerLimit - 1
-        } more times.`;
-
-        if (props.details.limit - 1 === 1) {
-          ferventPrayerMessage = "You may draw 1 Avelhem 1 more time.";
-        }
-
-        if (ferventPrayerLimit - 1 > 0) {
-          newGameState.currentResolution.push({
-            resolution: "Sovereign Resonant Skill",
-            resolution2: "Fervent Prayer1",
-            player: self,
-            details: {
-              reason: "Fervent Prayer",
-              title: "Fervent Prayer",
-              message: ferventPrayerMessage,
-              no: "Stop",
-              yes: "Draw",
-              limit: ferventPrayerLimit - 1,
-            },
-          });
-        }
         break;
 
       case "Press the Attack Avelhem":

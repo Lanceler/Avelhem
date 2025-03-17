@@ -3401,23 +3401,10 @@ const UseCurrentResolution = (props) => {
           return (
             <>
               {self === lastRes.player && !props.hideModal && (
-                <YouMayNoYes
+                <InspectSkill
                   details={lastRes.details}
-                  updateFirebase={props.updateFirebase}
                   hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
-
-        case "Fervent Prayer2":
-          return (
-            <>
-              {self === lastRes.player && !props.hideModal && (
-                <SelectHandMultiAvelhem
-                  details={lastRes.details}
                   updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
                 />
               )}
             </>

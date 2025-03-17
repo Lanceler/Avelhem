@@ -375,11 +375,12 @@ export const useSovereignSkillEffects = () => {
     //end "Activating Fervent Prayer" resolution
     newGameState.currentResolution.pop();
 
+    //spend FD
     newGameState[self].fateDefiance -= 2;
 
-    let count = 2;
+    let selectLimit = 2;
     if (resonator) {
-      count = 3;
+      selectLimit = 3;
       newGameState.currentResolution.push({
         resolution: "Sovereign Resonant Skill",
         resolution2: "Fervent PrayerR1",
@@ -387,34 +388,23 @@ export const useSovereignSkillEffects = () => {
       });
     }
 
-    newGameState.currentResolution.push({
-      resolution: "Sovereign Resonant Skill",
-      resolution2: "Fervent Prayer2",
-      player: self,
-      details: {
-        reason: "Fervent Prayer",
-        title: "Fervent Prayer",
-        message: `Select up to ${count} Avelhems to retain; discard the rest.`,
-        count: count,
-      },
-    });
-
-    let limit = 4;
+    //inspect
     newGameState.currentResolution.push({
       resolution: "Sovereign Resonant Skill",
       resolution2: "Fervent Prayer1",
       player: self,
       details: {
-        reason: "Fervent Prayer",
+        restriction: null,
         title: "Fervent Prayer",
-        message: `You may draw 1 Avelhem up to ${limit} more times.`,
-        no: "Stop",
-        yes: "Draw",
-        limit: limit,
+        reason: "Fervent Prayer",
+        message: `Inspect 7 Avelhems; you may add up to ${selectLimit} of them to your hand.`,
+        inspectionCount: 7,
+        select: "Multi",
+        selectLimit: selectLimit,
+        outcome: "Add",
+        avelhem: true,
       },
     });
-
-    newGameState = drawAvelhem(newGameState);
 
     return newGameState;
   };
@@ -498,7 +488,7 @@ export const useSovereignSkillEffects = () => {
           exclusion: [],
           searchTitle: "Press the Attack",
           searchMessage:
-            "Search for 1 non-burst Scion skill that enables the activator to strike or blast",
+            "Search for 1 non-burst skill that enables the activator to strike or blast",
           outcome: "Add",
           revealTitle: "Press the Attack",
           revealMessage: "Your opponent has searched for and revealed a skill.",
@@ -519,7 +509,7 @@ export const useSovereignSkillEffects = () => {
         details: {
           reason: "Press the Attack Pawn",
           title: "Press the Attack",
-          message: "You may deploy a pawn in your frontier.",
+          message: "You may deploy a pawn.",
           no: "Skip",
           yes: "Deploy",
         },

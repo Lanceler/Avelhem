@@ -16,12 +16,13 @@ const InspectSkill = (props) => {
   const { demoGuide } = useSelector((state) => state.demoGuide);
   const dispatch = useDispatch();
 
-  const { refillRepertoireSkill } = useRecurringEffects();
+  const { refillRepertoireSkill, refillRepertoireAvelhem } =
+    useRecurringEffects();
 
   const [selectedSkill, setSelectedSkill] = useState(null);
   const [selectedSkills, setSelectedSkills] = useState([]);
 
-  const inspectCount = Math.min(
+  let inspectCount = Math.min(
     props.details.inspectionCount,
     localGameState[self].skillRepertoire.length
   );
@@ -30,6 +31,18 @@ const InspectSkill = (props) => {
     localGameState[self].skillRepertoire.length - inspectCount,
     inspectCount
   );
+
+  if (props.details.avelhem) {
+    inspectCount = Math.min(
+      props.details.inspectionCount,
+      localGameState[self].avelhemRepertoire.length
+    );
+
+    repertoire = [...localGameState[self].avelhemRepertoire].splice(
+      localGameState[self].avelhemRepertoire.length - inspectCount,
+      inspectCount
+    );
+  }
 
   //reverse display, since last card is top of deck
   let inspectRerpertoire = [];
@@ -40,16 +53,25 @@ const InspectSkill = (props) => {
     });
   }
 
-  const floatingRepertoire = inspectRerpertoire.splice(
-    0,
-    localGameState[self].skillFloat
-  );
+  let floatingRepertoire = [];
 
-  const canSelect = (skill) => {
+  if (props.details.avelhem) {
+    floatingRepertoire = inspectRerpertoire.splice(
+      0,
+      localGameState[self].avelhemFloat
+    );
+  } else {
+    floatingRepertoire = inspectRerpertoire.splice(
+      0,
+      localGameState[self].skillFloat
+    );
+  }
+
+  const canSelect = (card) => {
     if (props.details.restriction === null) {
       return true;
     } else {
-      return props.details.restriction.includes(skill);
+      return props.details.restriction.includes(card);
     }
   };
 
@@ -79,122 +101,197 @@ const InspectSkill = (props) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     newGameState.currentResolution.pop();
 
-    switch (props.details.select) {
-      case "Single":
-        if (props.details.outcome === "Add") {
-          //add selected skill from repertoire to hand
-          newGameState[self].skillHand.push(
-            newGameState[self].skillRepertoire.splice(
-              newGameState[self].skillRepertoire.length - 1 - selectedSkill,
-              1
-            )[0]
-          );
+    if (props.details.avelhem) {
+      switch (props.details.select) {
+        case "Single":
+          if (props.details.outcome === "Add") {
+            //add selected Avelhem from repertoire to hand
+            newGameState[self].avelhemHand.push(
+              newGameState[self].avelhemRepertoire.splice(
+                newGameState[self].avelhemRepertoire.length - 1 - selectedSkill,
+                1
+              )[0]
+            );
 
-          // if the selected Skill was floating, decrease floating count
-          if (selectedSkill <= newGameState[self].skillFloat - 1) {
-            newGameState[self].skillFloat -= 1;
+            // if the selected Avelhem was floating, decrease floating count
+            if (selectedSkill <= newGameState[self].avelhemFloat - 1) {
+              newGameState[self].avelhemFloat -= 1;
+            }
+
+            //reset repertoire if empty
+            if (newGameState[self].avelhemRepertoire.length === 0) {
+              newGameState = refillRepertoireAvelhem(newGameState);
+            }
+          } else if (props.details.outcome === "Float") {
+            //take selected card then put it at the top of deck (end of array)
+            newGameState[self].avelhemRepertoire.push(
+              newGameState[self].avelhemRepertoire.splice(
+                newGameState[self].avelhemRepertoire.length - 1 - selectedSkill,
+                1
+              )[0]
+            );
+
+            // if the selected Avelhem was NOT floating, increase floating count
+            if (selectedSkill > newGameState[self].avelhemFloat - 1) {
+              newGameState[self].avelhemFloat =
+                newGameState[self].avelhemFloat + 1;
+            }
+          }
+          break;
+
+        case "Multi":
+          if (props.details.outcome === "Add") {
+            let selection = [...floatingRepertoire, ...inspectRerpertoire];
+            let SelectedRepertoireIndexes = [];
+            for (let i of selectedSkills) {
+              SelectedRepertoireIndexes.push(selection[i].repertoireIndex);
+
+              // add selected cards to hand in order they were selected
+              newGameState[self].avelhemHand.push(selection[i].id);
+            }
+
+            SelectedRepertoireIndexes.sort((a, b) => b - a);
+
+            for (let i of SelectedRepertoireIndexes) {
+              // if the selected Avelhem was floating, decrease floating count
+              if (i <= newGameState[self].avelhemFloat - 1) {
+                newGameState[self].avelhemFloat -= 1;
+              }
+
+              //remove card from repertoire
+              newGameState[self].avelhemRepertoire.splice(
+                newGameState[self].avelhemRepertoire.length - 1 - i,
+                1
+              );
+            }
+
+            //reset repertoire if empty
+            if (newGameState[self].avelhemRepertoire.length === 0) {
+              newGameState = refillRepertoireAvelhem(newGameState);
+            }
           }
 
-          //reset repertoire if empty
-          if (newGameState[self].skillRepertoire.length === 0) {
-            newGameState = refillRepertoireSkill(newGameState);
-          }
-        } else if (props.details.outcome === "Float") {
-          //take selected card then put it at the top of deck (end of array)
-          newGameState[self].skillRepertoire.push(
-            newGameState[self].skillRepertoire.splice(
-              newGameState[self].skillRepertoire.length - 1 - selectedSkill,
-              1
-            )[0]
-          );
+          break;
+      }
+    } else {
+      // Skills
+      switch (props.details.select) {
+        case "Single":
+          if (props.details.outcome === "Add") {
+            //add selected skill from repertoire to hand
+            newGameState[self].skillHand.push(
+              newGameState[self].skillRepertoire.splice(
+                newGameState[self].skillRepertoire.length - 1 - selectedSkill,
+                1
+              )[0]
+            );
 
-          // if the selected Skill was NOT floating, increase floating count
-          if (selectedSkill > newGameState[self].skillFloat - 1) {
-            newGameState[self].skillFloat = newGameState[self].skillFloat + 1;
-          }
-        }
-        break;
-
-      case "Multi":
-        if (props.details.outcome === "Add") {
-          if (props.details.reason === "Glacial Torrent") {
-            let unitInfo = props.unit;
-            let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-            unit.boosts.glacialTorrent = selectedSkills.length >= 2 ? 2 : 1;
-          }
-
-          let selection = [...floatingRepertoire, ...inspectRerpertoire];
-          let SelectedRepertoireIndexes = [];
-          for (let i of selectedSkills) {
-            SelectedRepertoireIndexes.push(selection[i].repertoireIndex);
-
-            // add selected cards to hand in order they were selected
-            newGameState[self].skillHand.push(selection[i].id);
-          }
-
-          SelectedRepertoireIndexes.sort((a, b) => b - a);
-
-          for (let i of SelectedRepertoireIndexes) {
             // if the selected Skill was floating, decrease floating count
-            if (i <= newGameState[self].skillFloat - 1) {
+            if (selectedSkill <= newGameState[self].skillFloat - 1) {
               newGameState[self].skillFloat -= 1;
             }
 
-            //remove card from repertoire
-            newGameState[self].skillRepertoire.splice(
-              newGameState[self].skillRepertoire.length - 1 - i,
-              1
+            //reset repertoire if empty
+            if (newGameState[self].skillRepertoire.length === 0) {
+              newGameState = refillRepertoireSkill(newGameState);
+            }
+          } else if (props.details.outcome === "Float") {
+            //take selected card then put it at the top of deck (end of array)
+            newGameState[self].skillRepertoire.push(
+              newGameState[self].skillRepertoire.splice(
+                newGameState[self].skillRepertoire.length - 1 - selectedSkill,
+                1
+              )[0]
             );
+
+            // if the selected Skill was NOT floating, increase floating count
+            if (selectedSkill > newGameState[self].skillFloat - 1) {
+              newGameState[self].skillFloat = newGameState[self].skillFloat + 1;
+            }
           }
+          break;
 
-          //reset repertoire if empty
-          if (newGameState[self].skillRepertoire.length === 0) {
-            newGameState = refillRepertoireSkill(newGameState);
-          }
-        } else if (props.details.outcome === "Reconnaissance") {
-          let selection = [...floatingRepertoire, ...inspectRerpertoire];
-          let SelectedRepertoireIndexes = [];
-
-          selectedSkills.reverse();
-          for (let i of selectedSkills) {
-            SelectedRepertoireIndexes.push(selection[i].repertoireIndex);
-
-            // place selected skills at bottom of repertoire (start of array)
-            newGameState[self].skillRepertoire.unshift(selection[i].id);
-          }
-
-          SelectedRepertoireIndexes.sort((a, b) => b - a);
-
-          for (let i of SelectedRepertoireIndexes) {
-            // if the selected Skill was floating, decrease floating count
-            if (i <= newGameState[self].skillFloat - 1) {
-              newGameState[self].skillFloat -= 1;
+        case "Multi":
+          if (props.details.outcome === "Add") {
+            if (props.details.reason === "Glacial Torrent") {
+              let unitInfo = props.unit;
+              let unit =
+                newGameState[unitInfo.player].units[unitInfo.unitIndex];
+              unit.boosts.glacialTorrent = selectedSkills.length >= 2 ? 2 : 1;
             }
 
-            //remove card from repertoire
-            newGameState[self].skillRepertoire.splice(
-              newGameState[self].skillRepertoire.length - 1 - i,
-              1
-            );
+            let selection = [...floatingRepertoire, ...inspectRerpertoire];
+            let SelectedRepertoireIndexes = [];
+            for (let i of selectedSkills) {
+              SelectedRepertoireIndexes.push(selection[i].repertoireIndex);
+
+              // add selected cards to hand in order they were selected
+              newGameState[self].skillHand.push(selection[i].id);
+            }
+
+            SelectedRepertoireIndexes.sort((a, b) => b - a);
+
+            for (let i of SelectedRepertoireIndexes) {
+              // if the selected Skill was floating, decrease floating count
+              if (i <= newGameState[self].skillFloat - 1) {
+                newGameState[self].skillFloat -= 1;
+              }
+
+              //remove card from repertoire
+              newGameState[self].skillRepertoire.splice(
+                newGameState[self].skillRepertoire.length - 1 - i,
+                1
+              );
+            }
+
+            //reset repertoire if empty
+            if (newGameState[self].skillRepertoire.length === 0) {
+              newGameState = refillRepertoireSkill(newGameState);
+            }
+          } else if (props.details.outcome === "Reconnaissance") {
+            let selection = [...floatingRepertoire, ...inspectRerpertoire];
+            let SelectedRepertoireIndexes = [];
+
+            selectedSkills.reverse();
+            for (let i of selectedSkills) {
+              SelectedRepertoireIndexes.push(selection[i].repertoireIndex);
+
+              // place selected skills at bottom of repertoire (start of array)
+              newGameState[self].skillRepertoire.unshift(selection[i].id);
+            }
+
+            SelectedRepertoireIndexes.sort((a, b) => b - a);
+
+            for (let i of SelectedRepertoireIndexes) {
+              // if the selected Skill was floating, decrease floating count
+              if (i <= newGameState[self].skillFloat - 1) {
+                newGameState[self].skillFloat -= 1;
+              }
+
+              //remove card from repertoire
+              newGameState[self].skillRepertoire.splice(
+                newGameState[self].skillRepertoire.length - 1 - i,
+                1
+              );
+            }
           }
-        }
 
-        newGameState.currentResolution.push({
-          resolution: "Misc.",
-          resolution2: "Message To Player",
-          player: enemy,
-          title: props.details.title,
-          message: `Your opponent placed ${selectedSkills.length} skills at the bottom of their repertoire.`,
-          specMessage: `${
-            self === "host" ? "Gold" : "Silver"
-          } Sovereign placed ${
-            selectedSkills.length
-          } skills at the bottom of their repertoire.`,
-        });
+          newGameState.currentResolution.push({
+            resolution: "Misc.",
+            resolution2: "Message To Player",
+            player: enemy,
+            title: props.details.title,
+            message: `Your opponent placed ${selectedSkills.length} skills at the bottom of their repertoire.`,
+            specMessage: `${
+              self === "host" ? "Gold" : "Silver"
+            } Sovereign placed ${
+              selectedSkills.length
+            } skills at the bottom of their repertoire.`,
+          });
 
-        break;
+          break;
+      }
     }
-
     //INSPECTION DOES NOT SHUFFLE
 
     dispatch(updateState(newGameState));
@@ -256,7 +353,7 @@ const InspectSkill = (props) => {
             <div
               className={`modalScrollableY ${demoGuide ? "demoBlocker" : ""}`}
             >
-              {localGameState[self].skillFloat > 0 && (
+              {floatingRepertoire.length > 0 && (
                 <>
                   <div className="modalContentText">Floating cards</div>
                   <div className="modalContent4Column">
@@ -299,7 +396,7 @@ const InspectSkill = (props) => {
                 </>
               )}
 
-              {localGameState[self].skillFloat > 0 &&
+              {floatingRepertoire.length > 0 &&
                 inspectRerpertoire.length > 0 && (
                   <div className="modalContentText">Non-floating cards</div>
                 )}
@@ -307,18 +404,16 @@ const InspectSkill = (props) => {
               <div className="modalContent4Column">
                 {inspectRerpertoire.map((usableSkill, i) => (
                   <div
-                    key={i + localGameState[self].skillFloat}
+                    key={i + floatingRepertoire.length}
                     className={`modalOptionOutline modalCardOptionOutline ${
-                      selectedSkills.includes(
-                        i + localGameState[self].skillFloat
-                      )
+                      selectedSkills.includes(i + floatingRepertoire.length)
                         ? "modalCardOptionOutlineSelected"
                         : ""
                     }`}
                     onClick={() => {
                       handleClick(
                         canSelect(usableSkill.id),
-                        i + localGameState[self].skillFloat
+                        i + floatingRepertoire.length
                       );
                       // handleUpdateDemoGuide();
                     }}
@@ -328,7 +423,7 @@ const InspectSkill = (props) => {
                         canClick(
                           "Skill Card",
                           usableSkill,
-                          i + localGameState[self].skillFloat
+                          i + floatingRepertoire.length
                         )
                           ? "demoClick"
                           : ""
@@ -336,14 +431,14 @@ const InspectSkill = (props) => {
                           `}
                       style={{
                         boxShadow: selectedSkills.includes(
-                          i + localGameState[self].skillFloat
+                          i + floatingRepertoire.length
                         )
                           ? "none"
                           : "",
                       }}
                     >
                       <SkillMultiSelect
-                        i={i + localGameState[self].skillFloat}
+                        i={i + floatingRepertoire.length}
                         usableSkill={usableSkill.id}
                         canAdd={canSelect(usableSkill.id)}
                         selectedSkills={selectedSkills}
@@ -359,7 +454,7 @@ const InspectSkill = (props) => {
             <div
               className={`modalScrollableY ${demoGuide ? "demoBlocker" : ""}`}
             >
-              {localGameState[self].skillFloat > 0 && (
+              {floatingRepertoire.length > 0 && (
                 <>
                   <div className="modalContentText">Floating cards</div>
                   <div className="modalContent4Column">
@@ -400,7 +495,7 @@ const InspectSkill = (props) => {
                 </>
               )}
 
-              {localGameState[self].skillFloat > 0 &&
+              {floatingRepertoire.length > 0 &&
                 inspectRerpertoire.length > 0 && (
                   <div className="modalContentText">Non-floating cards</div>
                 )}
@@ -408,16 +503,16 @@ const InspectSkill = (props) => {
               <div className="modalContent4Column">
                 {inspectRerpertoire.map((usableSkill, i) => (
                   <div
-                    key={i + localGameState[self].skillFloat}
+                    key={i + floatingRepertoire.length}
                     className={`modalOptionOutline modalCardOptionOutline ${
-                      selectedSkill === i + localGameState[self].skillFloat
+                      selectedSkill === i + floatingRepertoire.length
                         ? "modalCardOptionOutlineSelected"
                         : ""
                     }`}
                     onClick={() => {
                       handleClick(
                         canSelect(usableSkill.id),
-                        i + localGameState[self].skillFloat
+                        i + floatingRepertoire.length
                       );
                       // handleUpdateDemoGuide();
                     }}
@@ -427,7 +522,7 @@ const InspectSkill = (props) => {
                         canClick(
                           "Skill Card",
                           usableSkill,
-                          i + localGameState[self].skillFloat
+                          i + floatingRepertoire.length
                         )
                           ? "demoClick"
                           : ""
@@ -435,13 +530,13 @@ const InspectSkill = (props) => {
                           `}
                       style={{
                         boxShadow:
-                          selectedSkill === i + localGameState[self].skillFloat
+                          selectedSkill === i + floatingRepertoire.length
                             ? "none"
                             : "",
                       }}
                     >
                       <Skill
-                        i={i + localGameState[self].skillFloat}
+                        i={i + floatingRepertoire.length}
                         usableSkill={usableSkill}
                         canActivateSkill={canSelect(usableSkill.id)}
                       />

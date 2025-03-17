@@ -27,7 +27,6 @@ const SelectHandMultiAvelhem = (props) => {
 
   switch (props.details.reason) {
     case "Avelhem Hand Limit":
-    case "Fervent Prayer":
       skipMessage = "Discard All";
       selectMessage = "Retain";
   }
@@ -38,7 +37,6 @@ const SelectHandMultiAvelhem = (props) => {
 
     switch (props.details.reason) {
       case "Avelhem Hand Limit":
-      case "Fervent Prayer":
         // console.log(selectedAvelhems);
         //1. sort selected avelhems in descending order so they can be spliced smoothly
         let sortedSelectedAvelhems = [...selectedAvelhems].sort(
@@ -95,7 +93,6 @@ const SelectHandMultiAvelhem = (props) => {
 
     switch (props.details.reason) {
       case "Avelhem Hand Limit":
-      case "Fervent Prayer":
         //1. add entire hand to vestige
 
         newGameState[self].avelhemVestige = [
@@ -111,10 +108,6 @@ const SelectHandMultiAvelhem = (props) => {
       default:
         break;
     }
-
-    // console.log("update");
-    // console.log(newGameState[self].avelhemHand);
-    // console.log(newGameState[self].avelhemVestige);
 
     dispatch(updateState(newGameState));
     // props.updateFirebase(newGameState);
