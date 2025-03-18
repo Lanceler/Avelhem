@@ -3540,7 +3540,7 @@ const UseCurrentResolution = (props) => {
           return (
             <>
               {self === lastRes.player && !props.hideModal && (
-                <SelectCustomChoice
+                <YouMayNoYes
                   details={lastRes.details}
                   updateFirebase={props.updateFirebase}
                   hideOrRevealModale={props.hideOrRevealModale}

@@ -123,7 +123,7 @@ export const useSkillEffects = () => {
       canSkip: false,
       details: {
         title: "Conflagration",
-        message: "Spend 1 skill to blast an adjacent enemy.",
+        message: "Spend 1 skill to blast an adjacent foe.",
         restriction: null,
         reason: "Conflagration",
       },
@@ -150,7 +150,7 @@ export const useSkillEffects = () => {
           details: {
             reason: "Conflagration Ignite",
             title: "Conflagration",
-            message: "You may ignite an adjacent enemy.",
+            message: "You may ignite an adjacent foe.",
             no: "Skip",
             yes: "Ignite",
           },
@@ -221,7 +221,7 @@ export const useSkillEffects = () => {
           details: {
             title: "Blaze of Glory",
             message:
-              "You may reveal 1 “Blaze of Glory” to ignite a different adjacent enemy for 1 turn.",
+              "You may reveal 1 “Blaze of Glory” to ignite a different adjacent foe.",
             restriction: ["01-03"],
             reason: "Blaze of Glory",
             adjacentEnemies,
@@ -333,8 +333,7 @@ export const useSkillEffects = () => {
         unit: unit,
         details: {
           title: "Resplendence",
-          message:
-            "You may spend 1 skill to ignite an adjacent enemy for 1 turn.",
+          message: "You may spend 1 skill to ignite an adjacent foe.",
           restriction: null,
           reason: "Resplendence",
         },
@@ -436,8 +435,7 @@ export const useSkillEffects = () => {
           reason: "Frigid Breath3",
           restriction: null,
           title: "Frigid Breath",
-          message:
-            "You may float 1 skill to freeze an adjacent enemy for 1 turn.",
+          message: "You may float 1 skill to freeze an adjacent foe.",
         },
       });
     }
@@ -464,7 +462,7 @@ export const useSkillEffects = () => {
         details: {
           reason: "Frigid Breath Blast",
           title: "Frigid Breath",
-          message: "You may blast an adjacent frozen enemy.",
+          message: "You may blast an adjacent frozen foe.",
           no: "Skip",
           yes: "Blast",
         },
@@ -868,7 +866,7 @@ export const useSkillEffects = () => {
           details: {
             reason: "Cataclysmic Tempest 2nd Paralyze",
             title: "Cataclysmic Tempest",
-            message: "You may paralyze another adjacent enemy for 1 turn.",
+            message: "You may paralyze another adjacent foe.",
             no: "Skip",
             yes: "Paralyze",
             adjacentEnemies: adjacentEnemies,
@@ -950,7 +948,7 @@ export const useSkillEffects = () => {
           details: {
             title: "Cataclysmic Tempest",
             message:
-              "You may reveal 1 Wind skill to blast an adjacent paralyzed enemy.",
+              "You may reveal 1 Wind skill to blast an adjacent paralyzed foe.",
             restriction: ["03-01", "03-02", "03-03", "03-04"],
             reason: "Cataclysmic Tempest",
           },
@@ -1103,7 +1101,7 @@ export const useSkillEffects = () => {
           details: {
             reason: "Upheaval 2nd Paralyze",
             title: "Upheaval",
-            message: "You may paralyze another adjacent enemy for 1 turn.",
+            message: "You may paralyze another adjacent foe.",
             no: "Skip",
             yes: "Paralyze",
             adjacentEnemies: adjacentEnemies,
@@ -1301,7 +1299,7 @@ export const useSkillEffects = () => {
         details: {
           reason: "Geomancy Paralyze",
           title: "Geomancy",
-          message: "You may paralyze an adjacent enemy for 2 turns.",
+          message: "You may paralyze an adjacent foe.",
           no: "Skip",
           yes: "Paralyze",
         },
@@ -1363,19 +1361,11 @@ export const useSkillEffects = () => {
             reason: "Chain Lightning Blast",
             title: "Chain Lightning",
             message:
-              "You may spend 1 Charge to blast an enemy adjacent to the initial one.",
+              "You may spend 1 Charge to blast a foe adjacent to the initial one.",
             no: "Skip",
             yes: "Blast",
             adjacentEnemies: adjacentEnemies,
           },
-          // details: {
-          //   title: "Chain Lightning",
-          //   message:
-          //     "You may reveal 1 Lightning skill or spend 1 Charge to blast an enemy adjacent to the previous one.",
-          //   restriction: ["05-01", "05-02", "05-03", "05-04"],
-          //   reason: "Chain Lightning Blast",
-          //   adjacentEnemies: adjacentEnemies,
-          // },
         });
       }
     }
@@ -1492,7 +1482,7 @@ export const useSkillEffects = () => {
           details: {
             reason: "Zip and Zap Blast",
             title: "Zip and Zap",
-            message: "You may blast an adjacent enemy.",
+            message: "You may blast an adjacent foe.",
             no: "Skip",
             yes: "Blast",
           },
@@ -1688,7 +1678,7 @@ export const useSkillEffects = () => {
 
     delete unit.temporary.previousTarget;
 
-    let d1Message = "Use an Assault tactic to blast an adjacent enemy.";
+    let d1Message = "Use an Assault tactic to blast an adjacent foe.";
     let d1Restriction = ["Assault"];
 
     if (resonator) {
@@ -1703,7 +1693,7 @@ export const useSkillEffects = () => {
         });
       }
 
-      d1Message = "Use an Assault or Invoke tactic to blast an adjacent enemy.";
+      d1Message = "Use an Assault or Invoke tactic to blast an adjacent foe.";
       d1Restriction = ["Assault", "Invoke"];
 
       //2. Resonance
@@ -1756,7 +1746,7 @@ export const useSkillEffects = () => {
           details: {
             reason: "Diffusion 2nd Blast",
             title: "Diffusion",
-            message: "You may blast another adjacent enemy.",
+            message: "You may blast another adjacent foe.",
             no: "Skip",
             yes: "Blast",
             adjacentEnemies: adjacentEnemies,
@@ -1932,7 +1922,7 @@ export const useSkillEffects = () => {
           details: {
             reason: "Magnetic Shockwave 2nd Paralyze",
             title: "Magnetic Shockwave",
-            message: "You may paralyze another adjacent enemy for 1 turn.",
+            message: "You may paralyze another adjacent foe.",
             no: "Skip",
             yes: "Paralyze",
             adjacentEnemies: adjacentEnemies,
@@ -1961,7 +1951,7 @@ export const useSkillEffects = () => {
         details: {
           reason: "Magnetic Shockwave Blast",
           title: "Magnetic Shockwave",
-          message: "You may blast an adjacent paralyzed enemy.",
+          message: "You may blast an adjacent paralyzed foe.",
           no: "Skip",
           yes: "Blast",
           adjacentEnemies: adjacentEnemies,
@@ -2167,8 +2157,7 @@ export const useSkillEffects = () => {
         unit: unit,
         details: {
           title: "Arsenal Onslaught",
-          message:
-            "You may reveal 1 Metal skill to paralyze an adjacent enemy for 1 turn.",
+          message: "You may reveal 1 Metal skill to paralyze an adjacent foe.",
           restriction: ["07-01", "07-02", "07-03"],
           reason: "Arsenal Onslaught Paralyze",
         },
@@ -2197,8 +2186,7 @@ export const useSkillEffects = () => {
         unit: unit,
         details: {
           title: "Arsenal Onslaught",
-          message:
-            "You may spend 1 skill to strike or blast an adjacent enemy.",
+          message: "You may spend 1 skill to strike or blast an adjacent foe.",
           restriction: null,
           reason: "Arsenal Onslaught Attack",
         },

@@ -13,14 +13,8 @@ export const useSovereignSkillEffects = () => {
   const { self, enemy } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const {
-    avelhemToScion,
-    canDeploy,
-    drawAvelhem,
-    drawSkill,
-    grantRavager,
-    isAdjacent,
-  } = useRecurringEffects();
+  const { avelhemToScion, canDeploy, drawSkill, grantRavager, isAdjacent } =
+    useRecurringEffects();
 
   const { getScionSet, pressTheAttackList, sovereignSkillList } =
     useCardDatabase();
@@ -549,7 +543,7 @@ export const useSovereignSkillEffects = () => {
       details: {
         reason: "Power at the Final Hour",
         title: "Power at the Final Hour",
-        message: "Ascend the pawn to any eligible class.",
+        message: "Ascend the pawn to any eligible Scion.",
       },
     });
 
@@ -655,9 +649,12 @@ export const useSovereignSkillEffects = () => {
         resolution2: "Fated Rivalry3",
         player: self,
         details: {
-          title: "Fated Rivalry",
           reason: "Fated Rivalry",
+          title: "Fated Rivalry",
           unit: unit1,
+          message: "You may search for 1 skill of their class.",
+          no: "Skip",
+          yes: "Search",
         },
       });
     }

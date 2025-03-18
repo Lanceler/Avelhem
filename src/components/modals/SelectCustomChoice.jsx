@@ -16,15 +16,13 @@ const SelectCustomChoice = (props) => {
   const dispatch = useDispatch();
 
   const [selectedChoice, setSelectedChoice] = useState(null);
-  const { allBurstSkills, getScionSet } = useCardDatabase();
+  const { allBurstSkills } = useCardDatabase();
 
   useEffect(() => {
     setSelectedChoice(null);
   }, [props.details.reason]);
 
   const {
-    blast,
-    canBlast,
     canMove,
     canRaptorBlitzBlast,
     canSowAndReapBlast,
@@ -38,7 +36,6 @@ const SelectCustomChoice = (props) => {
     getZonesWithAllies,
     getZonesWithEnemies,
     getZonesWithEnemiesAfflicted,
-    strike,
   } = useRecurringEffects();
 
   let newGameState = JSON.parse(JSON.stringify(localGameState));
@@ -82,7 +79,7 @@ const SelectCustomChoice = (props) => {
       canSecondChoice = getZonesWithEnemies(unit, 1).length > 0;
       ChoiceFirstMessage =
         "Restore your Aether or that of an ally within 2 spaces.";
-      ChoiceSecondMessage = "Purge an adjacent enemy’s Aether.";
+      ChoiceSecondMessage = "Purge an adjacent foe’s Aether.";
       break;
 
     case "Cold Embrace":
@@ -90,8 +87,8 @@ const SelectCustomChoice = (props) => {
         getZonesWithEnemiesAfflicted(unit, 1, "frost").length > 0 &&
         canStrike(unit);
       canSecondChoice = getZonesWithEnemies(unit, 1).length > 0;
-      ChoiceFirstMessage = "Strike a frozen enemy.";
-      ChoiceSecondMessage = "Freeze an adjacent enemy for 2 turns.";
+      ChoiceFirstMessage = "Strike a frozen foe.";
+      ChoiceSecondMessage = "Freeze an adjacent foe for 2 turns.";
       break;
 
     case "Aerial Impetus":
@@ -101,7 +98,7 @@ const SelectCustomChoice = (props) => {
       canSecondChoice = getZonesWithEnemies(unit, 1).length > 0;
       ChoiceFirstMessage =
         "Float 1 skill to prompt an adjacent ally to traverse.";
-      ChoiceSecondMessage = "Purge an adjacent enemy’s Aether and Shield.";
+      ChoiceSecondMessage = "Purge an adjacent foe’s Aether and Shield.";
       break;
 
     case "Geomancy":
@@ -190,8 +187,8 @@ const SelectCustomChoice = (props) => {
     case "Sow and Reap":
       canFirstChoice = canSowAndReapBlast(unit);
       canSecondChoice = canSowAndReapStrike(unit);
-      ChoiceFirstMessage = "Blast (pierce Shield) an adjacent rooted enemy.";
-      ChoiceSecondMessage = "Prompt an adjacent ally to strike a rooted enemy.";
+      ChoiceFirstMessage = "Blast (pierce Shield) an adjacent rooted foe.";
+      ChoiceSecondMessage = "Prompt an adjacent ally to strike a rooted foe.";
       break;
 
     case "Everblooming":
@@ -209,8 +206,8 @@ const SelectCustomChoice = (props) => {
     case "Raptor Blitz":
       canFirstChoice = canRaptorBlitzBlast(unit);
       canSecondChoice = true;
-      ChoiceFirstMessage = "Blast an adjacent enemy that lacks Aether.";
-      ChoiceSecondMessage = "Purge the Aether of an enemy within 2 spaces.";
+      ChoiceFirstMessage = "Blast an adjacent foe that lacks Aether.";
+      ChoiceSecondMessage = "Purge the Aether of a foe within 2 spaces.";
       break;
 
     case "Tea for Two":
@@ -236,13 +233,6 @@ const SelectCustomChoice = (props) => {
       ChoiceFirstMessage = "Recover then reveal 1 burst skill.";
       ChoiceSecondMessage =
         "Search for any skill; if successful, reveal and discard it.";
-      break;
-
-    case "Fated Rivalry":
-      canFirstChoice = true;
-      canSecondChoice = true;
-      ChoiceFirstMessage = "Draw 2 skills.";
-      ChoiceSecondMessage = "Search for 1 non-burst skill of their class.";
       break;
   }
 
@@ -779,32 +769,6 @@ const SelectCustomChoice = (props) => {
               specMessage: `${
                 self === "host" ? "Gold" : "Silver"
               } Sovereign has searched for, revealed, and discarded a skill.`,
-            },
-          });
-        }
-        break;
-
-      case "Fated Rivalry":
-        if (selectedChoice === 1) {
-          newGameState = drawSkill(newGameState);
-          newGameState = drawSkill(newGameState);
-        } else {
-          newGameState.currentResolution.push({
-            resolution: "Search Card",
-            player: self,
-            details: {
-              restriction: getScionSet(props.details.unit.unitClass),
-              exclusion: allBurstSkills(),
-              searchTitle: "Fated Rivalry",
-              searchMessage: "Search for 1 non-burst skill of their class",
-              outcome: "Add",
-              revealTitle: null,
-              revealMessage: null,
-              messageTitle: "Fated Rivalry",
-              message: "Your opponent has searched for a skill.",
-              specMessage: `${
-                self === "host" ? "Gold" : "Silver"
-              } Sovereign has searched for a skill.`,
             },
           });
         }

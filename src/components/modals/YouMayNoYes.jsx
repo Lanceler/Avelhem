@@ -7,7 +7,7 @@ import { updateDemoCount } from "../../redux/demoCount";
 
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
-// import { useCardDatabase } from "../../hooks/useCardDatabase";
+import { useCardDatabase } from "../../hooks/useCardDatabase";
 
 const YouMayNoYes = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
@@ -16,7 +16,7 @@ const YouMayNoYes = (props) => {
   const { demoCount } = useSelector((state) => state.demoCount);
   const dispatch = useDispatch();
 
-  // const { allBurstSkills, getScionSet } = useCardDatabase();
+  const { allBurstSkills, getScionSet } = useCardDatabase();
 
   const {
     drawAvelhem,
@@ -39,6 +39,7 @@ const YouMayNoYes = (props) => {
       "Mana Feedback",
       "Mitigate Aether-Blast",
       "Press the Attack Avelhem",
+      "Fated Rivalry",
     ].includes(props.details.reason)
   ) {
     updateData = true;
@@ -392,6 +393,27 @@ const YouMayNoYes = (props) => {
         newGameState.currentResolution.push({
           resolution: "Deploying Pawn",
           zoneIds: getVacantFrontier(),
+        });
+        break;
+
+      case "Fated Rivalry":
+        newGameState.currentResolution.push({
+          resolution: "Search Card",
+          player: self,
+          details: {
+            restriction: getScionSet(props.details.unit.unitClass),
+            exclusion: allBurstSkills(),
+            searchTitle: "Fated Rivalry",
+            searchMessage: "Search for 1 non-burst skill of their class",
+            outcome: "Add",
+            revealTitle: null,
+            revealMessage: null,
+            messageTitle: "Fated Rivalry",
+            message: "Your opponent has searched for a skill.",
+            specMessage: `${
+              self === "host" ? "Gold" : "Silver"
+            } Sovereign has searched for a skill.`,
+          },
         });
         break;
 
