@@ -23,6 +23,7 @@ import SelectElement from "../components/modals/SelectElement";
 import SelectResonator from "../components/modals/SelectResonator";
 import SelectHandMultiAvelhem from "../components/modals/SelectHandMultiAvelhem";
 import SelectHandMultiSkill from "../components/modals/SelectHandMultiSkill";
+import RevealEnemyHand from "../components/modals/RevealEnemyHand";
 import RevealSkill from "../components/modals/RevealSkill";
 import SelectUnitAbility from "../components/modals/SelectUnitAbility";
 import SelectTacticalAction from "../components/modals/SelectTacticalAction";
@@ -52,7 +53,7 @@ const UseCurrentResolution = (props) => {
     applyAnathema,
     applyBurn,
     applyDamage,
-    applyFrostbite,
+    applyFrost,
     applyParalysis,
     applyScore,
     appointShield,
@@ -120,6 +121,7 @@ const UseCurrentResolution = (props) => {
   } = useSovereignSkillEffects();
 
   const {
+    eternalEmber1,
     afterburner1,
     afterburner2,
     fieryHeart1,
@@ -129,7 +131,10 @@ const UseCurrentResolution = (props) => {
     coldEmbrace1,
     airDash1,
     reapTheWhirlwind1,
+    aeromancy1,
     secondWind1,
+    saltTheEarth1,
+    mountainStance1,
     fortify1,
     leylineConvergence1,
     galvanize1,
@@ -137,7 +142,6 @@ const UseCurrentResolution = (props) => {
     arcFlash2,
     particleBeam1,
     particleBeam2,
-    particleBeam3,
     auraAmplication1,
     brandish1,
     ballisticArmor1,
@@ -146,12 +150,12 @@ const UseCurrentResolution = (props) => {
     ambrosia1,
   } = useUnitAbilityEffects();
 
-  const animationDelay = () => {
+  const animationDelay = (t) => {
     setTimeout(() => {
       const newGameState = JSON.parse(JSON.stringify(localGameState));
       newGameState.currentResolution.pop();
       dispatch(updateState(newGameState));
-    }, 250);
+    }, t);
   };
 
   const avelhemConclusion = (
@@ -214,32 +218,6 @@ const UseCurrentResolution = (props) => {
         if (unit) {
           unit = applyAnathema(unit);
         }
-
-        if (unit.temporary.eternalEmberActivation) {
-          delete unit.temporary.eternalEmberActivation;
-
-          newGameState.activatingUnit.push(unit);
-          newGameState.activatingSkill.push("EternalEmber");
-
-          newGameState.currentResolution.push({
-            resolution: "Unit Talent",
-            resolution2: "Talent Conclusion",
-            unit: unit,
-          });
-
-          newGameState.currentResolution.push({
-            resolution: "Unit Talent",
-            resolution2: "Activating Eternal Ember",
-            unit: unit,
-            details: {
-              title: "Eternal Ember",
-              message:
-                "You may spend 1 skill to reduce the duration of Anathema to 1 turn.",
-              restriction: null,
-              reason: "Eternal Ember",
-            },
-          });
-        }
       }
 
       dispatch(updateState(newGameState));
@@ -290,32 +268,6 @@ const UseCurrentResolution = (props) => {
         if (unit) {
           unit = applyAnathema(unit);
         }
-
-        if (unit.temporary.eternalEmberActivation) {
-          delete unit.temporary.eternalEmberActivation;
-
-          newGameState.activatingUnit.push(unit);
-          newGameState.activatingSkill.push("EternalEmber");
-
-          newGameState.currentResolution.push({
-            resolution: "Unit Talent",
-            resolution2: "Talent Conclusion",
-            unit: unit,
-          });
-
-          newGameState.currentResolution.push({
-            resolution: "Unit Talent",
-            resolution2: "Activating Eternal Ember",
-            unit: unit,
-            details: {
-              title: "Eternal Ember",
-              message:
-                "You may spend 1 skill to reduce the duration of Anathema to 1 turn.",
-              restriction: null,
-              reason: "Eternal Ember",
-            },
-          });
-        }
       }
 
       //Tea for Two
@@ -363,32 +315,6 @@ const UseCurrentResolution = (props) => {
 
     unit = applyAnathema(unit);
 
-    if (unit.temporary.eternalEmberActivation) {
-      delete unit.temporary.eternalEmberActivation;
-
-      newGameState.activatingUnit.push(unit);
-      newGameState.activatingSkill.push("EternalEmber");
-
-      newGameState.currentResolution.push({
-        resolution: "Unit Talent",
-        resolution2: "Talent Conclusion",
-        unit: unit,
-      });
-
-      newGameState.currentResolution.push({
-        resolution: "Unit Talent",
-        resolution2: "Activating Eternal Ember",
-        unit: unit,
-        details: {
-          title: "Eternal Ember",
-          message:
-            "You may spend 1 skill to reduce the duration of Anathema to 1 turn.",
-          restriction: null,
-          reason: "Eternal Ember",
-        },
-      });
-    }
-
     dispatch(updateState(newGameState));
     props.updateFirebase(newGameState);
   };
@@ -409,7 +335,7 @@ const UseCurrentResolution = (props) => {
     }, 250);
   };
 
-  const resolveApplyBurn = (attackerInfo, victimInfo, special) => {
+  const resolveApplyBurn = (attackerInfo, victimInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
     const attacker =
@@ -418,15 +344,14 @@ const UseCurrentResolution = (props) => {
     newGameState.currentResolution.pop();
 
     if (attacker !== null && !isMuted(attacker)) {
-      newGameState = applyBurn(newGameState, victimInfo, attackerInfo, special);
+      newGameState = applyBurn(newGameState, victimInfo);
     }
 
     dispatch(updateState(newGameState));
-
     props.updateFirebase(newGameState);
   };
 
-  const resolveApplyFrostbite = (attackerInfo, victimInfo, duration) => {
+  const resolveApplyFrost = (attackerInfo, victimInfo, duration) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
     const attacker =
@@ -435,7 +360,7 @@ const UseCurrentResolution = (props) => {
     newGameState.currentResolution.pop();
 
     if (attacker !== null && !isMuted(attacker)) {
-      newGameState = applyFrostbite(newGameState, victimInfo, duration);
+      newGameState = applyFrost(newGameState, victimInfo, duration);
     }
 
     dispatch(updateState(newGameState));
@@ -469,19 +394,13 @@ const UseCurrentResolution = (props) => {
     props.updateFirebase(newGameState);
   };
 
-  const selectAerialImpetusMove = (unit, ally) => {
+  const selectAndMoveUnit = (unit) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    //end "Aerial Impetus Prompt" or "Aerial Impetus Purge Move2"
     newGameState.currentResolution.pop();
 
     props.updateLocalState(
       enterMoveMode(getVacantAdjacentZones(unit), unit, newGameState, null)
     );
-
-    if (ally === "Ally") {
-      props.setMovingSpecial("AerialImpetusAlly");
-    }
   };
 
   // ================================================
@@ -534,7 +453,7 @@ const UseCurrentResolution = (props) => {
   switch (lastRes.resolution) {
     case "Animation Delay":
       if (self === lastRes.priority) {
-        animationDelay();
+        animationDelay(lastRes.time);
       }
       break;
 
@@ -737,7 +656,7 @@ const UseCurrentResolution = (props) => {
 
     case "Apply Burn":
       if (self === lastRes.attacker.player) {
-        resolveApplyBurn(lastRes.attacker, lastRes.victim, lastRes.special);
+        resolveApplyBurn(lastRes.attacker, lastRes.victim);
       }
       break;
 
@@ -763,13 +682,9 @@ const UseCurrentResolution = (props) => {
       }
       break;
 
-    case "Apply Frostbite":
+    case "Apply Frost":
       if (self === lastRes.attacker.player) {
-        resolveApplyFrostbite(
-          lastRes.attacker,
-          lastRes.victim,
-          lastRes.duration
-        );
+        resolveApplyFrost(lastRes.attacker, lastRes.victim, lastRes.duration);
       }
       break;
 
@@ -1083,34 +998,6 @@ const UseCurrentResolution = (props) => {
           }
           break;
 
-        case "Rooted Traverse":
-          return (
-            <>
-              {self === lastRes.unit.player && !props.hideModal && (
-                <YouMaySpend1Skill
-                  unit={lastRes.unit}
-                  details={lastRes.details}
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
-
-        case "Rooted Aether-blast":
-          return (
-            <>
-              {self === lastRes.unit.player && !props.hideModal && (
-                <YouMaySpend1Skill
-                  unit={lastRes.unit}
-                  details={lastRes.details}
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
-
         case "Rooted Traverse Movement":
           if (self === lastRes.unit.player) {
             props.updateLocalState(
@@ -1314,12 +1201,6 @@ const UseCurrentResolution = (props) => {
             </>
           );
 
-        case "Activating Reap the Whirlwind":
-          if (self === lastRes.unit.player) {
-            props.updateLocalState(reapTheWhirlwind1(lastRes.unit));
-          }
-          break;
-
         case "Activating Air Dash":
           if (self === lastRes.unit.player) {
             props.updateLocalState(airDash1(lastRes.unit));
@@ -1340,6 +1221,26 @@ const UseCurrentResolution = (props) => {
             );
           }
           break;
+
+        case "Activating Reap the Whirlwind":
+          if (self === lastRes.unit.player) {
+            props.updateLocalState(reapTheWhirlwind1(lastRes.unit));
+          }
+          break;
+
+        case "Reap the Whirlwind Float":
+          return (
+            <>
+              {self === lastRes.unit.player && !props.hideModal && (
+                <FloatSkill
+                  unSkippable={true}
+                  details={lastRes.details}
+                  updateFirebase={props.updateFirebase}
+                  hideOrRevealModale={props.hideOrRevealModale}
+                />
+              )}
+            </>
+          );
 
         case "Reap the Whirlwind1":
           if (self === lastRes.unit.player) {
@@ -1473,12 +1374,6 @@ const UseCurrentResolution = (props) => {
           }
           break;
 
-        case "Particle Beam2":
-          if (self === lastRes.unit.player) {
-            props.updateLocalState(particleBeam3(lastRes.unit));
-          }
-          break;
-
         case "Activating Amplify Aura":
           if (self === lastRes.unit.player) {
             props.updateLocalState(auraAmplication1(lastRes.unit));
@@ -1549,8 +1444,19 @@ const UseCurrentResolution = (props) => {
 
     case "Unit Talent":
       switch (lastRes.resolution2) {
-        case "Activating Kleptothermy":
+        case "Activating Aeromancy":
+          if (self === lastRes.unit.player) {
+            props.updateLocalState(aeromancy1(lastRes.unit));
+          }
+          break;
+
         case "Activating Mountain Stance":
+          if (self === lastRes.unit.player) {
+            props.updateLocalState(mountainStance1(lastRes.unit));
+          }
+          break;
+
+        case "Activating Kleptothermy":
         case "Activating Everblooming":
           return (
             <>
@@ -1565,7 +1471,6 @@ const UseCurrentResolution = (props) => {
             </>
           );
 
-        case "Activating Eternal Ember":
         case "Activating From the Ashes":
         case "Activating Lightning Rod":
           return (
@@ -1582,7 +1487,7 @@ const UseCurrentResolution = (props) => {
           );
 
         case "Activating Ambiance Assimilation":
-        case "Activating Mana Feedback":
+        case "Activating Overload":
         case "Activating Conduction":
           return (
             <>
@@ -1597,9 +1502,21 @@ const UseCurrentResolution = (props) => {
             </>
           );
 
+        case "Activating Eternal Ember":
+          if (self === lastRes.unit.player) {
+            props.updateLocalState(eternalEmber1(lastRes.unit));
+          }
+          break;
+
         case "Activating Second Wind":
           if (self === lastRes.unit.player) {
             props.updateLocalState(secondWind1());
+          }
+          break;
+
+        case "Activating Salt the Earth":
+          if (self === lastRes.unit.player) {
+            props.updateLocalState(saltTheEarth1(lastRes.unit));
           }
           break;
 
@@ -1677,7 +1594,7 @@ const UseCurrentResolution = (props) => {
 
         case "Blaze of Glory1":
           if (self === lastRes.unit.player) {
-            selectEnemies(lastRes.unit, 1, null, "ignite", "Blaze of Glory");
+            selectEnemies(lastRes.unit, 1, null, "ignite");
           }
           break;
 
@@ -1687,39 +1604,11 @@ const UseCurrentResolution = (props) => {
           }
           break;
 
-        case "Blaze of Glory2.5":
+        case "Blaze of Glory3":
           return (
             <>
               {self === lastRes.unit.player && !props.hideModal && (
                 <RevealSkill
-                  unit={lastRes.unit}
-                  details={lastRes.details}
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
-
-        case "Blaze of Glory3":
-          if (self === lastRes.unit.player) {
-            props.resolutionUpdate(
-              applySkill("blazeOfGlory3", lastRes.unit, lastRes.adjacentEnemies)
-            );
-          }
-          break;
-
-        case "Blaze of Glory4":
-          if (self === lastRes.unit.player) {
-            props.updateLocalState(applySkill("blazeOfGlory4", lastRes.unit));
-          }
-          break;
-
-        case "Blaze of Glory5":
-          return (
-            <>
-              {self === lastRes.unit.player && !props.hideModal && (
-                <YouMayNoYes
                   unit={lastRes.unit}
                   details={lastRes.details}
                   updateFirebase={props.updateFirebase}
@@ -1755,23 +1644,9 @@ const UseCurrentResolution = (props) => {
           }
           break;
 
-        case "Resplendence3":
-          return (
-            <>
-              {self === lastRes.unit.player && !props.hideModal && (
-                <YouMaySpend1Skill
-                  unit={lastRes.unit}
-                  details={lastRes.details}
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
-
         case "Resplendence4":
           if (self === lastRes.unit.player) {
-            selectEnemies(lastRes.unit, 1, null, "ignite", null);
+            selectEnemies(lastRes.unit, 1, null, "ignite");
           }
           break;
       }
@@ -1979,7 +1854,7 @@ const UseCurrentResolution = (props) => {
 
         case "Aerial Impetus Prompt":
           if (self === lastRes.unit.player) {
-            selectAerialImpetusMove(lastRes.unit, "Ally");
+            selectAndMoveUnit(lastRes.unit);
           }
           break;
 
@@ -2008,7 +1883,7 @@ const UseCurrentResolution = (props) => {
 
         case "Aerial Impetus Purge Move2":
           if (self === lastRes.player) {
-            selectAerialImpetusMove(lastRes.victim, "Enemy");
+            selectAndMoveUnit(lastRes.victim);
           }
           break;
 
@@ -2096,19 +1971,19 @@ const UseCurrentResolution = (props) => {
             </>
           );
 
-        case "Symphonic Screech2":
-          return (
-            <>
-              {self === lastRes.unit.player && !props.hideModal && (
-                <RevealSkill
-                  unit={lastRes.unit}
-                  details={lastRes.details}
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
+        // case "Symphonic Screech2":
+        //   return (
+        //     <>
+        //       {self === lastRes.unit.player && !props.hideModal && (
+        //         <RevealSkill
+        //           unit={lastRes.unit}
+        //           details={lastRes.details}
+        //           updateFirebase={props.updateFirebase}
+        //           hideOrRevealModale={props.hideOrRevealModale}
+        //         />
+        //       )}
+        //     </>
+        //   );
 
         case "Activating Cataclysmic Tempest":
           if (self === lastRes.unit.player) {
@@ -2217,20 +2092,6 @@ const UseCurrentResolution = (props) => {
           }
           break;
 
-        case "Crystallization1":
-          return (
-            <>
-              {self === lastRes.unit.player && !props.hideModal && (
-                <YouMaySpend1Skill
-                  unit={lastRes.unit}
-                  details={lastRes.details}
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
-
         case "Crystallization2":
           if (self === lastRes.unit.player) {
             props.updateLocalState(
@@ -2263,7 +2124,7 @@ const UseCurrentResolution = (props) => {
           return (
             <>
               {self === lastRes.unit.player && !props.hideModal && (
-                <YouMayNoYes
+                <RevealSkill
                   unit={lastRes.unit}
                   details={lastRes.details}
                   updateFirebase={props.updateFirebase}
@@ -2286,7 +2147,6 @@ const UseCurrentResolution = (props) => {
                 <YouMayNoYes
                   unit={lastRes.unit}
                   details={lastRes.details}
-                  setMovingSpecial={props.setMovingSpecial}
                   updateFirebase={props.updateFirebase}
                   hideOrRevealModale={props.hideOrRevealModale}
                 />
@@ -2317,21 +2177,6 @@ const UseCurrentResolution = (props) => {
             );
           }
           break;
-
-        case "Pitfall Trap2":
-          return (
-            <>
-              {self === lastRes.unit.player && !props.hideModal && (
-                <YouMaySpend1Skill
-                  unit={lastRes.unit}
-                  victim={lastRes.victim}
-                  details={lastRes.details}
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
 
         case "Pitfall Trap3":
           if (self === lastRes.unit.player) {
@@ -2536,20 +2381,6 @@ const UseCurrentResolution = (props) => {
           }
           break;
 
-        case "Thunder Thaumaturge2":
-          return (
-            <>
-              {self === lastRes.unit.player && !props.hideModal && (
-                <YouMaySpend1Skill
-                  unit={lastRes.unit}
-                  details={lastRes.details}
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
-
         case "Activating Valiant Spark":
           if (self === lastRes.unit.player) {
             props.updateLocalState(applySkill("valiantSpark1", lastRes.unit));
@@ -2583,47 +2414,10 @@ const UseCurrentResolution = (props) => {
         case "Surge1":
           return (
             <>
-              {self === localGameState.turnPlayer && !props.hideModal && (
-                <SelectTacticViaEffect
-                  unit={lastRes.unit}
-                  details={lastRes.details}
-                  setMovingSpecial={props.setMovingSpecial}
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
-
-        case "Surge2":
-          return (
-            <>
-              {self === lastRes.unit.player && !props.hideModal && (
-                <YouMayNoYes
-                  unit={lastRes.unit}
-                  details={lastRes.details}
-                  setMovingSpecial={props.setMovingSpecial}
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
-
-        case "Surge3":
-          if (self === lastRes.unit.player) {
-            props.updateLocalState(applySkill("surge2", lastRes.unit));
-          }
-          break;
-
-        case "Surge4":
-          return (
-            <>
               {self === lastRes.unit.player && !props.hideModal && (
                 <SelectCustomChoice
                   unit={lastRes.unit}
                   details={lastRes.details}
-                  setMovingSpecial={props.setMovingSpecial}
                   updateFirebase={props.updateFirebase}
                   hideOrRevealModale={props.hideOrRevealModale}
                 />
@@ -2937,20 +2731,6 @@ const UseCurrentResolution = (props) => {
           }
           break;
 
-        case "Arsenal Onslaught5":
-          return (
-            <>
-              {self === lastRes.unit.player && !props.hideModal && (
-                <YouMaySpend1Skill
-                  unit={lastRes.unit}
-                  details={lastRes.details}
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
-
         case "Arsenal Onslaught6":
           return (
             <>
@@ -3021,20 +2801,6 @@ const UseCurrentResolution = (props) => {
           }
           break;
 
-        case "Efflorescence1":
-          return (
-            <>
-              {self === lastRes.unit.player && !props.hideModal && (
-                <YouMaySpend1Skill
-                  unit={lastRes.unit}
-                  details={lastRes.details}
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
-
         case "EfflorescenceR1":
           if (self === lastRes.unit.player) {
             props.updateLocalState(applySkill("efflorescenceR2", lastRes.unit));
@@ -3055,20 +2821,6 @@ const UseCurrentResolution = (props) => {
           }
           break;
 
-        case "Viridian Grave1":
-          return (
-            <>
-              {self === lastRes.unit.player && !props.hideModal && (
-                <YouMaySpend1Skill
-                  unit={lastRes.unit}
-                  details={lastRes.details}
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
-
         case "Activating Castle of Thorns":
           if (self === lastRes.unit.player) {
             props.updateLocalState(applySkill("castleOfThorns1", lastRes.unit));
@@ -3076,11 +2828,10 @@ const UseCurrentResolution = (props) => {
           break;
 
         case "Castle Of Thorns1":
-        case "Castle Of Thorns3":
           return (
             <>
               {self === lastRes.unit.player && !props.hideModal && (
-                <YouMaySpend1Skill
+                <YouMayNoYes
                   unit={lastRes.unit}
                   details={lastRes.details}
                   updateFirebase={props.updateFirebase}
@@ -3154,6 +2905,20 @@ const UseCurrentResolution = (props) => {
             </>
           );
 
+        case "ReconnaissanceR1":
+          return (
+            <>
+              {self === lastRes.unit.player && !props.hideModal && (
+                <RevealEnemyHand
+                  unit={lastRes.unit}
+                  details={lastRes.details}
+                  updateFirebase={props.updateFirebase}
+                  hideOrRevealModale={props.hideOrRevealModale}
+                />
+              )}
+            </>
+          );
+
         case "Select Guardian Wings Activator":
           if (self === lastRes.player) {
             selectGuardianWingsActivator(lastRes.victim);
@@ -3165,6 +2930,24 @@ const UseCurrentResolution = (props) => {
             props.updateLocalState(
               applySkill("guardianWings1", lastRes.unit, lastRes.victim)
             );
+          }
+          break;
+
+        case "Activating Vanguard Fleet":
+          if (self === lastRes.unit.player) {
+            props.updateLocalState(applySkill("vanguardFleet", lastRes.unit));
+          }
+          break;
+
+        case "Vanguard Fleet2":
+          if (self === lastRes.unit.player) {
+            props.resolutionUpdate(applySkill("vanguardFleet2", lastRes.unit));
+          }
+          break;
+
+        case "Vanguard Fleet Prompt":
+          if (self === lastRes.unit.player) {
+            selectAndMoveUnit(lastRes.unit);
           }
           break;
 

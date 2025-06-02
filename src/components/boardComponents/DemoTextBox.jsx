@@ -578,7 +578,7 @@ const DemoTextBox = () => {
                 , where they can spend BP on upgrades.
                 <br /> <br />
                 <span className="goldText">
-                  1 BP is also obtained by eliminating an enemy unit.
+                  1 BP is also obtained by eliminating a foe.
                 </span>{" "}
                 Sovereigns can hold up to 10 BP; excesses gained are forfeited.
               </div>
@@ -1032,8 +1032,11 @@ const DemoTextBox = () => {
                 </span>
                 .
                 <br /> <br />
-                Each Sovereign can have up to 2 Scions of the same class in
-                play. For example, controlling 2 Fire Scions prevents you from
+                <span className="goldText">
+                  Each Sovereign can have up to 2 Scions of the same class in
+                  play.
+                </span>{" "}
+                For example, controlling 2 Fire Scions prevents you from
                 ascending a pawn to another Fire Scion until either is removed
                 from play.
               </div>
@@ -1134,9 +1137,8 @@ const DemoTextBox = () => {
                 <br /> <br />
                 Some abilities require the use of tactics. For example, Mana
                 Scions can use an Assault tactic to activate Particle Beam,
-                which lets them attack an enemy as far as 2 spaces away.
-                (Normally, units can use the Assault tactic to attack adjacent
-                enemies.)
+                which lets them attack a foe as far as 2 spaces away. (Normally,
+                units can use the Assault tactic to attack adjacent foes.)
               </div>
             );
 
@@ -1305,7 +1307,7 @@ const DemoTextBox = () => {
             return (
               <div>
                 <span className="goldText">
-                  Attacking an enemy reduces their HP.
+                  Attacking a foe reduces their HP.
                 </span>{" "}
                 The amount deducted is equivalent to the attack’s AP (Attack
                 Power).
@@ -1378,7 +1380,7 @@ const DemoTextBox = () => {
                 abilities, talents, and access to skill cards. They also cannot
                 attack via any means.
                 <br /> <br />
-                Punished Scions are only allowed to traverse.
+                Simply put, punished Scions can only traverse.
               </div>
             );
 
@@ -1388,10 +1390,7 @@ const DemoTextBox = () => {
                 The affliction of the Anathema is delayed until after the unit
                 has concluded all their activated effects.
                 <br /> <br />
-                Therefore, even though the enemy was eliminated by the attack of
-                Ignition Propulsion, the Fire Scion was not punished until after
-                they recovered their Aether (as per the skill’s last
-                sub-effect).
+                (This will be emphasized and explained in another demo.)
               </div>
             );
 
@@ -1432,8 +1431,8 @@ const DemoTextBox = () => {
                 must also occupy it at the end of their turn.
                 <br /> <br />
                 And without further ado, click on the End Turn button. The
-                Initiator can press this anytime as long as there are no ongoing
-                effects.
+                Initiator can end their turn anytime as long as there are no
+                ongoing effects.
               </div>
             );
           case 125:
@@ -1478,7 +1477,7 @@ const DemoTextBox = () => {
                 <br /> <br />
                 The durations of your Fire Scion’s Shield and Anathema have
                 decreased from 2 turns to 1: Their Shield icon is now blinking,
-                and their Anathema aura has weakened.
+                and their aura of Anathema has weakened.
               </div>
             );
 
@@ -1510,8 +1509,8 @@ const DemoTextBox = () => {
             return (
               <div>
                 Furthermore, the Sovereign of the scoring unit gains 3 BP, while
-                their opponent gains 6 FD (triple the yield of eliminating a
-                unit).
+                their opponent gains 6 FD.
+                <br /> <br /> This is triple the yield of eliminating a unit.
               </div>
             );
 
@@ -1520,7 +1519,7 @@ const DemoTextBox = () => {
               <div>
                 Lastly, if scoring causes the Initiator to meet the victory
                 requirement, they win. Otherwise, their opponent takes their
-                turn as the Initiator.
+                turn as the Initiator and goes through the same phases.
               </div>
             );
 

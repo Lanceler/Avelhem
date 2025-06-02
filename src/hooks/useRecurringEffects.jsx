@@ -74,10 +74,7 @@ export const useRecurringEffects = () => {
       newGameState.activatingResonator.push(resonator);
     }
 
-    newGameState.currentResolution.push({
-      resolution: "Animation Delay",
-      priority: self,
-    });
+    newGameState = animationDelay(newGameState, self);
 
     return newGameState;
   };
@@ -110,10 +107,7 @@ export const useRecurringEffects = () => {
 
     newGameState.activatingSkill.push(avelhem + "Alt");
 
-    newGameState.currentResolution.push({
-      resolution: "Animation Delay",
-      priority: self,
-    });
+    newGameState = animationDelay(newGameState, self);
 
     return newGameState;
   };
@@ -138,10 +132,7 @@ export const useRecurringEffects = () => {
     newGameState.activatingSkill.push("SC-05");
     newGameState.activatingUnit.push(null);
 
-    newGameState.currentResolution.push({
-      resolution: "Animation Delay",
-      priority: self,
-    });
+    newGameState = animationDelay(newGameState, self);
 
     return newGameState;
   };
@@ -371,13 +362,26 @@ export const useRecurringEffects = () => {
       victim: victim,
     });
 
-    newGameState.currentResolution.push({
-      resolution: "Animation Delay",
-      priority: self,
-    });
+    newGameState = animationDelay(newGameState, self);
 
     newGameState.activatingSkill.push("03-03");
     newGameState.activatingUnit.push(unit);
+
+    if (unit.cyclone !== 2) {
+      newGameState.activatingUnit.push(unit);
+      newGameState.activatingSkill.push("Aeromancy");
+      newGameState.currentResolution.push({
+        resolution: "Unit Talent",
+        resolution2: "Talent Conclusion",
+        unit: unit,
+      });
+
+      newGameState.currentResolution.push({
+        resolution: "Unit Talent",
+        resolution2: "Activating Aeromancy",
+        unit: unit,
+      });
+    }
 
     return newGameState;
   };
@@ -434,9 +438,22 @@ export const useRecurringEffects = () => {
     if (skillData.Aspect !== "Wind" && skillData.Method !== "Burst") {
       newGameState = applySymphonicScreech(unit, newGameState);
     } else {
+      newGameState = animationDelay(newGameState, self);
+    }
+
+    if (skillData.Aspect === "Wind" && unit.cyclone !== 2) {
+      newGameState.activatingUnit.push(unit);
+      newGameState.activatingSkill.push("Aeromancy");
       newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: self,
+        resolution: "Unit Talent",
+        resolution2: "Talent Conclusion",
+        unit: unit,
+      });
+
+      newGameState.currentResolution.push({
+        resolution: "Unit Talent",
+        resolution2: "Activating Aeromancy",
+        unit: unit,
       });
     }
 
@@ -462,10 +479,7 @@ export const useRecurringEffects = () => {
       newGameState.activatingSkill.push(skill);
       newGameState.activatingUnit.push(null);
 
-      newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: self,
-      });
+      newGameState = animationDelay(newGameState, self);
 
       return newGameState;
     };
@@ -613,10 +627,7 @@ export const useRecurringEffects = () => {
         resonator: resonator,
       });
 
-      newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: self,
-      });
+      newGameState = animationDelay(newGameState, self);
 
       newGameState.activatingSkill.push(skill);
       newGameState.activatingResonator.push(resonator);
@@ -729,10 +740,7 @@ export const useRecurringEffects = () => {
     newGameState.activatingSkill.push("SC-04");
     newGameState.activatingUnit.push(null);
 
-    newGameState.currentResolution.push({
-      resolution: "Animation Delay",
-      priority: self,
-    });
+    newGameState = animationDelay(newGameState, self);
 
     return newGameState;
   };
@@ -764,6 +772,49 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const aetherRestoreSpecial = (newGameState, unitInfo) => {
+    const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    unit.aether = 1;
+
+    if (unit.unitClass === "Mana Scion" && !isMuted(unit)) {
+      newGameState.activatingUnit.push(unit);
+      newGameState.activatingSkill.push("Overload");
+      newGameState.currentResolution.push({
+        resolution: "Unit Talent",
+        resolution2: "Talent Conclusion",
+        unit: unit,
+      });
+
+      newGameState.currentResolution.push({
+        resolution: "Unit Talent",
+        resolution2: "Activating Overload",
+        unit: unit,
+        details: {
+          reason: "Overload",
+          title: "Overload",
+          message: "You may draw 1 skill.",
+          no: "Skip",
+          yes: "Draw",
+        },
+      });
+    }
+
+    return newGameState;
+  };
+
+  const animationDelay = (newGameState, priority, time) => {
+    const t = time ? time : 275;
+
+    newGameState.currentResolution.push({
+      resolution: "Animation Delay",
+      priority: priority,
+      time: t,
+    });
+
+    return newGameState;
+  };
+
   const applyAnathema = (unit) => {
     // if (unit.temporary.activation > 0) {
     //   //if statement necessary because of Symphonic Screech <--- reworked code so not needed
@@ -776,47 +827,59 @@ export const useRecurringEffects = () => {
       unit.temporary.activation === 0 &&
       unit.temporary.anathemaDelay === true
     ) {
-      if (unit.unitClass === "Fire Scion" && !isMuted(unit)) {
-        unit.temporary.eternalEmberActivation = true;
-      } else {
-        delete unit.temporary.anathemaDelay;
-        unit.afflictions.anathema = 2;
-        unit.boosts = {};
-        delete unit.enhancements.disruption;
-        delete unit.enhancements.overgrowth;
-      }
+      delete unit.temporary.anathemaDelay;
+      unit.afflictions.anathema = 2;
+      unit.boosts = {};
+      delete unit.enhancements.overgrowth;
     }
 
     return unit;
   };
 
-  const applyBurn = (newGameState, victimInfo, attackerInfo, special) => {
-    //Update info
-    let attacker =
-      newGameState[attackerInfo.player].units[attackerInfo.unitIndex];
-    let victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
+  const applyBurn = (newGameState, victimInfo) => {
+    const victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
+    const attackerPlayer = victim.player === "host" ? "guest" : "host";
+
+    const isImmuneToBurn = (unit) =>
+      !isMuted(unit) && ["Fire Scion", "Water Scion"].includes(unit.unitClass);
 
     if (victim.enhancements.ward) {
-      delete newGameState[victim.player].units[victim.unitIndex].enhancements
-        .ward;
-    } else if (
-      !(
-        !isMuted(victim) &&
-        ["Fire Scion", "Water Scion"].includes(victim.unitClass)
-      )
-    ) {
-      newGameState[victim.player].units[victim.unitIndex].afflictions.burn = 1;
-
-      //burn gives frost immunity and purges overgrowth
-
-      delete newGameState[victim.player].units[victim.unitIndex].afflictions
-        .frost;
-      delete newGameState[victim.player].units[victim.unitIndex].enhancements
-        .overgrowth;
+      delete victim.enhancements.ward;
+      return newGameState;
     }
 
-    if (["Blaze of Glory"].includes(special)) {
-      attacker.temporary.previousTarget = victim.unitIndex;
+    if (isImmuneToBurn(victim)) {
+      newGameState.activatingUnit.push(victim);
+      newGameState.currentResolution.push({
+        resolution: "Unit Talent",
+        resolution2: "Talent Conclusion",
+        unit: victim,
+      });
+
+      switch (victim.unitClass) {
+        case "Fire Scion":
+          newGameState = applyTalentMessage(
+            newGameState,
+            "EternalEmber2",
+            "Eternal Ember",
+            "Eternal Ember grants Fire Scions immunity to Burn.",
+            attackerPlayer
+          );
+          break;
+        case "Water Scion":
+          newGameState = applyTalentMessage(
+            newGameState,
+            "ClearAsCrystal2",
+            "Clear as Crystal",
+            "Clear as Crystal grants Water Scions immunity to Burn.",
+            attackerPlayer
+          );
+          break;
+      }
+    } else {
+      victim.afflictions.burn = 1;
+      delete victim.afflictions.frost;
+      delete victim.enhancements.overgrowth;
     }
 
     return newGameState;
@@ -824,11 +887,8 @@ export const useRecurringEffects = () => {
 
   const applyBurnDamage = (newGameState, unitInfo) => {
     // newGameState.currentResolution.pop();
-
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
     delete unit.afflictions.burn;
-
     unit.hp -= 1;
 
     if (unit.hp < 1) {
@@ -838,95 +898,229 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  // const applyDamage = (attackerInfo, victimInfo, type, special) => {
+  //   let newGameState = JSON.parse(JSON.stringify(localGameState));
+  //   newGameState.currentResolution.pop();
+
+  //   //Update info
+  //   let attacker =
+  //     newGameState[attackerInfo.player].units[attackerInfo.unitIndex];
+  //   let victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
+
+  //   //this can happen with effects like thunder thaumaturge
+  //   if (attacker === null || isMuted(attacker)) {
+  //     return newGameState;
+  //     // to do: Maybe push a resolution that displays a message
+  //   }
+
+  //   if (["Diffusion"].includes(special)) {
+  //     attacker.temporary.previousTarget = victim.unitIndex;
+  //   }
+
+  //   //checkBypassShield
+  //   let bypassShield = false;
+  //   switch (true) {
+  //     case victim.afflictions.frost > 0 && attacker.unitClass === "Water Scion":
+  //       bypassShield = true;
+  //       break;
+  //     case attacker.sharpness === 2 && type === "strike":
+  //       bypassShield = true;
+  //       break;
+  //     case special === "sowAndReapBlast":
+  //       bypassShield = true;
+  //       break;
+  //     default:
+  //       break;
+  //   }
+
+  //   //calculate AP
+  //   let aP = 1;
+  //   switch (true) {
+  //     // case victim.afflictions.anathema > 0:
+  //     //   aP = 5;
+  //     //   break;
+  //     case ["Geomancy", "Surge", "Diffusion"].includes(special):
+  //       aP = 2;
+  //       break;
+
+  //     default: //apply AP modifiers
+  //       if (attacker.sharpness > 0) {
+  //         aP += attacker.sharpness;
+  //       }
+
+  //       if (special === "Aether-blast-blocked") {
+  //         aP = Math.max(0, aP - 1);
+  //       }
+  //       break;
+  //   }
+
+  //   //reduce HP
+  //   switch (true) {
+  //     case victim.enhancements.ward > 0:
+  //       delete newGameState[victim.player].units[victim.unitIndex].enhancements
+  //         .ward;
+  //       break;
+  //     case bypassShield && victim.enhancements.shield > 0:
+  //       delete newGameState[victim.player].units[victim.unitIndex].enhancements
+  //         .shield;
+  //       newGameState[victim.player].units[victim.unitIndex].hp = victim.hp - aP;
+  //       break;
+  //     case victim.enhancements.shield > 0:
+  //       delete newGameState[victim.player].units[victim.unitIndex].enhancements
+  //         .shield;
+  //       break;
+  //     default:
+  //       newGameState[victim.player].units[victim.unitIndex].hp = victim.hp - aP;
+  //       break;
+  //   }
+
+  //   //survival
+  //   if (newGameState[victim.player].units[victim.unitIndex].hp > 0) {
+  //     const pushSurvivalResolution = (
+  //       resolution2,
+  //       player,
+  //       victim,
+  //       attacker
+  //     ) => {
+  //       newGameState.currentResolution.push({
+  //         resolution: "Triggering Contingent Skill",
+  //         resolution2,
+  //         player,
+  //         victim,
+  //         attacker,
+  //       });
+  //     };
+
+  //     if (newGameState.turnPlayer === victim.player) {
+  //       if (triggerSurvivalAlly(victim)) {
+  //         pushSurvivalResolution(
+  //           "Triggering Survival Ally",
+  //           victim.player,
+  //           victim,
+  //           attacker
+  //         );
+  //       }
+
+  //       if (triggerSurvivalEnemy(victim)) {
+  //         pushSurvivalResolution(
+  //           "Triggering Survival Enemy",
+  //           victim.player === "host" ? "guest" : "host",
+  //           victim,
+  //           attacker
+  //         );
+  //       }
+  //     } else {
+  //       if (triggerSurvivalEnemy(victim)) {
+  //         pushSurvivalResolution(
+  //           "Triggering Survival Enemy",
+  //           victim.player === "host" ? "guest" : "host",
+  //           victim,
+  //           attacker
+  //         );
+  //       }
+
+  //       if (triggerSurvivalAlly(victim)) {
+  //         pushSurvivalResolution(
+  //           "Triggering Survival Ally",
+  //           victim.player,
+  //           victim,
+  //           attacker
+  //         );
+  //       }
+  //     }
+
+  //     //Mana feedback
+  //     if (attacker.unitClass === "Mana Scion" && !isMuted(attacker)) {
+  //       newGameState.activatingUnit.push(attacker);
+  //       newGameState.activatingSkill.push("ManaFeedback");
+  //       newGameState.currentResolution.push({
+  //         resolution: "Unit Talent",
+  //         resolution2: "Talent Conclusion",
+  //         unit: attacker,
+  //       });
+
+  //       newGameState.currentResolution.push({
+  //         resolution: "Unit Talent",
+  //         resolution2: "Activating Mana Feedback",
+  //         unit: attacker,
+  //         details: {
+  //           reason: "Mana Feedback",
+  //           title: "Mana Feedback",
+  //           message: "You may draw 1 skill.",
+  //           no: "Skip",
+  //           yes: "Draw",
+  //         },
+  //       });
+  //     }
+  //   } else {
+  //     //elimination
+  //     newGameState = eliminateUnit(
+  //       newGameState,
+  //       attacker,
+  //       victim,
+  //       type,
+  //       special
+  //     );
+  //   }
+
+  //   return newGameState;
+  // };
+
   const applyDamage = (attackerInfo, victimInfo, type, special) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
-
     newGameState.currentResolution.pop();
 
-    //Update info
-    let attacker =
+    const attacker =
       newGameState[attackerInfo.player].units[attackerInfo.unitIndex];
-    let victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
+    const victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
 
-    //this can happen with effects like thunder thaumaturge
-    if (attacker === null || isMuted(attacker)) {
-      return newGameState;
-      // to do: Maybe push a resolution that displays a message
-    }
+    // Edge case: attacker cannot attack
+    if (!attacker || isMuted(attacker)) return newGameState;
 
-    if (["Diffusion"].includes(special)) {
+    // Store target for Diffusion
+    if (special === "Diffusion") {
       attacker.temporary.previousTarget = victim.unitIndex;
     }
 
-    //checkBypassShield
-    let bypassShield = false;
-    switch (true) {
-      case victim.afflictions.frost > 0 && attacker.unitClass === "Water Scion":
-        bypassShield = true;
-        break;
-      case attacker.sharpness === 2 && type === "strike":
-        bypassShield = true;
-        break;
-      case special === "sowAndReapBlast":
-        bypassShield = true;
-        break;
-      default:
-        break;
-    }
+    // Determine if shield should be bypassed
+    const bypassShield =
+      (victim.afflictions.frost > 0 && attacker.unitClass === "Water Scion") ||
+      (attacker.sharpness === 2 && type === "strike") ||
+      special === "sowAndReapBlast";
 
-    //calculate AP
+    // Determine damage amount (AP)
     let aP = 1;
-    switch (true) {
-      // case victim.afflictions.anathema > 0:
-      //   aP = 5;
-      //   break;
-      case ["Geomancy", "Surge", "Diffusion"].includes(special):
-        aP = 2;
-        break;
-
-      default: //apply AP modifiers
-        if (attacker.sharpness > 0) {
-          aP += attacker.sharpness;
-        }
-
-        if (special === "Aether-blast-blocked") {
-          aP = Math.max(0, aP - 1);
-        }
-        break;
+    if (["Geomancy", "Surge", "Diffusion"].includes(special)) {
+      aP = 2;
+    } else {
+      if (attacker.sharpness > 0) aP += attacker.sharpness;
+      if (special === "Aether-blast-blocked") aP = Math.max(0, aP - 1);
     }
 
-    //reduce HP
-    switch (true) {
-      case victim.enhancements.ward > 0:
-        delete newGameState[victim.player].units[victim.unitIndex].enhancements
-          .ward;
-        break;
-      case bypassShield && victim.enhancements.shield > 0:
-        delete newGameState[victim.player].units[victim.unitIndex].enhancements
-          .shield;
-        delete newGameState[victim.player].units[victim.unitIndex].enhancements
-          .disruption;
-        newGameState[victim.player].units[victim.unitIndex].hp = victim.hp - aP;
-        break;
-      case victim.enhancements.shield > 0:
-        delete newGameState[victim.player].units[victim.unitIndex].enhancements
-          .shield;
-        delete newGameState[victim.player].units[victim.unitIndex].enhancements
-          .disruption;
-        break;
-      default:
-        newGameState[victim.player].units[victim.unitIndex].hp = victim.hp - aP;
-        break;
+    let triggerColdEmbrace = false;
+
+    // Apply damage
+    if (victim.enhancements.ward > 0) {
+      delete victim.enhancements.ward;
+    } else if (bypassShield && victim.enhancements.shield > 0) {
+      delete victim.enhancements.shield;
+      victim.hp -= aP;
+
+      if (
+        victim.afflictions.frost > 0 &&
+        attacker.unitClass === "Water Scion"
+      ) {
+        triggerColdEmbrace = true;
+      }
+    } else if (victim.enhancements.shield > 0) {
+      delete victim.enhancements.shield;
+    } else {
+      victim.hp -= aP;
     }
 
-    //survival
-    if (newGameState[victim.player].units[victim.unitIndex].hp > 0) {
-      const pushSurvivalResolution = (
-        resolution2,
-        player,
-        victim,
-        attacker
-      ) => {
+    // If victim survives, check for survival triggers and talents
+    if (victim.hp > 0) {
+      const pushSurvivalResolution = (resolution2, player) => {
         newGameState.currentResolution.push({
           resolution: "Triggering Contingent Skill",
           resolution2,
@@ -936,69 +1130,22 @@ export const useRecurringEffects = () => {
         });
       };
 
-      if (newGameState.turnPlayer === victim.player) {
-        if (triggerSurvivalAlly(victim)) {
-          pushSurvivalResolution(
-            "Triggering Survival Ally",
-            victim.player,
-            victim,
-            attacker
-          );
-        }
+      const turnPlayer = newGameState.turnPlayer;
+      const opponent = victim.player === "host" ? "guest" : "host";
 
-        if (triggerSurvivalEnemy(victim)) {
-          pushSurvivalResolution(
-            "Triggering Survival Enemy",
-            victim.player === "host" ? "guest" : "host",
-            victim,
-            attacker
-          );
-        }
+      if (turnPlayer === victim.player) {
+        if (triggerSurvivalAlly(victim))
+          pushSurvivalResolution("Triggering Survival Ally", victim.player);
+        if (triggerSurvivalEnemy(victim))
+          pushSurvivalResolution("Triggering Survival Enemy", opponent);
       } else {
-        if (triggerSurvivalEnemy(victim)) {
-          pushSurvivalResolution(
-            "Triggering Survival Enemy",
-            victim.player === "host" ? "guest" : "host",
-            victim,
-            attacker
-          );
-        }
-
-        if (triggerSurvivalAlly(victim)) {
-          pushSurvivalResolution(
-            "Triggering Survival Ally",
-            victim.player,
-            victim,
-            attacker
-          );
-        }
-      }
-
-      //Mana feedback
-      if (attacker.unitClass === "Mana Scion" && !isMuted(attacker)) {
-        newGameState.activatingUnit.push(attacker);
-        newGameState.activatingSkill.push("ManaFeedback");
-        newGameState.currentResolution.push({
-          resolution: "Unit Talent",
-          resolution2: "Talent Conclusion",
-          unit: attacker,
-        });
-
-        newGameState.currentResolution.push({
-          resolution: "Unit Talent",
-          resolution2: "Activating Mana Feedback",
-          unit: attacker,
-          details: {
-            reason: "Mana Feedback",
-            title: "Mana Feedback",
-            message: "You may draw 1 skill.",
-            no: "Skip",
-            yes: "Draw",
-          },
-        });
+        if (triggerSurvivalEnemy(victim))
+          pushSurvivalResolution("Triggering Survival Enemy", opponent);
+        if (triggerSurvivalAlly(victim))
+          pushSurvivalResolution("Triggering Survival Ally", victim.player);
       }
     } else {
-      //elimination
+      // Eliminate the unit if defeated
       newGameState = eliminateUnit(
         newGameState,
         attacker,
@@ -1008,52 +1155,187 @@ export const useRecurringEffects = () => {
       );
     }
 
-    return newGameState;
-  };
+    //Water Scion talent
+    if (triggerColdEmbrace) {
+      newGameState.activatingUnit.push(attacker);
+      newGameState.activatingSkill.push("ClearAsCrystal");
+      newGameState.currentResolution.push({
+        resolution: "Unit Talent",
+        resolution2: "Talent Conclusion",
+        unit: attacker,
+      });
 
-  const applyFrostbite = (newGameState, victimInfo, duration) => {
-    //Update info
-    let victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
-
-    if (victim.enhancements.ward) {
-      delete newGameState[victim.player].units[victim.unitIndex].enhancements
-        .ward;
-    } else if (
-      //burning units are immune
-      !victim.afflictions.burn > 0 &&
-      //Fire, Water, and Lightning Scions are immune
-      !(
-        !isMuted(victim) &&
-        ["Fire Scion", "Water Scion", "Lightning Scion"].includes(
-          victim.unitClass
-        )
-      )
-    ) {
-      if (
-        newGameState[victim.player].units[victim.unitIndex].afflictions.frost >
-        0
-      ) {
-        newGameState[victim.player].units[victim.unitIndex].afflictions.frost =
-          Math.max(
-            newGameState[victim.player].units[victim.unitIndex].afflictions
-              .frost,
-            duration
-          );
-      } else {
-        newGameState[victim.player].units[victim.unitIndex].afflictions.frost =
-          duration;
-      }
-
-      //frost purges boosts, disruption, overgrowth
-      newGameState[victim.player].units[victim.unitIndex].boosts = {};
-      delete newGameState[victim.player].units[victim.unitIndex].enhancements
-        .disruption;
-      delete newGameState[victim.player].units[victim.unitIndex].enhancements
-        .overgrowth;
+      newGameState.currentResolution.push({
+        resolution: "Misc.",
+        resolution2: "Message To Player",
+        player: victim.player,
+        title: "Clear as Crystal",
+        message: "Water Scions pierce Shield when attacking frozen foes.",
+        specMessage: "Water Scions pierce Shield when attacking frozen foes.",
+      });
     }
 
     return newGameState;
   };
+
+  const applyFrost = (newGameState, victimInfo, duration) => {
+    const victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
+    const attackerPlayer = victim.player === "host" ? "guest" : "host";
+
+    const isImmuneToFrost = () =>
+      victim.afflictions.burn > 0 ||
+      (!isMuted(victim) &&
+        ["Fire Scion", "Water Scion", "Lightning Scion"].includes(
+          unit.unitClass
+        ));
+
+    //Victim enhanced with ward negates affliction
+    if (victim.enhancements.ward) {
+      delete victim.enhancements.ward;
+      return newGameState;
+    }
+
+    if (isImmuneToFrost()) {
+      if (victim.afflictions.burn > 0) {
+        newGameState.currentResolution.push({
+          resolution: "Misc.",
+          resolution2: "Message To Player",
+          player: attackerPlayer,
+          title: "Frost Immunity",
+          message: "Units afflicted with Burn are immune to Frost.",
+          specMessage: "Units afflicted with Burn are immune to Frost.",
+        });
+      } else {
+        newGameState.activatingUnit.push(victim);
+        newGameState.currentResolution.push({
+          resolution: "Unit Talent",
+          resolution2: "Talent Conclusion",
+          unit: victim,
+        });
+
+        switch (victim.unitClass) {
+          case "Fire Scion":
+            newGameState = applyTalentMessage(
+              newGameState,
+              "EternalEmber2",
+              "Eternal Ember",
+              "Eternal Ember grants Fire Scions immunity to Frost.",
+              attackerPlayer
+            );
+            break;
+          case "Water Scion":
+            newGameState = applyTalentMessage(
+              newGameState,
+              "ClearAsCrystal2",
+              "Clear as Crystal",
+              "Clear as Crystal grants Water Scions immunity to Frost.",
+              attackerPlayer
+            );
+            break;
+          case "Lightning Scion":
+            newGameState = applyTalentMessage(
+              newGameState,
+              "Defibrillation",
+              "Defibrillation",
+              "Defibrillation grants Lightning Scions immunity to Frost.",
+              attackerPlayer
+            );
+            break;
+        }
+      }
+    } else {
+      //frost purges boosts, overgrowth
+      victim.afflictions.frost
+        ? (victim.afflictions.frost = Math.max(
+            victim.afflictions.frost,
+            duration
+          ))
+        : (victim.afflictions.frost = duration);
+
+      victim.boosts = {};
+      delete victim.enhancements.overgrowth;
+    }
+
+    return newGameState;
+  };
+
+  // const applyParalysis = (
+  //   newGameState,
+  //   attackerInfo,
+  //   victimInfo,
+  //   duration,
+  //   special
+  // ) => {
+  //   //Update info
+  //   let attacker =
+  //     newGameState[attackerInfo.player].units[attackerInfo.unitIndex];
+  //   let victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
+
+  //   //this can happen with effects like thunder thaumaturge
+  //   if (attacker === null || isMuted(attacker)) {
+  //     return newGameState;
+  //   }
+
+  //   if (
+  //     [
+  //       "Cataclysmic Tempest",
+  //       "Upheaval",
+  //       "ChainLightningParalysis",
+  //       "MagneticShockwave1stParalysis",
+  //     ].includes(special)
+  //   ) {
+  //     attacker.temporary.previousTarget = victim.unitIndex;
+  //   }
+
+  //   switch (true) {
+  //     case victim.enhancements.ward > 0:
+  //       delete victim.enhancements.ward;
+  //       break;
+  //     case ["Upheaval", "Pitfall Trap", "Geomancy"].includes(special) &&
+  //       ["Land Scion"].includes(victim.unitClass) &&
+  //       !isMuted(victim):
+  //       break;
+  //     case ["ChainLightningParalysis", "Thunder Thaumaturge"].includes(
+  //       special
+  //     ) &&
+  //       victim.unitClass === "Lightning Scion" &&
+  //       !isMuted(victim):
+  //       break;
+
+  //     default: //Paralysis successful
+  //       victim.afflictions.paralysis
+  //         ? (victim.afflictions.paralysis = Math.max(
+  //             victim.afflictions.paralysis,
+  //             duration
+  //           ))
+  //         : (victim.afflictions.paralysis = duration);
+
+  //       //paralysis purges boosts and overgrowth
+  //       victim.boosts = {};
+  //       delete victim.enhancements.overgrowth;
+
+  //       //Land Scion talent: Salt the Earth
+  //       if (attacker.unitClass === "Land Scion") {
+  //         attacker.aftershock
+  //           ? (attacker.aftershock = Math.min(attacker.aftershock + 1, 2))
+  //           : (attacker.aftershock = 1);
+  //       }
+
+  //       //If Cataclysmic Tempest
+  //       if (special === "Cataclysmic Tempest") {
+  //         attacker.temporary.cataclysmicFloat += 1;
+  //       }
+
+  //       //If PitfallTrap Succeeded
+  //       if (special === "Pitfall Trap") {
+  //         attacker.temporary.pitfallTrapBlast = true;
+  //       }
+
+  //       break;
+  //   }
+
+  //   return newGameState;
+  // };
 
   const applyParalysis = (
     newGameState,
@@ -1062,17 +1344,19 @@ export const useRecurringEffects = () => {
     duration,
     special
   ) => {
-    //Update info
-    let attacker =
+    const attacker =
       newGameState[attackerInfo.player].units[attackerInfo.unitIndex];
-    let victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
+    const victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
 
-    //this can happen with effects like thunder thaumaturge
-    if (attacker === null || isMuted(attacker)) {
-      return newGameState;
-      // to do: Maybe push a resolution that displays a message
-    }
+    //Land Scions are immune to paralysis from land skills
+    //Lightning Scions are immune to paralysis if they have 3 charges
+    const isImmuneToParalysis = () =>
+      (["Upheaval", "Pitfall Trap", "Geomancy"].includes(special) &&
+        victim.unitClass === "Land Scion" &&
+        !isMuted(victim)) ||
+      (victim.charge === 3 && !isMuted(victim));
 
+    //record previous target
     if (
       [
         "Cataclysmic Tempest",
@@ -1084,52 +1368,77 @@ export const useRecurringEffects = () => {
       attacker.temporary.previousTarget = victim.unitIndex;
     }
 
-    switch (true) {
-      case victim.enhancements.ward > 0:
-        delete victim.enhancements.ward;
-        break;
-      case ["Upheaval", "Pitfall Trap", "Geomancy"].includes(special) &&
-        ["Land Scion"].includes(victim.unitClass) &&
-        !isMuted(victim):
-        break;
-      case ["ChainLightningParalysis", "Thunder Thaumaturge"].includes(
-        special
-      ) &&
-        victim.unitClass === "Lightning Scion" &&
-        !isMuted(victim):
-        break;
+    //Victim enhanced with ward negates affliction
+    if (victim.enhancements.ward) {
+      delete victim.enhancements.ward;
+      return newGameState;
+    }
 
-      default:
-        victim.boosts = {};
+    if (isImmuneToParalysis()) {
+      newGameState.activatingUnit.push(victim);
+      newGameState.currentResolution.push({
+        resolution: "Unit Talent",
+        resolution2: "Talent Conclusion",
+        unit: victim,
+      });
 
-        victim.afflictions.paralysis
-          ? (victim.afflictions.paralysis = Math.max(
-              victim.afflictions.paralysis,
-              duration
-            ))
-          : (victim.afflictions.paralysis = duration);
+      switch (victim.unitClass) {
+        case "Land Scion":
+          newGameState = applyTalentMessage(
+            newGameState,
+            "SaltTheEarth2",
+            "Salt the Earth",
+            "Salt the Earth grants Land Scions immunity to Paralysis due to Land skills.",
+            attackerInfo.player
+          );
+          break;
+        case "Lightning Scion":
+          newGameState = applyTalentMessage(
+            newGameState,
+            "Defibrillation",
+            "Defibrillation",
+            "Defibrillation grants Lightning Scions immunity to Paralysis if they possess 3 Charges.",
+            attackerInfo.player
+          );
+          break;
+      }
+    } else {
+      //paralysis purges boosts and overgrowth
+      victim.afflictions.paralysis
+        ? (victim.afflictions.paralysis = Math.max(
+            victim.afflictions.paralysis,
+            duration
+          ))
+        : (victim.afflictions.paralysis = duration);
 
-        //paralysis purges boosts, disruption, overgrowth
-        victim.boosts = {};
-        delete victim.enhancements.disruption;
-        delete victim.enhancements.overgrowth;
+      victim.boosts = {};
+      delete victim.enhancements.overgrowth;
 
-        //If Cataclysmic Tempest
-        if (special === "Cataclysmic Tempest") {
-          attacker.temporary.cataclysmicFloat += 1;
-        }
+      //If Cataclysmic Tempest
+      if (special === "Cataclysmic Tempest") {
+        attacker.temporary.cataclysmicFloat += 1;
+      }
 
-        //If PitfallTrap Succeeded
-        if (special === "Pitfall Trap") {
-          attacker.temporary.pitfallTrapBlast = true;
-        }
+      //If PitfallTrap Succeeded
+      if (special === "Pitfall Trap") {
+        attacker.temporary.pitfallTrapBlast = true;
+      }
 
-        newGameState[attackerInfo.player].units[attackerInfo.unitIndex] =
-          attacker;
+      if (attacker.unitClass === "Land Scion" && attacker.aftershock !== 2) {
+        newGameState.activatingUnit.push(attacker);
+        newGameState.activatingSkill.push("SaltTheEarth");
+        newGameState.currentResolution.push({
+          resolution: "Unit Talent",
+          resolution2: "Talent Conclusion",
+          unit: attacker,
+        });
 
-        newGameState[victimInfo.player].units[victimInfo.unitIndex] = victim;
-
-        break;
+        newGameState.currentResolution.push({
+          resolution: "Unit Talent",
+          resolution2: "Activating Salt the Earth",
+          unit: attacker,
+        });
+      }
     }
 
     return newGameState;
@@ -1146,9 +1455,13 @@ export const useRecurringEffects = () => {
       unit.afflictions = {};
       unit.aether = 0;
       unit.hp = 0;
-      unit.charge = 0;
-      unit.blossom = 0;
-      unit.sharpness = 0;
+      delete unit.ember;
+      delete unit.torrent;
+      delete unit.cyclone;
+      delete unit.aftershock;
+      delete unit.charge;
+      delete unit.sharpnes;
+      delete unit.blossom;
     };
 
     let units = newGameState[self].units;
@@ -1216,16 +1529,30 @@ export const useRecurringEffects = () => {
         screech: true,
       });
 
-      newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: enemy,
-      });
+      newGameState = animationDelay(newGameState, enemy);
     } else {
-      newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: self,
-      });
+      newGameState = animationDelay(newGameState, self);
     }
+
+    return newGameState;
+  };
+
+  const applyTalentMessage = (
+    newGameState,
+    skill,
+    title,
+    message,
+    attackerPlayer
+  ) => {
+    newGameState.activatingSkill.push(skill);
+    newGameState.currentResolution.push({
+      resolution: "Misc.",
+      resolution2: "Message To Player",
+      player: attackerPlayer,
+      title,
+      message,
+      specMessage: message,
+    });
 
     return newGameState;
   };
@@ -1558,33 +1885,17 @@ export const useRecurringEffects = () => {
       return false;
     };
 
-    const canSurge = (unit) => {
-      if (!canMove(unit)) {
-        return false;
-      }
-
-      if (
-        localGameState.tactics[0].face === "Assault" &&
-        localGameState.tactics[0].stock > 0
-      ) {
-        return true;
-      }
-
-      if (
-        localGameState.tactics[1].face === "Assault" &&
-        localGameState.tactics[1].stock > 0
-      ) {
-        return true;
-      }
-
-      return false;
-    };
-
     switch (skill) {
       case "01-01":
-        return canStrike(unit) && localGameState[self].skillHand.length >= 2;
+        return (
+          canStrike(unit) &&
+          (localGameState[self].skillHand.length >= 2 || unit.ember >= 2)
+        );
       case "01-02":
-        return canBlast(unit) && localGameState[self].skillHand.length >= 2;
+        return (
+          canBlast(unit) &&
+          (localGameState[self].skillHand.length >= 2 || unit.ember >= 2)
+        );
       case "01-03":
         return false;
       case "01-04":
@@ -1627,7 +1938,12 @@ export const useRecurringEffects = () => {
         return true;
 
       case "06-01":
-        return canSurge(unit);
+        //unit must spend Aether, so they cannot be disrupted
+        return (
+          unit.aether > 0 &&
+          !isDisrupted(unit, 2) &&
+          (canStrike(unit) || canMove(unit))
+        );
       case "06-02":
         return canDiffusion(unit);
       case "06-03":
@@ -1717,7 +2033,8 @@ export const useRecurringEffects = () => {
       case "SA-04": // Reminiscence
         return (
           localGameState[self].skillVestige.length > 0 ||
-          localGameState[self].avelhemVestige.length > 0
+          (localGameState[self].avelhemVestige.length > 0 &&
+            localGameState[self].fateDefiance > 0)
         );
 
       case "SA-05": // Foreshadow
@@ -1883,10 +2200,10 @@ export const useRecurringEffects = () => {
   };
 
   const canSowAndReapBlast = (unitInfo) => {
-    const adjacentEnemies = getZonesWithEnemies(unitInfo, 1);
+    const enemies = getZonesWithEnemies(unitInfo, 2);
     const zones = JSON.parse(localGameState.zones);
 
-    for (let i of adjacentEnemies) {
+    for (let i of enemies) {
       const zone = zones[Math.floor(i / 5)][i % 5];
       const enemy = localGameState[zone.player].units[zone.unitIndex];
 
@@ -1950,13 +2267,7 @@ export const useRecurringEffects = () => {
 
     if (burningUnits.length === 0) {
       newGameState.currentResolution.pop();
-    }
-    // else if (burningUnits.length === 1) {
-    //   // newGameState.currentResolution.pop(); // do not pop
-    //   let unit = newGameState[self].units[burningUnits[0]];
-    //   newGameState = applyBurnDamage(newGameState, unit);
-    // }
-    else {
+    } else {
       let zonesWithBurningUnits = [];
 
       for (let i in burningUnits) {
@@ -2015,7 +2326,7 @@ export const useRecurringEffects = () => {
         unit.enhancements.shield ? unit.enhancements.shield-- : null;
         unit.enhancements.ward ? unit.enhancements.ward-- : null;
 
-        unit.enhancements.disruption ? unit.enhancements.disruption-- : null;
+        unit.lockdown ? unit.lockdown-- : null;
 
         unit = units[u];
       }
@@ -2211,10 +2522,7 @@ export const useRecurringEffects = () => {
             },
           });
 
-          newGameState.currentResolution.push({
-            resolution: "Animation Delay",
-            priority: victim.player,
-          });
+          newGameState = animationDelay(newGameState, victim.player);
           break;
 
         case "Mana Scion":
@@ -2240,10 +2548,7 @@ export const useRecurringEffects = () => {
             },
           });
 
-          newGameState.currentResolution.push({
-            resolution: "Animation Delay",
-            priority: victim.player,
-          });
+          newGameState = animationDelay(newGameState, victim.player);
           break;
 
         case "Plant Scion":
@@ -2267,10 +2572,7 @@ export const useRecurringEffects = () => {
             },
           });
 
-          newGameState.currentResolution.push({
-            resolution: "Animation Delay",
-            priority: victim.player,
-          });
+          newGameState = animationDelay(newGameState, victim.player);
           break;
 
         default:
@@ -2506,7 +2808,7 @@ export const useRecurringEffects = () => {
 
   const freeze1 = (newGameState, attacker, victim, special) => {
     newGameState.currentResolution.push({
-      resolution: "Apply Frostbite",
+      resolution: "Apply Frost",
       attacker: attacker,
       victim: victim,
       special: special,
@@ -2532,7 +2834,7 @@ export const useRecurringEffects = () => {
 
   const freeze2 = (newGameState, attacker, victim, special) => {
     newGameState.currentResolution.push({
-      resolution: "Apply Frostbite",
+      resolution: "Apply Frost",
       attacker: attacker,
       victim: victim,
       special: special,
@@ -2911,13 +3213,15 @@ export const useRecurringEffects = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     const zones = JSON.parse(localGameState.zones);
 
-    const zonesWithAdjacentEnemies = getZonesWithEnemies(unit, range);
+    const zonesWithEnemies = getZonesWithEnemies(unit, range);
 
-    for (let z of zonesWithAdjacentEnemies) {
+    for (let z of zonesWithEnemies) {
       const zone = zones[Math.floor(z / 5)][z % 5];
+      const enemy = newGameState[zone.player].units[zone.unitIndex];
       if (
-        newGameState[zone.player].units[zone.unitIndex].enhancements
-          .disruption > 0
+        enemy.lockdown > 0 &&
+        (enemy.enhancements.shield > 0 || enemy.enhancements.ward > 0) &&
+        !isMuted(enemy)
       ) {
         return true;
       }
@@ -3026,7 +3330,6 @@ export const useRecurringEffects = () => {
     const moverEnemy = mover.player === "host" ? "guest" : "host";
     if (
       newGameState[moverEnemy].skillHand.length > 0 &&
-      !["AerialImpetusAlly"].includes(special) &&
       triggerMotion(mover, special)
     ) {
       newGameState.currentResolution.push({
@@ -3649,7 +3952,6 @@ export const useRecurringEffects = () => {
 
     //end "Strike Movement"
     newGameState.currentResolution.pop();
-
     newGameState = move(newGameState, mover, zone, "strike");
 
     return newGameState;
@@ -3704,7 +4006,7 @@ export const useRecurringEffects = () => {
       !isDisrupted(victim, 1) &&
       ["strike", "aether-blast", "blast"].includes(method) && //only attacks can trigger it
       localGameState[victim.player].skillHand.length > 0 &&
-      getZonesWithEnemies(victim, 1).length > 0 //must be able to burn an adjacent enemy
+      getZonesWithEnemies(victim, 1).length > 0 //must be able to burn an adjacent foe
     ) {
       return true;
     }
@@ -4054,10 +4356,6 @@ export const useRecurringEffects = () => {
           resolution: "Unit Talent",
           resolution2: "Activating Mountain Stance",
           unit: unit,
-          details: {
-            title: "Mountain Stance",
-            reason: "Mountain Stance",
-          },
         });
         break;
 
@@ -4239,11 +4537,13 @@ export const useRecurringEffects = () => {
     activateThunderThaumaturge,
     activateVengefulLegacy,
     activateViridianGrave,
+    aetherRestoreSpecial,
+    animationDelay,
     applyAnathema,
     applyBurn,
     applyBurnDamage,
     applyDamage,
-    applyFrostbite,
+    applyFrost,
     applyParalysis,
     applyScore,
     appointShield,

@@ -24,6 +24,7 @@ const SelectUnitAbility = (props) => {
   const {} = useCardDatabase();
 
   const {
+    animationDelay,
     canAmplifyAura,
     canBallisticArmor,
     canStrike,
@@ -55,7 +56,7 @@ const SelectUnitAbility = (props) => {
           ),
           optionText: (
             <>
-              <div>⬩Strike.</div>
+              <div>⬩Spend 1 skill to strike.</div>
             </>
           ),
         },
@@ -71,7 +72,7 @@ const SelectUnitAbility = (props) => {
           optionText: (
             <>
               <div>
-                ⬩Spend 1 skill to purge an adjacent ally’s Frostbite and Burn.
+                ⬩Spend 1 skill to purge an adjacent ally’s Frost and Burn.
               </div>
             </>
           ),
@@ -80,12 +81,12 @@ const SelectUnitAbility = (props) => {
       break;
 
     case "Water Scion":
-      switch (unit.boosts.glacialTorrent) {
+      switch (unit.torrent) {
         case 2:
-          message = `Glacial Torrent boost: The next 2 abilities you activate do not require a tactic. `;
+          message = `Torrent: The next 2 abilities you activate do not require a tactic.`;
           break;
         case 1:
-          message = `Glacial Torrent boost: The next ability you activate does not require a tactic. `;
+          message = `Torrent: The next ability you activate does not require a tactic.`;
           break;
       }
 
@@ -124,7 +125,7 @@ const SelectUnitAbility = (props) => {
           optionText: (
             <>
               <div>
-                ⬩Strike a frozen enemy or freeze an adjacent enemy for 2 turns.
+                ⬩Strike a frozen foe or freeze an adjacent foe for 2 turns.
               </div>
             </>
           ),
@@ -158,13 +159,14 @@ const SelectUnitAbility = (props) => {
           optionName: "Reap the Whirlwind",
           abilityQualifier: (
             <div className="modal-option-oneshot">
-              <em>One-shot</em>
+              {/* <em>One-shot</em> */}
             </div>
           ),
           optionText: (
             <>
               <div>
-                ⬩Spend 1 skill and 2 Cyclones to blast an adjacent enemy.
+                ⬩Float 1 Wind skill and spend 2 Cyclones to blast an adjacent
+                foe.
               </div>
             </>
           ),
@@ -173,8 +175,8 @@ const SelectUnitAbility = (props) => {
       break;
 
     case "Land Scion":
-      if (unit.boosts.mountainStance) {
-        message = `Mountain Stance boost: You can use an Advance tactic to activate Fortify.`;
+      if (unit.aftershock === 2) {
+        message = `You may spend 2 Aftershocks to use an Advance tactic to activate your abilities.`;
       }
 
       abilityDetails = [
@@ -183,12 +185,6 @@ const SelectUnitAbility = (props) => {
           abilityQualifier: (
             <div className="abilityQualifier">
               <img src={AssaultSmall} style={{ height: 35 }} />{" "}
-              {unit.boosts.mountainStance && (
-                <span>
-                  {"\u00A0\u00A0or\u00A0\u00A0"}
-                  <img src={AdvanceSmall} style={{ height: 35 }} />
-                </span>
-              )}
             </div>
           ),
           optionText: (
@@ -282,8 +278,7 @@ const SelectUnitAbility = (props) => {
           ),
           optionText: (
             <>
-              <div>⬩Spend 1 skill to blast an enemy within 2 spaces.</div>
-              <div>⬩Restore your Aether.</div>
+              <div>⬩Spend 1 skill to blast a foe within 2 spaces.</div>
             </>
           ),
         },
@@ -337,7 +332,7 @@ const SelectUnitAbility = (props) => {
             <>
               <div>
                 ⬩Spend 1 skill and either 2 turns of Shield or 2 turns of Ward
-                to blast an adjacent enemy.
+                to blast an adjacent foe.
               </div>
             </>
           ),
@@ -370,8 +365,8 @@ const SelectUnitAbility = (props) => {
           optionText: (
             <>
               <div>
-                ⬩Spend 1 Blossom to purge your or an adjacent ally’s turn-based
-                afflictions (except Anathema).
+                ⬩Spend 1 Blossom to purge your or an adjacent ally’s afflictions
+                (except Root and Anathema).
               </div>
             </>
           ),
@@ -395,12 +390,16 @@ const SelectUnitAbility = (props) => {
       case "Fire Scion":
         switch (i) {
           case 0:
-            return canStrike(unit);
-          // && newGameState[unit.player].skillHand.length > 0
+            return (
+              canStrike(unit) &&
+              (newGameState[unit.player].skillHand.length > 0 ||
+                unit.ember >= 2)
+            );
           case 1:
             return (
               !unit.temporary.usedFieryHeart &&
-              newGameState[unit.player].skillHand.length > 0 &&
+              (newGameState[unit.player].skillHand.length > 0 ||
+                unit.ember >= 2) &&
               getZonesWithAllies(unit, 1, false).length > 0
             );
         }
@@ -423,9 +422,10 @@ const SelectUnitAbility = (props) => {
           case 1:
             return (
               unit.cyclone > 1 &&
-              newGameState[unit.player].skillHand.length > 0 &&
-              getZonesWithEnemies(unit, 1).length > 0 &&
-              !unit.temporary.usedReapTheWhirlwind
+              ["03-01", "03-02", "03-03", "03-04"].some((s) =>
+                newGameState[unit.player].skillHand.includes(s)
+              ) &&
+              getZonesWithEnemies(unit, 1).length > 0
             );
         }
 
@@ -536,10 +536,7 @@ const SelectUnitAbility = (props) => {
             unit: unit,
           });
 
-          newGameState.currentResolution.push({
-            resolution: "Animation Delay",
-            priority: self,
-          });
+          newGameState = animationDelay(newGameState, self);
 
           break;
         }
@@ -547,10 +544,8 @@ const SelectUnitAbility = (props) => {
 
       case "Water Scion":
         if (selectedChoice === 0) {
-          if (unit.boosts.glacialTorrent > 0) {
-            unit.boosts.glacialTorrent -= 1;
-            //newGameState[unit.player].units[unit.unitIndex] = unit;
-
+          if (unit.torrent > 0) {
+            unit.torrent -= 1;
             newGameState.activatingSkill.push("Hydrotherapy");
             newGameState.activatingUnit.push(unit);
 
@@ -566,10 +561,7 @@ const SelectUnitAbility = (props) => {
               unit: unit,
             });
 
-            newGameState.currentResolution.push({
-              resolution: "Animation Delay",
-              priority: self,
-            });
+            newGameState = animationDelay(newGameState, self);
           } else {
             newGameState.currentResolution.push({
               resolution: "Unit Ability",
@@ -586,9 +578,8 @@ const SelectUnitAbility = (props) => {
             });
           }
         } else if (selectedChoice === 1) {
-          if (unit.boosts.glacialTorrent > 0) {
-            unit.boosts.glacialTorrent -= 1;
-            //newGameState[unit.player].units[unit.unitIndex] = unit;
+          if (unit.torrent > 0) {
+            unit.torrent -= 1;
 
             newGameState.activatingSkill.push("ColdEmbrace");
             newGameState.activatingUnit.push(unit);
@@ -605,10 +596,7 @@ const SelectUnitAbility = (props) => {
               unit: unit,
             });
 
-            newGameState.currentResolution.push({
-              resolution: "Animation Delay",
-              priority: self,
-            });
+            newGameState = animationDelay(newGameState, self);
           } else {
             newGameState.currentResolution.push({
               resolution: "Unit Ability",
@@ -659,22 +647,19 @@ const SelectUnitAbility = (props) => {
             unit: unit,
           });
 
-          newGameState.currentResolution.push({
-            resolution: "Animation Delay",
-            priority: self,
-          });
+          newGameState = animationDelay(newGameState, self);
         }
         break;
 
       case "Land Scion":
         if (selectedChoice === 0) {
-          let fortifyMessage = "Use an Assault tactic.";
-          let fortifyRestriction = ["Assault"];
+          const fortifyMessage =
+            unit.aftershock === 2
+              ? "Use an Assault or Advance tactic."
+              : "Use an Assault tactic.";
 
-          if (unit.boosts.mountainStance) {
-            fortifyMessage = "Use an Assault or Advance tactic.";
-            fortifyRestriction = ["Assault", "Advance"];
-          }
+          const fortifyRestriction =
+            unit.aftershock === 2 ? ["Assault", "Advance"] : ["Assault"];
 
           newGameState.currentResolution.push({
             resolution: "Unit Ability",
@@ -690,14 +675,22 @@ const SelectUnitAbility = (props) => {
             },
           });
         } else if (selectedChoice === 1) {
+          const leylineConvergenceMessage =
+            unit.aftershock === 2
+              ? "Use an Advance tactic or 3 instances of Mobilize."
+              : "Use 3 instances of Mobilize.";
+
+          const leylineConvergenceRestriction =
+            unit.aftershock === 2 ? ["Mobilize", "Advance"] : ["Mobilize"];
+
           newGameState.currentResolution.push({
             resolution: "Unit Ability",
             resolution2: "Ability - select tactic",
             unit: unit,
             details: {
               title: "Leyline Convergence",
-              message: "Use 3 instances of 1 mobilize tactic.",
-              restriction: ["Mobilize"],
+              message: leylineConvergenceMessage,
+              restriction: leylineConvergenceRestriction,
               stock: 3,
               reason: "Leyline Convergence",
               canSkip: "Return",
@@ -741,10 +734,7 @@ const SelectUnitAbility = (props) => {
               unit: unit,
             });
 
-            newGameState.currentResolution.push({
-              resolution: "Animation Delay",
-              priority: self,
-            });
+            newGameState = animationDelay(newGameState, self);
           } else {
             newGameState.currentResolution.push({
               resolution: "Unit Ability",
@@ -795,10 +785,7 @@ const SelectUnitAbility = (props) => {
             unit: unit,
           });
 
-          newGameState.currentResolution.push({
-            resolution: "Animation Delay",
-            priority: self,
-          });
+          newGameState = animationDelay(newGameState, self);
         }
         break;
 
@@ -834,10 +821,7 @@ const SelectUnitAbility = (props) => {
             unit: unit,
           });
 
-          newGameState.currentResolution.push({
-            resolution: "Animation Delay",
-            priority: self,
-          });
+          newGameState = animationDelay(newGameState, self);
         }
         break;
 
@@ -859,10 +843,7 @@ const SelectUnitAbility = (props) => {
             unit: unit,
           });
 
-          newGameState.currentResolution.push({
-            resolution: "Animation Delay",
-            priority: self,
-          });
+          newGameState = animationDelay(newGameState, self);
         } else if (selectedChoice === 1) {
           updateData = true;
           newGameState.activatingSkill.push("Ambrosia");
@@ -880,10 +861,7 @@ const SelectUnitAbility = (props) => {
             unit: unit,
           });
 
-          newGameState.currentResolution.push({
-            resolution: "Animation Delay",
-            priority: self,
-          });
+          newGameState = animationDelay(newGameState, self);
         }
         break;
 

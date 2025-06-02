@@ -6,9 +6,10 @@ import { useRecurringEffects } from "./useRecurringEffects";
 
 export const useUnitAbilityEffects = () => {
   const { localGameState } = useSelector((state) => state.gameState);
-  const { self, enemy } = useSelector((state) => state.teams);
+  const { self } = useSelector((state) => state.teams);
 
   const {
+    animationDelay,
     canBlast,
     canMove,
     canStrike,
@@ -21,6 +22,25 @@ export const useUnitAbilityEffects = () => {
   } = useRecurringEffects();
 
   const {} = useCardDatabase();
+
+  const eternalEmber1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Eternal Ember"
+    newGameState.currentResolution.pop();
+
+    //give unit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation += 1)
+      : (unit.temporary.activation = 1);
+
+    unit.ember ? (unit.ember = Math.min(unit.ember + 1, 2)) : (unit.ember = 1);
+
+    newGameState = animationDelay(newGameState, unit.player, 1750);
+
+    return newGameState;
+  };
 
   const afterburner1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
@@ -38,6 +58,19 @@ export const useUnitAbilityEffects = () => {
       resolution: "Unit Ability",
       resolution2: "Afterburner1",
       unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Discard Skill",
+      unit: unit,
+      player: unit.player,
+      canSkip: false,
+      details: {
+        title: "Afterburner",
+        message: "Spend 1 skill to strike.",
+        restriction: null,
+        reason: "Afterburner",
+      },
     });
 
     return newGameState;
@@ -89,8 +122,7 @@ export const useUnitAbilityEffects = () => {
       canSkip: false,
       details: {
         title: "Fiery Heart",
-        message:
-          "Spend 1 skill to purge an adjacent ally’s Frostbite and Burn.",
+        message: "Spend 1 skill to purge an adjacent ally’s Frost and Burn.",
         restriction: null,
         reason: "Fiery Heart",
       },
@@ -155,8 +187,6 @@ export const useUnitAbilityEffects = () => {
     //end "Hydrotherapy1"
     newGameState.currentResolution.pop();
 
-    // newGameState = drawSkill(newGameState);
-
     if (newGameState[unit.player].skillHand.length > 0) {
       newGameState.currentResolution.push({
         resolution: "Unit Ability",
@@ -199,6 +229,28 @@ export const useUnitAbilityEffects = () => {
     return newGameState;
   };
 
+  const aeromancy1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Aeromancy"
+    newGameState.currentResolution.pop();
+
+    //give unit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation += 1)
+      : (unit.temporary.activation = 1);
+
+    //Wind Scions gain Cyclone when activating skill
+    unit.cyclone
+      ? (unit.cyclone = Math.min(2, unit.cyclone + 1))
+      : (unit.cyclone = 1);
+
+    newGameState = animationDelay(newGameState, unit.player, 1750);
+
+    return newGameState;
+  };
+
   const airDash1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
@@ -235,8 +287,6 @@ export const useUnitAbilityEffects = () => {
     //spend Cyclone
     unit.cyclone -= 2;
 
-    unit.temporary.usedReapTheWhirlwind = true;
-
     newGameState.currentResolution.push({
       resolution: "Unit Ability",
       resolution2: "Reap the Whirlwind1",
@@ -244,15 +294,14 @@ export const useUnitAbilityEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Discard Skill",
+      resolution: "Unit Ability",
+      resolution2: "Reap the Whirlwind Float",
       unit: unit,
-      player: unit.player,
-      canSkip: false,
       details: {
         title: "Reap the Whirlwind",
-        message: "Spend 1 skill and 2 Cyclones to blast an adjacent enemy.",
-        restriction: null,
         reason: "Reap the Whirlwind",
+        restriction: ["03-01", "03-02", "03-03", "03-04"],
+        message: "Float 1 Wind skill",
       },
     });
 
@@ -291,6 +340,48 @@ export const useUnitAbilityEffects = () => {
         },
       });
     }
+
+    return newGameState;
+  };
+
+  const saltTheEarth1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Salt the Earth"
+    newGameState.currentResolution.pop();
+
+    //give unit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation += 1)
+      : (unit.temporary.activation = 1);
+
+    //Gain Aftershocks
+    unit.aftershock
+      ? (unit.aftershock = Math.min(unit.aftershock + 1, 2))
+      : (unit.aftershock = 1);
+
+    newGameState = animationDelay(newGameState, unit.player, 1750);
+
+    return newGameState;
+  };
+
+  const mountainStance1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Mountain Stance"
+    newGameState.currentResolution.pop();
+
+    //give unit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation += 1)
+      : (unit.temporary.activation = 1);
+
+    //Gain 2 Aftershocks
+    unit.aftershock = 2;
+
+    newGameState = animationDelay(newGameState, unit.player, 1750);
 
     return newGameState;
   };
@@ -473,10 +564,7 @@ export const useUnitAbilityEffects = () => {
         },
       });
 
-      newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: self,
-      });
+      newGameState = animationDelay(newGameState, self);
     }
 
     return newGameState;
@@ -507,7 +595,7 @@ export const useUnitAbilityEffects = () => {
       canSkip: false,
       details: {
         title: "Particle Beam",
-        message: "Spend 1 skill to blast an enemy 2 spaces away.",
+        message: "Spend 1 skill to blast a foe 2 spaces away.",
         restriction: null,
         reason: "Particle Beam",
       },
@@ -523,12 +611,6 @@ export const useUnitAbilityEffects = () => {
     //end "Particle Beam1"
     newGameState.currentResolution.pop();
 
-    newGameState.currentResolution.push({
-      resolution: "Unit Ability",
-      resolution2: "Particle Beam2",
-      unit: unit,
-    });
-
     enterSelectUnitMode(
       getZonesWithEnemies(unit, 2),
       unit,
@@ -537,20 +619,6 @@ export const useUnitAbilityEffects = () => {
       "blast",
       null
     );
-
-    return newGameState;
-  };
-
-  const particleBeam3 = (unitInfo) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    //end "Particle Beam2"
-    newGameState.currentResolution.pop();
-
-    if (unit && !isMuted(unit)) {
-      unit.aether = 1;
-    }
 
     return newGameState;
   };
@@ -668,7 +736,7 @@ export const useUnitAbilityEffects = () => {
       details: {
         title: "Ballistic Armor",
         message:
-          "Spend 1 skill and either 2 turns Shield or 2 turns of Ward to blast an adjacent enemy",
+          "Spend 1 skill and either 2 turns Shield or 2 turns of Ward to blast an adjacent foe.",
         restriction: null,
         reason: "Ballistic Armor",
       },
@@ -710,10 +778,7 @@ export const useUnitAbilityEffects = () => {
       },
     });
 
-    newGameState.currentResolution.push({
-      resolution: "Animation Delay",
-      priority: self,
-    });
+    newGameState = animationDelay(newGameState, self);
 
     newGameState.currentResolution.push({
       resolution: "Discard Skill",
@@ -778,16 +843,20 @@ export const useUnitAbilityEffects = () => {
   //end of list
 
   return {
+    eternalEmber1,
     afterburner1,
     afterburner2,
     fieryHeart1,
     fieryHeart2,
     hydrotherapy1,
     hydrotherapy2,
+    aeromancy1,
     airDash1,
     coldEmbrace1,
     reapTheWhirlwind1,
     secondWind1,
+    saltTheEarth1,
+    mountainStance1,
     fortify1,
     leylineConvergence1,
     galvanize1,
@@ -795,7 +864,6 @@ export const useUnitAbilityEffects = () => {
     arcFlash2,
     particleBeam1,
     particleBeam2,
-    particleBeam3,
     auraAmplication1,
     brandish1,
     ballisticArmor1,

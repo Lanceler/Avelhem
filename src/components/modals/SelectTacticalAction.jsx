@@ -60,7 +60,7 @@ const SelectTacticalAction = (props) => {
           optionText: (
             <>
               <div className="">
-                ⬩Spend your Aether to blast an adjacent enemy. The enemy may
+                ⬩Spend your Aether to blast an adjacent foe. The foe may
                 mitigate it.{" "}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -110,7 +110,7 @@ const SelectTacticalAction = (props) => {
 
           optionText: (
             <>
-              <div className=" ">⬩Attack an adjacent enemy.</div>
+              <div className=" ">⬩Attack an adjacent foe.</div>
               <div className=" ">
                 ⬩If the attack was lethal, move to the zone they occupied.
               </div>
@@ -218,12 +218,13 @@ const SelectTacticalAction = (props) => {
             );
           } else {
             newGameState.currentResolution.push({
-              resolution: "Misc.",
-              resolution2: "Rooted Traverse",
+              resolution: "Discard Skill",
               unit: unit,
+              player: unit.player,
               details: {
                 title: "Tactical Action",
-                message: "You are rooted. You must spend 1 skill to traverse.",
+                message:
+                  "You are rooted. You must spend 1 skill to traverse via tactical action.",
                 restriction: null,
                 reason: "Rooted Traverse",
                 tactic: props.dice,
@@ -258,13 +259,13 @@ const SelectTacticalAction = (props) => {
             );
           } else {
             newGameState.currentResolution.push({
-              resolution: "Misc.",
-              resolution2: "Rooted Aether-blast",
+              resolution: "Discard Skill",
               unit: unit,
+              player: unit.player,
               details: {
                 title: "Tactical Action",
                 message:
-                  "You are rooted. You must spend 1 skill to Aether-blast.",
+                  "You are rooted. You must spend 1 skill to Aether-blast via tactical action.",
                 restriction: null,
                 reason: "Rooted Aether-blast",
                 tactic: props.dice,
@@ -289,12 +290,13 @@ const SelectTacticalAction = (props) => {
             );
           } else {
             newGameState.currentResolution.push({
-              resolution: "Misc.",
-              resolution2: "Rooted Traverse",
+              resolution: "Discard Skill",
               unit: unit,
+              player: unit.player,
               details: {
                 title: "Tactical Action",
-                message: "You are rooted. You must spend 1 skill to traverse.",
+                message:
+                  "You are rooted. You must spend 1 skill to traverse via tactical action.",
                 restriction: null,
                 reason: "Rooted Traverse",
                 tactic: props.dice,
@@ -318,12 +320,13 @@ const SelectTacticalAction = (props) => {
             );
           } else {
             newGameState.currentResolution.push({
-              resolution: "Misc.",
-              resolution2: "Rooted Traverse",
+              resolution: "Discard Skill",
               unit: unit,
+              player: unit.player,
               details: {
                 title: "Tactical Action",
-                message: "You are rooted. You must spend 1 skill to traverse.",
+                message:
+                  "You are rooted. You must spend 1 skill to traverse via tactical action.",
                 restriction: null,
                 reason: "Rooted Traverse",
                 tactic: props.dice,

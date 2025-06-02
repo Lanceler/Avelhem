@@ -21,8 +21,13 @@ const SelectTacticViaEffect = (props) => {
 
   const [infoPopUp, setInfoPopUp] = useState(null);
 
-  const { drawAvelhem, drawSkill, enterMoveMode, getVacantAdjacentZones } =
-    useRecurringEffects();
+  const {
+    animationDelay,
+    drawAvelhem,
+    drawSkill,
+    enterMoveMode,
+    getVacantAdjacentZones,
+  } = useRecurringEffects();
 
   const { getTacticImage } = useGetImages();
 
@@ -36,11 +41,19 @@ const SelectTacticViaEffect = (props) => {
 
   let updateData = false;
 
+  const enoughStock = (i) => {
+    if (localGameState.tactics[i].face === "Mobilize") {
+      return localGameState.tactics[i].stock >= props.details.stock;
+    } else {
+      return localGameState.tactics[i].stock > 0;
+    }
+  };
+
   if (
     localGameState.tactics[0] !== null &&
     (!props.unit || !props.unit.temporary.used0thTactic) &&
     props.details.restriction.includes(localGameState.tactics[0].face) &&
-    localGameState.tactics[0].stock >= props.details.stock
+    enoughStock(0)
   ) {
     canUseTactic[0] = true;
   }
@@ -49,7 +62,7 @@ const SelectTacticViaEffect = (props) => {
     localGameState.tactics[1] !== null &&
     (!props.unit || !props.unit.temporary.used1stTactic) &&
     props.details.restriction.includes(localGameState.tactics[1].face) &&
-    localGameState.tactics[1].stock >= props.details.stock
+    enoughStock(1)
   ) {
     canUseTactic[1] = true;
   }
@@ -74,7 +87,11 @@ const SelectTacticViaEffect = (props) => {
     newGameState.currentResolution.pop();
 
     //deduct stock from tactic
-    newGameState.tactics[i].stock -= props.details.stock;
+    if (localGameState.tactics[i].face === "Mobilize") {
+      newGameState.tactics[i].stock -= props.details.stock;
+    } else {
+      newGameState.tactics[i].stock -= 1;
+    }
 
     let unit = null;
     if (props.unit) {
@@ -109,10 +126,7 @@ const SelectTacticViaEffect = (props) => {
           unit: unit,
         });
 
-        newGameState.currentResolution.push({
-          resolution: "Animation Delay",
-          priority: self,
-        });
+        newGameState = animationDelay(newGameState, self);
 
         break;
 
@@ -133,10 +147,7 @@ const SelectTacticViaEffect = (props) => {
           unit: unit,
         });
 
-        newGameState.currentResolution.push({
-          resolution: "Animation Delay",
-          priority: self,
-        });
+        newGameState = animationDelay(newGameState, self);
         break;
 
       case "Cold Embrace":
@@ -156,10 +167,7 @@ const SelectTacticViaEffect = (props) => {
           unit: unit,
         });
 
-        newGameState.currentResolution.push({
-          resolution: "Animation Delay",
-          priority: self,
-        });
+        newGameState = animationDelay(newGameState, self);
         break;
 
       case "Air Dash":
@@ -182,16 +190,12 @@ const SelectTacticViaEffect = (props) => {
           unit: unit,
         });
 
-        newGameState.currentResolution.push({
-          resolution: "Animation Delay",
-          priority: self,
-        });
+        newGameState = animationDelay(newGameState, self);
         break;
 
       case "Fortify":
         if (newGameState.tactics[i].face === "Advance") {
-          delete unit.boosts.mountainStance;
-          //newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+          delete unit.aftershock;
         }
 
         updateData = true;
@@ -210,13 +214,14 @@ const SelectTacticViaEffect = (props) => {
           unit: unit,
         });
 
-        newGameState.currentResolution.push({
-          resolution: "Animation Delay",
-          priority: self,
-        });
+        newGameState = animationDelay(newGameState, self);
         break;
 
       case "Leyline Convergence":
+        if (newGameState.tactics[i].face === "Advance") {
+          delete unit.aftershock;
+        }
+
         updateData = true;
         newGameState.activatingSkill.push("LeylineConvergence");
         newGameState.activatingUnit.push(unit);
@@ -235,10 +240,7 @@ const SelectTacticViaEffect = (props) => {
           unit: unit,
         });
 
-        newGameState.currentResolution.push({
-          resolution: "Animation Delay",
-          priority: self,
-        });
+        newGameState = animationDelay(newGameState, self);
         break;
 
       case "Galvanize":
@@ -261,10 +263,7 @@ const SelectTacticViaEffect = (props) => {
           unit: unit,
         });
 
-        newGameState.currentResolution.push({
-          resolution: "Animation Delay",
-          priority: self,
-        });
+        newGameState = animationDelay(newGameState, self);
         break;
 
       case "Arc Flash":
@@ -284,10 +283,7 @@ const SelectTacticViaEffect = (props) => {
           unit: unit,
         });
 
-        newGameState.currentResolution.push({
-          resolution: "Animation Delay",
-          priority: self,
-        });
+        newGameState = animationDelay(newGameState, self);
         break;
 
       case "Particle Beam":
@@ -307,10 +303,7 @@ const SelectTacticViaEffect = (props) => {
           unit: unit,
         });
 
-        newGameState.currentResolution.push({
-          resolution: "Animation Delay",
-          priority: self,
-        });
+        newGameState = animationDelay(newGameState, self);
         break;
 
       case "Brandish":
@@ -330,10 +323,7 @@ const SelectTacticViaEffect = (props) => {
           unit: unit,
         });
 
-        newGameState.currentResolution.push({
-          resolution: "Animation Delay",
-          priority: self,
-        });
+        newGameState = animationDelay(newGameState, self);
         break;
 
       //Skills
@@ -353,8 +343,6 @@ const SelectTacticViaEffect = (props) => {
           resolution2: "Surge3",
           unit: unit,
         });
-
-        props.setMovingSpecial("Surge");
 
         newGameState = enterMoveMode(
           getVacantAdjacentZones(unit),

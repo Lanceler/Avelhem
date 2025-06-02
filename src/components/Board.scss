@@ -3,46 +3,33 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-
-    // background: aqua;
-
-
 }
 
 .board-contents{
     display: flex;
     flex-direction: column;
-    // background-color: aquamarine;
 }
-
-
-
-
 
 .board-physical {
     position: relative;
     display: flex;
     justify-content: center;
     user-select: none;
-    // background-color: aqua;
-
     animation: turnFadeIn 3.25s linear;
 }
-
-
 
 .board-space {
     display: flex;
     align-items: center;
-    border: 6px ridge goldenrod;
+    border: 8px ridge goldenrod;
+    
     height: 890px;
     width: 1450px;
-    // padding-top: 10px;
     overflow: hidden;
     // background: linear-gradient(to bottom, rgba(31, 31, 31, 0.95), rgba(90, 90, 90, 0.95) 70%, rgba(141, 141, 141, 0.95) 100%);
     background: linear-gradient(to bottom, rgba(85, 84, 84, 0.65), rgba(116, 116, 116, 0.7) 35%, rgba(230, 223, 223, 0.55) 100%);
     box-shadow: 4px 4px 8px 4px rgba(0, 0, 0, 0.5);
-    scrollbar-color: rgb(255, 168, 7) rgba(92, 63, 52, 0);
+    scrollbar-color: rgb(252, 165, 5) rgba(92, 63, 52, 0);
     scrollbar-width: thin;
 
     transform: scale(0.875);
@@ -53,7 +40,7 @@
 
 .board-space-your-glow, .board-space-enemy-glow{
     background: linear-gradient(to bottom, 
-                    rgba(0, 255, 255, 0) 25%, 
+                    rgba(0, 255, 255, 0) 40%, 
                     rgba(0, 217, 255, 0.65) 100%);
     height: 100%;
     width: 100%;
@@ -139,22 +126,23 @@
 }
 
 .board-center .board-frame {
-    border: 3.5px ridge goldenrod;
+        border: 5.5px ridge goldenrod;
     height: fit-content;
     width: fit-content;
     position: relative;
     /* overflow: hidden; */
-    background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
+    background: linear-gradient(to bottom, rgba(133, 6, 9, 0.65), rgba(143, 22, 24, 0.45) 60%, rgba(255, 65, 68, 0.65) 100%);
+    // background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
     // background: linear-gradient(to bottom, rgb(177, 138, 12), rgb(226, 184, 45) 60%, rgb(240, 196, 52) 100%);
-    box-shadow: 2px 2px 3px 3px rgba(0, 0, 0, 0.5);
+    box-shadow: 2px 2px 3px 1px rgba(0, 0, 0, 0.5);
     filter: brightness(1.05);
 }
 
-// .board-center .board-frame-enemy {
-//     background: linear-gradient(to bottom, rgb(0, 0, 0), rgb(19, 15, 15) 60%, rgb(44, 43, 43) 100%);
-//     filter: brightness(1.00);
-// }
+.board-center .board-frame-self {
+    // background: linear-gradient(to top, rgba(15, 91, 153, 0.60), rgba(25, 107, 184, 0.35) 70%, rgba(67, 152, 250, 0.45) 100%);
 
+    background: linear-gradient(to top, rgba(15, 91, 153, 0.60), rgba(85, 139, 189, 0.45) 70%, rgba(125, 178, 238, 0.55) 100%);
+}
 
 .board-right {
     height: 100%;
@@ -261,16 +249,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-
-    // background-color: aqua;
 }
 
 .eye-icon {
     height: 22px;
     filter: invert(100%);
     position: relative;
-    /* left: 2px; */
 }
 
 .question-icon0,
@@ -280,10 +264,6 @@
     fill: white;
     position: relative;
     cursor: help;
-    /* top: 50%; */
-    /* transform: translateY(-50%); */
-    /* left: 6px; */
-    /* pointer-events: all; */
     border-radius: 100%;
 }
 

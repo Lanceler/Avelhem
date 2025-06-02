@@ -20,19 +20,19 @@
 
 .modalV2 {
     max-height: 1000px;
-    border: 2px black solid;
+    border: 2.5px black solid;
     width: fit-content;
     min-width: 40%;
     max-width: 950px;
     margin: 0px auto;
-    border-top-right-radius: 70px;
+    border-top-right-radius: 65px;
     position: relative;
     top: 50%;
     transform: translateY(-50%);
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-width: thin;
-    background: rgba(231, 231, 231, 0.75);
+    background: rgba(243, 243, 243, 0.625);
 }
 
 .modalHeader2 {

@@ -10,7 +10,7 @@ import { useCardDatabase } from "../../hooks/useCardDatabase";
 
 const SelectCustomChoice = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
-  const { self, enemy } = useSelector((state) => state.teams);
+  const { self } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
 
   const dispatch = useDispatch();
@@ -23,6 +23,7 @@ const SelectCustomChoice = (props) => {
   }, [props.details.reason]);
 
   const {
+    aetherRestoreSpecial,
     canMove,
     canRaptorBlitzBlast,
     canSowAndReapBlast,
@@ -97,7 +98,7 @@ const SelectCustomChoice = (props) => {
         newGameState[unit.player].skillHand.length > 0;
       canSecondChoice = getZonesWithEnemies(unit, 1).length > 0;
       ChoiceFirstMessage =
-        "Float 1 skill to prompt an adjacent ally to traverse.";
+        "Spend 1 skill to prompt an adjacent ally to traverse.";
       ChoiceSecondMessage = "Purge an adjacent foe’s Aether and Shield.";
       break;
 
@@ -108,14 +109,6 @@ const SelectCustomChoice = (props) => {
       );
       ChoiceFirstMessage = "Raise your HP by 1 (Max 3).";
       ChoiceSecondMessage = "Recover 1 Land skill.";
-      break;
-
-    case "Mountain Stance":
-      canFirstChoice = true;
-      canSecondChoice = newGameState[unit.player].skillHand.length > 0;
-      ChoiceFirstMessage =
-        "Gain a boost: you can use an Advance tactic to activate “Fortify”.";
-      ChoiceSecondMessage = "Spend 1 skill to search for 1 “Crystallization”.";
       break;
 
     case "Fortify":
@@ -133,19 +126,18 @@ const SelectCustomChoice = (props) => {
       ChoiceSecondMessage = "Strike.";
       break;
 
-    case "Surge4":
-      canSkip = true;
+    case "Surge":
       canFirstChoice = canMove(unit);
       canSecondChoice = canStrike(unit);
-      ChoiceFirstMessage = "Traverse (bypass motion contingent skills).";
-      ChoiceSecondMessage = "Strike (2 AP).";
+      ChoiceFirstMessage = "Traverse.";
+      ChoiceSecondMessage = "Strike.";
       break;
 
     case "Aegis":
       canFirstChoice = true;
       canSecondChoice = newGameState[unit.player].skillHand.length > 0;
-      ChoiceFirstMessage = "Grant them Shield for 1 turn.";
-      ChoiceSecondMessage = "Spend 1 skill to grant them Ward for 1 turn.";
+      ChoiceFirstMessage = "Grant them Shield.";
+      ChoiceSecondMessage = "Spend 1 skill to grant them Ward.";
       break;
 
     case "Reinforce":
@@ -187,7 +179,7 @@ const SelectCustomChoice = (props) => {
     case "Sow and Reap":
       canFirstChoice = canSowAndReapBlast(unit);
       canSecondChoice = canSowAndReapStrike(unit);
-      ChoiceFirstMessage = "Blast (pierce Shield) an adjacent rooted foe.";
+      ChoiceFirstMessage = "Blast (pierce Shield) a foe within 2 spaces.";
       ChoiceSecondMessage = "Prompt an adjacent ally to strike a rooted foe.";
       break;
 
@@ -204,10 +196,11 @@ const SelectCustomChoice = (props) => {
       break;
 
     case "Raptor Blitz":
-      canFirstChoice = canRaptorBlitzBlast(unit);
-      canSecondChoice = true;
-      ChoiceFirstMessage = "Blast an adjacent foe that lacks Aether.";
-      ChoiceSecondMessage = "Purge the Aether of a foe within 2 spaces.";
+      canFirstChoice = true;
+      canSecondChoice = canRaptorBlitzBlast(unit);
+      ChoiceFirstMessage = "Purge the Aether of a foe within 2 spaces.";
+      ChoiceSecondMessage = "Blast an adjacent foe that lacks Aether.";
+
       break;
 
     case "Tea for Two":
@@ -218,9 +211,11 @@ const SelectCustomChoice = (props) => {
       break;
 
     case "Reminiscence":
-      canFirstChoice = newGameState[self].avelhemVestige.length > 0;
+      canFirstChoice =
+        newGameState[self].avelhemVestige.length > 0 &&
+        newGameState[self].fateDefiance > 0;
       canSecondChoice = newGameState[self].skillVestige.length > 0;
-      ChoiceFirstMessage = "Recover 1 Avelhem.";
+      ChoiceFirstMessage = "Spend 1 FD to recover 1 Avelhem.";
       ChoiceSecondMessage = "Recover then float 1 skill.";
       break;
 
@@ -228,7 +223,6 @@ const SelectCustomChoice = (props) => {
       canFirstChoice = allBurstSkills().some((s) =>
         newGameState[self].skillVestige.includes(s)
       );
-
       canSecondChoice = true;
       ChoiceFirstMessage = "Recover then reveal 1 burst skill.";
       ChoiceSecondMessage =
@@ -287,8 +281,6 @@ const SelectCustomChoice = (props) => {
           ];
 
         if (selectedChoice === 1) {
-          healingRainUnit.aether = 1;
-
           if (healingRainUnit.enhancements.ward > 0) {
             healingRainUnit.enhancements.ward = Math.max(
               healingRainUnit.enhancements.ward,
@@ -297,6 +289,9 @@ const SelectCustomChoice = (props) => {
           } else {
             healingRainUnit.enhancements.ward = 2;
           }
+
+          newGameState = aetherRestoreSpecial(newGameState, healingRainUnit);
+          updateData = true;
         } else {
           newGameState.currentResolution.push({
             resolution: "Water Skill",
@@ -366,14 +361,15 @@ const SelectCustomChoice = (props) => {
           });
 
           newGameState.currentResolution.push({
-            resolution: "Wind Skill",
-            resolution2: "Aerial Impetus Float",
+            resolution: "Discard Skill",
             unit: unit,
+            player: unit.player,
+            canSkip: false,
             details: {
               title: "Aerial Impetus",
-              reason: "Aerial Impetus",
+              message: "Spend 1 skill to prompt an adjacent ally to traverse.",
               restriction: null,
-              message: "Float 1 skill",
+              reason: "Aerial Impetus",
             },
           });
         } else {
@@ -402,42 +398,6 @@ const SelectCustomChoice = (props) => {
               restriction: ["04-01", "04-02", "04-03"],
               message: "Recover 1 Land skill.",
               outcome: "Add",
-            },
-          });
-        }
-        break;
-
-      case "Mountain Stance":
-        if (selectedChoice === 1) {
-          unit.boosts.mountainStance = true;
-        } else {
-          newGameState.currentResolution.push({
-            resolution: "Search Card",
-            player: self,
-            details: {
-              restriction: ["04-01"],
-              exclusion: [],
-              searchTitle: "Mountain Stance",
-              searchMessage: "Search for 1 “Crystallization”",
-              outcome: "Add",
-              revealTitle: null,
-              revealMessage: null,
-              messageTitle: null,
-              message: null,
-              specMessage: null,
-            },
-          });
-
-          newGameState.currentResolution.push({
-            resolution: "Discard Skill",
-            unit: unit,
-            player: unit.player,
-            canSkip: false,
-            details: {
-              title: "Mountain Stance",
-              message: "Spend 1 skill to search for 1 “Crystallization”.",
-              restriction: null,
-              reason: "Mountain Stance",
             },
           });
         }
@@ -483,10 +443,8 @@ const SelectCustomChoice = (props) => {
         }
         break;
 
-      case "Surge4":
+      case "Surge":
         if (selectedChoice === 1) {
-          props.setMovingSpecial("Surge");
-
           newGameState = enterMoveMode(
             getVacantAdjacentZones(unit),
             unit,
@@ -524,7 +482,7 @@ const SelectCustomChoice = (props) => {
             canSkip: false,
             details: {
               title: "Aegis",
-              message: "Spend 1 skill to grant Ward for 1 turn.",
+              message: "Spend 1 skill to grant Ward.",
               restriction: null,
               reason: "Aegis",
             },
@@ -668,13 +626,13 @@ const SelectCustomChoice = (props) => {
         if (selectedChoice === 1) {
           newGameState.currentResolution.push({
             resolution: "Avian Skill",
-            resolution2: "Raptor Blitz Blast",
+            resolution2: "Raptor Blitz Purge",
             unit: unit,
           });
         } else {
           newGameState.currentResolution.push({
             resolution: "Avian Skill",
-            resolution2: "Raptor Blitz Purge",
+            resolution2: "Raptor Blitz Blast",
             unit: unit,
           });
         }
@@ -711,6 +669,8 @@ const SelectCustomChoice = (props) => {
 
       case "Reminiscence":
         if (selectedChoice === 1) {
+          newGameState[self].fateDefiance -= 1;
+
           newGameState.currentResolution.push({
             resolution: "Recover Avelhem",
             player: self,
@@ -748,6 +708,7 @@ const SelectCustomChoice = (props) => {
               restriction: allBurstSkills(),
               message: "Recover then reveal 1 burst skill.",
               outcome: "Add",
+              reveal: true,
             },
           });
         } else {

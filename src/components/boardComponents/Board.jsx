@@ -26,6 +26,7 @@ const Board = (props) => {
     activatePitfallTrap,
     activateViridianGrave,
     activateSymphonicScreech,
+    aetherRestoreSpecial,
     applyBurnDamage,
     ascendPawn,
     avelhemToScion,
@@ -95,8 +96,7 @@ const Board = (props) => {
         newGameState = ignite(
           newGameState,
           newGameState[unit.player].units[unit.unitIndex],
-          selectedUnit,
-          special
+          selectedUnit
         );
         break;
 
@@ -166,9 +166,7 @@ const Board = (props) => {
         break;
 
       case "kleptothermy ally":
-        newGameState[selectedUnit.player].units[
-          selectedUnit.unitIndex
-        ].aether = 1;
+        newGameState = aetherRestoreSpecial(newGameState, selectedUnit);
         break;
 
       case "kleptothermy enemy":
@@ -206,10 +204,8 @@ const Board = (props) => {
       case "gale conjuration purge":
         let galeConjurationEnemy =
           newGameState[selectedUnit.player].units[selectedUnit.unitIndex];
-
         delete galeConjurationEnemy.enhancements.shield;
         delete galeConjurationEnemy.enhancements.ward;
-        delete galeConjurationEnemy.enhancements.disruption;
 
         if (isAdjacent(unit, galeConjurationEnemy)) {
           galeConjurationEnemy.aether = 0;
@@ -218,10 +214,7 @@ const Board = (props) => {
         break;
 
       case "gale conjuration restore":
-        let galeConjurationAlly =
-          newGameState[selectedUnit.player].units[selectedUnit.unitIndex];
-
-        galeConjurationAlly.aether = 1;
+        newGameState = aetherRestoreSpecial(newGameState, selectedUnit);
         break;
 
       case "symphonic screech":
@@ -305,9 +298,8 @@ const Board = (props) => {
         delete ambrosiaAlly.afflictions.frost;
         delete ambrosiaAlly.afflictions.paralysis;
 
-        newGameState[selectedUnit.player].units[selectedUnit.unitIndex] =
-          ambrosiaAlly;
-
+        // newGameState[selectedUnit.player].units[selectedUnit.unitIndex] =
+        //   ambrosiaAlly;
         break;
 
       case "raptor blitz purge":
@@ -318,6 +310,18 @@ const Board = (props) => {
 
       case "guardian wings":
         newGameState = activateGuardianWings(newGameState, selectedUnit, unit);
+        break;
+
+      case "vanguard fleet":
+        let vanguardFleetUser = newGameState[unit.player].units[unit.unitIndex];
+
+        vanguardFleetUser.temporary.previousTarget = selectedUnit.unitIndex;
+
+        newGameState.currentResolution.push({
+          resolution: "Avian Skill",
+          resolution2: "Vanguard Fleet Prompt",
+          unit: selectedUnit,
+        });
         break;
 
       case "ambidexterity":
@@ -544,7 +548,6 @@ const Board = (props) => {
         props.setUnitInfor(expandedUnit);
 
         // //for testing: quick movement
-
         // props.updateLocalState(
         //   enterMoveMode(
         //     getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
@@ -824,8 +827,6 @@ const Board = (props) => {
               validZones={props.validZones}
               deployUnit={props.deployUnit}
               movingUnit={props.movingUnit}
-              movingSpecial={props.movingSpecial}
-              setMovingSpecial={props.setMovingSpecial}
               moveUnit={props.moveUnit}
               tileMode={props.tileMode}
               deployClass={props.deployClass}

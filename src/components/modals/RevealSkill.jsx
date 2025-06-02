@@ -17,7 +17,7 @@ const RevealSkill = (props) => {
 
   const dispatch = useDispatch();
 
-  const { drawSkill } = useRecurringEffects();
+  const { enterSelectUnitMode } = useRecurringEffects();
 
   const [selectedSkill, setSelectedSkill] = useState(null);
 
@@ -49,12 +49,9 @@ const RevealSkill = (props) => {
 
     switch (props.details.reason) {
       case "Blaze of Glory":
-        newGameState.currentResolution.push({
-          resolution: "Fire Skill",
-          resolution2: "Blaze of Glory3",
-          unit: props.unit,
-          adjacentEnemies: props.details.adjacentEnemies,
-        });
+        unit.enhancements.shield
+          ? (unit.enhancements.shield = Math.max(2, unit.enhancements.shield))
+          : (unit.enhancements.shield = 2);
 
         revealTitle = "Blaze of Glory";
         revealMessage = "Your opponent has revealed 1 “Blaze of Glory”.";
@@ -72,11 +69,11 @@ const RevealSkill = (props) => {
         revealMessage = "Your opponent has revealed 1 Water Skill.";
         break;
 
-      case "Symphonic Screech":
-        newGameState = drawSkill(newGameState);
-        revealTitle = "Symphonic Screech";
-        revealMessage = "Your opponent has revealed 1 Wind Skill.";
-        break;
+      // case "Symphonic Screech":
+      //   newGameState = drawSkill(newGameState);
+      //   revealTitle = "Symphonic Screech";
+      //   revealMessage = "Your opponent has revealed 1 Wind Skill.";
+      //   break;
 
       case "Cataclysmic Tempest":
         newGameState.currentResolution.push({
@@ -87,6 +84,17 @@ const RevealSkill = (props) => {
 
         revealTitle = "Cataclysmic Tempest";
         revealMessage = "Your opponent has revealed 1 Wind Skill.";
+        break;
+
+      case "Upheaval": // "Upheaval3"
+        enterSelectUnitMode(
+          props.details.adjacentEnemies,
+          props.unit,
+          newGameState,
+          null,
+          "paralyze1",
+          "Upheaval"
+        );
         break;
 
       // case "Chain Lightning Blast":

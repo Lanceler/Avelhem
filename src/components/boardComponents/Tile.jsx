@@ -29,8 +29,7 @@ const Tile = (props) => {
     if (deployable) {
       props.deployUnit(props.zone.row, props.zone.column, props.deployClass);
     } else if (movable) {
-      props.moveUnit(props.movingUnit, props.zone.id, props.movingSpecial);
-      props.setMovingSpecial(null);
+      props.moveUnit(props.movingUnit, props.zone.id);
     } else {
       // props.getZonesInRange(props.zone.row, props.zone.column, 1, false);
     }
@@ -82,13 +81,12 @@ const Tile = (props) => {
       }}
     >
       <div className={`tile ${self !== "guest" ? "" : "reversed-tile"}`}>
-        {/* Tile coordinates below */}
-
         {/* {!props.zone.player && (
           <>
             [{props.zone.row},{props.zone.column}]
           </>
         )} */}
+        <div className="tile-outline"></div>
       </div>
     </div>
   );

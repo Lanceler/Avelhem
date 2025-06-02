@@ -327,7 +327,7 @@ const BountyPhase = (props) => {
       {
         text: (
           <>
-            Upgrade Beseech
+            Upgrade Beseech:
             <br />
             You may draw an additional Avelhem
           </>

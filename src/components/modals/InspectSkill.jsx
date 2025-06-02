@@ -217,7 +217,10 @@ const InspectSkill = (props) => {
               let unitInfo = props.unit;
               let unit =
                 newGameState[unitInfo.player].units[unitInfo.unitIndex];
-              unit.boosts.glacialTorrent = selectedSkills.length >= 2 ? 2 : 1;
+
+              if (selectedSkills.length >= 2) {
+                unit.torrent = 2;
+              }
             }
 
             let selection = [...floatingRepertoire, ...inspectRerpertoire];
@@ -276,17 +279,36 @@ const InspectSkill = (props) => {
             }
           }
 
+          const { reason, title } = props.details;
+          const skillCount = selectedSkills.length;
+          const sovereign = self === "host" ? "Gold" : "Silver";
+
+          let message = "";
+          let specMessage = "";
+
+          if (reason === "Glacial Torrent") {
+            message = `Your opponent added ${skillCount} Water skill${
+              skillCount > 1 ? "s" : ""
+            } to their hand.`;
+            specMessage = `${sovereign} Sovereign added ${skillCount} Water skill${
+              skillCount > 1 ? "s" : ""
+            } to their hand.`;
+          } else if (reason === "Reconnaissance") {
+            message = `Your opponent placed ${skillCount} skill${
+              skillCount > 1 ? "s" : ""
+            } at the bottom of their repertoire.`;
+            specMessage = `${sovereign} Sovereign placed ${skillCount} skill${
+              skillCount > 1 ? "s" : ""
+            } at the bottom of their repertoire.`;
+          }
+
           newGameState.currentResolution.push({
             resolution: "Misc.",
             resolution2: "Message To Player",
             player: enemy,
-            title: props.details.title,
-            message: `Your opponent placed ${selectedSkills.length} skills at the bottom of their repertoire.`,
-            specMessage: `${
-              self === "host" ? "Gold" : "Silver"
-            } Sovereign placed ${
-              selectedSkills.length
-            } skills at the bottom of their repertoire.`,
+            title,
+            message,
+            specMessage,
           });
 
           break;
@@ -315,12 +337,6 @@ const InspectSkill = (props) => {
         self === "host" ? "Gold" : "Silver"
       } Sovereign inspected their repertoire without selecting a card.`,
     });
-
-    if (props.details.reason === "Glacial Torrent") {
-      let unitInfo = props.unit;
-      let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-      unit.boosts.glacialTorrent = 1;
-    }
 
     dispatch(updateState(newGameState));
     props.updateFirebase(newGameState);

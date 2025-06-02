@@ -63,7 +63,6 @@ const BoardArea = (props) => {
   const [selectUnitReason, setSelectUnitReason] = useState(null);
   const [selectUnitSpecial, setSelectUnitSpecial] = useState(null);
   const [movingUnit, setMovingUnit] = useState(null);
-  const [movingSpecial, setMovingSpecial] = useState(null);
   const [tacticUsed, setTacticUsed] = useState(null);
   const [expandedUnit, setExpandedUnit] = useState(null);
   const [hideModal, setHideModal] = useState(false);
@@ -181,9 +180,7 @@ const BoardArea = (props) => {
     setSelectUnitReason(null);
     setSelectUnitSpecial(null);
     setMovingUnit(null);
-    // setMovingSpecial(null);
     setTacticUsed(null);
-
     setExpandedUnit(null);
 
     // if (localGameState) {
@@ -414,7 +411,6 @@ const BoardArea = (props) => {
     setSelectUnitReason(null);
     setSelectUnitSpecial(null);
     setMovingUnit(null);
-    setMovingSpecial(null);
     setTacticUsed(null);
     resolutionUpdate(gameState);
   };
@@ -593,7 +589,11 @@ const BoardArea = (props) => {
                             : "",
                       }}
                     >
-                      <div className={`board-frame `}>
+                      <div
+                        className={`board-frame ${
+                          whoseTurnGlow() === "self" ? "board-frame-self" : ""
+                        }`}
+                      >
                         <Board
                           expandedUnit={expandedUnit}
                           setExpandedUnit={setExpandedUnit}
@@ -601,8 +601,6 @@ const BoardArea = (props) => {
                           handleUpdateDemoGuide={handleUpdateDemoGuide}
                           userRole={props.userRole}
                           movingUnit={movingUnit}
-                          movingSpecial={movingSpecial}
-                          setMovingSpecial={setMovingSpecial}
                           moveUnit={moveUnit}
                           deployUnit={deployUnit}
                           tileMode={tileMode}
@@ -837,7 +835,6 @@ const BoardArea = (props) => {
                       setSelectUnitReason={setSelectUnitReason}
                       setSelectUnitSpecial={setSelectUnitSpecial}
                       setMovingUnit={setMovingUnit}
-                      setMovingSpecial={setMovingSpecial}
                       setTacticUsed={setTacticUsed}
                     />
 

@@ -39,38 +39,11 @@ const RecoverSkill = (props) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     newGameState.currentResolution.pop();
 
-    if (
-      [
-        "Recover then float 1 Plant skill other than “Efflorescence”.",
-        "Recover 1 Lightning skill other than “Thunder Thaumaturge”.",
-        "Recover then reveal 1 burst skill.",
-        "You may recover then float 1 skill that can grant a unit Ravager",
-      ].includes(props.details.message)
-    ) {
+    if (props.details.reveal) {
       let message = "Your opponent has recovered and revealed a skill.";
       let specMessage = `${
         self === "host" ? "Gold" : "Silver"
       } Sovereign has recovered and revealed a skill.`;
-
-      let title = "";
-
-      switch (props.details.message) {
-        case "Recover then float 1 Plant skill other than “Efflorescence”.":
-          title = "Efflorescence";
-          break;
-
-        case "Recover then float 1 Lightning skill other than “Thunder Thaumaturge”.":
-          title = "Thunder Thaumaturge";
-          break;
-
-        case "Recover then reveal 1 burst skill.":
-          title = "Foreshadow";
-          break;
-
-        case "You may recover then float 1 skill that can grant a unit Ravager.":
-          title = "Black Business Card";
-          break;
-      }
 
       newGameState.currentResolution.push({
         resolution: "Misc.",
@@ -82,7 +55,7 @@ const RecoverSkill = (props) => {
           ],
         message: message,
         specMessage: specMessage,
-        title: title,
+        title: props.details.title,
       });
     }
 

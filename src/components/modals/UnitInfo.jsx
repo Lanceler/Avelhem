@@ -55,7 +55,7 @@ const UnitInfo = (props) => {
 
             <p className="unitInfo-text-heading2">2. Fiery Heart (One-shot)</p>
             <p className="unitInfo-text-desc">
-              ⬩Spend 1 skill to purge an adjacent ally’s Frostbite and Burn.
+              ⬩Spend 1 skill to purge an adjacent ally’s Frost and Burn.
             </p>
           </>
         );
@@ -86,7 +86,7 @@ const UnitInfo = (props) => {
               </span>
             </p>
             <p className="unitInfo-text-desc">
-              ⬩Strike a frozen enemy or freeze an adjacent enemy for 2 turns.
+              ⬩Strike a frozen foe or freeze an adjacent foe for 2 turns.
             </p>
           </>
         );
@@ -106,11 +106,9 @@ const UnitInfo = (props) => {
               ⬩Move to a zone 2 spaces away.
             </p>
 
-            <p className="unitInfo-text-heading2">
-              2. Reap the Whirlwind (One-shot)
-            </p>
+            <p className="unitInfo-text-heading2">2. Reap the Whirlwind</p>
             <p className="unitInfo-text-desc">
-              ⬩Spend 1 skill and 2 Cyclones to blast an adjacent enemy.
+              ⬩Float 1 Wind skill and spend 2 Cyclones to blast an adjacent foe.
             </p>
           </>
         );
@@ -184,8 +182,7 @@ const UnitInfo = (props) => {
               </span>
             </p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Spend 1 skill to blast an enemy within 2 spaces. ⬩Restore your
-              Aether.
+              ⬩Spend 1 skill to blast a foe within 2 spaces.
             </p>
 
             <p className="unitInfo-text-heading2">2. Amplify Aura (One-shot)</p>
@@ -215,7 +212,7 @@ const UnitInfo = (props) => {
             </p>
             <p className="unitInfo-text-desc">
               ⬩Spend 1 skill and either 2 turns of Shield or 2 turns of Ward to
-              blast an adjacent enemy.
+              blast an adjacent foe.
             </p>
           </>
         );
@@ -230,8 +227,8 @@ const UnitInfo = (props) => {
 
             <p className="unitInfo-text-heading2">2. Ambrosia</p>
             <p className="unitInfo-text-desc">
-              ⬩Spend 1 Blossom to purge your or an adjacent ally’s turn-based
-              afflictions (except Anathema).
+              ⬩Spend 1 Blossom to purge your or an adjacent ally’s afflictions
+              (except Root and Anathema).
             </p>
           </>
         );
@@ -258,15 +255,20 @@ const UnitInfo = (props) => {
           <>
             <p className="unitInfo-text-heading2">1. From the Ashes</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Upon your debut, you may spend 1 skill to recover then float 1
+              ⬩Upon ascension, you may spend 1 skill to recover then float 1
               non-burst Fire skill.
             </p>
 
             <p className="unitInfo-text-heading2">2. Eternal Ember</p>
+            <p className="unitInfo-text-desc">
+              ⬩You are immune to Frost and Burn.
+            </p>
+            <p className="unitInfo-text-desc">
+              ⬩When you spend a skill, gain 1 Ember; you can have up to 2
+              Embers.
+            </p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩You are immune to Frostbite and Burn. ⬩When you would be
-              afflicted with Anathema, you may spend 1 skill to reduce its
-              duration to 1 turn.
+              ⬩You can spend 2 Embers in lieu of 1 skill.
             </p>
           </>
         );
@@ -276,16 +278,16 @@ const UnitInfo = (props) => {
           <>
             <p className="unitInfo-text-heading2">1. Kleptothermy</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Upon your debut, restore your Aether or that of an ally within 2
-              spaces; or purge an adjacent enemy’s Aether.
+              ⬩Upon ascension, restore your Aether or that of an ally within 2
+              spaces; or purge an adjacent foe’s Aether.
             </p>
 
             <p className="unitInfo-text-heading2">2. Clear as Crystal</p>
             <p className="unitInfo-text-desc">
-              ⬩You are immune to Frostbite and Burn.
+              ⬩You are immune to Frost and Burn.
             </p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Your attacks against frozen enemies pierce Shield.
+              ⬩Your attacks against frozen foes pierce Shield.
             </p>
           </>
         );
@@ -295,8 +297,8 @@ const UnitInfo = (props) => {
           <>
             <p className="unitInfo-text-heading2">1. Second Wind</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Upon your elimination, you may recover then float 1 non-burst
-              Wind skill.
+              ⬩Upon elimination, you may recover then float 1 non-burst Wind
+              skill.
             </p>
 
             <p className="unitInfo-text-heading2">2. Aeromancy</p>
@@ -305,7 +307,7 @@ const UnitInfo = (props) => {
               Cyclones.
             </p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Your motion does not trigger a contingency.
+              ⬩Your actions do not trigger a motion contingency.
             </p>
           </>
         );
@@ -315,18 +317,23 @@ const UnitInfo = (props) => {
           <>
             <p className="unitInfo-text-heading2">1. Mountain Stance</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Upon your debut, gain a boost: you can use{" "}
-              <span className="unitInfo-tactic-group2">
-                <img src={AdvanceSmall} className="unitInfo-tactic-icon2" />
-              </span>{" "}
-              to activate “Fortify”; or spend 1 skill to search for 1
-              “Crystallization”.
+              ⬩Upon ascension, gain 2 Aftershocks; you can have up to 2
+              Aftershocks.
             </p>
 
             <p className="unitInfo-text-heading2">2. Salt the Earth</p>
-            <p className="unitInfo-text-desc">⬩You are immune to Root.</p>
+            <p className="unitInfo-text-desc">
+              ⬩You are immune to Paralysis (due to Land skills) and Root.
+            </p>
+            <p className="unitInfo-text-desc">
+              ⬩When you successfully paralyze a foe, gain 1 Aftershock.
+            </p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩You are immune to Paralysis due to Land skills.
+              ⬩When you activate an ability, you may spend 2 Aftershocks to use{" "}
+              <span className="unitInfo-tactic-group2">
+                <img src={AdvanceSmall} className="unitInfo-tactic-icon2" />
+              </span>{" "}
+              in lieu of the required tactic.
             </p>
           </>
         );
@@ -336,14 +343,14 @@ const UnitInfo = (props) => {
           <>
             <p className="unitInfo-text-heading2">1. Lightning Rod</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Upon your debut, you may spend 1 skill to gain 1 Charge; you can
+              ⬩Upon ascension, you may spend 1 skill to gain 1 Charge; you can
               have up to 3 Charges.
             </p>
 
             <p className="unitInfo-text-heading2">2. Defibrillation</p>
-            <p className="unitInfo-text-desc ">⬩You are immune to Frostbite.</p>
+            <p className="unitInfo-text-desc ">⬩You are immune to Frost.</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩You are immune to Paralysis due to Lightning skills.
+              ⬩If you have 3 Charges, you are immune to Paralysis.
             </p>
           </>
         );
@@ -353,12 +360,15 @@ const UnitInfo = (props) => {
           <>
             <p className="unitInfo-text-heading2">1. Ambiance Assimilation</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Upon your elimination, you may search for 1 non-burst Mana skill.
+              ⬩Upon elimination, you may search for 1 non-burst Mana skill.
             </p>
 
-            <p className="unitInfo-text-heading2">2. Mana Feedback</p>
+            <p className="unitInfo-text-heading2">2. Overload</p>
+            <p className="unitInfo-text-desc">
+              ⬩When your Aether is restored, you may draw 1 skill.
+            </p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩When an enemy survives your attack, you may draw 1 skill.
+              ⬩The attacks of your skills have 2 AP.
             </p>
           </>
         );
@@ -368,7 +378,7 @@ const UnitInfo = (props) => {
           <>
             <p className="unitInfo-text-heading2">1. Conduction</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Upon your debut, you may search for then float 1 “Magnetic
+              ⬩Upon ascension, you may search for then float 1 “Magnetic
               Shockwave”.
             </p>
             <p className="unitInfo-text-heading2">2. Penetrator</p>
@@ -387,8 +397,8 @@ const UnitInfo = (props) => {
           <>
             <p className="unitInfo-text-heading2">1. Everblooming</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Upon your elimination, you may draw 1 skill or spend 2 Blossoms
-              to recover then float 1 “Efflorescence”.
+              ⬩Upon elimination, you may draw 1 skill or spend 2 Blossoms to
+              recover then float 1 “Efflorescence”.
             </p>
 
             <p className="unitInfo-text-heading2">2. Flora’s Reverence</p>
@@ -486,9 +496,27 @@ const UnitInfo = (props) => {
                         Aether: {unit.aether ? "Present" : "None"}
                       </p>
 
+                      {unit.ember > 0 && (
+                        <p className="unitInfo-text-heading2">
+                          Ember: {unit.ember}
+                        </p>
+                      )}
+
+                      {unit.torrent > 0 && (
+                        <p className="unitInfo-text-heading2">
+                          Torrent: {unit.torrent}
+                        </p>
+                      )}
+
                       {unit.cyclone > 0 && (
                         <p className="unitInfo-text-heading2">
                           Cyclone: {unit.cyclone}
+                        </p>
+                      )}
+
+                      {unit.aftershock > 0 && (
+                        <p className="unitInfo-text-heading2">
+                          Aftershock: {unit.aftershock}
                         </p>
                       )}
 
@@ -497,6 +525,13 @@ const UnitInfo = (props) => {
                           Charge: {unit.charge}
                         </p>
                       )}
+
+                      {unit.lockdown > 0 && (
+                        <p className="unitInfo-text-heading2">
+                          Lockdown: {unit.lockdown}
+                        </p>
+                      )}
+
                       {unit.sharpness > 0 && (
                         <p className="unitInfo-text-heading2">
                           Sharpness: {unit.sharpness}
@@ -562,7 +597,6 @@ const UnitInfo = (props) => {
               {(unit.enhancements.ravager ||
                 unit.enhancements.ward ||
                 unit.enhancements.shield ||
-                unit.enhancements.disruption ||
                 unit.enhancements.overgrowth) && (
                 <>
                   <p className="unitInfo-text-heading1">
@@ -606,32 +640,11 @@ const UnitInfo = (props) => {
                     </>
                   )}
 
-                  {unit.enhancements.disruption > 0 && (
-                    <>
-                      <p className="unitInfo-text-heading2">
-                        Disruption ({unit.enhancements.disruption} turn
-                        {unit.enhancements.disruption > 1 ? "s" : ""})
-                      </p>
-                      <p className="unitInfo-text-desc">
-                        ⬩Prevents enemies within 2 spaces from spending their
-                        Aethers and activating abilities.
-                      </p>
-                      <p className="unitInfo-text-desc">
-                        ⬩Prevents adjacent enemies from activating non-burst
-                        skills.
-                      </p>
-                      <p className="unitInfo-text-desc unitInfo-text-last">
-                        ⬩This enhancement is purged if the unit is muted or if
-                        their Shield is purged.
-                      </p>
-                    </>
-                  )}
-
                   {unit.enhancements.overgrowth && (
                     <>
                       <p className="unitInfo-text-heading2">Overgrowth</p>
                       <p className="unitInfo-text-desc ">
-                        ⬩Afflicts adjacent enemies with Root.
+                        ⬩Afflicts adjacent foes with Root.
                       </p>
                       <p className="unitInfo-text-desc unitInfo-text-last">
                         ⬩This enhancement is purged if the unit moves or has an
@@ -681,11 +694,11 @@ const UnitInfo = (props) => {
                   {unit.afflictions.frost > 0 && (
                     <>
                       <p className="unitInfo-text-heading2">
-                        Frostbite ({unit.afflictions.frost} turn
+                        Frost ({unit.afflictions.frost} turn
                         {unit.afflictions.frost > 1 ? "s" : ""})
                       </p>
                       <p className="unitInfo-text-desc unitInfo-text-last">
-                        ⬩<em>Frostbitten</em>, muted, and immobilized.
+                        ⬩<em>Frozen</em>, muted, and immobilized.
                       </p>
                     </>
                   )}
@@ -697,7 +710,7 @@ const UnitInfo = (props) => {
                         {unit.afflictions.burn > 1 ? "s" : ""})
                       </p>
                       <p className="unitInfo-text-desc  ">
-                        ⬩<em>Burning</em>; immune to Frostbite.
+                        ⬩<em>Burning</em>; immune to Frost.
                       </p>
                       <p className="unitInfo-text-desc unitInfo-text-last">
                         ⬩When Burn expires at the end of the turn, lose 1 HP.
@@ -720,10 +733,7 @@ const UnitInfo = (props) => {
                 </>
               )}
 
-              {(unit.boosts.ambidexterity ||
-                unit.boosts.glacialTorrent ||
-                unit.boosts.mountainStance ||
-                unit.boosts.valiantSpark) && (
+              {(unit.boosts.ambidexterity || unit.boosts.valiantSpark) && (
                 <>
                   <p className="unitInfo-text-heading1">
                     <u>
@@ -737,35 +747,6 @@ const UnitInfo = (props) => {
                       <p className="unitInfo-text-desc unitInfo-text-last">
                         ⬩Next standard skill activated is retained upon
                         conclusion.
-                      </p>
-                    </>
-                  )}
-
-                  {unit.boosts.glacialTorrent && (
-                    <>
-                      <p className="unitInfo-text-heading2">Glacial Torrent</p>
-                      <p className="unitInfo-text-desc unitInfo-text-last">
-                        ⬩Can activate the next{" "}
-                        {unit.boosts.glacialTorrent > 1
-                          ? "2 abilties"
-                          : "ability"}{" "}
-                        without using a tactic.
-                      </p>
-                    </>
-                  )}
-
-                  {unit.boosts.mountainStance && (
-                    <>
-                      <p className="unitInfo-text-heading2">Mountain Stance</p>
-                      <p className="unitInfo-text-desc unitInfo-text-last">
-                        ⬩Can activate “Fortify” by using{" "}
-                        <span className="unitInfo-tactic-group2">
-                          <img
-                            src={AdvanceSmall}
-                            className="unitInfo-tactic-icon2"
-                          />
-                        </span>
-                        .
                       </p>
                     </>
                   )}

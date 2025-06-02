@@ -30,6 +30,7 @@ const CPSkillCard = (props) => {
           onClick={() => {
             dispatch(updateMagnifiedSkill(props.cardInfo.CardId));
           }}
+          style={{ textAlign: "center" }}
         >
           <FontAwesomeIcon icon={faMagnifyingGlass} />
         </button>

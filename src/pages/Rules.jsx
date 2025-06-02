@@ -1054,7 +1054,7 @@ export default function Rules() {
                       </a>
                       .
                     </li>
-                    <li>Aether-blast an adjacent enemy.</li>
+                    <li>Aether-blast an adjacent foe.</li>
                   </ul>
                 </li>
               </ul>
@@ -1101,8 +1101,8 @@ export default function Rules() {
                   <ul>
                     <li>Traverse (move to a vacant adjacent zone).</li>
                     <li>
-                      Strike (attack an adjacent enemy, then move to their zone
-                      if they were eliminated).
+                      Strike (attack an adjacent foe, then move to their zone if
+                      they were eliminated).
                     </li>
                   </ul>
                 </li>
@@ -1263,9 +1263,9 @@ export default function Rules() {
                   the unit, unless they are enhanced with Ward.
                 </li>
                 <li>
-                  <strong>Disruption</strong>: Prevents enemies within 2 spaces
+                  <strong>Disruption</strong>: Prevents foes within 2 spaces
                   from the unit from activating abilities and spending their
-                  Aether. Prevents enemies adjacent to the unit from activating
+                  Aether. Prevents foes adjacent to the unit from activating
                   non-burst skills. This status is purged if the unit is muted
                   or not enhanced with Shield.
                 </li>
@@ -1285,11 +1285,11 @@ export default function Rules() {
                   <strong>Paralysis</strong>: Mutes and immobilizes the unit.
                 </li>
                 <li>
-                  <strong>Frostbite</strong>: Mutes and immobilizes the unit.
+                  <strong>Frost</strong>: Mutes and immobilizes the unit.
                 </li>
                 <li>
-                  <strong>Burn</strong>: Grants the unit immunity to Frostbite.
-                  When this status expires, the unit loses 1 HP.
+                  <strong>Burn</strong>: Grants the unit immunity to Frost. When
+                  this status expires, the unit loses 1 HP.
                 </li>
                 <li>
                   <strong>Root</strong>: Prevents the unit from performing a
@@ -1474,7 +1474,7 @@ export default function Rules() {
                   Arsenal Onslaught
                 </span>{" "}
                 is simply “Strike”. This can be restated and expanded as 3
-                sub-effects: “(1)Target an adjacent enemy. (2)Attack them. (3)If
+                sub-effects: “(1)Target an adjacent foe. (2)Attack them. (3)If
                 the attack was lethal, move to the zone they were occupying.”
               </p>
 
@@ -1504,7 +1504,7 @@ export default function Rules() {
               <br />
               <h3>Strike</h3>
               <ul>
-                <li>Target an adjacent enemy.</li>
+                <li>Target an adjacent foe.</li>
                 <li>Attack them.</li>
                 <li>
                   If the attack was lethal, move to the zone they were
@@ -1527,9 +1527,9 @@ export default function Rules() {
               <p>
                 Note: The following keywords are always proceeded by a phrase
                 indicating the unit they must affect. For example, if a
-                sub-effect states “blast an adjacent enemy”, the first
-                sub-effect of blast changes from <em>“Target a unit”</em> into{" "}
-                <em>“Target an adjacent enemy”</em>.
+                sub-effect states “blast an adjacent foe, the first sub-effect
+                of blast changes from <em>“Target a unit”</em> into{" "}
+                <em>“Target an adjacent foe</em>.
               </p>
 
               <br />
@@ -1570,7 +1570,7 @@ export default function Rules() {
               <h3>Freeze</h3>
               <ul>
                 <li>Target a unit.</li>
-                <li>Inflict them with Frostbite.</li>
+                <li>Inflict them with Frost.</li>
               </ul>
 
               {/* <br />
@@ -1780,10 +1780,10 @@ export default function Rules() {
                   use.
                   <ul>
                     <li>
-                      Ignition Propulsion provides extra movement by using
-                      enemies as stepping stones. If enhanced with Ravager, Fire
-                      Scions can use multiple copies to move up to 4 times in
-                      one turn, which can create an opportunity to score.
+                      Ignition Propulsion provides extra movement by using foes
+                      as stepping stones. If enhanced with Ravager, Fire Scions
+                      can use multiple copies to move up to 4 times in one turn,
+                      which can create an opportunity to score.
                     </li>
                   </ul>
                 </li>
@@ -1831,17 +1831,8 @@ export default function Rules() {
                   >
                     Mountain Stance
                   </span>{" "}
-                  talent allows them to spend 1 skill to search their repertoire
-                  for their Crystallization skill and add it to their hand,
-                  granting immediate access to extra HP.
-                  <ul>
-                    <li>
-                      Alternatively, it can be used to give them a boost that
-                      allows them to use an Advance tactic to activate their
-                      Fortify ability, which normally requires an Assault
-                      tactic. (Reminder: boosts expire at the end of the turn.)
-                    </li>
-                  </ul>
+                  talent grants them 2 Aftershocks, which improves the
+                  accessibility of their abilities.
                 </li>
                 <li>
                   Their{" "}
@@ -1853,9 +1844,9 @@ export default function Rules() {
                   >
                     Fortify
                   </span>{" "}
-                  ability allows allows them to use an Assault (or Advance if
-                  boosted by Mountain Stance) tactic to gain Shield for 2 turns.
-                  They may then float 1 skill to traverse or strike, as a unit
+                  ability allows allows them to use an Assault (or Advance by
+                  spending Aftershocks) tactic to gain Shield for 2 turns. They
+                  may then float 1 skill to traverse or strike, as a unit
                   normally would with this tactic.
                 </li>
                 <li>
@@ -1872,11 +1863,11 @@ export default function Rules() {
                   <ul>
                     <li>
                       If your Land Scion unlikely to be attacked the following
-                      turn (for reasons such as the lack of enemies in
-                      proximity), do not waste resources on gaining Shield.
+                      turn (for reasons such as the lack of foes in proximity),
+                      do not waste resources on gaining Shield.
                     </li>
                     <li>
-                      If you do not need to deal with a Shielded enemy urgently,
+                      If you do not need to deal with a Shielded foe urgently,
                       consider waiting for their Shield to expire before
                       dedicating resources to attack them. Do not bother
                       attacking a Shielded unit if you cannot follow up with
@@ -1894,7 +1885,7 @@ export default function Rules() {
                   >
                     Upheaval
                   </span>{" "}
-                  can paralyze up to 2 adjacent enemies for 1 turn.
+                  can paralyze up to 2 adjacent foes for 1 turn.
                   <ul>
                     <li>
                       Though it won’t eliminate them, it will limit the
@@ -1996,10 +1987,10 @@ export default function Rules() {
                   >
                     Magnetic Shockwave
                   </span>{" "}
-                  can paralyze 1 adjacent enemy, and its potency increases as
-                  the user invests in their Sharpness. 1 Sharpness allows them
-                  to paralyze another enemy, while 2 Sharpness allows them to
-                  blast a paralyzed enemy.
+                  can paralyze 1 adjacent foe, and its potency increases as the
+                  user invests in their Sharpness. 1 Sharpness allows them to
+                  paralyze another foe, while 2 Sharpness allows them to blast a
+                  paralyzed foe.
                 </li>
 
                 <li>
@@ -2011,9 +2002,9 @@ export default function Rules() {
                   >
                     Frenzy Blade
                   </span>{" "}
-                  can be activated when an adjacent enemy survives an attack.
-                  This is another source of Sharpness, and it allows them to
-                  attack the surviving enemy.
+                  can be activated when an adjacent foe survives an attack. This
+                  is another source of Sharpness, and it allows them to attack
+                  the surviving foe.
                   <ul>
                     <li>
                       This is especially useful against sturdy Land Scions.
@@ -2113,8 +2104,7 @@ export default function Rules() {
                   >
                     Particle Beam
                   </span>
-                  , which allows them to attack enemies within 2 spaces away and
-                  restores their Aether.
+                  , which allows them to attack foes within 2 spaces away.
                   <ul>
                     <li>
                       This is especially useful against Land Scions who are
@@ -2182,14 +2172,14 @@ export default function Rules() {
                   >
                     Dirusption Field
                   </span>{" "}
-                  shuts down their enemies for 2 turns.
+                  shuts down their foes for 2 turns.
                   <ul>
                     <li>
                       Enemies within 2 spaces from them cannot activate their
                       abilities nor spend their Aether, preventing them from
                       performing and even mitigating Aether-blasts.{" "}
                     </li>
-                    <li>Adjacent enemies cannot use non-burst skills.</li>
+                    <li>Adjacent foes cannot use non-burst skills.</li>
                   </ul>
                 </li>
               </ul>

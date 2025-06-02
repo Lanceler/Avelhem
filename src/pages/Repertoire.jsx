@@ -514,6 +514,7 @@ export default function Repertoire() {
             <div className="avelhem-selection">
               {avelhemCardPool.map((card, index) => (
                 <div
+                  key={index}
                   style={{
                     display: id < 4 && card.CardId > 8 ? "none" : "block",
                   }}
@@ -601,6 +602,7 @@ export default function Repertoire() {
             <div className="skill-selection">
               {skillCardPool.map((card, index) => (
                 <div
+                  key={index}
                   style={{
                     display:
                       id < 4 && skillCardListExpansion.includes(card.CardId)

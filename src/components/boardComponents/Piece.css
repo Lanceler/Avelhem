@@ -16,6 +16,12 @@
   display: flex;
   align-items: center;
   box-shadow: 0px 0px 2px 1.5px rgba(0, 0, 0, 0.5);
+
+  scale: 0.875
+}
+
+.piece:hover {
+  scale: 0.975
 }
 
 .piece-scionClass {
@@ -193,11 +199,11 @@
 }
 
 .shieldAndWard {
-  height: 25px;
+  height: 30px;
   position: absolute;
   z-index: 397;
   pointer-events: none;
-  top: 48px;
+  top: 43px;
 
   left: 90%;
   translate: -50%;
@@ -355,7 +361,7 @@
 
 
 
-.disruption {
+.lockdown {
   width: 40px;
   height: 40px;
   border: 3px solid rgb(114, 250, 255, 0);
@@ -376,11 +382,11 @@
   pointer-events: none;
 }
 
-.disruption.animating {
-  animation: expand-disruption 3s linear infinite;
+.lockdown.animating {
+  animation: expand-lockdown 3s linear infinite;
 }
 
-.disruption2 {
+.lockdown2 {
   background-color: #00000000;
   position: absolute;
   z-index: 200;
@@ -393,11 +399,11 @@
   pointer-events: none;
 }
 
-.disruption2-animate {
-  animation: disruption2-expand 2.5s linear infinite;
+.lockdown2-animate {
+  animation: lockdown2-expand 2.5s linear infinite;
 }
 
-@keyframes disruption2-expand {
+@keyframes lockdown2-expand {
   0%,
   15% {
     box-shadow: 0px 0px 0px 0px rgba(78, 220, 255, 0);
@@ -416,7 +422,7 @@
   }
 }
 
-@keyframes expand-disruption {
+@keyframes expand-lockdown {
   0% {
     /* width: 50px;
         height: 50px; */
@@ -612,7 +618,7 @@
   animation: fadeInOut 2s infinite alternate;
 }
 
-/* .fiery-heart {
+.ember {
   transform: rotate(45deg);
   background: linear-gradient(
     22deg,
@@ -630,7 +636,7 @@
   animation: moveUpDown 0.95s ease-in-out infinite;
   pointer-events: none;
   z-index: 5;
-} */
+}
 
 .glacial-torrent {
   transform: rotate(45deg);
@@ -672,7 +678,7 @@
   z-index: 5;
 }
 
-.mountain-stance {
+.aftershock {
   transform: rotate(45deg);
   background: linear-gradient(
     22deg,
@@ -751,7 +757,7 @@
   z-index: 5;
 }
 
-.disruptionCounter {
+.lockdownCounter {
   transform: rotate(45deg);
   background: linear-gradient(
     22deg,
@@ -854,8 +860,6 @@
 
 .crosshair {
   z-index: 700;
-  /* height: 75px;
-    width: 70px; */
   position: absolute;
   pointer-events: none;
   top: -20px;
@@ -864,10 +868,7 @@
   opacity: 0.55;
   animation: scaleAnimation2 2.2s ease-in-out infinite alternate;
 
-  /* filter: sepia(2.5) saturate(10000%) hue-rotate(-290deg); */
-  /* filter: sepia(2.5) saturate(10000%) hue-rotate(-70deg) contrast(1.5); */
-  /* filter: sepia(1) saturate(10000%) hue-rotate(-35deg); */
-  filter: sepia(1) saturate(10000%) hue-rotate(-275deg);
+ filter: sepia(1) saturate(10000%) hue-rotate(-275deg);
 }
 
 @keyframes scaleAnimation2 {

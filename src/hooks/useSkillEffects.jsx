@@ -6,6 +6,7 @@ export const useSkillEffects = () => {
   const { self, enemy } = useSelector((state) => state.teams);
 
   const {
+    aetherRestoreSpecial,
     blast,
     canMove,
     canSowAndReapBlast,
@@ -19,6 +20,7 @@ export const useSkillEffects = () => {
     getZonesWithEnemiesNoAether,
     getZonesWithEnemiesRooted,
     isAdjacent,
+    isImmobilized,
     isMuted,
     isRooted,
     paralyze1,
@@ -173,14 +175,6 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    delete unit.temporary.previousTarget;
-
-    newGameState.currentResolution.push({
-      resolution: "Fire Skill",
-      resolution2: "Blaze of Glory4",
-      unit: unit,
-    });
-
     newGameState.currentResolution.push({
       resolution: "Fire Skill",
       resolution2: "Blaze of Glory2",
@@ -204,72 +198,16 @@ export const useSkillEffects = () => {
     //end "Blaze of Glory2" resolution
     newGameState.currentResolution.pop();
 
-    let adjacentEnemies = getZonesWithEnemies(unit, 1);
-    adjacentEnemies = adjacentEnemies.filter(
-      (z) =>
-        zones[Math.floor(z / 5)][z % 5].unitIndex !==
-        unit.temporary.previousTarget
-    );
-
     if (unit !== null && !isMuted(unit)) {
-      if (adjacentEnemies.length > 0) {
-        //Ignite 2nd enemy
-        newGameState.currentResolution.push({
-          resolution: "Fire Skill",
-          resolution2: "Blaze of Glory2.5",
-          unit,
-          details: {
-            title: "Blaze of Glory",
-            message:
-              "You may reveal 1 “Blaze of Glory” to ignite a different adjacent foe.",
-            restriction: ["01-03"],
-            reason: "Blaze of Glory",
-            adjacentEnemies,
-          },
-        });
-      }
-    }
-
-    return newGameState;
-  };
-
-  const blazeOfGlory3 = (unitInfo, adjacentEnemies) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    //end "Blaze of Glory 3" resolution
-    newGameState.currentResolution.pop();
-
-    enterSelectUnitMode(
-      adjacentEnemies,
-      unit,
-      newGameState,
-      null,
-      "ignite",
-      null
-    );
-
-    return newGameState;
-  };
-
-  const blazeOfGlory4 = (unitInfo) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    //end "Blaze of Glory4"
-    newGameState.currentResolution.pop();
-
-    if (unit && !isMuted(unit) && unit.aether > 0) {
       newGameState.currentResolution.push({
         resolution: "Fire Skill",
-        resolution2: "Blaze of Glory5",
-        unit: unit,
+        resolution2: "Blaze of Glory3",
+        unit,
         details: {
-          reason: "Blaze of Glory Draw",
           title: "Blaze of Glory",
-          message: "You may spend your Aether to draw 2 skills.",
-          no: "Skip",
-          yes: "Draw",
+          message: "You may reveal 1 “Blaze of Glory” to gain Shield.",
+          restriction: ["01-03"],
+          reason: "Blaze of Glory",
         },
       });
     }
@@ -325,12 +263,12 @@ export const useSkillEffects = () => {
 
     if (
       getZonesWithEnemies(unit, 1).length &&
-      newGameState[unit.player].skillHand.length > 0
+      (newGameState[unit.player].skillHand.length > 0 || unit.ember >= 2)
     ) {
       newGameState.currentResolution.push({
-        resolution: "Fire Skill",
-        resolution2: "Resplendence3",
+        resolution: "Discard Skill",
         unit: unit,
+        player: unit.player,
         details: {
           title: "Resplendence",
           message: "You may spend 1 skill to ignite an adjacent foe.",
@@ -529,6 +467,10 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
+    unit.torrent
+      ? (unit.torrent = Math.min(2, unit.torrent + 1))
+      : (unit.torrent = 1);
+
     //inspect
     newGameState.currentResolution.push({
       resolution: "Water Skill",
@@ -539,8 +481,8 @@ export const useSkillEffects = () => {
         title: "Glacial Torrent",
         reason: "Glacial Torrent",
         message:
-          "Inspect 5 skills; you may add up to 3 Water skills among them to your hand.",
-        inspectionCount: 5,
+          "Inspect 6 skills; you may add up to 3 Water skills among them to your hand.",
+        inspectionCount: 6,
         select: "Multi",
         selectLimit: 3,
         outcome: "Add",
@@ -561,11 +503,6 @@ export const useSkillEffects = () => {
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
-
-    //Wind Scions gain Cyclone when activating skill
-    unit.cyclone
-      ? (unit.cyclone = Math.min(2, unit.cyclone + 1))
-      : (unit.cyclone = 1);
 
     if (
       (["Advance", "Invoke"].includes(newGameState.tactics[0].face) &&
@@ -661,11 +598,6 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    //Wind Scions gain Cyclone when activating skill
-    unit.cyclone
-      ? (unit.cyclone = Math.min(2, unit.cyclone + 1))
-      : (unit.cyclone = 1);
-
     if (resonator) {
       if (resonator !== "SA-02") {
         newGameState.currentResolution.push({
@@ -736,11 +668,6 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    //Wind Scions gain Cyclone when activating skill
-    unit.cyclone
-      ? (unit.cyclone = Math.min(2, unit.cyclone + 1))
-      : (unit.cyclone = 1);
-
     //give victim activationCounter
     victim.temporary.activation
       ? (victim.temporary.activation += 1)
@@ -771,21 +698,6 @@ export const useSkillEffects = () => {
       });
     }
 
-    //activator can reveal 1 Wind skill to draw 1 floating skill
-    if (newGameState[self].skillHand.length > 0) {
-      newGameState.currentResolution.push({
-        resolution: "Wind Skill",
-        resolution2: "Symphonic Screech2",
-        unit: unit,
-        details: {
-          title: "Symphonic Screech",
-          message: "You may reveal 1 Wind skill to draw 1 skill.",
-          restriction: ["03-01", "03-02", "03-03", "03-04"],
-          reason: "Symphonic Screech",
-        },
-      });
-    }
-
     newGameState.currentResolution.push({
       resolution: "Misc.",
       resolution2: "Message To Player",
@@ -808,11 +720,6 @@ export const useSkillEffects = () => {
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
-
-    //Wind Scions gain Cyclone when activating skill
-    unit.cyclone
-      ? (unit.cyclone = Math.min(2, unit.cyclone + 1))
-      : (unit.cyclone = 1);
 
     delete unit.temporary.previousTarget;
     unit.temporary.cataclysmicFloat = 0;
@@ -995,9 +902,9 @@ export const useSkillEffects = () => {
 
     if (newGameState[unit.player].skillHand.length > 0) {
       newGameState.currentResolution.push({
-        resolution: "Land Skill",
-        resolution2: "Crystallization1",
+        resolution: "Discard Skill",
         unit: unit,
+        player: unit.player,
         details: {
           title: "Crystallization",
           message: "You may spend 1 skill to gain Shield for 2 turns.",
@@ -1099,11 +1006,11 @@ export const useSkillEffects = () => {
           resolution2: "Upheaval3",
           unit: unit,
           details: {
-            reason: "Upheaval 2nd Paralyze",
             title: "Upheaval",
-            message: "You may paralyze another adjacent foe.",
-            no: "Skip",
-            yes: "Paralyze",
+            message:
+              "You may reveal 1 Land skill to paralyze a different adjacent foe.",
+            restriction: ["04-01", "04-02", "04-03", "04-04"],
+            reason: "Upheaval",
             adjacentEnemies: adjacentEnemies,
           },
         });
@@ -1121,8 +1028,7 @@ export const useSkillEffects = () => {
     //end "UpheavalR1" resolution
     newGameState.currentResolution.pop();
 
-    if (unit !== null && !isMuted(unit)) {
-      //6. Continue
+    if (unit !== null && !isMuted(unit) && canMove(unit)) {
       newGameState.currentResolution.push({
         resolution: "Land Skill",
         resolution2: "UpheavalR2",
@@ -1133,24 +1039,6 @@ export const useSkillEffects = () => {
           message: "You may traverse.",
           no: "Skip",
           yes: "Traverse",
-        },
-      });
-
-      newGameState.activatingUnit.push(unit);
-      newGameState.activatingSkill.push("MountainStance");
-      newGameState.currentResolution.push({
-        resolution: "Unit Talent",
-        resolution2: "Talent Conclusion",
-        unit: unit,
-      });
-
-      newGameState.currentResolution.push({
-        resolution: "Unit Talent",
-        resolution2: "Activating Mountain Stance",
-        unit: unit,
-        details: {
-          title: "Mountain Stance",
-          reason: "Mountain Stance",
         },
       });
     }
@@ -1199,11 +1087,11 @@ export const useSkillEffects = () => {
         attacker;
 
       newGameState.currentResolution.push({
-        resolution: "Land Skill",
-        resolution2: "Pitfall Trap2",
+        resolution: "Discard Skill",
         unit: attacker,
-        victim: victim,
+        player: attacker.player,
         details: {
+          victim: victim,
           title: "Pitfall Trap",
           message:
             "The affliction succeeded. You may spend 1 skill to blast them.",
@@ -1551,9 +1439,9 @@ export const useSkillEffects = () => {
       newGameState[unit.player].skillHand.length > 0
     ) {
       newGameState.currentResolution.push({
-        resolution: "Lightning Skill",
-        resolution2: "Thunder Thaumaturge2",
+        resolution: "Discard Skill",
         unit: unit,
+        player: unit.player,
         details: {
           title: "Thunder Thaumaturge",
           message:
@@ -1619,47 +1507,19 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
+    //Spend Aether
+    unit.aether = 0;
+
     newGameState.currentResolution.push({
       resolution: "Mana Skill",
       resolution2: "Surge1",
+      player: self,
       unit: unit,
       details: {
         title: "Surge",
-        message: "Use an Assault tactic to traverse.",
-        restriction: ["Assault"],
-        stock: 1,
         reason: "Surge",
-        canSkip: false,
       },
     });
-
-    return newGameState;
-  };
-
-  const surge2 = (unitInfo) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    //end "Surge3"
-    newGameState.currentResolution.pop();
-
-    if (unit && !isMuted(unit) && (canMove(unit) || canStrike(unit))) {
-      newGameState.currentResolution.push({
-        resolution: "Mana Skill",
-        resolution2: "Surge4",
-        player: self,
-        unit: unit,
-        details: {
-          title: "Surge",
-          reason: "Surge4",
-        },
-      });
-
-      newGameState.currentResolution.push({
-        resolution: "Animation Delay",
-        priority: self,
-      });
-    }
 
     return newGameState;
   };
@@ -1771,6 +1631,8 @@ export const useSkillEffects = () => {
       unit.enhancements.shield
         ? (unit.enhancements.shield = Math.max(2, unit.enhancements.shield))
         : (unit.enhancements.shield = 2);
+
+      newGameState = aetherRestoreSpecial(newGameState, unit);
     }
 
     return newGameState;
@@ -1791,9 +1653,9 @@ export const useSkillEffects = () => {
 
     newGameState[victimInfo.player].units[victimInfo.unitIndex] = victim;
 
-    if (unit.unitIndex === victim.unitIndex) {
-      newGameState = drawSkill(newGameState);
-    }
+    // if (unit.unitIndex === victim.unitIndex) {
+    //   newGameState = drawSkill(newGameState);
+    // }
 
     newGameState.currentResolution.push({
       resolution: "Mana Skill",
@@ -1811,7 +1673,6 @@ export const useSkillEffects = () => {
 
   const disruptionField1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
-    const zones = JSON.parse(newGameState.zones);
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
     //end "Activating Disruption Field" resolution
@@ -1822,38 +1683,37 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    unit.enhancements.shield
-      ? (unit.enhancements.shield = Math.max(2, unit.enhancements.shield))
-      : (unit.enhancements.shield = 2);
+    unit.lockdown = 2;
 
-    unit.enhancements.disruption = 2;
+    // unit.enhancements.shield
+    //   ? (unit.enhancements.shield = Math.max(2, unit.enhancements.shield))
+    //   : (unit.enhancements.shield = 2);
 
-    let enemyZones = getZonesWithEnemies(unit, 1);
+    // const zones = JSON.parse(newGameState.zones);
+    // let enemyZones = getZonesWithEnemies(unit, 1);
+    // for (let i of enemyZones) {
+    //   const zone = zones[Math.floor(i / 5)][i % 5];
+    //   const enemy = newGameState[zone.player].units[zone.unitIndex];
 
-    for (let i of enemyZones) {
-      const zone = zones[Math.floor(i / 5)][i % 5];
-      const enemy = newGameState[zone.player].units[zone.unitIndex];
+    //   delete enemy.enhancements.shield;
+    //   delete enemy.enhancements.ward;
 
-      delete enemy.enhancements.disruption;
-      delete enemy.enhancements.shield;
-      delete enemy.enhancements.ward;
+    //   newGameState[zone.player].units[zone.unitIndex] = enemy;
+    // }
 
-      newGameState[zone.player].units[zone.unitIndex] = enemy;
-    }
-
-    newGameState.currentResolution.push({
-      resolution: "Discard Skill",
-      unit: unit,
-      player: unit.player,
-      canSkip: false,
-      details: {
-        title: "Disruption Field",
-        message:
-          "Spend 1 Mana skill to gain Disruption and Shield for 2 turns each.",
-        restriction: ["06-01", "06-02", "06-03"],
-        reason: "Disruption Field",
-      },
-    });
+    // newGameState.currentResolution.push({
+    //   resolution: "Discard Skill",
+    //   unit: unit,
+    //   player: unit.player,
+    //   canSkip: false,
+    //   details: {
+    //     title: "Disruption Field",
+    //     message:
+    //       "Spend 1 Mana skill to gain Disruption and Shield for 2 turns each.",
+    //     restriction: ["06-01", "06-02", "06-03"],
+    //     reason: "Disruption Field",
+    //   },
+    // });
 
     return newGameState;
   };
@@ -2181,9 +2041,9 @@ export const useSkillEffects = () => {
       newGameState[unit.player].skillHand.length > 0
     ) {
       newGameState.currentResolution.push({
-        resolution: "Metal Skill",
-        resolution2: "Arsenal Onslaught5",
+        resolution: "Discard Skill",
         unit: unit,
+        player: unit.player,
         details: {
           title: "Arsenal Onslaught",
           message: "You may spend 1 skill to strike or blast an adjacent foe.",
@@ -2251,7 +2111,7 @@ export const useSkillEffects = () => {
     newGameState.currentResolution.pop();
 
     enterSelectUnitMode(
-      getZonesWithEnemiesRooted(unit, 1),
+      getZonesWithEnemiesRooted(unit, 2),
       unit,
       newGameState,
       null,
@@ -2359,9 +2219,9 @@ export const useSkillEffects = () => {
       )
     ) {
       newGameState.currentResolution.push({
-        resolution: "Plant Skill",
-        resolution2: "Efflorescence1",
+        resolution: "Discard Skill",
         unit: unit,
+        player: unit.player,
         details: {
           title: "Efflorescence",
           message:
@@ -2410,9 +2270,9 @@ export const useSkillEffects = () => {
     }
 
     newGameState.currentResolution.push({
-      resolution: "Plant Skill",
-      resolution2: "Viridian Grave1",
+      resolution: "Discard Skill",
       unit: unit,
+      player: unit.player,
       details: {
         title: "Viridian Grave",
         message: "You may spend 1 skill to gain Shield for 2 turns.",
@@ -2440,12 +2300,6 @@ export const useSkillEffects = () => {
       ? (unit.enhancements.shield = Math.max(unit.enhancements.shield, 2))
       : (unit.enhancements.shield = 2);
 
-    if (unit.enhancements.overgrowth === true) {
-      unit.enhancements.ward
-        ? (unit.enhancements.ward = Math.max(unit.enhancements.ward, 2))
-        : (unit.enhancements.ward = 2);
-    }
-
     newGameState.currentResolution.push({
       resolution: "Plant Skill",
       resolution2: "Castle Of Thorns2",
@@ -2453,16 +2307,35 @@ export const useSkillEffects = () => {
     });
 
     newGameState.currentResolution.push({
-      resolution: "Plant Skill",
-      resolution2: "Castle Of Thorns1",
+      resolution: "Discard Skill",
       unit: unit,
+      player: unit.player,
       details: {
         title: "Castle of Thorns",
-        message: "You may spend 1 skill to search for 1 Plant skill",
+        message: "You may spend 1 skill to search for 1 Plant skill.",
         restriction: null,
         reason: "Castle of Thorns1",
       },
     });
+
+    if (unit.enhancements.overgrowth === true) {
+      // unit.enhancements.ward
+      //   ? (unit.enhancements.ward = Math.max(unit.enhancements.ward, 2))
+      //   : (unit.enhancements.ward = 2);
+
+      newGameState.currentResolution.push({
+        resolution: "Plant Skill",
+        resolution2: "Castle Of Thorns1",
+        unit: unit,
+        details: {
+          reason: "Castle of Thorns",
+          title: "Castle of Thorns",
+          message: "You may spend your Overgrowth to gain Ward for 2 turns.",
+          no: "Skip",
+          yes: "Spend",
+        },
+      });
+    }
 
     return newGameState;
   };
@@ -2492,12 +2365,12 @@ export const useSkillEffects = () => {
       (newGameState[unit.player].skillHand.length > 0 || unit.blossom > 0)
     ) {
       newGameState.currentResolution.push({
-        resolution: "Plant Skill",
-        resolution2: "Castle Of Thorns3",
+        resolution: "Discard Skill",
         unit: unit,
+        player: unit.player,
         details: {
           title: "Castle of Thorns",
-          message: "You may spend 1 skill to recover 1 Plant skill",
+          message: "You may spend 1 skill to recover 1 Plant skill.",
           restriction: null,
           reason: "Castle of Thorns2",
         },
@@ -2579,6 +2452,9 @@ export const useSkillEffects = () => {
         resolution: "Avian Skill",
         resolution2: "ReconnaissanceR1",
         unit: unit,
+        details: {
+          title: "Reconnaissance",
+        },
       });
     }
 
@@ -2617,13 +2493,114 @@ export const useSkillEffects = () => {
 
     newGameState[victimInfo.player].units[victimInfo.unitIndex] = victim;
 
-    if (unit.unitIndex === victim.unitIndex) {
-      unit.aether = 1;
-    }
-
     victim.enhancements.shield
       ? (victim.enhancements.shield = Math.max(1, victim.enhancements.shield))
-      : (victim.enhancements.shield = 2);
+      : (victim.enhancements.shield = 1);
+
+    if (unit.unitIndex === victim.unitIndex) {
+      newGameState = aetherRestoreSpecial(newGameState, unit);
+    }
+
+    return newGameState;
+  };
+
+  const vanguardFleet1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Vanguard Fleet" resolution
+    newGameState.currentResolution.pop();
+
+    unit.enhancements.shield
+      ? (unit.enhancements.shield = Math.max(2, unit.enhancements.shield))
+      : (unit.enhancements.shield = 2);
+
+    //give unit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation += 1)
+      : (unit.temporary.activation = 1);
+
+    delete unit.temporary.previousTarget;
+
+    newGameState.currentResolution.push({
+      resolution: "Avian Skill",
+      resolution2: "Vanguard Fleet2", //Yes, this is duplicated
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Avian Skill",
+      resolution2: "Vanguard Fleet2",
+      unit: unit,
+    });
+
+    if (canMove(unit)) {
+      newGameState.currentResolution.push({
+        resolution: "Discard Skill",
+        unit: unit,
+        player: unit.player,
+        details: {
+          title: "Vanguard Fleet",
+          message: "You may spend 1 Avian skill to traverse.",
+          restriction: ["09-01", "09-02", "09-03", "09-04"],
+          reason: "Vanguard Fleet1",
+        },
+      });
+    }
+
+    return newGameState;
+  };
+
+  const vanguardFleet2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    const zones = JSON.parse(localGameState.zones);
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Vanguard Fleet2" resolution
+    newGameState.currentResolution.pop();
+
+    if (newGameState[unit.player].skillHand.length > 0) {
+      const zonesWithAllies = getZonesWithAllies(unit, 9, false);
+      let zonesWithMovableAllies = [];
+
+      const isbehind = (ally) => {
+        if (unit.player === "host") {
+          return unit.row < ally.row;
+        } else {
+          return unit.row > ally.row;
+        }
+      };
+
+      for (let z of zonesWithAllies) {
+        const zone = zones[Math.floor(z / 5)][z % 5];
+        const ally = newGameState[zone.player].units[zone.unitIndex];
+
+        if (
+          canMove(ally) &&
+          !isImmobilized(ally) &&
+          isbehind(ally) &&
+          ally.unitIndex !== unit.temporary.previousTarget
+        ) {
+          zonesWithMovableAllies.push(z);
+        }
+      }
+
+      if (zonesWithMovableAllies.length > 0) {
+        newGameState.currentResolution.push({
+          resolution: "Discard Skill",
+          unit: unit,
+          player: unit.player,
+          details: {
+            title: "Vanguard Fleet",
+            message:
+              "You may spend 1 skill to prompt an ally in any row behind you to traverse.",
+            restriction: null,
+            reason: "Vanguard Fleet2",
+            zonesWithMovableAllies: zonesWithMovableAllies,
+          },
+        });
+      }
+    }
 
     return newGameState;
   };
@@ -2645,10 +2622,6 @@ export const useSkillEffects = () => {
         return blazeOfGlory1(a);
       case "blazeOfGlory2":
         return blazeOfGlory2(a);
-      case "blazeOfGlory3":
-        return blazeOfGlory3(a, b);
-      case "blazeOfGlory4":
-        return blazeOfGlory4(a);
       case "resplendence1":
         return resplendence1(a);
       case "resplendence2":
@@ -2739,8 +2712,6 @@ export const useSkillEffects = () => {
       //Mana
       case "surge1":
         return surge1(a);
-      case "surge2":
-        return surge2(a);
       case "diffusion1":
         return diffusion1(a, b);
       case "diffusion2":
@@ -2809,6 +2780,10 @@ export const useSkillEffects = () => {
         return reconnaissance1(a, b);
       case "guardianWings1":
         return guardianWings1(a, b);
+      case "vanguardFleet":
+        return vanguardFleet1(a);
+      case "vanguardFleet2":
+        return vanguardFleet2(a);
     }
   };
 

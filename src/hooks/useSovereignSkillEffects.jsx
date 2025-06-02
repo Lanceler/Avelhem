@@ -13,8 +13,14 @@ export const useSovereignSkillEffects = () => {
   const { self, enemy } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const { avelhemToScion, canDeploy, drawSkill, grantRavager, isAdjacent } =
-    useRecurringEffects();
+  const {
+    aetherRestoreSpecial,
+    avelhemToScion,
+    canDeploy,
+    drawSkill,
+    grantRavager,
+    isAdjacent,
+  } = useRecurringEffects();
 
   const { getScionSet, pressTheAttackList, sovereignSkillList } =
     useCardDatabase();
@@ -245,7 +251,7 @@ export const useSovereignSkillEffects = () => {
         reason: "Transmute",
         title: "Transmute",
         message:
-          "Reveal the aspects of 1 or 2 Scions skills and shuffle them into your repertoire. For each revealed aspect, search for 1 matching skill.",
+          "Reveal the aspects of 1 or 2 Scions skills and place them at the bottom of your repertoire.",
         count: 2,
       },
     });
@@ -604,13 +610,12 @@ export const useSovereignSkillEffects = () => {
     //end "Power at the Final Hour3" resolution
     newGameState.currentResolution.pop();
 
-    unit.aether = 1;
     newGameState[unit.player].fateDefiance = Math.min(
       6,
       newGameState[unit.player].fateDefiance + 2
     );
 
-    //
+    newGameState = aetherRestoreSpecial(newGameState, unit);
 
     return newGameState;
   };
@@ -788,6 +793,7 @@ export const useSovereignSkillEffects = () => {
           message:
             "You may recover then float 1 skill that can grant a unit Ravager.",
           outcome: "Float",
+          reveal: true,
         },
       });
     }

@@ -80,7 +80,7 @@ const InfoPopUp = (props) => {
             <ol className="infoPopUp-list">
               <li className="unitInfo-text-desc">⬩Traverse.</li>
               <li className="unitInfo-text-desc">
-                ⬩Aether-blast an adjacent enemy.
+                ⬩Aether-blast an adjacent foe.
               </li>
             </ol>
 
@@ -188,7 +188,7 @@ const InfoPopUp = (props) => {
                   1 BP upon entering the Bounty Phase.
                 </li>
                 <li className="unitInfo-text-desc">
-                  1 BP when an enemy is eliminated.
+                  1 BP when a foe is eliminated.
                 </li>
                 <li className="unitInfo-text-desc">
                   3 BP when an ally scores.
@@ -222,9 +222,7 @@ const InfoPopUp = (props) => {
                 <li className="unitInfo-text-desc">
                   2 FD when an ally is eliminated.
                 </li>
-                <li className="unitInfo-text-desc">
-                  6 FD when an enemy scores.
-                </li>
+                <li className="unitInfo-text-desc">6 FD when a foe scores.</li>
                 <li className="unitInfo-text-desc">
                   6 FD when the opponent’s skill repertoire is depleted.
                 </li>

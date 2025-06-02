@@ -25,7 +25,7 @@ export const Piece = (props) => {
 
   const { getElementImage } = useGetImages();
 
-  const { isRooted } = useRecurringEffects();
+  const { isMuted, isRooted } = useRecurringEffects();
 
   let pieceSelectable = false;
 
@@ -146,12 +146,15 @@ export const Piece = (props) => {
               </>
 
               {/* Mana Scion: Disruption */}
-              {props.unit.enhancements.disruption > 0 && (
-                <>
-                  <div className="disruption2"></div>
-                  <div className="disruption2 disruption2-animate"></div>
-                </>
-              )}
+              {props.unit.lockdown > 0 &&
+                (props.unit.enhancements.shield > 0 ||
+                  props.unit.enhancements.ward > 0) &&
+                !isMuted(props.unit) && (
+                  <>
+                    <div className="lockdown2"></div>
+                    <div className="lockdown2 lockdown2-animate"></div>
+                  </>
+                )}
 
               {/* Plant Scion: Overgrowth */}
               {props.unit.enhancements.overgrowth === true && (
@@ -231,117 +234,31 @@ export const Piece = (props) => {
 
           {/* attributes */}
 
-          {props.unit.unitClass === "Plant Scion" && (
+          {props.unit.unitClass === "Fire Scion" && (
             <>
-              {props.unit.blossom === 1 && (
+              {props.unit.ember === 1 && (
                 <div
-                  className="blossom"
+                  className="ember"
                   style={{
-                    left: "33.33%",
+                    left: "30%",
                     transform: "translateX(-50%) rotate(45deg)",
                   }}
                 ></div>
               )}
-
-              {props.unit.blossom === 2 && (
+              {props.unit.ember > 1 && (
                 <>
                   <div
-                    className="blossom"
+                    className="ember"
                     style={{
-                      left: "33.33%",
+                      left: "30%",
                       transform: "translateX(-50%) rotate(45deg)",
                     }}
                   ></div>
                   <div
-                    className="blossom"
+                    className="ember"
                     style={{
-                      left: "50%",
-                      transform: "rotate(45deg)",
-                    }}
-                  ></div>
-                </>
-              )}
-
-              {props.unit.blossom > 2 && (
-                <>
-                  <div
-                    className="blossom"
-                    style={{
-                      left: "20%",
+                      left: "70%",
                       transform: "translateX(-50%) rotate(45deg)",
-                    }}
-                  ></div>
-                  <div
-                    className="blossom"
-                    style={{
-                      left: "50%",
-                      transform: " translateX(-50%)  rotate(45deg)",
-                    }}
-                  ></div>
-                  <div
-                    className="blossom"
-                    style={{
-                      left: "80%",
-                      transform: " translateX(-50%)  rotate(45deg)",
-                    }}
-                  ></div>
-                </>
-              )}
-            </>
-          )}
-
-          {props.unit.unitClass === "Lightning Scion" && (
-            <>
-              {props.unit.charge === 1 && (
-                <div
-                  className="charge"
-                  style={{
-                    left: "33.33%",
-                    transform: "translateX(-50%) rotate(45deg)",
-                  }}
-                ></div>
-              )}
-
-              {props.unit.charge === 2 && (
-                <>
-                  <div
-                    className="charge"
-                    style={{
-                      left: "33.33%",
-                      transform: "translateX(-50%) rotate(45deg)",
-                    }}
-                  ></div>
-                  <div
-                    className="charge"
-                    style={{
-                      left: "50%",
-                      transform: "rotate(45deg)",
-                    }}
-                  ></div>
-                </>
-              )}
-
-              {props.unit.charge > 2 && (
-                <>
-                  <div
-                    className="charge"
-                    style={{
-                      left: "20%",
-                      transform: "translateX(-50%) rotate(45deg)",
-                    }}
-                  ></div>
-                  <div
-                    className="charge"
-                    style={{
-                      left: "50%",
-                      transform: " translateX(-50%)  rotate(45deg)",
-                    }}
-                  ></div>
-                  <div
-                    className="charge"
-                    style={{
-                      left: "80%",
-                      transform: " translateX(-50%)  rotate(45deg)",
                     }}
                   ></div>
                 </>
@@ -351,7 +268,7 @@ export const Piece = (props) => {
 
           {props.unit.unitClass === "Water Scion" && (
             <>
-              {props.unit.boosts.glacialTorrent === 1 && (
+              {props.unit.torrent === 1 && (
                 <div
                   className="glacial-torrent"
                   style={{
@@ -360,7 +277,7 @@ export const Piece = (props) => {
                   }}
                 ></div>
               )}
-              {props.unit.boosts.glacialTorrent > 1 && (
+              {props.unit.torrent > 1 && (
                 <>
                   <div
                     className="glacial-torrent"
@@ -415,40 +332,117 @@ export const Piece = (props) => {
 
           {props.unit.unitClass === "Land Scion" && (
             <>
-              {props.unit.boosts.mountainStance === true && (
+              {props.unit.aftershock === 1 && (
                 <div
-                  className="mountain-stance"
-                  style={{
-                    left: "50%",
-                    transform: " translateX(-50%)  rotate(45deg)",
-                  }}
-                ></div>
-              )}
-            </>
-          )}
-
-          {props.unit.unitClass === "Mana Scion" && (
-            <>
-              {props.unit.enhancements.disruption === 1 && (
-                <div
-                  className="disruptionCounter"
+                  className="aftershock"
                   style={{
                     left: "30%",
                     transform: "translateX(-50%) rotate(45deg)",
                   }}
                 ></div>
               )}
-              {props.unit.enhancements.disruption > 1 && (
+              {props.unit.aftershock > 1 && (
                 <>
                   <div
-                    className="disruptionCounter"
+                    className="aftershock"
                     style={{
                       left: "30%",
                       transform: "translateX(-50%) rotate(45deg)",
                     }}
                   ></div>
                   <div
-                    className="disruptionCounter"
+                    className="aftershock"
+                    style={{
+                      left: "70%",
+                      transform: "translateX(-50%) rotate(45deg)",
+                    }}
+                  ></div>
+                </>
+              )}
+            </>
+          )}
+
+          {props.unit.unitClass === "Lightning Scion" && (
+            <>
+              {props.unit.charge === 1 && (
+                <div
+                  className="charge"
+                  style={{
+                    left: "20%",
+                    transform: "translateX(-50%) rotate(45deg)",
+                  }}
+                ></div>
+              )}
+
+              {props.unit.charge === 2 && (
+                <>
+                  <div
+                    className="charge"
+                    style={{
+                      left: "20%",
+                      transform: "translateX(-50%) rotate(45deg)",
+                    }}
+                  ></div>
+                  <div
+                    className="charge"
+                    style={{
+                      left: "50%",
+                      transform: " translateX(-50%)  rotate(45deg)",
+                    }}
+                  ></div>
+                </>
+              )}
+
+              {props.unit.charge > 2 && (
+                <>
+                  <div
+                    className="charge"
+                    style={{
+                      left: "20%",
+                      transform: "translateX(-50%) rotate(45deg)",
+                    }}
+                  ></div>
+                  <div
+                    className="charge"
+                    style={{
+                      left: "50%",
+                      transform: " translateX(-50%)  rotate(45deg)",
+                    }}
+                  ></div>
+                  <div
+                    className="charge"
+                    style={{
+                      left: "80%",
+                      transform: " translateX(-50%)  rotate(45deg)",
+                    }}
+                  ></div>
+                </>
+              )}
+            </>
+          )}
+
+          {props.unit.unitClass === "Mana Scion" && (
+            <>
+              {props.unit.lockdown === 1 && (
+                <div
+                  className="lockdownCounter"
+                  style={{
+                    left: "30%",
+                    transform: "translateX(-50%) rotate(45deg)",
+                  }}
+                ></div>
+              )}
+              {props.unit.lockdown > 1 && (
+                <>
+                  <div
+                    className="lockdownCounter"
+                    style={{
+                      left: "30%",
+                      transform: "translateX(-50%) rotate(45deg)",
+                    }}
+                  ></div>
+                  <div
+                    className="lockdownCounter"
                     style={{
                       left: "70%",
                       transform: "translateX(-50%) rotate(45deg)",
@@ -484,6 +478,65 @@ export const Piece = (props) => {
                     style={{
                       left: "70%",
                       transform: "translateX(-50%) rotate(45deg)",
+                    }}
+                  ></div>
+                </>
+              )}
+            </>
+          )}
+
+          {props.unit.unitClass === "Plant Scion" && (
+            <>
+              {props.unit.blossom === 1 && (
+                <div
+                  className="blossom"
+                  style={{
+                    left: "20%",
+                    transform: "translateX(-50%) rotate(45deg)",
+                  }}
+                ></div>
+              )}
+
+              {props.unit.blossom === 2 && (
+                <>
+                  <div
+                    className="blossom"
+                    style={{
+                      left: "20%",
+                      transform: "translateX(-50%) rotate(45deg)",
+                    }}
+                  ></div>
+                  <div
+                    className="blossom"
+                    style={{
+                      left: "50%",
+                      transform: "translateX(-50%) rotate(45deg)",
+                    }}
+                  ></div>
+                </>
+              )}
+
+              {props.unit.blossom > 2 && (
+                <>
+                  <div
+                    className="blossom"
+                    style={{
+                      left: "20%",
+                      transform: "translateX(-50%) rotate(45deg)",
+                    }}
+                  ></div>
+                  <div
+                    className="blossom"
+                    style={{
+                      left: "50%",
+                      transform: " translateX(-50%) rotate(45deg)",
+                    }}
+                  ></div>
+                  <div
+                    className="blossom"
+                    style={{
+                      left: "80%",
+                      transform: " translateX(-50%)  rotate(45deg)",
                     }}
                   ></div>
                 </>

@@ -19,10 +19,13 @@ const YouMaySpend1Skill = (props) => {
   const dispatch = useDispatch();
 
   const {
+    animationDelay,
     avelhemToScion,
     canAscend,
     drawSkill,
+    enterMoveMode,
     enterSelectUnitMode,
+    getVacantAdjacentZones,
     getZonesWithAllies,
     getZonesWithEnemies,
     isMuted,
@@ -93,6 +96,7 @@ const YouMaySpend1Skill = (props) => {
             message:
               "Recover then float 1 Plant skill other than “Efflorescence”.",
             outcome: "Float",
+            reveal: true,
           },
         });
 
@@ -109,10 +113,7 @@ const YouMaySpend1Skill = (props) => {
           },
         });
 
-        newGameState.currentResolution.push({
-          resolution: "Animation Delay",
-          priority: self,
-        });
+        newGameState = animationDelay(newGameState, self);
         break;
 
       case "Viridian Grave":
@@ -163,14 +164,14 @@ const YouMaySpend1Skill = (props) => {
     //props.updateFirebase(newGameState);
   };
 
-  const handleSelect = () => {
+  const handleEmber = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = props.unit
-      ? newGameState[props.unit.player].units[props.unit.unitIndex]
-      : null;
+    let unit = newGameState[props.unit.player].units[props.unit.unitIndex];
 
     //end Discarding Skill resolution
     newGameState.currentResolution.pop();
+
+    delete unit.ember;
 
     switch (props.details.reason) {
       case "From the Ashes":
@@ -187,10 +188,47 @@ const YouMaySpend1Skill = (props) => {
         });
         break;
 
-      case "Eternal Ember":
-        unit.afflictions.anathema = 1;
-        delete unit.temporary.anathemaDelay;
-        unit.boosts = {};
+      case "Resplendence":
+        newGameState.currentResolution.push({
+          resolution: "Fire Skill",
+          resolution2: "Resplendence4",
+          unit: unit,
+        });
+        break;
+    }
+
+    dispatch(updateState(newGameState));
+    //props.updateFirebase(newGameState);
+  };
+
+  const handleSelect = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = props.unit
+      ? newGameState[props.unit.player].units[props.unit.unitIndex]
+      : null;
+
+    let ability = null;
+
+    //end Discarding Skill resolution
+    newGameState.currentResolution.pop();
+
+    if (unit && unit.unitClass === "Fire Scion" && !isMuted(unit)) {
+      ability = "Eternal Ember";
+    }
+
+    switch (props.details.reason) {
+      case "From the Ashes":
+        newGameState.currentResolution.push({
+          resolution: "Recover Skill",
+          player: self,
+          details: {
+            title: "From the Ashes",
+            reason: "From the Ashes",
+            restriction: ["01-01", "01-02", "01-03"],
+            message: "Recover then float 1 Fire skill.",
+            outcome: "Float",
+          },
+        });
         break;
 
       case "Resplendence":
@@ -214,7 +252,7 @@ const YouMaySpend1Skill = (props) => {
           resolution: "Land Skill",
           resolution2: "Pitfall Trap3",
           unit: unit,
-          victim: props.victim,
+          victim: props.details.victim,
         });
         break;
 
@@ -229,6 +267,7 @@ const YouMaySpend1Skill = (props) => {
             message:
               "Recover then float 1 Lightning skill other than “Thunder Thaumaturge”.",
             outcome: "Float",
+            reveal: true,
           },
         });
         break;
@@ -263,6 +302,7 @@ const YouMaySpend1Skill = (props) => {
             message:
               "Recover then float 1 Plant skill other than “Efflorescence”.",
             outcome: "Float",
+            reveal: true,
           },
         });
 
@@ -279,10 +319,7 @@ const YouMaySpend1Skill = (props) => {
           },
         });
 
-        newGameState.currentResolution.push({
-          resolution: "Animation Delay",
-          priority: self,
-        });
+        newGameState = animationDelay(newGameState, self);
         break;
 
       case "Viridian Grave":
@@ -358,6 +395,21 @@ const YouMaySpend1Skill = (props) => {
         );
         break;
 
+      case "Vanguard Fleet1":
+        enterMoveMode(getVacantAdjacentZones(unit), unit, newGameState, null);
+        break;
+
+      case "Vanguard Fleet2":
+        enterSelectUnitMode(
+          props.details.zonesWithMovableAllies,
+          unit,
+          newGameState,
+          null,
+          "vanguard fleet",
+          null
+        );
+        break;
+
       case "Destine":
         //end Defiance Phase Selection
         newGameState.currentResolution.pop();
@@ -388,6 +440,28 @@ const YouMaySpend1Skill = (props) => {
       )[0]
     );
 
+    switch (ability) {
+      case "Eternal Ember":
+        newGameState.activatingUnit.push(unit);
+        newGameState.activatingSkill.push("EternalEmber");
+
+        newGameState.currentResolution.push({
+          resolution: "Unit Talent",
+          resolution2: "Talent Conclusion",
+          unit: unit,
+        });
+
+        newGameState.currentResolution.push({
+          resolution: "Unit Talent",
+          resolution2: "Activating Eternal Ember",
+          unit: unit,
+        });
+
+        newGameState = animationDelay(newGameState, unit.player);
+
+        break;
+    }
+
     dispatch(updateState(newGameState));
     props.updateFirebase(newGameState);
   };
@@ -407,14 +481,6 @@ const YouMaySpend1Skill = (props) => {
 
     //end Discarding Skill resolution
     newGameState.currentResolution.pop();
-
-    if (props.details.reason === "Eternal Ember") {
-      let unit = newGameState[props.unit.player].units[props.unit.unitIndex];
-
-      unit.afflictions.anathema = 2;
-      delete unit.temporary.anathemaDelay;
-      unit.boosts = {};
-    }
 
     dispatch(updateState(newGameState));
     props.updateFirebase(newGameState);
@@ -519,6 +585,12 @@ const YouMaySpend1Skill = (props) => {
           {selectedSkill === null && props.unit?.blossom > 0 && (
             <button className="redButton2" onClick={() => handleBlossom()}>
               Spend 1 Blossom
+            </button>
+          )}
+
+          {selectedSkill === null && props.unit?.ember >= 2 && (
+            <button className="redButton2" onClick={() => handleEmber()}>
+              Spend 2 Embers
             </button>
           )}
 

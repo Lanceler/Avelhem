@@ -1,434 +1,120 @@
 export const useCardDatabase = () => {
+  const makeAvelhemCard = (name, id) => {
+    const AVELHEM_LIMIT = 4;
+
+    return {
+      Name: name,
+      Stock: AVELHEM_LIMIT,
+      CardId: id,
+    };
+  };
+
   const avelhemCardList = [
-    {
-      Name: "Fire Avelhem",
-      Stock: 4,
-      Method: "Avelhem",
-      CardId: 1,
-    },
-    {
-      Name: "Water Avelhem",
-      Stock: 4,
-      Method: "Avelhem",
-      CardId: 2,
-    },
-    {
-      Name: "Wind Avelhem",
-      Stock: 4,
-      Method: "Avelhem",
-      CardId: 3,
-    },
-    {
-      Name: "Land Avelhem",
-      Stock: 4,
-      Method: "Avelhem",
-      CardId: 4,
-    },
-    {
-      Name: "Lightning Avelhem",
-      Stock: 4,
-      Method: "Avelhem",
-      CardId: 5,
-    },
-    {
-      Name: "Mana Avelhem",
-      Stock: 4,
-      Method: "Avelhem",
-      CardId: 6,
-    },
-    {
-      Name: "Metal Avelhem",
-      Stock: 4,
-      Method: "Avelhem",
-      CardId: 7,
-    },
-    {
-      Name: "Plant Avelhem",
-      Stock: 4,
-      Method: "Avelhem",
-      CardId: 8,
-    },
+    makeAvelhemCard("Fire Avelhem", 1),
+    makeAvelhemCard("Water Avelhem", 2),
+    makeAvelhemCard("Wind Avelhem", 3),
+    makeAvelhemCard("Land Avelhem", 4),
+    makeAvelhemCard("Lightning Avelhem", 5),
+    makeAvelhemCard("Mana Avelhem", 6),
+    makeAvelhemCard("Metal Avelhem", 7),
+    makeAvelhemCard("Plant Avelhem", 8),
 
-    ///expansion
-
-    {
-      Name: "Avian Avelhem",
-      Stock: 4,
-      Method: "Avelhem",
-      CardId: 9,
-    },
+    // Expansion
+    makeAvelhemCard("Avian Avelhem", 9),
   ];
 
+  const makeSkillCard = (name, stock, aspect, method, id) => {
+    return {
+      Name: name,
+      Stock: stock,
+      Aspect: aspect,
+      Method: method,
+      CardId: id,
+    };
+  };
+
   const skillCardList = [
-    //fire
-    {
-      Name: "Ignition Propulsion",
-      Stock: 4,
-      Aspect: "Fire",
-      Method: "Standard",
-      CardId: "01-01",
-    },
-    {
-      Name: "Conflagration",
-      Stock: 4,
-      Aspect: "Fire",
-      Method: "Resonant",
-      CardId: "01-02",
-    },
-    {
-      Name: "Blaze of Glory",
-      Stock: 4,
-      Aspect: "Fire",
-      Method: "Contingent",
-      CardId: "01-03",
-    },
-    {
-      Name: "Resplendence",
-      Stock: 1,
-      Aspect: "Fire",
-      Method: "Burst",
-      CardId: "01-04",
-    },
-    //water
-    {
-      Name: "Purification",
-      Stock: 4,
-      Aspect: "Water",
-      Method: "Standard",
-      CardId: "02-01",
-    },
-    {
-      Name: "Frigid Breath",
-      Stock: 4,
-      Aspect: "Water",
-      Method: "Resonant",
-      CardId: "02-02",
-    },
-    {
-      Name: "Healing Rain",
-      Stock: 4,
-      Aspect: "Water",
-      Method: "Contingent",
-      CardId: "02-03",
-    },
-    {
-      Name: "Glacial Torrent",
-      Stock: 1,
-      Aspect: "Water",
-      Method: "Burst",
-      CardId: "02-04",
-    },
-    //wind
-    {
-      Name: "Aerial Impetus",
-      Stock: 4,
-      Aspect: "Wind",
-      Method: "Standard",
-      CardId: "03-01",
-    },
-    {
-      Name: "Gale Conjuration",
-      Stock: 4,
-      Aspect: "Wind",
-      Method: "Resonant",
-      CardId: "03-02",
-    },
-    {
-      Name: "Symphonic Screech",
-      Stock: 4,
-      Aspect: "Wind",
-      Method: "Contingent",
-      CardId: "03-03",
-    },
-    {
-      Name: "Cataclysmic Tempest",
-      Stock: 1,
-      Aspect: "Wind",
-      Method: "Burst",
-      CardId: "03-04",
-    },
-    //land
-    {
-      Name: "Crystallization",
-      Stock: 4,
-      Aspect: "Land",
-      Method: "Standard",
-      CardId: "04-01",
-    },
-    {
-      Name: "Upheaval",
-      Stock: 4,
-      Aspect: "Land",
-      Method: "Resonant",
-      CardId: "04-02",
-    },
-    {
-      Name: "Pitfall Trap",
-      Stock: 4,
-      Aspect: "Land",
-      Method: "Contingent",
-      CardId: "04-03",
-    },
-    {
-      Name: "Geomancy",
-      Stock: 1,
-      Aspect: "Land",
-      Method: "Burst",
-      CardId: "04-04",
-    },
-    //lightning
-    {
-      Name: "Chain Lightning",
-      Stock: 4,
-      Aspect: "Lightning",
-      Method: "Standard",
-      CardId: "05-01",
-    },
-    {
-      Name: "Zip and Zap",
-      Stock: 4,
-      Aspect: "Lightning",
-      Method: "Resonant",
-      CardId: "05-02",
-    },
-    {
-      Name: "Thunder Thaumaturge",
-      Stock: 4,
-      Aspect: "Lightning",
-      Method: "Contingent",
-      CardId: "05-03",
-    },
-    {
-      Name: "Valiant Spark",
-      Stock: 1,
-      Aspect: "Lightning",
-      Method: "Burst",
-      CardId: "05-04",
-    },
-    //mana
-    {
-      Name: "Surge",
-      Stock: 4,
-      Aspect: "Mana",
-      Method: "Standard",
-      CardId: "06-01",
-    },
-    {
-      Name: "Diffusion",
-      Stock: 4,
-      Aspect: "Mana",
-      Method: "Resonant",
-      CardId: "06-02",
-    },
-    {
-      Name: "Aegis",
-      Stock: 4,
-      Aspect: "Mana",
-      Method: "Contingent",
-      CardId: "06-03",
-    },
-    {
-      Name: "Disruption Field",
-      Stock: 1,
-      Aspect: "Mana",
-      Method: "Burst",
-      CardId: "06-04",
-    },
-    //metal
-    {
-      Name: "Magnetic Shockwave",
-      Stock: 4,
-      Aspect: "Metal",
-      Method: "Standard",
-      CardId: "07-01",
-    },
-    {
-      Name: "Reinforce",
-      Stock: 4,
-      Aspect: "Metal",
-      Method: "Resonant",
-      CardId: "07-02",
-    },
-    {
-      Name: "Frenzy Blade",
-      Stock: 4,
-      Aspect: "Metal",
-      Method: "Contingent",
-      CardId: "07-03",
-    },
-    {
-      Name: "Arsenal Onslaught",
-      Stock: 1,
-      Aspect: "Metal",
-      Method: "Burst",
-      CardId: "07-04",
-    },
-    //plant
-    {
-      Name: "Sow and Reap",
-      Stock: 4,
-      Aspect: "Plant",
-      Method: "Standard",
-      CardId: "08-01",
-    },
-    {
-      Name: "Efflorescence",
-      Stock: 4,
-      Aspect: "Plant",
-      Method: "Resonant",
-      CardId: "08-02",
-    },
-    {
-      Name: "Viridian Grave",
-      Stock: 4,
-      Aspect: "Plant",
-      Method: "Contingent",
-      CardId: "08-03",
-    },
-    {
-      Name: "Castle of Thorns",
-      Stock: 1,
-      Aspect: "Plant",
-      Method: "Burst",
-      CardId: "08-04",
-    },
+    makeSkillCard("Ignition Propulsion", 4, "Fire", "Standard", "01-01"),
+    makeSkillCard("Conflagration", 4, "Fire", "Resonant", "01-02"),
+    makeSkillCard("Blaze of Glory", 4, "Fire", "Contingent", "01-03"),
+    makeSkillCard("Resplendence", 1, "Fire", "Burst", "01-04"),
 
-    //avian
-    {
-      Name: "Raptor Blitz",
-      Stock: 4,
-      Aspect: "Avian",
-      Method: "Standard",
-      CardId: "09-01",
-    },
-    {
-      Name: "Reconnaissance",
-      Stock: 4,
-      Aspect: "Avian",
-      Method: "Resonant",
-      CardId: "09-02",
-    },
-    {
-      Name: "Guardian Wings",
-      Stock: 4,
-      Aspect: "Avian",
-      Method: "Contingent",
-      CardId: "09-03",
-    },
-    {
-      Name: "Vanguard Fleet",
-      Stock: 1,
-      Aspect: "Avian",
-      Method: "Burst",
-      CardId: "09-04",
-    },
+    makeSkillCard("Purification", 4, "Water", "Standard", "02-01"),
+    makeSkillCard("Frigid Breath", 4, "Water", "Resonant", "02-02"),
+    makeSkillCard("Healing Rain", 4, "Water", "Contingent", "02-03"),
+    makeSkillCard("Glacial Torrent", 1, "Water", "Burst", "02-04"),
 
-    //sovereign
-    {
-      Name: "Heir’s Endeavor",
-      Stock: 2,
-      Aspect: "Sovereign",
-      Method: "Standard",
-      CardId: "SA-01",
-    },
-    {
-      Name: "Tea for Two",
-      Stock: 2,
-      Aspect: "Sovereign",
-      Method: "Standard",
-      CardId: "SA-02",
-    },
-    {
-      Name: "Dark Halo",
-      Stock: 2,
-      Aspect: "Sovereign",
-      Method: "Standard",
-      CardId: "SA-03",
-    },
-    {
-      Name: "Reminiscence",
-      Stock: 2,
-      Aspect: "Sovereign",
-      Method: "Standard",
-      CardId: "SA-04",
-    },
-    {
-      Name: "Foreshadow",
-      Stock: 2,
-      Aspect: "Sovereign",
-      Method: "Standard",
-      CardId: "SA-05",
-    },
-    {
-      Name: "Transmute",
-      Stock: 2,
-      Aspect: "Sovereign",
-      Method: "Resonant",
-      CardId: "SB-01",
-    },
-    {
-      Name: "Ambidexterity",
-      Stock: 2,
-      Aspect: "Sovereign",
-      Method: "Resonant",
-      CardId: "SB-02",
-    },
-    {
-      Name: "Providence",
-      Stock: 2,
-      Aspect: "Sovereign",
-      Method: "Resonant",
-      CardId: "SB-03",
-    },
-    {
-      Name: "Fervent Prayer",
-      Stock: 2,
-      Aspect: "Sovereign",
-      Method: "Resonant",
-      CardId: "SB-04",
-    },
-    {
-      Name: "Press the Attack",
-      Stock: 2,
-      Aspect: "Sovereign",
-      Method: "Resonant",
-      CardId: "SB-05",
-    },
-    {
-      Name: "Power at the Final Hour",
-      Stock: 2,
-      Aspect: "Sovereign",
-      Method: "Contingent",
-      CardId: "SC-01",
-    },
-    {
-      Name: "Fated Rivalry",
-      Stock: 2,
-      Aspect: "Sovereign",
-      Method: "Contingent",
-      CardId: "SC-02",
-    },
-    {
-      Name: "Match Made in Heaven",
-      Stock: 2,
-      Aspect: "Sovereign",
-      Method: "Contingent",
-      CardId: "SC-03",
-    },
-    {
-      Name: "Vengeful Legacy",
-      Stock: 2,
-      Aspect: "Sovereign",
-      Method: "Contingent",
-      CardId: "SC-04",
-    },
-    {
-      Name: "Black Business Card",
-      Stock: 2,
-      Aspect: "Sovereign",
-      Method: "Contingent",
-      CardId: "SC-05",
-    },
+    makeSkillCard("Aerial Impetus", 4, "Wind", "Standard", "03-01"),
+    makeSkillCard("Gale Conjuration", 4, "Wind", "Resonant", "03-02"),
+    makeSkillCard("Symphonic Screech", 4, "Wind", "Contingent", "03-03"),
+    makeSkillCard("Cataclysmic Tempest", 1, "Wind", "Burst", "03-04"),
+
+    makeSkillCard("Crystallization", 4, "Land", "Standard", "04-01"),
+    makeSkillCard("Upheaval", 4, "Land", "Resonant", "04-02"),
+    makeSkillCard("Pitfall Trap", 4, "Land", "Contingent", "04-03"),
+    makeSkillCard("Geomancy", 1, "Land", "Burst", "04-04"),
+
+    makeSkillCard("Chain Lightning", 4, "Lightning", "Standard", "05-01"),
+    makeSkillCard("Zip and Zap", 4, "Lightning", "Resonant", "05-02"),
+    makeSkillCard("Thunder Thaumaturge", 4, "Lightning", "Contingent", "05-03"),
+    makeSkillCard("Valiant Spark", 1, "Lightning", "Burst", "05-04"),
+
+    makeSkillCard("Chain Lightning", 4, "Lightning", "Standard", "05-01"),
+    makeSkillCard("Zip and Zap", 4, "Lightning", "Resonant", "05-02"),
+    makeSkillCard("Thunder Thaumaturge", 4, "Lightning", "Contingent", "05-03"),
+    makeSkillCard("Valiant Spark", 1, "Lightning", "Burst", "05-04"),
+
+    makeSkillCard("Surge", 4, "Mana", "Standard", "06-01"),
+    makeSkillCard("Diffusion", 4, "Mana", "Resonant", "06-02"),
+    makeSkillCard("Aegis", 4, "Mana", "Contingent", "06-03"),
+    makeSkillCard("Disruption Field", 1, "Mana", "Burst", "06-04"),
+
+    makeSkillCard("Magnetic Shockwave", 4, "Metal", "Standard", "07-01"),
+    makeSkillCard("Reinforce", 4, "Metal", "Resonant", "07-02"),
+    makeSkillCard("Frenzy Blade", 4, "Metal", "Contingent", "07-03"),
+    makeSkillCard("Arsenal Onslaught", 1, "Metal", "Burst", "07-04"),
+
+    makeSkillCard("Sow and Reap", 4, "Plant", "Standard", "08-01"),
+    makeSkillCard("Efflorescence", 4, "Plant", "Resonant", "08-02"),
+    makeSkillCard("Viridian Grave", 4, "Plant", "Contingent", "08-03"),
+    makeSkillCard("Castle of Thorns", 1, "Plant", "Burst", "08-04"),
+
+    makeSkillCard("Raptor Blitz", 4, "Avian", "Standard", "09-01"),
+    makeSkillCard("Reconnaissance", 4, "Avian", "Resonant", "09-02"),
+    makeSkillCard("Guardian Wings", 4, "Avian", "Contingent", "09-03"),
+    makeSkillCard("Vanguard Fleet", 1, "Avian", "Burst", "09-04"),
+
+    //Sovereign
+    makeSkillCard("Heir’s Endeavor", 2, "Sovereign", "Standard", "SA-01"),
+    makeSkillCard("Tea for Two", 2, "Sovereign", "Standard", "SA-02"),
+    makeSkillCard("Dark Halo", 2, "Sovereign", "Standard", "SA-03"),
+    makeSkillCard("Reminiscence", 2, "Sovereign", "Standard", "SA-04"),
+    makeSkillCard("Foreshadow", 2, "Sovereign", "Standard", "SA-05"),
+
+    makeSkillCard("Transmute", 2, "Sovereign", "Resonant", "SB-01"),
+    makeSkillCard("Ambidexterity", 2, "Sovereign", "Resonant", "SB-02"),
+    makeSkillCard("Providence", 2, "Sovereign", "Resonant", "SB-03"),
+    makeSkillCard("Fervent Prayer", 2, "Sovereign", "Resonant", "SB-04"),
+    makeSkillCard("Press the Attack", 2, "Sovereign", "Resonant", "SB-05"),
+
+    makeSkillCard(
+      "Power at the Final Hour",
+      2,
+      "Sovereign",
+      "Contingent",
+      "SC-01"
+    ),
+    makeSkillCard("Fated Rivalry", 2, "Sovereign", "Contingent", "SC-02"),
+    makeSkillCard(
+      "Match Made in Heaven",
+      2,
+      "Sovereign",
+      "Contingent",
+      "SC-03"
+    ),
+    makeSkillCard("Vengeful Legacy", 2, "Sovereign", "Contingent", "SC-04"),
+    makeSkillCard("Black Business Card", 2, "Sovereign", "Contingent", "SC-05"),
+
     // {
     //   Name: "Coalescence",
     //   Stock: 1,
@@ -496,6 +182,25 @@ export const useCardDatabase = () => {
       "08-04",
       "09-04",
       // "SD-01",
+    ];
+  };
+
+  const allContingentSkills = () => {
+    return [
+      "01-03",
+      "02-03",
+      "03-03",
+      "04-03",
+      "05-03",
+      "06-03",
+      "07-03",
+      "08-03",
+      "09-03",
+      "SC-01",
+      "SC-02",
+      "SC-03",
+      "SC-04",
+      "SC-05",
     ];
   };
 
@@ -601,6 +306,7 @@ export const useCardDatabase = () => {
     getSkillById,
     getSkillIndex,
     allBurstSkills,
+    allContingentSkills,
     pressTheAttackList,
     sovereignSkillList,
     trialTeaAvelhems,

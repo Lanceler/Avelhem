@@ -19,6 +19,7 @@ const YouMayNoYes = (props) => {
   const { allBurstSkills, getScionSet } = useCardDatabase();
 
   const {
+    aetherRestoreSpecial,
     drawAvelhem,
     drawSkill,
     endExecutionPhase2,
@@ -36,7 +37,7 @@ const YouMayNoYes = (props) => {
   let updateData = false;
   if (
     [
-      "Mana Feedback",
+      "Overload",
       "Mitigate Aether-Blast",
       "Press the Attack Avelhem",
       "Fated Rivalry",
@@ -104,9 +105,11 @@ const YouMayNoYes = (props) => {
 
         unit.aether = 0;
 
-        newGameState[props.attacker.player].units[
-          props.attacker.unitIndex
-        ].aether = 1;
+        let attacker =
+          newGameState[props.attacker.player].units[props.attacker.unitIndex];
+
+        newGameState = aetherRestoreSpecial(newGameState, attacker);
+
         break;
 
       case "Conflagration Ignite": //"ConflagrationR2"
@@ -126,12 +129,6 @@ const YouMayNoYes = (props) => {
           resolution2: "Frigid BreathR3",
           unit: props.unit,
         });
-        break;
-
-      case "Blaze of Glory Draw": //"Blaze of Glory5"
-        unit.aether = 0;
-        newGameState = drawSkill(newGameState);
-        newGameState = drawSkill(newGameState);
         break;
 
       case "Resplendence": //Resplendence1
@@ -190,17 +187,6 @@ const YouMayNoYes = (props) => {
           null,
           "paralyze1",
           "Cataclysmic Tempest"
-        );
-        break;
-
-      case "Upheaval 2nd Paralyze": // "Upheaval3"
-        enterSelectUnitMode(
-          props.details.adjacentEnemies,
-          props.unit,
-          newGameState,
-          null,
-          "paralyze1",
-          "Upheaval"
         );
         break;
 
@@ -292,17 +278,6 @@ const YouMayNoYes = (props) => {
         );
         break;
 
-      case "Surge": // "Surge2"
-        props.setMovingSpecial("Surge");
-
-        newGameState = enterMoveMode(
-          getVacantAdjacentZones(unit),
-          unit,
-          newGameState,
-          null
-        );
-        break;
-
       case "Diffusion 2nd Blast": // "Diffusion4"
         enterSelectUnitMode(
           props.details.adjacentEnemies,
@@ -377,8 +352,16 @@ const YouMayNoYes = (props) => {
         });
         break;
 
-      case "Mana Feedback": //Activating Mana Restructure
+      case "Overload": //Activating Overload
         newGameState = drawSkill(newGameState);
+        break;
+
+      case "Castle of Thorns": // "Castle Of Thorns1"
+        delete unit.enhancements.overgrowth;
+        unit.enhancements.ward
+          ? (unit.enhancements.ward = Math.max(unit.enhancements.ward, 2))
+          : (unit.enhancements.ward = 2);
+
         break;
 
       case "Foreshadow Draw": //"Foreshadow Draw"

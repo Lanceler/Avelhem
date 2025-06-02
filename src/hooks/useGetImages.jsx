@@ -90,22 +90,29 @@ import AvianScion from "../assets/scionIcons/AvianScion.png";
 import Afterburner from "../assets/abilities/Afterburner.jpg";
 import FieryHeart from "../assets/abilities/FieryHeart.jpg";
 import EternalEmber from "../assets/abilities/EternalEmber.jpg";
+import EternalEmber2 from "../assets/abilities/EternalEmber2.jpg";
 import FromTheAshes from "../assets/abilities/FromTheAshes.jpg";
 import Hydrotherapy from "../assets/abilities/Hydrotherapy.jpg";
 import ColdEmbrace from "../assets/abilities/ColdEmbrace.jpg";
+import ClearAsCrystal from "../assets/abilities/ClearAsCrystal.jpg";
+import ClearAsCrystal2 from "../assets/abilities/ClearAsCrystal2.jpg";
 import Kleptothermy from "../assets/abilities/Kleptothermy.jpg";
+import Aeromancy from "../assets/abilities/Aeromancy.jpg";
 import AirDash from "../assets/abilities/AirDash.jpg";
 import ReapTheWhirlwind from "../assets/abilities/ReapTheWhirlwind.jpg";
 import SecondWind from "../assets/abilities/SecondWind.jpg";
 import Fortify from "../assets/abilities/Fortify.jpg";
 import LeylineConvergence from "../assets/abilities/LeylineConvergence.jpg";
 import MountainStance from "../assets/abilities/MountainStance.jpg";
+import SaltTheEarth from "../assets/abilities/SaltTheEarth.jpg";
+import SaltTheEarth2 from "../assets/abilities/SaltTheEarth2.jpg";
 import Galvanize from "../assets/abilities/Galvanize.jpg";
 import ArcFlash from "../assets/abilities/ArcFlash.jpg";
 import LightningRod from "../assets/abilities/LightningRod.jpg";
+import Defibrillation from "../assets/abilities/Defibrillation.jpg";
 import ParticleBeam from "../assets/abilities/ParticleBeam.jpg";
 import AmbianceAssimilation from "../assets/abilities/AmbianceAssimilation.jpg";
-import ManaFeedback from "../assets/abilities/ManaFeedback.jpg";
+import Overload from "../assets/abilities/Overload.jpg";
 import AmplifyAura from "../assets/abilities/AmplifyAura.jpg";
 import Brandish from "../assets/abilities/Brandish.jpg";
 import BallisticArmor from "../assets/abilities/BallisticArmor.jpg";
@@ -251,23 +258,30 @@ export const useGetImages = () => {
     Afterburner,
     FieryHeart,
     EternalEmber,
+    EternalEmber2,
     FromTheAshes,
     Hydrotherapy,
     ColdEmbrace,
+    ClearAsCrystal,
+    ClearAsCrystal2,
     Kleptothermy,
+    Aeromancy,
     AirDash,
     ReapTheWhirlwind,
     SecondWind,
     Fortify,
     LeylineConvergence,
     MountainStance,
+    SaltTheEarth,
+    SaltTheEarth2,
     Galvanize,
     ArcFlash,
     LightningRod,
+    Defibrillation,
     ParticleBeam,
     AmplifyAura,
     AmbianceAssimilation,
-    ManaFeedback,
+    Overload,
     Brandish,
     Conduction,
     BallisticArmor,
@@ -415,6 +429,8 @@ export const useGetImages = () => {
         return FieryHeart;
       case "EternalEmber":
         return EternalEmber;
+      case "EternalEmber2":
+        return EternalEmber2;
       case "FromTheAshes":
         return FromTheAshes;
 
@@ -434,6 +450,10 @@ export const useGetImages = () => {
         return Hydrotherapy;
       case "ColdEmbrace":
         return ColdEmbrace;
+      case "ClearAsCrystal":
+        return ClearAsCrystal;
+      case "ClearAsCrystal2":
+        return ClearAsCrystal2;
       case "Kleptothermy":
         return Kleptothermy;
 
@@ -449,6 +469,8 @@ export const useGetImages = () => {
         return SymphonicScreech;
       case "03-04":
         return CataclysmicTempest;
+      case "Aeromancy":
+        return Aeromancy;
       case "AirDash":
         return AirDash;
       case "ReapTheWhirlwind":
@@ -474,6 +496,10 @@ export const useGetImages = () => {
         return LeylineConvergence;
       case "MountainStance":
         return MountainStance;
+      case "SaltTheEarth":
+        return SaltTheEarth;
+      case "SaltTheEarth2":
+        return SaltTheEarth2;
 
       case 5:
         return LightningAvelhem;
@@ -493,6 +519,8 @@ export const useGetImages = () => {
         return ArcFlash;
       case "LightningRod":
         return LightningRod;
+      case "Defibrillation":
+        return Defibrillation;
 
       case 6:
         return ManaAvelhem;
@@ -512,8 +540,8 @@ export const useGetImages = () => {
         return AmplifyAura;
       case "AmbianceAssimilation":
         return AmbianceAssimilation;
-      case "ManaFeedback":
-        return ManaFeedback;
+      case "Overload":
+        return Overload;
 
       case 7:
         return MetalAvelhem;
