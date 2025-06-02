@@ -59,11 +59,6 @@ export const useCardDatabase = () => {
     makeSkillCard("Thunder Thaumaturge", 4, "Lightning", "Contingent", "05-03"),
     makeSkillCard("Valiant Spark", 1, "Lightning", "Burst", "05-04"),
 
-    makeSkillCard("Chain Lightning", 4, "Lightning", "Standard", "05-01"),
-    makeSkillCard("Zip and Zap", 4, "Lightning", "Resonant", "05-02"),
-    makeSkillCard("Thunder Thaumaturge", 4, "Lightning", "Contingent", "05-03"),
-    makeSkillCard("Valiant Spark", 1, "Lightning", "Burst", "05-04"),
-
     makeSkillCard("Surge", 4, "Mana", "Standard", "06-01"),
     makeSkillCard("Diffusion", 4, "Mana", "Resonant", "06-02"),
     makeSkillCard("Aegis", 4, "Mana", "Contingent", "06-03"),
