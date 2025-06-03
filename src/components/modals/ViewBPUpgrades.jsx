@@ -163,6 +163,33 @@ const ViewBPUpgrades = (props) => {
                 </>
               )}
             </div>
+
+            <div>
+              {upgrades.burst > 0 && (
+                <>
+                  <h3>Burst:</h3>
+
+                  {upgrades.burst >= 1 && (
+                    <p className="unitInfo-text-desc">
+                      1. Can activate burst skills.
+                    </p>
+                  )}
+                  {upgrades.burst >= 2 && (
+                    <p className="unitInfo-text-desc">
+                      2. Can search for burst skills.
+                    </p>
+                  )}
+                  {upgrades.burst >= 3 && (
+                    <p className="unitInfo-text-desc">
+                      3. Shattered skills are shuffled into repertoire when
+                      replenished.
+                    </p>
+                  )}
+
+                  <br />
+                </>
+              )}
+            </div>
           </div>
         </div>
       </div>

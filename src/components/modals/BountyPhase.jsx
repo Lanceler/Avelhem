@@ -132,6 +132,38 @@ const BountyPhase = (props) => {
         setSelectedChoice(null);
         break;
 
+      case 16:
+        newGameState[self].bountyUpgrades.burst = 1;
+        newGameState[self].bountyPoints -= burstCosts[0];
+        setSelectedChoice(null);
+        break;
+
+      case 17:
+        newGameState[self].bountyUpgrades.burst = 2;
+        newGameState[self].bountyPoints -= burstCosts[1];
+        setSelectedChoice(null);
+        break;
+
+      case 18:
+        newGameState[self].bountyUpgrades.burst = 3;
+        newGameState[self].bountyPoints -= burstCosts[2];
+        setSelectedChoice(null);
+
+        newGameState.currentResolution.push({
+          resolution: "Misc.",
+          resolution2: "Burst Upgrade",
+          player: self,
+          details: {
+            reason: "Burst Upgrade",
+            title: "Burst Upgrade",
+            message: "You may discard your entire skill repertoire.",
+            no: "Skip",
+            yes: "Discard",
+          },
+        });
+
+        break;
+
       default:
         break;
     }
@@ -157,6 +189,7 @@ const BountyPhase = (props) => {
   const coordinationCosts = [3, 3, 4];
   const tacticsCosts = [3, 3, 4];
   const avelhemCosts = [3, 3, 4];
+  const burstCosts = [3, 3, 4];
   // const victoryCosts = [10, 5];
 
   const canFrontier = [
@@ -202,6 +235,15 @@ const BountyPhase = (props) => {
       localGameState[self].bountyUpgrades.avelhem === 1,
     localGameState[self].bountyPoints >= avelhemCosts[2] &&
       localGameState[self].bountyUpgrades.avelhem === 2,
+  ];
+
+  const canBurst = [
+    localGameState[self].bountyPoints >= burstCosts[0] &&
+      localGameState[self].bountyUpgrades.burst === 0,
+    localGameState[self].bountyPoints >= burstCosts[1] &&
+      localGameState[self].bountyUpgrades.burst === 1,
+    localGameState[self].bountyPoints >= burstCosts[2] &&
+      localGameState[self].bountyUpgrades.burst === 2,
   ];
 
   // const canVictory = [
@@ -260,6 +302,15 @@ const BountyPhase = (props) => {
 
       case 15:
         return newGameState[self].bountyUpgrades.avelhem >= 3;
+
+      case 16:
+        return newGameState[self].bountyUpgrades.burst >= 1;
+
+      case 17:
+        return newGameState[self].bountyUpgrades.burst >= 2;
+
+      case 18:
+        return newGameState[self].bountyUpgrades.burst >= 3;
 
       default:
         return;
@@ -433,6 +484,41 @@ const BountyPhase = (props) => {
     can: canAvelhem,
   };
 
+  const burstBounty = {
+    category: "Burst",
+    items: [
+      {
+        text: (
+          <>
+            You can activate
+            <br />
+            burst skills
+          </>
+        ),
+        ind: 16,
+      },
+      {
+        text: "You can search for burst skills",
+        ind: 17,
+      },
+      {
+        text: (
+          <>
+            <p style={{ fontSize: 17.2 }}>
+              When your skill repertoire is depleted, shattered skills are
+              included in its replenishment (you may discard your entire skill
+              repertoire)
+            </p>
+          </>
+        ),
+
+        ind: 18,
+      },
+    ],
+    cost: burstCosts,
+    can: canBurst,
+  };
+
   const BountyRow = ({ info }) => {
     return (
       <div className={`modalContent2 ${demoGuide ? "demoBlocker" : ""}`}>
@@ -500,6 +586,7 @@ const BountyPhase = (props) => {
           <BountyRow info={coordinationBounty} />
           <BountyRow info={tacticsBounty} />
           <BountyRow info={avelhemBounty} />
+          <BountyRow info={burstBounty} />
         </div>
 
         <div className="modalFooter">

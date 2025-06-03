@@ -80,7 +80,7 @@ const YouMaySpend1Skill = (props) => {
     //end Discarding Skill resolution
     newGameState.currentResolution.pop();
 
-    unit.blossom = unit.blossom - 1;
+    unit.blossom = unit.blossom - 2;
 
     //newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
 
@@ -93,9 +93,8 @@ const YouMaySpend1Skill = (props) => {
             title: "Efflorescence",
             reason: "Efflorescence",
             restriction: ["08-01", "08-03", "08-04"],
-            message:
-              "Recover then float 1 Plant skill other than “Efflorescence”.",
-            outcome: "Float",
+            message: "Recover 1 Plant skill other than “Efflorescence”.",
+            outcome: "Add",
             reveal: true,
           },
         });
@@ -299,9 +298,8 @@ const YouMaySpend1Skill = (props) => {
             title: "Efflorescence",
             reason: "Efflorescence",
             restriction: ["08-01", "08-03", "08-04"],
-            message:
-              "Recover then float 1 Plant skill other than “Efflorescence”.",
-            outcome: "Float",
+            message: "Recover 1 Plant skill other than “Efflorescence”.",
+            outcome: "Add",
             reveal: true,
           },
         });
@@ -582,9 +580,9 @@ const YouMaySpend1Skill = (props) => {
             </button>
           )}
 
-          {selectedSkill === null && props.unit?.blossom > 0 && (
+          {selectedSkill === null && props.unit?.blossom > 1 && (
             <button className="redButton2" onClick={() => handleBlossom()}>
-              Spend 1 Blossom
+              Spend 2 Blossoms
             </button>
           )}
 

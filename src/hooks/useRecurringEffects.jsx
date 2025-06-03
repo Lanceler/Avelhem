@@ -10,7 +10,7 @@ export const useRecurringEffects = () => {
   const { self, enemy } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const { getScionSet, getSkillById } = useCardDatabase();
+  const { allBurstSkills, getScionSet, getSkillById } = useCardDatabase();
 
   const [zones, setZones] = useState(null);
 
@@ -1460,7 +1460,8 @@ export const useRecurringEffects = () => {
       delete unit.cyclone;
       delete unit.aftershock;
       delete unit.charge;
-      delete unit.sharpnes;
+      delete unit.lockdown;
+      delete unit.sharpness;
       delete unit.blossom;
     };
 
@@ -1829,20 +1830,16 @@ export const useRecurringEffects = () => {
       return false;
     }
 
-    //only non-burst skills can be activated if disrupted
+    //burst skills can be activated after upgrade is purchased
     if (
-      isDisrupted(unit, 1) &&
-      ![
-        "01-04",
-        "02-04",
-        "03-04",
-        "04-04",
-        "05-04",
-        "06-04",
-        "07-04",
-        "08-04",
-      ].includes(skill)
+      allBurstSkills().includes(skill) &&
+      localGameState[self].bountyUpgrades.burst < 1
     ) {
+      return false;
+    }
+
+    //only non-burst skills can be activated if disrupted
+    if (isDisrupted(unit, 1) && !allBurstSkills().includes(skill)) {
       return false;
     }
 
@@ -1949,9 +1946,10 @@ export const useRecurringEffects = () => {
       case "06-03":
         return false;
       case "06-04":
-        return ["06-01", "06-02", "06-03"].some((s) =>
-          localGameState[self].skillHand.includes(s)
-        );
+        return true;
+      // return ["06-01", "06-02", "06-03"].some((s) =>
+      //   localGameState[self].skillHand.includes(s)
+      // );
 
       case "07-01":
         return getZonesWithEnemies(unit, 1).length > 0 ? true : false;
@@ -3411,10 +3409,17 @@ export const useRecurringEffects = () => {
   const refillRepertoireSkill = (newGameState) => {
     //If deck empties, shuffle discard pile into it.
 
+    //0. If burst is upgraded, include shattered skills
+    if (newGameState[self].bountyUpgrades.burst > 2) {
+      newGameState[self].skillVestige = [
+        ...newGameState[self].skillVestige,
+        ...newGameState[self].skillShattered,
+      ];
+      skillShattered = [];
+    }
+
     //1.Shuffle Vestige
-    newGameState[self].skillVestige = shuffleCards(
-      newGameState[self].skillVestige
-    );
+    newSkillDeck = shuffleCards(newGameState[self].skillVestige);
 
     //2. Copy vestige to repertoire
     newGameState[self].skillRepertoire = [...newSkillDeck];

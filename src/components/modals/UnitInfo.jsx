@@ -164,8 +164,7 @@ const UnitInfo = (props) => {
               </span>
             </p>
             <p className="unitInfo-text-desc">
-              ⬩Spend 3 Charges to search for then float 1 non-burst Lightning
-              skill.
+              ⬩Spend 3 Charges to search for then float 1 Lightning skill.
             </p>
             <p className="unitInfo-text-desc">⬩You may traverse.</p>
             <p className="unitInfo-text-desc">⬩You may traverse or strike.</p>
@@ -404,7 +403,8 @@ const UnitInfo = (props) => {
             <p className="unitInfo-text-heading2">2. Flora’s Reverence</p>
             <p className="unitInfo-text-desc ">⬩You are immune to Root.</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩You can spend Blossoms in lieu of skills.
+              ⬩You can spend 2 Blossoms in lieu of 1 skill; you can have up to 3
+              Blossoms.
             </p>
           </>
         );

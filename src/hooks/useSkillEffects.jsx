@@ -2225,7 +2225,7 @@ export const useSkillEffects = () => {
         details: {
           title: "Efflorescence",
           message:
-            "You may spend 2 skills to recover then float 1 Plant skill other than “Efflorescence”. Select 1st skill.",
+            "You may spend 2 skills to recover 1 Plant skill other than “Efflorescence”. Select 1st skill.",
           restriction: null,
           reason: "Efflorescence1",
         },
@@ -2362,7 +2362,7 @@ export const useSkillEffects = () => {
     } else if (
       unit !== null &&
       !isMuted(unit) &&
-      (newGameState[unit.player].skillHand.length > 0 || unit.blossom > 0)
+      (newGameState[unit.player].skillHand.length > 0 || unit.blossom > 1)
     ) {
       newGameState.currentResolution.push({
         resolution: "Discard Skill",

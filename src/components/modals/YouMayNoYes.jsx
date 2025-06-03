@@ -387,7 +387,7 @@ const YouMayNoYes = (props) => {
             restriction: getScionSet(props.details.unit.unitClass),
             exclusion: allBurstSkills(),
             searchTitle: "Fated Rivalry",
-            searchMessage: "Search for 1 non-burst skill of their class",
+            searchMessage: "Search for skill that belongs to their class",
             outcome: "Add",
             revealTitle: null,
             revealMessage: null,

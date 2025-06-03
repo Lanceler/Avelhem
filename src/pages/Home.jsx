@@ -72,6 +72,7 @@ export default function Home() {
             coordination: 0,
             tactics: 0,
             avelhem: 0,
+            burst: 0,
           },
           fateDefiance: 3,
           score: 0,

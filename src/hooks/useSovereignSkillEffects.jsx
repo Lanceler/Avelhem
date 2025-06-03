@@ -356,7 +356,8 @@ export const useSovereignSkillEffects = () => {
         restriction: [standardSkill],
         exclusion: [],
         searchTitle: "Ambidexterity",
-        searchMessage: "Search for 1 standard skill of their class",
+        searchMessage:
+          "Search for 1 standard skill that belongs to their class",
         outcome: "Add",
         revealTitle: null,
         revealMessage: null,
@@ -609,12 +610,6 @@ export const useSovereignSkillEffects = () => {
 
     //end "Power at the Final Hour3" resolution
     newGameState.currentResolution.pop();
-
-    newGameState[unit.player].fateDefiance = Math.min(
-      6,
-      newGameState[unit.player].fateDefiance + 2
-    );
-
     newGameState = aetherRestoreSpecial(newGameState, unit);
 
     return newGameState;
@@ -657,7 +652,7 @@ export const useSovereignSkillEffects = () => {
           reason: "Fated Rivalry",
           title: "Fated Rivalry",
           unit: unit1,
-          message: "You may search for 1 skill of their class.",
+          message: "You may search for 1 skill that belongs to their class.",
           no: "Skip",
           yes: "Search",
         },

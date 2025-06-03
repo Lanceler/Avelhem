@@ -47,6 +47,14 @@ const SearchCard = (props) => {
   const floatingRepertoire = searchRerpertoire.splice(0, cardFloat);
 
   const canSearch = (card) => {
+    //burst skills cannot be searched until upgrade is purchased
+    if (
+      allBurstSkills().includes(card) &&
+      newGameState[self].bountyUpgrades.burst < 2
+    ) {
+      return false;
+    }
+
     if (props.details.exclusion.includes(card)) {
       return false;
     }

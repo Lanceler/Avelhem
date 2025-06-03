@@ -529,10 +529,10 @@ export const useUnitAbilityEffects = () => {
       resolution: "Search Card",
       player: self,
       details: {
-        restriction: ["05-01", "05-02", "05-03"],
+        restriction: ["05-01", "05-02", "05-03", "05-04"],
         exclusion: [],
         searchTitle: "Arc Flash",
-        searchMessage: "Search for then float 1 non-burst Lightning skill",
+        searchMessage: "Search for then float 1 Lightning skill",
         outcome: "Float",
         revealTitle: null,
         revealMessage: null,
