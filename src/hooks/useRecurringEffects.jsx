@@ -3415,11 +3415,11 @@ export const useRecurringEffects = () => {
         ...newGameState[self].skillVestige,
         ...newGameState[self].skillShattered,
       ];
-      skillShattered = [];
+      newGameState[self].skillShattered = [];
     }
 
     //1.Shuffle Vestige
-    newSkillDeck = shuffleCards(newGameState[self].skillVestige);
+    let newSkillDeck = shuffleCards(newGameState[self].skillVestige);
 
     //2. Copy vestige to repertoire
     newGameState[self].skillRepertoire = [...newSkillDeck];

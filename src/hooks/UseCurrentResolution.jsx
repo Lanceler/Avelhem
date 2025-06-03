@@ -967,6 +967,7 @@ const UseCurrentResolution = (props) => {
 
         case "Beseech - Upgraded":
         case "Cultivate - Upgraded":
+        case "Burst Upgrade":
           return (
             <>
               {self === lastRes.player && !props.hideModal && (

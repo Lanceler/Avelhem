@@ -504,10 +504,10 @@ const BountyPhase = (props) => {
       {
         text: (
           <>
-            <p style={{ fontSize: 17.2 }}>
+            <p style={{ fontSize: 16.3 }}>
               When your skill repertoire is depleted, shattered skills are
-              included in its replenishment (you may discard your entire skill
-              repertoire)
+              included in its replenishment (You may discard your entire skill
+              repertoire upon purchase)
             </p>
           </>
         ),
