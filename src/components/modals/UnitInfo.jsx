@@ -255,7 +255,7 @@ const UnitInfo = (props) => {
             <p className="unitInfo-text-heading2">1. From the Ashes</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
               ⬩Upon ascension, you may spend 1 skill to recover then float 1
-              non-burst Fire skill.
+              Fire skill.
             </p>
 
             <p className="unitInfo-text-heading2">2. Eternal Ember</p>
@@ -296,8 +296,7 @@ const UnitInfo = (props) => {
           <>
             <p className="unitInfo-text-heading2">1. Second Wind</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Upon elimination, you may recover then float 1 non-burst Wind
-              skill.
+              ⬩Upon elimination, you may recover then float 1 Wind skill.
             </p>
 
             <p className="unitInfo-text-heading2">2. Aeromancy</p>
@@ -359,7 +358,7 @@ const UnitInfo = (props) => {
           <>
             <p className="unitInfo-text-heading2">1. Ambiance Assimilation</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Upon elimination, you may search for 1 non-burst Mana skill.
+              ⬩Upon elimination, you may search for 1 Mana skill.
             </p>
 
             <p className="unitInfo-text-heading2">2. Overload</p>
@@ -526,9 +525,9 @@ const UnitInfo = (props) => {
                         </p>
                       )}
 
-                      {unit.lockdown > 0 && (
+                      {unit.seal > 0 && (
                         <p className="unitInfo-text-heading2">
-                          Lockdown: {unit.lockdown}
+                          Seal: {unit.seal}
                         </p>
                       )}
 

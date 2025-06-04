@@ -339,10 +339,10 @@ const YouMayNoYes = (props) => {
           resolution: "Search Card",
           player: self,
           details: {
-            restriction: ["06-01", "06-02", "06-03"],
+            restriction: ["06-01", "06-02", "06-03", "06-04"],
             exclusion: [],
             searchTitle: "Ambiance Assimilation",
-            searchMessage: "Search for 1 non-burst Mana skill",
+            searchMessage: "Search for 1 Mana skill",
             outcome: "Add",
             revealTitle: null,
             revealMessage: null,
@@ -366,6 +366,11 @@ const YouMayNoYes = (props) => {
         break;
 
       case "Foreshadow Draw": //"Foreshadow Draw"
+        newGameState = drawSkill(newGameState);
+        break;
+
+      case "Foreshadow Draw 2": //"Foreshadow Draw 2"
+        newGameState = drawSkill(newGameState);
         newGameState = drawSkill(newGameState);
         break;
 

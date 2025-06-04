@@ -361,7 +361,7 @@
 
 
 
-.lockdown {
+.seal {
   width: 40px;
   height: 40px;
   border: 3px solid rgb(114, 250, 255, 0);
@@ -382,11 +382,11 @@
   pointer-events: none;
 }
 
-.lockdown.animating {
-  animation: expand-lockdown 3s linear infinite;
+.seal.animating {
+  animation: expand-seal 3s linear infinite;
 }
 
-.lockdown2 {
+.seal2 {
   background-color: #00000000;
   position: absolute;
   z-index: 200;
@@ -399,11 +399,11 @@
   pointer-events: none;
 }
 
-.lockdown2-animate {
-  animation: lockdown2-expand 2.5s linear infinite;
+.seal2-animate {
+  animation: seal2-expand 2.5s linear infinite;
 }
 
-@keyframes lockdown2-expand {
+@keyframes seal2-expand {
   0%,
   15% {
     box-shadow: 0px 0px 0px 0px rgba(78, 220, 255, 0);
@@ -422,7 +422,7 @@
   }
 }
 
-@keyframes expand-lockdown {
+@keyframes expand-seal {
   0% {
     /* width: 50px;
         height: 50px; */
@@ -757,7 +757,7 @@
   z-index: 5;
 }
 
-.lockdownCounter {
+.sealCounter {
   transform: rotate(45deg);
   background: linear-gradient(
     22deg,

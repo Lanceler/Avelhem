@@ -180,7 +180,7 @@ const YouMaySpend1Skill = (props) => {
           details: {
             title: "From the Ashes",
             reason: "From the Ashes",
-            restriction: ["01-01", "01-02", "01-03"],
+            restriction: ["01-01", "01-02", "01-03", "01-04"],
             message: "Recover then float 1 Fire skill.",
             outcome: "Float",
           },
@@ -223,7 +223,7 @@ const YouMaySpend1Skill = (props) => {
           details: {
             title: "From the Ashes",
             reason: "From the Ashes",
-            restriction: ["01-01", "01-02", "01-03"],
+            restriction: ["01-01", "01-02", "01-03", "01-04"],
             message: "Recover then float 1 Fire skill.",
             outcome: "Float",
           },

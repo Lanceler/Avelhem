@@ -1683,11 +1683,11 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    unit.lockdown = 2;
+    unit.seal = 3;
 
-    // unit.enhancements.shield
-    //   ? (unit.enhancements.shield = Math.max(2, unit.enhancements.shield))
-    //   : (unit.enhancements.shield = 2);
+    unit.enhancements.shield
+      ? (unit.enhancements.shield = Math.max(1, unit.enhancements.shield))
+      : (unit.enhancements.shield = 1);
 
     // const zones = JSON.parse(newGameState.zones);
     // let enemyZones = getZonesWithEnemies(unit, 1);

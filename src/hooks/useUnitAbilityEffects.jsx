@@ -315,7 +315,7 @@ export const useUnitAbilityEffects = () => {
     newGameState.currentResolution.pop();
 
     if (
-      !["03-01", "03-02", "03-03"].some((s) =>
+      !["03-01", "03-02", "03-03", "03-04"].some((s) =>
         newGameState[self].skillVestige.includes(s)
       )
     ) {
@@ -334,8 +334,8 @@ export const useUnitAbilityEffects = () => {
         details: {
           title: "Second Wind",
           reason: "Second Wind",
-          restriction: ["03-01", "03-02", "03-03"],
-          message: "You may recover then float 1 non-burst Wind skill.",
+          restriction: ["03-01", "03-02", "03-03", "03-04"],
+          message: "You may recover then float 1 Wind skill.",
           outcome: "Float",
         },
       });

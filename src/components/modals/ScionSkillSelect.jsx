@@ -142,6 +142,12 @@ const ScionSkillSelect = (props) => {
 
         <div className="modalContent2">
           <div className="modalContentText">
+            {localGameState[self].bountyUpgrades.burst < 1 &&
+            usableSkills.length > 0
+              ? "You cannot activate burst skills until you have upgraded them."
+              : ""}
+          </div>
+          <div className="modalContentText">
             {usableSkills.length === 0
               ? `No ${props.unit.unitClass
                   .replace("Scion", "")

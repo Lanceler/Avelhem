@@ -146,13 +146,13 @@ export const Piece = (props) => {
               </>
 
               {/* Mana Scion: Disruption */}
-              {props.unit.lockdown > 0 &&
+              {props.unit.seal > 0 &&
                 (props.unit.enhancements.shield > 0 ||
                   props.unit.enhancements.ward > 0) &&
                 !isMuted(props.unit) && (
                   <>
-                    <div className="lockdown2"></div>
-                    <div className="lockdown2 lockdown2-animate"></div>
+                    <div className="seal2"></div>
+                    <div className="seal2 seal2-animate"></div>
                   </>
                 )}
 
@@ -423,29 +423,56 @@ export const Piece = (props) => {
 
           {props.unit.unitClass === "Mana Scion" && (
             <>
-              {props.unit.lockdown === 1 && (
+              {props.unit.seal === 1 && (
                 <div
-                  className="lockdownCounter"
+                  className="sealCounter"
                   style={{
-                    left: "30%",
+                    left: "20%",
                     transform: "translateX(-50%) rotate(45deg)",
                   }}
                 ></div>
               )}
-              {props.unit.lockdown > 1 && (
+
+              {props.unit.seal === 2 && (
                 <>
                   <div
-                    className="lockdownCounter"
+                    className="sealCounter"
                     style={{
-                      left: "30%",
+                      left: "20%",
                       transform: "translateX(-50%) rotate(45deg)",
                     }}
                   ></div>
                   <div
-                    className="lockdownCounter"
+                    className="sealCounter"
                     style={{
-                      left: "70%",
+                      left: "50%",
+                      transform: " translateX(-50%)  rotate(45deg)",
+                    }}
+                  ></div>
+                </>
+              )}
+
+              {props.unit.seal > 2 && (
+                <>
+                  <div
+                    className="sealCounter"
+                    style={{
+                      left: "20%",
                       transform: "translateX(-50%) rotate(45deg)",
+                    }}
+                  ></div>
+                  <div
+                    className="sealCounter"
+                    style={{
+                      left: "50%",
+                      transform: " translateX(-50%)  rotate(45deg)",
+                    }}
+                  ></div>
+                  <div
+                    className="sealCounter"
+                    style={{
+                      left: "80%",
+                      transform: " translateX(-50%)  rotate(45deg)",
                     }}
                   ></div>
                 </>

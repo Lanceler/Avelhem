@@ -216,20 +216,19 @@ export const useSovereignSkillEffects = () => {
     //end "Foreshadow3" resolution
     newGameState.currentResolution.pop();
 
-    if (newGameState[self].skillFloat > 0) {
-      newGameState.currentResolution.push({
-        resolution: "Sovereign Standard Skill",
-        resolution2: "Foreshadow Draw",
-        player: self,
-        details: {
-          reason: "Foreshadow Draw",
-          title: "Foreshadow",
-          message: "You may draw another floating skill.",
-          no: "Skip",
-          yes: "Draw",
-        },
-      });
-    }
+    newGameState.currentResolution.push({
+      resolution: "Sovereign Standard Skill",
+      resolution2: "Foreshadow Draw",
+      player: self,
+      details: {
+        reason: "Foreshadow Draw 2",
+        title: "Foreshadow",
+        message: "Since you searched for a burst skill, you may draw 2 skills.",
+        no: "Skip",
+        yes: "Draw",
+      },
+    });
+
     return newGameState;
   };
 
@@ -489,7 +488,7 @@ export const useSovereignSkillEffects = () => {
           exclusion: [],
           searchTitle: "Press the Attack",
           searchMessage:
-            "Search for 1 non-burst skill that enables the activator to strike or blast",
+            "Search for 1 skill that enables the activator to strike or blast",
           outcome: "Add",
           revealTitle: "Press the Attack",
           revealMessage: "Your opponent has searched for and revealed a skill.",

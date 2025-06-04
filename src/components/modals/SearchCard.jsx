@@ -30,6 +30,11 @@ const SearchCard = (props) => {
   let repertoire = [];
   let cardFloat = 0;
 
+  const searchMsgAppend =
+    !props.details.avelhem && newGameState[self].bountyUpgrades.burst < 2
+      ? " (You cannot search for burst skills until you have upgraded them.)"
+      : "";
+
   if (props.details.avelhem) {
     repertoire = [...newGameState[self].avelhemRepertoire];
     cardFloat = newGameState[self].avelhemFloat;
@@ -433,7 +438,9 @@ const SearchCard = (props) => {
         </div>
 
         <div className="modalContent2" style={{ pointerEvents: "all" }}>
-          <div className="modalContentText">{props.details.searchMessage}</div>
+          <div className="modalContentText">
+            {props.details.searchMessage + searchMsgAppend}
+          </div>
 
           <div className={`modalScrollableY ${demoGuide ? "demoBlocker" : ""}`}>
             {cardFloat > 0 && (

@@ -156,7 +156,8 @@ const BountyPhase = (props) => {
           details: {
             reason: "Burst Upgrade",
             title: "Burst Upgrade",
-            message: "You may discard your entire skill repertoire.",
+            message:
+              "You may discard your skill repertoire. (Warning: This will grant your opponent 6 FD and 3 BP.)",
             no: "Skip",
             yes: "Discard",
           },
@@ -504,10 +505,9 @@ const BountyPhase = (props) => {
       {
         text: (
           <>
-            <p style={{ fontSize: 16.3 }}>
-              When your skill repertoire is depleted, shattered skills are
-              included in its replenishment (You may discard your entire skill
-              repertoire upon purchase)
+            <p style={{ fontSize: 17 }}>
+              Include shattered skills when replenishing your repertoire (You
+              may discard your skill repertoire upon purchase)
             </p>
           </>
         ),

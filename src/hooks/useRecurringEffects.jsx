@@ -1460,7 +1460,7 @@ export const useRecurringEffects = () => {
       delete unit.cyclone;
       delete unit.aftershock;
       delete unit.charge;
-      delete unit.lockdown;
+      delete unit.seal;
       delete unit.sharpness;
       delete unit.blossom;
     };
@@ -1935,12 +1935,8 @@ export const useRecurringEffects = () => {
         return true;
 
       case "06-01":
-        //unit must spend Aether, so they cannot be disrupted
-        return (
-          unit.aether > 0 &&
-          !isDisrupted(unit, 2) &&
-          (canStrike(unit) || canMove(unit))
-        );
+        //unit must spend Aether
+        return unit.aether > 0 && (canStrike(unit) || canMove(unit));
       case "06-02":
         return canDiffusion(unit);
       case "06-03":
@@ -2324,7 +2320,7 @@ export const useRecurringEffects = () => {
         unit.enhancements.shield ? unit.enhancements.shield-- : null;
         unit.enhancements.ward ? unit.enhancements.ward-- : null;
 
-        unit.lockdown ? unit.lockdown-- : null;
+        unit.seal ? unit.seal-- : null;
 
         unit = units[u];
       }
@@ -2540,7 +2536,7 @@ export const useRecurringEffects = () => {
             details: {
               reason: "Ambiance Assimilation",
               title: "Ambiance Assimilation",
-              message: "You may search for 1 non-burst Mana skill.",
+              message: "You may search for 1 Mana skill.",
               no: "Skip",
               yes: "Search",
             },
@@ -3205,8 +3201,8 @@ export const useRecurringEffects = () => {
       return false;
     }
 
-    //Note: range 1 prevents non-burst skill activation
-    //Note: range 2 prevents aether-spending and abilities
+    //Note: range 1 prevents abilities & non-burst skill activation
+    //Note: range 2 prevents aether-blasts and mitigation
 
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     const zones = JSON.parse(localGameState.zones);
@@ -3217,7 +3213,7 @@ export const useRecurringEffects = () => {
       const zone = zones[Math.floor(z / 5)][z % 5];
       const enemy = newGameState[zone.player].units[zone.unitIndex];
       if (
-        enemy.lockdown > 0 &&
+        enemy.seal > 0 &&
         (enemy.enhancements.shield > 0 || enemy.enhancements.ward > 0) &&
         !isMuted(enemy)
       ) {
@@ -3437,6 +3433,9 @@ export const useRecurringEffects = () => {
       6,
       newGameState[enemy].fateDefiance + 6
     );
+
+    //5. Safety
+    newGameState[self].skillFloat = 0;
 
     return newGameState;
   };
@@ -4298,7 +4297,7 @@ export const useRecurringEffects = () => {
         });
 
         if (
-          !["01-01", "01-02", "01-03"].some((s) =>
+          !["01-01", "01-02", "01-03", "01-04"].some((s) =>
             newGameState[unit.player].skillVestige.includes(s)
           )
         ) {
@@ -4307,7 +4306,7 @@ export const useRecurringEffects = () => {
             resolution2: "Message To Player",
             player: self,
             title: "From the Ashes",
-            message: "You do not have any non-burst Fire skills to recover.",
+            message: "You do not have any Fire skills to recover.",
           });
         } else {
           newGameState.currentResolution.push({
@@ -4317,7 +4316,7 @@ export const useRecurringEffects = () => {
             details: {
               title: "From the Ashes",
               message:
-                "You may spend 1 skill to recover then float 1 non-burst Fire skill.",
+                "You may spend 1 skill to recover then float 1 Fire skill.",
               restriction: null,
               reason: "From the Ashes",
             },

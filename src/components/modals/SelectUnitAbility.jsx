@@ -376,7 +376,7 @@ const SelectUnitAbility = (props) => {
   }
 
   const canChoice = (i) => {
-    if (isMuted(unit) || isDisrupted(unit, 2)) {
+    if (isMuted(unit) || isDisrupted(unit, 1)) {
       return false;
     }
 
