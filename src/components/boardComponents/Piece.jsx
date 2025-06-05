@@ -127,6 +127,19 @@ export const Piece = (props) => {
         props.unit.enhancements.ward > 0) &&
       !isMuted(props.unit);
 
+    const ascensionColors = {
+      "Fire Scion": "#ff8b1e",
+      "Water Scion": "#03afff",
+      "Wind Scion": "#8dfdb2",
+      "Land Scion": "#e97b31",
+      "Lightning Scion": "#03e2ff",
+      "Mana Scion": "#fff894",
+      "Metal Scion": "#5e0066",
+      "Plant Scion": "#fa69ff",
+    };
+
+    const bgColor = ascensionColors[props.unit.unitClass] || "#e8e8e8"; // fallback
+
     return (
       <div
         className={`piece ${props.unit.player}
@@ -150,7 +163,14 @@ export const Piece = (props) => {
             className="pieceScionClass"
           />
 
-          {props.unit.unitClass !== "Pawn" && <div className="ascension"></div>}
+          {props.unit.unitClass !== "Pawn" && (
+            <div
+              className="ascension"
+              style={{
+                backgroundColor: bgColor,
+              }}
+            ></div>
+          )}
 
           {isRooted(props.unit) && <img src={RootGif} className="rooted" />}
 
@@ -177,50 +197,55 @@ export const Piece = (props) => {
 
   const attribute = () => {
     let attr = null;
-    let count = 0;
+    let limit = 0;
 
     switch (props.unit.unitClass) {
       case "Fire Scion":
         attr = "ember";
-        count = 2;
+        limit = 2;
         break;
       case "Water Scion":
         attr = "torrent";
-        count = 2;
+        limit = 2;
         break;
       case "Wind Scion":
         attr = "cyclone";
-        count = 2;
+        limit = 2;
         break;
       case "Land Scion":
         attr = "aftershock";
-        count = 2;
+        limit = 2;
         break;
       case "Lightning Scion":
         attr = "charge";
-        count = 3;
+        limit = 3;
         break;
       case "Mana Scion":
         attr = "seal";
-        count = 3;
+        limit = 3;
         break;
       case "Metal Scion":
         attr = "sharpness";
-        count = 2;
+        limit = 2;
         break;
       case "Plant Scion":
         attr = "blossom";
-        count = 3;
+        limit = 3;
         break;
       default:
         attr = null;
-        count = 0;
+        limit = 0;
+    }
+
+    if (!attr || !props.unit[attr]) {
+      return;
     }
 
     const getLeftPosition = (i) => {
-      if (count === 1) return "50%";
-      if (count === 2) return ["30%", "70%"][i];
-      if (count === 3) return ["20%", "50%", "80%"][i];
+      if (limit === 1) return "50%";
+      if (limit === 2) return ["30%", "70%"][i];
+      if (limit === 3) return ["20%", "50%", "80%"][i];
+      return 0;
     };
 
     return (
