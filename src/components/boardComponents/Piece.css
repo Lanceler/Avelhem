@@ -24,7 +24,7 @@
   scale: 0.975
 }
 
-.piece-scionClass {
+.pieceScionClass {
   object-fit: cover;
   width: 46px;
   height: 46px;
@@ -317,7 +317,7 @@
 }
 
 
-.deploy-impact {
+.deployImpact {
   
   width: 55px;
   height: 55px;
@@ -357,35 +357,6 @@
 }
 
 
-
-
-
-
-.seal {
-  width: 40px;
-  height: 40px;
-  border: 3px solid rgb(114, 250, 255, 0);
-  border-radius: 100%;
-  /* background-color: transparent; */
-  /* background-color: rgba(34, 153, 201, 0.45); */
-  background: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0.329),
-    rgba(78, 220, 255, 0.932)
-  );
-  /* transition: all 1.5s ease; */
-  position: absolute;
-  z-index: 200;
-
-  top: 10%;
-  left: 10%;
-  pointer-events: none;
-}
-
-.seal.animating {
-  animation: expand-seal 3s linear infinite;
-}
-
 .seal2 {
   background-color: #00000000;
   position: absolute;
@@ -397,11 +368,9 @@
   /* box-shadow: 0px 0px 55px 75px rgba(78, 220, 255, 0.45); */
 
   pointer-events: none;
-}
-
-.seal2-animate {
   animation: seal2-expand 2.5s linear infinite;
 }
+
 
 @keyframes seal2-expand {
   0%,
@@ -618,164 +587,105 @@
   animation: fadeInOut 2s infinite alternate;
 }
 
-.ember {
-  transform: rotate(45deg);
-  background: linear-gradient(
-    22deg,
-    #ff0b03,
-    #ff0b03,
-    #dd1e17,
-    #ff8b1e,
-    #ffc1a4,
-    #ffb0b0
-  );
-  border: 0.5px solid #000000de;
-  height: 7.5px;
-  width: 7.5px;
+.attributeContainer {
   position: absolute;
   animation: moveUpDown 0.95s ease-in-out infinite;
-  pointer-events: none;
-  z-index: 5;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  /* background-color: #006deb; */
 }
 
-.glacial-torrent {
-  transform: rotate(45deg);
-  background: linear-gradient(
-    22deg,
-    #03afff,
-    #006deb,
-    #2ea1ff,
-    #60a0ff,
-    #b2d3ff,
-    #f4fbff
-  );
+.attribute {
   border: 0.5px solid #000000de;
   height: 7.5px;
   width: 7.5px;
   position: absolute;
-  animation: moveUpDown 0.95s ease-in-out infinite;
   pointer-events: none;
-  z-index: 5;
+  z-index: 50;
 }
+
+.ember {
+  background: linear-gradient(22deg,
+      #ff0b03,
+      #ff0b03,
+      #dd1e17,
+      #ff8b1e,
+      #ffc1a4,
+      #ffb0b0);
+}
+
+.torrent {
+  background: linear-gradient(22deg,
+      #03afff,
+      #006deb,
+      #2ea1ff,
+      #60a0ff,
+      #b2d3ff,
+      #f4fbff);
+}
+
 
 .cyclone {
-  transform: rotate(45deg);
-  background: linear-gradient(
-    22deg,
-    #005222,
-    #00911f,
-    #18ca5d,
-    #39e271,
-    #8dfdb2,
-    #d8ffd8
-  );
-  border: 0.5px solid #000000de;
-  height: 7.5px;
-  width: 7.5px;
-  position: absolute;
-  animation: moveUpDown 0.95s ease-in-out infinite;
-  pointer-events: none;
-  z-index: 5;
+  background: linear-gradient(22deg,
+      #005222,
+      #00911f,
+      #18ca5d,
+      #39e271,
+      #8dfdb2,
+      #d8ffd8);
 }
 
 .aftershock {
-  transform: rotate(45deg);
-  background: linear-gradient(
-    22deg,
-    #502000,
-    #7e3707,
-    #b1500f,
-    #d3641a,
-    #e97b31,
-    #d8ffd8
-  );
-  border: 0.5px solid #000000de;
-  height: 7.5px;
-  width: 7.5px;
-  position: absolute;
-  animation: moveUpDown 0.95s ease-in-out infinite;
-  pointer-events: none;
-  z-index: 5;
-}
-
-.sharpness {
-  transform: rotate(45deg);
   background: linear-gradient(22deg,
-        #290029,
-        #5e0066,
-        #7f058a,
-        #ffdefb,
-        #b208d4,
-        #490150);
-
-  border: 0.5px solid #000000de;
-  height: 7.5px;
-  width: 7.5px;
-  position: absolute;
-  animation: moveUpDown 0.95s ease-in-out infinite;
-  pointer-events: none;
-  z-index: 5;
-}
-
-.blossom {
-  transform: rotate(45deg);
-  background: linear-gradient(
-    22deg,
-    #7a137e,
-    #971e9b,
-    #d138d6,
-    #fa69ff,
-    #f7deff,
-    #fcdbff
-  );
-  border: 0.5px solid #000000de;
-  height: 7.5px;
-  width: 7.5px;
-  position: absolute;
-  animation: moveUpDown 0.95s ease-in-out infinite;
-  pointer-events: none;
-  z-index: 5;
+      #502000,
+      #7e3707,
+      #b1500f,
+      #d3641a,
+      #e97b31,
+      #d8ffd8);
 }
 
 .charge {
-  transform: rotate(45deg);
-  background: linear-gradient(
-    22deg,
-    #6e6700,
-    #9b9000,
-    #ddcf08,
-    #ccbe00,
-    #fff241,
-    #fff894
-  );
-  border: 0.5px solid #000000de;
-  height: 7.5px;
-  width: 7.5px;
-  position: absolute;
-  animation: moveUpDown 0.95s ease-in-out infinite;
-  pointer-events: none;
-  z-index: 5;
+  background: linear-gradient(22deg,
+      #6e6700,
+      #9b9000,
+      #ddcf08,
+      #ccbe00,
+      #fff241,
+      #fff894);
 }
 
-.sealCounter {
-  transform: rotate(45deg);
-  background: linear-gradient(
-    22deg,
-    #03eeff,
-    #03e2ff,
-    #03e2ff,
-    #78f1eb,
-    #cbecff,
-    #f0fcff
-  );
-  border: 0.5px solid #000000de;
-  height: 7.5px;
-  width: 7.5px;
-  position: absolute;
-  animation: moveUpDown 0.95s ease-in-out infinite;
-  pointer-events: none;
-  z-index: 5;
+.seal {
+  background: linear-gradient(22deg,
+      #03eeff,
+      #03e2ff,
+      #03e2ff,
+      #78f1eb,
+      #cbecff,
+      #f0fcff);
 }
+
+.sharpness {
+  background: linear-gradient(22deg,
+      #290029,
+      #5e0066,
+      #7f058a,
+      #ffdefb,
+      #b208d4,
+      #490150);
+}
+
+.blossom {
+  background: linear-gradient(22deg,
+      #7a137e,
+      #971e9b,
+      #d138d6,
+      #fa69ff,
+      #f7deff,
+      #fcdbff);
+}
+
 
 /* .raptor-blitz {
   transform: rotate(45deg);
@@ -866,21 +776,22 @@
   left: -17.5px;
   scale: 1.05;
   opacity: 0.55;
-  animation: scaleAnimation2 2.2s ease-in-out infinite alternate;
+  animation: crosshairAnimation 2.2s ease-in-out infinite alternate;
 
- filter: sepia(1) saturate(10000%) hue-rotate(-275deg);
+ /* filter: sepia(1) saturate(10000%) hue-rotate(-275deg); */
+filter: sepia(1) saturate(10000%) hue-rotate(-30deg);
 }
 
-@keyframes scaleAnimation2 {
+@keyframes crosshairAnimation {
   0%,
   100% {
-    opacity: 0.35;
+    opacity: 0.45;
   }
 
   45%,
   50%,
   55% {
-    opacity: 0.8;
+    opacity: 0.85;
     top: -17.5px;
   }
 }

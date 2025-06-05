@@ -325,11 +325,9 @@ const Board = (props) => {
         break;
 
       case "ambidexterity":
-        if (!isMuted(selectedUnit)) {
-          newGameState[selectedUnit.player].units[
-            selectedUnit.unitIndex
-          ].boosts.ambidexterity = true;
-        }
+        newGameState[selectedUnit.player].units[
+          selectedUnit.unitIndex
+        ].boosts.ambidexterity = true;
 
         if (special === "resonated") {
           newGameState.currentResolution.push({

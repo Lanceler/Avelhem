@@ -24,14 +24,11 @@ export const Piece = (props) => {
   const dispatch = useDispatch();
 
   const { getElementImage } = useGetImages();
-
   const { isMuted, isRooted } = useRecurringEffects();
 
-  let pieceSelectable = false;
-
-  if (props.validZones.includes(props.unit.row * 5 + props.unit.column)) {
-    pieceSelectable = true;
-  }
+  const pieceSelectable = props.validZones.includes(
+    props.unit.row * 5 + props.unit.column
+  );
 
   const handleClick = () => {
     if (props.tileMode === "selectUnit") {
@@ -51,8 +48,7 @@ export const Piece = (props) => {
       ) {
         props.setExpandedUnit(null);
       } else {
-        const unitCopy = JSON.parse(JSON.stringify(props.unit));
-        props.setExpandedUnit(unitCopy);
+        props.setExpandedUnit(JSON.parse(JSON.stringify(props.unit)));
       }
     }
   };
@@ -124,80 +120,131 @@ export const Piece = (props) => {
     }
   };
 
+  const pieceBase = () => {
+    const showDisruption =
+      props.unit.seal > 0 &&
+      (props.unit.enhancements.shield > 0 ||
+        props.unit.enhancements.ward > 0) &&
+      !isMuted(props.unit);
+
+    return (
+      <div
+        className={`piece ${props.unit.player}
+                ${canClick("Unit", props.unit) ? "demoClick" : ""}`}
+        onClick={() => {
+          handleClick();
+          handleUpdateDemoGuide();
+        }}
+      >
+        <>
+          <div className="deployImpact"></div>
+
+          {showDisruption && <div className="seal2"></div>}
+
+          {props.unit.enhancements.overgrowth === true && (
+            <div className="overgrowth animating"></div>
+          )}
+
+          <img
+            src={getElementImage(props.unit.unitClass)}
+            className="pieceScionClass"
+          />
+
+          {props.unit.unitClass !== "Pawn" && <div className="ascension"></div>}
+
+          {isRooted(props.unit) && <img src={RootGif} className="rooted" />}
+
+          {props.unit.afflictions.anathema > 0 && (
+            <div className="anathema-aura">
+              <div className="cascade-line"></div>
+              <div className="cascade-line2"></div>
+              {props.unit.afflictions.anathema > 1 && (
+                <div className="cascade-line3"></div>
+              )}
+            </div>
+          )}
+
+          {props.unit.enhancements.ravager && (
+            <div className="anathema-aura">
+              <div className="ravager-line"></div>
+              <div className="ravager-line2"></div>
+            </div>
+          )}
+        </>
+      </div>
+    );
+  };
+
+  const attribute = () => {
+    let attr = null;
+    let count = 0;
+
+    switch (props.unit.unitClass) {
+      case "Fire Scion":
+        attr = "ember";
+        count = 2;
+        break;
+      case "Water Scion":
+        attr = "torrent";
+        count = 2;
+        break;
+      case "Wind Scion":
+        attr = "cyclone";
+        count = 2;
+        break;
+      case "Land Scion":
+        attr = "aftershock";
+        count = 2;
+        break;
+      case "Lightning Scion":
+        attr = "charge";
+        count = 3;
+        break;
+      case "Mana Scion":
+        attr = "seal";
+        count = 3;
+        break;
+      case "Metal Scion":
+        attr = "sharpness";
+        count = 2;
+        break;
+      case "Plant Scion":
+        attr = "blossom";
+        count = 3;
+        break;
+      default:
+        attr = null;
+        count = 0;
+    }
+
+    const getLeftPosition = (i) => {
+      if (count === 1) return "50%";
+      if (count === 2) return ["30%", "70%"][i];
+      if (count === 3) return ["20%", "50%", "80%"][i];
+    };
+
+    return (
+      <div className="attributeContainer">
+        {[...Array(props.unit[attr])].map((_, i) => (
+          <div
+            key={i}
+            className={`attribute ${attr}`}
+            style={{
+              left: getLeftPosition(i),
+              transform: "translateX(-50%) rotate(45deg)",
+            }}
+          ></div>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <div className="piece-body">
       {props.unit && (
         <>
-          <div
-            className={`piece ${props.unit.player}
-            ${canClick("Unit", props.unit) ? "demoClick" : ""}
-            
-            
-            `}
-            onClick={() => {
-              handleClick();
-              handleUpdateDemoGuide();
-            }}
-          >
-            <>
-              {/* deploy impact */}
-              <>
-                <div className="deploy-impact"></div>
-              </>
-
-              {/* Mana Scion: Disruption */}
-              {props.unit.seal > 0 &&
-                (props.unit.enhancements.shield > 0 ||
-                  props.unit.enhancements.ward > 0) &&
-                !isMuted(props.unit) && (
-                  <>
-                    <div className="seal2"></div>
-                    <div className="seal2 seal2-animate"></div>
-                  </>
-                )}
-
-              {/* Plant Scion: Overgrowth */}
-              {props.unit.enhancements.overgrowth === true && (
-                <div className="overgrowth animating"></div>
-              )}
-
-              <img
-                src={getElementImage(props.unit.unitClass)}
-                className="piece-scionClass"
-              />
-
-              {props.unit.unitClass !== "Pawn" && (
-                <div className="ascension"></div>
-              )}
-
-              {/* root */}
-
-              {isRooted(props.unit) && <img src={RootGif} className="rooted" />}
-
-              {/* anathema / ravager */}
-
-              {props.unit.afflictions.anathema > 0 && (
-                <>
-                  <div className="anathema-aura">
-                    <div className="cascade-line"></div>
-                    <div className="cascade-line2"></div>
-                    {props.unit.afflictions.anathema > 1 && (
-                      <div className="cascade-line3"></div>
-                    )}
-                  </div>
-                </>
-              )}
-
-              {props.unit.enhancements.ravager && (
-                <>
-                  <div className="anathema-aura">
-                    <div className="ravager-line"></div>
-                    <div className="ravager-line2"></div>
-                  </div>
-                </>
-              )}
-            </>
-          </div>
+          {pieceBase()}
+          {attribute()}
 
           {/* HP */}
 
@@ -231,359 +278,6 @@ export const Piece = (props) => {
               }`}
             />
           )}
-
-          {/* attributes */}
-
-          {props.unit.unitClass === "Fire Scion" && (
-            <>
-              {props.unit.ember === 1 && (
-                <div
-                  className="ember"
-                  style={{
-                    left: "30%",
-                    transform: "translateX(-50%) rotate(45deg)",
-                  }}
-                ></div>
-              )}
-              {props.unit.ember > 1 && (
-                <>
-                  <div
-                    className="ember"
-                    style={{
-                      left: "30%",
-                      transform: "translateX(-50%) rotate(45deg)",
-                    }}
-                  ></div>
-                  <div
-                    className="ember"
-                    style={{
-                      left: "70%",
-                      transform: "translateX(-50%) rotate(45deg)",
-                    }}
-                  ></div>
-                </>
-              )}
-            </>
-          )}
-
-          {props.unit.unitClass === "Water Scion" && (
-            <>
-              {props.unit.torrent === 1 && (
-                <div
-                  className="glacial-torrent"
-                  style={{
-                    left: "30%",
-                    transform: "translateX(-50%) rotate(45deg)",
-                  }}
-                ></div>
-              )}
-              {props.unit.torrent > 1 && (
-                <>
-                  <div
-                    className="glacial-torrent"
-                    style={{
-                      left: "30%",
-                      transform: "translateX(-50%) rotate(45deg)",
-                    }}
-                  ></div>
-                  <div
-                    className="glacial-torrent"
-                    style={{
-                      left: "70%",
-                      transform: "translateX(-50%) rotate(45deg)",
-                    }}
-                  ></div>
-                </>
-              )}
-            </>
-          )}
-
-          {props.unit.unitClass === "Wind Scion" && (
-            <>
-              {props.unit.cyclone === 1 && (
-                <div
-                  className="cyclone"
-                  style={{
-                    left: "30%",
-                    transform: "translateX(-50%) rotate(45deg)",
-                  }}
-                ></div>
-              )}
-              {props.unit.cyclone > 1 && (
-                <>
-                  <div
-                    className="cyclone"
-                    style={{
-                      left: "30%",
-                      transform: "translateX(-50%) rotate(45deg)",
-                    }}
-                  ></div>
-                  <div
-                    className="cyclone"
-                    style={{
-                      left: "70%",
-                      transform: "translateX(-50%) rotate(45deg)",
-                    }}
-                  ></div>
-                </>
-              )}
-            </>
-          )}
-
-          {props.unit.unitClass === "Land Scion" && (
-            <>
-              {props.unit.aftershock === 1 && (
-                <div
-                  className="aftershock"
-                  style={{
-                    left: "30%",
-                    transform: "translateX(-50%) rotate(45deg)",
-                  }}
-                ></div>
-              )}
-              {props.unit.aftershock > 1 && (
-                <>
-                  <div
-                    className="aftershock"
-                    style={{
-                      left: "30%",
-                      transform: "translateX(-50%) rotate(45deg)",
-                    }}
-                  ></div>
-                  <div
-                    className="aftershock"
-                    style={{
-                      left: "70%",
-                      transform: "translateX(-50%) rotate(45deg)",
-                    }}
-                  ></div>
-                </>
-              )}
-            </>
-          )}
-
-          {props.unit.unitClass === "Lightning Scion" && (
-            <>
-              {props.unit.charge === 1 && (
-                <div
-                  className="charge"
-                  style={{
-                    left: "20%",
-                    transform: "translateX(-50%) rotate(45deg)",
-                  }}
-                ></div>
-              )}
-
-              {props.unit.charge === 2 && (
-                <>
-                  <div
-                    className="charge"
-                    style={{
-                      left: "20%",
-                      transform: "translateX(-50%) rotate(45deg)",
-                    }}
-                  ></div>
-                  <div
-                    className="charge"
-                    style={{
-                      left: "50%",
-                      transform: " translateX(-50%)  rotate(45deg)",
-                    }}
-                  ></div>
-                </>
-              )}
-
-              {props.unit.charge > 2 && (
-                <>
-                  <div
-                    className="charge"
-                    style={{
-                      left: "20%",
-                      transform: "translateX(-50%) rotate(45deg)",
-                    }}
-                  ></div>
-                  <div
-                    className="charge"
-                    style={{
-                      left: "50%",
-                      transform: " translateX(-50%)  rotate(45deg)",
-                    }}
-                  ></div>
-                  <div
-                    className="charge"
-                    style={{
-                      left: "80%",
-                      transform: " translateX(-50%)  rotate(45deg)",
-                    }}
-                  ></div>
-                </>
-              )}
-            </>
-          )}
-
-          {props.unit.unitClass === "Mana Scion" && (
-            <>
-              {props.unit.seal === 1 && (
-                <div
-                  className="sealCounter"
-                  style={{
-                    left: "20%",
-                    transform: "translateX(-50%) rotate(45deg)",
-                  }}
-                ></div>
-              )}
-
-              {props.unit.seal === 2 && (
-                <>
-                  <div
-                    className="sealCounter"
-                    style={{
-                      left: "20%",
-                      transform: "translateX(-50%) rotate(45deg)",
-                    }}
-                  ></div>
-                  <div
-                    className="sealCounter"
-                    style={{
-                      left: "50%",
-                      transform: " translateX(-50%)  rotate(45deg)",
-                    }}
-                  ></div>
-                </>
-              )}
-
-              {props.unit.seal > 2 && (
-                <>
-                  <div
-                    className="sealCounter"
-                    style={{
-                      left: "20%",
-                      transform: "translateX(-50%) rotate(45deg)",
-                    }}
-                  ></div>
-                  <div
-                    className="sealCounter"
-                    style={{
-                      left: "50%",
-                      transform: " translateX(-50%)  rotate(45deg)",
-                    }}
-                  ></div>
-                  <div
-                    className="sealCounter"
-                    style={{
-                      left: "80%",
-                      transform: " translateX(-50%)  rotate(45deg)",
-                    }}
-                  ></div>
-                </>
-              )}
-            </>
-          )}
-
-          {props.unit.unitClass === "Metal Scion" && (
-            <>
-              {props.unit.sharpness === 1 && (
-                <div
-                  className="sharpness"
-                  style={{
-                    left: "30%",
-                    transform: "translateX(-50%) rotate(45deg)",
-                  }}
-                ></div>
-              )}
-              {props.unit.sharpness > 1 && (
-                <>
-                  <div
-                    className="sharpness"
-                    style={{
-                      left: "30%",
-                      transform: "translateX(-50%) rotate(45deg)",
-                    }}
-                  ></div>
-                  <div
-                    className="sharpness"
-                    style={{
-                      left: "70%",
-                      transform: "translateX(-50%) rotate(45deg)",
-                    }}
-                  ></div>
-                </>
-              )}
-            </>
-          )}
-
-          {props.unit.unitClass === "Plant Scion" && (
-            <>
-              {props.unit.blossom === 1 && (
-                <div
-                  className="blossom"
-                  style={{
-                    left: "20%",
-                    transform: "translateX(-50%) rotate(45deg)",
-                  }}
-                ></div>
-              )}
-
-              {props.unit.blossom === 2 && (
-                <>
-                  <div
-                    className="blossom"
-                    style={{
-                      left: "20%",
-                      transform: "translateX(-50%) rotate(45deg)",
-                    }}
-                  ></div>
-                  <div
-                    className="blossom"
-                    style={{
-                      left: "50%",
-                      transform: "translateX(-50%) rotate(45deg)",
-                    }}
-                  ></div>
-                </>
-              )}
-
-              {props.unit.blossom > 2 && (
-                <>
-                  <div
-                    className="blossom"
-                    style={{
-                      left: "20%",
-                      transform: "translateX(-50%) rotate(45deg)",
-                    }}
-                  ></div>
-                  <div
-                    className="blossom"
-                    style={{
-                      left: "50%",
-                      transform: " translateX(-50%) rotate(45deg)",
-                    }}
-                  ></div>
-                  <div
-                    className="blossom"
-                    style={{
-                      left: "80%",
-                      transform: " translateX(-50%)  rotate(45deg)",
-                    }}
-                  ></div>
-                </>
-              )}
-            </>
-          )}
-
-          {/* {props.unit.unitClass === "Avian Scion" && (
-            <>
-              {props.unit.boosts.raptorBlitz === true && (
-                <div
-                  className="raptor-blitz"
-                  style={{
-                    left: "50%",
-                    transform: " translateX(-50%)  rotate(45deg)",
-                  }}
-                ></div>
-              )}
-            </>
-          )} */}
 
           {/* burn */}
 
@@ -626,17 +320,9 @@ export const Piece = (props) => {
               <img src={AmbidexterityIcon} className="ambidexterity" />
             </>
           )}
-
-          {/* target */}
-
-          {/* {isActivatingTarget && (
-            <>
-              <img src={Crosshair} className="crosshair" />
-            </>
-          )} */}
         </>
       )}
-      {!props.unit && <div className="piece"></div>}
+      {/* {!props.unit && <div className="piece"></div>} */}
     </div>
   );
 };

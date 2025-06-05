@@ -829,7 +829,6 @@ export const useRecurringEffects = () => {
     ) {
       delete unit.temporary.anathemaDelay;
       unit.afflictions.anathema = 2;
-      unit.boosts = {};
       delete unit.enhancements.overgrowth;
     }
 
@@ -1244,7 +1243,7 @@ export const useRecurringEffects = () => {
         }
       }
     } else {
-      //frost purges boosts, overgrowth
+      //frost purges overgrowth
       victim.afflictions.frost
         ? (victim.afflictions.frost = Math.max(
             victim.afflictions.frost,
@@ -1252,90 +1251,11 @@ export const useRecurringEffects = () => {
           ))
         : (victim.afflictions.frost = duration);
 
-      victim.boosts = {};
       delete victim.enhancements.overgrowth;
     }
 
     return newGameState;
   };
-
-  // const applyParalysis = (
-  //   newGameState,
-  //   attackerInfo,
-  //   victimInfo,
-  //   duration,
-  //   special
-  // ) => {
-  //   //Update info
-  //   let attacker =
-  //     newGameState[attackerInfo.player].units[attackerInfo.unitIndex];
-  //   let victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
-
-  //   //this can happen with effects like thunder thaumaturge
-  //   if (attacker === null || isMuted(attacker)) {
-  //     return newGameState;
-  //   }
-
-  //   if (
-  //     [
-  //       "Cataclysmic Tempest",
-  //       "Upheaval",
-  //       "ChainLightningParalysis",
-  //       "MagneticShockwave1stParalysis",
-  //     ].includes(special)
-  //   ) {
-  //     attacker.temporary.previousTarget = victim.unitIndex;
-  //   }
-
-  //   switch (true) {
-  //     case victim.enhancements.ward > 0:
-  //       delete victim.enhancements.ward;
-  //       break;
-  //     case ["Upheaval", "Pitfall Trap", "Geomancy"].includes(special) &&
-  //       ["Land Scion"].includes(victim.unitClass) &&
-  //       !isMuted(victim):
-  //       break;
-  //     case ["ChainLightningParalysis", "Thunder Thaumaturge"].includes(
-  //       special
-  //     ) &&
-  //       victim.unitClass === "Lightning Scion" &&
-  //       !isMuted(victim):
-  //       break;
-
-  //     default: //Paralysis successful
-  //       victim.afflictions.paralysis
-  //         ? (victim.afflictions.paralysis = Math.max(
-  //             victim.afflictions.paralysis,
-  //             duration
-  //           ))
-  //         : (victim.afflictions.paralysis = duration);
-
-  //       //paralysis purges boosts and overgrowth
-  //       victim.boosts = {};
-  //       delete victim.enhancements.overgrowth;
-
-  //       //Land Scion talent: Salt the Earth
-  //       if (attacker.unitClass === "Land Scion") {
-  //         attacker.aftershock
-  //           ? (attacker.aftershock = Math.min(attacker.aftershock + 1, 2))
-  //           : (attacker.aftershock = 1);
-  //       }
-
-  //       //If Cataclysmic Tempest
-  //       if (special === "Cataclysmic Tempest") {
-  //         attacker.temporary.cataclysmicFloat += 1;
-  //       }
-
-  //       //If PitfallTrap Succeeded
-  //       if (special === "Pitfall Trap") {
-  //         attacker.temporary.pitfallTrapBlast = true;
-  //       }
-
-  //       break;
-  //   }
-
-  //   return newGameState;
-  // };
 
   const applyParalysis = (
     newGameState,
@@ -1403,7 +1323,7 @@ export const useRecurringEffects = () => {
           break;
       }
     } else {
-      //paralysis purges boosts and overgrowth
+      //paralysis purges overgrowth
       victim.afflictions.paralysis
         ? (victim.afflictions.paralysis = Math.max(
             victim.afflictions.paralysis,
@@ -1411,7 +1331,6 @@ export const useRecurringEffects = () => {
           ))
         : (victim.afflictions.paralysis = duration);
 
-      victim.boosts = {};
       delete victim.enhancements.overgrowth;
 
       //If Cataclysmic Tempest

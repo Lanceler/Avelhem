@@ -673,7 +673,7 @@ const UnitInfo = (props) => {
                         {unit.afflictions.anathema > 1 ? "s" : ""})
                       </p>
                       <p className="unitInfo-text-desc unitInfo-text-last">
-                        ⬩<em>Punished</em> and muted.
+                        ⬩Muted.
                       </p>
                     </>
                   )}
@@ -685,7 +685,7 @@ const UnitInfo = (props) => {
                         {unit.afflictions.paralysis > 1 ? "s" : ""})
                       </p>
                       <p className="unitInfo-text-desc unitInfo-text-last">
-                        ⬩<em>Paralyzed</em>, muted, and immobilized.
+                        ⬩Muted and immobilized.
                       </p>
                     </>
                   )}
@@ -697,7 +697,7 @@ const UnitInfo = (props) => {
                         {unit.afflictions.frost > 1 ? "s" : ""})
                       </p>
                       <p className="unitInfo-text-desc unitInfo-text-last">
-                        ⬩<em>Frozen</em>, muted, and immobilized.
+                        ⬩Muted and immobilized.
                       </p>
                     </>
                   )}
@@ -708,11 +708,9 @@ const UnitInfo = (props) => {
                         Burn ({unit.afflictions.burn} turn
                         {unit.afflictions.burn > 1 ? "s" : ""})
                       </p>
-                      <p className="unitInfo-text-desc  ">
-                        ⬩<em>Burning</em>; immune to Frost.
-                      </p>
+                      <p className="unitInfo-text-desc  ">⬩Immune to Frost.</p>
                       <p className="unitInfo-text-desc unitInfo-text-last">
-                        ⬩When Burn expires at the end of the turn, lose 1 HP.
+                        ⬩Loses 1 HP during the Final Phase.
                       </p>
                     </>
                   )}
@@ -720,9 +718,7 @@ const UnitInfo = (props) => {
                   {isRooted(unit) && (
                     <>
                       <p className="unitInfo-text-heading2">Root</p>
-                      <p className="unitInfo-text-desc  ">
-                        ⬩<em>Rooted</em>; cannot strike.
-                      </p>
+                      <p className="unitInfo-text-desc  ">⬩Cannot strike.</p>
                       <p className="unitInfo-text-desc unitInfo-text-last">
                         ⬩Must spend 1 skill to traverse or Aether-blast via
                         tactical action.

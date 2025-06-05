@@ -286,7 +286,7 @@ const YouMayNoYes = (props) => {
           newGameState,
           null,
           "blast",
-          null
+          "Diffusion"
         );
         break;
 
