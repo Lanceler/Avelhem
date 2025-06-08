@@ -219,19 +219,42 @@
     /* background-color: red; */
 }
 
-.board-right .deck-and-dice-container .deck-container .resource-points .fd-counter,
-.board-right .deck-and-dice-container .deck-container .resource-points .bp-counter {
+.fd-counter,
+.bp-counter {
     width: 150px;
     height: 30px;
+    display: flex;
+    align-items: center;
+    border: 3px solid goldenrod;
+    border-radius: 8px;
+    background-image: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+}
+
+.counter-flash{
+    width: 100%;
+    height: 100%;
     padding: 5px;
     display: flex;
     justify-content: space-around;
     align-items: center;
     color: #e8e8e8;
-    border: 3px solid goldenrod;
-    border-radius: 8px;
-    background-image: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
-    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+.textFlash {
+    animation: textWhiteFlash 1.25s;
+    transition: background-color 1.25s ease;
+}
+
+@keyframes textWhiteFlash {
+    0% {
+        background-color: white;
+    } 
+
+    100% {
+        background-color: rgba(255, 255, 255, 0);
+    }
 }
 
 .board-right .deck-and-dice-container .deck-container .resource-points .bp-counter {

@@ -26,16 +26,16 @@ export const Piece = (props) => {
   const { getElementImage } = useGetImages();
   const { isMuted, isRooted } = useRecurringEffects();
 
-  const pieceSelectable = props.validZones.includes(
-    props.unit.row * 5 + props.unit.column
-  );
+  const unit = props.unit;
+
+  const pieceSelectable = props.validZones.includes(unit.row * 5 + unit.column);
 
   const handleClick = () => {
     if (props.tileMode === "selectUnit") {
       if (pieceSelectable) {
         props.selectUnit(
           props.movingUnit,
-          props.unit,
+          unit,
           props.selectUnitReason,
           props.selectUnitSpecial
         );
@@ -43,12 +43,12 @@ export const Piece = (props) => {
     } else {
       if (
         props.expandedUnit &&
-        props.expandedUnit.unitIndex === props.unit.unitIndex &&
-        props.expandedUnit.player === props.unit.player
+        props.expandedUnit.unitIndex === unit.unitIndex &&
+        props.expandedUnit.player === unit.player
       ) {
         props.setExpandedUnit(null);
       } else {
-        props.setExpandedUnit(JSON.parse(JSON.stringify(props.unit)));
+        props.setExpandedUnit(JSON.parse(JSON.stringify(unit)));
       }
     }
   };
@@ -122,28 +122,27 @@ export const Piece = (props) => {
 
   const pieceBase = () => {
     const showDisruption =
-      props.unit.seal > 0 &&
-      (props.unit.enhancements.shield > 0 ||
-        props.unit.enhancements.ward > 0) &&
-      !isMuted(props.unit);
+      unit.seal > 0 &&
+      (unit.enhancements.shield > 0 || unit.enhancements.ward > 0) &&
+      !isMuted(unit);
 
     const ascensionColors = {
       "Fire Scion": "#ff8b1e",
       "Water Scion": "#03afff",
       "Wind Scion": "#8dfdb2",
-      "Land Scion": "#e97b31",
-      "Lightning Scion": "#03e2ff",
+      "Land Scion": "#747475",
+      "Lightning Scion": "#411cc7",
       "Mana Scion": "#fff894",
-      "Metal Scion": "#5e0066",
+      "Metal Scion": "#bcbcc4",
       "Plant Scion": "#fa69ff",
     };
 
-    const bgColor = ascensionColors[props.unit.unitClass] || "#e8e8e8"; // fallback
+    const bgColor = ascensionColors[unit.unitClass] || "#e8e8e8";
 
     return (
       <div
-        className={`piece ${props.unit.player}
-                ${canClick("Unit", props.unit) ? "demoClick" : ""}`}
+        className={`piece ${unit.player}
+                ${canClick("Unit", unit) ? "demoClick" : ""}`}
         onClick={() => {
           handleClick();
           handleUpdateDemoGuide();
@@ -154,16 +153,16 @@ export const Piece = (props) => {
 
           {showDisruption && <div className="seal2"></div>}
 
-          {props.unit.enhancements.overgrowth === true && (
+          {unit.enhancements.overgrowth === true && (
             <div className="overgrowth animating"></div>
           )}
 
           <img
-            src={getElementImage(props.unit.unitClass)}
+            src={getElementImage(unit.unitClass)}
             className="pieceScionClass"
           />
 
-          {props.unit.unitClass !== "Pawn" && (
+          {unit.unitClass !== "Pawn" && (
             <div
               className="ascension"
               style={{
@@ -172,19 +171,19 @@ export const Piece = (props) => {
             ></div>
           )}
 
-          {isRooted(props.unit) && <img src={RootGif} className="rooted" />}
+          {isRooted(unit) && <img src={RootGif} className="rooted" />}
 
-          {props.unit.afflictions.anathema > 0 && (
+          {unit.afflictions.anathema > 0 && (
             <div className="anathema-aura">
               <div className="cascade-line"></div>
               <div className="cascade-line2"></div>
-              {props.unit.afflictions.anathema > 1 && (
+              {unit.afflictions.anathema > 1 && (
                 <div className="cascade-line3"></div>
               )}
             </div>
           )}
 
-          {props.unit.enhancements.ravager && (
+          {unit.enhancements.ravager && (
             <div className="anathema-aura">
               <div className="ravager-line"></div>
               <div className="ravager-line2"></div>
@@ -199,7 +198,7 @@ export const Piece = (props) => {
     let attr = null;
     let limit = 0;
 
-    switch (props.unit.unitClass) {
+    switch (unit.unitClass) {
       case "Fire Scion":
         attr = "ember";
         limit = 2;
@@ -237,7 +236,7 @@ export const Piece = (props) => {
         limit = 0;
     }
 
-    if (!attr || !props.unit[attr]) {
+    if (!attr || !unit[attr]) {
       return;
     }
 
@@ -250,7 +249,7 @@ export const Piece = (props) => {
 
     return (
       <div className="attributeContainer">
-        {[...Array(props.unit[attr])].map((_, i) => (
+        {[...Array(unit[attr])].map((_, i) => (
           <div
             key={i}
             className={`attribute ${attr}`}
@@ -264,90 +263,87 @@ export const Piece = (props) => {
     );
   };
 
+  const bottomAttributeContainer = () => {
+    return (
+      <div className="bottomAttributeContainer">
+        <div className="hp">
+          {unit.hp > 0 && <img src={HP} className="hPIcon" />}
+          {unit.hp > 0 && <div className="hPIcon hP-amount">{unit.hp}</div>}
+        </div>
+
+        {unit.aether == true && (
+          <div className="aether">
+            <img src={Aether} className="aetherIcon" />
+          </div>
+        )}
+
+        <div className="shieldAndWardContainer">
+          {unit.enhancements.ward > 0 && (
+            <div
+              className={unit.enhancements.ward === 1 ? "fade-in-out" : ""}
+              style={{ zIndex: 350 }}
+            >
+              <img src={Ward} className="shieldAndWard" />
+            </div>
+          )}
+
+          {unit.enhancements.shield > 0 && (
+            <div
+              className={unit.enhancements.shield === 1 ? "fade-in-out" : ""}
+              style={{ zIndex: 351 }}
+            >
+              <img src={Shield} className="shieldAndWard" />
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="piece-body">
-      {props.unit && (
+      {unit && (
         <>
           {pieceBase()}
           {attribute()}
+          {bottomAttributeContainer()}
 
-          {/* HP */}
-
-          {props.unit.hp > 0 && <img src={HP} className="hP" />}
-          {props.unit.hp > 0 && (
-            <div className="hP hP-amount">{props.unit.hp}</div>
-          )}
-
-          {/* aether */}
-
-          {props.unit.aether == true && <img src={Aether} className="aether" />}
-
-          {/* ward */}
-
-          {props.unit.enhancements.ward > 0 && (
-            <img
-              src={Ward}
-              className={`shieldAndWard ${
-                props.unit.enhancements.ward === 1 ? "fade-in-out" : ""
-              }`}
-            />
-          )}
-
-          {/* shield */}
-
-          {props.unit.enhancements.shield > 0 && (
-            <img
-              src={Shield}
-              className={`shieldAndWard ${
-                props.unit.enhancements.shield === 1 ? "fade-in-out" : ""
-              }`}
-            />
-          )}
-
-          {/* burn */}
-
-          {props.unit.afflictions.burn > 0 && (
+          {unit.afflictions.burn > 0 && (
             <>
               <img src={BurnGif} className="burn" />
             </>
           )}
 
-          {/* frost */}
-
-          {props.unit.afflictions.frost > 0 && (
+          {unit.afflictions.frost > 0 && (
             <>
               <img
                 src={FrostbiteGif}
                 className={`frost ${
-                  props.unit.afflictions.frost == 1 ? "frost-1" : "frost-2"
+                  unit.afflictions.frost == 1 ? "frost-1" : "frost-2"
                 }`}
               />
             </>
           )}
 
-          {/* paralysis */}
-
-          {props.unit.afflictions.paralysis > 0 && (
+          {unit.afflictions.paralysis > 0 && (
             <>
               <img
                 src={ParalysisGif}
                 className={`paralyzed ${
-                  props.unit.afflictions.paralysis === 1
-                    ? "fade-in-out-paralyze"
-                    : ""
+                  unit.afflictions.paralysis === 1 ? "fade-in-out-paralyze" : ""
                 }`}
               />
             </>
           )}
 
-          {props.unit.boosts.ambidexterity === true && (
+          {unit.boosts.ambidexterity === true && (
             <>
               <img src={AmbidexterityIcon} className="ambidexterity" />
             </>
           )}
         </>
       )}
-      {/* {!props.unit && <div className="piece"></div>} */}
+      {/* {!unit && <div className="piece"></div>} */}
     </div>
   );
 };
