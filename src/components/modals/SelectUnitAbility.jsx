@@ -26,7 +26,6 @@ const SelectUnitAbility = (props) => {
   const {
     animationDelay,
     canAmplifyAura,
-    canBallisticArmor,
     canStrike,
     getVacant2SpaceZones,
     getZonesWithAllies,
@@ -330,10 +329,8 @@ const SelectUnitAbility = (props) => {
           ),
           optionText: (
             <>
-              <div>
-                ⬩Spend 1 skill and either 2 turns of Shield or 2 turns of Ward
-                to blast an adjacent foe.
-              </div>
+              <div>⬩Spend your Shield or Ward to restore your Aether.</div>
+              <div>⬩You may float 1 skill to Aether-blast an adjacent foe.</div>
             </>
           ),
         },
@@ -462,8 +459,7 @@ const SelectUnitAbility = (props) => {
           case 1:
             return (
               !unit.temporary.usedBallisticArmor &&
-              newGameState[unit.player].skillHand.length > 0 &&
-              canBallisticArmor(unit)
+              (unit.enhancements.shield > 0 || unit.enhancements.ward > 0)
             );
         }
 

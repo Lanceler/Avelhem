@@ -1314,40 +1314,9 @@ export const useSkillEffects = () => {
 
     newGameState.currentResolution.push({
       resolution: "Lightning Skill",
-      resolution2: "Zip And Zap2",
-      unit: unit,
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Lightning Skill",
       resolution2: "Zip And Zap1",
       unit: unit,
     });
-
-    return newGameState;
-  };
-
-  const zipAndZap2 = (unitInfo) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    //end "Zip And Zap2" resolution
-    newGameState.currentResolution.pop();
-
-    if (unit !== null && !isMuted(unit) && unit.charge > 0) {
-      newGameState.currentResolution.push({
-        resolution: "Lightning Skill",
-        resolution2: "Zip And Zap3",
-        unit: unit,
-        details: {
-          reason: "Zip and Zap Shield",
-          title: "Zip and Zap",
-          message: "You may spend 1 Charge to gain Shield for 2 turns.",
-          no: "Skip",
-          yes: "Shield",
-        },
-      });
-    }
 
     return newGameState;
   };
@@ -2698,8 +2667,6 @@ export const useSkillEffects = () => {
         return chainLightning3(a, b);
       case "zipAndZap1":
         return zipAndZap1(a, b);
-      case "zipAndZap2":
-        return zipAndZap2(a);
       case "zipAndZapR2":
         return zipAndZapR2(a);
       case "thunderThaumaturge1":

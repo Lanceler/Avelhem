@@ -145,6 +145,7 @@ const UseCurrentResolution = (props) => {
     auraAmplication1,
     brandish1,
     ballisticArmor1,
+    ballisticArmor2,
     flourish1,
     flourish2,
     ambrosia1,
@@ -1421,6 +1422,26 @@ const UseCurrentResolution = (props) => {
             </>
           );
 
+        case "Ballistic Armor2":
+          return (
+            <>
+              {self === lastRes.unit.player && !props.hideModal && (
+                <FloatSkill
+                  unit={lastRes.unit}
+                  details={lastRes.details}
+                  updateFirebase={props.updateFirebase}
+                  hideOrRevealModale={props.hideOrRevealModale}
+                />
+              )}
+            </>
+          );
+
+        case "Ballistic Armor3":
+          if (self === lastRes.unit.player) {
+            props.updateLocalState(ballisticArmor2(lastRes.unit));
+          }
+          break;
+
         case "Activating Flourish":
           if (self === lastRes.unit.player) {
             props.updateLocalState(flourish1(lastRes.unit));
@@ -2330,20 +2351,6 @@ const UseCurrentResolution = (props) => {
             props.updateLocalState(applySkill("zipAndZap2", lastRes.unit));
           }
           break;
-
-        case "Zip And Zap3":
-          return (
-            <>
-              {self === lastRes.unit.player && !props.hideModal && (
-                <YouMayNoYes
-                  unit={lastRes.unit}
-                  details={lastRes.details}
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
 
         case "Zip And ZapR1":
           if (self === lastRes.unit.player) {

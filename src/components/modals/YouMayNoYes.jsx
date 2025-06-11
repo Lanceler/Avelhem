@@ -242,14 +242,6 @@ const YouMayNoYes = (props) => {
 
         break;
 
-      case "Zip and Zap Shield": // "Zip And Zap3"
-        unit.charge -= 1;
-        unit.enhancements.shield
-          ? (unit.enhancements.shield = Math.max(unit.enhancements.shield, 2))
-          : (unit.enhancements.shield = 2);
-        //newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
-        break;
-
       case "Zip and Zap Blast": // "Zip And ZapR2"
         enterSelectUnitMode(
           getZonesWithEnemies(props.unit, 1),

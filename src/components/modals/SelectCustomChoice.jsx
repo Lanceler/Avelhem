@@ -170,10 +170,10 @@ const SelectCustomChoice = (props) => {
       break;
 
     case "Ballistic Armor":
-      canFirstChoice = unit.enhancements.shield > 1;
-      canSecondChoice = unit.enhancements.ward > 1;
-      ChoiceFirstMessage = "Spend 2 turns of Shield.";
-      ChoiceSecondMessage = "Spend 2 turns of Ward.";
+      canFirstChoice = unit.enhancements.shield > 0;
+      canSecondChoice = unit.enhancements.ward > 0;
+      ChoiceFirstMessage = "Spend your Shield.";
+      ChoiceSecondMessage = "Spend your Ward.";
       break;
 
     case "Sow and Reap":
@@ -568,19 +568,12 @@ const SelectCustomChoice = (props) => {
 
       case "Ballistic Armor":
         if (selectedChoice === 1) {
-          unit.enhancements.shield -= 2;
+          delete unit.enhancements.shield;
         } else {
-          unit.enhancements.ward -= 2;
+          delete unit.enhancements.ward;
         }
 
-        enterSelectUnitMode(
-          getZonesWithEnemies(unit, 1),
-          unit,
-          newGameState,
-          null,
-          "blast",
-          null
-        );
+        unit.aether = 1;
         break;
 
       case "Sow and Reap":

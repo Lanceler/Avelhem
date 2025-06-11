@@ -18,6 +18,7 @@ export const useUnitAbilityEffects = () => {
     getVacant2SpaceZones,
     getZonesWithAllies,
     getZonesWithEnemies,
+    isDisrupted,
     isMuted,
   } = useRecurringEffects();
 
@@ -718,6 +719,24 @@ export const useUnitAbilityEffects = () => {
 
     unit.temporary.usedBallisticArmor = true;
 
+    if (
+      getZonesWithEnemies(unit, 1).length > 0 &&
+      newGameState[unit.player].skillHand.length > 0 &&
+      !isDisrupted(unit, 2)
+    ) {
+      newGameState.currentResolution.push({
+        resolution: "Unit Ability",
+        resolution2: "Ballistic Armor2",
+        unit: unit,
+        details: {
+          reason: "Ballistic Armor",
+          restriction: null,
+          title: "Ballistic Armor",
+          message: "You may float 1 skill to Aether-blast an adjacent foe.",
+        },
+      });
+    }
+
     newGameState.currentResolution.push({
       resolution: "Unit Ability",
       resolution2: "Ballistic Armor1",
@@ -728,19 +747,26 @@ export const useUnitAbilityEffects = () => {
       },
     });
 
-    newGameState.currentResolution.push({
-      resolution: "Discard Skill",
-      unit: unit,
-      player: unit.player,
-      canSkip: false,
-      details: {
-        title: "Ballistic Armor",
-        message:
-          "Spend 1 skill and either 2 turns Shield or 2 turns of Ward to blast an adjacent foe.",
-        restriction: null,
-        reason: "Ballistic Armor",
-      },
-    });
+    return newGameState;
+  };
+
+  const ballisticArmor2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Ballistic Armor3" resolution
+    newGameState.currentResolution.pop();
+
+    unit.aether = 0;
+
+    enterSelectUnitMode(
+      getZonesWithEnemies(unit, 1),
+      unit,
+      newGameState,
+      null,
+      "aether-blast",
+      null
+    );
 
     return newGameState;
   };
@@ -867,6 +893,7 @@ export const useUnitAbilityEffects = () => {
     auraAmplication1,
     brandish1,
     ballisticArmor1,
+    ballisticArmor2,
     flourish1,
     flourish2,
     ambrosia1,

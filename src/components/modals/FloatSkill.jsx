@@ -90,6 +90,14 @@ const FloatSkill = (props) => {
         });
         break;
 
+      case "Ballistic Armor":
+        newGameState.currentResolution.push({
+          resolution: "Unit Ability",
+          resolution2: "Ballistic Armor3",
+          unit: unit,
+        });
+        break;
+
       case "Match Made in Heaven":
         let unit1 =
           newGameState[props.details.unit1.player].units[

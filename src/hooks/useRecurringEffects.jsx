@@ -2041,18 +2041,6 @@ export const useRecurringEffects = () => {
     return false;
   };
 
-  const canBallisticArmor = (unit) => {
-    if (!canBlast(unit)) {
-      return false;
-    }
-
-    if (unit.enhancements.shield > 1 || unit.enhancements.ward > 1) {
-      return true;
-    }
-
-    return false;
-  };
-
   const canDeploy = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -4482,7 +4470,6 @@ export const useRecurringEffects = () => {
     canAscend,
     canAmplifyAura,
     canBlast,
-    canBallisticArmor,
     canDeploy,
     canDestine,
     canRaptorBlitzBlast,
