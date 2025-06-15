@@ -89,7 +89,7 @@ export default function Repertoire() {
   };
 
   const addToSkillRepertoire = (cardPoolIndex) => {
-    if (skillRepertoire.length < 60 && skillCardPool[cardPoolIndex].Stock > 0) {
+    if (skillRepertoire.length < 50 && skillCardPool[cardPoolIndex].Stock > 0) {
       let newSkillRepertoire = [...skillRepertoire];
       newSkillRepertoire.push({
         Name: skillCardList[cardPoolIndex].Name,
@@ -211,7 +211,7 @@ export default function Repertoire() {
 
     const fixedArray = [];
 
-    for (let i = 0; i < 60; i++) {
+    for (let i = 0; i < 50; i++) {
       fixedArray.push(i);
     }
 
@@ -254,11 +254,11 @@ export default function Repertoire() {
     } else if (repertoireDescription.length > 200) {
       setSaveError("Description must have a length of 200 characters or less.");
     } else if (
-      skillRepertoire.length !== 60 ||
+      skillRepertoire.length !== 50 ||
       avelhemRepertoire.length !== 20
     ) {
       setSaveError(
-        "Avelhem & skill repertoires must have 20 and 60 cards, respectively."
+        "Avelhem & skill repertoires must have 20 and 50 cards, respectively."
       );
     } else {
       setIsLoading(true);
@@ -540,7 +540,7 @@ export default function Repertoire() {
           >
             <div className="repertoire-header">
               <div className="">
-                Skill Repertoire ({skillRepertoire.length} / 60)
+                Skill Repertoire ({skillRepertoire.length} / 50)
               </div>
               <div className="repertoire-buttons">
                 <button

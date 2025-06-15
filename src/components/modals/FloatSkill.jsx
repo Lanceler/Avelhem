@@ -18,7 +18,7 @@ const FloatSkill = (props) => {
 
   const dispatch = useDispatch();
 
-  const { getVacantFrontier } = useRecurringEffects();
+  const { aetherRestoreSpecial, getVacantFrontier } = useRecurringEffects();
 
   const [selectedSkill, setSelectedSkill] = useState(null);
 
@@ -98,6 +98,24 @@ const FloatSkill = (props) => {
         });
         break;
 
+      case "Guardian Wings":
+        let guardianUnit =
+          newGameState[props.details.victim.player].units[
+            props.details.victim.unitIndex
+          ];
+
+        guardianUnit.enhancements.shield
+          ? (guardianUnit.enhancements.shield = Math.max(
+              1,
+              guardianUnit.enhancements.shield
+            ))
+          : (guardianUnit.enhancements.shield = 1);
+
+        if (guardianUnit.unitClass === "Avian Scion") {
+          newGameState = aetherRestoreSpecial(newGameState, guardianUnit);
+        }
+        break;
+
       case "Match Made in Heaven":
         let unit1 =
           newGameState[props.details.unit1.player].units[
@@ -113,17 +131,10 @@ const FloatSkill = (props) => {
           ? (unit1.enhancements.ward = Math.max(2, unit1.enhancements.ward))
           : (unit1.enhancements.ward = 2);
 
-        newGameState[props.details.unit1.player].units[
-          props.details.unit1.unitIndex
-        ] = unit1;
-
         unit2.enhancements.ward
           ? (unit2.enhancements.ward = Math.max(2, unit2.enhancements.ward))
           : (unit2.enhancements.ward = 2);
 
-        newGameState[props.details.unit2.player].units[
-          props.details.unit2.unitIndex
-        ] = unit2;
         break;
 
       case "Advance Deploy Scion":

@@ -49,6 +49,8 @@ const UseCurrentResolution = (props) => {
   const dispatch = useDispatch();
 
   const { applySkill } = useSkillEffects();
+  const { applyAbility } = useUnitAbilityEffects();
+
   const {
     applyAnathema,
     applyBurn,
@@ -119,37 +121,6 @@ const UseCurrentResolution = (props) => {
     vengefulLegacy2,
     blackBusinessCard1,
   } = useSovereignSkillEffects();
-
-  const {
-    eternalEmber1,
-    afterburner1,
-    afterburner2,
-    fieryHeart1,
-    fieryHeart2,
-    hydrotherapy1,
-    hydrotherapy2,
-    coldEmbrace1,
-    airDash1,
-    reapTheWhirlwind1,
-    aeromancy1,
-    secondWind1,
-    saltTheEarth1,
-    mountainStance1,
-    fortify1,
-    leylineConvergence1,
-    galvanize1,
-    arcFlash1,
-    arcFlash2,
-    particleBeam1,
-    particleBeam2,
-    auraAmplication1,
-    brandish1,
-    ballisticArmor1,
-    ballisticArmor2,
-    flourish1,
-    flourish2,
-    ambrosia1,
-  } = useUnitAbilityEffects();
 
   const animationDelay = (t) => {
     setTimeout(() => {
@@ -548,6 +519,20 @@ const UseCurrentResolution = (props) => {
                   updateFirebase={props.updateFirebase}
                   hideOrRevealModale={props.hideOrRevealModale}
                   reroll={lastRes.reroll}
+                />
+              )}
+            </>
+          );
+
+        case "Finesse":
+          return (
+            <>
+              {self === lastRes.player && !props.hideModal && (
+                <SelectCustomChoice
+                  player={lastRes.player}
+                  details={lastRes.details}
+                  updateFirebase={props.updateFirebase}
+                  hideOrRevealModale={props.hideOrRevealModale}
                 />
               )}
             </>
@@ -1135,37 +1120,37 @@ const UseCurrentResolution = (props) => {
 
         case "Activating Afterburner":
           if (self === lastRes.unit.player) {
-            props.updateLocalState(afterburner1(lastRes.unit));
+            props.updateLocalState(applyAbility("afterburner1", lastRes.unit));
           }
           break;
 
         case "Afterburner1":
           if (self === lastRes.unit.player) {
-            props.updateLocalState(afterburner2(lastRes.unit));
+            props.updateLocalState(applyAbility("afterburner2", lastRes.unit));
           }
           break;
 
         case "Activating Fiery Heart":
           if (self === lastRes.unit.player) {
-            props.updateLocalState(fieryHeart1(lastRes.unit));
+            props.updateLocalState(applyAbility("fieryHeart1", lastRes.unit));
           }
           break;
 
         case "Fiery Heart1":
           if (self === lastRes.unit.player) {
-            props.updateLocalState(fieryHeart2(lastRes.unit));
+            props.updateLocalState(applyAbility("fieryHeart2", lastRes.unit));
           }
           break;
 
         case "Activating Hydrotherapy":
           if (self === lastRes.unit.player) {
-            props.updateLocalState(hydrotherapy1(lastRes.unit));
+            props.updateLocalState(applyAbility("hydrotherapy1", lastRes.unit));
           }
           break;
 
         case "Hydrotherapy1":
           if (self === lastRes.unit.player) {
-            props.updateLocalState(hydrotherapy2(lastRes.unit));
+            props.updateLocalState(applyAbility("hydrotherapy2", lastRes.unit));
           }
           break;
 
@@ -1185,7 +1170,7 @@ const UseCurrentResolution = (props) => {
 
         case "Activating Cold Embrace":
           if (self === lastRes.unit.player) {
-            props.updateLocalState(coldEmbrace1(lastRes.unit));
+            props.updateLocalState(applyAbility("coldEmbrace1", lastRes.unit));
           }
           break;
 
@@ -1205,7 +1190,7 @@ const UseCurrentResolution = (props) => {
 
         case "Activating Air Dash":
           if (self === lastRes.unit.player) {
-            props.updateLocalState(airDash1(lastRes.unit));
+            props.updateLocalState(applyAbility("airDash1", lastRes.unit));
           }
           break;
 
@@ -1226,7 +1211,9 @@ const UseCurrentResolution = (props) => {
 
         case "Activating Reap the Whirlwind":
           if (self === lastRes.unit.player) {
-            props.updateLocalState(reapTheWhirlwind1(lastRes.unit));
+            props.updateLocalState(
+              applyAbility("reapTheWhirlwind1", lastRes.unit)
+            );
           }
           break;
 
@@ -1252,7 +1239,7 @@ const UseCurrentResolution = (props) => {
 
         case "Activating Fortify":
           if (self === lastRes.unit.player) {
-            props.updateLocalState(fortify1(lastRes.unit));
+            props.updateLocalState(applyAbility("fortify1", lastRes.unit));
           }
           break;
 
@@ -1286,7 +1273,9 @@ const UseCurrentResolution = (props) => {
 
         case "Activating Leyline Convergence":
           if (self === lastRes.unit.player) {
-            props.updateLocalState(leylineConvergence1(lastRes.unit));
+            props.updateLocalState(
+              applyAbility("leylineConvergence1", lastRes.unit)
+            );
           }
           break;
 
@@ -1306,7 +1295,7 @@ const UseCurrentResolution = (props) => {
 
         case "Activating Galvanize":
           if (self === lastRes.unit.player) {
-            props.updateLocalState(galvanize1(lastRes.unit));
+            props.updateLocalState(applyAbility("galvanize1", lastRes.unit));
           }
           break;
 
@@ -1326,7 +1315,7 @@ const UseCurrentResolution = (props) => {
 
         case "Activating Arc Flash":
           if (self === lastRes.unit.player) {
-            props.resolutionUpdate(arcFlash1(lastRes.unit));
+            props.resolutionUpdate(applyAbility("arcFlash1", lastRes.unit));
           }
           break;
 
@@ -1346,7 +1335,7 @@ const UseCurrentResolution = (props) => {
 
         case "Arc Flash2":
           if (self === lastRes.unit.player) {
-            props.updateLocalState(arcFlash2(lastRes.unit));
+            props.updateLocalState(applyAbility("arcFlash2", lastRes.unit));
           }
           break;
 
@@ -1366,25 +1355,27 @@ const UseCurrentResolution = (props) => {
 
         case "Activating Particle Beam":
           if (self === lastRes.unit.player) {
-            props.updateLocalState(particleBeam1(lastRes.unit));
+            props.updateLocalState(applyAbility("particleBeam1", lastRes.unit));
           }
           break;
 
         case "Particle Beam1":
           if (self === lastRes.unit.player) {
-            props.updateLocalState(particleBeam2(lastRes.unit));
+            props.updateLocalState(applyAbility("particleBeam2", lastRes.unit));
           }
           break;
 
         case "Activating Amplify Aura":
           if (self === lastRes.unit.player) {
-            props.updateLocalState(auraAmplication1(lastRes.unit));
+            props.updateLocalState(
+              applyAbility("auraAmplication1", lastRes.unit)
+            );
           }
           break;
 
         case "Activating Brandish":
           if (self === lastRes.unit.player) {
-            props.updateLocalState(brandish1(lastRes.unit));
+            props.updateLocalState(applyAbility("brandish1", lastRes.unit));
           }
           break;
 
@@ -1404,7 +1395,9 @@ const UseCurrentResolution = (props) => {
 
         case "Activating Ballistic Armor":
           if (self === lastRes.unit.player) {
-            props.updateLocalState(ballisticArmor1(lastRes.unit));
+            props.updateLocalState(
+              applyAbility("ballisticArmor1", lastRes.unit)
+            );
           }
           break;
 
@@ -1438,25 +1431,27 @@ const UseCurrentResolution = (props) => {
 
         case "Ballistic Armor3":
           if (self === lastRes.unit.player) {
-            props.updateLocalState(ballisticArmor2(lastRes.unit));
+            props.updateLocalState(
+              applyAbility("ballisticArmor2", lastRes.unit)
+            );
           }
           break;
 
         case "Activating Flourish":
           if (self === lastRes.unit.player) {
-            props.updateLocalState(flourish1(lastRes.unit));
+            props.updateLocalState(applyAbility("flourish1", lastRes.unit));
           }
           break;
 
         case "Flourish1":
           if (self === lastRes.unit.player) {
-            props.updateLocalState(flourish2(lastRes.unit));
+            props.updateLocalState(applyAbility("flourish2", lastRes.unit));
           }
           break;
 
         case "Activating Ambrosia":
           if (self === lastRes.unit.player) {
-            props.updateLocalState(ambrosia1(lastRes.unit));
+            props.updateLocalState(applyAbility("ambrosia1", lastRes.unit));
           }
           break;
 
@@ -1468,13 +1463,15 @@ const UseCurrentResolution = (props) => {
       switch (lastRes.resolution2) {
         case "Activating Aeromancy":
           if (self === lastRes.unit.player) {
-            props.updateLocalState(aeromancy1(lastRes.unit));
+            props.updateLocalState(applyAbility("aeromancy1", lastRes.unit));
           }
           break;
 
         case "Activating Mountain Stance":
           if (self === lastRes.unit.player) {
-            props.updateLocalState(mountainStance1(lastRes.unit));
+            props.updateLocalState(
+              applyAbility("mountainStance1", lastRes.unit)
+            );
           }
           break;
 
@@ -1526,19 +1523,19 @@ const UseCurrentResolution = (props) => {
 
         case "Activating Eternal Ember":
           if (self === lastRes.unit.player) {
-            props.updateLocalState(eternalEmber1(lastRes.unit));
+            props.updateLocalState(applyAbility("eternalEmber1", lastRes.unit));
           }
           break;
 
         case "Activating Second Wind":
           if (self === lastRes.unit.player) {
-            props.updateLocalState(secondWind1());
+            props.updateLocalState(applyAbility("secondWind1"));
           }
           break;
 
         case "Activating Salt the Earth":
           if (self === lastRes.unit.player) {
-            props.updateLocalState(saltTheEarth1(lastRes.unit));
+            props.updateLocalState(applyAbility("saltTheEarth1", lastRes.unit));
           }
           break;
 
@@ -2940,6 +2937,20 @@ const UseCurrentResolution = (props) => {
             );
           }
           break;
+
+        case "Guardian Wings Float":
+          return (
+            <>
+              {self === lastRes.unit.player && !props.hideModal && (
+                <FloatSkill
+                  unSkippable={true}
+                  details={lastRes.details}
+                  updateFirebase={props.updateFirebase}
+                  hideOrRevealModale={props.hideOrRevealModale}
+                />
+              )}
+            </>
+          );
 
         case "Activating Vanguard Fleet":
           if (self === lastRes.unit.player) {

@@ -55,6 +55,8 @@ export const useUnitAbilityEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
+    unit.temporary.usedFirstAbility = true;
+
     newGameState.currentResolution.push({
       resolution: "Unit Ability",
       resolution2: "Afterburner1",
@@ -108,7 +110,7 @@ export const useUnitAbilityEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    unit.temporary.usedFieryHeart = true;
+    unit.temporary.usedSecondAbility = true;
 
     newGameState.currentResolution.push({
       resolution: "Unit Ability",
@@ -264,6 +266,8 @@ export const useUnitAbilityEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
+    unit.temporary.usedFirstAbility = true;
+
     newGameState.currentResolution.push({
       resolution: "Unit Ability",
       resolution2: "Air Dash1",
@@ -285,6 +289,8 @@ export const useUnitAbilityEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
+    unit.temporary.usedSecondAbility = true;
+
     //spend Cyclone
     unit.cyclone -= 2;
 
@@ -302,7 +308,7 @@ export const useUnitAbilityEffects = () => {
         title: "Reap the Whirlwind",
         reason: "Reap the Whirlwind",
         restriction: ["03-01", "03-02", "03-03", "03-04"],
-        message: "Float 1 Wind skill",
+        message: "Float 1 Wind skill.",
       },
     });
 
@@ -399,6 +405,8 @@ export const useUnitAbilityEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
+    unit.temporary.usedFirstAbility = true;
+
     //Gain Shield for 2 turns
     unit.enhancements.shield
       ? (unit.enhancements.shield = Math.max(2, unit.enhancements.shield))
@@ -433,6 +441,8 @@ export const useUnitAbilityEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
+    unit.temporary.usedSecondAbility = true;
+
     unit.aether = 1;
 
     if (canMove(unit)) {
@@ -465,6 +475,8 @@ export const useUnitAbilityEffects = () => {
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
+
+    unit.temporary.usedFirstAbility = true;
 
     //Gain 1 charge
     unit.charge
@@ -501,6 +513,8 @@ export const useUnitAbilityEffects = () => {
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
+
+    unit.temporary.usedSecondAbility = true;
 
     //Spend 3 charges
     unit.charge -= 3;
@@ -583,6 +597,8 @@ export const useUnitAbilityEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
+    unit.temporary.usedFirstAbility = true;
+
     newGameState.currentResolution.push({
       resolution: "Unit Ability",
       resolution2: "Particle Beam1",
@@ -636,7 +652,7 @@ export const useUnitAbilityEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    unit.temporary.usedAmplifyAura = true;
+    unit.temporary.usedSecondAbility = true;
 
     const allies = getZonesWithAllies(unit, 1, true);
     const zones = JSON.parse(newGameState.zones);
@@ -674,6 +690,8 @@ export const useUnitAbilityEffects = () => {
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
+
+    unit.temporary.usedFirstAbility = true;
 
     newGameState.currentResolution.push({
       resolution: "Unit Ability",
@@ -717,7 +735,7 @@ export const useUnitAbilityEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    unit.temporary.usedBallisticArmor = true;
+    unit.temporary.usedSecondAbility = true;
 
     if (
       getZonesWithEnemies(unit, 1).length > 0 &&
@@ -782,8 +800,6 @@ export const useUnitAbilityEffects = () => {
     unit.temporary.activation
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
-
-    unit.temporary.usedFlourish = true;
 
     newGameState.currentResolution.push({
       resolution: "Unit Ability",
@@ -868,34 +884,81 @@ export const useUnitAbilityEffects = () => {
 
   //end of list
 
-  return {
-    eternalEmber1,
-    afterburner1,
-    afterburner2,
-    fieryHeart1,
-    fieryHeart2,
-    hydrotherapy1,
-    hydrotherapy2,
-    aeromancy1,
-    airDash1,
-    coldEmbrace1,
-    reapTheWhirlwind1,
-    secondWind1,
-    saltTheEarth1,
-    mountainStance1,
-    fortify1,
-    leylineConvergence1,
-    galvanize1,
-    arcFlash1,
-    arcFlash2,
-    particleBeam1,
-    particleBeam2,
-    auraAmplication1,
-    brandish1,
-    ballisticArmor1,
-    ballisticArmor2,
-    flourish1,
-    flourish2,
-    ambrosia1,
+  const applyAbility = (effect, unit) => {
+    switch (effect) {
+      //Fire
+      case "eternalEmber1":
+        return eternalEmber1(unit);
+      case "afterburner1":
+        return afterburner1(unit);
+      case "afterburner2":
+        return afterburner2(unit);
+      case "fieryHeart1":
+        return fieryHeart1(unit);
+      case "fieryHeart2":
+        return fieryHeart2(unit);
+
+      //Water
+      case "hydrotherapy1":
+        return hydrotherapy1(unit);
+      case "hydrotherapy2":
+        return hydrotherapy2(unit);
+      case "coldEmbrace1":
+        return coldEmbrace1(unit);
+
+      //Wind
+      case "aeromancy1":
+        return aeromancy1(unit);
+      case "airDash1":
+        return airDash1(unit);
+      case "reapTheWhirlwind1":
+        return reapTheWhirlwind1(unit);
+      case "secondWind1":
+        return secondWind1();
+
+      //Land
+      case "saltTheEarth1":
+        return saltTheEarth1(unit);
+      case "mountainStance1":
+        return mountainStance1(unit);
+      case "fortify1":
+        return fortify1(unit);
+      case "leylineConvergence1":
+        return leylineConvergence1(unit);
+
+      //Lightning
+      case "galvanize1":
+        return galvanize1(unit);
+      case "arcFlash1":
+        return arcFlash1(unit);
+      case "arcFlash2":
+        return arcFlash2(unit);
+
+      //Mana
+      case "particleBeam1":
+        return particleBeam1(unit);
+      case "particleBeam2":
+        return particleBeam2(unit);
+      case "auraAmplication1":
+        return auraAmplication1(unit);
+
+      //Metal
+      case "brandish1":
+        return brandish1(unit);
+      case "ballisticArmor1":
+        return ballisticArmor1(unit);
+      case "ballisticArmor2":
+        return ballisticArmor2(unit);
+
+      //Plant
+      case "flourish1":
+        return flourish1(unit);
+      case "flourish2":
+        return flourish2(unit);
+      case "ambrosia1":
+        return ambrosia1(unit);
+    }
   };
+
+  return { applyAbility };
 };

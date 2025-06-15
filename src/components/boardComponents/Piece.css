@@ -16,6 +16,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  
 
 }
 
@@ -49,30 +50,22 @@
   opacity: 0;
   z-index: 40;
 
-  color: #bcbcc4
-
 }
 
 @keyframes ascend {
   0% {
     scale: 0.2;
     opacity: 0;
-    filter: brightness(2);
   }
   10% {
     scale: 2.5;
     opacity: 1;
-    
   }
-
-  30%{
-    filter: brightness(1);
-  }
-
 
   100% {
     scale: 0.4;
     opacity: 0;
+    background-color: var(--ascension-color);
   }
 }
 
@@ -493,28 +486,20 @@
   );
   /* transition: all 1.5s ease; */
   position: absolute;
-  z-index: 600;
+  z-index: 6000;
 
   top: 10%;
   left: 10%;
   pointer-events: none;
+
+  animation: expand-overgrowth 2.5s linear infinite;;
 }
 
-.overgrowth.animating {
-  animation: expand-overgrowth 2.5s linear infinite;
-}
 
 @keyframes expand-overgrowth {
-  0% {
-    /* width: 50px;
-        height: 50px; */
+  0%{
     opacity: 0.9;
     transform: scale(0.8);
-  }
-
-  50% {
-    /* opacity: 0.70; */
-    /* transform: scale(2.5); */
   }
 
   85%,

@@ -3968,6 +3968,10 @@ export const useRecurringEffects = () => {
   };
 
   const triggerGuardianWings = (victim) => {
+    if (localGameState[victim.player].skillHand.length < 2) {
+      return false;
+    }
+
     const zones = JSON.parse(localGameState.zones);
     const alliesInRange = getZonesWithAllies(victim, 2, true); // includes self
 

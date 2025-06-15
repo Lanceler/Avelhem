@@ -53,7 +53,7 @@ const UnitInfo = (props) => {
             </p>
             <p className="unitInfo-text-desc unitInfo-text-last">⬩Strike.</p>
 
-            <p className="unitInfo-text-heading2">2. Fiery Heart (One-shot)</p>
+            <p className="unitInfo-text-heading2">2. Fiery Heart</p>
             <p className="unitInfo-text-desc">
               ⬩Spend 1 skill to purge an adjacent ally’s Frost and Burn.
             </p>
@@ -95,7 +95,7 @@ const UnitInfo = (props) => {
         return (
           <>
             <p className="unitInfo-text-heading2">
-              1. Air Dash (One-shot){" "}
+              1. Air Dash{" "}
               <span className="unitInfo-tactic-group">
                 <img src={MobilizeSmall} className="unitInfo-tactic-mobilize" />
                 <img src={MobilizeSmall} className="unitInfo-tactic-mobilize" />
@@ -146,7 +146,7 @@ const UnitInfo = (props) => {
         return (
           <>
             <p className="unitInfo-text-heading2">
-              1. Galvanize (One-shot){" "}
+              1. Galvanize{" "}
               <span className="unitInfo-tactic-group">
                 <img src={MobilizeSmall} className="unitInfo-tactic-mobilize" />
                 <img src={MobilizeSmall} className="unitInfo-tactic-mobilize" />
@@ -184,7 +184,7 @@ const UnitInfo = (props) => {
               ⬩Spend 1 skill to blast a foe within 2 spaces.
             </p>
 
-            <p className="unitInfo-text-heading2">2. Amplify Aura (One-shot)</p>
+            <p className="unitInfo-text-heading2">2. Amplify Aura</p>
             <p className="unitInfo-text-desc">
               ⬩Convert your or an adjacent ally’s Aether into Shield for 2
               turns.
@@ -206,9 +206,7 @@ const UnitInfo = (props) => {
               ⬩Draw 1 skill or restore your Aether.
             </p>
 
-            <p className="unitInfo-text-heading2">
-              2. Ballistic Armor (One-shot)
-            </p>
+            <p className="unitInfo-text-heading2">2. Ballistic Armor</p>
             <p className="unitInfo-text-desc">
               ⬩Spend your Shield or Ward to restore your Aether.
             </p>
@@ -221,7 +219,7 @@ const UnitInfo = (props) => {
       case "Plant Scion":
         return (
           <>
-            <p className="unitInfo-text-heading2">1. Flourish (One-shot) </p>
+            <p className="unitInfo-text-heading2">1. Flourish</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
               ⬩Spend 2 skills to restore your Aether and gain Overgrowth.
             </p>
@@ -286,6 +284,9 @@ const UnitInfo = (props) => {
             <p className="unitInfo-text-heading2">2. Clear as Crystal</p>
             <p className="unitInfo-text-desc">
               ⬩You are immune to Frost and Burn.
+            </p>
+            <p className="unitInfo-text-desc">
+              ⬩You can activate abilities more than once per turn.
             </p>
             <p className="unitInfo-text-desc unitInfo-text-last">
               ⬩Your attacks against frozen foes pierce Shield.
@@ -403,6 +404,9 @@ const UnitInfo = (props) => {
 
             <p className="unitInfo-text-heading2">2. Flora’s Reverence</p>
             <p className="unitInfo-text-desc ">⬩You are immune to Root.</p>
+            <p className="unitInfo-text-desc">
+              ⬩You can activate abilities more than once per turn.
+            </p>
             <p className="unitInfo-text-desc unitInfo-text-last">
               ⬩You can spend 2 Blossoms in lieu of 1 skill; you can have up to 3
               Blossoms.

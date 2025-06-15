@@ -175,9 +175,6 @@ const SelectTacticViaEffect = (props) => {
         newGameState.activatingSkill.push("AirDash");
         newGameState.activatingUnit.push(unit);
 
-        unit.temporary.usedAirDash = true;
-        //newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
-
         newGameState.currentResolution.push({
           resolution: "Tactic End",
           unit: unit,
@@ -247,9 +244,6 @@ const SelectTacticViaEffect = (props) => {
         updateData = true;
         newGameState.activatingSkill.push("Galvanize");
         newGameState.activatingUnit.push(unit);
-
-        unit.temporary.usedGalvanize = true;
-        //newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
 
         newGameState.currentResolution.push({
           resolution: "Tactic End",

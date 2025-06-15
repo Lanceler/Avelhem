@@ -772,7 +772,7 @@ const Board = (props) => {
           </div>
         )}
 
-      {localGameState.host.units.map((unit, i) => (
+      {/* {localGameState.host.units.map((unit, i) => (
         <div key={i}>
           {unit && (
             <div className="board-piece" style={unitPosition(unit)}>
@@ -810,7 +810,29 @@ const Board = (props) => {
             </div>
           )}
         </div>
-      ))}
+      ))} */}
+
+      {[...localGameState.host.units, ...localGameState.guest.units].map(
+        (unit, i) => (
+          <div key={unit ? unit.player + unit.unitIndex : i}>
+            {unit && (
+              <div className="board-piece" style={unitPosition(unit)}>
+                <Piece
+                  unit={unit}
+                  movingUnit={props.movingUnit}
+                  tileMode={props.tileMode}
+                  selectUnitReason={props.selectUnitReason}
+                  selectUnitSpecial={props.selectUnitSpecial}
+                  expandedUnit={expandedUnit}
+                  setExpandedUnit={props.setExpandedUnit}
+                  validZones={props.validZones}
+                  selectUnit={selectUnit}
+                />
+              </div>
+            )}
+          </div>
+        )
+      )}
 
       <div
         className={

@@ -148,11 +148,22 @@ const DefiancePhaseSelection = (props) => {
         //Spend FD
         newGameState[self].fateDefiance -= defianceCosts[5];
 
-        //draw 1 skill
-        newGameState = drawSkill(newGameState);
-
         //end defiance Phase
         newGameState = endDefiancePhase(newGameState);
+
+        newGameState.currentResolution.push({
+          resolution: "Defiance Options",
+          resolution2: "Finesse",
+          player: self,
+          details: {
+            title: "Finesse",
+            reason: "Finesse",
+          },
+        });
+
+        //draw 1 skill
+        // newGameState = drawSkill(newGameState);
+
         break;
 
       default:
@@ -184,7 +195,7 @@ const DefiancePhaseSelection = (props) => {
     2,
     2,
     3,
-    3,
+    4,
   ];
 
   const canSelect = [
@@ -233,7 +244,13 @@ const DefiancePhaseSelection = (props) => {
     },
     {
       title: "Finesse",
-      desc: <>Draw 1 skill.</>,
+      desc: (
+        <>
+          Draw 1 skill
+          <br />
+          or deploy a pawn.
+        </>
+      ),
     },
   ];
 

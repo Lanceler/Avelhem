@@ -645,9 +645,8 @@ export default function Rules() {
               <p>
                 Scions have 2 unique abilities, which are special actions they
                 can manually activate. Some abilities require a tactic to be
-                used. Abilities with the “One-shot” property can only be
-                activated once per turn; this limit applies to units
-                individually.
+                used. Each ability can be activated no more than once per turn;
+                this limit applies to units individually.
               </p>
               <br />
 

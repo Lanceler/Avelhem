@@ -40,7 +40,8 @@ const SelectUnitAbility = (props) => {
   let updateLocal = true;
   let updateData = false;
 
-  let message = null;
+  let message =
+    "Units can activate each of their abilities no more than once per turn.";
 
   let abilityDetails = [];
   switch (unit.unitClass) {
@@ -61,13 +62,7 @@ const SelectUnitAbility = (props) => {
         },
         {
           optionName: "Fiery Heart",
-          abilityQualifier: (
-            <div className="abilityQualifier">
-              <span className="abilityQualifier">
-                <em>One-shot</em>
-              </span>
-            </div>
-          ),
+          abilityQualifier: <div className="abilityQualifier"></div>,
           optionText: (
             <>
               <div>
@@ -80,12 +75,18 @@ const SelectUnitAbility = (props) => {
       break;
 
     case "Water Scion":
+      message =
+        "Clear as Crystal: You can activate your abilities more than once per turn.";
       switch (unit.torrent) {
         case 2:
-          message = `Torrent: The next 2 abilities you activate do not require a tactic.`;
+          message =
+            message +
+            " (Torrent: The next 2 abilities you activate do not require tactics.";
           break;
         case 1:
-          message = `Torrent: The next ability you activate does not require a tactic.`;
+          message =
+            message +
+            " (Torrent: The next ability you activate does not require a tactic.";
           break;
       }
 
@@ -102,7 +103,7 @@ const SelectUnitAbility = (props) => {
           optionText: (
             <>
               <div>
-                ⬩Purge an adjacent ally’s turn-based afflictions (except
+                ⬩Purge an adjacent ally’s afflictions (except Root and
                 Anathema).
               </div>
               <div>⬩You may float 1 skill to search for 1 “Healing Rain”.</div>
@@ -138,9 +139,6 @@ const SelectUnitAbility = (props) => {
           optionName: "Air Dash",
           abilityQualifier: (
             <>
-              <div className="modal-option-oneshot">
-                <em>One-shot</em>
-              </div>
               <div className="abilityQualifier">
                 <img src={MobilizeSmall} style={{ height: 30 }} />
                 <img src={MobilizeSmall} style={{ height: 30 }} />
@@ -156,11 +154,7 @@ const SelectUnitAbility = (props) => {
         },
         {
           optionName: "Reap the Whirlwind",
-          abilityQualifier: (
-            <div className="modal-option-oneshot">
-              {/* <em>One-shot</em> */}
-            </div>
-          ),
+          abilityQualifier: "",
           optionText: (
             <>
               <div>
@@ -217,7 +211,9 @@ const SelectUnitAbility = (props) => {
 
     case "Lightning Scion":
       if (unit.boosts.valiantSpark) {
-        message = `Valiant Spark boost: You can activate Arc Flash without using a tactic. `;
+        message =
+          message +
+          " (Valiant Spark: You can activate Arc Flash without using a tactic.";
       }
 
       abilityDetails = [
@@ -225,11 +221,7 @@ const SelectUnitAbility = (props) => {
           optionName: "Galvanize",
           abilityQualifier: (
             <>
-              <div className="abilityQualifier">
-                <span className="">
-                  <em>One-shot</em>
-                </span>
-              </div>
+              <div className="abilityQualifier"></div>
               <div className="abilityQualifier">
                 <img src={MobilizeSmall} style={{ height: 30 }} />
                 <img src={MobilizeSmall} style={{ height: 30 }} />
@@ -283,13 +275,7 @@ const SelectUnitAbility = (props) => {
         },
         {
           optionName: "Amplify Aura",
-          abilityQualifier: (
-            <div className="abilityQualifier">
-              <span className="abilityQualifier">
-                <em>One-shot</em>
-              </span>
-            </div>
-          ),
+          abilityQualifier: <div className="abilityQualifier"></div>,
           optionText: (
             <>
               <div>
@@ -320,13 +306,7 @@ const SelectUnitAbility = (props) => {
         },
         {
           optionName: "Ballistic Armor",
-          abilityQualifier: (
-            <div className="abilityQualifier">
-              <span className="abilityQualifier">
-                <em>One-shot</em>
-              </span>
-            </div>
-          ),
+          abilityQualifier: <div className="abilityQualifier"></div>,
           optionText: (
             <>
               <div>⬩Spend your Shield or Ward to restore your Aether.</div>
@@ -338,16 +318,12 @@ const SelectUnitAbility = (props) => {
       break;
 
     case "Plant Scion":
+      message =
+        "Flora’s Reverence: You can activate your abilities more than once per turn.";
       abilityDetails = [
         {
           optionName: "Flourish",
-          abilityQualifier: (
-            <div className="abilityQualifier">
-              <span className="abilityQualifier">
-                <em>One-shot</em>
-              </span>
-            </div>
-          ),
+          abilityQualifier: <div className="abilityQualifier"></div>,
           optionText: (
             <>
               <div>
@@ -377,6 +353,14 @@ const SelectUnitAbility = (props) => {
       return false;
     }
 
+    if (unit.temporary.usedFirstAbility && i === 0) {
+      return false;
+    }
+
+    if (unit.temporary.usedSecondAbility && i === 1) {
+      return false;
+    }
+
     switch (unit.unitClass) {
       // case "Template":
       //   switch (i) {
@@ -394,7 +378,6 @@ const SelectUnitAbility = (props) => {
             );
           case 1:
             return (
-              !unit.temporary.usedFieryHeart &&
               (newGameState[unit.player].skillHand.length > 0 ||
                 unit.ember >= 2) &&
               getZonesWithAllies(unit, 1, false).length > 0
@@ -412,10 +395,7 @@ const SelectUnitAbility = (props) => {
       case "Wind Scion":
         switch (i) {
           case 0:
-            return (
-              getVacant2SpaceZones(unit).length > 0 &&
-              !unit.temporary.usedAirDash
-            );
+            return getVacant2SpaceZones(unit).length > 0;
           case 1:
             return (
               unit.cyclone > 1 &&
@@ -436,7 +416,7 @@ const SelectUnitAbility = (props) => {
       case "Lightning Scion":
         switch (i) {
           case 0:
-            return !unit.temporary.usedGalvanize;
+            return true;
           case 1:
             return unit.charge >= 3;
         }
@@ -449,7 +429,7 @@ const SelectUnitAbility = (props) => {
               newGameState[unit.player].skillHand.length > 0
             );
           case 1:
-            return !unit.temporary.usedAmplifyAura && canAmplifyAura(unit);
+            return canAmplifyAura(unit);
         }
 
       case "Metal Scion":
@@ -457,20 +437,16 @@ const SelectUnitAbility = (props) => {
           case 0:
             return true;
           case 1:
-            return (
-              !unit.temporary.usedBallisticArmor &&
-              (unit.enhancements.shield > 0 || unit.enhancements.ward > 0)
-            );
+            return unit.enhancements.shield > 0 || unit.enhancements.ward > 0;
         }
 
       case "Plant Scion":
         switch (i) {
           case 0:
             return (
-              !unit.temporary.usedFlourish &&
-              (newGameState[unit.player].skillHand.length > 1 ||
-                (newGameState[unit.player].skillHand.length === 1 &&
-                  unit.blossom > 1))
+              newGameState[unit.player].skillHand.length > 1 ||
+              (newGameState[unit.player].skillHand.length === 1 &&
+                unit.blossom > 1)
             );
           case 1:
             return unit.blossom > 0;

@@ -21,7 +21,8 @@ export default function Home() {
   const { user } = useAuthContext();
   const { getBannerImage } = useGetImages();
 
-  const { trialTeaAvelhems, trialTeaSkills } = useCardDatabase();
+  const { starterAvelhemRepertoire, starterSkillRepertoire } =
+    useCardDatabase();
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -55,12 +56,12 @@ export default function Home() {
         zones = JSON.stringify(zones);
 
         const playerData = {
-          skillRepertoire: trialTeaSkills,
+          skillRepertoire: starterSkillRepertoire,
           skillVestige: [],
           skillShattered: [],
           skillHand: [],
           skillFloat: 0,
-          avelhemRepertoire: trialTeaAvelhems,
+          avelhemRepertoire: starterAvelhemRepertoire,
           avelhemVestige: [],
           avelhemHand: [],
           avelhemFloat: 0,

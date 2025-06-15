@@ -154,7 +154,7 @@ export const Piece = (props) => {
           {showDisruption && <div className="seal2"></div>}
 
           {unit.enhancements.overgrowth === true && (
-            <div className="overgrowth animating"></div>
+            <div className="overgrowth"></div>
           )}
 
           <img
@@ -166,7 +166,7 @@ export const Piece = (props) => {
             <div
               className="ascension"
               style={{
-                backgroundColor: bgColor,
+                "--ascension-color": bgColor,
               }}
             ></div>
           )}
@@ -343,7 +343,6 @@ export const Piece = (props) => {
           )}
         </>
       )}
-      {/* {!unit && <div className="piece"></div>} */}
     </div>
   );
 };

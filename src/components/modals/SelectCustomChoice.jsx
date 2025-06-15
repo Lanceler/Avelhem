@@ -24,6 +24,7 @@ const SelectCustomChoice = (props) => {
 
   const {
     aetherRestoreSpecial,
+    canDeploy,
     canMove,
     canRaptorBlitzBlast,
     canSowAndReapBlast,
@@ -33,6 +34,7 @@ const SelectCustomChoice = (props) => {
     enterMoveMode,
     enterSelectUnitMode,
     getVacantAdjacentZones,
+    getVacantFrontier,
     getZonesAerialImpetusAlly,
     getZonesWithAllies,
     getZonesWithEnemies,
@@ -40,6 +42,9 @@ const SelectCustomChoice = (props) => {
   } = useRecurringEffects();
 
   let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+  console.log(newGameState.currentResolution);
+
   let unit = null;
   if (props.unit !== undefined && props.unit !== null) {
     unit = newGameState[props.unit.player].units[props.unit.unitIndex];
@@ -56,6 +61,13 @@ const SelectCustomChoice = (props) => {
   let updateData = false;
 
   switch (props.details.reason) {
+    case "Finesse":
+      canFirstChoice = true;
+      canSecondChoice = canDeploy();
+      ChoiceFirstMessage = "Draw 1 skill.";
+      ChoiceSecondMessage = "Deploy a pawn.";
+      break;
+
     case "Purification":
       canFirstChoice = true;
       canSecondChoice = getZonesWithAllies(unit, 2, false).length > 0;
@@ -247,7 +259,10 @@ const SelectCustomChoice = (props) => {
   };
 
   const handleSelect = () => {
-    newGameState.currentResolution.pop();
+    if (!(props.details.reason === "Finesse" && selectedChoice === 2)) {
+      newGameState.currentResolution.pop();
+      console.log("POP!");
+    }
 
     switch (props.details.reason) {
       // case "TEMPLATE":
@@ -257,6 +272,18 @@ const SelectCustomChoice = (props) => {
       //     //2nd choice
       //   }
       //   break;
+
+      case "Finesse":
+        if (selectedChoice === 1) {
+          newGameState = drawSkill(newGameState);
+          updateData = true;
+        } else {
+          newGameState.currentResolution.push({
+            resolution: "Deploying Pawn",
+            zoneIds: getVacantFrontier(),
+          });
+        }
+        break;
 
       case "Purification":
         if (selectedChoice === 1) {

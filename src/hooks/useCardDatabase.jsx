@@ -1,7 +1,8 @@
 export const useCardDatabase = () => {
-  const makeAvelhemCard = (name, id) => {
-    const AVELHEM_LIMIT = 4;
+  const SL = 3; //Non-burst Scion skill limit
+  const AVELHEM_LIMIT = 4;
 
+  const makeAvelhemCard = (name, id) => {
     return {
       Name: name,
       Stock: AVELHEM_LIMIT,
@@ -34,49 +35,55 @@ export const useCardDatabase = () => {
   };
 
   const skillCardList = [
-    makeSkillCard("Ignition Propulsion", 4, "Fire", "Standard", "01-01"),
-    makeSkillCard("Conflagration", 4, "Fire", "Resonant", "01-02"),
-    makeSkillCard("Blaze of Glory", 4, "Fire", "Contingent", "01-03"),
+    makeSkillCard("Ignition Propulsion", SL, "Fire", "Standard", "01-01"),
+    makeSkillCard("Conflagration", SL, "Fire", "Resonant", "01-02"),
+    makeSkillCard("Blaze of Glory", SL, "Fire", "Contingent", "01-03"),
     makeSkillCard("Resplendence", 1, "Fire", "Burst", "01-04"),
 
-    makeSkillCard("Purification", 4, "Water", "Standard", "02-01"),
-    makeSkillCard("Frigid Breath", 4, "Water", "Resonant", "02-02"),
-    makeSkillCard("Healing Rain", 4, "Water", "Contingent", "02-03"),
+    makeSkillCard("Purification", SL, "Water", "Standard", "02-01"),
+    makeSkillCard("Frigid Breath", SL, "Water", "Resonant", "02-02"),
+    makeSkillCard("Healing Rain", SL, "Water", "Contingent", "02-03"),
     makeSkillCard("Glacial Torrent", 1, "Water", "Burst", "02-04"),
 
-    makeSkillCard("Aerial Impetus", 4, "Wind", "Standard", "03-01"),
-    makeSkillCard("Gale Conjuration", 4, "Wind", "Resonant", "03-02"),
-    makeSkillCard("Symphonic Screech", 4, "Wind", "Contingent", "03-03"),
+    makeSkillCard("Aerial Impetus", SL, "Wind", "Standard", "03-01"),
+    makeSkillCard("Gale Conjuration", SL, "Wind", "Resonant", "03-02"),
+    makeSkillCard("Symphonic Screech", SL, "Wind", "Contingent", "03-03"),
     makeSkillCard("Cataclysmic Tempest", 1, "Wind", "Burst", "03-04"),
 
-    makeSkillCard("Crystallization", 4, "Land", "Standard", "04-01"),
-    makeSkillCard("Upheaval", 4, "Land", "Resonant", "04-02"),
-    makeSkillCard("Pitfall Trap", 4, "Land", "Contingent", "04-03"),
+    makeSkillCard("Crystallization", SL, "Land", "Standard", "04-01"),
+    makeSkillCard("Upheaval", SL, "Land", "Resonant", "04-02"),
+    makeSkillCard("Pitfall Trap", SL, "Land", "Contingent", "04-03"),
     makeSkillCard("Geomancy", 1, "Land", "Burst", "04-04"),
 
-    makeSkillCard("Chain Lightning", 4, "Lightning", "Standard", "05-01"),
-    makeSkillCard("Zip and Zap", 4, "Lightning", "Resonant", "05-02"),
-    makeSkillCard("Thunder Thaumaturge", 4, "Lightning", "Contingent", "05-03"),
+    makeSkillCard("Chain Lightning", SL, "Lightning", "Standard", "05-01"),
+    makeSkillCard("Zip and Zap", SL, "Lightning", "Resonant", "05-02"),
+    makeSkillCard(
+      "Thunder Thaumaturge",
+      SL,
+      "Lightning",
+      "Contingent",
+      "05-03"
+    ),
     makeSkillCard("Valiant Spark", 1, "Lightning", "Burst", "05-04"),
 
-    makeSkillCard("Surge", 4, "Mana", "Standard", "06-01"),
-    makeSkillCard("Diffusion", 4, "Mana", "Resonant", "06-02"),
-    makeSkillCard("Aegis", 4, "Mana", "Contingent", "06-03"),
+    makeSkillCard("Surge", SL, "Mana", "Standard", "06-01"),
+    makeSkillCard("Diffusion", SL, "Mana", "Resonant", "06-02"),
+    makeSkillCard("Aegis", SL, "Mana", "Contingent", "06-03"),
     makeSkillCard("Disruption Field", 1, "Mana", "Burst", "06-04"),
 
-    makeSkillCard("Magnetic Shockwave", 4, "Metal", "Standard", "07-01"),
-    makeSkillCard("Reinforce", 4, "Metal", "Resonant", "07-02"),
-    makeSkillCard("Frenzy Blade", 4, "Metal", "Contingent", "07-03"),
+    makeSkillCard("Magnetic Shockwave", SL, "Metal", "Standard", "07-01"),
+    makeSkillCard("Reinforce", SL, "Metal", "Resonant", "07-02"),
+    makeSkillCard("Frenzy Blade", SL, "Metal", "Contingent", "07-03"),
     makeSkillCard("Arsenal Onslaught", 1, "Metal", "Burst", "07-04"),
 
-    makeSkillCard("Sow and Reap", 4, "Plant", "Standard", "08-01"),
-    makeSkillCard("Efflorescence", 4, "Plant", "Resonant", "08-02"),
-    makeSkillCard("Viridian Grave", 4, "Plant", "Contingent", "08-03"),
+    makeSkillCard("Sow and Reap", SL, "Plant", "Standard", "08-01"),
+    makeSkillCard("Efflorescence", SL, "Plant", "Resonant", "08-02"),
+    makeSkillCard("Viridian Grave", SL, "Plant", "Contingent", "08-03"),
     makeSkillCard("Castle of Thorns", 1, "Plant", "Burst", "08-04"),
 
-    makeSkillCard("Raptor Blitz", 4, "Avian", "Standard", "09-01"),
-    makeSkillCard("Reconnaissance", 4, "Avian", "Resonant", "09-02"),
-    makeSkillCard("Guardian Wings", 4, "Avian", "Contingent", "09-03"),
+    makeSkillCard("Raptor Blitz", SL, "Avian", "Standard", "09-01"),
+    makeSkillCard("Reconnaissance", SL, "Avian", "Resonant", "09-02"),
+    makeSkillCard("Guardian Wings", SL, "Avian", "Contingent", "09-03"),
     makeSkillCard("Vanguard Fleet", 1, "Avian", "Burst", "09-04"),
 
     //Sovereign
@@ -204,6 +211,7 @@ export const useCardDatabase = () => {
       "01-01", //Ignition Propulsion
       "01-02", //Conflagration
       "02-02", //Frigid Breath
+      "03-04", //Cataclysmic Cyclone
       "04-03", //Pitfall Trap
       "04-04", //Geomancy
       "05-01", //Chain Lightning
@@ -239,58 +247,70 @@ export const useCardDatabase = () => {
     ];
   };
 
-  const trialTeaAvelhems = [
-    //fire
-    1, 1, 1, 1,
-    //land
-    4, 4, 4, 4,
-    //mana
-    6, 6, 6, 6,
-    //metal
-    7, 7, 7, 7,
+  const starterSkillRepertoire = [
+    "01-01", // Ignition Propulsion
+    "01-01", // Ignition Propulsion
+    "01-01", // Ignition Propulsion
+    "01-02", // Conflagration
+    "01-02", // Conflagration
+    "01-02", // Conflagration
+    "01-03", // Conflagration
+    "01-03", // Conflagration
+    "01-03", // Conflagration
+    "02-01", // Purification
+    "02-01", // Purification
+    "02-01", // Purification
+    "02-02", // Frigid Breath
+    "02-02", // Frigid Breath
+    "02-02", // Frigid Breath
+    "02-03", // Healing Rain
+    "02-03", // Healing Rain
+    "02-03", // Healing Rain
+    "03-01", // Aerial Impetus
+    "03-01", // Aerial Impetus
+    "03-01", // Aerial Impetus
+    "03-02", // Gale Conjuration
+    "03-02", // Gale Conjuration
+    "03-02", // Gale Conjuration
+    "04-01", // Crystallization
+    "04-01", // Crystallization
+    "04-01", // Crystallization
+    "04-03", // Pitfall Trap
+    "04-03", // Pitfall Trap
+    "04-03", // Pitfall Trap
+    "06-01", // Surge
+    "06-01", // Surge
+    "06-01", // Surge
+    "06-03", // Aegis
+    "06-03", // Aegis
+    "06-03", // Aegis
+    "SA-02", // Tea for Two
+    "SA-02", // Tea for Two
+    "SA-03", // Dark Halo
+    "SA-03", // Dark Halo
+    "SA-04", // Reminiscence
+    "SA-04", // Reminiscence
+    "SB-01", // Transmute
+    "SB-01", // Transmute
+    "SB-03", // Providence
+    "SB-03", // Providence
+    "SC-02", // Fated Rivalry
+    "SC-02", // Fated Rivalry
+    "SC-04", // Vengeful Legacy
+    "SC-04", // Vengeful Legacy
   ];
 
-  const trialTeaSkills = [
-    "01-01",
-    "01-01",
-    "01-01",
-    "01-02",
-    "01-02",
-    "01-02",
-    "01-04",
-    "04-01",
-    "04-01",
-    "04-01",
-    "04-01",
-    "04-02",
-    "04-02",
-    "04-02",
-    "04-03",
-    "04-03",
-    "04-03",
-    "04-04",
-    "06-03",
-    "06-03",
-    "06-03",
-    "06-03",
-    "06-04",
-    "07-01",
-    "07-01",
-    "07-01",
-    "07-02",
-    "07-02",
-    "07-02",
-    "07-02",
-    "07-03",
-    "07-03",
-    "07-04",
-    "SA-02",
-    "SA-02",
-    "SA-03",
-    "SA-03",
-    "SA-04",
-    "SB-01",
-    "SB-01",
+  const starterAvelhemRepertoire = [
+    //Fire
+    1, 1, 1, 1,
+    //Water
+    2, 2, 2, 2,
+    //Wind
+    3, 3, 3, 3,
+    //Land
+    4, 4, 4, 4,
+    //Mana
+    6, 6, 6, 6,
   ];
 
   return {
@@ -306,7 +326,7 @@ export const useCardDatabase = () => {
     allContingentSkills,
     pressTheAttackList,
     sovereignSkillList,
-    trialTeaAvelhems,
-    trialTeaSkills,
+    starterAvelhemRepertoire,
+    starterSkillRepertoire,
   };
 };

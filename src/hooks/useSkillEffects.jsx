@@ -1620,12 +1620,6 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    newGameState[victimInfo.player].units[victimInfo.unitIndex] = victim;
-
-    // if (unit.unitIndex === victim.unitIndex) {
-    //   newGameState = drawSkill(newGameState);
-    // }
-
     newGameState.currentResolution.push({
       resolution: "Mana Skill",
       resolution2: "Aegis1",
@@ -2460,15 +2454,26 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    newGameState[victimInfo.player].units[victimInfo.unitIndex] = victim;
+    // victim.enhancements.shield
+    //   ? (victim.enhancements.shield = Math.max(1, victim.enhancements.shield))
+    //   : (victim.enhancements.shield = 1);
 
-    victim.enhancements.shield
-      ? (victim.enhancements.shield = Math.max(1, victim.enhancements.shield))
-      : (victim.enhancements.shield = 1);
+    // if (victim.unitClass === "Avian Scion") {
+    //   newGameState = aetherRestoreSpecial(newGameState, unit);
+    // }
 
-    if (unit.unitIndex === victim.unitIndex) {
-      newGameState = aetherRestoreSpecial(newGameState, unit);
-    }
+    newGameState.currentResolution.push({
+      resolution: "Avian Skill",
+      resolution2: "Guardian Wings Float",
+      unit: unit,
+      details: {
+        title: "Guardian Wings",
+        reason: "Guardian Wings",
+        restriction: null,
+        message: "Float 1 skill.",
+        victim: victim,
+      },
+    });
 
     return newGameState;
   };
@@ -2576,7 +2581,7 @@ export const useSkillEffects = () => {
 
   //end of list
 
-  const applySkill = (effect, a, b, c) => {
+  const applySkill = (effect, a, b) => {
     switch (effect) {
       //Fire
       case "ignitionPropulsion1":
@@ -2754,7 +2759,5 @@ export const useSkillEffects = () => {
     }
   };
 
-  return {
-    applySkill,
-  };
+  return { applySkill };
 };
