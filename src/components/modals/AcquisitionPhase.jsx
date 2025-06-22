@@ -175,10 +175,9 @@ const AcquisitionPhase = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          case 15:
+          case 14:
             return element2 === 1;
-
-          case 16:
+          case 15:
             return element1 === "button";
         }
     }
@@ -188,8 +187,8 @@ const AcquisitionPhase = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
+          case 14:
           case 15:
-          case 16:
             dispatch(updateDemoCount(demoCount + 1));
             break;
         }

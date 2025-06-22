@@ -51,37 +51,27 @@ const PlayerAvelhemHand = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          case 72:
-          case 80:
+          case 66:
+          case 84:
             return true;
 
-          case 73:
-            return element1 === 1;
-
-          case 81:
+          case 67:
             return element1 === 6;
+
+          case 85:
+            return element1 === 2;
         }
     }
-
-    // switch (demoGuide) {
-    //   case "Learn1.206":
-    //     return true;
-
-    //  case "Learn1.207":
-    //     return element1 === 2;
-
-    //   ////////////////
-    // }
   };
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          case 72:
-          case 73:
-          case 80:
-          case 81:
+          case 66:
+          case 67:
+          case 84:
+          case 85:
             dispatch(updateDemoCount(demoCount + 1));
             break;
         }

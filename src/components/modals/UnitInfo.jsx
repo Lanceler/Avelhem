@@ -29,7 +29,7 @@ const UnitInfo = (props) => {
 
   const unit = props.unit;
 
-  const team = unit.player === self ? "Ally" : "Enemy";
+  const team = unit.player === self ? "Ally" : "Foe";
 
   const skillSet = getScionSet(unit.unitClass);
 
@@ -420,10 +420,11 @@ const UnitInfo = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          case 97:
-            return element2 === 0;
+          // case 97:
+          //   return element2 === 0;
 
-          case 99:
+          case 82:
+          case 113:
             return element1 === "Collapse";
         }
     }
@@ -433,14 +434,15 @@ const UnitInfo = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          case 97:
-            if (i === 0) {
-              dispatch(updateDemoCount(demoCount + 1));
-            }
-            break;
+          // case 97:
+          //   if (i === 0) {
+          //     dispatch(updateDemoCount(demoCount + 1));
+          //   }
+          //   break;
 
-          case 99:
-            if (i === "close") {
+          case 82:
+          case 113:
+            if (i === "Collapse") {
               dispatch(updateDemoCount(demoCount + 1));
             }
             break;
@@ -462,19 +464,19 @@ const UnitInfo = (props) => {
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 512 512"
-            className={` close-modal-button unitInfo-close ${
+            className={`close-modal-button unitInfo-close ${
               canClick("Collapse") ? "demoClick" : ""
             }`}
             onClick={() => {
               handleCollapse();
-              handleUpdateDemoGuide("close");
+              handleUpdateDemoGuide("Collapse");
             }}
           >
             <path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm121.6 313.1c4.7 4.7 4.7 12.3 0 17L338 377.6c-4.7 4.7-12.3 4.7-17 0L256 312l-65.1 65.6c-4.7 4.7-12.3 4.7-17 0L134.4 338c-4.7-4.7-4.7-12.3 0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3 0-17l39.6-39.6c4.7-4.7 12.3-4.7 17 0l65 65.7 65.1-65.6c4.7-4.7 12.3-4.7 17 0l39.6 39.6c4.7 4.7 4.7 12.3 0 17L312 256l65.6 65.1z" />
           </svg>
         </div>
 
-        <div className="info-modal-contents">
+        <div className="info-modal-contents" style={{ pointerEvents: "all" }}>
           <div className="unitInfo-Abilities-Attributes">
             <div className="unitInfo-Abilities  ">
               <p className="unitInfo-text-heading1">
@@ -579,7 +581,7 @@ const UnitInfo = (props) => {
                         }}
                         onClick={() => {
                           dispatch(updateMagnifiedSkill(skill));
-                          handleUpdateDemoGuide(i);
+                          // handleUpdateDemoGuide(i);
                         }}
                       ></div>
                     ))}

@@ -126,7 +126,7 @@
 }
 
 .board-center .board-frame {
-        border: 5.5px ridge goldenrod;
+    border: 5.5px ridge goldenrod;
     height: fit-content;
     width: fit-content;
     position: relative;
@@ -136,13 +136,13 @@
     // background: linear-gradient(to bottom, rgb(177, 138, 12), rgb(226, 184, 45) 60%, rgb(240, 196, 52) 100%);
     box-shadow: 2px 2px 3px 1px rgba(0, 0, 0, 0.5);
     filter: brightness(1.05);
+  
 }
 
 .board-center .board-frame-self {
-    // background: linear-gradient(to top, rgba(15, 91, 153, 0.60), rgba(25, 107, 184, 0.35) 70%, rgba(67, 152, 250, 0.45) 100%);
-
     background: linear-gradient(to top, rgba(15, 91, 153, 0.60), rgba(85, 139, 189, 0.45) 70%, rgba(125, 178, 238, 0.55) 100%);
 }
+
 
 .board-right {
     height: 100%;
@@ -228,9 +228,15 @@
     align-items: center;
     border: 3px solid goldenrod;
     border-radius: 8px;
-    background-image: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
+    // background-image: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
+    background-image: linear-gradient(to bottom, rgba(151, 8, 10, 0.3), rgba(221, 35, 38, 0.5) 60%, rgba(255, 90, 93, 0.9) 100%);
     box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.5);
     overflow: hidden;
+}
+
+.bp-counter:hover {
+    filter: brightness(110%);
+    background: linear-gradient(to bottom, rgb(151, 8, 11), rgb(221, 35, 38) 60%, rgb(255, 90, 93) 100%);
 }
 
 .counter-flash{

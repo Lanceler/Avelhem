@@ -80,11 +80,9 @@ const PlayerSkillHand = (props) => {
           className="collapse"
           onClick={() => handleCollapse()}
           style={{
-            top: `${-raiseHeight + 45}px`,
+            top: `${-raiseHeight + 15}px`,
           }}
         >
-          {/* <img src={Collapse} className="collapseIcon" /> */}
-
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 384 512"

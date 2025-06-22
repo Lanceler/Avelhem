@@ -334,12 +334,12 @@ const SelectTacticalActionSovereign = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          case 37:
-          case 44:
+          case 40:
+          case 46:
             return element2 === 0;
 
-          case 38:
-          case 45:
+          case 41:
+          case 47:
             return element1 === "Select Button";
         }
     }
@@ -349,10 +349,10 @@ const SelectTacticalActionSovereign = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          case 37:
-          case 38:
-          case 44:
-          case 45:
+          case 40:
+          case 41:
+          case 46:
+          case 47:
             dispatch(updateDemoCount(demoCount + 1));
             break;
         }

@@ -3,7 +3,7 @@ import "./Modal.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
-import { updateDemo } from "../../redux/demoGuide";
+import { updateDemoCount } from "../../redux/demoCount";
 
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 import { useCardDatabase } from "../../hooks/useCardDatabase";
@@ -12,6 +12,7 @@ const SelectCustomChoice = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
+  const { demoCount } = useSelector((state) => state.demoCount);
 
   const dispatch = useDispatch();
 
@@ -261,7 +262,7 @@ const SelectCustomChoice = (props) => {
   const handleSelect = () => {
     if (!(props.details.reason === "Finesse" && selectedChoice === 2)) {
       newGameState.currentResolution.pop();
-      console.log("POP!");
+      // console.log("POP!");
     }
 
     switch (props.details.reason) {
@@ -777,27 +778,35 @@ const SelectCustomChoice = (props) => {
   };
 
   const canClick = (element) => {
-    switch (
-      demoGuide
+    switch (demoGuide) {
+      case "Learn-overview":
+        switch (demoCount) {
+          case 89:
+            return element === "1st Choice";
 
-      // case "Learn1.246":
-      //   return element === "Select Button";
+          case 103:
+            return element === "2nd Choice";
 
-      ///////////////////////
-    ) {
+          case 90:
+          case 104:
+            return element === "Select Button";
+
+          //////////////////////////
+        }
     }
   };
 
   const handleUpdateDemoGuide = () => {
-    switch (
-      demoGuide
-
-      // case "Learn1.246":
-      //   dispatch(updateDemo("Learn1.247"));
-      //   break;
-
-      ///////////////////////
-    ) {
+    switch (demoGuide) {
+      case "Learn-overview":
+        switch (demoCount) {
+          case 89:
+          case 90:
+          case 103:
+          case 104:
+            dispatch(updateDemoCount(demoCount + 1));
+            break;
+        }
     }
   };
 

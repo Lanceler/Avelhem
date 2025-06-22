@@ -48,9 +48,11 @@ const ViewVestige = (props) => {
   const canClick = () => {
     switch (demoGuide) {
       case "Learn-overview":
-        switch (demoCount) {
-          case 85:
-            return true;
+        switch (
+          demoCount
+          // case 85:
+          //   return true;
+        ) {
         }
     }
   };
@@ -58,10 +60,12 @@ const ViewVestige = (props) => {
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
       case "Learn-overview":
-        switch (demoCount) {
-          case 85:
-            dispatch(updateDemoCount(demoCount + 1));
-            break;
+        switch (
+          demoCount
+          // case 85:
+          //   dispatch(updateDemoCount(demoCount + 1));
+          //   break;
+        ) {
         }
     }
   };

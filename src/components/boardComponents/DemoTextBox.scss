@@ -1,14 +1,17 @@
 .demo-text-box-area {
     position: absolute;
     z-index: 500000;
-    width: 750px;
-    top: 15%;
-    left: 75%;
-    transform: translate(-50%,-50%);
+    width: 680px;
+    // top: 15%;
+    // left: 75%;
+    // transform: translate(-50%,-50%);
     display: flex;
     flex-direction: column;
-    transition: top 0.45s ease-in-out, left 0.45s ease-in-out;
+    transition: top 0.75s ease-in-out, left 0.75s ease-in-out;
     // gap: 8px;
+
+    align-self: normal;
+
 
 }
 
@@ -37,7 +40,6 @@
     flex-direction: row;
     gap: 20px;
     justify-content: end;
-    // background-color: rgba(0, 0, 0, 0.80);
     background: linear-gradient(to bottom, rgba(37, 37, 37, 0.75), rgba(0, 0, 0, 0.0) 100%);
 }
 
@@ -59,6 +61,7 @@
 .play-button:hover {
     filter: brightness(1.2);
     color: rgb(255, 207, 86);
+    
 }
 
 .play-button:disabled {

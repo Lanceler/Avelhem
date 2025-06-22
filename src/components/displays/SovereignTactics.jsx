@@ -46,26 +46,13 @@ const SovereignTactics = (props) => {
   };
 
   const canClick = (element1, element2) => {
-    // switch (demoGuide) {
-    //   case "Learn1.34":
-    //   case "Learn1.35":
-    //   case "Learn1.115":
-    //     return element2 === 0;
-
-    //   case "Learn1.46":
-    //     return element2 === 1;
-
-    //   case "Learn1.117":
-    //     return element === "?";
-    // }
-
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          case 35:
+          case 38:
             return element2 === 0;
 
-          case 42:
+          case 44:
             return element2 === 1;
 
           case 63:
@@ -78,8 +65,8 @@ const SovereignTactics = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          case 35:
-          case 42:
+          case 38:
+          case 44:
           case 63:
             dispatch(updateDemoCount(demoCount + 1));
             break;

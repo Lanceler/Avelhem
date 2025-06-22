@@ -858,13 +858,11 @@ const SelectUnitAbility = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          case 90:
+          case 74:
             return element2 === 1;
 
-          case 91:
+          case 75:
             return element1 === "Select Button";
-
-          ///////////////////////////////
         }
     }
   };
@@ -873,8 +871,8 @@ const SelectUnitAbility = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          case 90:
-          case 91:
+          case 74:
+          case 75:
             dispatch(updateDemoCount(demoCount + 1));
             break;
         }

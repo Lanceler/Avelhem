@@ -19,10 +19,12 @@ const ZoomCard = (props) => {
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
       case "Learn-overview":
-        switch (demoCount) {
-          case 98:
-            dispatch(updateDemoCount(demoCount + 1));
-            break;
+        switch (
+          demoCount
+          // case 98:
+          //   dispatch(updateDemoCount(demoCount + 1));
+          //   break;
+        ) {
         }
     }
   };

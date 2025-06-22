@@ -119,7 +119,7 @@ export default function Demo() {
   // };
 
   useEffect(() => {
-    if ([7, 8, 11, 21, 30, 46, 117].includes(demoCount)) {
+    if ([7, 8, 9, 20, 29, 33, 48, 114].includes(demoCount)) {
       scriptedDemo();
     }
   }, [demoCount]);
@@ -138,40 +138,21 @@ export default function Demo() {
             duplicateDemoGameState.host.skillHand = [
               "SA-04",
               "01-01",
-              "05-02",
               "08-03",
-              "07-01",
-            ];
-
-            duplicateDemoGameState.guest.skillHand = [
-              "07-02",
-              "07-02",
-              "SB-01",
-              "SA-04",
-              "05-01",
-              "08-01",
+              "05-02",
+              "06-01",
             ];
 
             const a = duplicateDemoGameState.host.avelhemRepertoire.length;
-            duplicateDemoGameState.host.avelhemRepertoire[a - 1] = 1;
+            duplicateDemoGameState.host.avelhemRepertoire[a - 1] = 2;
             duplicateDemoGameState.host.avelhemRepertoire[a - 2] = 6;
-
-            duplicateDemoGameState.guest.avelhemRepertoire[a - 1] = 7;
-            duplicateDemoGameState.guest.avelhemRepertoire[a - 2] = 8;
 
             const b = duplicateDemoGameState.host.skillRepertoire.length;
             duplicateDemoGameState.host.skillRepertoire[b - 1] = "SB-05";
-            duplicateDemoGameState.host.skillRepertoire[b - 2] = "08-04";
-            duplicateDemoGameState.host.skillRepertoire[b - 3] = "04-01";
-            duplicateDemoGameState.host.skillRepertoire[b - 4] = "SB-02";
-            duplicateDemoGameState.host.skillRepertoire[b - 5] = "02-01";
-            duplicateDemoGameState.host.skillRepertoire[b - 6] = "05-01";
-            duplicateDemoGameState.host.skillRepertoire[b - 7] = "05-02";
-            duplicateDemoGameState.host.skillRepertoire[b - 8] = "04-03";
-
+            duplicateDemoGameState.host.skillRepertoire[b - 2] = "06-02";
             break;
 
-          case 11:
+          case 9:
             const newZoneInfo = [...JSON.parse(duplicateDemoGameState.zones)];
 
             duplicateDemoGameState.host.units = [
@@ -199,22 +180,28 @@ export default function Demo() {
             newZoneInfo[3][4].unitIndex = 0;
 
             duplicateDemoGameState.zones = JSON.stringify(newZoneInfo);
-
             break;
 
-          case 21:
+          case 20:
             duplicateDemoGameState.host.bountyPoints = 6;
             break;
 
-          case 30:
-          case 46:
+          case 29:
+            duplicateDemoGameState.tactics = [
+              { face: "Advance", limit: 1, stock: 1 },
+              { face: "Advance", limit: 1, stock: 1 },
+            ];
+            break;
+
+          case 33:
+          case 48:
             duplicateDemoGameState.tactics = [
               { face: "Advance", limit: 1, stock: 1 },
               { face: "Mobilize", limit: 3, stock: 3 },
             ];
             break;
 
-          case 117:
+          case 114:
             duplicateDemoGameState.host.units[4] = {
               player: "host",
               unitIndex: 4,
@@ -228,19 +215,8 @@ export default function Demo() {
               boosts: {},
               temporary: {},
             };
-
             break;
-            //////////////////////
-
-            return (
-              <div>
-                Overview: Humanity has inherited the Maker’s authority over
-                creation; their wills empower and bend creation to their whims.
-                Players assume the roles of Sovereigns, ordained monarchs whose
-                dominion compels mankind itself; their goal is to enthrone their
-                royal bloodline as the one and only.
-              </div>
-            );
+          //////////////////////
         }
     }
 
@@ -261,7 +237,8 @@ export default function Demo() {
           }}
         >
           <div className="demo-header">
-            {demoTitle}{" "}
+            {demoTitle}
+            {/* {" "}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 512 512"
@@ -270,7 +247,7 @@ export default function Demo() {
               onClick={() => setInfoPopUp(id)}
             >
               <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM169.8 165.3c7.9-22.3 29.1-37.3 52.8-37.3h58.3c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24V250.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1H222.6c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z" />
-            </svg>
+            </svg> */}
           </div>
 
           <div className="demo-board">

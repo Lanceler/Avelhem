@@ -42,7 +42,8 @@ const TacticResults = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          case 30:
+          case 29:
+          case 33:
             return true;
         }
     }
@@ -52,7 +53,8 @@ const TacticResults = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          case 30:
+          case 29:
+          case 33:
             dispatch(updateDemoCount(demoCount + 1));
             break;
         }

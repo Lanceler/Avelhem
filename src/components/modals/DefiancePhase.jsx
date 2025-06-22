@@ -232,7 +232,7 @@ const DefiancePhaseSelection = (props) => {
     },
     {
       title: "Destine",
-      desc: "Spend 1 Scion skill to ascend an ally pawn to the matching class",
+      desc: "Spend 1 Scion skill to ascend an ally pawn to the matching class.",
     },
     {
       title: "Ex Machina",
@@ -258,19 +258,19 @@ const DefiancePhaseSelection = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
+          case 31:
+            return element1 === 1;
           case 32:
-            return element1 === "skip";
+            return element1 === "select";
         }
     }
-
-    //   case "Learn1.184":
-    //     return element1 === "Ex Machina";
   };
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
+          case 31:
           case 32:
             dispatch(updateDemoCount(demoCount + 1));
             break;
@@ -311,7 +311,7 @@ const DefiancePhaseSelection = (props) => {
               >
                 <div
                   className={`modalSmall ${canSelect[i] ? "" : "disabledModal"} 
-                   ${canClick(d.title) ? "demoClick" : ""}  `}
+                   ${canClick(i) ? "demoClick" : ""}  `}
                   style={{
                     boxShadow: selectedChoice === i + 1 ? "none" : "",
                   }}

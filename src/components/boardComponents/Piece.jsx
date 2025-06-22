@@ -57,43 +57,42 @@ export const Piece = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          case 46:
-          case 53:
-          case 60:
-          case 75:
-          case 92:
-          case 94:
-          case 102:
+          case 49:
+          case 55:
+          case 61:
+          case 69:
+          case 72:
+          case 77:
+          case 79:
+          case 91:
+          case 99:
+          case 110:
             return (
               element1 === "Unit" &&
               element2.unitIndex === 1 &&
               element2.player === "host"
             );
 
-          case 65:
-          case 83:
-          case 86:
+          case 87:
             return (
               element1 === "Unit" &&
               element2.unitIndex === 2 &&
               element2.player === "host"
             );
 
-          case 109:
+          case 107:
             return (
               element1 === "Unit" &&
               element2.unitIndex === 1 &&
               element2.player === "guest"
             );
 
-          case 118:
+          case 115:
             return (
               element1 === "Unit" &&
               element2.unitIndex === 4 &&
               element2.player === "host"
             );
-
-          ///////
         }
     }
   };
@@ -102,18 +101,11 @@ export const Piece = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          case 46:
-          case 53:
-          case 60:
-          case 65:
-          case 75:
-          case 83:
-          case 86:
-          case 92:
-          case 94:
-          case 102:
-          case 109:
-          case 118:
+          case 69:
+          case 77:
+          case 87:
+          case 91:
+          case 107:
             dispatch(updateDemoCount(demoCount + 1));
             break;
         }

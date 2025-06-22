@@ -74,12 +74,11 @@ const SelectTactic = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          case 48:
+          case 50:
             return element2 === 0;
 
-          case 55:
-          case 67:
-          case 120:
+          case 56:
+          case 116:
             return element2 === 1;
 
           case 62:
@@ -92,11 +91,10 @@ const SelectTactic = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          case 48:
-          case 55:
+          case 50:
+          case 56:
           case 62:
-          case 67:
-          case 120:
+          case 116:
             dispatch(updateDemoCount(demoCount + 1));
             break;
         }

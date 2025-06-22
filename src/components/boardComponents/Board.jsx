@@ -499,20 +499,20 @@ const Board = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          case 47:
-          case 54:
+          case 49:
+          case 55:
           case 61:
-          case 66:
-          case 119:
+          case 115:
             return element1 === "Tactic Button";
 
-          case 87:
+          case 72:
             return element1 === "Ability Button";
 
-          case 95:
+          case 79:
+          case 110:
             return element1 === "Info Button";
 
-          case 103:
+          case 99:
             return element1 === "Skill Button";
         }
 
@@ -524,14 +524,14 @@ const Board = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          case 47:
-          case 54:
+          case 49:
+          case 55:
           case 61:
-          case 66:
-          case 87:
-          case 95:
-          case 103:
-          case 119:
+          case 72:
+          case 79:
+          case 99:
+          case 110:
+          case 115:
             dispatch(updateDemoCount(demoCount + 1));
             break;
         }

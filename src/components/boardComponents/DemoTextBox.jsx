@@ -16,85 +16,78 @@ const DemoTextBox = () => {
 
   const handleBack = () => {
     switch (tutorialIndex) {
-      case 16:
-        setTutorialIndex(14);
+      case 15:
+        setTutorialIndex(13);
         break;
+
+      case 21:
       case 22:
       case 23:
       case 24:
-      case 25:
-        setTutorialIndex(20);
+        setTutorialIndex(19);
         break;
-      case 29:
-        setTutorialIndex(27);
+
+      case 28:
+        setTutorialIndex(26);
         break;
-      case 38:
-        setTutorialIndex(36);
+
+      case 32:
+        setTutorialIndex(30);
         break;
-      case 45:
-        setTutorialIndex(43);
+
+      case 41:
+        setTutorialIndex(39);
         break;
+
       case 47:
         setTutorialIndex(45);
         break;
-      case 50:
-        setTutorialIndex(48);
+
+      case 52:
+        setTutorialIndex(50);
         break;
-      case 54:
-        setTutorialIndex(52);
-        break;
-      case 57:
+
       case 58:
-        setTutorialIndex(55);
+      case 59:
+        setTutorialIndex(56);
         break;
-      case 61:
-        setTutorialIndex(59);
+
+      case 67:
+        setTutorialIndex(65);
         break;
-      case 66:
-        setTutorialIndex(64);
+
+      case 75:
+        setTutorialIndex(73);
         break;
-      case 68:
-      case 69:
-      case 70:
-        setTutorialIndex(66);
+
+      case 85:
+        setTutorialIndex(83);
         break;
-      case 73:
-        setTutorialIndex(71);
+
+      case 90:
+        setTutorialIndex(88);
         break;
-      case 79:
-        setTutorialIndex(77);
+
+      case 102:
+        setTutorialIndex(100);
         break;
-      case 81:
-      case 82:
-      case 83:
-        setTutorialIndex(79);
+
+      case 104:
+        setTutorialIndex(102);
         break;
-      case 91:
-        setTutorialIndex(89);
-        break;
-      case 95:
-        setTutorialIndex(93);
-        break;
-      case 103:
-        setTutorialIndex(101);
-        break;
-      case 106:
-        setTutorialIndex(104);
-        break;
-      case 108:
-        setTutorialIndex(106);
-        break;
+
+      case 116:
+      case 117:
+      case 118:
       case 119:
-      case 120:
-      case 121:
-      case 122:
-      case 123:
-        setTutorialIndex(117);
+        setTutorialIndex(114);
         break;
-      case 128:
-      case 129:
-        setTutorialIndex(126);
+
+      case 124:
+      case 125:
+        setTutorialIndex(122);
         break;
+
       default:
         setTutorialIndex(tutorialIndex - 1);
         break;
@@ -102,7 +95,77 @@ const DemoTextBox = () => {
   };
 
   const handleForward = () => {
-    setTutorialIndex(tutorialIndex + 1);
+    switch (true) {
+      case tutorialIndex === 13:
+        setTutorialIndex(15);
+        break;
+
+      case [19, 20, 21, 22, 23].includes(tutorialIndex):
+        setTutorialIndex(24);
+        break;
+
+      case tutorialIndex === 26:
+        setTutorialIndex(28);
+        break;
+
+      case tutorialIndex === 30:
+        setTutorialIndex(32);
+        break;
+
+      case tutorialIndex === 39:
+        setTutorialIndex(41);
+        break;
+
+      case tutorialIndex === 45:
+        setTutorialIndex(47);
+        break;
+
+      case tutorialIndex === 50:
+        setTutorialIndex(52);
+        break;
+
+      case [56, 57, 58].includes(tutorialIndex):
+        setTutorialIndex(59);
+        break;
+
+      case tutorialIndex === 65:
+        setTutorialIndex(67);
+        break;
+
+      case tutorialIndex === 73:
+        setTutorialIndex(75);
+        break;
+
+      case tutorialIndex === 83:
+        setTutorialIndex(85);
+        break;
+
+      case tutorialIndex === 88:
+        setTutorialIndex(90);
+        break;
+
+      case tutorialIndex === 100:
+        setTutorialIndex(102);
+        break;
+
+      case tutorialIndex === 102:
+        setTutorialIndex(104);
+        break;
+
+      case [114, 115, 116, 117, 118].includes(tutorialIndex):
+        setTutorialIndex(119);
+        break;
+
+      case [122, 123].includes(tutorialIndex):
+        setTutorialIndex(125);
+        break;
+
+      default:
+        setTutorialIndex(tutorialIndex + 1);
+        break;
+    }
+
+    // setTutorialIndex(tutorialIndex + 1);
   };
 
   const handleFastForward = () => {
@@ -113,218 +176,510 @@ const DemoTextBox = () => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (tutorialIndex) {
-          //left center, slightly raised
+          //center
           case 1:
           case 2:
             return {
-              top: "35%",
-              left: "30%",
-              transform: "translate(-50%, -50%)",
-              width: 675,
+              top: 350,
+              left: 350,
+              width: 775,
             };
 
-          //bottom right, slightly raised
           case 3:
-          case 85:
+          case 4:
             return {
-              top: "75%",
-              left: "75%",
-              transform: "translate(-50%, -50%)",
-              width: 675,
+              top: 440,
+              left: 740,
             };
 
-          //middle center, slightly raised; small
-          case 93:
-          case 136:
+          case 5:
+          case 6:
+          case 7:
             return {
-              top: "30%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
+              top: 40,
+              left: 40,
+            };
+
+          case 8:
+            return {
+              top: 540,
+              left: 40,
+            };
+
+          case 9:
+            return {
+              top: 280,
+              left: 740,
+            };
+
+          case 10:
+            return {
+              top: 380,
+              left: 740,
+            };
+
+          case 11:
+            return {
+              top: 520,
+              left: 290,
+            };
+
+          case 14:
+          case 15:
+            return {
+              top: 40,
+              left: 40,
+              width: 1350,
+            };
+
+          case 16:
+            return {
+              top: 340,
+              left: 680,
+            };
+
+          case 17:
+            return {
+              top: 580,
+              left: 730,
+            };
+
+          case 18:
+          case 19:
+          case 20:
+          case 21:
+          case 22:
+          case 23:
+          case 24:
+          case 25:
+          case 26:
+          case 27:
+          case 28:
+          case 29:
+          case 30:
+          case 31:
+          case 32:
+          case 33:
+            return {
+              top: 40,
+              left: 820,
+              width: 600,
+            };
+
+          case 34:
+          case 35:
+          case 36:
+            return {
+              top: 70,
+              left: 40,
               width: 650,
-              // height: 200,
             };
 
-          //middle of board, slightly smaller
+          case 37:
+          case 38:
+            return {
+              top: 130,
+              left: 740,
+              width: 550,
+            };
+
           case 39:
+          case 40:
+          case 41:
+            return {
+              top: 40,
+              left: 740,
+              width: 650,
+            };
+
+          case 42:
+          case 43:
+            return {
+              top: 440,
+              left: 720,
+            };
+
+          case 44:
+          case 45:
           case 46:
           case 47:
             return {
-              top: "40%",
-              left: "37.5%",
-              transform: "translate(-50%, -50%)",
-              width: 620,
-              // height: 210,
+              top: 40,
+              left: 740,
+              width: 650,
             };
 
-          //center of board; small
-          case 12:
+          case 49:
             return {
-              top: "53%",
-              left: "30%",
-              width: 500,
-              // height: 150,
+              top: 300,
+              left: 40,
+              width: 650,
             };
 
-          //center of board; a bit small
-          case 40:
+          case 50:
             return {
-              top: "50%",
-              left: "30%",
-              width: 500,
-              // height: 180,
+              top: 40,
+              left: 40,
+              width: 400,
             };
 
-          // top center of board, a bit smaller
-          case 105:
-          case 106:
-          case 113:
-          case 135:
+          case 51:
+          case 52:
             return {
-              top: "17.5%",
-              left: "35%",
-              width: 550,
-              // height: 210,
+              top: 40,
+              left: 20,
+              width: 400,
             };
 
-          // top center of board; small
-          case 60:
-          case 61:
+          case 53:
+            return {
+              top: 150,
+              left: 140,
+              width: 650,
+            };
+
+          case 63:
+            return {
+              top: 140,
+              left: 740,
+              width: 650,
+            };
+
+          case 64:
+            return {
+              top: 20,
+              left: 400,
+              width: 750,
+            };
+
+          case 65:
+            return {
+              top: 50,
+              left: 600,
+              width: 750,
+            };
+
+          case 66:
+          case 67:
+            return {
+              top: 390,
+              left: 650,
+              width: 750,
+            };
+
+          case 68:
+            return {
+              top: 450,
+              left: 800,
+              width: 380,
+            };
+
+          case 69:
+            return {
+              top: 80,
+              left: 320,
+              width: 750,
+            };
+
+          case 70:
+            return {
+              top: 220,
+              left: 620,
+              width: 750,
+            };
+
+          case 73:
+            return {
+              top: 30,
+              left: 470,
+              width: 950,
+            };
+
+          case 74:
           case 75:
-          case 102:
-          case 103:
-          case 109:
             return {
-              top: "20%",
-              left: "35%",
-              width: 350,
-              // height: 150,
+              top: 30,
+              left: 870,
+              width: 550,
             };
 
-          // top center of board, a bit lower; small
-          case 125:
+          case 76:
             return {
-              top: "30%",
-              left: "35%",
-              width: 350,
-              // height: 120,
+              top: 80,
+              left: 600,
+              width: 750,
             };
 
-          //bottom left
-          case 5:
-          case 6:
           case 77:
+          case 78:
             return {
-              top: "75%",
-              left: "30%",
-              transform: "translate(-50%, -50%)",
-              width: 600,
+              top: 180,
+              left: 340,
             };
 
-          //middle left
-          case 107:
-          case 108:
+          case 79:
             return {
-              top: "50%",
-              left: "22.5%",
-              width: 600,
+              top: 80,
+              left: 340,
             };
 
-          //top left
-          case 124:
-          case 134:
+          case 80:
+          case 81:
             return {
-              top: "25%",
-              left: "25%",
-              transform: "translate(-50%, -50%)",
+              top: 40,
+              left: 920,
+              width: 450,
+            };
+
+          case 82:
+            return {
+              top: 220,
+              left: 820,
+              width: 420,
+            };
+
+          case 83:
+            return {
+              top: 80,
+              left: 600,
               width: 700,
             };
 
-          //bottom right
-          case 41:
-          case 42:
+          case 84:
+          case 85:
             return {
-              top: "75%",
-              left: "70%",
-              transform: "translate(-50%, -50%)",
+              top: 390,
+              left: 650,
+              width: 750,
+            };
+
+          case 86:
+          case 87:
+            return {
+              top: 450,
+              left: 800,
+              width: 380,
+            };
+
+          case 88:
+            return {
+              top: 80,
+              left: 280,
+            };
+
+          case 89:
+          case 90:
+            return {
+              top: 40,
+              left: 820,
               width: 600,
             };
 
-          //middle right
-          case 8:
-          case 9:
-          case 10:
-          case 17:
+          case 91:
           case 92:
             return {
-              top: "50%",
-              left: "72.5%",
+              top: 40,
+              left: 280,
             };
 
-          //middle top right; slightly small
-          case 35:
+          case 93:
             return {
-              top: "32.5%",
-              left: "71.0%",
-              width: 620,
-              // height: 175,
+              top: 180,
+              left: 480,
+              width: 400,
             };
 
-          //middle right; slightly small
-          case 13:
-          case 73:
-          case 74:
-          case 84:
-          case 86:
-          case 87:
-          case 99:
-          case 112:
-          case 133:
-            return {
-              top: "52%",
-              left: "71.0%",
-              width: 610,
-              // height: 200,
-            };
-
-          //lower right; small
-          case 18:
-          case 63:
-          case 64:
-          case 72:
-            return {
-              top: "75%",
-              left: "75%",
-              width: 450,
-              // height: 160,
-            };
-
-          //top right smaller
+          case 94:
+          case 95:
+          case 96:
+          case 97:
           case 98:
+            return {
+              top: 280,
+              left: 700,
+              width: 650,
+            };
+
+          case 99:
+            return {
+              top: 140,
+              left: 250,
+              width: 750,
+            };
+
+          case 100:
+            return {
+              top: 320,
+              left: 970,
+              width: 420,
+            };
+
+          case 101:
+          case 102:
+            return {
+              top: 380,
+              left: 750,
+              width: 420,
+            };
+
+          case 103:
+          case 104:
+            return {
+              top: 80,
+              left: 780,
+              width: 620,
+            };
+
+          case 105:
+            return {
+              top: 40,
+              left: 300,
+              width: 560,
+            };
+
+          case 106:
+            return {
+              top: 40,
+              left: 300,
+              width: 650,
+            };
+
+          case 107:
+            return {
+              top: 140,
+              left: 300,
+              width: 550,
+            };
+
+          case 108:
+          case 109:
+            return {
+              top: 290,
+              left: 740,
+              width: 680,
+            };
+
+          case 110:
+            return {
+              top: 90,
+              left: 540,
+              width: 650,
+            };
+
+          case 111:
+          case 112:
+            return {
+              top: 500,
+              left: 40,
+              width: 700,
+            };
+
+          case 113:
+            return {
+              top: 220,
+              left: 820,
+              width: 420,
+            };
+
+          case 114:
+          case 115:
+          case 116:
+          case 117:
+          case 118:
+          case 119:
+            return {
+              top: 55,
+              left: 720,
+              width: 650,
+            };
+
+          case 120:
+            return {
+              top: 100,
+              left: 40,
+              width: 490,
+            };
+
+          case 121:
+            return {
+              top: 200,
+              left: 440,
+              width: 400,
+            };
+
+          case 122:
+            return {
+              top: 340,
+              left: 40,
+            };
+
+          case 123:
+          case 124:
+          case 125:
+            return {
+              top: 200,
+              left: 740,
+              width: 600,
+            };
+
+          case 126:
+            return {
+              top: 250,
+              left: 580,
+              width: 600,
+            };
+
           case 127:
+            return {
+              top: 350,
+              left: 640,
+              width: 650,
+            };
+
           case 128:
+            return {
+              top: 60,
+              left: 640,
+              width: 650,
+            };
+
           case 129:
             return {
-              top: "12.5%",
-              width: 550,
+              top: 60,
+              left: 640,
+              width: 650,
+            };
+
+          case 130:
+            return {
+              top: 160,
+              left: 440,
+              width: 380,
+            };
+
+          case 131:
+          case 132:
+            return {
+              top: 450,
+              left: 750,
+              width: 500,
             };
 
           default:
             return {
-              top: "20%",
-              left: "72.5%",
-              transform: "translate(-50%, -50%)",
-              width: 750,
+              top: 40,
+              left: 40,
             };
         }
     }
   };
 
   const learnOveriewExclude = new Set([
-    7, 15, 16, 21, 22, 23, 24, 25, 28, 29, 30, 32, 35, 37, 38, 39, 42, 44, 45,
-    46, 47, 48, 49, 50, 51, 53, 54, 55, 56, 57, 58, 60, 61, 62, 63, 64, 65, 66,
-    67, 68, 69, 70, 72, 73, 74, 75, 79, 80, 81, 82, 83, 84, 85, 86, 87, 90, 91,
-    92, 94, 95, 97, 98, 99, 102, 103, 105, 106, 107, 108, 109, 118, 119, 120,
-    121, 122, 123, 124, 125, 127, 128, 129, 136,
+    7, 14, 15, 20, 21, 22, 23, 24, 27, 28, 29, 31, 32, 33, 38, 40, 41, 43, 44,
+    46, 47, 49, 50, 51, 52, 53, 55, 56, 57, 58, 59, 61, 62, 63, 64, 66, 67, 68,
+    69, 72, 74, 75, 77, 79, 82, 84, 85, 86, 87, 89, 90, 91, 93, 99, 101, 102,
+    103, 104, 107, 110, 113, 115, 116, 117, 118, 119, 120, 121, 123, 124, 125,
+    130, 132,
   ]);
 
   const showNext = () => {
@@ -342,585 +697,523 @@ const DemoTextBox = () => {
             return (
               <div>
                 <span className="goldText">Avelhem: War of the Sovereigns</span>{" "}
-                is a competitive two-player board game. This tutorial will cover
-                its basic mechanics and familiarize you with its digital user
+                is a 1 vs. 1 tactical dueling game. This tutorial will cover the
+                game’s basic mechanics and familiarize you with its digital user
                 interface.
                 <br /> <br />
                 To proceed through the tutorial, click on the object embedded in
-                a <span style={{ color: "#25d01c" }}>green glow</span>. You can
-                also use the arrow buttons below to revisit previous messages.
+                a{" "}
+                <strong>
+                  <span style={{ color: "#16ca1f" }}>green glow</span>
+                </strong>
+                . You can also use the arrow buttons below to revisit previous
+                messages.
               </div>
             );
 
           case 2:
             return (
               <div>
-                <span className="goldText">Overview:</span> Humanity has
-                inherited the Maker’s dominion and authority over creation, the
-                power known as Avelhem.
+                The game is set in a realm where demigods walk among mortals as
+                the elements dance to their tunes. Humanity has inherited the
+                Maker’s authority over creation, the godsend power known as “
+                <span className="goldText">Avelhem</span>”.
                 <br /> <br />
-                <span className="goldText">
-                  Players assume the roles of the titular Sovereigns
-                </span>
-                , ordained monarchs whose Avelhems grant rulership over
-                humankind itself. Impelled by grand ambitions, the Sovereigns
-                embark on conquest, hellbent on enthroning their bloodline as
-                the one and only.
+                Players take on the mantle of the titular Sovereigns, monarchs
+                whose dominion is humanity itself.
               </div>
             );
 
           case 3:
             return (
               <div>
-                <span className="goldText">
-                  The game unfolds on a board with 10 rows and 5 columns.
-                </span>{" "}
-                Sovereigns position at opposite sides and designate the rows
-                closest to them as their respective bases.
+                The game unfolds on a board with 10 rows and 5 columns.
                 <br /> <br />
-                <span className="goldText">
-                  To win, one must maneuver their units into the opponent’s
-                  base.
-                </span>{" "}
-                This can be achieved with tactics allocated each turn, along
-                with the aid of skill cards and inherent abilities.
+                Each Sovereign positions at opposite ends of the board, with the
+                outermost rows designated as their respective bases.
               </div>
             );
 
           case 4:
             return (
               <div>
-                Sovereigns can set the number of units required for victory to a
-                maximum of 5.
+                <span className="goldText">
+                  Victory is claimed by maneuvering your units onto your
+                  opponent’s base.
+                </span>
                 <br /> <br />
-                This digital simulator automatically sets the objective to 1
-                while offering the flexibility to raise it whenever a Sovereign
-                wins.
+                By default, the first player to score with a unit wins. However,
+                players may raise the objective for longer, more intense
+                matches.
               </div>
             );
 
           case 5:
             return (
               <div>
-                <span className="goldText">Setup:</span> Sovereigns must
-                construct 2 repertoires (decks) that contain 60 skill cards & 20
-                Avelhem cards, respectively.
+                <span className="goldText">Part 1: Setup</span>
                 <br /> <br />
-                (In this website, accounts are provided starter repertoires,
-                which can be customized in the Repertoires page.)
+                Prior to the game, Sovereigns must construct 2 repertoires
+                (decks) that contain{" "}
+                <span className="goldText">
+                  50 skills cards & 20 Avelhem cards
+                </span>
+                , respectively. (Accounts are provided with starter repertoires,
+                which can be customized.)
               </div>
             );
 
           case 6:
             return (
               <div>
-                You can find the repertoires (decks) to the right of the board.
+                Repertoires are positioned to the right of the board.
                 <br /> <br />
-                The cards with the red borders are{" "}
-                <span className="goldText">skills</span>, while those with the
-                gold borders are <span className="goldText">Avelhems</span>.
+                The cards with the red borders are the skills, while those with
+                the gold borders are the Avelhems.
               </div>
             );
 
           case 7:
             return (
               <div>
-                Either player can play the first turn, decided by any reasonable
-                means. Ultimately, the option is given to the host.
+                Any player can go first, decided by any reasonable means.
+                Ultimately, the option is given to the player hosting the game.
                 <br /> <br />
                 Click on Go First.
               </div>
             );
-
           case 8:
             return (
               <div>
                 <span className="goldText">
                   The Initiator refers to the Sovereign whose turn it is.
-                </span>{" "}
-                Once the first Initiator is decided, both Sovereigns shuffle
-                their repertoires.{" "}
-                <span className="goldText">
-                  The Initiator draws 5 cards, while their opponent draws 6.
                 </span>
                 <br /> <br />
-                Note: When you are in the position to make a move or decision,
-                your side will glow blue. On occasion, this can happen even
-                during your opponent’s turn.
+                Once the first Initiator is decided, both Sovereigns shuffle
+                their repertoires. The Initiator draws 5 skills, while their
+                opponent draws 6.
               </div>
             );
 
           case 9:
             return (
               <div>
-                Each repertoire has its respective vestige (discard pile).
+                Both Sovereigns then deploy pawns on the 1st, 3rd, and 5th
+                columns on the 4th row of their respective sides. Pawns are
+                represented by tokens featuring plain white circles.
                 <br /> <br />
-                Unlike some other games, decking out does not result to an
-                instant loss.{" "}
-                <span className="goldText">
-                  When a repertoire is depleted, its vestige is shuffled to form
-                  a new one.
-                </span>
+                Gold tokens are assigned to the host, while silver tokens are
+                assigned to their opponent.
               </div>
             );
-
           case 10:
             return (
               <div>
-                Everyone is privy to the number of cards in every location: all
-                hands, repertoires (decks), and vestiges (discard piles).
-                <br /> <br />
-                That said,{" "}
-                <span className="goldText">
-                  no one is allowed to view the contents of a repertoire
-                </span>
-                , unless an effect allows them to. One may view the contents of
-                their own hand and vestiges at any time.
+                Units are deployed with 1 Health Point (HP) and Aether, which
+                are represented by the heart and winged diamond icons,
+                respectively.
               </div>
             );
 
           case 11:
             return (
               <div>
-                Both Sovereigns then{" "}
-                <span className="goldText">
-                  place pawns on the 1st, 3rd, and 5th columns on the 4th row
-                </span>{" "}
-                of their respective sides.
+                Lastly, Sovereigns set their Fate Defiance (FD) counters to 3.
                 <br /> <br />
-                <span className="goldText">
-                  Pawns are represented by tokens featuring plain white circles.
-                </span>{" "}
-                Gold units are assigned to the host, while silver units are
-                assigned to the guest.
+                Alongside Bounty Points (BP), these are located between one’s
+                skill and Avelhem repertoires.
               </div>
             );
-
           case 12:
             return (
               <div>
-                <span className="goldText">
-                  Units are deployed with 1 HP and Aether.
-                </span>{" "}
-                These are represented by the pulsing heart and winged-diamond
-                icons, respectively.
+                <span className="goldText">Part 2: Turn Structure</span>
+                <br /> <br />
+                To reiterate, the Initiator refers to the Sovereign whose turn
+                it currently is.
+                <br /> <br />
+                Each turn has 6 phases: Acquisition, Bounty, Coordination,
+                Defiance, Execution, and Final.
               </div>
             );
 
           case 13:
             return (
               <div>
-                <span className="goldText">
-                  Lastly, Sovereigns set their Fate Defiance (FD) to 3.
-                </span>
-                <br /> <br />
-                Alongside Bounty Points (BP), this can be found between one’s
-                skill and Avelhem repertoires.
+                When the game is in a state where you have priority to make a
+                move, the board will glow{" "}
+                <span style={{ color: "#4eacf8" }}>blue</span>. This typically
+                happens during your turn, but there are moments in your
+                opponent’s turn when you are given opportunities to react—and
+                vice versa.
               </div>
             );
 
           case 14:
+          case 15:
             return (
               <div>
-                With the setup complete, let us proceed to the turn structure.
-                <br /> <br />
-                To reiterate, the Initiator refers to the Sovereign whose turn
-                it currently is.{" "}
-                <span className="goldText">Each turn has 6 phases.</span>
+                In the <span className="goldText">Acquisition Phase</span>, the
+                Initiator bolsters their resources by choosing between deploying
+                a pawn or drawing cards.
+                <br />
+                As you already have pawns on the board and skill cards in hand,
+                choose Beseech to draw 2 Avelhem cards.
               </div>
             );
 
-          case 15:
           case 16:
             return (
               <div>
-                The first phase is the{" "}
-                <span className="goldText">Acquisition Phase</span>
-                , where the Initiator is presented options that involve
-                deploying a pawn or drawings cards.
+                Avelhems are divine powers that command and enhance creation.
                 <br /> <br />
-                As you already have pawns on the board and skill cards in hand,
-                choose to draw 2 Avelhem cards via Beseech.
+                In this game, they are bestowed via cards that ascend pawns to
+                Scions of a specified class. The icon at the card’s top-left
+                corner reflects its corresponding class.
               </div>
             );
 
           case 17:
             return (
               <div>
-                <span className="goldText">
-                  The titular Avelhems refer to the power that commands and
-                  enhances creation.
-                </span>{" "}
-                In this game, they are bestowed via cards that ascend pawns to
-                Scions of a specified class.
-                <br /> <br />
-                The icon at an Avelhem’s top left corner reflects its
-                corresponding class.
+                For convenience, skills and Avelhems are displayed in separate
+                hands.
               </div>
             );
 
           case 18:
             return (
               <div>
-                For convenience, skills and Avelhems are displayed separately.
-                The latter is found to the right of the former.
+                In the <span className="goldText">Bounty Phase</span>, the
+                Initiator receives 1 Bounty Point (BP) and accesses a shop where
+                they can spend it on upgrades.
+                <br /> <br />
+                <span className="goldText">
+                  BP is also obtained by eliminating the opponent’s units.
+                </span>{" "}
+                Sovereigns can hold up to 10 BP; excesses gained are forfeited.
               </div>
             );
 
           case 19:
             return (
               <div>
-                Up next is the <span className="goldText">Bounty Phase</span>.
+                Upgrades are organized into tiered categories displayed as rows.
                 <br /> <br />
-                <span className="goldText">
-                  The Initiator receives 1 Bounty Point (BP) and accesses a shop
-                </span>
-                , where they can spend BP on upgrades.
-                <br /> <br />
-                <span className="goldText">
-                  1 BP is also obtained by eliminating a foe.
-                </span>{" "}
-                Sovereigns can hold up to 10 BP; excesses gained are forfeited.
+                Higher-tier items remain locked until the previous tier is
+                purchased. For example, expanding your frontier to 4 rows
+                unlocks the option to expand it to 5.
               </div>
             );
 
           case 20:
-            return (
-              <div>
-                Upgrades are placed into tiered categories presented in rows.
-                <br /> <br />
-                <span className="goldText">
-                  Higher-tier items are locked behind the purchase of the
-                  preceding tier
-                </span>
-                , located at their left. For example, you must expand your
-                frontier to 4 rows before you can purchase the expansion to 5
-                rows.
-              </div>
-            );
-
           case 21:
           case 22:
           case 23:
           case 24:
-          case 25:
             return (
               <div>
-                For the sake of this demonstration, you have been provided
-                additional BP. You may make multiple purchases in a single
-                visit, provided your BP is sufficient.
+                For the purposes of this demonstration, you have been granted
+                additional BP. You can make multiple purchases, as long as you
+                have enough BP.
                 <br /> <br />
                 Upgrade your Acquisition Phase twice, then proceed. (Feel free
                 to scroll down to view the other categories.)
               </div>
             );
 
-          case 26:
+          case 25:
             return (
               <div>
-                The third phase is the{" "}
-                <span className="goldText">Coordination Phase</span>, where the
+                In the <span className="goldText">Coordination Phase</span>, the
                 Initiator obtains their tactics for the turn.
                 <br /> <br />
-                <span className="goldText">
-                  Tactics are used to perform actions.
-                </span>
+                Tactics are used to perform tactical actions, such as moving or
+                attacking with a unit.
               </div>
             );
 
-          case 27:
+          case 26:
             return (
               <div>
                 This phase offers 3 options.{" "}
                 <span className="goldText">
-                  Sovereigns will often be choosing Assent, which provides a
-                  pair of random tactics.
-                </span>
-                <br /> <br />
-                (Battle Cry and Convene are more situational, as they guarantee
-                certain tactics but have costs or restrictions. Also note that
-                these options can also be upgraded to provide additional
-                benefits.)
+                  Assent tends to be the go-to choice despite the tactics
+                  provided being random.
+                </span>{" "}
+                Battle Cry and Convene are more situational, as they guarantee
+                specific tactics but have costs or limitations.
               </div>
             );
 
+          case 27:
           case 28:
-          case 29:
             return (
               <div>
                 Choose Assent.
                 <br /> <br />
-                As noted below,{" "}
-                <span className="goldText">
-                  tactical dice have 6 sides but 4 different faces.
-                </span>{" "}
-                2 of these are twice as likely to appear as the others. The
-                Convene option provides an exclusive tactic that cannot be
-                rolled, but it will not be covered in this tutorial.
+                As noted below, tactical dice have 6 sides but 4 different
+                faces. 2 of these are twice as likely as to appear as the
+                others. The Convene option provides an exclusive 5th tactic, but
+                it will not be covered in this tutorial.
+              </div>
+            );
+
+          case 29:
+            return (
+              <div>
+                You have rolled 2 Advance tactics. These will provide a set of
+                options for your possible tactical actions.
+                <br /> <br />
+                Note: The 5 different tactics have some overlap, which improves
+                the odds of having access to desired actions.
               </div>
             );
 
           case 30:
             return (
               <div>
-                You have rolled an Advance and a Mobilize Tactic.
+                In the <span className="goldText">Defiance Phase</span>, the
+                Initiator may spend Fate Defiance (FD) on immediate benefits,
+                such as rerolling unfavorable tactics.
                 <br /> <br />
-                These will determine your options for possible actions.
+                <span className="goldText">
+                  2 FD is obtained as consolation when one’s unit is eliminated.
+                </span>{" "}
+                The maximum FD that can be held is 6.
               </div>
             );
 
           case 31:
-            return (
-              <div>
-                The fourth phase is the{" "}
-                <span className="goldText">Defiance Phase</span>. Here, the{" "}
-                <span className="goldText">
-                  Initiator may spend Fate Defiance (FD) on immediate benefits
-                </span>
-                , such as renewing their hand or rerolling unfavorable tactics.
-                <br /> <br />
-                <span className="goldText">
-                  Sovereigns gain 2 FD as consolation when their units are
-                  eliminated.
-                </span>{" "}
-                They start the game with 3 and can hold up to 6.
-              </div>
-            );
-
           case 32:
             return (
               <div>
-                Unlike the Bounty Phase, the Defiance Phase allows no more than
-                1 expenditure. For example, if you have 2 FD and spend 1 to
-                reroll your tactics, you cannot reroll again. Instead, you
-                automatically proceed to the next phase.
-                <br /> <br />
-                For now, press skip.
+                Select Backtrack to reroll your tactics at the cost of 1 FD.
               </div>
             );
 
           case 33:
             return (
               <div>
-                The fifth phase is the{" "}
-                <span className="goldText">Execution Phase</span>. Simply put,{" "}
-                <span className="goldText">
-                  this is where the Initiator and their units can activate
-                  effects via cards, tactics, and abilities.
-                </span>{" "}
-                It is akin to the “Main Phase” of some other games.
-                <br /> <br />
-                There is no arbitrary limit nor strict sequence to these
-                activations. In other words, one could theoretically activate
-                all the cards in their hand while using tactics and abilities in
-                between.
+                Unlike the Bounty Phase, the Defiance Phase is limited to 1
+                expenditure. Despite having sufficient FD to spend, you will
+                instead automatically proceed to the next phase.
               </div>
             );
 
           case 34:
             return (
               <div>
-                Let’s start with using a tactic.
-                <br /> <br />
-                As mentioned earlier, tactics are used to perform actions.{" "}
-                <span className="goldText">
-                  Each type provides a different set of options with a little
-                  overlap.
-                </span>
+                The <span className="goldText">Execution Phase</span> functions
+                similarly to the “Main Phase” in other games. Here, the
+                Initiator can make active use of the resources they’ve gathered
+                so far.
               </div>
             );
 
           case 35:
             return (
               <div>
-                Click on the Advance tactic located to the left of the board.
+                Simply put, the Initiator can perform the following actions:
+                <br />
+                1. Use a tactic <br />
+                2. Activate a card <br />
+                3. Activate a unit’s ability <br />
+                4. Proceed to the Final Phase
               </div>
             );
 
           case 36:
             return (
               <div>
-                As a Sovereign, you will mainly use the Advance tactic to deploy
-                a pawn on a zone in your frontier.{" "}
+                With the exception of proceeding to the Final Phase,{" "}
                 <span className="goldText">
-                  The frontier initially consists of the first 3 rows of your
-                  side of the board
+                  there is no fixed order or limit to these actions
                 </span>
-                , and it can be extended by spending BP on upgrades.
-                <br /> <br />
-                Note: Sovereigns can have up to 8 units on the board.
+                . The Initiator can freely alternate between using tactics,
+                activating cards, and activating unit abilities, as long as they
+                meet the conditions and costs.
               </div>
             );
 
           case 37:
+            return (
+              <div>
+                Let’s start by using a tactic.
+                <br /> <br />
+                Tactics are used by both Sovereigns and units to perform
+                tactical actions. Each tactic provides a unique set of options.
+              </div>
+            );
+
           case 38:
-            return <div>Click on Deploy Pawn.</div>;
+            return (
+              <div>
+                Tactics are displayed to the right of the board, between the
+                Sovereigns’ skill repertoires.
+                <br /> <br />
+                Click on the Advance tactic.
+              </div>
+            );
 
           case 39:
             return (
               <div>
-                <span className="goldText">
-                  Zones eligible for deployment are colored blue
-                </span>
-                ; clicking on one of them would instantly deploy the pawn. In
-                case you change your mind, you can press Cancel by the top left
-                corner of the board.
+                As a Sovereign, you will mainly use the Advance tactic to deploy
+                a pawn on a zone inside your frontier.
                 <br /> <br />
-                Deploy a new pawn on the 3rd row and column.
+                <span className="goldText">
+                  The frontier initially consists of the first 3 rows of your
+                  side of the board.
+                </span>{" "}
+                It can be expanded by purchasing upgrades in the Bounty Phase.
               </div>
             );
 
           case 40:
-            return (
-              <div>
-                As stated earlier,{" "}
-                <span className="goldText">
-                  units are deployed with 1 HP and Aether
-                </span>
-                , represented by the pulsing heart and winged-diamond icons.
-              </div>
-            );
-
           case 41:
-            return (
-              <div>
-                Performing actions via a tactics consumes them, preventing
-                further usage. As the Advance tactic has been used, it is
-                blackened like other disabled options.
-                <br /> <br />
-                To maximize value, one should consider the tradeoffs.
-              </div>
-            );
+            return <div>Click on Deploy Pawn.</div>;
 
           case 42:
             return (
               <div>
-                That said, the Mobilize tactic comes with 3 instances:{" "}
-                <span className="goldText">
-                  performing actions with this tactic consumes its instances
-                  rather than its entirety.
-                </span>
+                Zones eligible for deployment will have an opaque blue color;
+                clicking on them would instantly deploy the pawn in their
+                location.
                 <br /> <br />
-                To illustrate, click on the Mobilize tactic to the left of the
-                board.
+                In case you change your mind, you can press Cancel near the
+                top-left corner of the board.
               </div>
             );
 
           case 43:
             return (
               <div>
-                As a Sovereign, you can use 2 Mobilize instances to draw 1 skill
-                card from the top of your repertoire.
+                Deploy a pawn on the 3rd row and column.
                 <br /> <br />
-                Note: These{" "}
-                <span className="goldText">
-                  instances must come from a single source
-                </span>
-                ; in other words, you are not allowed to use 1 instance each
-                from 2 Mobilize tactics.
+                As a reminder, units are deployed with 1 HP and Aether.
               </div>
             );
 
           case 44:
-          case 45:
-            return <div>Draw a skill card.</div>;
-
-          case 46:
-          case 47:
             return (
               <div>
-                Units can also use tactics to perform their own actions.{" "}
-                <span className="goldText">
-                  For the sake of this demonstration, your tactics have been
-                  reset.
-                </span>
+                Tactics are consumed when performing the actions, preventing
+                further usage.
                 <br /> <br />
-                Click on your top center pawn to open their menu, then click on
-                top right button, which features a cube icon.
+                That said, the Mobilize tactic provides 3 instances.{" "}
+                <span className="goldText">
+                  Performing actions with this tactic consumes its instances
+                  rather than its entirety.
+                </span>{" "}
+                To illustrate, click on the Mobilize tactic.
               </div>
             );
 
+          case 45:
+            return (
+              <div>
+                A Sovereign, you can use 2 Mobilize instances to draw 1 skill.
+                <br /> <br />
+                Note: These instances must come from a single source. In other
+                words, you are not allowed to use 1 instance each from 2
+                different Mobilize tactics.
+              </div>
+            );
+
+          case 46:
+          case 47:
+            return <div>Draw a skill.</div>;
+
           case 48:
-            return <div>Click on the Advance tactic.</div>;
+            return (
+              <div>
+                Units can also use tactics to perform their own actions.
+                <br /> <br />
+                For the purposes of this demonstration, your tactics have been
+                refreshed.
+              </div>
+            );
 
           case 49:
+            return (
+              <div>
+                Click on your top-center pawn to open their menu, then click on
+                the top-right button.
+              </div>
+            );
+
           case 50:
+            return <div>Click on the Advance tactic.</div>;
+
+          case 51:
+          case 52:
             return (
               <div>
                 Units can use the Advance tactic to{" "}
                 <span className="goldText">traverse</span>, which is a keyword
-                that means{" "}
-                <span className="goldText">
-                  “move to a vacant adjacent zone”
-                </span>
-                .
+                that means “
+                <span className="goldText">move to a vacant adjacent zone</span>
+                ”. (Aether-blast will not be discussed in this tutorial.)
                 <br /> <br />
-                Click on the Traverse option.
+                Click on Traverse.
               </div>
             );
 
-          case 51:
+          case 53:
             return (
               <div>
-                Similar with deployment, zones eligible for movement are colored
-                blue. Also note that in case you change your mind, you can press
-                the cancel button at the top left corner.
+                As with deployment, zones eligible for movement will have an
+                opaque blue color. Also note that in case you change your mind,
+                you can press Cancel.
                 <br /> <br />
                 Click on the zone ahead of your pawn to make them move.
               </div>
             );
 
-          case 52:
-            return (
-              <div>
-                As mentioned, some tactics have a little overlap.
-                <br /> <br />
-                <span className="goldText">
-                  As with Advance, Mobilize allows units to traverse
-                </span>
-                —in fact, the latter does it better as it allows for multiple
-                movements.
-              </div>
-            );
-
-          case 53:
           case 54:
             return (
               <div>
-                Let’s make your pawn use a tactic again.
+                As mentioned earlier, tactics have some overlaps.
                 <br /> <br />
-                Click on them to open their menu, then click on the top right
-                button.
+                As with Advance, units can traverse via Mobilize. And since it
+                has 3 instances, it allows up to 3 units to move.
               </div>
             );
 
           case 55:
-            return <div>Click on Mobilize.</div>;
-
-          case 56:
-          case 57:
-          case 58:
             return (
               <div>
-                Click on the traverse option, then make them move forward again.
+                Let’s make your pawn use a tactic again.
+                <br /> <br />
+                Open their menu, then click on the top-right button.
               </div>
             );
 
+          case 56:
+            return <div>Click on Mobilize.</div>;
+
+          case 57:
+          case 58:
           case 59:
             return (
               <div>
-                <span className="goldText">
-                  A unit cannot use the same Mobilize tactic more than once.
-                </span>{" "}
-                Since your top center pawn has already moved via the Mobilize
-                tactic, they are barred from using its remaining instances.
-                <br /> <br />
-                (Clarification: A unit is allowed to traverse twice using 2
-                different Mobilize tactics.)
+                Click on traverse, then make them move forward once more.
               </div>
             );
 
           case 60:
+            return (
+              <div>
+                <span className="goldText">
+                  Units cannot use the same Mobilize tactic more than once.
+                </span>{" "}
+                Even though your Mobilize has 2 remaining instances, your
+                topmost pawn is barred from using it. (Clarification: A unit is
+                allowed to traverse twice using 2 different Mobilize tactics.)
+              </div>
+            );
+
           case 61:
             return (
               <div>
@@ -932,8 +1225,7 @@ const DemoTextBox = () => {
           case 62:
             return (
               <div>
-                As you can see, the Mobilize tactic is blackened despite having
-                2 remaining instances.
+                As you can see, Mobilize cannot be selected.
                 <br /> <br />
                 Press Return.
               </div>
@@ -942,9 +1234,9 @@ const DemoTextBox = () => {
           case 63:
             return (
               <div>
-                The other actions you can perform with these tactics, as well as
-                the other tactics, will be discussed in a different tutorial.
-                That said, players can access the Tactics Guide by clicking on
+                The other tactics and tactical actions will be discussed in a
+                different tutorial. That said, players can access the{" "}
+                <span className="goldText">Tactics Guide</span> by clicking on
                 the{" "}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -952,9 +1244,10 @@ const DemoTextBox = () => {
                   className="question-icon3"
                   style={{ fill: "#ffffe9" }}
                 >
-                  <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM169.8 165.3c7.9-22.3 29.1-37.3 52.8-37.3h58.3c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24V250.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1H222.6c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z" />
+                  {" "}
+                  <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM169.8 165.3c7.9-22.3 29.1-37.3 52.8-37.3h58.3c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24V250.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1H222.6c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z" />{" "}
                 </svg>{" "}
-                icon at the top right corner of the tactics.
+                icon at the top-right corner of the tactics.
               </div>
             );
 
@@ -967,164 +1260,203 @@ const DemoTextBox = () => {
             );
 
           case 65:
-          case 66:
             return (
               <div>
-                Since you have remaining instances, let’s move another unit.
+                You still have 2 Mobilize instances, which can be used to draw 1
+                skill or move up to 2 more pawns. However, you don't need to use
+                them right away. As mentioned earlier, you can freely alternate
+                between using tactics and cards.
                 <br /> <br />
-                Make your right pawn move closer to the top center one. Open
-                their menu, then click on the upper right button.
+                On that note, let’s activate an Avelhem.
               </div>
             );
 
+          case 66:
           case 67:
+            return (
+              <div>
+                Avelhems are cards primarily used to ascend pawns to Scions. To
+                use an Avelhem, raise your hand by clicking on any of its cards.
+                Once your hand is raised, click on the specific card you want to
+                activate.
+                <br /> <br />
+                In this case, click on the Mana Avelhem.
+              </div>
+            );
+
           case 68:
+            return <div>Click on Activate.</div>;
+
           case 69:
+            return (
+              <div>
+                When activated, cards are displayed on the left side of the
+                board.
+                <br /> <br />
+                As per the Avelhem’s effect, you must select a pawn to ascend.
+                Zones containing eligible units will be colored an opaque blue.
+                Click on your topmost pawn.
+              </div>
+            );
+
           case 70:
             return (
               <div>
-                Follow the same steps as earlier: Click on Mobilize, traverse,
-                and the destination.
+                <span className="goldText">
+                  Cards are sent to their respective vestige (discard pile) when
+                  they conclude their effects
+                </span>
+                . Vestiges are located beside their corresponding repertoire.
+                <br /> <br />
+                <span className="goldText">
+                  Only the vestige’s owner can view its contents
+                </span>{" "}
+                (by clicking it); however, the number of cards it contains is
+                known to everyone.
               </div>
             );
 
           case 71:
             return (
               <div>
-                Aside from tactics, you can also use cards. Let’s start by using
-                an Avelhem.
+                <span className="goldText">
+                  Ascending pawns to Scions is the game’s core feature.
+                </span>{" "}
+                Pawns can only use tactics to move and attack, while Scions can
+                also activate skill cards and abilities that thematically apply
+                their powers.
                 <br /> <br />
-                As a reminder, Avelhems are cards primarily used to ascend pawns
-                into Scions.
+                Speaking of which, let’s activate an ability.
               </div>
             );
 
           case 72:
+            return (
+              <div>
+                Click on your Mana Scion to open their menu. Notice the addition
+                of 2 buttons. Now that your unit is a Scion, they have access to
+                skills and abilities.
+                <br /> <br />
+                Click on the bottom-right button to open their ability menu.
+              </div>
+            );
+
           case 73:
             return (
               <div>
-                To use an Avelhem card, click on any card in your hand to raise
-                it, then click on the specific card you want to activate. In
-                this case, click on the Fire Avelhem card.
+                Abilities are special actions available to Scions. Each Scion
+                class 2 exclusive abilities.
+                <br /> <br />
+                Some abilities require tactics to activate. For example,
+                Particle Beam uses an Assault tactic, and it allows Mana Scions
+                to attack foes up to 2 spaces away. (Normally, a unit would use
+                Assault to traverse or attack an adjacent foe.)
               </div>
             );
 
           case 74:
-            return <div>Click on the Activate button.</div>;
-
           case 75:
             return (
               <div>
-                The zones of eligible units will be colored blue.
+                On the other hand, some abilities do not require tactics.
+                Amplify Aura is one such example.
                 <br /> <br />
-                Click on your topmost pawn to ascend them.
+                Activate Amplify Aura.
               </div>
             );
 
           case 76:
             return (
               <div>
-                Ascending pawns into Scions is the game’s core feature. Pawns
-                can only use tactics to move and attack, while{" "}
-                <span className="goldText">
-                  Scions can also activate skill cards and abilities that
-                  thematically apply their powers
-                </span>
-                .
+                Amplify Aura allows a Mana Scion to convert their own or their
+                adjacent ally’s Aether into a Shield that lasts 2 turns. Shield
+                is a status condition that negates the next attack that the unit
+                would receive.
                 <br /> <br />
-                <span className="goldText">
-                  Each Sovereign can have up to 2 Scions of the same class in
-                  play.
-                </span>{" "}
-                For example, controlling 2 Fire Scions prevents you from
-                ascending a pawn to another Fire Scion until either is removed
-                from play.
+                Like cards, activated abilities are displayed at the left of the
+                board. Ability cards are for visual reference only; they are not
+                game components.
               </div>
             );
 
           case 77:
             return (
               <div>
-                <span className="goldText">
-                  Scions also have class-exclusive talents
-                </span>
-                , which are special effects that automatically activate when
-                applicable.
-                <br /> <br />
-                In the case of Fire Scions, their “From the Ashes” talent
-                activates when they debut (enter play).
+                Click on your Mana Scion to make them recipient of Amplify
+                Aura’s effect.
               </div>
             );
 
           case 78:
+            return (
+              <div>
+                Notice that the Mana Scion’s Aether icon (the winged diamond)
+                has disappeared, while a silver shield icon has appeared.
+              </div>
+            );
+
           case 79:
             return (
               <div>
-                This talent allows them to recover a Fire skill from the vestige
-                (discard pile) and float it (put it on top of the repertoire).
-                Since your vestige does not contain any Fire skills, this effect
-                is currently not applicable
+                In addition to these visual indicators, you can view a unit’s
+                information by clicking on the top-left button of their menu.
                 <br /> <br />
-                Note: The talent card is for visual reference only; it is not a
-                game component.
+                Click on your Mana Scion, then click on their information
+                button.
               </div>
             );
 
           case 80:
+            return (
+              <div>
+                The unit’s relevant information is displayed here. For example,
+                you can see their HP, Aether (or lack thereof), and their
+                Shield.
+              </div>
+            );
+
           case 81:
+            return (
+              <div>
+                It also serves as a reference guide, listing their abilities,
+                talents, and even the skills they can activate. (Feel free to
+                click on these cards to enlarge them for viewing.)
+              </div>
+            );
+
           case 82:
+            return <div>Close the unit’s information page.</div>;
+
           case 83:
             return (
               <div>
-                Activate your Mana Avelhem card to ascend your right pawn.
-                <br /> <br />
-                Like last time, click on your hand, the specific card, the
-                Activate button, and lastly the unit you want to ascend.
+                <span className="goldText">
+                  Units can use each of their abilities up to once per turn.
+                </span>{" "}
+                Therefore, you will have to wait until your next turn before
+                your Mana Scion can activate Amplify Aura again.
               </div>
             );
 
           case 84:
-            return (
-              <div>
-                <span className="goldText">
-                  Cards are sent to their respective vestige when they conclude
-                  their effects.
-                </span>{" "}
-                You can view the contents of your own vestige at any time by
-                clicking on it.
-                <br /> <br />
-                Click on your Avelhem vestige, located to the right of its
-                repertoire.
-              </div>
-            );
-
           case 85:
             return (
               <div>
-                <span className="goldText">
-                  Only the vestige’s owner can view its contents
-                </span>
-                ; however, the number of cards it contains is known to everyone.
+                We have gone through tactics and abilities. Up next is the
+                activation of skills, but let’s first activate another Avelhem
+                card.
                 <br /> <br />
-                Close your Avelhem vestige.
+                Raise your Avelhem hand, then click on your Water Avelhem.
               </div>
             );
 
           case 86:
-            return (
-              <div>
-                As mentioned, Scions gain access to abilities and skills. Let’s
-                demonstrate the use of abilities with the Mana Scion. Click on
-                them to open their menu.
-              </div>
-            );
+            return <div>Click Activate.</div>;
 
           case 87:
             return (
               <div>
-                Notice the addition of 2 buttons.
-                <br /> <br />
-                Click on the bottom right one to open their ability menu.
+                Click on your rightmost pawn to ascend them into a Water Scion.
               </div>
             );
 
@@ -1132,414 +1464,365 @@ const DemoTextBox = () => {
             return (
               <div>
                 <span className="goldText">
-                  Each Scion class has 2 exclusive abilities.
-                </span>
+                  Scions also possess talents, which are passive effects that
+                  automatically activate when applicable.
+                </span>{" "}
+                In the case of Water Scions, their Kleptothermy talent activates
+                the moment they ascend.
                 <br /> <br />
-                Some abilities require the use of tactics. For example, Mana
-                Scions can use an Assault tactic to activate Particle Beam,
-                which lets them attack a foe as far as 2 spaces away. (Normally,
-                units can use the Assault tactic to attack adjacent foes.)
+                (Note: As with ability cards, the talent card is just a visual
+                reference and not a game component.)
               </div>
             );
 
           case 89:
+          case 90:
             return (
               <div>
-                On the other hand, some abilities do not require tactics, making
-                them more reliable and accessible. Amplify Aura is one such
-                example; however, it also has the “One-shot” property, which
-                means that it cannot be activated more than once per turn.
+                Kleptothermy allows Water Scions to either restore an ally’s
+                Aether or purge it if they are a foe.
+                <br /> <br />
+                Select the first option.
               </div>
             );
 
-          case 90:
           case 91:
-            return <div>Activate Amplify Aura.</div>;
+            return (
+              <div>
+                You must now select the recipient of Kleptothermy’s effect. As
+                usual, zones containing eligible units will have an opaque blue
+                color.
+                <br /> <br />
+                Click on your Mana Scion.
+              </div>
+            );
 
           case 92:
             return (
               <div>
-                <span className="goldText">
-                  Amplify Aura allows a Mana Scion to convert their own or their
-                  adjacent ally’s Aether into a Shield that lasts 2 turns.
-                </span>{" "}
-                Shield is a status condition that negates the next attack the
-                unit would receive.
+                Your Mana Scion has regained their Aether (and its icon).
                 <br /> <br />
-                Click on the Fire Scion to make them recipient of Amplify Aura’s
-                effect.
-                <br /> <br />
-                Note: The ability card is for visual reference only; it is not a
-                game component.
+                This has triggered their Overload talent, which grants the
+                option to draw 1 skill.
               </div>
             );
 
           case 93:
+            return <div>Select the Draw option.</div>;
+
+          case 94:
             return (
               <div>
-                Notice that the Fire Scion’s Aether icon (formerly located
-                beside the HP icon) has disappeared, while a silver shield icon
-                has appeared.
-                <br /> <br />
-                Note: This is but one of Aether’s applications, but this
-                attribute will be discussed in detail in a different tutorial.
+                <span className="goldText">
+                  Sometimes, the sequence of your actions matters.
+                </span>{" "}
+                Ascending your pawn to a Water Scion after activating Amplify
+                Aura resulted in your Mana Scion regaining their Aether after
+                they had expended it.
               </div>
             );
 
-          case 94:
           case 95:
             return (
               <div>
-                In addition to these visual indicators, you can access a unit’s
-                information by clicking on the top left button of their menu.
+                Now let’s talk about skills.
                 <br /> <br />
-                Click on your Fire Scion, then click on their information
-                button.
+                Skills are cards that enable Sovereign and units to perform
+                special actions.
               </div>
             );
 
           case 96:
             return (
               <div>
-                Relevant information regarding the selected unit is displayed
-                here. As you can see, it indicates their HP, their Aether (or
-                lack thereof), as well as statuses such as their Shield.
+                <span className="goldText">
+                  Skills can be activated by only those that match their aspect
+                </span>
+                , which is indicated by the icon in the card’s top-right corner.
+                <br /> <br />
+                Surge is a Mana skill; thus, its activation is exclusive to Mana
+                Scions.
               </div>
             );
 
           case 97:
             return (
               <div>
-                It also serves as a reference guide, listing their abilities,
-                talents, and even the skill cards they can activate. Clicking on
-                these cards will display them up close so you can read them.
-                <br /> <br />
-                Click on the left-most card of their skill set.
+                Conversely, a skill like Chain Lightning is exclusive to
+                Lightning Scions.
               </div>
             );
 
           case 98:
-            return <div>Click anywhere to close it.</div>;
+            return (
+              <div>
+                There are also Sovereign skills, whose aspects are represented
+                by a crown rather than a unit’s icon. Like Avelhem cards, these
+                are activated by the Sovereigns directly from their hand.
+              </div>
+            );
 
           case 99:
-            return <div>Close the information display.</div>;
+            return (
+              <div>
+                Let’s activate a skill.
+                <br /> <br />
+                Open your Mana Scion’s menu, then click on the bottom-left
+                button.
+              </div>
+            );
 
           case 100:
             return (
               <div>
-                The last portion of Execution Phase demonstration is the
-                activation of Scion skill cards.
+                Skills that belong to the Scion’s class are displayed. If
+                circumstances prevent the activation of a skill, the card will
+                be grayed out.
                 <br /> <br />
-                <span className="goldText">
-                  Scions can activate skill with aspects that match their class.
-                </span>{" "}
-                A skill card’s aspect can be found at its top left corner. For
-                example, Ignition Propulsion is a Fire skill; only Fire Scions
-                can activate it.
+                (Feel free to click on the magnifying glass icon on a card to
+                enlarge it for viewing. You can then click anywhere to close
+                it.)
               </div>
             );
 
           case 101:
-            return (
-              <div>
-                Conversely, Reminiscence is a Sovereign skill. Its aspect is
-                represented by a crown.
-                <br /> <br />
-                Like Avelhem cards, Sovereigns skill cards are activated
-                directly from one’s hand.
-              </div>
-            );
-
           case 102:
-          case 103:
-            return (
-              <div>
-                Click on your Fire Scion to open their menu, then click on the
-                bottom left button to open their skill selection.
-              </div>
-            );
+            return <div>Activate Surge.</div>;
 
+          case 103:
           case 104:
             return (
               <div>
-                This display will filter out cards that do not match the unit’s
-                aspect.
+                Surge requires the activator to spend their Aether to traverse
+                or strike. (Fortunately, clever sequencing of actions restored
+                your Mana Scion’s Aether.)
                 <br /> <br />
-                If you are unfamiliar with what a card does, click on the
-                magnifying glass icon on its top right corner to view it up
-                close. You can then click anywhere to close it.
+                Select Strike.
               </div>
             );
 
           case 105:
+            return (
+              <div>
+                Strike is a keyword that has 3 steps:
+                <br />
+                1. Target an adjacent foe. <br />
+                2. Attack them. <br />
+                3. If the attack was lethal, move into the zone they were
+                occupying.
+              </div>
+            );
+
           case 106:
             return (
               <div>
-                Scion skills can be thought of as abilities that require
-                specific cards to activate.
+                Attacking a unit reduces its HP by an amount equal to the
+                attack’s AP (Attack Power).
                 <br /> <br />
-                Activate Ignition Propulsion.
+                Both HP and AP have a default value of 1; therefore, it normally
+                takes a single attack to deplete a unit’s HP.
               </div>
             );
 
           case 107:
+            return <div>Click on the only foe within striking range.</div>;
+
           case 108:
             return (
               <div>
-                Ignition Propulsion requires the activator to spend (discard) a
-                skill card from hand, in addition to the activated card itself.
+                <span className="goldText">
+                  When a unit’s HP is reduced to 0, they are eliminated and
+                  removed from the board.
+                </span>
                 <br /> <br />
-                Spending skills is a recurring theme in a number of effects. The
-                decision to part with or keep a card can potentially alter the
-                course of the game, so choose carefully. For now, discard
-                “Viridian Grave” (the third skill).
+                The Sovereign who owns the eliminated unit receives 2 FD, while
+                their opponent receives 1 BP. Consequently, your opponent now
+                has 5 FD, while you have 1 BP.
               </div>
             );
 
           case 109:
             return (
               <div>
-                Click on the enemy pawn to designate them as the attack target.
+                As per the 3rd step of strike, your Mana Scion has moved into
+                the zone that the pawn was occupying.
+                <br /> <br />
+                Surge then concludes its effect and is sent to the vestige
+                (discard pile).
               </div>
             );
 
           case 110:
             return (
               <div>
-                <span className="goldText">
-                  Attacking a foe reduces their HP.
-                </span>{" "}
-                The amount deducted is equivalent to the attack’s AP (Attack
-                Power).
+                Oh, why is your Mana Scion emitting a dark aura, you ask?
                 <br /> <br />
-                HP and AP are 1 by default; therefore, it normally takes a
-                single attack to deplete a unit’s HP.
+                Let’s check their information page.
               </div>
             );
 
           case 111:
             return (
               <div>
-                <span className="goldText">
-                  When a unit’s HP is reduced to 0, they are eliminated and
-                  removed from the board.
-                </span>{" "}
-                Furthermore, the Sovereign of the eliminated unit receives 2 FD,
-                while their opponent receives 1 BP.
+                <em>
+                  “To wield an Avelhem is to become a steward of Creation. And
+                  what greater sin is there than destroying the Maker’s
+                  beloved?”
+                </em>
                 <br /> <br />
                 <span className="goldText">
-                  When a unit eliminates an enemy via strike, they automatically
-                  move into the zone the victim was occupying.
-                </span>
+                  When a Scion (not pawn) eliminates another unit, they are
+                  punished with the Anathema status for 2 turns.
+                </span>{" "}
+                This is represented by the cascading dark purple aura.
               </div>
             );
 
           case 112:
             return (
               <div>
-                And as mentioned earlier, you have gained 1 BP, while your
-                opponent has gained 2 FD (they started with 3, which brings
-                their total to 5).
+                Anathema disables a Scion’s Avelhem, stripping them of their
+                abilities, talents, and skills. It also prevents them from
+                attacking via any means.
+                <br /> <br />
+                Simply put, punished Scions are muted and only allowed to move.
               </div>
             );
 
           case 113:
-            return (
-              <div>
-                As per Ignition Propulsion’s second sub-effect, your Fire Scion
-                has recovered their Aether (represented by the return of their
-                winged-diamond icon).
-                <br /> <br />
-                …But what is with that dark aura, you ask?
-              </div>
-            );
+            return <div>Close the unit’s information page.</div>;
 
           case 114:
             return (
               <div>
-                <strong>
-                  <em>
-                    “To wield an Avelhem is to become a steward of Creation. And
-                    what greater sin is there than destroying the Maker’s
-                    beloved?”
-                  </em>
-                </strong>
+                And that wraps up the Execution Phase.
                 <br /> <br />
                 <span className="goldText">
-                  When a Scion (not pawn) eliminates another unit, they are
-                  punished with the Anathema status for 2 turns.
+                  As a reminder, your objective is to move a unit onto your
+                  opponent’s base.
                 </span>{" "}
-                This is represented by a dark purple aura flowing downward.
+                For demonstration purposes, a pawn has been deployed 1 row away
+                from their base.
               </div>
             );
 
           case 115:
-            return (
-              <div>
-                Anathema disables Scion’s power, stripping them of their
-                abilities, talents, and access to skill cards. They also cannot
-                attack via any means.
-                <br /> <br />
-                Simply put, punished Scions can only traverse.
-              </div>
-            );
-
           case 116:
-            return (
-              <div>
-                The affliction of the Anathema is delayed until after the unit
-                has concluded all their activated effects.
-                <br /> <br />
-                (This will be emphasized and explained in another demo.)
-              </div>
-            );
-
           case 117:
-            return (
-              <div>
-                And that wraps up the Execution Phase. But before we move to the
-                last phase, a pawn has been deployed on the 2nd row of the board
-                for the sake of another demonstration.
-                <br /> <br />
-                <span className="goldText">
-                  As a reminder, your objective is to move your units into your
-                  opponent’s base.
-                </span>
-              </div>
-            );
-
           case 118:
           case 119:
-          case 120:
-          case 121:
-          case 122:
-          case 123:
             return (
               <div>
-                Using your last Mobilize instance, move that pawn into the zone
-                above them.
-                <br /> <br />
-                Open their tactics menu, then click on Mobilize, traverse, and
-                the destination.
+                Use 1 instance of your Mobilize tactic to move that pawn
+                forward. Open their tactics menu, then click on Mobilize,
+                traverse, and their destination.
               </div>
             );
 
-          case 124:
+          case 120:
             return (
               <div>
-                It is not enough that a unit moves into the enemy base. They
-                must also occupy it at the end of their turn.
+                Your unit has reached the opponent’s base. However,{" "}
+                <span className="goldText">
+                  scoring does not occur until the end of the Final Phase
+                </span>
+                .
                 <br /> <br />
-                And without further ado, click on the End Turn button. The
-                Initiator can end their turn anytime as long as there are no
-                ongoing effects.
+                And without further ado, click on End Turn.
               </div>
             );
-          case 125:
+
+          case 121:
             return <div>Confirm that you want to end.</div>;
+
+          case 122:
+            return (
+              <div>
+                In the Final Phase, the Initiator winds up their turn. Unused
+                tactics are forfeited, cards exceeding the hand limit are
+                discarded, and the durations of their units’ statuses tick down.
+                <br /> <br />
+                You had 1 remaining Mobilize instance, which has now expired.
+              </div>
+            );
+
+          case 123:
+          case 124:
+          case 125:
+            return (
+              <div>
+                You must discard cards until your hand contains no more than 8
+                skills and 0 Avelhems. (These limits can be increased by
+                spending BP.)
+                <br /> <br />
+                For demonstration purposes, 4 skills were added to your hand,
+                bringing the total to 10. Select 2 excess cards to discard.
+              </div>
+            );
 
           case 126:
             return (
               <div>
-                The last phase is the{" "}
-                <span className="goldText">Final Phase</span>. During this
-                phase, the{" "}
-                <span className="goldText">
-                  Initiator forfeits unused tactics and must discard any excess
-                  cards from hand
-                </span>
-                .
+                After excess cards are discarded, the status durations of the
+                Initiator’s units decrease by 1.
                 <br /> <br />
-                The skill card limit is 8, while the Avelhem card limit is 0
-                (but it can be upgraded to 1).
+                Your Mana Scion’s Shield and Anathema have both dropped from 2
+                turns to 1. Their Shield icon is now blinking, and the aura of
+                their Anathema has dimmed.
               </div>
             );
 
           case 127:
+            return (
+              <div>
+                Lastly, the game performs a check: If any of the Initiator’s
+                units are occupying the opponent’s base for the first time, they
+                will score and award their Sovereign 3 BP, while their opponent
+                will receive 6 FD.
+              </div>
+            );
+
           case 128:
+            return (
+              <div>
+                Units that have scored remain in play, but they cannot be
+                interacted with. They still count toward to their owner’s unit
+                limit. (Sovereigns can control up to 8 units at a time, and no
+                more than 2 allied Scions may share the same class.)
+              </div>
+            );
+
           case 129:
             return (
               <div>
-                For the sake of this demonstration, your hand size has increased
-                to 10 skill cards. Select 2 excess cards to be discarded.
+                If scoring causes the Initiator to meet the victory requirement,
+                they win the game. Otherwise, the game continues with their
+                opponent as the Initiator.
+                <br /> <br />
+                As noted earlier, the victory requirement is automatically set
+                to 1, but players may increase it once someone wins.
               </div>
             );
 
           case 130:
-            return (
-              <div>
-                After excess cards are discarded,{" "}
-                <span className="goldText">
-                  the durations of turn-based statuses affecting the Initiator’s
-                  units decrease by 1
-                </span>
-                .
-                <br /> <br />
-                The durations of your Fire Scion’s Shield and Anathema have
-                decreased from 2 turns to 1: Their Shield icon is now blinking,
-                and their aura of Anathema has weakened.
-              </div>
-            );
+            return <div>Raise the objective to 2.</div>;
 
           case 131:
             return (
               <div>
-                Lastly, the game performs a check:{" "}
-                <span className="goldText">
-                  If the any of the Initiator’s units are occupying their
-                  opponent’s base for the first time, they will score
-                </span>
-                .
+                The opponent’s side of the board is now glowing red, which means
+                it’s their turn to make a decision.
               </div>
             );
 
           case 132:
             return (
               <div>
-                Units that have scored stay on the board, but they cannot be
-                interacted with and continue to contribute to their owner’s unit
-                limits.
+                And that covers the basics. For a deeper understanding of
+                mechanics and advanced strategies, refer to the rulebook and
+                other tutorials.
                 <br /> <br />
-                Reminder: A Sovereign can have up to 8 units at a time, and no
-                more than 2 ally Scions can have the same class.
-              </div>
-            );
-
-          case 133:
-            return (
-              <div>
-                Furthermore, the Sovereign of the scoring unit gains 3 BP, while
-                their opponent gains 6 FD.
-                <br /> <br /> This is triple the yield of eliminating a unit.
-              </div>
-            );
-
-          case 134:
-            return (
-              <div>
-                Lastly, if scoring causes the Initiator to meet the victory
-                requirement, they win. Otherwise, their opponent takes their
-                turn as the Initiator and goes through the same phases.
-              </div>
-            );
-
-          case 135:
-            return (
-              <div>
-                As mentioned earlier, the victory requirement in this simulator
-                is automatically set to 1, but players may choose to raise it
-                once someone wins.
-              </div>
-            );
-
-          case 136:
-            return (
-              <div>
-                And that covers the basics. Consider reading the rules or
-                playing the other tutorials for a deeper understanding of the
-                mechanics and its nuances.
-                <br /> <br />
-                End of Overview Tutorial.
+                <span className="goldText">End of Overview Tutorial.</span>
               </div>
             );
 

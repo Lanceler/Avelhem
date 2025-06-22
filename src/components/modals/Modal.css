@@ -840,7 +840,8 @@
     border: goldenrod 8px ridge;
     display: flex;
     flex-direction: column;
-    pointer-events: all;
+    /* pointer-events: all; */
+    
     cursor: default;
 }
 

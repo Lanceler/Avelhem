@@ -175,10 +175,10 @@ const CoordinationPhaseSelection = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          case 28:
+          case 27:
             return element1 === "choice" && element2 === 0;
 
-          case 29:
+          case 28:
             return element1 === "select";
         }
     }
@@ -188,8 +188,8 @@ const CoordinationPhaseSelection = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
+          case 27:
           case 28:
-          case 29:
             dispatch(updateDemoCount(demoCount + 1));
             break;
         }

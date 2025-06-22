@@ -298,11 +298,11 @@ const SelectHandMultiSkill = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          case 127:
+          case 123:
             return element2 === 0;
-          case 128:
+          case 124:
             return element2 === 1;
-          case 129:
+          case 125:
             return element1 === "Button";
         }
     }
@@ -312,9 +312,9 @@ const SelectHandMultiSkill = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          case 127:
-          case 128:
-          case 129:
+          case 123:
+          case 124:
+          case 125:
             dispatch(updateDemoCount(demoCount + 1));
             break;
         }

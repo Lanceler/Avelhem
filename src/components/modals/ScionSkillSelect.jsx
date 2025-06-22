@@ -105,10 +105,10 @@ const ScionSkillSelect = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          case 105:
-            return element2.id === "01-01";
+          case 101:
+            return element2.id === "06-01";
 
-          case 106:
+          case 102:
             return element1 === "Select Button";
         }
 
@@ -124,8 +124,8 @@ const ScionSkillSelect = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          case 105:
-          case 106:
+          case 101:
+          case 102:
             dispatch(updateDemoCount(demoCount + 1));
             break;
         }

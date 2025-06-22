@@ -76,9 +76,7 @@ const YouMayNoYes = (props) => {
 
     switch (props.details.reason) {
       case "End Execution Phase": //"End Execution Phase Confirm"
-        if (demoCount === 125 && demoGuide === "Learn-overview") {
-          newGameState = drawSkill(newGameState);
-          newGameState = drawSkill(newGameState);
+        if (demoCount === 121 && demoGuide === "Learn-overview") {
           newGameState = drawSkill(newGameState);
           newGameState = drawSkill(newGameState);
           newGameState = drawSkill(newGameState);
@@ -436,12 +434,11 @@ const YouMayNoYes = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          case 125:
+          case 93:
+          case 121:
             return element === "Yes Choice";
 
           // return element === "No Choice";
-
-          ////////////////////////////
         }
     }
 
@@ -452,7 +449,8 @@ const YouMayNoYes = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          case 125:
+          case 93:
+          case 121:
             dispatch(updateDemoCount(demoCount + 1));
             break;
         }

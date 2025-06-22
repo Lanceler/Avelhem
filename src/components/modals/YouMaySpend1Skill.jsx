@@ -491,12 +491,14 @@ const YouMaySpend1Skill = (props) => {
   const canClick = (element1, element2) => {
     switch (demoGuide) {
       case "Learn-overview":
-        switch (demoCount) {
-          case 107:
-            return element2 === 2;
+        switch (
+          demoCount
+          // case 107:
+          //   return element2 === 2;
 
-          case 108:
-            return element1 === "Select Button";
+          // case 108:
+          //   return element1 === "Select Button";
+        ) {
         }
     }
   };
@@ -504,11 +506,13 @@ const YouMaySpend1Skill = (props) => {
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
       case "Learn-overview":
-        switch (demoCount) {
-          case 107:
-          case 108:
-            dispatch(updateDemoCount(demoCount + 1));
-            break;
+        switch (
+          demoCount
+          // case 107:
+          // case 108:
+          //   dispatch(updateDemoCount(demoCount + 1));
+          //   break;
+        ) {
         }
     }
   };

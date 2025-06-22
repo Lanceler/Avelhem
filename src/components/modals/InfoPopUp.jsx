@@ -545,7 +545,9 @@ const InfoPopUp = (props) => {
           </svg>
         </div>
         <div className="info-modal-contents scrollable">
-          <div className="">{infoBody()}</div>
+          <div className="" style={{ pointerEvents: "all" }}>
+            {infoBody()}
+          </div>
         </div>
       </div>
     </div>

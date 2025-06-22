@@ -3,11 +3,13 @@ import "./Modal.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
+import { updateDemoCount } from "../../redux/demoCount";
 
 const VictoryScreen = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
+  const { demoCount } = useSelector((state) => state.demoCount);
 
   const dispatch = useDispatch();
 
@@ -45,9 +47,9 @@ const VictoryScreen = (props) => {
     }.`;
 
     if (localGameState[self].score < 5) {
-      message3 = `You may offer to set the objective to ${
+      message3 = `Raise the objective to ${
         localGameState[self].score + 1
-      } and continue the game.`;
+      } and continue playing.`;
     }
   } else if (enemy === props.player) {
     message1 = "Defeat...";
@@ -56,9 +58,24 @@ const VictoryScreen = (props) => {
     } unit${localGameState[enemy].score > 1 ? "s" : ""}.`;
   }
 
-  const demoOverride = () => {
-    if (!demoGuide) {
-      return false;
+  const canClick = (element1) => {
+    switch (demoGuide) {
+      case "Learn-overview":
+        switch (demoCount) {
+          case 130:
+            return element1 === "Button";
+        }
+    }
+  };
+
+  const handleUpdateDemoGuide = () => {
+    switch (demoGuide) {
+      case "Learn-overview":
+        switch (demoCount) {
+          case 130:
+            dispatch(updateDemoCount(demoCount + 1));
+            break;
+        }
     }
   };
 
@@ -78,16 +95,20 @@ const VictoryScreen = (props) => {
           <div className="modalContentText">{message1}</div>
           <div className="modalContentText">{message2}</div>
 
-          <div className="finalPhase-Button">
-            {!demoOverride() &&
-              self === props.player &&
-              localGameState[self].score < 5 && (
-                <button className="redButton2" onClick={() => handleOffer()}>
-                  {message3}
-                </button>
-              )}
-
-            {demoOverride() && <div>{demoOverride()}</div>}
+          <div className={`finalPhase-Button`}>
+            {self === props.player && localGameState[self].score < 5 && (
+              <button
+                className={`redButton2 ${
+                  canClick("Button") ? "demoClick" : ""
+                }`}
+                onClick={() => {
+                  handleOffer();
+                  handleUpdateDemoGuide();
+                }}
+              >
+                {message3}
+              </button>
+            )}
           </div>
         </div>
       </div>

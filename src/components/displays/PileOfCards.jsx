@@ -80,27 +80,15 @@ const PileOfCards = (props) => {
   };
 
   const canClick = () => {
-    // switch (demoGuide) {
-    //   case "Learn1.20.1":
-    //     return (
-    //       ["avelhemVestige", "skillVestige"].includes(pile) &&
-    //       team === "host" &&
-    //       stack.length
-    //     );
-
-    //   case "Learn1.229.1":
-    //     return ["skillVestige"].includes(pile) && team === "host";
-    // }
-
     switch (demoGuide) {
       case "Learn-overview":
-        switch (demoCount) {
-          case 84:
-            return pile === "avelhemVestige" && team === "host";
-
-          // return ["skillVestige"].includes(pile) && team === "host";
+        switch (
+          demoCount
+          // case 84:
+          //   return pile === "avelhemVestige" && team === "host";
 
           ///////
+        ) {
         }
     }
   };
@@ -108,10 +96,12 @@ const PileOfCards = (props) => {
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
       case "Learn-overview":
-        switch (demoCount) {
-          case 84:
-            dispatch(updateDemoCount(demoCount + 1));
-            break;
+        switch (
+          demoCount
+          // case 84:
+          //   dispatch(updateDemoCount(demoCount + 1));
+          //   break;
+        ) {
         }
     }
   };

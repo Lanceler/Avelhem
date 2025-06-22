@@ -322,17 +322,17 @@ const BountyPhase = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          case 21:
+          case 20:
             return element1 === "Acquisition Phase" && element2 === 0;
 
-          case 22:
-          case 24:
+          case 21:
+          case 23:
             return element1 === "purchase";
 
-          case 23:
+          case 22:
             return element1 === "Acquisition Phase" && element2 === 1;
 
-          case 25:
+          case 24:
             return element1 === "proceed";
         }
     }
@@ -342,11 +342,11 @@ const BountyPhase = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
+          case 20:
           case 21:
           case 22:
           case 23:
           case 24:
-          case 25:
             dispatch(updateDemoCount(demoCount + 1));
             break;
         }

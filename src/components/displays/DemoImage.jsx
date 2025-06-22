@@ -14,20 +14,17 @@ const DemoImage = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          case 17:
-            return 8;
-
-          case 71:
-            return 7;
-
-          case 78:
-            return "FromTheAshes";
-
-          case 100:
-            return "01-01";
-
-          case 101:
+          case 16:
+            return 1;
+          case 95:
+          case 96:
+            return "06-01";
+          case 97:
+            return "05-01";
+          case 98:
             return "SA-04";
+          // case 78:
+          //   return "FromTheAshes";
         }
     }
   };

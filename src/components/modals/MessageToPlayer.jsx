@@ -23,9 +23,11 @@ const MessageToPlayer = (props) => {
   const canClick = () => {
     switch (demoGuide) {
       case "Learn-overview":
-        switch (demoCount) {
-          case 79:
-            return true;
+        switch (
+          demoCount
+          // case 79:
+          //   return true;
+        ) {
         }
     }
   };
@@ -33,10 +35,12 @@ const MessageToPlayer = (props) => {
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
       case "Learn-overview":
-        switch (demoCount) {
-          case 79:
-            dispatch(updateDemoCount(demoCount + 1));
-            break;
+        switch (
+          demoCount
+          // case 79:
+          //   dispatch(updateDemoCount(demoCount + 1));
+          //   break;
+        ) {
         }
     }
   };

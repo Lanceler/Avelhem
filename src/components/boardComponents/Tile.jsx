@@ -39,18 +39,19 @@ const Tile = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          case 39:
+          case 43:
             return element1 === 37;
-          case 51:
+
+          case 53:
             return element1 === 27;
-          case 58:
+
+          case 59:
             return element1 === 22;
-          case 70:
-            return element1 === 28;
-          case 123:
+
+          case 119:
             return element1 === 3;
 
-          ////////////////////////////
+          //////////////////////////
         }
     }
   };
@@ -59,11 +60,10 @@ const Tile = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          case 39:
-          case 51:
-          case 58:
-          case 70:
-          case 123:
+          case 43:
+          case 53:
+          case 59:
+          case 119:
             dispatch(updateDemoCount(demoCount + 1));
             break;
         }

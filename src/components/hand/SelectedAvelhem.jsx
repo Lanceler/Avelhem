@@ -96,8 +96,8 @@ const SelectedAvelhem = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          case 74:
-          case 82:
+          case 68:
+          case 86:
             return element1 === "Activate Button";
         }
     }
@@ -109,8 +109,8 @@ const SelectedAvelhem = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          case 74:
-          case 82:
+          case 68:
+          case 86:
             dispatch(updateDemoCount(demoCount + 1));
             break;
         }

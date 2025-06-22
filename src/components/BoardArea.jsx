@@ -161,10 +161,22 @@ const BoardArea = (props) => {
     });
   }, []);
 
+  // useEffect(() => {
+  //   if (!loadingImages) {
+  //     setShowContent(true);
+  //   }
+  // }, [loadingImages]);
+
   useEffect(() => {
+    let timer;
     if (!loadingImages) {
-      setShowContent(true);
+      timer = setTimeout(() => {
+        setShowContent(true);
+      }, 1750); // 2.5 seconds
     }
+
+    // Cleanup function
+    return () => clearTimeout(timer);
   }, [loadingImages]);
 
   //====================================================================
@@ -231,9 +243,9 @@ const BoardArea = (props) => {
 
   useEffect(() => {
     if (demoGuide === "Learn-overview") {
-      if ([8, 17, 76, 126, 130].includes(demoCount)) {
+      if ([8, 16, 88, 92, 122, 126].includes(demoCount)) {
         setHideModal(true);
-      } else if ([15, 19, 79, 127, 135].includes(demoCount)) {
+      } else if ([14, 18, 89, 93, 123, 130].includes(demoCount)) {
         setHideModal(false);
       }
     }
@@ -462,10 +474,9 @@ const BoardArea = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          case 124:
+          case 120:
             return element1 === "End Button";
-
-          ////////////////////////////
+          //////////////////
         }
     }
   };
@@ -474,7 +485,7 @@ const BoardArea = (props) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          case 124:
+          case 120:
             dispatch(updateDemoCount(demoCount + 1));
             break;
         }
@@ -500,7 +511,7 @@ const BoardArea = (props) => {
                         key="LoadingImage"
                         exit={{
                           opacity: 0,
-                          transition: { duration: 0.75 },
+                          transition: { duration: 1.15 },
                         }}
                         className="loading-image"
                       >
@@ -624,10 +635,11 @@ const BoardArea = (props) => {
                     <div
                       className="board-center"
                       style={{
-                        visibility:
+                        opacity:
                           demoGuide === "Learn-overview" && demoCount < 3
-                            ? "hidden"
-                            : "",
+                            ? 0
+                            : 1,
+                        transition: "opacity 0.85s ease-in-out",
                       }}
                     >
                       <div
@@ -691,7 +703,7 @@ const BoardArea = (props) => {
                                   style={{
                                     visibility:
                                       demoGuide === "Learn-overview" &&
-                                      demoCount < 13
+                                      demoCount < 11
                                         ? "hidden"
                                         : "",
                                   }}
@@ -798,7 +810,7 @@ const BoardArea = (props) => {
                                   style={{
                                     visibility:
                                       demoGuide === "Learn-overview" &&
-                                      demoCount < 13
+                                      demoCount < 11
                                         ? "hidden"
                                         : "",
                                   }}
@@ -902,7 +914,7 @@ const BoardArea = (props) => {
                       setTacticUsed={setTacticUsed}
                     />
 
-                    {[17, 71, 78, 100, 101].includes(demoCount) &&
+                    {[16, 95, 96, 97, 98].includes(demoCount) &&
                       demoGuide === "Learn-overview" && <DemoImage />}
 
                     {unitInfor !== null && (
