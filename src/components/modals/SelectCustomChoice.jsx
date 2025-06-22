@@ -44,8 +44,6 @@ const SelectCustomChoice = (props) => {
 
   let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-  console.log(newGameState.currentResolution);
-
   let unit = null;
   if (props.unit !== undefined && props.unit !== null) {
     unit = newGameState[props.unit.player].units[props.unit.unitIndex];

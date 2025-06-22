@@ -1441,20 +1441,20 @@ export const useSkillEffects = () => {
       newGameState = drawSkill(newGameState);
       newGameState = drawSkill(newGameState);
     } else {
-      unit.charge
-        ? (unit.charge = Math.min(3, unit.charge + 2))
-        : (unit.charge = 2);
+      unit.charge = 3;
     }
 
-    if (newGameState[unit.player].skillHand.length > 0) {
+    if (
+      newGameState[unit.player].skillHand.length > 0 &&
+      !unit.temporary.usedSecondAbility
+    ) {
       newGameState.currentResolution.push({
         resolution: "Lightning Skill",
         resolution2: "Valiant Spark1",
         unit: unit,
         details: {
           title: "Valiant Spark",
-          message:
-            "You may reveal 1 Lightning skill to gain a boost: You can activate “Arc Flash” without using a tactic.",
+          message: "You may reveal 1 Lightning skill to activate “Arc Flash”.",
           restriction: ["05-01", "05-02", "05-03"],
           reason: "Valiant Spark",
         },

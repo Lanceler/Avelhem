@@ -736,7 +736,7 @@ const UnitInfo = (props) => {
                 </>
               )}
 
-              {(unit.boosts.ambidexterity || unit.boosts.valiantSpark) && (
+              {unit.boosts.ambidexterity && (
                 <>
                   <p className="unitInfo-text-heading1">
                     <u>
@@ -750,15 +750,6 @@ const UnitInfo = (props) => {
                       <p className="unitInfo-text-desc unitInfo-text-last">
                         ⬩Next standard skill activated is retained upon
                         conclusion.
-                      </p>
-                    </>
-                  )}
-
-                  {unit.boosts.valiantSpark && (
-                    <>
-                      <p className="unitInfo-text-heading2">Valiant Spark</p>
-                      <p className="unitInfo-text-desc unitInfo-text-last">
-                        ⬩Can activate “Arc Flash” without using a tactic.
                       </p>
                     </>
                   )}

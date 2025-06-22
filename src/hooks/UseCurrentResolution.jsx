@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../redux/gameState";
@@ -378,14 +378,7 @@ const UseCurrentResolution = (props) => {
   // ================================================
   // ================================================
 
-  let lastRes = { resolution: "" };
-
-  if (localGameState.currentResolution.length > 0) {
-    lastRes =
-      localGameState.currentResolution[
-        localGameState.currentResolution.length - 1
-      ];
-  }
+  const lastRes = localGameState.currentResolution.at(-1) ?? { resolution: "" };
 
   if (props.userRole === "spectator") {
     switch (lastRes.resolution2) {

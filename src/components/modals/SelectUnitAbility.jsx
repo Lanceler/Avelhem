@@ -210,12 +210,6 @@ const SelectUnitAbility = (props) => {
       break;
 
     case "Lightning Scion":
-      if (unit.boosts.valiantSpark) {
-        message =
-          message +
-          " (Valiant Spark: You can activate Arc Flash without using a tactic.";
-      }
-
       abilityDetails = [
         {
           optionName: "Galvanize",
@@ -687,41 +681,19 @@ const SelectUnitAbility = (props) => {
             },
           });
         } else if (selectedChoice === 1) {
-          if (unit.boosts.valiantSpark) {
-            delete unit.boosts.valiantSpark;
-            //newGameState[unit.player].units[unit.unitIndex] = unit;
-
-            newGameState.activatingSkill.push("ArcFlash");
-            newGameState.activatingUnit.push(unit);
-
-            newGameState.currentResolution.push({
-              resolution: "Tactic End",
-              unit: unit,
-              effect: true,
-            });
-
-            newGameState.currentResolution.push({
-              resolution: "Unit Ability",
-              resolution2: "Activating Arc Flash",
-              unit: unit,
-            });
-
-            newGameState = animationDelay(newGameState, self);
-          } else {
-            newGameState.currentResolution.push({
-              resolution: "Unit Ability",
-              resolution2: "Ability - select tactic",
-              unit: unit,
-              details: {
-                title: "Arc Flash",
-                message: "Use an Assault tactic.",
-                restriction: ["Assault"],
-                stock: 1,
-                reason: "Arc Flash",
-                canSkip: "Return",
-              },
-            });
-          }
+          newGameState.currentResolution.push({
+            resolution: "Unit Ability",
+            resolution2: "Ability - select tactic",
+            unit: unit,
+            details: {
+              title: "Arc Flash",
+              message: "Use an Assault tactic.",
+              restriction: ["Assault"],
+              stock: 1,
+              reason: "Arc Flash",
+              canSkip: "Return",
+            },
+          });
         }
         break;
 

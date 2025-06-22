@@ -111,8 +111,22 @@ const RevealSkill = (props) => {
       //   break;
 
       case "Valiant Spark":
-        unit.boosts.valiantSpark = true;
         //newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
+
+        newGameState.activatingSkill.push("ArcFlash");
+        newGameState.activatingUnit.push(unit);
+
+        newGameState.currentResolution.push({
+          resolution: "Tactic End",
+          unit: unit,
+          effect: true,
+        });
+
+        newGameState.currentResolution.push({
+          resolution: "Unit Ability",
+          resolution2: "Activating Arc Flash",
+          unit: unit,
+        });
 
         revealTitle = "Valiant Spark";
         revealMessage = "Your opponent has revealed 1 Lightning Skill";

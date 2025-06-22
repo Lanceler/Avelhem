@@ -36,7 +36,6 @@ const Board = (props) => {
     freeze2,
     ignite,
     isAdjacent,
-    isMuted,
     paralyze1,
     strike,
     aetherBlast,
@@ -424,75 +423,39 @@ const Board = (props) => {
   };
 
   const activatingTarget = () => {
-    if (
-      localGameState.activatingTarget.length > 0 &&
-      localGameState.activatingTarget[
-        localGameState.activatingTarget.length - 1
-      ]
-    ) {
-      let unitInfo =
-        localGameState.activatingTarget[
-          localGameState.activatingTarget.length - 1
-        ];
+    const lastUnit = localGameState.activatingTarget.at(-1);
+    if (!lastUnit) return;
 
-      let unit = localGameState[unitInfo.player].units[unitInfo.unitIndex];
+    const unit = localGameState[lastUnit.player].units[lastUnit.unitIndex];
+    if (!unit) return;
 
-      if (!unit) {
-        return;
-      }
+    const row = self === "guest" ? 9 - unit.row : unit.row;
+    const col = self === "guest" ? 4 - unit.column : unit.column;
 
-      //host or spectator
-      if (self !== "guest") {
-        return {
-          position: "absolute",
-          zIndex: 101,
-          top: 13 + 78 * unit.row,
-          left: 13 + 78 * unit.column,
-        };
-      } else {
-        //guest
-        return {
-          position: "absolute",
-          zIndex: 101,
-          top: 13 + 78 * (9 - unit.row),
-          left: 13 + 78 * (4 - unit.column),
-        };
-      }
-    }
+    return {
+      position: "absolute",
+      zIndex: 101,
+      top: 13 + 78 * row,
+      left: 13 + 78 * col,
+    };
   };
 
   const activatingUnit = () => {
-    if (
-      localGameState.activatingUnit.length > 0 &&
-      localGameState.activatingUnit[localGameState.activatingUnit.length - 1]
-    ) {
-      let unitInfo =
-        localGameState.activatingUnit[localGameState.activatingUnit.length - 1];
+    const lastUnit = localGameState.activatingUnit.at(-1);
+    if (!lastUnit) return;
 
-      let unit = localGameState[unitInfo.player].units[unitInfo.unitIndex];
+    const unit = localGameState[lastUnit.player].units[lastUnit.unitIndex];
+    if (!unit) return;
 
-      if (!unit) {
-        return;
-      }
+    const row = self === "guest" ? 9 - unit.row : unit.row;
+    const col = self === "guest" ? 4 - unit.column : unit.column;
 
-      //host or spectator
-      if (self !== "guest") {
-        return {
-          position: "absolute",
-          zIndex: 101,
-          top: 21 + 78 * unit.row,
-          left: 21 + 78 * unit.column,
-        };
-      } else {
-        //guest
-        return {
-          position: "absolute",
-          zIndex: 101,
-          top: 21 + 78 * (9 - unit.row),
-          left: 21 + 78 * (4 - unit.column),
-        };
-      }
-    }
+    return {
+      position: "absolute",
+      zIndex: 101,
+      top: 21 + 78 * row,
+      left: 21 + 78 * col,
+    };
   };
 
   const canClick = (element1) => {
@@ -665,93 +628,119 @@ const Board = (props) => {
     }
   };
 
-  return (
-    <>
-      {expandedUnit !== null && (
-        <>
+  const unitOptions = () => {
+    const isExecutionPhase =
+      localGameState.currentResolution.at(-1)?.resolution === "Execution Phase";
+
+    const showOtherButtons =
+      isExecutionPhase &&
+      expandedUnit &&
+      self === expandedUnit.player &&
+      self === localGameState.turnPlayer &&
+      props.userRole !== "spectator";
+
+    return (
+      <>
+        <div
+          className={`pieceOption ${
+            canClick("Info Button") ? "demoClick" : ""
+          }`}
+          style={
+            unitButtonPosition(
+              expandedUnit ? expandedUnit : { row: 100, column: 100 }
+            )[0]
+          }
+          onClick={() => {
+            handleUnitOptions("Info");
+            handleUpdateDemoGuide();
+          }}
+        >
+          <div className="optionIcon">
+            <img src={getMiscImage("UnitProfile")} className="unitOptions" />
+          </div>
+        </div>
+
+        <div
+          style={
+            showOtherButtons
+              ? {}
+              : { opacity: 0, pointerEvents: "none", userSelect: "none" }
+          }
+        >
           <div
             className={`pieceOption ${
-              canClick("Info Button") ? "demoClick" : ""
+              canClick("Tactic Button") ? "demoClick" : ""
             }`}
-            style={unitButtonPosition(expandedUnit)[0]}
+            style={
+              unitButtonPosition(
+                expandedUnit ? expandedUnit : { row: 100, column: 100 }
+              )[1]
+            }
             onClick={() => {
-              handleUnitOptions("Info");
+              handleUnitOptions("Tactic");
               handleUpdateDemoGuide();
             }}
           >
             <div className="optionIcon">
-              <img src={getMiscImage("UnitProfile")} className="unitOptions" />
+              <img src={getMiscImage("UnitTactic")} className="unitOptions" />
             </div>
           </div>
+          <div
+            style={
+              expandedUnit?.unitClass !== "Pawn"
+                ? {}
+                : { opacity: 0, pointerEvents: "none", userSelect: "none" }
+            }
+          >
+            <div
+              className={`pieceOption ${
+                canClick("Ability Button") ? "demoClick" : ""
+              }`}
+              style={
+                unitButtonPosition(
+                  expandedUnit ? expandedUnit : { row: 100, column: 100 }
+                )[2]
+              }
+              onClick={() => {
+                handleUnitOptions("Ability");
+                handleUpdateDemoGuide();
+              }}
+            >
+              <div className="optionIcon">
+                {" "}
+                <img
+                  src={getMiscImage("UnitAbility")}
+                  className="unitOptions"
+                />
+              </div>
+            </div>
+            <div
+              className={`pieceOption ${
+                canClick("Skill Button") ? "demoClick" : ""
+              }`}
+              style={
+                unitButtonPosition(
+                  expandedUnit ? expandedUnit : { row: 100, column: 100 }
+                )[3]
+              }
+              onClick={() => {
+                handleUnitOptions("Skill");
+                handleUpdateDemoGuide();
+              }}
+            >
+              <div className="optionIcon">
+                <img src={getMiscImage("UnitSkill")} className="unitOptions" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  };
 
-          {localGameState.currentResolution.length > 0 &&
-            localGameState.currentResolution[
-              localGameState.currentResolution.length - 1
-            ].resolution === "Execution Phase" &&
-            self === expandedUnit.player &&
-            self === localGameState.turnPlayer &&
-            props.userRole !== "spectator" && (
-              <>
-                <div
-                  className={`pieceOption ${
-                    canClick("Tactic Button") ? "demoClick" : ""
-                  }`}
-                  style={unitButtonPosition(expandedUnit)[1]}
-                  onClick={() => {
-                    handleUnitOptions("Tactic");
-                    handleUpdateDemoGuide();
-                  }}
-                >
-                  <div className="optionIcon">
-                    <img
-                      src={getMiscImage("UnitTactic")}
-                      className="unitOptions"
-                    />
-                  </div>
-                </div>
-                {expandedUnit.unitClass !== "Pawn" && (
-                  <>
-                    <div
-                      className={`pieceOption ${
-                        canClick("Ability Button") ? "demoClick" : ""
-                      }`}
-                      style={unitButtonPosition(expandedUnit)[2]}
-                      onClick={() => {
-                        handleUnitOptions("Ability");
-                        handleUpdateDemoGuide();
-                      }}
-                    >
-                      <div className="optionIcon">
-                        {" "}
-                        <img
-                          src={getMiscImage("UnitAbility")}
-                          className="unitOptions"
-                        />
-                      </div>
-                    </div>
-                    <div
-                      className={`pieceOption ${
-                        canClick("Skill Button") ? "demoClick" : ""
-                      }`}
-                      style={unitButtonPosition(expandedUnit)[3]}
-                      onClick={() => {
-                        handleUnitOptions("Skill");
-                        handleUpdateDemoGuide();
-                      }}
-                    >
-                      <div className="optionIcon">
-                        <img
-                          src={getMiscImage("UnitSkill")}
-                          className="unitOptions"
-                        />
-                      </div>
-                    </div>
-                  </>
-                )}
-              </>
-            )}
-        </>
-      )}
+  return (
+    <>
+      {unitOptions()}
 
       {localGameState.activatingUnit.length > 0 &&
         localGameState.activatingUnit[
@@ -771,46 +760,6 @@ const Board = (props) => {
             <img src={getMiscImage("Crosshair")} className="crosshair" />
           </div>
         )}
-
-      {/* {localGameState.host.units.map((unit, i) => (
-        <div key={i}>
-          {unit && (
-            <div className="board-piece" style={unitPosition(unit)}>
-              <Piece
-                unit={unit}
-                movingUnit={props.movingUnit}
-                tileMode={props.tileMode}
-                selectUnitReason={props.selectUnitReason}
-                selectUnitSpecial={props.selectUnitSpecial}
-                expandedUnit={expandedUnit}
-                setExpandedUnit={props.setExpandedUnit}
-                validZones={props.validZones}
-                selectUnit={selectUnit}
-              />
-            </div>
-          )}
-        </div>
-      ))}
-
-      {localGameState.guest.units.map((unit, i) => (
-        <div key={-i - 1}>
-          {unit && (
-            <div className="board-piece" style={unitPosition(unit)}>
-              <Piece
-                unit={unit}
-                movingUnit={props.movingUnit}
-                tileMode={props.tileMode}
-                selectUnitReason={props.selectUnitReason}
-                selectUnitSpecial={props.selectUnitSpecial}
-                expandedUnit={expandedUnit}
-                setExpandedUnit={props.setExpandedUnit}
-                validZones={props.validZones}
-                selectUnit={selectUnit}
-              />
-            </div>
-          )}
-        </div>
-      ))} */}
 
       {[...localGameState.host.units, ...localGameState.guest.units].map(
         (unit, i) => (
