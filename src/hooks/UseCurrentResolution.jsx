@@ -681,7 +681,7 @@ const UseCurrentResolution = (props) => {
     case "Choose Resonator":
       return (
         <>
-          {self === lastRes.player && (
+          {self === lastRes.player && !props.hideModal && (
             <SelectResonator
               unit={lastRes.unit}
               skill={lastRes.skill}
@@ -695,7 +695,7 @@ const UseCurrentResolution = (props) => {
     case "Choose Resonator Avelhem":
       return (
         <>
-          {self === lastRes.player && (
+          {self === lastRes.player && !props.hideModal && (
             <SelectResonator
               avelhem={lastRes.avelhem}
               updateFirebase={props.updateFirebase}
@@ -946,18 +946,6 @@ const UseCurrentResolution = (props) => {
 
         case "Beseech - Upgraded":
         case "Cultivate - Upgraded":
-        case "Burst Upgrade":
-          return (
-            <>
-              {self === lastRes.player && !props.hideModal && (
-                <YouMayNoYes
-                  details={lastRes.details}
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
 
         case "Tactic Results":
           return (

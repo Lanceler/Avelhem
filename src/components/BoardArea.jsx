@@ -647,8 +647,11 @@ const BoardArea = (props) => {
   return (
     <div className="board-body">
       {zones && localGameState && (
-        <div className="board-contents">
-          <div className="board-physical">
+        // <div className="board-contents">
+
+        // </div>
+        <div className="board-physical">
+          <div className="board-space-wrapper">
             <div className="board-space">
               {!["ready", "spectate"].includes(props.playerStatus) && (
                 <>{props.gameInvite()}</>

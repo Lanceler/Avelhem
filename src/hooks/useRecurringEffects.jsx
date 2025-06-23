@@ -1752,7 +1752,7 @@ export const useRecurringEffects = () => {
     //burst skills can be activated after upgrade is purchased
     if (
       allBurstSkills().includes(skill) &&
-      localGameState[self].bountyUpgrades.burst < 1
+      localGameState[self].bountyUpgrades.skill < 2
     ) {
       return false;
     }
@@ -2588,9 +2588,10 @@ export const useRecurringEffects = () => {
     }
     newGameState[enemy].units = enemyUnits;
 
-    //2. Selectively discard skills in excess of your hand limit (8).
-    if (newGameState[self].skillHand.length > 8) {
-      const excessSkills = newGameState[self].skillHand.length - 8;
+    //2. Selectively discard skills in excess of your hand limit.
+    const skillHandlimit = newGameState[self].bountyUpgrades.skill > 2 ? 12 : 8;
+    if (newGameState[self].skillHand.length > skillHandlimit) {
+      const excessSkills = newGameState[self].skillHand.length - skillHandlimit;
 
       newGameState.currentResolution.push({
         resolution: "Final Phase",
@@ -2599,10 +2600,10 @@ export const useRecurringEffects = () => {
         details: {
           reason: "Skill Hand Limit",
           title: "Final Phase",
-          message: `The skill hand limit is 8 cards. Discard ${excessSkills} excess skill${
+          message: `The skill hand limit is ${skillHandlimit} cards. Discard ${excessSkills} excess skill${
             excessSkills === 1 ? "" : "s"
           }.`,
-          count: newGameState[self].skillHand.length - 8,
+          count: newGameState[self].skillHand.length - skillHandlimit,
         },
       });
     }
@@ -3063,12 +3064,11 @@ export const useRecurringEffects = () => {
     return false;
   };
 
-  const ignite = (newGameState, attacker, victim, special) => {
+  const ignite = (newGameState, attacker, victim) => {
     newGameState.currentResolution.push({
       resolution: "Apply Burn",
       attacker: attacker,
       victim: victim,
-      special: special,
       type: "ignite",
     });
 
@@ -3311,15 +3311,6 @@ export const useRecurringEffects = () => {
 
   const refillRepertoireSkill = (newGameState) => {
     //If deck empties, shuffle discard pile into it.
-
-    //0. If burst is upgraded, include shattered skills
-    if (newGameState[self].bountyUpgrades.burst > 2) {
-      newGameState[self].skillVestige = [
-        ...newGameState[self].skillVestige,
-        ...newGameState[self].skillShattered,
-      ];
-      newGameState[self].skillShattered = [];
-    }
 
     //1.Shuffle Vestige
     let newSkillDeck = shuffleCards(newGameState[self].skillVestige);

@@ -409,16 +409,6 @@ const YouMayNoYes = (props) => {
           resolution: "Acquisition Phase Selection",
         });
         break;
-
-      case "Burst Upgrade":
-        newGameState[self].skillVestige = [
-          ...newGameState[self].skillVestige,
-          ...newGameState[self].skillRepertoire,
-        ];
-        newGameState = refillRepertoireSkill(newGameState);
-        updateData = true;
-        break;
-
       default:
         break;
     }

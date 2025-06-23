@@ -10,6 +10,8 @@ import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import Skill from "../hand/Skill";
 
+import { useCardDatabase } from "../../hooks/useCardDatabase";
+
 const SelectResonator = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
@@ -19,6 +21,7 @@ const SelectResonator = (props) => {
 
   const [selectedSkill, setSelectedSkill] = useState(null);
 
+  const { getScionSet } = useCardDatabase();
   const { activateAvelhem, activateSkill, activateSovereignSkillAndResonate } =
     useRecurringEffects();
 
@@ -54,6 +57,15 @@ const SelectResonator = (props) => {
     );
   } else {
     validResonators = [props.skill.id, "SA-01", "SA-02", "SA-03"];
+
+    if (props.unit && localGameState[self].bountyUpgrades.skill > 0) {
+      validResonators = [
+        ...validResonators,
+        ...getScionSet(props.unit.unitClass),
+      ];
+    }
+
+    // console.log(validResonators);
 
     usableSkills = usableSkills.filter(
       (skill) =>

@@ -133,35 +133,21 @@ const BountyPhase = (props) => {
         break;
 
       case 16:
-        newGameState[self].bountyUpgrades.burst = 1;
-        newGameState[self].bountyPoints -= burstCosts[0];
+        newGameState[self].bountyUpgrades.skill = 1;
+        newGameState[self].bountyPoints -= skillCosts[0];
         setSelectedChoice(null);
         break;
 
       case 17:
-        newGameState[self].bountyUpgrades.burst = 2;
-        newGameState[self].bountyPoints -= burstCosts[1];
+        newGameState[self].bountyUpgrades.skill = 2;
+        newGameState[self].bountyPoints -= skillCosts[1];
         setSelectedChoice(null);
         break;
 
       case 18:
-        newGameState[self].bountyUpgrades.burst = 3;
-        newGameState[self].bountyPoints -= burstCosts[2];
+        newGameState[self].bountyUpgrades.skill = 3;
+        newGameState[self].bountyPoints -= skillCosts[2];
         setSelectedChoice(null);
-
-        newGameState.currentResolution.push({
-          resolution: "Misc.",
-          resolution2: "Burst Upgrade",
-          player: self,
-          details: {
-            reason: "Burst Upgrade",
-            title: "Burst Upgrade",
-            message:
-              "You may discard your skill repertoire. (Warning: This will grant your opponent 6 FD and 3 BP.)",
-            no: "Skip",
-            yes: "Discard",
-          },
-        });
 
         break;
 
@@ -190,7 +176,7 @@ const BountyPhase = (props) => {
   const coordinationCosts = [3, 3, 4];
   const tacticsCosts = [3, 3, 4];
   const avelhemCosts = [3, 3, 4];
-  const burstCosts = [3, 3, 4];
+  const skillCosts = [3, 3, 4];
   // const victoryCosts = [10, 5];
 
   const canFrontier = [
@@ -238,13 +224,13 @@ const BountyPhase = (props) => {
       localGameState[self].bountyUpgrades.avelhem === 2,
   ];
 
-  const canBurst = [
-    localGameState[self].bountyPoints >= burstCosts[0] &&
-      localGameState[self].bountyUpgrades.burst === 0,
-    localGameState[self].bountyPoints >= burstCosts[1] &&
-      localGameState[self].bountyUpgrades.burst === 1,
-    localGameState[self].bountyPoints >= burstCosts[2] &&
-      localGameState[self].bountyUpgrades.burst === 2,
+  const canSkill = [
+    localGameState[self].bountyPoints >= skillCosts[0] &&
+      localGameState[self].bountyUpgrades.skill === 0,
+    localGameState[self].bountyPoints >= skillCosts[1] &&
+      localGameState[self].bountyUpgrades.skill === 1,
+    localGameState[self].bountyPoints >= skillCosts[2] &&
+      localGameState[self].bountyUpgrades.skill === 2,
   ];
 
   // const canVictory = [
@@ -305,13 +291,13 @@ const BountyPhase = (props) => {
         return newGameState[self].bountyUpgrades.avelhem >= 3;
 
       case 16:
-        return newGameState[self].bountyUpgrades.burst >= 1;
+        return newGameState[self].bountyUpgrades.skill >= 1;
 
       case 17:
-        return newGameState[self].bountyUpgrades.burst >= 2;
+        return newGameState[self].bountyUpgrades.skill >= 2;
 
       case 18:
-        return newGameState[self].bountyUpgrades.burst >= 3;
+        return newGameState[self].bountyUpgrades.skill >= 3;
 
       default:
         return;
@@ -466,7 +452,7 @@ const BountyPhase = (props) => {
         ind: 13,
       },
       {
-        text: "Your hand can hold up to 1 Avelhem at the Final Phase",
+        text: "Increase your Avelhem hand limit to 1",
         ind: 14,
       },
       {
@@ -485,9 +471,20 @@ const BountyPhase = (props) => {
     can: canAvelhem,
   };
 
-  const burstBounty = {
-    category: "Burst",
+  const skillBounty = {
+    category: "Skill",
     items: [
+      {
+        text: (
+          <>
+            <p style={{ fontSize: 19.5 }}>
+              Your scions can use any skill that belongs to their class as a
+              resonator
+            </p>
+          </>
+        ),
+        ind: 16,
+      },
       {
         text: (
           <>
@@ -496,27 +493,15 @@ const BountyPhase = (props) => {
             burst skills
           </>
         ),
-        ind: 16,
-      },
-      {
-        text: "You can search for burst skills",
         ind: 17,
       },
       {
-        text: (
-          <>
-            <p style={{ fontSize: 17 }}>
-              Include shattered skills when replenishing your repertoire (You
-              may discard your skill repertoire upon purchase)
-            </p>
-          </>
-        ),
-
+        text: "Increase your skill hand limit to 12",
         ind: 18,
       },
     ],
-    cost: burstCosts,
-    can: canBurst,
+    cost: skillCosts,
+    can: canSkill,
   };
 
   const BountyRow = ({ info }) => {
@@ -586,7 +571,7 @@ const BountyPhase = (props) => {
           <BountyRow info={coordinationBounty} />
           <BountyRow info={tacticsBounty} />
           <BountyRow info={avelhemBounty} />
-          <BountyRow info={burstBounty} />
+          <BountyRow info={skillBounty} />
         </div>
 
         <div className="modalFooter">

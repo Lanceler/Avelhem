@@ -604,7 +604,8 @@ const UnitInfo = (props) => {
               {(unit.enhancements.ravager ||
                 unit.enhancements.ward ||
                 unit.enhancements.shield ||
-                unit.enhancements.overgrowth) && (
+                unit.enhancements.overgrowth ||
+                unit.boosts.ambidexterity) && (
                 <>
                   <p className="unitInfo-text-heading1">
                     <u>
@@ -656,6 +657,17 @@ const UnitInfo = (props) => {
                       <p className="unitInfo-text-desc unitInfo-text-last">
                         ⬩This enhancement is purged if the unit moves or has an
                         affliction.
+                      </p>
+                    </>
+                  )}
+
+                  {unit.boosts.ambidexterity && (
+                    <>
+                      <p className="unitInfo-text-heading2">
+                        Ambidexterity (1 turn)
+                      </p>
+                      <p className="unitInfo-text-desc unitInfo-text-last">
+                        ⬩Next standard skill activated is retained.
                       </p>
                     </>
                   )}
@@ -730,26 +742,6 @@ const UnitInfo = (props) => {
                       <p className="unitInfo-text-desc unitInfo-text-last">
                         ⬩Must spend 1 skill to traverse or Aether-blast via
                         tactical action.
-                      </p>
-                    </>
-                  )}
-                </>
-              )}
-
-              {unit.boosts.ambidexterity && (
-                <>
-                  <p className="unitInfo-text-heading1">
-                    <u>
-                      <strong>Boosts</strong>
-                    </u>
-                  </p>
-
-                  {unit.boosts.ambidexterity && (
-                    <>
-                      <p className="unitInfo-text-heading2">Ambidexterity</p>
-                      <p className="unitInfo-text-desc unitInfo-text-last">
-                        ⬩Next standard skill activated is retained upon
-                        conclusion.
                       </p>
                     </>
                   )}

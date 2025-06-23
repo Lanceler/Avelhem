@@ -1,8 +1,12 @@
 
 .board-body {
     width: 100%;
+    height: 1200px;
     display: flex;
     flex-direction: column;
+    // background-color: red;
+    overflow: hidden;
+    position: relative;
 }
 
 .board-contents{
@@ -13,9 +17,22 @@
 .board-physical {
     position: relative;
     display: flex;
-    justify-content: center;
+    // justify-content: center;
     user-select: none;
     animation: turnFadeIn 3.25s linear;
+
+    // background-color: aqua;
+    overflow: hidden;
+    height: 100%;
+    max-width: 100vw;
+}
+
+.board-space-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%) scale(0.875);
+    transform-origin: center;
 }
 
 .board-space {
@@ -25,16 +42,13 @@
     
     height: 890px;
     width: 1450px;
+    
     overflow: hidden;
-    // background: linear-gradient(to bottom, rgba(31, 31, 31, 0.95), rgba(90, 90, 90, 0.95) 70%, rgba(141, 141, 141, 0.95) 100%);
+    
     background: linear-gradient(to bottom, rgba(85, 84, 84, 0.65), rgba(116, 116, 116, 0.7) 35%, rgba(230, 223, 223, 0.55) 100%);
     box-shadow: 4px 4px 8px 4px rgba(0, 0, 0, 0.5);
-    scrollbar-color: rgb(252, 165, 5) rgba(92, 63, 52, 0);
-    scrollbar-width: thin;
-
-    transform: scale(0.875);
-    // transition: background 0.5s ease;
-
+    // scrollbar-color: rgb(252, 165, 5) rgba(92, 63, 52, 0);
+    // scrollbar-width: thin;
 }
 
 
@@ -43,7 +57,7 @@
                     rgba(0, 255, 255, 0) 40%, 
                     rgba(0, 217, 255, 0.65) 100%);
     height: 100%;
-    width: 100%;
+    width: 99%;
     position: absolute;
     z-index: -1;
     // opacity: 0;
@@ -379,36 +393,95 @@
 }
 //////////////////////////////////////////////////////////////
 
-@media screen and (max-width: 926px) and (orientation: landscape) {
-    .board-physical {
-        transform: scale(0.4);
-        max-width: 100vw;
-        max-height: 100vh;
+
+@media screen and (max-width: 1325px) {
+    .board-body {
+        height: 800px;
     }
-    .board-space {
-        flex-shrink: 0;
-        transform: translateY(-20%);
+
+    .board-space-wrapper {
+        transform: translate(-50%, -50%) scale(0.80);
+    } 
+}
+
+@media screen and (max-width: 1215px) {
+    .board-body {
+        height: 700px;
     }
-    .board-contents {
-        min-height: 165vh;
+
+    .board-space-wrapper {
+        transform: translate(-50%, -50%) scale(0.7);
+    }
+}
+
+@media screen and (max-width: 1070px) {
+    .board-body {
+        height: 550px;
+    }
+
+    .board-space-wrapper {
+        transform: translate(-50%, -50%) scale(0.55);
+    }
+}
+
+@media screen and (max-width: 830px) {
+    .board-body {
+        height: 400px;
+    }
+
+    .board-space-wrapper {
+        transform: translate(-50%, -50%) scale(0.40);
+    }
+}
+
+@media screen and (max-width: 610px) {
+    .board-body {
+        height: 250px;
+    }
+
+    .board-space-wrapper {
+        transform: translate(-50%, -50%) scale(0.25);
+    }
+}
+
+@media screen and (max-height: 420px) {
+    .board-space-wrapper {
+        transform: translate(-50%, -50%) scale(0.435);
     }
 }
 
 
-@media screen and (max-width: 754px) and (orientation: landscape) {
-    .board-physical {
-        transform: scale(0.35);
-    }
-}
 
-@media screen and (max-height: 400px) and (orientation: landscape) {
-    .board-physical {
-        transform: scale(0.325);
-    }
-}
+// @media screen and (max-width: 926px) and (orientation: landscape) {
+//     .board-physical {
+//         transform: scale(0.4);
+//         max-width: 100vw;
+//         max-height: 100vh;
+//     }
+//     .board-space {
+//         flex-shrink: 0;
+//         transform: translateY(-20%);
+//     }
+//     .board-contents {
+//         min-height: 165vh;
+//     }
+// }
 
-@media screen and (max-height: 330px) and (orientation: landscape) {
-    .board-physical {
-        transform: scale(0.30);
-    }
-}
+
+// @media screen and (max-width: 754px) and (orientation: landscape) {
+//     .board-physical {
+//         transform: scale(0.35);
+//     }
+// }
+
+// @media screen and (max-height: 400px) and (orientation: landscape) {
+//     .board-physical {
+//         transform: scale(0.325);
+//     }
+// }
+
+// @media screen and (max-height: 330px) and (orientation: landscape) {
+//     .board-physical {
+//         transform: scale(0.30);
+//     }
+// }

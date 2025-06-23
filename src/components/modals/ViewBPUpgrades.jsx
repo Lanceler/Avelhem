@@ -149,7 +149,7 @@ const ViewBPUpgrades = (props) => {
                   )}
                   {upgrades.avelhem >= 2 && (
                     <p className="unitInfo-text-desc">
-                      2. Can retain up to 1 Avelhem at the end of turn.
+                      2. Avelhem hand limit raised to 1
                     </p>
                   )}
                   {upgrades.avelhem >= 3 && (
@@ -165,24 +165,24 @@ const ViewBPUpgrades = (props) => {
             </div>
 
             <div>
-              {upgrades.burst > 0 && (
+              {upgrades.skill > 0 && (
                 <>
-                  <h3>Burst:</h3>
+                  <h3>Skill:</h3>
 
-                  {upgrades.burst >= 1 && (
+                  {upgrades.skill >= 1 && (
                     <p className="unitInfo-text-desc">
-                      1. Can activate burst skills.
+                      1. Scions can use any skill that belongs to their class as
+                      a resonator
                     </p>
                   )}
-                  {upgrades.burst >= 2 && (
+                  {upgrades.skill >= 2 && (
                     <p className="unitInfo-text-desc">
-                      2. Can search for burst skills.
+                      2. Can activate burst skills.
                     </p>
                   )}
-                  {upgrades.burst >= 3 && (
+                  {upgrades.skill >= 3 && (
                     <p className="unitInfo-text-desc">
-                      3. Shattered skills are shuffled into repertoire when
-                      replenished.
+                      3. Skill hand limit raised to 12
                     </p>
                   )}
 

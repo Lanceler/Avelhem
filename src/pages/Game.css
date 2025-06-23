@@ -99,3 +99,37 @@
     /* margin-top: auto; */
     min-height: 180px;
 }
+
+/* //////////// */
+
+@media screen and (max-width: 1325px) {
+    .game-body {
+        min-height: 1150px;
+    }
+}
+
+@media screen and (max-width: 1215px) {
+    .game-body {
+        min-height: 1050px;
+    }
+}
+
+@media screen and (max-width: 1070px) {
+    .game-body {
+        min-height: 880px;
+    }
+}
+
+@media screen and (max-width: 830px) {
+
+
+    .game-body {
+        min-height: 720px;
+    }
+}
+
+@media screen and (max-width: 610px) {
+    .game-body {
+        min-height: 650px;
+    }
+}

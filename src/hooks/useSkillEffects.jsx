@@ -20,6 +20,7 @@ export const useSkillEffects = () => {
     getZonesWithEnemiesNoAether,
     getZonesWithEnemiesRooted,
     isAdjacent,
+    isDisrupted,
     isImmobilized,
     isMuted,
     isRooted,
@@ -1446,7 +1447,8 @@ export const useSkillEffects = () => {
 
     if (
       newGameState[unit.player].skillHand.length > 0 &&
-      !unit.temporary.usedSecondAbility
+      !unit.temporary.usedSecondAbility &&
+      !isDisrupted(unit, 1)
     ) {
       newGameState.currentResolution.push({
         resolution: "Lightning Skill",
