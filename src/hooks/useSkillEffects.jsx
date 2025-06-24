@@ -468,9 +468,7 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    unit.torrent
-      ? (unit.torrent = Math.min(2, unit.torrent + 1))
-      : (unit.torrent = 1);
+    unit.torrent = 2;
 
     //inspect
     newGameState.currentResolution.push({

@@ -213,16 +213,6 @@ const InspectSkill = (props) => {
 
         case "Multi":
           if (props.details.outcome === "Add") {
-            if (props.details.reason === "Glacial Torrent") {
-              let unitInfo = props.unit;
-              let unit =
-                newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-              if (selectedSkills.length >= 2) {
-                unit.torrent = 2;
-              }
-            }
-
             let selection = [...floatingRepertoire, ...inspectRerpertoire];
             let SelectedRepertoireIndexes = [];
             for (let i of selectedSkills) {
