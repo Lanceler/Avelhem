@@ -2337,16 +2337,14 @@ export const useRecurringEffects = () => {
     newZoneInfo[victim.row][victim.column].unitIndex = null;
     newGameState.zones = JSON.stringify(newZoneInfo);
 
-    //"If the attack was lethal" subsequent effects
-    switch (special) {
-      case "Geomancy":
-        newGameState[attacker.player].units[
-          attacker.unitIndex
-        ].temporary.geomancyLethal = true;
-        break;
-      default:
-        break;
-    }
+    // "If the attack was lethal" subsequent effects
+    // switch (special) {
+    //   case "Parasite Bloom":
+    //     // idk ;
+    //     break;
+    //   default:
+    //     break;
+    // }
 
     //strike movement
     if (type === "strike") {

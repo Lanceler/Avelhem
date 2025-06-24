@@ -1176,8 +1176,7 @@ export const useSkillEffects = () => {
     if (
       unit !== null &&
       !isMuted(unit) &&
-      getZonesWithEnemies(unit, 1).length > 0 &&
-      unit.temporary.geomancyLethal
+      getZonesWithEnemies(unit, 1).length > 0
     ) {
       newGameState.currentResolution.push({
         resolution: "Land Skill",
@@ -1192,8 +1191,6 @@ export const useSkillEffects = () => {
         },
       });
     }
-
-    delete unit.temporary.geomancyLethal;
 
     return newGameState;
   };
