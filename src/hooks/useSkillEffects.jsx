@@ -2320,9 +2320,8 @@ export const useSkillEffects = () => {
         message: "You do not have any Plant skills to recover.",
       });
     } else if (
-      unit !== null &&
-      !isMuted(unit) &&
-      (newGameState[unit.player].skillHand.length > 0 || unit.blossom > 1)
+      newGameState[unit.player].skillHand.length > 0 ||
+      unit.blossom > 1
     ) {
       newGameState.currentResolution.push({
         resolution: "Discard Skill",

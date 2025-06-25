@@ -117,8 +117,14 @@
 }
 
 @media screen and (max-width: 610px) {
+
+    .demo-header {
+            padding-top: 45px;
+            font-size: 2.0rem;
+        }
+
     .demo-body {
-        min-height: 650px;
+        min-height: 500px;
     }
 }
 
