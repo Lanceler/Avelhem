@@ -81,11 +81,6 @@ const Tile = (props) => {
       }}
     >
       <div className={`tile ${self !== "guest" ? "" : "reversed-tile"}`}>
-        {/* {!props.zone.player && (
-          <>
-            [{props.zone.row},{props.zone.column}]
-          </>
-        )} */}
         <div className="tile-outline"></div>
       </div>
     </div>

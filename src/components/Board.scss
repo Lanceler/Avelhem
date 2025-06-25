@@ -34,12 +34,14 @@
     transform: translate(-50%, -60%) scale(0.875);
     transform-origin: center;
     overflow: hidden;
+    border: 8px ridge goldenrod;
 }
 
 .board-space {
     display: flex;
     align-items: center;
-    border: 8px ridge goldenrod;
+    // border: 8px ridge goldenrod;
+    // border: 8px ridge goldenrod;
     height: 890px;
     width: 1450px;
     overflow: hidden;  

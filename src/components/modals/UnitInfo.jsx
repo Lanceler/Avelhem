@@ -478,7 +478,7 @@ const UnitInfo = (props) => {
 
         <div className="info-modal-contents" style={{ pointerEvents: "all" }}>
           <div className="unitInfo-Abilities-Attributes">
-            <div className="unitInfo-Abilities  ">
+            <div className="unitInfo-Abilities">
               <p className="unitInfo-text-heading1">
                 <u>
                   <strong>Abilities</strong>

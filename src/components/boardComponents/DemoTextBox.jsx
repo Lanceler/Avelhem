@@ -1636,7 +1636,7 @@ const DemoTextBox = () => {
                 </span>
                 <br /> <br />
                 The Sovereign who owns the eliminated unit receives 2 FD, while
-                their opponent receives 1 BP. Consequently, your opponent now
+                their opponent is awarded 1 BP. Consequently, your opponent now
                 has 5 FD, while you have 1 BP.
               </div>
             );
@@ -1797,7 +1797,7 @@ const DemoTextBox = () => {
               <div>
                 If scoring causes the Initiator to meet the victory requirement,
                 they win the game. Otherwise, the game continues with their
-                opponent as the Initiator.
+                opponent becoming the Initiator.
                 <br /> <br />
                 As noted earlier, the victory requirement is automatically set
                 to 1, but players may increase it once someone wins.

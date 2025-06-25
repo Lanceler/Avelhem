@@ -118,6 +118,12 @@
     .game-body {
         min-height: 880px;
     }
+
+.board-data {
+    padding: 20px 120px;
+    font-size: 23px;
+    min-height: 130px;
+}
 }
 
 @media screen and (max-width: 830px) {
@@ -125,11 +131,11 @@
         min-height: 720px;
     }
 
-        .board-data {
-            padding: 20px 60px;
-            font-size: 20px;
-            min-height: 125px;
-        }
+    .board-data {
+        padding: 20px 60px;
+        font-size: 20px;
+        min-height: 125px;
+    }
 }
 
 @media screen and (max-width: 610px) {

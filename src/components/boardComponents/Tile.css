@@ -47,15 +47,20 @@
 }
 
 .selectable .tile {
-    
     /* background: rgba(0, 217, 255, 0.70); */
     background: rgba(3, 226, 255, 0.9);
     transition: background 0.45s ease;
 
 }
 
-.selectable .tile:hover{
-background: rgb(221, 228, 124);
+
+.selectable.demoClick .tile {
+    background: rgba(7, 221, 0, 0.9);
+}
+
+.selectable .tile:hover,
+.selectable.demoClick .tile:hover {
+    background: rgb(221, 228, 124);
     cursor: pointer
 }
 
