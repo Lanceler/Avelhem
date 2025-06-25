@@ -223,7 +223,7 @@ export const useSovereignSkillEffects = () => {
       details: {
         reason: "Foreshadow Draw 2",
         title: "Foreshadow",
-        message: "Since you searched for a burst skill, you may draw 2 skills.",
+        message: "Since you searched for a burst skill, you may draw 1 skill.",
         no: "Skip",
         yes: "Draw",
       },

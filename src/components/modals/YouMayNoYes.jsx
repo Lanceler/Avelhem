@@ -361,7 +361,6 @@ const YouMayNoYes = (props) => {
 
       case "Foreshadow Draw 2": //"Foreshadow Draw 2"
         newGameState = drawSkill(newGameState);
-        newGameState = drawSkill(newGameState);
         break;
 
       case "Press the Attack Avelhem":
