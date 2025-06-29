@@ -10,15 +10,12 @@ export const useUnitAbilityEffects = () => {
 
   const {
     animationDelay,
-    canBlast,
+
     canMove,
     canStrike,
-    drawSkill,
     enterSelectUnitMode,
-    getVacant2SpaceZones,
     getZonesWithAllies,
     getZonesWithEnemies,
-    isDisrupted,
     isMuted,
   } = useRecurringEffects();
 
@@ -739,8 +736,7 @@ export const useUnitAbilityEffects = () => {
 
     if (
       getZonesWithEnemies(unit, 1).length > 0 &&
-      newGameState[unit.player].skillHand.length > 0 &&
-      !isDisrupted(unit, 2)
+      newGameState[unit.player].skillHand.length > 0
     ) {
       newGameState.currentResolution.push({
         resolution: "Unit Ability",

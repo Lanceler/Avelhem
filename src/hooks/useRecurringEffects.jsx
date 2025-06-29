@@ -82,7 +82,7 @@ export const useRecurringEffects = () => {
   const activateAvelhemRecover = (newGameState, avelhem) => {
     //newGameState.currentResolution.pop() <--not needed
 
-    newGameState[self].fateDefiance -= 2;
+    newGameState[self].defiancePoints -= 2;
 
     const scionClass = avelhemToScion(avelhem);
 
@@ -1400,8 +1400,8 @@ export const useRecurringEffects = () => {
             newGameState.guest.bountyPoints + 3
           );
 
-          //Enemy gains 6 FD
-          newGameState.host.fateDefiance = 6;
+          //Enemy gains 6 DP
+          newGameState.host.defiancePoints = 6;
         } else if (unit.row === 0 && self === "host") {
           //Host scores
           //Grant score
@@ -1414,8 +1414,8 @@ export const useRecurringEffects = () => {
             newGameState.host.bountyPoints + 3
           );
 
-          //Enemy gains 6 FD
-          newGameState.guest.fateDefiance = 6;
+          //Enemy gains 6 DP
+          newGameState.guest.defiancePoints = 6;
         }
       }
     }
@@ -1691,8 +1691,7 @@ export const useRecurringEffects = () => {
   };
 
   const canActivateResonance = (unit, skill) => {
-    //only non-burst skills can be activated if disrupted
-    if (isMuted(unit) || isDisrupted(unit, 1)) {
+    if (isMuted(unit)) {
       return false;
     }
 
@@ -1754,11 +1753,6 @@ export const useRecurringEffects = () => {
       allBurstSkills().includes(skill) &&
       localGameState[self].bountyUpgrades.skill < 2
     ) {
-      return false;
-    }
-
-    //only non-burst skills can be activated if disrupted
-    if (isDisrupted(unit, 1) && !allBurstSkills().includes(skill)) {
       return false;
     }
 
@@ -1902,7 +1896,7 @@ export const useRecurringEffects = () => {
 
   const canActivateSovereignSkill = (skill) => {
     const canHeirsEndeavor = () => {
-      if (localGameState[self].fateDefiance < 3) {
+      if (localGameState[self].defiancePoints < 3) {
         return false;
       }
 
@@ -1947,14 +1941,14 @@ export const useRecurringEffects = () => {
         return (
           localGameState[self].skillVestige.length > 0 ||
           (localGameState[self].avelhemVestige.length > 0 &&
-            localGameState[self].fateDefiance > 0)
+            localGameState[self].defiancePoints > 0)
         );
 
       case "SA-05": // Foreshadow
         return true;
 
       case "SB-01": // Transmute
-        return hasScionSkill() && localGameState[self].fateDefiance >= 2;
+        return hasScionSkill() && localGameState[self].defiancePoints >= 2;
 
       case "SB-02": // Ambidexterity
         return getZonesWithScions(self).length > 0;
@@ -1963,7 +1957,7 @@ export const useRecurringEffects = () => {
         return hasTactic(["Invoke"]);
 
       case "SB-04": // Fervent Prayer
-        return localGameState[self].fateDefiance >= 2;
+        return localGameState[self].defiancePoints >= 2;
 
       case "SB-05": // Press the Attack
         return canPressTheAttack();
@@ -2318,10 +2312,10 @@ export const useRecurringEffects = () => {
 
     let newZoneInfo = JSON.parse(newGameState.zones);
 
-    // Grant Fate Defiance
-    newGameState[victim.player].fateDefiance = Math.min(
+    // Grant Defiance Points
+    newGameState[victim.player].defiancePoints = Math.min(
       6,
-      newGameState[victim.player].fateDefiance + 2
+      newGameState[victim.player].defiancePoints + 2
     );
 
     // Grant Bounty Points
@@ -3117,11 +3111,7 @@ export const useRecurringEffects = () => {
     for (let z of zonesWithEnemies) {
       const zone = zones[Math.floor(z / 5)][z % 5];
       const enemy = newGameState[zone.player].units[zone.unitIndex];
-      if (
-        enemy.seal > 0 &&
-        (enemy.enhancements.shield > 0 || enemy.enhancements.ward > 0) &&
-        !isMuted(enemy)
-      ) {
+      if (enemy.seal > 0 && !isMuted(enemy)) {
         return true;
       }
     }
@@ -3320,14 +3310,14 @@ export const useRecurringEffects = () => {
     newGameState[self].skillVestige = [];
 
     //4. Apply Penalty
-    //If one’s skill repertoire is depleted, their opponent gains 6 FD and 3 BP.
+    //If one’s skill repertoire is depleted, their opponent gains 6 DP and 3 BP.
     newGameState[enemy].bountyPoints = Math.min(
       10,
       newGameState[enemy].bountyPoints + 3
     );
-    newGameState[enemy].fateDefiance = Math.min(
+    newGameState[enemy].defiancePoints = Math.min(
       6,
-      newGameState[enemy].fateDefiance + 6
+      newGameState[enemy].defiancePoints + 6
     );
 
     //5. Safety
@@ -3371,11 +3361,7 @@ export const useRecurringEffects = () => {
       const zone = zones[Math.floor(z / 5)][z % 5];
       const unit = newGameState[zone.player].units[zone.unitIndex];
 
-      if (
-        unit.unitClass === "Mana Scion" &&
-        !isMuted(unit) &&
-        !isDisrupted(unit, 1)
-      ) {
+      if (unit.unitClass === "Mana Scion" && !isMuted(unit)) {
         zonesWithManaScions.push(z);
       }
     }
@@ -3545,7 +3531,6 @@ export const useRecurringEffects = () => {
       if (
         unit.unitClass === "Metal Scion" &&
         !isMuted(unit) &&
-        !isDisrupted(unit, 1) &&
         !isRooted(unit)
       ) {
         zonesWithMetalScions.push(z);
@@ -3579,11 +3564,7 @@ export const useRecurringEffects = () => {
       const zone = zones[Math.floor(z / 5)][z % 5];
       const unit = newGameState[zone.player].units[zone.unitIndex];
 
-      if (
-        unit.unitClass === "Avian Scion" &&
-        !isMuted(unit) &&
-        !isDisrupted(unit, 1)
-      ) {
+      if (unit.unitClass === "Avian Scion" && !isMuted(unit)) {
         zonesWithAvianScions.push(z);
       }
     }
@@ -3615,11 +3596,7 @@ export const useRecurringEffects = () => {
       const zone = zones[Math.floor(z / 5)][z % 5];
       const unit = newGameState[zone.player].units[zone.unitIndex];
 
-      if (
-        unit.unitClass === "Water Scion" &&
-        !isMuted(unit) &&
-        !isDisrupted(unit, 1)
-      ) {
+      if (unit.unitClass === "Water Scion" && !isMuted(unit)) {
         zonesWithWaterScions.push(z);
       }
     }
@@ -3683,11 +3660,7 @@ export const useRecurringEffects = () => {
       const zone = zones[Math.floor(z / 5)][z % 5];
       const unit = newGameState[zone.player].units[zone.unitIndex];
 
-      if (
-        unit.unitClass === "Land Scion" &&
-        !isMuted(unit) &&
-        !isDisrupted(unit, 1)
-      ) {
+      if (unit.unitClass === "Land Scion" && !isMuted(unit)) {
         zonesWithLandScions.push(z);
       }
     }
@@ -3719,11 +3692,7 @@ export const useRecurringEffects = () => {
       const zone = zones[Math.floor(z / 5)][z % 5];
       const unit = newGameState[zone.player].units[zone.unitIndex];
 
-      if (
-        unit.unitClass === "Wind Scion" &&
-        !isMuted(unit) &&
-        !isDisrupted(unit, 1)
-      ) {
+      if (unit.unitClass === "Wind Scion" && !isMuted(unit)) {
         zonesWithWindScions.push(z);
       }
     }
@@ -3794,11 +3763,7 @@ export const useRecurringEffects = () => {
       const zone = zones[Math.floor(z / 5)][z % 5];
       const unit = newGameState[zone.player].units[zone.unitIndex];
 
-      if (
-        unit.unitClass === "Plant Scion" &&
-        !isMuted(unit) &&
-        !isDisrupted(unit, 1)
-      ) {
+      if (unit.unitClass === "Plant Scion" && !isMuted(unit)) {
         zonesWithPlantScions.push(z);
       }
     }
@@ -3865,11 +3830,7 @@ export const useRecurringEffects = () => {
       const zone = zones[Math.floor(i / 5)][i % 5];
       const unit = localGameState[zone.player].units[zone.unitIndex];
 
-      if (
-        unit.unitClass === "Mana Scion" &&
-        !isMuted(unit) &&
-        !isDisrupted(unit, 1)
-      ) {
+      if (unit.unitClass === "Mana Scion" && !isMuted(unit)) {
         return true;
       }
     }
@@ -3903,7 +3864,6 @@ export const useRecurringEffects = () => {
     if (
       victim.unitClass === "Fire Scion" && //must be Fire Scion
       !isMuted(victim) &&
-      !isDisrupted(victim, 1) &&
       ["strike", "aether-blast", "blast"].includes(method) && //only attacks can trigger it
       localGameState[victim.player].skillHand.length > 0 &&
       getZonesWithEnemies(victim, 1).length > 0 //must be able to burn an adjacent foe
@@ -3946,7 +3906,6 @@ export const useRecurringEffects = () => {
       if (
         unit.unitClass === "Metal Scion" &&
         !isMuted(unit) &&
-        !isDisrupted(unit, 1) &&
         !isRooted(unit)
       ) {
         return true;
@@ -3968,11 +3927,7 @@ export const useRecurringEffects = () => {
       const zone = zones[Math.floor(i / 5)][i % 5];
       const unit = localGameState[zone.player].units[zone.unitIndex];
 
-      if (
-        unit.unitClass === "Avian Scion" &&
-        !isMuted(unit) &&
-        !isDisrupted(unit, 1)
-      ) {
+      if (unit.unitClass === "Avian Scion" && !isMuted(unit)) {
         return true;
       }
     }
@@ -3988,11 +3943,7 @@ export const useRecurringEffects = () => {
       const zone = zones[Math.floor(i / 5)][i % 5];
       const unit = localGameState[zone.player].units[zone.unitIndex];
 
-      if (
-        unit.unitClass === "Water Scion" &&
-        !isMuted(unit) &&
-        !isDisrupted(unit, 1)
-      ) {
+      if (unit.unitClass === "Water Scion" && !isMuted(unit)) {
         return true;
       }
     }
@@ -4049,11 +4000,7 @@ export const useRecurringEffects = () => {
       const zone = zones[Math.floor(i / 5)][i % 5];
       const unit = localGameState[zone.player].units[zone.unitIndex];
 
-      if (
-        unit.unitClass === "Land Scion" &&
-        !isMuted(unit) &&
-        !isDisrupted(unit, 1)
-      ) {
+      if (unit.unitClass === "Land Scion" && !isMuted(unit)) {
         return true;
       }
     }
@@ -4090,8 +4037,7 @@ export const useRecurringEffects = () => {
 
         if (
           localGameState[enemy].units[unitIndex].unitClass === "Wind Scion" &&
-          !isMuted(localGameState[enemy].units[unitIndex]) &&
-          !isDisrupted(localGameState[enemy].units[unitIndex], 1)
+          !isMuted(localGameState[enemy].units[unitIndex])
         ) {
           return true;
         }
@@ -4126,7 +4072,6 @@ export const useRecurringEffects = () => {
     if (
       victim.unitClass === "Lightning Scion" && //must be Lightning Scion
       !isMuted(victim) &&
-      !isDisrupted(victim, 1) &&
       victim.charge && //enemy needs chrge
       isAdjacent(attacker, victim) //enemy must be adjacent
     ) {
@@ -4171,11 +4116,7 @@ export const useRecurringEffects = () => {
       const zone = zones[Math.floor(i / 5)][i % 5];
       const unit = localGameState[zone.player].units[zone.unitIndex];
 
-      if (
-        unit.unitClass === "Plant Scion" &&
-        !isMuted(unit) &&
-        !isDisrupted(unit, 1)
-      ) {
+      if (unit.unitClass === "Plant Scion" && !isMuted(unit)) {
         return true;
       }
     }
@@ -4399,7 +4340,7 @@ export const useRecurringEffects = () => {
       !isMuted(attacker) &&
       victim.aether &&
       !isMuted(victim) &&
-      !isDisrupted(victim, 2)
+      !isDisrupted(victim, 1)
     ) {
       newGameState.currentResolution.push({
         resolution: "Mitigating Aether-Blast2",

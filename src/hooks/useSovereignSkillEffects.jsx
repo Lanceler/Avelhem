@@ -31,7 +31,7 @@ export const useSovereignSkillEffects = () => {
     //end "Activating Heir’s Endeavor" resolution
     newGameState.currentResolution.pop();
 
-    newGameState[self].fateDefiance -= 3;
+    newGameState[self].defiancePoints -= 3;
 
     newGameState.currentResolution.push({
       resolution: "Recover Skill",
@@ -40,7 +40,7 @@ export const useSovereignSkillEffects = () => {
         title: "Heir’s Endeavor",
         reason: "Heir’s Endeavor",
         restriction: [...sovereignSkillList()],
-        message: "Spend 3 FD to recover 1 Sovereign skill.",
+        message: "Spend 3 DP to recover 1 Sovereign skill.",
         outcome: "Add",
       },
     });
@@ -238,8 +238,8 @@ export const useSovereignSkillEffects = () => {
     //end "Activating Transmute" resolution
     newGameState.currentResolution.pop();
 
-    //spend FD
-    newGameState[self].fateDefiance -= 2;
+    //spend DP
+    newGameState[self].defiancePoints -= 2;
 
     newGameState.currentResolution.push({
       resolution: "Sovereign Resonant Skill",
@@ -375,8 +375,8 @@ export const useSovereignSkillEffects = () => {
     //end "Activating Fervent Prayer" resolution
     newGameState.currentResolution.pop();
 
-    //spend FD
-    newGameState[self].fateDefiance -= 2;
+    //spend DP
+    newGameState[self].defiancePoints -= 2;
 
     let selectLimit = 2;
     if (resonator) {
@@ -463,9 +463,9 @@ export const useSovereignSkillEffects = () => {
     //end "ProvidenceR1" resolution
     newGameState.currentResolution.pop();
 
-    newGameState[self].fateDefiance = Math.min(
+    newGameState[self].defiancePoints = Math.min(
       6,
-      newGameState[self].fateDefiance + 3
+      newGameState[self].defiancePoints + 3
     );
 
     //Resonance also grants an advance tactic, but that will be handled via spending the invoke

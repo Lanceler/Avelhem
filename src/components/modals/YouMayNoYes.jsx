@@ -91,7 +91,7 @@ const YouMayNoYes = (props) => {
         break;
 
       case "Cultivate Draw": //"Cultivate - Upgraded"
-        newGameState[self].fateDefiance -= 1;
+        newGameState[self].defiancePoints -= 1;
         newGameState = drawSkill(newGameState);
         break;
 

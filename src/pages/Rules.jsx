@@ -181,8 +181,8 @@ export default function Rules() {
                 <li>Player boards</li>
                 <ul>
                   <li>
-                    Displays upgrades and tallies Bounty Points and Fate
-                    Defiance
+                    Displays upgrades and tallies Bounty Points and Defiance
+                    Points
                   </li>
                 </ul>
 
@@ -253,9 +253,9 @@ export default function Rules() {
               </p>
               <br />
 
-              <h3>5. Set Fate Defiance (FD) counters to 3</h3>
+              <h3>5. Set Defiance Points (DP) counters to 3</h3>
               <p>
-                In this digital simulator, a Sovereign’s FD, as well as their
+                In this digital simulator, a Sovereign’s DP, as well as their
                 BP, is displayed between their Avelhem and skill repertoires.
               </p>
               <br />
@@ -310,10 +310,10 @@ export default function Rules() {
               <br />
               <h3>Defiance Phase</h3>
               <p>
-                The Defiance Phase is where the Initiator can spend Fate
-                Defiance (FD) on immediate benefits that can improve their
-                current turn, such as rerolling unfavorable tactics or drawing
-                an additional skill card.
+                The Defiance Phase is where the Initiator can spend Defiance
+                Points (DP) on immediate benefits that can improve their current
+                turn, such as rerolling unfavorable tactics or drawing an
+                additional skill card.
               </p>
 
               <br />
@@ -364,7 +364,7 @@ export default function Rules() {
               <h3>Elimination</h3>
               <p>
                 Units are eliminated and removed from play when their HP is
-                depleted. Sovereigns receive 2 FD when their units are
+                depleted. Sovereigns receive 2 DP when their units are
                 eliminated, and they are awarded 1 BP when they eliminate their
                 opponent’s units.
               </p>
@@ -489,9 +489,9 @@ export default function Rules() {
               <br />
               <h3>Defiance Phase</h3>
               <p>
-                The Defiance Phase is where the Initiator can spend Fate
-                Defiance (FD) on immediate benefits that can improve their
-                current turn.
+                The Defiance Phase is where the Initiator can spend Defiance
+                Points (DP) on immediate benefits that can improve their current
+                turn.
               </p>
               <br />
               <p>
@@ -499,21 +499,21 @@ export default function Rules() {
               </p>
               <ul>
                 <li>
-                  Artifice: Spend 1 FD to select up to 5 skills from your hand;
+                  Artifice: Spend 1 DP to select up to 5 skills from your hand;
                   place them at the bottom of your repertoire, then draw the
                   same number.
                 </li>
-                <li>Backtrack: Spend 1 FD to reroll your tactics.</li>
+                <li>Backtrack: Spend 1 DP to reroll your tactics.</li>
                 <li>
-                  Curate: Spend 2 FD to reroll your tactics with 3 dice, then
+                  Curate: Spend 2 DP to reroll your tactics with 3 dice, then
                   disregard 1 of them.
                 </li>
                 <li>
-                  Destine: Spend 2 FD and 1 Scion skill to ascend an ally pawn
+                  Destine: Spend 2 DP and 1 Scion skill to ascend an ally pawn
                   to the matching class.
                 </li>
-                <li>Ex Machina: Spend 3 FD to search for 1 Sovereign skill.</li>
-                <li>Finesse: Spend 3 FD to draw 1 skill.</li>
+                <li>Ex Machina: Spend 3 DP to search for 1 Sovereign skill.</li>
+                <li>Finesse: Spend 3 DP to draw 1 skill.</li>
               </ul>
               <br />
               <h3>Execution Phase</h3>
@@ -577,7 +577,7 @@ export default function Rules() {
                   <ul>
                     <li>
                       When the Initiator’s unit scores, they gain 3 BP, while
-                      their opponent receives 6 FD.
+                      their opponent receives 6 DP.
                     </li>
                     <li>
                       Units that have scored stay on the board and are still
@@ -625,7 +625,7 @@ export default function Rules() {
               <h3>Elimination</h3>
               <p>
                 Units are eliminated and removed from play when their HP is
-                depleted. Sovereigns receive 2 FD when their units are
+                depleted. Sovereigns receive 2 DP when their units are
                 eliminated, and they are awarded 1 BP when they eliminate their
                 opponent’s units.
               </p>
@@ -1033,7 +1033,7 @@ export default function Rules() {
                   Sovereign Actions:
                   <ul>
                     <li>Deploy a pawn.</li>
-                    <li>Spend 6 FD to convert to an Assault tactic.</li>
+                    <li>Spend 6 DP to convert to an Assault tactic.</li>
                     <li>
                       Float 1 skill to deploy a Scion.{" "}
                       <em>(Must be unlocked via Bounty Phase.)</em>
@@ -1115,7 +1115,6 @@ export default function Rules() {
                   <ul>
                     <li>Draw 3 Avelhems.</li>
                     <li>Draw 2 skills.</li>
-                    <li>Gain 3 FD.</li>
                   </ul>
                 </li>
                 <li>Invoke does not provide any unit actions.</li>
@@ -1714,10 +1713,7 @@ export default function Rules() {
                   The skill repertoire size is reduced from 60 to 40 cards.
                 </li>
 
-                <li>
-                  The Fate Defiance (FD) costs of Artifice and Backtrack are
-                  reduced from 1 to 0.
-                </li>
+                <li>Artifice and Backtrack cost 0 instead of 1 DP.</li>
                 <li>
                   Sovereigns can click on their own repertoires to view the
                   contents. (The cards will be sorted and won’t reflect their

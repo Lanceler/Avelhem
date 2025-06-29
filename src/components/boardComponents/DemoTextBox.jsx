@@ -818,7 +818,7 @@ const DemoTextBox = () => {
           case 11:
             return (
               <div>
-                Lastly, Sovereigns set their Fate Defiance (FD) counters to 3.
+                Lastly, Sovereigns set their Defiance Points (DP) counters to 3.
                 <br /> <br />
                 Alongside Bounty Points (BP), these are located between one’s
                 skill and Avelhem repertoires.
@@ -974,13 +974,13 @@ const DemoTextBox = () => {
             return (
               <div>
                 In the <span className="goldText">Defiance Phase</span>, the
-                Initiator may spend Fate Defiance (FD) on immediate benefits,
+                Initiator may spend Defiance Points (DP) on immediate benefits,
                 such as rerolling unfavorable tactics.
                 <br /> <br />
                 <span className="goldText">
-                  2 FD is obtained as consolation when one’s unit is eliminated.
+                  2 DP is obtained as consolation when one’s unit is eliminated.
                 </span>{" "}
-                The maximum FD that can be held is 6.
+                The maximum DP that can be held is 6.
               </div>
             );
 
@@ -988,7 +988,7 @@ const DemoTextBox = () => {
           case 32:
             return (
               <div>
-                Select Backtrack to reroll your tactics at the cost of 1 FD.
+                Select Backtrack to reroll your tactics at the cost of 1 DP.
               </div>
             );
 
@@ -996,7 +996,7 @@ const DemoTextBox = () => {
             return (
               <div>
                 Unlike the Bounty Phase, the Defiance Phase is limited to 1
-                expenditure. Despite having sufficient FD to spend, you will
+                expenditure. Despite having sufficient DP to spend, you will
                 instead automatically proceed to the next phase.
               </div>
             );
@@ -1635,9 +1635,9 @@ const DemoTextBox = () => {
                   removed from the board.
                 </span>
                 <br /> <br />
-                The Sovereign who owns the eliminated unit receives 2 FD, while
+                The Sovereign who owns the eliminated unit receives 2 DP, while
                 their opponent is awarded 1 BP. Consequently, your opponent now
-                has 5 FD, while you have 1 BP.
+                has 5 DP, while you have 1 BP.
               </div>
             );
 
@@ -1778,7 +1778,7 @@ const DemoTextBox = () => {
                 Lastly, the game performs a check: If any of the Initiator’s
                 units are occupying the opponent’s base for the first time, they
                 will score and award their Sovereign 3 BP, while their opponent
-                will receive 6 FD.
+                will receive 6 DP.
               </div>
             );
 

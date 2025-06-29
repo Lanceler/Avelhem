@@ -75,7 +75,7 @@ export default function Home() {
             avelhem: 0,
             skill: 0,
           },
-          fateDefiance: 3,
+          defiancePoints: 3,
           score: 0,
         };
 

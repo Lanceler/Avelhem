@@ -68,17 +68,18 @@ const ViewBPUpgrades = (props) => {
 
                   {upgrades.acquisition >= 1 && (
                     <p className="unitInfo-text-desc">
-                      1. May draw 1 additional Avelhem via Beseech.
+                      1. Beseech upgraded: May draw 1 additional Avelhem.
                     </p>
                   )}
                   {upgrades.acquisition >= 2 && (
                     <p className="unitInfo-text-desc">
-                      2. Pawns deployed via Appoint gain Shield for 2 turns.
+                      2. Appoint upgraded: Pawns gain Shield for 2 turns.
                     </p>
                   )}
                   {upgrades.acquisition >= 3 && (
                     <p className="unitInfo-text-desc">
-                      3. May spend 1 FD to draw another skill via Cultivate.
+                      3. Cultivate upgraded: May spend 1 DP to draw 1 additional
+                      skill.
                     </p>
                   )}
                   <br />
@@ -93,17 +94,17 @@ const ViewBPUpgrades = (props) => {
 
                   {upgrades.coordination >= 1 && (
                     <p className="unitInfo-text-desc">
-                      1. Battle Cry upgraded: roll 1 tactical die.
+                      1. Battle Cry upgraded: Roll 1 tactical die.
                     </p>
                   )}
                   {upgrades.coordination >= 2 && (
                     <p className="unitInfo-text-desc">
-                      2. Convene upgraded: gain 1 Advance tactic.
+                      2. Convene upgraded: Gain 1 Advance tactic.
                     </p>
                   )}
                   {upgrades.coordination >= 3 && (
                     <p className="unitInfo-text-desc">
-                      3. Assent upgraded: gain 1 FD.
+                      3. Assent upgraded: Gain 2 DP.
                     </p>
                   )}
                   <br />
@@ -118,17 +119,17 @@ const ViewBPUpgrades = (props) => {
 
                   {upgrades.tactics >= 1 && (
                     <p className="unitInfo-text-desc">
-                      1. Rally upgraded: instances raised from 2 to 3.
+                      1. Rally upgraded: Instances raised from 2 to 3.
                     </p>
                   )}
                   {upgrades.tactics >= 2 && (
                     <p className="unitInfo-text-desc">
-                      2. Mobilize upgraded: instances raised from 3 to 4.
+                      2. Mobilize upgraded: Instances raised from 3 to 4.
                     </p>
                   )}
                   {upgrades.tactics >= 3 && (
                     <p className="unitInfo-text-desc">
-                      3. Advance upgraded: “Deploy Scion” action unlocked.
+                      3. Advance upgraded: “Deploy Scion” unlocked.
                     </p>
                   )}
 
@@ -154,7 +155,7 @@ const ViewBPUpgrades = (props) => {
                   )}
                   {upgrades.avelhem >= 3 && (
                     <p className="unitInfo-text-desc">
-                      3. Avelhems have an alternate effect: spend 2 FD to
+                      3. Avelhems have an alternate effect: Spend 2 DP to
                       recover 1 skill with the matching aspect.
                     </p>
                   )}
@@ -172,7 +173,7 @@ const ViewBPUpgrades = (props) => {
                   {upgrades.skill >= 1 && (
                     <p className="unitInfo-text-desc">
                       1. Scions can use any skill that belongs to their class as
-                      a resonator
+                      a resonator.
                     </p>
                   )}
                   {upgrades.skill >= 2 && (
@@ -182,7 +183,7 @@ const ViewBPUpgrades = (props) => {
                   )}
                   {upgrades.skill >= 3 && (
                     <p className="unitInfo-text-desc">
-                      3. Skill hand limit raised to 12
+                      3. Skill hand limit raised to 12.
                     </p>
                   )}
 

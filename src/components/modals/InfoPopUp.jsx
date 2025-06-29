@@ -25,10 +25,10 @@ const InfoPopUp = (props) => {
         return "Tactics Guide";
 
       case "BP":
-        return "BP (Bounty Point) Info.";
+        return "Bounty Point (BP) Info.";
 
-      case "FD":
-        return "FD (Fate Defiance) Info.";
+      case "DP":
+        return "Defiance Point (DP) Info.";
 
       case "Aether-Blast Mitigation":
         return "Aether-Blast Mitigation";
@@ -69,7 +69,7 @@ const InfoPopUp = (props) => {
                 ⬩Deploy a pawn in your frontier.
               </li>
               <li className="unitInfo-text-desc">
-                ⬩Spend 6 FD to gain an Assault tactic.
+                ⬩Spend 6 DP to gain an Assault tactic.
               </li>
               <li className="unitInfo-text-desc">
                 ⬩Float 1 skill to deploy a Scion in your frontier.{" "}
@@ -144,7 +144,6 @@ const InfoPopUp = (props) => {
             <ol className="infoPopUp-list">
               <li className="unitInfo-text-desc">⬩Draw 3 Avelhems.</li>
               <li className="unitInfo-text-desc">⬩Draw 2 skills.</li>
-              <li className="unitInfo-text-desc">⬩Gain 3 FD.</li>
             </ol>
 
             <br />
@@ -201,30 +200,30 @@ const InfoPopUp = (props) => {
           </div>
         );
 
-      case "FD":
+      case "DP":
         return (
           <div>
             <div className="unitInfo-text-desc">
               <p>
-                FD is a resource that can be spent to obtain immediate benefits
+                DP is a resource that can be spent to obtain immediate benefits
                 during the Defiance Phase.
               </p>
               <p>
-                Some effects also require the expenditure of FD to activate.
+                Some effects also require the expenditure of DP to activate.
               </p>
               <p>
-                Sovereigns can possess up to 6 FD at a time; excesses gained are
+                Sovereigns can possess up to 6 DP at a time; excesses gained are
                 forfeited.
               </p>
-              <p>Sovereigns earn FD as follows:</p>
+              <p>Sovereigns earn DP as follows:</p>
 
               <ul className="infoPopUp-list2">
                 <li className="unitInfo-text-desc">
-                  2 FD when an ally is eliminated.
+                  2 DP when an ally is eliminated.
                 </li>
-                <li className="unitInfo-text-desc">6 FD when a foe scores.</li>
+                <li className="unitInfo-text-desc">6 DP when a foe scores.</li>
                 <li className="unitInfo-text-desc">
-                  6 FD when the opponent’s skill repertoire is depleted.
+                  6 DP when the opponent’s skill repertoire is depleted.
                 </li>
               </ul>
             </div>
@@ -293,7 +292,7 @@ const InfoPopUp = (props) => {
                   <ul>
                     <li>
                       When the Initiator’s unit scores, they gain 3 BP, while
-                      their opponent receives 6 FD.
+                      their opponent receives 6 DP.
                     </li>
                     <li>
                       Units that have scored stay on the board and are still
@@ -454,7 +453,7 @@ const InfoPopUp = (props) => {
               <ul className="infoPopUp-list2">
                 <li className="unitInfo-text-desc">
                   Sovereigns play with identical repertoires and start with 5
-                  Bounty Points (BP).
+                  BP.
                 </li>
                 <li className="unitInfo-text-desc">
                   The skill repertoire size is reduced from 60 to 40 cards.
@@ -465,8 +464,8 @@ const InfoPopUp = (props) => {
                   <strong>Fire, Land, Mana, and Metal</strong> Avelhems.
                 </li>
                 <li className="unitInfo-text-desc">
-                  The Fate Defiance (FD) costs of Artifice and Backtrack are
-                  reduced from 1 to 0.
+                  The DP costs of Artifice and Backtrack are reduced from 1 to
+                  0.
                 </li>
                 <li className="unitInfo-text-desc">
                   Sovereigns can click on their own repertoires to view the

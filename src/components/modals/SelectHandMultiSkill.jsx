@@ -128,9 +128,9 @@ const SelectHandMultiSkill = (props) => {
         //do an extra pop
         newGameState.currentResolution.pop();
 
-        //deduct FD
+        //deduct DP
         if (!newGameState.teaTrial) {
-          newGameState[self].fateDefiance -= 1;
+          newGameState[self].defiancePoints -= 1;
         }
 
         //1. place selected skills at bottom of repertoire (start of array)

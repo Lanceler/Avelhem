@@ -45,8 +45,8 @@ const DefiancePhaseSelection = (props) => {
 
     switch (selectedChoice) {
       case 1:
-        //DO NOT spend FD
-        //newGameState[self].fateDefiance -= defianceCosts[0]
+        //DO NOT spend DP
+        //newGameState[self].defiancePoints -= defianceCosts[0]
 
         updateData = false;
 
@@ -65,8 +65,8 @@ const DefiancePhaseSelection = (props) => {
         break;
 
       case 2:
-        //Spend FD
-        newGameState[self].fateDefiance -= defianceCosts[1];
+        //Spend DP
+        newGameState[self].defiancePoints -= defianceCosts[1];
 
         //reroll tactics
         newGameState = assignTactics(newGameState, rollTactic(), rollTactic());
@@ -82,8 +82,8 @@ const DefiancePhaseSelection = (props) => {
         break;
 
       case 3:
-        //Spend FD
-        newGameState[self].fateDefiance -= defianceCosts[2];
+        //Spend DP
+        newGameState[self].defiancePoints -= defianceCosts[2];
 
         //reroll tactics
 
@@ -96,8 +96,8 @@ const DefiancePhaseSelection = (props) => {
         break;
 
       case 4:
-        //DO NOT spend FD
-        //newGameState[self].fateDefiance -= defianceCosts[3]
+        //DO NOT spend DP
+        //newGameState[self].defiancePoints -= defianceCosts[3]
 
         updateData = false;
 
@@ -108,7 +108,7 @@ const DefiancePhaseSelection = (props) => {
           details: {
             title: "Destine",
             message:
-              "Spend 2 FD and 1 Scion skill to ascend an ally pawn to the matching class.",
+              "Spend 2 DP and 1 Scion skill to ascend an ally pawn to the matching class.",
             restriction: null,
             reason: "Destine",
             defianceCost: defianceCosts[3],
@@ -117,8 +117,8 @@ const DefiancePhaseSelection = (props) => {
         break;
 
       case 5:
-        //Spend FD
-        newGameState[self].fateDefiance -= defianceCosts[4];
+        //Spend DP
+        newGameState[self].defiancePoints -= defianceCosts[4];
 
         //end defiance Phase
         newGameState = endDefiancePhase(newGameState);
@@ -145,8 +145,8 @@ const DefiancePhaseSelection = (props) => {
         break;
 
       case 6:
-        //Spend FD
-        newGameState[self].fateDefiance -= defianceCosts[5];
+        //Spend DP
+        newGameState[self].defiancePoints -= defianceCosts[5];
 
         //end defiance Phase
         newGameState = endDefiancePhase(newGameState);
@@ -200,21 +200,21 @@ const DefiancePhaseSelection = (props) => {
 
   const canSelect = [
     //Artifice
-    newGameState[self].fateDefiance >= defianceCosts[0] &&
+    newGameState[self].defiancePoints >= defianceCosts[0] &&
       newGameState[self].skillHand.length > 0,
     //Backtrack
-    newGameState[self].fateDefiance >= defianceCosts[1] &&
+    newGameState[self].defiancePoints >= defianceCosts[1] &&
       newGameState.tactics.length > 1,
     //Curate
-    newGameState[self].fateDefiance >= defianceCosts[2] &&
+    newGameState[self].defiancePoints >= defianceCosts[2] &&
       newGameState.tactics.length > 1,
     //Destine
-    newGameState[self].fateDefiance >= defianceCosts[3] && canDestine(),
+    newGameState[self].defiancePoints >= defianceCosts[3] && canDestine(),
 
     //Ex Machina
-    newGameState[self].fateDefiance >= defianceCosts[4],
+    newGameState[self].defiancePoints >= defianceCosts[4],
     //Finesse
-    newGameState[self].fateDefiance >= defianceCosts[5],
+    newGameState[self].defiancePoints >= defianceCosts[5],
   ];
 
   const defianceOptions = [
@@ -282,7 +282,7 @@ const DefiancePhaseSelection = (props) => {
       <div className="modalV2">
         <div className="modalHeader2">
           <div className="modalTitle2">
-            Defiance Phase (FD: {localGameState[self].fateDefiance})
+            Defiance Phase (DP: {localGameState[self].defiancePoints})
           </div>
           <div className="modalButton2">
             <button className="yellowButton" onClick={() => handleViewBoard()}>
@@ -324,7 +324,7 @@ const DefiancePhaseSelection = (props) => {
                     >
                       {d.desc}
                     </div>
-                    <div className="modalChoiceText modalDefianceText modalCost">{`Cost: ${defianceCosts[i]} FD`}</div>
+                    <div className="modalChoiceText modalDefianceText modalCost">{`Cost: ${defianceCosts[i]} DP`}</div>
                   </div>
                 </div>
               </div>

@@ -37,7 +37,7 @@ const CoordinationPhaseSelection = (props) => {
           <div className="">⬩Roll 2 tactical dice.</div>
           <div className=" ">
             ⬩{upgrade < 3 && <>If upgraded: </>}
-            Gain 1 FD.
+            Gain 1 DP.
           </div>
         </>
       ),
@@ -115,9 +115,9 @@ const CoordinationPhaseSelection = (props) => {
         });
 
         if (upgrade >= 3) {
-          newGameState[self].fateDefiance = Math.min(
+          newGameState[self].defiancePoints = Math.min(
             6,
-            newGameState[self].fateDefiance + 1
+            newGameState[self].defiancePoints + 2
           );
         }
 

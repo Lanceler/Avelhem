@@ -113,10 +113,7 @@ export const Piece = (props) => {
   };
 
   const pieceBase = () => {
-    const showDisruption =
-      unit.seal > 0 &&
-      (unit.enhancements.shield > 0 || unit.enhancements.ward > 0) &&
-      !isMuted(unit);
+    const showDisruption = unit.seal > 0 && !isMuted(unit);
 
     const ascensionColors = {
       "Fire Scion": "#ff8b1e",

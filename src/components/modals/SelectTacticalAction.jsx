@@ -28,7 +28,6 @@ const SelectTacticalAction = (props) => {
     getZonesWithEnemies,
     isDisrupted,
     isImmobilized,
-    isMuted,
     isRooted,
   } = useRecurringEffects();
 
@@ -144,7 +143,7 @@ const SelectTacticalAction = (props) => {
               unit.aether &&
               canBlast(unit) &&
               unit.unitClass !== "Pawn" &&
-              !isDisrupted(unit, 2) &&
+              !isDisrupted(unit, 1) &&
               (isRooted(unit)
                 ? localGameState[unit.player].skillHand.length > 0
                 : true)

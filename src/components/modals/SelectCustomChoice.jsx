@@ -224,9 +224,9 @@ const SelectCustomChoice = (props) => {
     case "Reminiscence":
       canFirstChoice =
         newGameState[self].avelhemVestige.length > 0 &&
-        newGameState[self].fateDefiance > 0;
+        newGameState[self].defiancePoints > 0;
       canSecondChoice = newGameState[self].skillVestige.length > 0;
-      ChoiceFirstMessage = "Spend 1 FD to recover 1 Avelhem.";
+      ChoiceFirstMessage = "Spend 1 DP to recover 1 Avelhem.";
       ChoiceSecondMessage = "Recover then float 1 skill.";
       break;
 
@@ -688,7 +688,7 @@ const SelectCustomChoice = (props) => {
 
       case "Reminiscence":
         if (selectedChoice === 1) {
-          newGameState[self].fateDefiance -= 1;
+          newGameState[self].defiancePoints -= 1;
 
           newGameState.currentResolution.push({
             resolution: "Recover Avelhem",

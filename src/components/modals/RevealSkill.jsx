@@ -97,41 +97,6 @@ const RevealSkill = (props) => {
         );
         break;
 
-      // case "Chain Lightning Blast":
-      //   newGameState.currentResolution.push({
-      //     resolution: "Lightning Skill",
-      //     resolution2: "Chain Lightning4",
-      //     unit: props.unit,
-      //     adjacentEnemies: props.details.adjacentEnemies,
-      //   });
-
-      //   revealTitle = "Chain Lightning";
-      //   revealMessage = "Your opponent has revealed 1 Lightning Skill.";
-
-      //   break;
-
-      case "Valiant Spark":
-        //newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
-
-        newGameState.activatingSkill.push("ArcFlash");
-        newGameState.activatingUnit.push(unit);
-
-        newGameState.currentResolution.push({
-          resolution: "Tactic End",
-          unit: unit,
-          effect: true,
-        });
-
-        newGameState.currentResolution.push({
-          resolution: "Unit Ability",
-          resolution2: "Activating Arc Flash",
-          unit: unit,
-        });
-
-        revealTitle = "Valiant Spark";
-        revealMessage = "Your opponent has revealed 1 Lightning Skill";
-        break;
-
       case "Arsenal Onslaught Paralyze":
         newGameState.currentResolution.push({
           resolution: "Metal Skill",

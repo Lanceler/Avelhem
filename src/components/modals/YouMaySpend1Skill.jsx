@@ -271,11 +271,27 @@ const YouMaySpend1Skill = (props) => {
         });
         break;
 
+      case "Valiant Spark":
+        newGameState.activatingSkill.push("ArcFlash");
+        newGameState.activatingUnit.push(unit);
+
+        newGameState.currentResolution.push({
+          resolution: "Tactic End",
+          unit: unit,
+          effect: true,
+        });
+
+        newGameState.currentResolution.push({
+          resolution: "Unit Ability",
+          resolution2: "Activating Arc Flash",
+          unit: unit,
+        });
+        break;
+
       case "Lightning Rod":
         unit.charge
           ? (unit.charge = Math.min(3, unit.charge + 1))
           : (unit.charge = 1);
-        //newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
         break;
 
       case "Arsenal Onslaught Attack":
@@ -412,8 +428,8 @@ const YouMaySpend1Skill = (props) => {
         //end Defiance Phase Selection
         newGameState.currentResolution.pop();
 
-        //Spend FD
-        newGameState[self].fateDefiance -= props.details.defianceCost;
+        //Spend DP
+        newGameState[self].defiancePoints -= props.details.defianceCost;
 
         const skillCode = usableSkills[selectedSkill].id.substring(0, 2);
 

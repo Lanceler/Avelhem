@@ -1436,6 +1436,7 @@ export const useSkillEffects = () => {
       newGameState = drawSkill(newGameState);
       newGameState = drawSkill(newGameState);
       newGameState = drawSkill(newGameState);
+      newGameState = drawSkill(newGameState);
     } else {
       unit.charge = 3;
     }
@@ -1446,12 +1447,12 @@ export const useSkillEffects = () => {
       !isDisrupted(unit, 1)
     ) {
       newGameState.currentResolution.push({
-        resolution: "Lightning Skill",
-        resolution2: "Valiant Spark1",
+        resolution: "Discard Skill",
         unit: unit,
+        player: unit.player,
         details: {
           title: "Valiant Spark",
-          message: "You may reveal 1 Lightning skill to activate “Arc Flash”.",
+          message: "You may spend 1 Lightning skill to activate “Arc Flash”.",
           restriction: ["05-01", "05-02", "05-03"],
           reason: "Valiant Spark",
         },
@@ -1645,9 +1646,9 @@ export const useSkillEffects = () => {
 
     unit.seal = 3;
 
-    unit.enhancements.shield
-      ? (unit.enhancements.shield = Math.max(1, unit.enhancements.shield))
-      : (unit.enhancements.shield = 1);
+    // unit.enhancements.shield
+    //   ? (unit.enhancements.shield = Math.max(1, unit.enhancements.shield))
+    //   : (unit.enhancements.shield = 1);
 
     // const zones = JSON.parse(newGameState.zones);
     // let enemyZones = getZonesWithEnemies(unit, 1);

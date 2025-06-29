@@ -32,7 +32,7 @@ const SelectedAvelhem = (props) => {
   const canRecover =
     yourTurn &&
     localGameState[self].bountyUpgrades.avelhem >= 3 &&
-    localGameState[self].fateDefiance >= 2 &&
+    localGameState[self].defiancePoints >= 2 &&
     getScionSet(scionClass).some((s) =>
       localGameState[self].skillVestige.includes(s)
     );
@@ -162,7 +162,7 @@ const SelectedAvelhem = (props) => {
                 className="redButton selectedCardModal-buttons"
                 onClick={() => handleSearch()}
               >
-                Search (3 FD)
+                Search (3 DP)
               </button>
             </>
           )} */}

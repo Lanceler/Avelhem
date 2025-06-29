@@ -377,7 +377,7 @@ const BountyPhase = (props) => {
         ind: 5,
       },
       {
-        text: "Upgrade Cultivate: You may spend 1 FD to draw an additional skill",
+        text: "Upgrade Cultivate: You may spend 1 DP to draw an additional skill",
         ind: 6,
       },
     ],
@@ -401,7 +401,7 @@ const BountyPhase = (props) => {
           <>
             Upgrade Assent:
             <br />
-            Gain 1 FD
+            Gain 1 DP
           </>
         ),
         ind: 9,
@@ -459,7 +459,7 @@ const BountyPhase = (props) => {
         text: (
           <>
             <p style={{ fontSize: 19.5 }}>
-              Unlock Avelhem alternate effect: Spend 2 FD to recover 1 skill
+              Unlock Avelhem alternate effect: Spend 2 DP to recover 1 skill
               with the matching aspect
             </p>
           </>

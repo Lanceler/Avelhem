@@ -44,7 +44,7 @@ const SelectTacticalActionSovereign = (props) => {
           optionQualifier: null,
           optionText: (
             <>
-              <div className="">⬩Spend 6 FD to gain an Assault tactic.</div>
+              <div className="">⬩Spend 6 DP to gain an Assault tactic.</div>
             </>
           ),
         },
@@ -66,6 +66,8 @@ const SelectTacticalActionSovereign = (props) => {
             <>
               <div className="">
                 ⬩Float 1 skill to deploy a Scion in your frontier.
+                <br />
+                ⬩Activate their “Upon Ascension” talent, if any.
               </div>
             </>
           ),
@@ -122,15 +124,15 @@ const SelectTacticalActionSovereign = (props) => {
             </>
           ),
         },
-        {
-          optionName: "Defy Fate",
-          optionQualifier: null,
-          optionText: (
-            <>
-              <div className="">⬩Gain 3 FD.</div>
-            </>
-          ),
-        },
+        // {
+        //   optionName: "Defy Fate",
+        //   optionQualifier: null,
+        //   optionText: (
+        //     <>
+        //       <div className="">⬩Gain 3 DP.</div>
+        //     </>
+        //   ),
+        // },
       ];
       break;
 
@@ -166,7 +168,7 @@ const SelectTacticalActionSovereign = (props) => {
           case 0:
             return canDeploy();
           case 1:
-            return newGameState[self].fateDefiance >= 6;
+            return newGameState[self].defiancePoints >= 6;
           case 2:
             return (
               newGameState[self].bountyUpgrades.tactics >= 3 &&
@@ -243,7 +245,7 @@ const SelectTacticalActionSovereign = (props) => {
             break;
 
           case 1:
-            newGameState[self].fateDefiance -= 6;
+            newGameState[self].defiancePoints -= 6;
 
             //Gain assault command
             newGameState.tactics[props.dice].stock += 1;
@@ -291,14 +293,14 @@ const SelectTacticalActionSovereign = (props) => {
             newGameState = drawSkill(newGameState);
             break;
 
-          case 2:
-            //Gain FD
-            newGameState[self].fateDefiance = Math.min(
-              6,
-              newGameState[self].fateDefiance + 3
-            );
+          // case 2:
+          //   //Gain DP
+          //   newGameState[self].defiancePoints = Math.min(
+          //     6,
+          //     newGameState[self].defiancePoints + 3
+          //   );
 
-            break;
+          //   break;
         }
         break;
 

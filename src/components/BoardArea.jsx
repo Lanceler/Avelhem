@@ -105,10 +105,10 @@ const BoardArea = (props) => {
   const { imagesLoadingList } = useGetImages();
   const totalImages = imagesLoadingList.length;
 
-  const [enemyFD, setEnemyFD] = useState(0);
-  const [enemyFDFlash, setEnemyFDFlash] = useState(false);
-  const [selfFD, setSelfFD] = useState(0);
-  const [selfFDFlash, setSelfFDFlash] = useState(false);
+  const [enemyDP, setEnemyDP] = useState(0);
+  const [enemyDPFlash, setEnemyDPFlash] = useState(false);
+  const [selfDP, setSelfDP] = useState(0);
+  const [selfDPFlash, setSelfDPFlash] = useState(false);
 
   const [enemyBP, setEnemyBP] = useState(0);
   const [enemyBPFlash, setEnemyBPFlash] = useState(false);
@@ -200,8 +200,8 @@ const BoardArea = (props) => {
     setExpandedUnit(null);
 
     if (localGameState) {
-      setEnemyFD(localGameState[enemy].fateDefiance);
-      setSelfFD(localGameState[self].fateDefiance);
+      setEnemyDP(localGameState[enemy].defiancePoints);
+      setSelfDP(localGameState[self].defiancePoints);
       setEnemyBP(localGameState[enemy].bountyPoints);
       setSelfBP(localGameState[self].bountyPoints);
     }
@@ -212,16 +212,16 @@ const BoardArea = (props) => {
   }, [localGameState, props.userRole]);
 
   useEffect(() => {
-    setEnemyFDFlash(true);
-    const timeout = setTimeout(() => setEnemyFDFlash(false), 1350);
+    setEnemyDPFlash(true);
+    const timeout = setTimeout(() => setEnemyDPFlash(false), 1350);
     return () => clearTimeout(timeout);
-  }, [enemyFD]);
+  }, [enemyDP]);
 
   useEffect(() => {
-    setSelfFDFlash(true);
-    const timeout = setTimeout(() => setSelfFDFlash(false), 1350);
+    setSelfDPFlash(true);
+    const timeout = setTimeout(() => setSelfDPFlash(false), 1350);
     return () => clearTimeout(timeout);
-  }, [selfFD]);
+  }, [selfDP]);
 
   useEffect(() => {
     setEnemyBPFlash(true);
@@ -511,14 +511,14 @@ const BoardArea = (props) => {
           >
             <div className={`fd-counter `}>
               <div
-                className={`counter-flash ${enemyFDFlash ? "textFlash" : ""}`}
+                className={`counter-flash ${enemyDPFlash ? "textFlash" : ""}`}
               >
-                FD: {enemyFD} / 6{" "}
+                DP: {enemyDP} / 6{" "}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 512 512"
                   className="question-icon"
-                  onClick={() => setInfoPopUp("FD")}
+                  onClick={() => setInfoPopUp("DP")}
                 >
                   <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM169.8 165.3c7.9-22.3 29.1-37.3 52.8-37.3h58.3c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24V250.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1H222.6c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z" />
                 </svg>
@@ -598,14 +598,14 @@ const BoardArea = (props) => {
           >
             <div className={`fd-counter `}>
               <div
-                className={`counter-flash ${selfFDFlash ? "textFlash" : ""}`}
+                className={`counter-flash ${selfDPFlash ? "textFlash" : ""}`}
               >
-                FD: {selfFD} / 6{" "}
+                DP: {selfDP} / 6{" "}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 512 512"
                   className="question-icon"
-                  onClick={() => setInfoPopUp("FD")}
+                  onClick={() => setInfoPopUp("DP")}
                 >
                   <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM169.8 165.3c7.9-22.3 29.1-37.3 52.8-37.3h58.3c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24V250.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1H222.6c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z" />
                 </svg>

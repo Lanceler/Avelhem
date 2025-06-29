@@ -60,7 +60,7 @@ const AcquisitionPhase = (props) => {
           <div>⬩Draw 1 skill.</div>
           <div>
             ⬩{upgrade < 3 && <>If upgraded: </>}
-            You may spend 1 FD to draw 1 skill.
+            You may spend 1 DP to draw 1 skill.
           </div>
         </>
       ),
@@ -145,7 +145,7 @@ const AcquisitionPhase = (props) => {
 
         if (
           newGameState[self].bountyUpgrades.acquisition >= 3 &&
-          newGameState[self].fateDefiance > 0
+          newGameState[self].defiancePoints > 0
         ) {
           newGameState.currentResolution.push({
             resolution: "Misc.",
@@ -154,7 +154,7 @@ const AcquisitionPhase = (props) => {
             details: {
               reason: "Cultivate Draw",
               title: "Cultivate",
-              message: "You may spend 1 FD to draw 1 Skill.",
+              message: "You may spend 1 DP to draw 1 Skill.",
               no: "Skip",
               yes: "Draw",
             },

@@ -105,7 +105,6 @@ const UseCurrentResolution = (props) => {
     ambidexterity1,
     ambidexterityR1,
     providence1,
-    providenceR1,
     ferventPrayer1,
     ferventPrayerR1,
     pressTheAttack1,
@@ -2372,20 +2371,6 @@ const UseCurrentResolution = (props) => {
             props.updateLocalState(applySkill("valiantSpark1", lastRes.unit));
           }
           break;
-
-        case "Valiant Spark1":
-          return (
-            <>
-              {self === lastRes.unit.player && !props.hideModal && (
-                <RevealSkill
-                  unit={lastRes.unit}
-                  details={lastRes.details}
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
       }
       break;
 
@@ -3167,12 +3152,6 @@ const UseCurrentResolution = (props) => {
               )}
             </>
           );
-
-        case "ProvidenceR1":
-          if (self === lastRes.player) {
-            props.updateLocalState(providenceR1(lastRes.resonator));
-          }
-          break;
 
         case "Activating Fervent Prayer":
           if (self === lastRes.player) {
