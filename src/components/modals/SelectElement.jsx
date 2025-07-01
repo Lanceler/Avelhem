@@ -15,7 +15,7 @@ const SelectElement = (props) => {
   const { ascendPawn } = useRecurringEffects();
   const { getElementImage } = useGetImages();
 
-  const aspects = [
+  const facets = [
     "Fire Scion",
     "Water Scion",
     "Wind Scion",
@@ -27,7 +27,7 @@ const SelectElement = (props) => {
   ];
 
   if (localGameState.expansion === "Familiars’ Followup") {
-    aspects.push("Avian Scion");
+    facets.push("Avian Scion");
   }
 
   let canSkip = false;
@@ -122,11 +122,11 @@ const SelectElement = (props) => {
     }
   };
 
-  const handleSelect = (aspect) => {
-    if (selectedChoice === aspect) {
+  const handleSelect = (facet) => {
+    if (selectedChoice === facet) {
       setSelectedChoice(null);
-    } else if (canChoice(aspect)) {
-      setSelectedChoice(aspect);
+    } else if (canChoice(facet)) {
+      setSelectedChoice(facet);
     }
   };
 
@@ -157,33 +157,33 @@ const SelectElement = (props) => {
           <div className="modalContentText">{props.details.message}</div>
 
           <div className="modalContent4Column">
-            {aspects.map((aspect, i) => (
+            {facets.map((facet, i) => (
               <div
                 key={i}
-                onClick={() => handleSelect(aspect)}
+                onClick={() => handleSelect(facet)}
                 className={`modalOptionOutline
                   modalElementOptionOutline
                   ${
-                    selectedChoice === aspect
+                    selectedChoice === facet
                       ? "modalElementOptionOutlineSelected"
                       : ""
                   } `}
               >
                 <div
                   className={`modalElement
-                    ${canChoice(aspect) ? "" : "disabledModal"}`}
+                    ${canChoice(facet) ? "" : "disabledModal"}`}
                   style={{
-                    boxShadow: selectedChoice === aspect ? "none" : "",
+                    boxShadow: selectedChoice === facet ? "none" : "",
                   }}
                 >
                   <div className="modal-option-element">
                     <img
-                      src={getElementImage(aspect)}
+                      src={getElementImage(facet)}
                       className="selectElementIcon"
-                      alt={aspect.replace(" Scion", "element icon")}
+                      alt={facet.replace(" Scion", "element icon")}
                     />
                     <div className="modal-option-title">
-                      {aspect.replace(" Scion", "")}
+                      {facet.replace(" Scion", "")}
                     </div>
                   </div>
                 </div>

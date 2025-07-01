@@ -95,7 +95,7 @@ export const useSkillEffects = () => {
       : (unit.temporary.activation = 1);
 
     if (resonator) {
-      if (resonator !== "SA-02") {
+      if (!["SA-02", "SA-03"].includes(resonator)) {
         newGameState.currentResolution.push({
           resolution: "Misc.",
           resolution2: "May float resonant skill unit",
@@ -320,7 +320,7 @@ export const useSkillEffects = () => {
       : (unit.temporary.activation = 1);
 
     if (resonator) {
-      if (resonator !== "SA-02") {
+      if (!["SA-02", "SA-03"].includes(resonator)) {
         newGameState.currentResolution.push({
           resolution: "Misc.",
           resolution2: "May float resonant skill unit",
@@ -598,7 +598,7 @@ export const useSkillEffects = () => {
       : (unit.temporary.activation = 1);
 
     if (resonator) {
-      if (resonator !== "SA-02") {
+      if (!["SA-02", "SA-03"].includes(resonator)) {
         newGameState.currentResolution.push({
           resolution: "Misc.",
           resolution2: "Retain resonant skill unit",
@@ -947,7 +947,7 @@ export const useSkillEffects = () => {
     delete unit.temporary.previousTarget;
 
     if (resonator) {
-      if (resonator !== "SA-02") {
+      if (!["SA-02", "SA-03"].includes(resonator)) {
         newGameState.currentResolution.push({
           resolution: "Misc.",
           resolution2: "May float resonant skill unit",
@@ -1290,7 +1290,7 @@ export const useSkillEffects = () => {
     unit.charge -= 2;
 
     if (resonator) {
-      if (resonator !== "SA-02") {
+      if (!["SA-02", "SA-03"].includes(resonator)) {
         newGameState.currentResolution.push({
           resolution: "Misc.",
           resolution2: "May float resonant skill unit",
@@ -1509,7 +1509,7 @@ export const useSkillEffects = () => {
     let d1Restriction = ["Assault"];
 
     if (resonator) {
-      if (resonator !== "SA-02") {
+      if (!["SA-02", "SA-03"].includes(resonator)) {
         newGameState.currentResolution.push({
           resolution: "Misc.",
           resolution2: "May float resonant skill unit",
@@ -1796,7 +1796,7 @@ export const useSkillEffects = () => {
       : (unit.temporary.activation = 1);
 
     if (resonator) {
-      if (resonator !== "SA-02") {
+      if (!["SA-02", "SA-03"].includes(resonator)) {
         newGameState.currentResolution.push({
           resolution: "Misc.",
           resolution2: "Retain resonant skill unit",
@@ -2145,7 +2145,7 @@ export const useSkillEffects = () => {
       : (unit.blossom = 2);
 
     if (resonator) {
-      if (resonator !== "SA-02") {
+      if (!["SA-02", "SA-03"].includes(resonator)) {
         newGameState.currentResolution.push({
           resolution: "Misc.",
           resolution2: "Retain resonant skill unit",
@@ -2386,7 +2386,7 @@ export const useSkillEffects = () => {
       : (unit.temporary.activation = 1);
 
     if (resonator) {
-      if (resonator !== "SA-02") {
+      if (!["SA-02", "SA-03"].includes(resonator)) {
         newGameState.currentResolution.push({
           resolution: "Misc.",
           resolution2: "May float resonant skill unit",

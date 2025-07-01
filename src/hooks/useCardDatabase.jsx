@@ -24,11 +24,11 @@ export const useCardDatabase = () => {
     makeAvelhemCard("Avian Avelhem", 9),
   ];
 
-  const makeSkillCard = (name, stock, aspect, method, id) => {
+  const makeSkillCard = (name, stock, facet, method, id) => {
     return {
       Name: name,
       Stock: stock,
-      Aspect: aspect,
+      Facet: facet,
       Method: method,
       CardId: id,
     };
@@ -120,7 +120,7 @@ export const useCardDatabase = () => {
     // {
     //   Name: "Coalescence",
     //   Stock: 1,
-    //   Aspect: "Sovereign",
+    //   Facet: "Sovereign",
     //   Method: "Burst",
     //   CardId: "SD-01",
     // },

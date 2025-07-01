@@ -49,10 +49,10 @@ const YouMaySpend1Skill = (props) => {
 
   const canBeDiscarded = (skill) => {
     if (props.details.reason === "Destine") {
-      //get aspect of skill
+      //get facet of skill
       const skillCode = skill.substring(0, 2);
 
-      //if aspect is non-sovereign, check if can ascend
+      //if facet is non-sovereign, check if can ascend
       if (!isNaN(parseInt(skillCode))) {
         if (
           canAscend(localGameState, self, avelhemToScion(parseInt(skillCode)))

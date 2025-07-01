@@ -131,7 +131,7 @@ const ViewBPUpgrades = (props) => {
                   {upgrades.avelhem >= 3 && (
                     <p className="unitInfo-text-desc">
                       3. Avelhems have an alternate effect: Spend 2 DP to
-                      recover 1 skill with the matching aspect.
+                      recover 1 skill with the matching facet.
                     </p>
                   )}
 

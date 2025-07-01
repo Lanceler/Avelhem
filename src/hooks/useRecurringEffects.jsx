@@ -429,19 +429,19 @@ export const useRecurringEffects = () => {
     }
 
     newGameState.currentResolution.push({
-      resolution: skillData.Aspect + " Skill",
+      resolution: skillData.Facet + " Skill",
       resolution2: "Activating " + skillData.Name,
       unit,
       resonator,
     });
 
-    if (skillData.Aspect !== "Wind" && skillData.Method !== "Burst") {
+    if (skillData.Facet !== "Wind" && skillData.Method !== "Burst") {
       newGameState = applySymphonicScreech(unit, newGameState);
     } else {
       newGameState = animationDelay(newGameState, self);
     }
 
-    if (skillData.Aspect === "Wind" && unit.cyclone !== 2) {
+    if (skillData.Facet === "Wind" && unit.cyclone !== 2) {
       newGameState.activatingUnit.push(unit);
       newGameState.activatingSkill.push("Aeromancy");
       newGameState.currentResolution.push({
@@ -2088,15 +2088,15 @@ export const useRecurringEffects = () => {
       return false;
     }
 
-    //3. try to see if pawn can promote to aspect of any card in hand
+    //3. try to see if pawn can promote to facet of any card in hand
 
     const skillHand = newGameState[self].skillHand;
 
     for (let skill of skillHand) {
-      //3.1 get aspect of skill
+      //3.1 get facet of skill
       const skillCode = skill.substring(0, 2);
 
-      //3.2 if aspect is non-sovereign, check if can ascend
+      //3.2 if facet is non-sovereign, check if can ascend
       if (!isNaN(parseInt(skillCode))) {
         if (
           canAscend(newGameState, self, avelhemToScion(parseInt(skillCode)))
@@ -4278,7 +4278,7 @@ export const useRecurringEffects = () => {
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
     if (unit && !isMuted(unit)) {
-      if (resonator !== "SA-02") {
+      if (!["SA-02", "SA-03"].includes(resonator)) {
         newGameState.currentResolution.push({
           resolution: "Misc.",
           resolution2: "May float resonant skill",

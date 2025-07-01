@@ -250,7 +250,7 @@ export const useSovereignSkillEffects = () => {
         reason: "Transmute",
         title: "Transmute",
         message:
-          "Reveal the aspects of 1 or 2 Scions skills and place them at the bottom of your repertoire.",
+          "Reveal the facets of 1 or 2 Scions skills and place them at the bottom of your repertoire.",
         count: 2,
       },
     });

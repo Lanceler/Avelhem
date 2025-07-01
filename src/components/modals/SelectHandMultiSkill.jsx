@@ -209,24 +209,24 @@ const SelectHandMultiSkill = (props) => {
           });
         }
 
-        //4. inform enemy of aspects
+        //4. inform enemy of facets
         let transmuteMessage = "";
         let specTransmuteMessage = "";
 
         switch (selectedCards.length) {
           case 1:
-            transmuteMessage = `Your opponent has revealed a skill with the following aspect: ${avelhemToScion(
+            transmuteMessage = `Your opponent has revealed a skill with the following facet: ${avelhemToScion(
               parseInt(selectedCards[0])
             ).replace(" Scion", "")}.`;
             specTransmuteMessage = `${
               self === "host" ? "Gold" : "Silver"
-            } Sovereign has revealed a skill with the following aspect: ${avelhemToScion(
+            } Sovereign has revealed a skill with the following facet: ${avelhemToScion(
               parseInt(selectedCards[0])
             ).replace(" Scion", "")}.`;
             break;
 
           case 2:
-            transmuteMessage = `Your opponent has revealed skills with the following aspects: ${avelhemToScion(
+            transmuteMessage = `Your opponent has revealed skills with the following facets: ${avelhemToScion(
               parseInt(selectedCards[0])
             ).replace(" Scion", "")} and ${avelhemToScion(
               parseInt(selectedCards[1])
@@ -234,7 +234,7 @@ const SelectHandMultiSkill = (props) => {
 
             specTransmuteMessage = `${
               self === "host" ? "Gold" : "Silver"
-            } Sovereign has revealed skills with the following aspects: ${avelhemToScion(
+            } Sovereign has revealed skills with the following facets: ${avelhemToScion(
               parseInt(selectedCards[0])
             ).replace(" Scion", "")} and ${avelhemToScion(
               parseInt(selectedCards[1])

@@ -25,16 +25,9 @@ const FloatResonator = (props) => {
     //end "May float resonant skill"
     newGameState.currentResolution.pop();
 
-    //Dark Halo Overides
-    if (props.resonator !== "SA-03") {
-      newGameState.currentResolution[
-        newGameState.currentResolution.length - 1
-      ].skillConclusion = "float";
-    } else {
-      newGameState.currentResolution[
-        newGameState.currentResolution.length - 1
-      ].resonatorConclusion = "float";
-    }
+    newGameState.currentResolution[
+      newGameState.currentResolution.length - 1
+    ].skillConclusion = "float";
 
     dispatch(updateState(newGameState));
     // props.updateFirebase(newGameState);
@@ -44,16 +37,7 @@ const FloatResonator = (props) => {
     props.hideOrRevealModale();
   };
 
-  let revealedCard = null;
-
-  //Dark Halo Overides
-  if (props.resonator === "SA-03") {
-    // revealedCard = getSkillById(props.resonator);
-    revealedCard = props.resonator;
-  } else {
-    // revealedCard = getSkillById(props.skill);
-    revealedCard = props.skill;
-  }
+  const revealedCard = props.skill;
 
   return (
     <div className="modalBackdrop">
@@ -68,14 +52,6 @@ const FloatResonator = (props) => {
         </div>
         <div className="modalContent2">
           <div className="modalContentText">You may float this skill.</div>
-          {props.resonator === "SA-03" && (
-            <div className="modalContentText">
-              <em>
-                *When a skill resonates with Dark Halo, the sub-effect that
-                would retain or float it applies to the latter instead.
-              </em>
-            </div>
-          )}
 
           <div className="modalContent1Column">
             {props.skill && (

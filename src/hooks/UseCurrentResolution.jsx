@@ -221,7 +221,9 @@ const UseCurrentResolution = (props) => {
         newGameState[player].skillHand.push(skill);
       }
 
-      if (resonatorConclusion === "discard") {
+      if (resonator === "SA-03") {
+        newGameState[player].skillHand.push(resonator);
+      } else if (resonatorConclusion === "discard") {
         newGameState[player].skillVestige.push(resonator);
       } else if (resonatorConclusion === "float") {
         newGameState[player].skillRepertoire.push(resonator);
@@ -253,22 +255,15 @@ const UseCurrentResolution = (props) => {
     }, 250);
   };
 
-  const skillResonanceRetain = (resonator) => {
+  const skillResonanceRetain = () => {
     const newGameState = JSON.parse(JSON.stringify(localGameState));
 
     //end "Retain resonant skill"
     newGameState.currentResolution.pop();
 
-    //Dark Halo Overides
-    if (resonator !== "SA-03") {
-      newGameState.currentResolution[
-        newGameState.currentResolution.length - 1
-      ].skillConclusion = "retain";
-    } else {
-      newGameState.currentResolution[
-        newGameState.currentResolution.length - 1
-      ].resonatorConclusion = "retain";
-    }
+    newGameState.currentResolution[
+      newGameState.currentResolution.length - 1
+    ].skillConclusion = "retain";
 
     dispatch(updateState(newGameState));
   };
@@ -1055,7 +1050,7 @@ const UseCurrentResolution = (props) => {
 
         case "Retain resonant skill":
           if (self === lastRes.player) {
-            skillResonanceRetain(lastRes.resonator);
+            skillResonanceRetain();
           }
           break;
 

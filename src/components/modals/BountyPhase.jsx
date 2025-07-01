@@ -409,7 +409,7 @@ const BountyPhase = (props) => {
           <>
             <p style={{ fontSize: 19.5 }}>
               Unlock Avelhem alternate effect: Spend 2 DP to recover 1 skill
-              with the matching aspect
+              with the matching facet
             </p>
           </>
         ),

@@ -414,11 +414,11 @@ export default function Rules() {
                 Skills are the applications of powers granted by Avelhems. These
                 cards offer a wider variety of effects that can activated by
                 Sovereigns, as well as units. The icon at the top left corner of
-                a skill card represents its aspect, which determines who can
+                a skill card represents its facet, which determines who can
                 exclusively activate it. For example, a Sovereign skill (which
                 has a crown icon) can only be activated by a Sovereign.
                 Likewise, a Lightning skill can only be activated by a Lightning
-                Scion. The gem below a skill’s aspect is its method, which
+                Scion. The gem below a skill’s facet is its method, which
                 determines mechanics of its activation.
               </p>
               <br />
@@ -774,10 +774,10 @@ export default function Rules() {
               <br />
               <br />
 
-              <h3>Aspects</h3>
+              <h3>Facets</h3>
               <p>
                 The icon at the top left corner of a skill card represents its
-                aspect, which determines who can exclusively activate it. For
+                facet, which determines who can exclusively activate it. For
                 example, a Sovereign skill (which has a crown icon) such as{" "}
                 <span
                   className="rule-view-card"
@@ -803,7 +803,7 @@ export default function Rules() {
               <br />
               <h3>Method</h3>
               <p>
-                The gem below a skill’s aspect is its method, which determines
+                The gem below a skill’s facet is its method, which determines
                 mechanics of its activation. A Scion’s skill set consists of 4
                 cards, 1 for each method: standard, resonant, contingent, and
                 burst.
@@ -1326,18 +1326,18 @@ export default function Rules() {
               <h2>Effects</h2>
               <p>
                 Effects are the instructions of cards, actions, abilities,
-                talents, and keywords. These are broken down into sub-effects,
-                typically consisting of single sentences. Sub-effects are
-                written from the perspective of the entity performing them. On
-                cards, sub-effects are separated by line breaks for clarity.
+                talents, and keywords. These are broken down into steps,
+                typically consisting of single sentences. Steps are written from
+                the perspective of the entity performing them. On cards, steps
+                are separated by line breaks for clarity.
               </p>
               <br />
 
               <p>
-                Sub-effects are mandatory by default; those qualified with the
-                phrase <em>“you may” </em>are optional. An effect cannot be
-                activated if its mandatory sub-effects cannot be fulfilled. For
-                example, a Sovereign cannot activate{" "}
+                Steps are mandatory by default; those qualified with the phrase{" "}
+                <em>“you may” </em>are optional. An effect cannot be activated
+                if its mandatory steps cannot be fulfilled. For example, a
+                Sovereign cannot activate{" "}
                 <span
                   className="rule-view-card"
                   onClick={() => {
@@ -1347,16 +1347,16 @@ export default function Rules() {
                   Press the Attack
                 </span>{" "}
                 unless they have 2 Advance tactics to convert. Its subsequent
-                sub-effects are optional.
+                steps are optional.
               </p>
 
               <br />
               <p>
-                Conditional sub-effects have statements that begin with{" "}
-                <em>“if”</em> and are applied only when their statements are
-                true. A false statement will not prevent the activation of the
-                effect, but its corresponding sub-effect will be ignored. For
-                example, a Mana Scion who activates{" "}
+                Conditional steps have statements that begin with <em>“if”</em>{" "}
+                and are applied only when their statements are true. A false
+                statement will not prevent the activation of the effect, but its
+                corresponding step will be ignored. For example, a Mana Scion
+                who activates{" "}
                 <span
                   className="rule-view-card"
                   onClick={() => {
@@ -1366,12 +1366,12 @@ export default function Rules() {
                   Aegis
                 </span>{" "}
                 will draw a skill only if they were targeted. Regardless, it
-                will proceed to its next sub-effect.
+                will proceed to its next step.
               </p>
 
               <br />
               <p>
-                Modular sub-effects present the activator a choice between two
+                Modular steps present the activator a choice between two
                 options. Either can be chosen, provided it can be accomplished.
                 Continuing from the previous example, a Mana Scion who activates{" "}
                 <span
@@ -1392,14 +1392,14 @@ export default function Rules() {
               <br />
               <div className="rules-image-container">
                 <div className="rules-image-desc">
-                  A skill with optional sub-effects (left), & a skill with
-                  conditional and modular sub-effects (right)
+                  A skill with optional steps (left), & a skill with conditional
+                  and modular steps (right)
                 </div>
 
                 <img
                   src={EffectSkill}
                   className="rules-skill-display"
-                  alt="Skills with mandatory, optional, conditional, and modular sub-effects"
+                  alt="Skills with mandatory, optional, conditional, and modular steps"
                 />
               </div>
 
@@ -1422,8 +1422,8 @@ export default function Rules() {
                 >
                   Zip and Zap
                 </span>{" "}
-                and uses its first sub-effect to move next to an enemy Land
-                Scion, the Land Scion can activate{" "}
+                and uses its first step to move next to an enemy Land Scion, the
+                Land Scion can activate{" "}
                 <span
                   className="rule-view-card"
                   onClick={() => {
@@ -1432,12 +1432,12 @@ export default function Rules() {
                 >
                   Pitfall Trap
                 </span>{" "}
-                before the second sub-effect of Zip and Zap applies. If Pitfall
-                Trap paralyzes or eliminates the Lightning Scion, Zip and Zap
-                concludes abruptly since its remaining sub-effects can no longer
-                be applied. Conversely, if Pitfall Trap fails to incapacitate
-                the Lightning Scion, they will resume applying the effect of Zip
-                and Zap.
+                before the second step of Zip and Zap applies. If Pitfall Trap
+                paralyzes or eliminates the Lightning Scion, Zip and Zap
+                concludes abruptly since its remaining steps can no longer be
+                applied. Conversely, if Pitfall Trap fails to incapacitate the
+                Lightning Scion, they will resume applying the effect of Zip and
+                Zap.
               </p>
 
               <br />
@@ -1461,8 +1461,7 @@ export default function Rules() {
               <p>
                 Keywords are effects compressed into single words for the sake
                 of brevity. These observe the same rules discussed earlier and
-                can appear within other effects. For example, the first
-                sub-effect of{" "}
+                can appear within other effects. For example, the first step of{" "}
                 <span
                   className="rule-view-card"
                   onClick={() => {
@@ -1472,8 +1471,8 @@ export default function Rules() {
                   Arsenal Onslaught
                 </span>{" "}
                 is simply “Strike”. This can be restated and expanded as 3
-                sub-effects: “(1)Target an adjacent foe. (2)Attack them. (3)If
-                the attack was lethal, move to the zone they were occupying.”
+                steps: “(1)Target an adjacent foe. (2)Attack them. (3)If the
+                attack was lethal, move to the zone they were occupying.”
               </p>
 
               <br />
@@ -1524,9 +1523,9 @@ export default function Rules() {
 
               <p>
                 Note: The following keywords are always proceeded by a phrase
-                indicating the unit they must affect. For example, if a
-                sub-effect states “blast an adjacent foe, the first sub-effect
-                of blast changes from <em>“Target a unit”</em> into{" "}
+                indicating the unit they must affect. For example, if a step
+                states “blast an adjacent foe, the first step of blast changes
+                from <em>“Target a unit”</em> into{" "}
                 <em>“Target an adjacent foe</em>.
               </p>
 

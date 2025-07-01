@@ -1539,7 +1539,7 @@ const DemoTextBox = () => {
             return (
               <div>
                 <span className="goldText">
-                  Skills can be activated by only those that match their aspect
+                  Skills can be activated by only those that match their facet
                 </span>
                 , which is indicated by the icon in the card’s top-right corner.
                 <br /> <br />
@@ -1559,9 +1559,9 @@ const DemoTextBox = () => {
           case 98:
             return (
               <div>
-                There are also Sovereign skills, whose aspects are represented
-                by a crown rather than a unit’s icon. Like Avelhem cards, these
-                are activated by the Sovereigns directly from their hand.
+                There are also Sovereign skills, whose facets are represented by
+                a crown rather than a unit’s icon. Like Avelhem cards, these are
+                activated by the Sovereigns directly from their hand.
               </div>
             );
 
@@ -1688,7 +1688,8 @@ const DemoTextBox = () => {
                 abilities, talents, and skills. It also prevents them from
                 attacking via any means.
                 <br /> <br />
-                Simply put, punished Scions are muted and only allowed to move.
+                Simply put, Scions punished with Anathema are muted and only
+                allowed to move.
               </div>
             );
 
