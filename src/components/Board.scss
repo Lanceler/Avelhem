@@ -35,13 +35,14 @@
     transform-origin: center;
     overflow: hidden;
     border: 8px ridge goldenrod;
+
+    padding: 0;
+
 }
 
 .board-space {
     display: flex;
     align-items: center;
-    // border: 8px ridge goldenrod;
-    // border: 8px ridge goldenrod;
     height: 890px;
     width: 1450px;
     overflow: hidden;  
@@ -55,11 +56,14 @@
                     rgba(0, 255, 255, 0) 40%, 
                     rgba(0, 217, 255, 0.65) 100%);
     height: 100%;
-    width: 99%;
+    width: 100%;
     position: absolute;
     z-index: -1;
     // opacity: 0;
     animation: turnFadeIn 0.35s linear;
+    
+
+    
 
 }
 

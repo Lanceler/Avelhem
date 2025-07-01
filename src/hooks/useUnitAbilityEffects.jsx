@@ -28,11 +28,6 @@ export const useUnitAbilityEffects = () => {
     //end "Activating Eternal Ember"
     newGameState.currentResolution.pop();
 
-    //give unit activationCounter
-    unit.temporary.activation
-      ? (unit.temporary.activation += 1)
-      : (unit.temporary.activation = 1);
-
     unit.ember ? (unit.ember = Math.min(unit.ember + 1, 2)) : (unit.ember = 1);
 
     newGameState = animationDelay(newGameState, unit.player, 1750);
@@ -236,11 +231,6 @@ export const useUnitAbilityEffects = () => {
     //end "Activating Aeromancy"
     newGameState.currentResolution.pop();
 
-    //give unit activationCounter
-    unit.temporary.activation
-      ? (unit.temporary.activation += 1)
-      : (unit.temporary.activation = 1);
-
     //Wind Scions gain Cyclone when activating skill
     unit.cyclone
       ? (unit.cyclone = Math.min(2, unit.cyclone + 1))
@@ -355,11 +345,6 @@ export const useUnitAbilityEffects = () => {
     //end "Activating Salt the Earth"
     newGameState.currentResolution.pop();
 
-    //give unit activationCounter
-    unit.temporary.activation
-      ? (unit.temporary.activation += 1)
-      : (unit.temporary.activation = 1);
-
     //Gain Aftershocks
     unit.aftershock
       ? (unit.aftershock = Math.min(unit.aftershock + 1, 2))
@@ -376,11 +361,6 @@ export const useUnitAbilityEffects = () => {
 
     //end "Activating Mountain Stance"
     newGameState.currentResolution.pop();
-
-    //give unit activationCounter
-    unit.temporary.activation
-      ? (unit.temporary.activation += 1)
-      : (unit.temporary.activation = 1);
 
     //Gain 2 Aftershocks
     unit.aftershock = 2;

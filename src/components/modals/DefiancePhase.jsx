@@ -161,9 +161,6 @@ const DefiancePhaseSelection = (props) => {
           },
         });
 
-        //draw 1 skill
-        // newGameState = drawSkill(newGameState);
-
         break;
 
       default:

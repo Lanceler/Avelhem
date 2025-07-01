@@ -2616,7 +2616,7 @@ const UseCurrentResolution = (props) => {
           return (
             <>
               {self === lastRes.unit.player && !props.hideModal && (
-                <SelectCustomChoice
+                <YouMayNoYes
                   unit={lastRes.unit}
                   details={lastRes.details}
                   updateFirebase={props.updateFirebase}
@@ -2625,26 +2625,6 @@ const UseCurrentResolution = (props) => {
               )}
             </>
           );
-
-        case "Frenzy Blade4":
-          if (self === lastRes.unit.player) {
-            props.updateLocalState(applySkill("frenzyBlade4", lastRes.unit));
-          }
-          break;
-
-        // case "Frenzy Blade2":
-        //   return (
-        //     <>
-        //       {self === lastRes.unit.player && !props.hideModal && (
-        //         <SelectCustomChoice
-        //           unit={lastRes.unit}
-        //           details={lastRes.details}
-        //           updateFirebase={props.updateFirebase}
-        //           hideOrRevealModale={props.hideOrRevealModale}
-        //         />
-        //       )}
-        //     </>
-        //   );
 
         case "Activating Arsenal Onslaught":
           if (self === lastRes.unit.player) {

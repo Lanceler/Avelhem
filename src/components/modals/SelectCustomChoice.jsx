@@ -158,13 +158,6 @@ const SelectCustomChoice = (props) => {
       ChoiceSecondMessage = "Spend 1 skill to gain raise your HP to 2.";
       break;
 
-    case "Frenzy Blade3":
-      canFirstChoice = true;
-      canSecondChoice = newGameState[self].skillHand.length > 0;
-      ChoiceFirstMessage = "Draw 1 skill.";
-      ChoiceSecondMessage = "Spend 1 skill to gain Shield for 2 turns.";
-      break;
-
     case "Arsenal Onslaught":
       canSkip = true;
       canFirstChoice = canStrike(unit);
@@ -539,30 +532,6 @@ const SelectCustomChoice = (props) => {
               message: "Spend 1 skill to raise your HP to 2.",
               restriction: null,
               reason: "Reinforce",
-            },
-          });
-        }
-        break;
-
-      case "Frenzy Blade2":
-        if (selectedChoice === 1) {
-          newGameState = drawSkill(newGameState);
-        } else {
-          newGameState.currentResolution.push({
-            resolution: "Metal Skill",
-            resolution2: "Frenzy Blade4",
-            unit: unit,
-          });
-          newGameState.currentResolution.push({
-            resolution: "Discard Skill",
-            unit: unit,
-            player: unit.player,
-            canSkip: false,
-            details: {
-              title: "Frenzy Blade",
-              message: "Spend 1 skill to gain Shield for 2 turns.",
-              restriction: null,
-              reason: "Frenzy Blade",
             },
           });
         }

@@ -1882,7 +1882,7 @@ export const useSkillEffects = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
-    //end "Frenzy Blade 1" resolution
+    //end "Frenzy Blade1" resolution
     newGameState.currentResolution.pop();
 
     newGameState = strike(newGameState, unit, victim, null);
@@ -1894,7 +1894,7 @@ export const useSkillEffects = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
-    //end "Frenzy Blade 2" resolution
+    //end "Frenzy Blade2" resolution
     newGameState.currentResolution.pop();
 
     if (unit !== null && !isMuted(unit)) {
@@ -1903,25 +1903,14 @@ export const useSkillEffects = () => {
         resolution2: "Frenzy Blade3",
         unit: unit,
         details: {
+          reason: "Frenzy Blade",
           title: "Frenzy Blade",
-          reason: "Frenzy Blade3",
+          message: "You may spend 1 Sharpness to gain Shield foe 2 turns.",
+          no: "Skip",
+          yes: "Spend",
         },
       });
     }
-
-    return newGameState;
-  };
-
-  const frenzyBlade4 = (unitInfo) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    //end "Frenzy Blade4" resolution
-    newGameState.currentResolution.pop();
-
-    unit.enhancements.shield
-      ? (unit.enhancements.shield = Math.max(2, unit.enhancements.shield))
-      : (unit.enhancements.shield = 2);
 
     return newGameState;
   };
@@ -2709,8 +2698,6 @@ export const useSkillEffects = () => {
         return frenzyBlade2(a, b);
       case "frenzyBlade3":
         return frenzyBlade3(a);
-      case "frenzyBlade4":
-        return frenzyBlade4(a);
       case "arsenalOnslaught1":
         return arsenalOnslaught1(a);
       case "arsenalOnslaught2":

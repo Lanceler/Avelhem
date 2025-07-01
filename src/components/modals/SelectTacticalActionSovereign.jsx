@@ -5,6 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
 import { updateDemoCount } from "../../redux/demoCount";
 
+import AssaultSmall from "../../assets/diceIcons/AssaultSmall.png";
+
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 const SelectTacticalActionSovereign = (props) => {
@@ -44,7 +46,10 @@ const SelectTacticalActionSovereign = (props) => {
           optionQualifier: null,
           optionText: (
             <>
-              <div className="">⬩Spend 6 DP to gain an Assault tactic.</div>
+              <div className="">
+                ⬩Spend 6 DP to reroll this tactic to{" "}
+                <img src={AssaultSmall} style={{ height: 21 }} />.
+              </div>
             </>
           ),
         },
@@ -65,9 +70,8 @@ const SelectTacticalActionSovereign = (props) => {
           optionText: (
             <>
               <div className="">
-                ⬩Float 1 skill to deploy a Scion in your frontier.
-                <br />
-                ⬩Activate their “Upon Ascension” talent, if any.
+                ⬩Float 1 skill to deploy a Scion in your frontier. (Activate
+                their “Upon Ascension” talent, if any.)
               </div>
             </>
           ),

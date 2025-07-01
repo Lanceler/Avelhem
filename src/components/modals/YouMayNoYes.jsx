@@ -347,6 +347,13 @@ const YouMayNoYes = (props) => {
         newGameState = drawSkill(newGameState);
         break;
 
+      case "Frenzy Blade": // Frenzy Blade3
+        unit.sharpness -= 1;
+        unit.enhancements.shield
+          ? (unit.enhancements.shield = Math.max(unit.enhancements.shield, 2))
+          : (unit.enhancements.shield = 2);
+        break;
+
       case "Castle of Thorns": // "Castle Of Thorns1"
         delete unit.enhancements.overgrowth;
         unit.enhancements.ward

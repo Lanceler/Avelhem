@@ -338,6 +338,13 @@ const DemoTextBox = () => {
               width: 650,
             };
 
+          case 61:
+            return {
+              top: 195,
+              left: 40,
+              width: 640,
+            };
+
           case 63:
             return {
               top: 140,
@@ -818,7 +825,7 @@ const DemoTextBox = () => {
           case 11:
             return (
               <div>
-                Lastly, Sovereigns set their Defiance Points (DP) counters to 3.
+                Lastly, Sovereigns set their Defiance Points (DP) to 3.
                 <br /> <br />
                 Alongside Bounty Points (BP), these are located between one’s
                 skill and Avelhem repertoires.
@@ -1208,17 +1215,16 @@ const DemoTextBox = () => {
                 <span className="goldText">
                   Units cannot use the same Mobilize tactic more than once.
                 </span>{" "}
-                Even though your Mobilize has 2 remaining instances, your
-                topmost pawn is barred from using it. (Clarification: A unit is
-                allowed to traverse twice using 2 different Mobilize tactics.)
+                Though your Mobilize has 2 remaining instances, your topmost
+                pawn is barred from using it. (Clarification: A unit is allowed
+                to traverse twice using 2 different Mobilize tactics.)
               </div>
             );
 
           case 61:
             return (
               <div>
-                To illustrate this point, click on that pawn again and open
-                their tactics menu.
+                To illustrate this point, reopen that pawn’s tactics menu.
               </div>
             );
 
@@ -1263,8 +1269,8 @@ const DemoTextBox = () => {
             return (
               <div>
                 You still have 2 Mobilize instances, which can be used to draw 1
-                skill or move up to 2 more pawns. However, you don't need to use
-                them right away. As mentioned earlier, you can freely alternate
+                skill or move up to 2 more units. However, you don't need to use
+                them immediately. As mentioned earlier, you can freely alternate
                 between using tactics and cards.
                 <br /> <br />
                 On that note, let’s activate an Avelhem.

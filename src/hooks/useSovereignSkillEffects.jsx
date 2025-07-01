@@ -432,13 +432,8 @@ export const useSovereignSkillEffects = () => {
     //end "Activating Providence" resolution
     newGameState.currentResolution.pop();
 
-    if (resonator) {
-      newGameState.currentResolution.push({
-        resolution: "Sovereign Resonant Skill",
-        resolution2: "ProvidenceR1",
-        player: self,
-      });
-    }
+    //Resonance also grants an advance tactic,
+    //but that will be handled via spending the invoke
 
     newGameState.currentResolution.push({
       resolution: "Sovereign Resonant Skill",
@@ -453,22 +448,6 @@ export const useSovereignSkillEffects = () => {
         resonated: resonator ? "resonated" : null,
       },
     });
-
-    return newGameState;
-  };
-
-  const providenceR1 = () => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    //end "ProvidenceR1" resolution
-    newGameState.currentResolution.pop();
-
-    newGameState[self].defiancePoints = Math.min(
-      6,
-      newGameState[self].defiancePoints + 3
-    );
-
-    //Resonance also grants an advance tactic, but that will be handled via spending the invoke
 
     return newGameState;
   };
@@ -811,7 +790,6 @@ export const useSovereignSkillEffects = () => {
     ambidexterity1,
     ambidexterityR1,
     providence1,
-    providenceR1,
     ferventPrayer1,
     ferventPrayerR1,
     pressTheAttack1,
