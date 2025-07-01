@@ -52,7 +52,7 @@ const LoadingImage = (props) => {
                 props.setShowContent(true);
               }}
             >
-              Proceed
+              Skip
             </button>
           </div>
         </div>

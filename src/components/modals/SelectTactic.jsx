@@ -26,7 +26,9 @@ const SelectTactic = (props) => {
     localGameState.tactics[0] !== null &&
     !props.unit.temporary.used0thTactic &&
     localGameState.tactics[0].stock > 0 &&
-    ["Advance", "Assault", "Mobilize"].includes(localGameState.tactics[0].face)
+    ["Advance", "Assault", "Mobilize", "Invoke"].includes(
+      localGameState.tactics[0].face
+    )
   ) {
     canUseTactic[0] = true;
   }
@@ -35,7 +37,9 @@ const SelectTactic = (props) => {
     localGameState.tactics[1] !== null &&
     !props.unit.temporary.used1stTactic &&
     localGameState.tactics[1].stock > 0 &&
-    ["Advance", "Assault", "Mobilize"].includes(localGameState.tactics[1].face)
+    ["Advance", "Assault", "Mobilize", "Invoke"].includes(
+      localGameState.tactics[1].face
+    )
   ) {
     canUseTactic[1] = true;
   }

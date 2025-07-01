@@ -78,24 +78,6 @@ const BountyPhase = (props) => {
         setSelectedChoice(null);
         break;
 
-      case 7:
-        newGameState[self].bountyUpgrades.coordination = 1;
-        newGameState[self].bountyPoints -= coordinationCosts[0];
-        setSelectedChoice(null);
-        break;
-
-      case 8:
-        newGameState[self].bountyUpgrades.coordination = 2;
-        newGameState[self].bountyPoints -= coordinationCosts[1];
-        setSelectedChoice(null);
-        break;
-
-      case 9:
-        newGameState[self].bountyUpgrades.coordination = 3;
-        newGameState[self].bountyPoints -= coordinationCosts[2];
-        setSelectedChoice(null);
-        break;
-
       case 10:
         newGameState[self].bountyUpgrades.tactics = 1;
         newGameState[self].bountyPoints -= tacticsCosts[0];
@@ -173,7 +155,6 @@ const BountyPhase = (props) => {
 
   const frontierCosts = [6, 8, 10];
   const acquisitionCosts = [3, 3, 4];
-  const coordinationCosts = [3, 3, 4];
   const tacticsCosts = [3, 3, 4];
   const avelhemCosts = [3, 3, 4];
   const skillCosts = [3, 3, 4];
@@ -195,15 +176,6 @@ const BountyPhase = (props) => {
       localGameState[self].bountyUpgrades.acquisition === 1,
     localGameState[self].bountyPoints >= acquisitionCosts[2] &&
       localGameState[self].bountyUpgrades.acquisition === 2,
-  ];
-
-  const canCoordination = [
-    localGameState[self].bountyPoints >= coordinationCosts[0] &&
-      localGameState[self].bountyUpgrades.coordination === 0,
-    localGameState[self].bountyPoints >= coordinationCosts[1] &&
-      localGameState[self].bountyUpgrades.coordination === 1,
-    localGameState[self].bountyPoints >= coordinationCosts[2] &&
-      localGameState[self].bountyUpgrades.coordination === 2,
   ];
 
   const canTactics = [
@@ -262,15 +234,6 @@ const BountyPhase = (props) => {
 
       case 6:
         return newGameState[self].bountyUpgrades.acquisition >= 3;
-
-      case 7:
-        return newGameState[self].bountyUpgrades.coordination >= 1;
-
-      case 8:
-        return newGameState[self].bountyUpgrades.coordination >= 2;
-
-      case 9:
-        return newGameState[self].bountyUpgrades.coordination >= 3;
 
       case 10:
         return newGameState[self].bountyUpgrades.tactics >= 1;
@@ -385,32 +348,6 @@ const BountyPhase = (props) => {
     can: canAcquisition,
   };
 
-  const coordinationBounty = {
-    category: "Coordination Phase",
-    items: [
-      {
-        text: "Upgrade Battle Cry: Roll 1 tactical die",
-        ind: 7,
-      },
-      {
-        text: "Upgrade Convene: Gain 1 Advance tactic",
-        ind: 8,
-      },
-      {
-        text: (
-          <>
-            Upgrade Assent:
-            <br />
-            Gain 1 DP
-          </>
-        ),
-        ind: 9,
-      },
-    ],
-    cost: coordinationCosts,
-    can: canCoordination,
-  };
-
   const tacticsBounty = {
     category: (
       <>
@@ -428,11 +365,23 @@ const BountyPhase = (props) => {
     ),
     items: [
       {
-        text: "Upgrade Rally: Increase instances to 3",
+        text: (
+          <>
+            Upgrade Invoke:
+            <br />
+            Units may draw 1 skill via Aether-blast
+          </>
+        ),
         ind: 10,
       },
       {
-        text: "Upgrade Mobilize: Increase instances to 4",
+        text: (
+          <>
+            Upgrade Mobilize:
+            <br />
+            Increase instances to 4
+          </>
+        ),
         ind: 11,
       },
       {
@@ -568,7 +517,6 @@ const BountyPhase = (props) => {
         <div className="modalScrollableY" style={{ pointerEvents: "all" }}>
           <BountyRow info={frontierBounty} />
           <BountyRow info={acquisitionBounty} />
-          <BountyRow info={coordinationBounty} />
           <BountyRow info={tacticsBounty} />
           <BountyRow info={avelhemBounty} />
           <BountyRow info={skillBounty} />

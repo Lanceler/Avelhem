@@ -39,6 +39,8 @@ import DemoImage from "./displays/DemoImage";
 
 import UseCurrentResolution from "../hooks/UseCurrentResolution";
 
+import SelectRepertoire from "./modals/SelectRepertoire";
+
 const BoardArea = (props) => {
   const dispatch = useDispatch();
 
@@ -166,7 +168,7 @@ const BoardArea = (props) => {
     if (!loadingImages) {
       timer = setTimeout(() => {
         setShowContent(true);
-      }, 1750); // 2.5 seconds
+      }, 1750);
     }
 
     // Cleanup function
@@ -310,6 +312,11 @@ const BoardArea = (props) => {
       newGameState.currentResolution[newGameState.currentResolution.length - 1]
         .resolution === "Deploying Pawn";
 
+    //Deployed via Assault
+    const assaultUsed =
+      newGameState.currentResolution[newGameState.currentResolution.length - 1]
+        .assault;
+
     //end "Deploying Pawn / Scion"
     newGameState.currentResolution.pop();
 
@@ -360,8 +367,24 @@ const BoardArea = (props) => {
       }
     }
 
-    //Trigger Motion Contingency
+    //Draw Avelhem via Assault
+    if (assaultUsed) {
+      newGameState.currentResolution.push({
+        resolution: "Misc.",
+        resolution2: "Assault - Avelhem Draw",
+        player: self,
+        details: {
+          reason: "Assault - Avelhem Draw",
+          title: "Assault",
+          message: "You may draw 1 Avelhem.",
+          no: "Skip",
+          yes: "Draw",
+        },
+      });
+    }
+
     if (newGameState[enemy].skillHand.length > 0 && triggerMotion(newUnit)) {
+      //Trigger Motion Contingency
       newGameState.currentResolution.push({
         resolution: "Triggering Contingent Skill",
         resolution2: "Triggering Motion",
@@ -653,6 +676,13 @@ const BoardArea = (props) => {
         <div className="board-physical">
           <div className="board-space-wrapper">
             <div className="board-space">
+              {props.playerStatus === "pick repertoire" && (
+                <SelectRepertoire
+                  onSelectRepertoire={props.onSelectRepertoire}
+                  expansion={props.expansion}
+                />
+              )}
+
               {!["ready", "spectate"].includes(props.playerStatus) && (
                 <>{props.gameInvite()}</>
               )}

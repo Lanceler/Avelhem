@@ -316,7 +316,7 @@ export default function Game() {
           key="BoardArea"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.75 }}
+          transition={{ duration: 0.15 }}
         >
           <BoardArea
             gameState={gameData ? gameData.gameState : null}
@@ -324,6 +324,8 @@ export default function Game() {
             userRole={userRole}
             playerStatus={playerStatus}
             gameInvite={gameInvite}
+            onSelectRepertoire={onSelectRepertoire}
+            expansion={gameData ? gameData.expansion : null}
           />
         </motion.div>
       </AnimatePresence>
@@ -362,12 +364,13 @@ export default function Game() {
         )}
       </div>
 
-      {playerStatus === "pick repertoire" && (
+      {/* {playerStatus === "pick repertoire" && (
         <SelectRepertoire
           onSelectRepertoire={onSelectRepertoire}
           expansion={gameData ? gameData.expansion : null}
         />
-      )}
+      )} */}
+
       {isLoading && <Loading />}
 
       {infoPopUp && (

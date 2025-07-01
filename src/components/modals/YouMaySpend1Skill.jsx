@@ -211,6 +211,14 @@ const YouMaySpend1Skill = (props) => {
     //end Discarding Skill resolution
     newGameState.currentResolution.pop();
 
+    //send selected skill to vestige
+    newGameState[self].skillVestige.push(
+      newGameState[self].skillHand.splice(
+        usableSkills[selectedSkill].handIndex,
+        1
+      )[0]
+    );
+
     if (unit && unit.unitClass === "Fire Scion" && !isMuted(unit)) {
       ability = "Eternal Ember";
     }
@@ -409,6 +417,38 @@ const YouMaySpend1Skill = (props) => {
         );
         break;
 
+      case "Rooted Aether-blast (Invoke)":
+        //give unit activationCounter
+        unit.temporary.activation
+          ? (unit.temporary.activation += 1)
+          : (unit.temporary.activation = 1);
+
+        //newGameState[unit.player].units[unit.unitIndex] = unit;
+        newGameState.activatingUnit.push(unit);
+
+        newGameState.currentResolution.push({
+          resolution: "Tactic End",
+          unit: unit,
+        });
+
+        if (localGameState[unit.player].bountyUpgrades.tactics > 0) {
+          newGameState.currentResolution.push({
+            resolution: "Misc.",
+            resolution2: "Aether-blast - Upgraded",
+            unit: unit,
+          });
+        }
+
+        enterSelectUnitMode(
+          getZonesWithEnemies(unit, 1),
+          unit,
+          newGameState,
+          props.details.tactic,
+          "aether-blast",
+          null
+        );
+        break;
+
       case "Vanguard Fleet1":
         enterMoveMode(getVacantAdjacentZones(unit), unit, newGameState, null);
         break;
@@ -445,14 +485,6 @@ const YouMaySpend1Skill = (props) => {
       default:
         break;
     }
-
-    //send selected skill to vestige
-    newGameState[self].skillVestige.push(
-      newGameState[self].skillHand.splice(
-        usableSkills[selectedSkill].handIndex,
-        1
-      )[0]
-    );
 
     switch (ability) {
       case "Eternal Ember":

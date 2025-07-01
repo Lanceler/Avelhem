@@ -52,6 +52,7 @@ const UseCurrentResolution = (props) => {
   const { applyAbility } = useUnitAbilityEffects();
 
   const {
+    aetherBlastDraw,
     applyAnathema,
     applyBurn,
     applyDamage,
@@ -850,6 +851,7 @@ const UseCurrentResolution = (props) => {
     case "Misc.":
       switch (lastRes.resolution2) {
         case "End Execution Phase Confirm":
+        case "Assault - Avelhem Draw":
           return (
             <>
               {self === lastRes.player && !props.hideModal && (
@@ -943,8 +945,39 @@ const UseCurrentResolution = (props) => {
           }
           break;
 
+        case "Aether-blast - Upgraded":
+          if (self === lastRes.unit.player) {
+            props.resolutionUpdate(aetherBlastDraw(lastRes.unit));
+          }
+          break;
+
+        case "Aether-blast - Upgraded2":
+          return (
+            <>
+              {self === lastRes.unit.player && !props.hideModal && (
+                <YouMayNoYes
+                  unit={lastRes.unit}
+                  details={lastRes.details}
+                  updateFirebase={props.updateFirebase}
+                  hideOrRevealModale={props.hideOrRevealModale}
+                />
+              )}
+            </>
+          );
+
         case "Beseech - Upgraded":
         case "Cultivate - Upgraded":
+          return (
+            <>
+              {self === lastRes.player && !props.hideModal && (
+                <YouMayNoYes
+                  details={lastRes.details}
+                  updateFirebase={props.updateFirebase}
+                  hideOrRevealModale={props.hideOrRevealModale}
+                />
+              )}
+            </>
+          );
 
         case "Tactic Results":
           return (

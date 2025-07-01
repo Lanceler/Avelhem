@@ -94,14 +94,18 @@ const SelectTacticalActionSovereign = (props) => {
       break;
 
     case "Assault":
-    case "Null":
       optionDetails = [
         {
-          optionName: "Null",
-          optionQualifier: null,
+          optionName: "Deploy Pawn",
+          optionQualifier: (
+            <div>
+              You can have up to <br /> 8 units in play.
+            </div>
+          ),
           optionText: (
             <>
-              <div className="">No tactical actions available.</div>
+              <div className="">⬩Deploy a pawn in your frontier.</div>
+              <div className="">⬩You may draw 1 Avelhem.</div>
             </>
           ),
         },
@@ -128,32 +132,17 @@ const SelectTacticalActionSovereign = (props) => {
             </>
           ),
         },
-        // {
-        //   optionName: "Defy Fate",
-        //   optionQualifier: null,
-        //   optionText: (
-        //     <>
-        //       <div className="">⬩Gain 3 DP.</div>
-        //     </>
-        //   ),
-        // },
       ];
       break;
 
-    case "Rally":
+    case "Null":
       optionDetails = [
         {
-          optionName: "Deploy Pawn",
-          optionQualifier: (
-            <div>
-              You can have up to <br /> 8 units in play.
-            </div>
-          ),
+          optionName: "Null",
+          optionQualifier: null,
           optionText: (
             <>
-              <div className="">
-                ⬩Use 1 instance to deploy a pawn in your frontier.
-              </div>
+              <div className="">No tactical actions available.</div>
             </>
           ),
         },
@@ -189,25 +178,24 @@ const SelectTacticalActionSovereign = (props) => {
         }
 
       case "Assault":
+        switch (i) {
+          case 0:
+            return canDeploy();
+        }
+        break;
+
       case "Null":
         switch (i) {
           case 0:
             return false;
         }
+        break;
 
       case "Invoke":
         switch (i) {
           case 0:
           case 1:
-          case 2:
             return true;
-        }
-        break;
-
-      case "Rally":
-        switch (i) {
-          case 0:
-            return canDeploy();
         }
         break;
     }
@@ -226,8 +214,7 @@ const SelectTacticalActionSovereign = (props) => {
     let updateData = true;
 
     const deployPawnSelected =
-      (face === "Advance" && selectedChoice === 0) ||
-      (face === "Rally" && selectedChoice === 0);
+      ["Advance", "Assault"].includes(face) && selectedChoice === 0;
 
     if (!deployPawnSelected) {
       newGameState.currentResolution.pop();
@@ -284,6 +271,21 @@ const SelectTacticalActionSovereign = (props) => {
         }
         break;
 
+      case "Assault":
+        switch (selectedChoice) {
+          case 0:
+            updateData = false;
+
+            newGameState.currentResolution.push({
+              resolution: "Deploying Pawn",
+              zoneIds: getVacantFrontier(),
+              dice: props.dice,
+              assault: true,
+            });
+            break;
+        }
+        break;
+
       case "Invoke":
         switch (selectedChoice) {
           case 0:
@@ -295,30 +297,6 @@ const SelectTacticalActionSovereign = (props) => {
           case 1:
             newGameState = drawSkill(newGameState);
             newGameState = drawSkill(newGameState);
-            break;
-
-          // case 2:
-          //   //Gain DP
-          //   newGameState[self].defiancePoints = Math.min(
-          //     6,
-          //     newGameState[self].defiancePoints + 3
-          //   );
-
-          //   break;
-        }
-        break;
-
-      case "Rally":
-        switch (selectedChoice) {
-          case 0:
-            updateData = false;
-
-            newGameState.currentResolution.push({
-              resolution: "Deploying Pawn",
-              zoneIds: getVacantFrontier(),
-              dice: props.dice,
-            });
-
             break;
         }
         break;

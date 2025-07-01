@@ -803,6 +803,30 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const aetherBlastDraw = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    newGameState.currentResolution.pop();
+
+    if (unit && !isMuted(unit)) {
+      newGameState.currentResolution.push({
+        resolution: "Misc.",
+        resolution2: "Aether-blast - Upgraded2",
+        unit: unit,
+        details: {
+          reason: "Aether-blast Invoke",
+          title: "Aether-blast (Invoke - Upgraded)",
+          message: "You may draw 1 skill.",
+          no: "Skip",
+          yes: "Draw",
+        },
+      });
+    }
+
+    return newGameState;
+  };
+
   const animationDelay = (newGameState, priority, time) => {
     const t = time ? time : 275;
 
@@ -3310,15 +3334,9 @@ export const useRecurringEffects = () => {
     newGameState[self].skillVestige = [];
 
     //4. Apply Penalty
-    //If one’s skill repertoire is depleted, their opponent gains 6 DP and 3 BP.
-    newGameState[enemy].bountyPoints = Math.min(
-      10,
-      newGameState[enemy].bountyPoints + 3
-    );
-    newGameState[enemy].defiancePoints = Math.min(
-      6,
-      newGameState[enemy].defiancePoints + 6
-    );
+    //If one’s skill repertoire is depleted, their opponent gains 6 DP and 10 BP.
+    newGameState[enemy].bountyPoints = 10;
+    newGameState[enemy].defiancePoints = 6;
 
     //5. Safety
     newGameState[self].skillFloat = 0;
@@ -4382,6 +4400,7 @@ export const useRecurringEffects = () => {
     activateThunderThaumaturge,
     activateVengefulLegacy,
     activateViridianGrave,
+    aetherBlastDraw,
     aetherRestoreSpecial,
     animationDelay,
     applyAnathema,

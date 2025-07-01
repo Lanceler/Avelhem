@@ -4,7 +4,6 @@
     height: 1200px;
     display: flex;
     flex-direction: column;
-    // background-color: red;
     overflow: hidden;
     position: relative;
 }
@@ -17,11 +16,9 @@
 .board-physical {
     position: relative;
     display: flex;
-    // justify-content: center;
     user-select: none;
-    animation: turnFadeIn 3.25s linear;
+    animation: turnFadeIn 1.25s linear;
 
-    // background-color: aqua;
     overflow: hidden;
     height: 100%;
     max-width: 100vw;
@@ -35,7 +32,6 @@
     transform-origin: center;
     overflow: hidden;
     border: 8px ridge goldenrod;
-
     padding: 0;
 
 }
@@ -60,10 +56,7 @@
     position: absolute;
     z-index: -1;
     // opacity: 0;
-    animation: turnFadeIn 0.35s linear;
-    
-
-    
+    animation: turnFadeIn 0.35s linear;    
 
 }
 

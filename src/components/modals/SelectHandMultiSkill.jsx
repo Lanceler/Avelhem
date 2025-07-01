@@ -96,11 +96,7 @@ const SelectHandMultiSkill = (props) => {
         //1. gain assault tactic
         newGameState.tactics[0] = { face: "Assault", stock: 1, limit: 1 };
 
-        if (newGameState[self].bountyUpgrades.coordination >= 1) {
-          newGameState.tactics[1] = rollTactic();
-        } else {
-          newGameState.tactics[1] = { face: "Null", stock: 0, limit: 1 };
-        }
+        newGameState.tactics[1] = { face: "Null", stock: 0, limit: 1 };
 
         //2. change phase
         newGameState.turnPhase = "Defiance";

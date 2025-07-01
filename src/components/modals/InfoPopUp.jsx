@@ -7,7 +7,7 @@ import AdvanceSmall from "../../assets/diceIcons/AdvanceSmall.png";
 import MobilizeSmall from "../../assets/diceIcons/MobilizeSmall.png";
 import AssaultSmall from "../../assets/diceIcons/AssaultSmall.png";
 import InvokeSmall from "../../assets/diceIcons/InvokeSmall.png";
-import RallySmall from "../../assets/diceIcons/RallySmall.png";
+// import RallySmall from "../../assets/diceIcons/RallySmall.png";
 
 import { useSelector, useDispatch } from "react-redux";
 const InfoPopUp = (props) => {
@@ -124,6 +124,16 @@ const InfoPopUp = (props) => {
                 <img src={AssaultSmall} className="infoPopUp-tactic-icon" />
               </span>
             </div>
+
+            <div className="unitInfo-text-heading2">
+              Sovereign Tactical Actions
+            </div>
+            <ol className="infoPopUp-list">
+              <li className="unitInfo-text-desc">
+                ⬩Deploy a pawn in your frontier. ⬩You may draw 1 Avelhem.
+              </li>
+            </ol>
+
             <div className="unitInfo-text-heading2">Unit Tactical Actions</div>
             <ol className="infoPopUp-list">
               <li className="unitInfo-text-desc">⬩Traverse.</li>
@@ -145,26 +155,15 @@ const InfoPopUp = (props) => {
               <li className="unitInfo-text-desc">⬩Draw 3 Avelhems.</li>
               <li className="unitInfo-text-desc">⬩Draw 2 skills.</li>
             </ol>
-
-            <br />
-
-            <div className="unitInfo-text-heading1">
-              <strong>Rally </strong>
-              <span className="infoPopUp-tactic-group">
-                <img src={RallySmall} className="infoPopUp-tactic-icon" />
-              </span>
-            </div>
-            <div className="unitInfo-text-heading2">
-              Sovereign Tactical Actions
-            </div>
+            <div className="unitInfo-text-heading2">Unit Tactical Actions</div>
             <ol className="infoPopUp-list">
               <li className="unitInfo-text-desc">
-                Use 1 instance to deploy a pawn in your frontier.
+                ⬩Aether-blast an adjacent foe. ⬩If upgraded: You may draw 1
+                skill.
               </li>
             </ol>
-            <div className="unitInfo-text-heading2">
-              <em>Note: Rally provides 2 (3 if upgraded) instances.</em>
-            </div>
+
+            <br />
           </>
         );
 
@@ -193,7 +192,7 @@ const InfoPopUp = (props) => {
                   3 BP when an ally scores.
                 </li>
                 <li className="unitInfo-text-desc">
-                  3 BP when the opponent’s skill repertoire is depleted.
+                  10 BP when the opponent’s skill repertoire is depleted.
                 </li>
               </ul>
             </div>
@@ -243,14 +242,16 @@ const InfoPopUp = (props) => {
               <p>
                 Migitating an Aether-blast reduces its AP by 1, but it also
                 restores the Aether of the attacker. (Tip: Aether-blasts with at
-                least 2 AP will still do damage; avoid mitigating them if they
-                remain lethal, as that would only benefit your opponent.)
+                least 2 AP will still do damage if mitigated; avoid mitigating
+                them if they remain lethal, as that would only benefit your
+                opponent.)
               </p>
 
               <br />
               <p>
-                Mitigation occurs when the attack connects; therefore, it occurs
-                after trigger-based talents and contingent skills resolve.
+                Shield and Ward are still consumed when negating attacks that
+                have 0 AP. (Tip: If your unit has Shield or Ward, do not make
+                them waste their Aether on mitigation.)
               </p>
             </div>
           </div>

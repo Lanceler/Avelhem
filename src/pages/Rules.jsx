@@ -484,7 +484,7 @@ export default function Rules() {
               <ul>
                 <li>Assent: Roll 2 tactical dice.</li>
                 <li>Battle Cry: Spend 3 skills to gain 1 Assault tactic.</li>
-                <li>Convene: Gain 1 Rally tactic.</li>
+                {/* <li>Convene: Gain 1 Rally tactic.</li> */}
               </ul>
               <br />
               <h3>Defiance Phase</h3>
@@ -1133,7 +1133,7 @@ export default function Rules() {
                     <li>Use 1 instance to deploy a pawn.</li>
                   </ul>
                 </li>
-                <li>Rally does not provide any unit actions.</li>
+                {/* <li>Rally does not provide any unit actions.</li> */}
               </ul>
               <br />
               <h2>Other Uses</h2>

@@ -86,6 +86,11 @@ const YouMayNoYes = (props) => {
         newGameState = endExecutionPhase2(newGameState);
         break;
 
+      case "Aether-blast Invoke": //Aether-blast - Upgraded2
+        newGameState = drawSkill(newGameState);
+        break;
+
+      case "Assault - Avelhem Draw": // "Assault - Avelhem Draw"
       case "Beseech Draw": //"Beseech - Upgraded"
         newGameState = drawAvelhem(newGameState);
         break;

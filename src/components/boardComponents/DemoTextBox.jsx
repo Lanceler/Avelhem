@@ -943,13 +943,11 @@ const DemoTextBox = () => {
           case 26:
             return (
               <div>
-                This phase offers 3 options.{" "}
+                This phase offers 2 options.{" "}
                 <span className="goldText">
                   Assent tends to be the go-to choice despite the tactics
                   provided being random.
-                </span>{" "}
-                Battle Cry and Convene are more situational, as they guarantee
-                specific tactics but have costs or limitations.
+                </span>
               </div>
             );
 
@@ -961,8 +959,7 @@ const DemoTextBox = () => {
                 <br /> <br />
                 As noted below, tactical dice have 6 sides but 4 different
                 faces. 2 of these are twice as likely as to appear as the
-                others. The Convene option provides an exclusive 5th tactic, but
-                it will not be covered in this tutorial.
+                others.
               </div>
             );
 
@@ -972,7 +969,7 @@ const DemoTextBox = () => {
                 You have rolled 2 Advance tactics. These will provide a set of
                 options for your possible tactical actions.
                 <br /> <br />
-                Note: The 5 different tactics have some overlap, which improves
+                Note: The 4 different tactics have some overlap, which improves
                 the odds of having access to desired actions.
               </div>
             );

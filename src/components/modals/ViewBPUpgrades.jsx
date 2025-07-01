@@ -88,38 +88,13 @@ const ViewBPUpgrades = (props) => {
             </div>
 
             <div>
-              {upgrades.coordination > 0 && (
-                <>
-                  <h3>Cordination:</h3>
-
-                  {upgrades.coordination >= 1 && (
-                    <p className="unitInfo-text-desc">
-                      1. Battle Cry upgraded: Roll 1 tactical die.
-                    </p>
-                  )}
-                  {upgrades.coordination >= 2 && (
-                    <p className="unitInfo-text-desc">
-                      2. Convene upgraded: Gain 1 Advance tactic.
-                    </p>
-                  )}
-                  {upgrades.coordination >= 3 && (
-                    <p className="unitInfo-text-desc">
-                      3. Assent upgraded: Gain 2 DP.
-                    </p>
-                  )}
-                  <br />
-                </>
-              )}
-            </div>
-
-            <div>
               {upgrades.tactics > 0 && (
                 <>
                   <h3>Tactics:</h3>
 
                   {upgrades.tactics >= 1 && (
                     <p className="unitInfo-text-desc">
-                      1. Rally upgraded: Instances raised from 2 to 3.
+                      1. Invoke upgraded: May draw 1 skill via Aether-blast.
                     </p>
                   )}
                   {upgrades.tactics >= 2 && (

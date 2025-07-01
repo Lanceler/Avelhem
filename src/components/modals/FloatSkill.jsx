@@ -50,6 +50,17 @@ const FloatSkill = (props) => {
     //end Floating Skill resolution
     newGameState.currentResolution.pop();
 
+    //send selected skill to repertoire
+    newGameState[self].skillRepertoire.push(
+      ...newGameState[self].skillHand.splice(
+        usableSkills[selectedSkill].handIndex,
+        1
+      )
+    );
+
+    //Increase floating count
+    newGameState[self].skillFloat = newGameState[self].skillFloat + 1;
+
     switch (props.details.reason) {
       case "Frigid Breath3":
         newGameState.currentResolution.push({
@@ -151,17 +162,6 @@ const FloatSkill = (props) => {
       default:
         break;
     }
-
-    //send selected skill to repertoire
-    newGameState[self].skillRepertoire.push(
-      ...newGameState[self].skillHand.splice(
-        usableSkills[selectedSkill].handIndex,
-        1
-      )
-    );
-
-    //Increase floating count
-    newGameState[self].skillFloat = newGameState[self].skillFloat + 1;
 
     dispatch(updateState(newGameState));
     props.updateFirebase(newGameState);
