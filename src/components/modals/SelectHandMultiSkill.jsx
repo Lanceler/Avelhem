@@ -109,6 +109,7 @@ const SelectHandMultiSkill = (props) => {
         newGameState.currentResolution.push({
           resolution: "Misc.",
           resolution2: "Tactic Results",
+          player: self,
         });
 
       //DO NOT break; it will discard skills just like "Skill Hand Limit"

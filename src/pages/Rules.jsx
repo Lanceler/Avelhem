@@ -1666,51 +1666,6 @@ export default function Rules() {
                   Sovereigns play with identical repertoires and start with 5
                   Bounty Points (BP).
                 </li>
-                <li>
-                  The Avelhem repertoire size is reduced from 20 to 16 cards and
-                  includes 4 copies each of{" "}
-                  <strong>
-                    <span
-                      className="rule-view-card"
-                      onClick={() => {
-                        dispatch(updateMagnifiedSkill(1));
-                      }}
-                    >
-                      Fire
-                    </span>
-                    ,{" "}
-                    <span
-                      className="rule-view-card"
-                      onClick={() => {
-                        dispatch(updateMagnifiedSkill(4));
-                      }}
-                    >
-                      Land
-                    </span>
-                    ,{" "}
-                    <span
-                      className="rule-view-card"
-                      onClick={() => {
-                        dispatch(updateMagnifiedSkill(6));
-                      }}
-                    >
-                      Mana
-                    </span>
-                    , and{" "}
-                    <span
-                      className="rule-view-card"
-                      onClick={() => {
-                        dispatch(updateMagnifiedSkill(7));
-                      }}
-                    >
-                      Metal
-                    </span>
-                  </strong>{" "}
-                  Avelhems.
-                </li>
-                <li>
-                  The skill repertoire size is reduced from 60 to 40 cards.
-                </li>
 
                 <li>Artifice and Backtrack cost 0 instead of 1 DP.</li>
                 <li>

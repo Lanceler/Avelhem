@@ -457,14 +457,6 @@ const InfoPopUp = (props) => {
                   BP.
                 </li>
                 <li className="unitInfo-text-desc">
-                  The skill repertoire size is reduced from 60 to 40 cards.
-                </li>
-                <li className="unitInfo-text-desc">
-                  The Avelhem repertoire size is reduced from 20 to 16 cards and
-                  includes 4 copies each of{" "}
-                  <strong>Fire, Land, Mana, and Metal</strong> Avelhems.
-                </li>
-                <li className="unitInfo-text-desc">
                   The DP costs of Artifice and Backtrack are reduced from 1 to
                   0.
                 </li>

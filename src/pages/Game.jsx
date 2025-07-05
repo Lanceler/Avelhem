@@ -77,7 +77,7 @@ export default function Game() {
     );
     updateDemo(null);
     updateDemoCount(0);
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     setIsLoading(true);

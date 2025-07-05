@@ -37,6 +37,7 @@ const TacticResults3 = (props) => {
       resolution: "Misc.",
       resolution2: "Tactic Results",
       reroll: true,
+      player: self,
     });
 
     dispatch(updateState(newGameState));

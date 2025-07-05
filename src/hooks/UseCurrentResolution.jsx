@@ -977,7 +977,7 @@ const UseCurrentResolution = (props) => {
         case "Tactic Results":
           return (
             <>
-              {!props.hideModal && (
+              {self === lastRes.player && !props.hideModal && (
                 <TacticResults
                   updateFirebase={props.updateFirebase}
                   hideOrRevealModale={props.hideOrRevealModale}

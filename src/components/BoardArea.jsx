@@ -927,13 +927,16 @@ const BoardArea = (props) => {
                     {magnifiedSkill && <ZoomCard cardInfo={magnifiedSkill} />}
                   </>
 
-                  {whoseTurnGlow() === "self" && (
-                    <div className={`board-space-your-glow`}></div>
-                  )}
-
-                  {whoseTurnGlow() === "enemy" && (
-                    <div className={`board-space-enemy-glow`}></div>
-                  )}
+                  <>
+                    {(() => {
+                      const turn = whoseTurnGlow();
+                      if (turn === "self")
+                        return <div className="board-space-your-glow"></div>;
+                      if (turn === "enemy")
+                        return <div className="board-space-enemy-glow"></div>;
+                      return null;
+                    })()}
+                  </>
                 </>
               )}
             </div>

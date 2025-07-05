@@ -78,6 +78,7 @@ const DefiancePhaseSelection = (props) => {
           resolution: "Misc.",
           resolution2: "Tactic Results",
           reroll: true,
+          player: self,
         });
         break;
 

@@ -86,6 +86,7 @@ const CoordinationPhaseSelection = (props) => {
         newGameState.currentResolution.push({
           resolution: "Misc.",
           resolution2: "Tactic Results",
+          player: self,
         });
 
         dispatch(updateState(newGameState));
