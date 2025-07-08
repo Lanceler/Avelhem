@@ -943,11 +943,13 @@ const DemoTextBox = () => {
           case 26:
             return (
               <div>
-                This phase offers 2 options.{" "}
                 <span className="goldText">
-                  Assent tends to be the go-to choice despite the tactics
-                  provided being random.
-                </span>
+                  By design, the Initiator will often pick Assent and roll 2
+                  dice to gain random tactics.
+                </span>{" "}
+                In desperate situations, they may opt to pick Battle Cry, which
+                guarantees an Assault tactic at the cost of 3 skill cards and
+                the second tactic.
               </div>
             );
 

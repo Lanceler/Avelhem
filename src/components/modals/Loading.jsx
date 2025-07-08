@@ -5,8 +5,7 @@ const Loading = () => {
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <h2 style={{ textAlign: "center" }}>Loading...</h2>
-        {/* Test */}
+        <h2 style={{ textAlign: "center" }}>Connecting...</h2>
       </div>
     </div>
   );

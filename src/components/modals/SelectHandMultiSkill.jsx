@@ -150,12 +150,14 @@ const SelectHandMultiSkill = (props) => {
           resolution2: "Message To Player",
           player: enemy,
           title: "Defiance: Artifice",
-          message: `Your opponent has returned ${selectedCards.length} skills to their repertoire and drawn the same number.`,
+          message: `Your opponent placed ${selectedCards.length} skill${
+            selectedCards.length > 1 ? "s" : ""
+          } at the bottom of their repertoire and drew the same number.`,
           specMessage: `${
             self === "host" ? "Gold" : "Silver"
-          } Sovereign has returned ${
-            selectedCards.length
-          } skills to their repertoire and drawn the same number.`,
+          } Sovereign placed ${selectedCards.length} skill${
+            selectedCards.length > 1 ? "s" : ""
+          } at the bottom of their repertoire and drew the same number.`,
         });
         break;
 

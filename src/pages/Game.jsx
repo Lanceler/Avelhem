@@ -35,14 +35,13 @@ export default function Game() {
   const { user } = useAuthContext();
   const navigate = useNavigate();
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [gameError, setGameError] = useState(null);
   const [gameId, setGameId] = useState(null);
   const [gameData, setGameData] = useState(null);
   const [userRole, setUserRole] = useState("");
   const [playerStatus, setPlayerStatus] = useState("");
   const [banner, setBanner] = useState({ title: "", buttonText: "" });
-  const [bannerImg, setBannerImg] = useState("Challenge");
 
   const [infoPopUp, setInfoPopUp] = useState(null);
   const [infoClosed, setInfoClosed] = useState(false);
@@ -102,7 +101,7 @@ export default function Game() {
         } else {
           const GameDoc = snapshot.docs[0];
           setGameId(GameDoc.data().id);
-          setIsLoading(false);
+          // setIsLoading(false);
         }
       })
       .catch((err) => {
@@ -112,7 +111,7 @@ export default function Game() {
   }, [queryGame, navigate]);
 
   useEffect(() => {
-    setIsLoading(true);
+    // setIsLoading(true);
     let unsubscribe;
 
     if (gameId) {
@@ -123,34 +122,33 @@ export default function Game() {
           setGameData(docSnapshot.data());
         } else {
           console.log("Game does not exist");
+          setIsLoading(false);
         }
       });
     }
-
-    setIsLoading(false);
 
     return () => unsubscribe?.();
   }, [gameId]);
 
   useEffect(() => {
-    if (gameData && user.uid === gameData.hostId) {
-      setUserRole("host");
-    } else if (gameData && user.uid === gameData.guestId) {
-      setUserRole("guest");
-    } else {
-      setUserRole("spectator");
-    }
+    setUserRole("spectator");
 
-    if (gameData && gameData.teaTrial && !infoClosed) {
-      setInfoPopUp("tea");
-      setInfoClosed(true);
-      setBannerImg("Tea");
+    if (gameData) {
+      if (user.uid === gameData.hostId) {
+        setUserRole("host");
+      } else if (user.uid === gameData.guestId) {
+        setUserRole("guest");
+      }
+
+      if (gameData.teaTrial && !infoClosed) {
+        setInfoPopUp("tea");
+        setInfoClosed(true);
+      }
+      setIsLoading(false);
     }
   }, [gameData, user.uid]);
 
   const handleJoinGame = async () => {
-    setIsLoading(true);
-
     try {
       const gameDoc = doc(db, "gameInfo", gameId);
       await updateDoc(gameDoc, {
@@ -316,7 +314,7 @@ export default function Game() {
           key="BoardArea"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.15 }}
+          transition={{ duration: 1.15 }}
         >
           <BoardArea
             gameState={gameData ? gameData.gameState : null}
@@ -363,16 +361,7 @@ export default function Game() {
           </>
         )}
       </div>
-
-      {/* {playerStatus === "pick repertoire" && (
-        <SelectRepertoire
-          onSelectRepertoire={onSelectRepertoire}
-          expansion={gameData ? gameData.expansion : null}
-        />
-      )} */}
-
       {isLoading && <Loading />}
-
       {infoPopUp && (
         <InfoPopUp info={infoPopUp} setInfoPopUp={setInfoPopUp} mobile={true} />
       )}

@@ -17,8 +17,6 @@
     position: relative;
     display: flex;
     user-select: none;
-    animation: turnFadeIn 1.25s linear;
-
     overflow: hidden;
     height: 100%;
     max-width: 100vw;
@@ -44,6 +42,8 @@
     overflow: hidden;  
     background: linear-gradient(to bottom, rgba(85, 84, 84, 0.65), rgba(116, 116, 116, 0.7) 35%, rgba(230, 223, 223, 0.55) 100%);
     box-shadow: 4px 4px 8px 4px rgba(0, 0, 0, 0.5);
+
+    animation: turnFadeIn 1.25s linear;
 }
 
 
@@ -252,12 +252,23 @@
     display: flex;
     position: relative;
     background-color: rgba(0, 0, 0, 0.43);
-    width: 335px;
+    width: 300px;
     height: 155px;
     padding: 1px;
     border-radius: 10px;
     border: 2.5px solid goldenrod;
     box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.5);
+
+    gap: 10px;
+    padding: 5px;
+
+}
+
+.tacticSovereignWrapper{
+    width: fit-content;
+    height: fit-content;
+    border-radius: 8px;
+
 }
 
 .tacticSovereignContainer-info {
@@ -277,7 +288,7 @@
 }
 
 .tacticSovereignBG {
-    margin: 0 5px 0 5px;
+    // margin: 0 5px 0 5px;
     width: fit-content;
     height: fit-content;
     border: goldenrod 3px solid;
@@ -343,13 +354,17 @@
 .diceFlash {
     animation: diceWhiteFlash 1.25s;
     transition: background 1.25s ease;
-    
 }
 
 @keyframes diceWhiteFlash {
     0% {
-        // filter: brightness(5)
+        filter: brightness(5);
         background: white;
+    }
+
+    100% {
+        filter: brightness(1);
+        background: rgba(255, 255, 255, 0);
     }
 }
 
@@ -526,37 +541,3 @@
 }
 
 
-
-// @media screen and (max-width: 926px) and (orientation: landscape) {
-//     .board-physical {
-//         transform: scale(0.4);
-//         max-width: 100vw;
-//         max-height: 100vh;
-//     }
-//     .board-space {
-//         flex-shrink: 0;
-//         transform: translateY(-20%);
-//     }
-//     .board-contents {
-//         min-height: 165vh;
-//     }
-// }
-
-
-// @media screen and (max-width: 754px) and (orientation: landscape) {
-//     .board-physical {
-//         transform: scale(0.35);
-//     }
-// }
-
-// @media screen and (max-height: 400px) and (orientation: landscape) {
-//     .board-physical {
-//         transform: scale(0.325);
-//     }
-// }
-
-// @media screen and (max-height: 330px) and (orientation: landscape) {
-//     .board-physical {
-//         transform: scale(0.30);
-//     }
-// }

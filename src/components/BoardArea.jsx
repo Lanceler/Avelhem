@@ -749,26 +749,33 @@ const BoardArea = (props) => {
         {localGameState.tactics.map((tactic, index) => (
           <div className={`tacticSovereignDice}`} key={index}>
             <div
-              className={` tacticSovereignBG ${
-                tactic.stock < 1 || localGameState.turnPlayer === enemy
-                  ? "disabledtacticSovereignBG"
-                  : ""
-              } ${canClick("Tactic", index) ? "demoClick" : ""}
-              ${[die1Flash, die2Flash][index] ? "diceFlash" : ""}
-              `}
-              onClick={() => {
-                handleClick(tactic.face, index);
-                handleUpdateDemoGuide();
-              }}
+              className={`tacticSovereignWrapper ${
+                [die1Flash, die2Flash][index] ? "diceFlash" : ""
+              }`}
             >
               <div
-                key={index}
-                className="tacticSovereign"
-                style={{
-                  backgroundImage: `url(${getTacticImage(tactic.face)})`,
+                className={` tacticSovereignBG ${
+                  tactic.stock < 1 || localGameState.turnPlayer === enemy
+                    ? "disabledtacticSovereignBG"
+                    : ""
+                } ${canClick("Tactic", index) ? "demoClick" : ""}
+              
+              `}
+                onClick={() => {
+                  handleClick(tactic.face, index);
+                  handleUpdateDemoGuide();
                 }}
-              ></div>
+              >
+                <div
+                  key={index}
+                  className="tacticSovereign"
+                  style={{
+                    backgroundImage: `url(${getTacticImage(tactic.face)})`,
+                  }}
+                ></div>
+              </div>
             </div>
+
             <h2 className="tacticSovereignLabel">
               {tactic.face} ({tactic.stock})
             </h2>
@@ -780,12 +787,9 @@ const BoardArea = (props) => {
 
   return (
     <div className="board-body">
-      {zones && localGameState && (
-        // <div className="board-contents">
-
-        // </div>
-        <div className="board-physical">
-          <div className="board-space-wrapper">
+      <div className="board-physical">
+        <div className="board-space-wrapper">
+          {zones && localGameState && (
             <div className="board-space">
               {props.playerStatus === "pick repertoire" && (
                 <SelectRepertoire
@@ -1051,9 +1055,9 @@ const BoardArea = (props) => {
                 </>
               )}
             </div>
-          </div>
+          )}
         </div>
-      )}
+      </div>
 
       {openContingencySettings && (
         <ContingencySettings
