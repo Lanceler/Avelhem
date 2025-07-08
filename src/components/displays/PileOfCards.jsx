@@ -23,12 +23,15 @@ const PileOfCards = (props) => {
 
   const [showPile, setShowPile] = useState(null);
 
-  let team = props.team;
+  const [team, setTeam] = useState(props.team);
+
+  useEffect(() => {
+    setTeam(props.team);
+  }, [props.team]);
+
   let pile = props.pile;
 
-  // let stack = [...localGameState[team][pile]];
   const [stack, setStack] = useState([...localGameState[team][pile]]);
-
   const cardBack = pile[0] === "a" ? "AvelhemCardBack" : "SkillCardBack";
 
   useEffect(() => {
@@ -57,7 +60,7 @@ const PileOfCards = (props) => {
       default:
         break;
     }
-  }, [localGameState]);
+  }, [localGameState, team]);
 
   const isFloating = (i) => {
     return i >= stack.length - floatingCards;
