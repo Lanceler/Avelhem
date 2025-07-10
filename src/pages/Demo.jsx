@@ -47,7 +47,7 @@ export default function Demo() {
     dispatch(
       updatecontingencySettings({
         Activation: true,
-        Ascension: true,
+        Ascension: false,
         Elimination: true,
         Motion: true,
         Survival: true,

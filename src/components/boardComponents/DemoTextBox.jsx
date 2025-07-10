@@ -1363,8 +1363,8 @@ const DemoTextBox = () => {
           case 75:
             return (
               <div>
-                On the other hand, some abilities do not require tactics.
-                Amplify Aura is one such example.
+                Conversely, some abilities like Amplify Aura do not require
+                tactics.
                 <br /> <br />
                 Activate Amplify Aura.
               </div>

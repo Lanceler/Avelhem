@@ -77,7 +77,7 @@ export const useDemoGameStates = () => {
           activatingSkill: [],
           turnPlayer: null,
           turnPhase: null,
-          skipAscensionTrigger: true,
+          skipAscensionTrigger: ["SC-02"],
         };
 
       case "learn-overview":
@@ -198,7 +198,7 @@ export const useDemoGameStates = () => {
           activatingUnit: [],
           turnPhase: null,
           currentResolution: [],
-          skipAscensionTrigger: true,
+          skipAscensionTrigger: ["SC-02", "SC-03"],
         };
 
       case "classes":

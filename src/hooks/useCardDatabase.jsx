@@ -254,16 +254,15 @@ export const useCardDatabase = () => {
     "01-02", // Conflagration
     "01-02", // Conflagration
     "01-02", // Conflagration
-    "01-03", // Conflagration
-    "01-03", // Conflagration
-    "01-03", // Conflagration
+    "01-03", // Blaze of Glory
+    "01-03", // Blaze of Glory
+    "01-03", // Blaze of Glory
     "02-01", // Purification
     "02-01", // Purification
     "02-01", // Purification
     "02-02", // Frigid Breath
     "02-02", // Frigid Breath
     "02-02", // Frigid Breath
-    "02-03", // Healing Rain
     "02-03", // Healing Rain
     "02-03", // Healing Rain
     "03-01", // Aerial Impetus
@@ -275,6 +274,9 @@ export const useCardDatabase = () => {
     "04-01", // Crystallization
     "04-01", // Crystallization
     "04-01", // Crystallization
+    "04-02", // Upheaval
+    "04-02", // Upheaval
+    "04-02", // Upheaval
     "04-03", // Pitfall Trap
     "04-03", // Pitfall Trap
     "04-03", // Pitfall Trap
@@ -294,10 +296,8 @@ export const useCardDatabase = () => {
     "SB-01", // Transmute
     "SB-03", // Providence
     "SB-03", // Providence
-    "SC-02", // Fated Rivalry
-    "SC-02", // Fated Rivalry
-    "SC-04", // Vengeful Legacy
-    "SC-04", // Vengeful Legacy
+    "SC-03", // Match Made in Heaven
+    "SC-03", // Match Made in Heaven
   ];
 
   const starterAvelhemRepertoire = [

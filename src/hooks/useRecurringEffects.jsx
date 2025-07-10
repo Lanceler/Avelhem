@@ -3857,7 +3857,7 @@ export const useRecurringEffects = () => {
   };
 
   const triggerAscensionAlly = (newGameState, unit, scionClass, method) => {
-    if (newGameState.skipAscensionTrigger) {
+    if (newGameState.skipAscensionTrigger?.includes("SC-03")) {
       return false;
     }
 
@@ -3865,9 +3865,10 @@ export const useRecurringEffects = () => {
   };
 
   const triggerAscensionEnemy = (newGameState, unit, scionClass, method) => {
-    if (newGameState.skipAscensionTrigger) {
+    if (newGameState.skipAscensionTrigger?.includes("SC-02")) {
       return false;
     }
+
     return triggerFatedRivalry(newGameState, unit, scionClass, method);
   };
 

@@ -19,7 +19,6 @@ import { updateDemo } from "../redux/demoGuide";
 import { updateDemoCount } from "../redux/demoCount";
 import { updatecontingencySettings } from "../redux/contingencySettings";
 
-import SelectRepertoire from "../components/modals/SelectRepertoire";
 import Loading from "../components/modals/Loading";
 import BoardArea from "../components/BoardArea";
 
@@ -134,7 +133,9 @@ export default function Game() {
     setUserRole("spectator");
 
     if (gameData) {
-      if (user.uid === gameData.hostId) {
+      if (!user) {
+        setUserRole("spectator");
+      } else if (user.uid === gameData.hostId) {
         setUserRole("host");
       } else if (user.uid === gameData.guestId) {
         setUserRole("guest");
@@ -146,7 +147,7 @@ export default function Game() {
       }
       setIsLoading(false);
     }
-  }, [gameData, user.uid]);
+  }, [gameData, user?.uid]);
 
   const handleJoinGame = async () => {
     try {

@@ -64,7 +64,8 @@ function App() {
 
                 <Route
                   path="/game"
-                  element={user ? <Game /> : <Navigate to="/login" />}
+                  // element={user ? <Game /> : <Navigate to="/login" />}
+                  element={<Game />}
                 />
 
                 <Route path="/rules" element={<Rules />} />
