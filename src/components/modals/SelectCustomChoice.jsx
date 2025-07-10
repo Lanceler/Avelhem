@@ -203,7 +203,7 @@ const SelectCustomChoice = (props) => {
       canFirstChoice = true;
       canSecondChoice = canRaptorBlitzBlast(unit);
       ChoiceFirstMessage = "Purge the Aether of a foe within 2 spaces.";
-      ChoiceSecondMessage = "Blast an adjacent foe that lacks Aether.";
+      ChoiceSecondMessage = "Blast an adjacent foe that has no Aether.";
 
       break;
 
