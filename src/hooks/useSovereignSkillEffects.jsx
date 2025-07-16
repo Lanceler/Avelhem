@@ -663,6 +663,8 @@ export const useSovereignSkillEffects = () => {
     // end "Match Made in Heaven2"
     newGameState.currentResolution.pop();
 
+    //Allow it to work even if hand it empty at the moment,
+    //as them being adjacent would draw the skill needed
     if (newGameState[self].skillHand.length > 0 || isAdjacent(unit1, unit2)) {
       newGameState.currentResolution.push({
         resolution: "Sovereign Contingent Skill",

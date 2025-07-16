@@ -860,7 +860,7 @@ const UseCurrentResolution = (props) => {
           );
 
         case "Moving Unit":
-          if (self === localGameState.turnPlayer && props.tileMode !== "move") {
+          if (self === lastRes.mover && props.tileMode !== "move") {
             props.setTileMode("move");
             props.setValidZones(lastRes.zoneIds);
             props.setMovingUnit(lastRes.unit);
@@ -1537,7 +1537,32 @@ const UseCurrentResolution = (props) => {
 
         case "Activating Second Wind":
           if (self === lastRes.unit.player) {
-            props.updateLocalState(applyAbility("secondWind1"));
+            props.updateLocalState(applyAbility("secondWind1", lastRes.unit));
+          }
+          break;
+
+        case "Second Wind1":
+          return (
+            <>
+              {self === lastRes.player && !props.hideModal && (
+                <FloatSkill
+                  details={lastRes.details}
+                  updateFirebase={props.updateFirebase}
+                  hideOrRevealModale={props.hideOrRevealModale}
+                />
+              )}
+            </>
+          );
+
+        case "Second Wind Select Ally":
+          if (self === lastRes.player) {
+            props.updateLocalState(applyAbility("secondWind2", lastRes.allies));
+          }
+          break;
+
+        case "Second Wind Prompt":
+          if (self === lastRes.unit.player) {
+            selectAndMoveUnit(lastRes.unit);
           }
           break;
 

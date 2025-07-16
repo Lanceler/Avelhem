@@ -89,6 +89,15 @@ const FloatSkill = (props) => {
         });
         break;
 
+      case "Second Wind":
+        newGameState.currentResolution.push({
+          resolution: "Unit Talent",
+          resolution2: "Second Wind Select Ally",
+          player: self,
+          allies: props.details.allies,
+        });
+        break;
+
       case "Fortify":
         newGameState.currentResolution.push({
           resolution: "Unit Ability",

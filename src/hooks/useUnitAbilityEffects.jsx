@@ -10,10 +10,10 @@ export const useUnitAbilityEffects = () => {
 
   const {
     animationDelay,
-
     canMove,
     canStrike,
     enterSelectUnitMode,
+    getZonesAerialImpetusAlly,
     getZonesWithAllies,
     getZonesWithEnemies,
     isMuted,
@@ -302,38 +302,50 @@ export const useUnitAbilityEffects = () => {
     return newGameState;
   };
 
-  const secondWind1 = () => {
+  const secondWind1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
+    // Unit is dead; do not update info
+    // let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
     //end "Activating Second Wind" resolution
     newGameState.currentResolution.pop();
 
-    if (
-      !["03-01", "03-02", "03-03", "03-04"].some((s) =>
-        newGameState[self].skillVestige.includes(s)
-      )
-    ) {
+    const allies = getZonesAerialImpetusAlly(unitInfo);
+
+    if (allies.length > 0) {
       newGameState.currentResolution.push({
-        resolution: "Misc.",
-        resolution2: "Message To Player",
+        resolution: "Unit Talent",
+        resolution2: "Second Wind1",
         player: self,
-        title: "Second Wind",
-        message: "You do not have any Wind skills to recover.",
-      });
-    } else {
-      newGameState.currentResolution.push({
-        resolution: "Recover Skill",
-        player: self,
-        canSkip: true,
+        unit: null,
         details: {
           title: "Second Wind",
-          reason: "Second Wind",
+          message:
+            "You may float 1 Wind skill to prompt an adjacent ally to traverse.",
           restriction: ["03-01", "03-02", "03-03", "03-04"],
-          message: "You may recover then float 1 Wind skill.",
-          outcome: "Float",
+          reason: "Second Wind",
+          allies: allies,
         },
       });
     }
+
+    return newGameState;
+  };
+
+  const secondWind2 = (allies) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    //end "Second Wind Select Ally" resolution
+    newGameState.currentResolution.pop();
+
+    enterSelectUnitMode(
+      allies,
+      null,
+      newGameState,
+      null,
+      "second wind prompt",
+      null
+    );
 
     return newGameState;
   };
@@ -890,7 +902,9 @@ export const useUnitAbilityEffects = () => {
       case "reapTheWhirlwind1":
         return reapTheWhirlwind1(unit);
       case "secondWind1":
-        return secondWind1();
+        return secondWind1(unit);
+      case "secondWind2":
+        return secondWind2(unit);
 
       //Land
       case "saltTheEarth1":

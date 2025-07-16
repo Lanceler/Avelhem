@@ -299,7 +299,8 @@ const UnitInfo = (props) => {
           <>
             <p className="unitInfo-text-heading2">1. Second Wind</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Upon elimination, you may recover then float 1 Wind skill.
+              ⬩Upon elimination, you may float 1 Wind skill to prompt an
+              adjacent ally to traverse.
             </p>
 
             <p className="unitInfo-text-heading2">2. Aeromancy</p>

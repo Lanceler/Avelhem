@@ -209,11 +209,18 @@ const Board = (props) => {
         if (isAdjacent(unit, galeConjurationEnemy)) {
           galeConjurationEnemy.aether = 0;
         }
-
         break;
 
       case "gale conjuration restore":
         newGameState = aetherRestoreSpecial(newGameState, selectedUnit);
+        break;
+
+      case "second wind prompt":
+        newGameState.currentResolution.push({
+          resolution: "Unit Talent",
+          resolution2: "Second Wind Prompt",
+          unit: selectedUnit,
+        });
         break;
 
       case "symphonic screech":

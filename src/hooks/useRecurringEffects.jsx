@@ -2666,6 +2666,7 @@ export const useRecurringEffects = () => {
       unit: unit,
       tactic: tactic,
       canCancel: canCancel,
+      mover: self,
     });
 
     return newGameState;
