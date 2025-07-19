@@ -65,6 +65,7 @@ const UseCurrentResolution = (props) => {
     decrementStatus,
     drawSkill,
     endDefiancePhase2,
+    eliminateUnit2,
     enterMoveMode,
     getVacant2SpaceZones,
     getVacantAdjacentZones,
@@ -101,6 +102,7 @@ const UseCurrentResolution = (props) => {
     foreshadow2,
     foreshadow3,
     darkHalo1,
+
     transmute1,
     transmuteR1,
     ambidexterity1,
@@ -845,6 +847,12 @@ const UseCurrentResolution = (props) => {
 
     case "Misc.":
       switch (lastRes.resolution2) {
+        case "Unit Removal":
+          if (self === lastRes.player) {
+            props.resolutionUpdate(eliminateUnit2(lastRes.unit));
+          }
+          break;
+
         case "End Execution Phase Confirm":
         case "Assault - Avelhem Draw":
           return (

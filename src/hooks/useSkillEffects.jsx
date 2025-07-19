@@ -702,7 +702,7 @@ export const useSkillEffects = () => {
       resolution2: "Message To Player",
       player: enemy,
       title: "Symphonic Screech",
-      message: "The effects of your unit’s skill have been negated!",
+      message: "The effect of your unit’s skill has been negated!",
     });
 
     return newGameState;

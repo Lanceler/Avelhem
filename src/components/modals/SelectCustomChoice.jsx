@@ -191,8 +191,7 @@ const SelectCustomChoice = (props) => {
       canSkip = true;
       canFirstChoice = true;
       canSecondChoice =
-        props.details.unitClone.blossom >= 2 &&
-        newGameState[self].skillVestige.includes("08-02");
+        unit.blossom >= 2 && newGameState[self].skillVestige.includes("08-02");
 
       ChoiceFirstMessage = "Draw 1 skill";
       ChoiceSecondMessage =

@@ -24,7 +24,7 @@ export const Piece = (props) => {
   const dispatch = useDispatch();
 
   const { getElementImage } = useGetImages();
-  const { isMuted, isRooted } = useRecurringEffects();
+  const { isRooted } = useRecurringEffects();
 
   const unit = props.unit;
 
@@ -292,7 +292,11 @@ export const Piece = (props) => {
   return (
     <div className="piece-body">
       {unit && (
-        <>
+        <div
+          className={`${
+            unit.hp < 1 && !unit.enhancements.score ? "eliminated-piece" : ""
+          }`}
+        >
           {pieceBase()}
           {attribute()}
           {bottomAttributeContainer()}
@@ -330,7 +334,7 @@ export const Piece = (props) => {
               <img src={AmbidexterityIcon} className="ambidexterity" />
             </>
           )}
-        </>
+        </div>
       )}
     </div>
   );

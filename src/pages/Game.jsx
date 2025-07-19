@@ -330,6 +330,7 @@ export default function Game() {
       </AnimatePresence>
 
       <div className="board-data">
+        {gameError && <>Something went wrong...</>}
         {gameData?.gameState && (
           <>
             Initiator:{" "}

@@ -1209,7 +1209,7 @@ export const useRecurringEffects = () => {
       victim.afflictions.burn > 0 ||
       (!isMuted(victim) &&
         ["Fire Scion", "Water Scion", "Lightning Scion"].includes(
-          unit.unitClass
+          victim.unitClass
         ));
 
     //Victim enhanced with ward negates affliction
@@ -2334,7 +2334,7 @@ export const useRecurringEffects = () => {
 
     let victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
 
-    let newZoneInfo = JSON.parse(newGameState.zones);
+    // let newZoneInfo = JSON.parse(newGameState.zones);
 
     // Grant Defiance Points
     newGameState[victim.player].defiancePoints = Math.min(
@@ -2350,10 +2350,10 @@ export const useRecurringEffects = () => {
     );
 
     //remove eliminated unit
-    newGameState[victim.player].units[victim.unitIndex] = null;
-    newZoneInfo[victim.row][victim.column].player = null;
-    newZoneInfo[victim.row][victim.column].unitIndex = null;
-    newGameState.zones = JSON.stringify(newZoneInfo);
+    // newGameState[victim.player].units[victim.unitIndex] = null;
+    // newZoneInfo[victim.row][victim.column].player = null;
+    // newZoneInfo[victim.row][victim.column].unitIndex = null;
+    // newGameState.zones = JSON.stringify(newZoneInfo);
 
     // "If the attack was lethal" subsequent effects
     // switch (special) {
@@ -2373,6 +2373,14 @@ export const useRecurringEffects = () => {
         zone: victim.row * 5 + victim.column,
       });
     }
+
+    //Remove from board
+    newGameState.currentResolution.push({
+      resolution: "Misc.",
+      resolution2: "Unit Removal",
+      unit: victim,
+      player: newGameState.turnPlayer,
+    });
 
     //elimination contingency
     const pushEliminationResolution = (resolution2, player, unit) => {
@@ -2420,7 +2428,7 @@ export const useRecurringEffects = () => {
     if (!isMuted(victim)) {
       switch (victim.unitClass) {
         case "Wind Scion":
-          newGameState.activatingUnit.push(null);
+          newGameState.activatingUnit.push(victim);
           newGameState.activatingSkill.push("SecondWind");
 
           newGameState.currentResolution.push({
@@ -2443,7 +2451,7 @@ export const useRecurringEffects = () => {
           break;
 
         case "Mana Scion":
-          newGameState.activatingUnit.push(null);
+          newGameState.activatingUnit.push(victim);
           newGameState.activatingSkill.push("AmbianceAssimilation");
 
           newGameState.currentResolution.push({
@@ -2469,7 +2477,7 @@ export const useRecurringEffects = () => {
           break;
 
         case "Plant Scion":
-          newGameState.activatingUnit.push(null);
+          newGameState.activatingUnit.push(victim);
           newGameState.activatingSkill.push("Everblooming");
 
           newGameState.currentResolution.push({
@@ -2485,7 +2493,7 @@ export const useRecurringEffects = () => {
             details: {
               title: "Everblooming",
               reason: "Everblooming",
-              unitClone: victim, // Fungal Scion can trigger this talent, which will affect unit
+              // unitClone: victim, // Fungal Scion can trigger this talent, which will affect unit
             },
           });
 
@@ -2496,6 +2504,21 @@ export const useRecurringEffects = () => {
           break;
       }
     }
+
+    return newGameState;
+  };
+
+  const eliminateUnit2 = (unit) => {
+    const newGameState = JSON.parse(JSON.stringify(localGameState));
+    let newZoneInfo = JSON.parse(newGameState.zones);
+
+    //End "Unit Removal" resolution
+    newGameState.currentResolution.pop();
+
+    newGameState[unit.player].units[unit.unitIndex] = null;
+    newZoneInfo[unit.row][unit.column].player = null;
+    newZoneInfo[unit.row][unit.column].unitIndex = null;
+    newGameState.zones = JSON.stringify(newZoneInfo);
 
     return newGameState;
   };
@@ -3711,7 +3734,7 @@ export const useRecurringEffects = () => {
       const zone = zones[Math.floor(z / 5)][z % 5];
       const unit = newGameState[zone.player].units[zone.unitIndex];
 
-      if (unit.unitClass === "Wind Scion" && !isMuted(unit)) {
+      if (unit.unitClass === "Wind Scion" && !isMuted(unit) && unit.hp > 0) {
         zonesWithWindScions.push(z);
       }
     }
@@ -4054,10 +4077,11 @@ export const useRecurringEffects = () => {
       const enemyZones = getZonesWithEnemies(unit, 2);
       for (let z of enemyZones) {
         const unitIndex = zones[Math.floor(z / 5)][z % 5].unitIndex;
-
+        const enemyUnit = localGameState[enemy].units[unitIndex];
         if (
-          localGameState[enemy].units[unitIndex].unitClass === "Wind Scion" &&
-          !isMuted(localGameState[enemy].units[unitIndex])
+          enemyUnit.unitClass === "Wind Scion" &&
+          !isMuted(enemyUnit) &&
+          enemyUnit.hp > 0
         ) {
           return true;
         }
@@ -4436,6 +4460,7 @@ export const useRecurringEffects = () => {
     decrementStatus,
     drawAvelhem,
     drawSkill,
+    eliminateUnit2,
     endDefiancePhase,
     endDefiancePhase2,
     endExecutionPhase,

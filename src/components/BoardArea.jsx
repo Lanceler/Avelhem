@@ -828,7 +828,7 @@ const BoardArea = (props) => {
                   </AnimatePresence>
 
                   <>
-                    {props.demo && (
+                    {props.demo && whoseTurnGlow() !== "self" && (
                       <button
                         className={`redButton demo-switch-button ${
                           canClick("Switch Player Button") ? "demoClick" : ""
