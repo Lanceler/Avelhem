@@ -2780,9 +2780,7 @@ export const useRecurringEffects = () => {
     let twoSpaceZones = getZonesInRange(unit.row, unit.column, 2, false);
 
     twoSpaceZones = twoSpaceZones.filter(
-      (z) =>
-        !zones[Math.floor(z / 5)][z % 5].player &&
-        !getZonesInRange(unit.row, unit.column, 1, false).includes(z)
+      (z) => !zones[Math.floor(z / 5)][z % 5].player
     );
 
     return twoSpaceZones;

@@ -198,7 +198,7 @@ export const Piece = (props) => {
         break;
       case "Wind Scion":
         attr = "cyclone";
-        limit = 2;
+        limit = 3;
         break;
       case "Land Scion":
         attr = "aftershock";

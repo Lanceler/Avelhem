@@ -124,33 +124,10 @@ export const useUnitAbilityEffects = () => {
 
     //Wind Scions gain Cyclone when activating skill
     unit.cyclone
-      ? (unit.cyclone = Math.min(2, unit.cyclone + 1))
+      ? (unit.cyclone = Math.min(3, unit.cyclone + 1))
       : (unit.cyclone = 1);
 
     newGameState = animationDelay(newGameState, unit.player, 1750);
-
-    return newGameState;
-  };
-
-  const airDash1 = (unitInfo) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    //end "Activating Air Dash"
-    newGameState.currentResolution.pop();
-
-    //give unit activationCounter
-    unit.temporary.activation
-      ? (unit.temporary.activation += 1)
-      : (unit.temporary.activation = 1);
-
-    unit.temporary.usedFirstAbility = true;
-
-    newGameState.currentResolution.push({
-      resolution: "Unit Ability",
-      resolution2: "Air Dash1",
-      unit: unit,
-    });
 
     return newGameState;
   };
@@ -167,10 +144,13 @@ export const useUnitAbilityEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    unit.temporary.usedSecondAbility = true;
+    unit.temporary.usedFirstAbility = true;
 
-    //spend Cyclone
-    unit.cyclone -= 2;
+    newGameState.currentResolution.push({
+      resolution: "Unit Ability",
+      resolution2: "Reap the Whirlwind2",
+      unit: unit,
+    });
 
     newGameState.currentResolution.push({
       resolution: "Unit Ability",
@@ -178,17 +158,48 @@ export const useUnitAbilityEffects = () => {
       unit: unit,
     });
 
-    newGameState.currentResolution.push({
-      resolution: "Unit Ability",
-      resolution2: "Reap the Whirlwind Float",
-      unit: unit,
-      details: {
-        title: "Reap the Whirlwind",
-        reason: "Reap the Whirlwind",
-        restriction: ["03-01", "03-02", "03-03", "03-04"],
-        message: "Float 1 Wind skill.",
-      },
-    });
+    return newGameState;
+  };
+
+  const reapTheWhirlwind2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Reap the Whirlwind2"
+    newGameState.currentResolution.pop();
+
+    if (unit.cyclone > 1) {
+      newGameState.currentResolution.push({
+        resolution: "Unit Ability",
+        resolution2: "Reap the Whirlwind3",
+        unit: unit,
+        details: {
+          title: "Reap the Whirlwind",
+          reason: "Reap the Whirlwind",
+        },
+      });
+    }
+
+    return newGameState;
+  };
+
+  const reapTheWhirlwind3 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Reap the Whirlwind4"
+    newGameState.currentResolution.pop();
+
+    unit.aether = 0;
+
+    enterSelectUnitMode(
+      getZonesWithEnemies(unit, 1),
+      unit,
+      newGameState,
+      null,
+      "aether-blast",
+      null
+    );
 
     return newGameState;
   };
@@ -780,10 +791,12 @@ export const useUnitAbilityEffects = () => {
       //Wind
       case "aeromancy1":
         return aeromancy1(unit);
-      case "airDash1":
-        return airDash1(unit);
       case "reapTheWhirlwind1":
         return reapTheWhirlwind1(unit);
+      case "reapTheWhirlwind2":
+        return reapTheWhirlwind2(unit);
+      case "reapTheWhirlwind3":
+        return reapTheWhirlwind3(unit);
       case "secondWind1":
         return secondWind1(unit);
       case "secondWind2":

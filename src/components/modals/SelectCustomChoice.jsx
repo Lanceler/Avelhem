@@ -25,6 +25,7 @@ const SelectCustomChoice = (props) => {
 
   const {
     aetherRestoreSpecial,
+    canBlast,
     canDeploy,
     canMove,
     canRaptorBlitzBlast,
@@ -40,6 +41,7 @@ const SelectCustomChoice = (props) => {
     getZonesWithAllies,
     getZonesWithEnemies,
     getZonesWithEnemiesAfflicted,
+    isDisrupted,
   } = useRecurringEffects();
 
   let newGameState = JSON.parse(JSON.stringify(localGameState));
@@ -111,6 +113,14 @@ const SelectCustomChoice = (props) => {
       ChoiceFirstMessage =
         "Spend 1 skill to prompt an adjacent ally to traverse.";
       ChoiceSecondMessage = "Purge an adjacent foe’s Aether and Shield.";
+      break;
+
+    case "Reap the Whirlwind":
+      canSkip = true;
+      canFirstChoice = true;
+      canSecondChoice = unit.aether && canBlast(unit) && !isDisrupted(unit, 1);
+      ChoiceFirstMessage = "Spend 2 Cyclones to restore your Aether.";
+      ChoiceSecondMessage = "Spend 2 Cyclones to Aether-blast an adjacent foe.";
       break;
 
     case "Geomancy":
@@ -400,6 +410,20 @@ const SelectCustomChoice = (props) => {
             "aerial impetus purge",
             null
           );
+        }
+        break;
+
+      case "Reap the Whirlwind":
+        unit.cyclone -= 2;
+
+        if (selectedChoice === 1) {
+          unit.aether = 1;
+        } else {
+          newGameState.currentResolution.push({
+            resolution: "Unit Ability",
+            resolution2: "Reap the Whirlwind4",
+            unit: unit,
+          });
         }
         break;
 

@@ -100,7 +100,7 @@ const SelectUnitAbility = (props) => {
     case "Wind Scion":
       abilityDetails = [
         {
-          optionName: "Air Dash",
+          optionName: "Reap the Whirlwind",
           abilityQualifier: (
             <>
               <div className="abilityQualifier">
@@ -112,18 +112,10 @@ const SelectUnitAbility = (props) => {
           ),
           optionText: (
             <>
-              <div>⬩Move to a zone 2 spaces away.</div>
-            </>
-          ),
-        },
-        {
-          optionName: "Reap the Whirlwind",
-          abilityQualifier: "",
-          optionText: (
-            <>
+              <div>⬩Move to a zone within 2 spaces.</div>
               <div>
-                ⬩Float 1 Wind skill and spend 2 Cyclones to blast an adjacent
-                foe.
+                ⬩You may spend 2 Cyclones to restore your Aether or Aether-blast
+                an adjacent foe.
               </div>
             </>
           ),
@@ -339,8 +331,6 @@ const SelectUnitAbility = (props) => {
       case "Water Scion":
         switch (i) {
           case 0:
-            return getZonesWithAllies(unit, 1, false).length > 0;
-          case 1:
             return getZonesWithEnemies(unit, 1).length > 0;
         }
 
@@ -348,14 +338,6 @@ const SelectUnitAbility = (props) => {
         switch (i) {
           case 0:
             return getVacant2SpaceZones(unit).length > 0;
-          case 1:
-            return (
-              unit.cyclone > 1 &&
-              ["03-01", "03-02", "03-03", "03-04"].some((s) =>
-                newGameState[unit.player].skillHand.includes(s)
-              ) &&
-              getZonesWithEnemies(unit, 1).length > 0
-            );
         }
 
       case "Land Scion":
@@ -492,33 +474,16 @@ const SelectUnitAbility = (props) => {
             resolution2: "Ability - select tactic",
             unit: unit,
             details: {
-              title: "Air Dash",
+              title: "Reap the Whirlwind",
               message: "Use 3 instances of 1 mobilize tactic.",
               restriction: ["Mobilize"],
               stock: 3,
-              reason: "Air Dash",
+              reason: "Reap the Whirlwind",
               canSkip: "Return",
             },
           });
-        } else if (selectedChoice === 1) {
-          updateData = true;
-          newGameState.activatingSkill.push("ReapTheWhirlwind");
-          newGameState.activatingUnit.push(unit);
-
-          newGameState.currentResolution.push({
-            resolution: "Tactic End",
-            unit: unit,
-            effect: true,
-          });
-
-          newGameState.currentResolution.push({
-            resolution: "Unit Ability",
-            resolution2: "Activating Reap the Whirlwind",
-            unit: unit,
-          });
-
-          newGameState = animationDelay(newGameState, self);
         }
+
         break;
 
       case "Land Scion":

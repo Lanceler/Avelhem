@@ -150,9 +150,9 @@ const SelectTacticViaEffect = (props) => {
         newGameState = animationDelay(newGameState, self);
         break;
 
-      case "Air Dash":
+      case "Reap the Whirlwind":
         updateData = true;
-        newGameState.activatingSkill.push("AirDash");
+        newGameState.activatingSkill.push("ReapTheWhirlwind");
         newGameState.activatingUnit.push(unit);
 
         newGameState.currentResolution.push({
@@ -163,7 +163,7 @@ const SelectTacticViaEffect = (props) => {
 
         newGameState.currentResolution.push({
           resolution: "Unit Ability",
-          resolution2: "Activating Air Dash",
+          resolution2: "Activating Reap the Whirlwind",
           unit: unit,
         });
 

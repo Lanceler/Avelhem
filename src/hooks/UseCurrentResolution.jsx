@@ -1166,13 +1166,15 @@ const UseCurrentResolution = (props) => {
             </>
           );
 
-        case "Activating Air Dash":
+        case "Activating Reap the Whirlwind":
           if (self === lastRes.unit.player) {
-            props.updateLocalState(applyAbility("airDash1", lastRes.unit));
+            props.updateLocalState(
+              applyAbility("reapTheWhirlwind1", lastRes.unit)
+            );
           }
           break;
 
-        case "Air Dash1":
+        case "Reap the Whirlwind1":
           if (self === lastRes.unit.player) {
             props.updateLocalState(
               enterMoveMode(
@@ -1187,20 +1189,20 @@ const UseCurrentResolution = (props) => {
           }
           break;
 
-        case "Activating Reap the Whirlwind":
+        case "Reap the Whirlwind2":
           if (self === lastRes.unit.player) {
             props.updateLocalState(
-              applyAbility("reapTheWhirlwind1", lastRes.unit)
+              applyAbility("reapTheWhirlwind2", lastRes.unit)
             );
           }
           break;
 
-        case "Reap the Whirlwind Float":
+        case "Reap the Whirlwind3":
           return (
             <>
               {self === lastRes.unit.player && !props.hideModal && (
-                <FloatSkill
-                  unSkippable={true}
+                <SelectCustomChoice
+                  unit={lastRes.unit}
                   details={lastRes.details}
                   updateFirebase={props.updateFirebase}
                   hideOrRevealModale={props.hideOrRevealModale}
@@ -1209,9 +1211,11 @@ const UseCurrentResolution = (props) => {
             </>
           );
 
-        case "Reap the Whirlwind1":
+        case "Reap the Whirlwind4":
           if (self === lastRes.unit.player) {
-            selectEnemies(lastRes.unit, 1, null, "blast", null);
+            props.updateLocalState(
+              applyAbility("reapTheWhirlwind3", lastRes.unit)
+            );
           }
           break;
 

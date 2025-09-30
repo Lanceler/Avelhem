@@ -77,20 +77,19 @@ const UnitInfo = (props) => {
         return (
           <>
             <p className="unitInfo-text-heading2">
-              1. Air Dash{" "}
+              Reap the Whirlwind{" "}
               <span className="unitInfo-tactic-group">
                 <img src={MobilizeSmall} className="unitInfo-tactic-mobilize" />
                 <img src={MobilizeSmall} className="unitInfo-tactic-mobilize" />
                 <img src={MobilizeSmall} className="unitInfo-tactic-mobilize" />
               </span>
             </p>
-            <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Move to a zone 2 spaces away.
-            </p>
-
-            <p className="unitInfo-text-heading2">2. Reap the Whirlwind</p>
             <p className="unitInfo-text-desc">
-              ⬩Float 1 Wind skill and spend 2 Cyclones to blast an adjacent foe.
+              ⬩Move to a zone within 2 spaces.
+            </p>
+            <p className="unitInfo-text-desc unitInfo-text-last">
+              ⬩You may spend 2 Cyclones to restore your Aether or Aether-blast
+              an adjacent foe.
             </p>
           </>
         );
@@ -287,7 +286,7 @@ const UnitInfo = (props) => {
 
             <p className="unitInfo-text-heading2">2. Aeromancy</p>
             <p className="unitInfo-text-desc">
-              ⬩When you activate a skill, gain 1 Cyclone; you can have up to 2
+              ⬩When you activate a skill, gain 1 Cyclone; you can have up to 3
               Cyclones.
             </p>
             <p className="unitInfo-text-desc unitInfo-text-last">
@@ -464,7 +463,7 @@ const UnitInfo = (props) => {
             <div className="unitInfo-Abilities">
               <p className="unitInfo-text-heading1">
                 <u>
-                  <strong>Abilities</strong>
+                  <strong>Ability</strong>
                 </u>
               </p>
               <div className="unitInfo-scroll scrollable">{abilities()}</div>

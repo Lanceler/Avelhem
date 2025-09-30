@@ -96,7 +96,6 @@ import ClearAsCrystal from "../assets/abilities/ClearAsCrystal.jpg";
 import ClearAsCrystal2 from "../assets/abilities/ClearAsCrystal2.jpg";
 import Kleptothermy from "../assets/abilities/Kleptothermy.jpg";
 import Aeromancy from "../assets/abilities/Aeromancy.jpg";
-import AirDash from "../assets/abilities/AirDash.jpg";
 import ReapTheWhirlwind from "../assets/abilities/ReapTheWhirlwind.jpg";
 import SecondWind from "../assets/abilities/SecondWind.jpg";
 import Fortify from "../assets/abilities/Fortify.jpg";
@@ -262,7 +261,6 @@ export const useGetImages = () => {
     ClearAsCrystal2,
     Kleptothermy,
     Aeromancy,
-    AirDash,
     ReapTheWhirlwind,
     SecondWind,
     Fortify,
@@ -463,8 +461,6 @@ export const useGetImages = () => {
         return CataclysmicTempest;
       case "Aeromancy":
         return Aeromancy;
-      case "AirDash":
-        return AirDash;
       case "ReapTheWhirlwind":
         return ReapTheWhirlwind;
       case "SecondWind":
