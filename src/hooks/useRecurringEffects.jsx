@@ -2774,32 +2774,6 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
-  const freeze2 = (newGameState, attacker, victim, special) => {
-    newGameState.currentResolution.push({
-      resolution: "Apply Frost",
-      attacker: attacker,
-      victim: victim,
-      special: special,
-      type: "freeze2",
-      duration: 2,
-    });
-
-    //to do in the future: consider bypass Target
-    if (triggerTarget(attacker, victim, "freeze2")) {
-      newGameState.currentResolution.push({
-        resolution: "Triggering Contingent Skill",
-        resolution2: "Triggering Target",
-        attacker: attacker,
-        victim: victim,
-        type: "freeze2",
-      });
-
-      newGameState.activatingTarget.push(victim);
-    }
-
-    return newGameState;
-  };
-
   const getVacant2SpaceZones = (unit) => {
     const zones = JSON.parse(localGameState.zones);
 
@@ -4470,7 +4444,7 @@ export const useRecurringEffects = () => {
     floatAvelhem,
     floatSkill,
     freeze1,
-    freeze2,
+
     getVacant2SpaceZones,
     getVacantAdjacentZones,
     getVacantFrontier,

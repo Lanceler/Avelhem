@@ -46,16 +46,13 @@ const UnitInfo = (props) => {
         return (
           <>
             <p className="unitInfo-text-heading2">
-              1. Afterburner{" "}
+              Afterburner{" "}
               <span className="unitInfo-tactic-group">
                 <img src={InvokeSmall} className="unitInfo-tactic-icon" />
               </span>
             </p>
-            <p className="unitInfo-text-desc unitInfo-text-last">⬩Strike.</p>
-
-            <p className="unitInfo-text-heading2">2. Fiery Heart</p>
-            <p className="unitInfo-text-desc">
-              ⬩Spend 1 skill to purge an adjacent ally’s Frost and Burn.
+            <p className="unitInfo-text-desc unitInfo-text-last">
+              ⬩Spend 1 skill to strike.
             </p>
           </>
         );
@@ -64,29 +61,14 @@ const UnitInfo = (props) => {
         return (
           <>
             <p className="unitInfo-text-heading2">
-              1. Hydrotherapy{" "}
+              Cold Embrace{" "}
               <span className="unitInfo-tactic-group">
                 <img src={AdvanceSmall} className="unitInfo-tactic-icon" />
-                <img src={InvokeSmall} className="unitInfo-tactic-icon" />
-              </span>
-            </p>
-            <p className="unitInfo-text-desc">
-              ⬩Purge an adjacent ally’s turn-based afflictions (except
-              Anathema).
-            </p>
-            <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩You may float 1 skill to search for 1 “Healing Rain”.
-            </p>
-
-            <p className="unitInfo-text-heading2">
-              2. Cold Embrace{" "}
-              <span className="unitInfo-tactic-group">
                 <img src={AssaultSmall} className="unitInfo-tactic-icon" />
-                <img src={InvokeSmall} className="unitInfo-tactic-icon" />
               </span>
             </p>
             <p className="unitInfo-text-desc">
-              ⬩Strike a frozen foe or freeze an adjacent foe for 2 turns.
+              ⬩Strike a frozen foe or freeze an adjacent foe.
             </p>
           </>
         );

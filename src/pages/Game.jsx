@@ -191,7 +191,18 @@ export default function Game() {
         buttonText: "Return to homepage",
       });
     } else if (gameData) {
-      if (userRole === "host") {
+      if (!user) {
+        setPlayerStatus("login");
+        setBanner({
+          title: (
+            <>
+              INVITED BY: <br />
+              {gameData.hostName}
+            </>
+          ),
+          buttonText: <>Log in to play</>,
+        });
+      } else if (userRole === "host") {
         if (!gameData.guestId) {
           setPlayerStatus("waiting");
           setBanner({
@@ -268,6 +279,8 @@ export default function Game() {
         return handleCopyUrl();
       case "join":
         return handleJoinGame();
+      case "login":
+        return navigate("/login");
       case "error":
         return navigate("/");
       default:

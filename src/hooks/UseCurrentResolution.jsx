@@ -1146,44 +1146,6 @@ const UseCurrentResolution = (props) => {
           }
           break;
 
-        case "Activating Fiery Heart":
-          if (self === lastRes.unit.player) {
-            props.updateLocalState(applyAbility("fieryHeart1", lastRes.unit));
-          }
-          break;
-
-        case "Fiery Heart1":
-          if (self === lastRes.unit.player) {
-            props.updateLocalState(applyAbility("fieryHeart2", lastRes.unit));
-          }
-          break;
-
-        case "Activating Hydrotherapy":
-          if (self === lastRes.unit.player) {
-            props.updateLocalState(applyAbility("hydrotherapy1", lastRes.unit));
-          }
-          break;
-
-        case "Hydrotherapy1":
-          if (self === lastRes.unit.player) {
-            props.updateLocalState(applyAbility("hydrotherapy2", lastRes.unit));
-          }
-          break;
-
-        case "Hydrotherapy2":
-          return (
-            <>
-              {self === lastRes.unit.player && !props.hideModal && (
-                <FloatSkill
-                  unit={lastRes.unit}
-                  details={lastRes.details}
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
-
         case "Activating Cold Embrace":
           if (self === lastRes.unit.player) {
             props.updateLocalState(applyAbility("coldEmbrace1", lastRes.unit));

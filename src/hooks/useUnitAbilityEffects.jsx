@@ -90,115 +90,6 @@ export const useUnitAbilityEffects = () => {
     return newGameState;
   };
 
-  const fieryHeart1 = (unitInfo) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    //end "Activating Fiery Heart"
-    newGameState.currentResolution.pop();
-
-    //give unit activationCounter
-    unit.temporary.activation
-      ? (unit.temporary.activation += 1)
-      : (unit.temporary.activation = 1);
-
-    unit.temporary.usedSecondAbility = true;
-
-    newGameState.currentResolution.push({
-      resolution: "Unit Ability",
-      resolution2: "Fiery Heart1",
-      unit: unit,
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Discard Skill",
-      unit: unit,
-      player: unit.player,
-      canSkip: false,
-      details: {
-        title: "Fiery Heart",
-        message: "Spend 1 skill to purge an adjacent ally’s Frost and Burn.",
-        restriction: null,
-        reason: "Fiery Heart",
-      },
-    });
-
-    return newGameState;
-  };
-
-  const fieryHeart2 = (unitInfo) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    //end "Fiery Heart1"
-    newGameState.currentResolution.pop();
-
-    enterSelectUnitMode(
-      getZonesWithAllies(unit, 1, false),
-      unit,
-      newGameState,
-      null,
-      "fiery heart",
-      null
-    );
-
-    return newGameState;
-  };
-
-  const hydrotherapy1 = (unitInfo) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    //end "Activating Hydrotherapy"
-    newGameState.currentResolution.pop();
-
-    //give unit activationCounter
-    unit.temporary.activation
-      ? (unit.temporary.activation += 1)
-      : (unit.temporary.activation = 1);
-
-    newGameState.currentResolution.push({
-      resolution: "Unit Ability",
-      resolution2: "Hydrotherapy1",
-      unit: unit,
-    });
-
-    enterSelectUnitMode(
-      getZonesWithAllies(unit, 1, false),
-      unit,
-      newGameState,
-      null,
-      "hydrotherapy",
-      null
-    );
-
-    return newGameState;
-  };
-
-  const hydrotherapy2 = (unitInfo) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    //end "Hydrotherapy1"
-    newGameState.currentResolution.pop();
-
-    if (newGameState[unit.player].skillHand.length > 0) {
-      newGameState.currentResolution.push({
-        resolution: "Unit Ability",
-        resolution2: "Hydrotherapy2",
-        unit: unit,
-        details: {
-          reason: "Hydrotherapy2",
-          restriction: null,
-          title: "Hydrotherapy",
-          message: "You may float 1 skill to search for 1 “Healing Rain”.",
-        },
-      });
-    }
-
-    return newGameState;
-  };
-
   const coldEmbrace1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
@@ -881,16 +772,8 @@ export const useUnitAbilityEffects = () => {
         return afterburner1(unit);
       case "afterburner2":
         return afterburner2(unit);
-      case "fieryHeart1":
-        return fieryHeart1(unit);
-      case "fieryHeart2":
-        return fieryHeart2(unit);
 
       //Water
-      case "hydrotherapy1":
-        return hydrotherapy1(unit);
-      case "hydrotherapy2":
-        return hydrotherapy2(unit);
       case "coldEmbrace1":
         return coldEmbrace1(unit);
 

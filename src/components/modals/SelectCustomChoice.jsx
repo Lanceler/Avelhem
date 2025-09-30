@@ -100,7 +100,7 @@ const SelectCustomChoice = (props) => {
         canStrike(unit);
       canSecondChoice = getZonesWithEnemies(unit, 1).length > 0;
       ChoiceFirstMessage = "Strike a frozen foe.";
-      ChoiceSecondMessage = "Freeze an adjacent foe for 2 turns.";
+      ChoiceSecondMessage = "Freeze an adjacent foe.";
       break;
 
     case "Aerial Impetus":
@@ -364,7 +364,7 @@ const SelectCustomChoice = (props) => {
             unit,
             newGameState,
             null,
-            "freeze2",
+            "freeze1",
             null
           );
         }

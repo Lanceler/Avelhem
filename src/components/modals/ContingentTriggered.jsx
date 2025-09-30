@@ -218,10 +218,6 @@ const ContingentTriggered = (props) => {
           targetType = "freeze (1 turn)";
           break;
 
-        case "freeze2":
-          targetType = "freeze (2 turns)";
-          break;
-
         case "ignite":
           targetType = "ignite";
           break;

@@ -88,11 +88,9 @@ import PlantScion from "../assets/scionIcons/PlantScion.png";
 import AvianScion from "../assets/scionIcons/AvianScion.png";
 
 import Afterburner from "../assets/abilities/Afterburner.jpg";
-import FieryHeart from "../assets/abilities/FieryHeart.jpg";
 import EternalEmber from "../assets/abilities/EternalEmber.jpg";
 import EternalEmber2 from "../assets/abilities/EternalEmber2.jpg";
 import FromTheAshes from "../assets/abilities/FromTheAshes.jpg";
-import Hydrotherapy from "../assets/abilities/Hydrotherapy.jpg";
 import ColdEmbrace from "../assets/abilities/ColdEmbrace.jpg";
 import ClearAsCrystal from "../assets/abilities/ClearAsCrystal.jpg";
 import ClearAsCrystal2 from "../assets/abilities/ClearAsCrystal2.jpg";
@@ -256,11 +254,9 @@ export const useGetImages = () => {
     PlantScion,
     AvianScion,
     Afterburner,
-    FieryHeart,
     EternalEmber,
     EternalEmber2,
     FromTheAshes,
-    Hydrotherapy,
     ColdEmbrace,
     ClearAsCrystal,
     ClearAsCrystal2,
@@ -425,8 +421,6 @@ export const useGetImages = () => {
         return Resplendence;
       case "Afterburner":
         return Afterburner;
-      case "FieryHeart":
-        return FieryHeart;
       case "EternalEmber":
         return EternalEmber;
       case "EternalEmber2":
@@ -446,8 +440,6 @@ export const useGetImages = () => {
         return HealingRain;
       case "02-04":
         return GlacialTorrent;
-      case "Hydrotherapy":
-        return Hydrotherapy;
       case "ColdEmbrace":
         return ColdEmbrace;
       case "ClearAsCrystal":

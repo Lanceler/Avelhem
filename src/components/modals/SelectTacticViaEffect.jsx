@@ -130,26 +130,6 @@ const SelectTacticViaEffect = (props) => {
 
         break;
 
-      case "Hydrotherapy":
-        updateData = true;
-        newGameState.activatingSkill.push("Hydrotherapy");
-        newGameState.activatingUnit.push(unit);
-
-        newGameState.currentResolution.push({
-          resolution: "Tactic End",
-          unit: unit,
-          effect: true,
-        });
-
-        newGameState.currentResolution.push({
-          resolution: "Unit Ability",
-          resolution2: "Activating Hydrotherapy",
-          unit: unit,
-        });
-
-        newGameState = animationDelay(newGameState, self);
-        break;
-
       case "Cold Embrace":
         updateData = true;
         newGameState.activatingSkill.push("ColdEmbrace");

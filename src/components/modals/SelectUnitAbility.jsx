@@ -40,8 +40,7 @@ const SelectUnitAbility = (props) => {
   let updateLocal = true;
   let updateData = false;
 
-  let message =
-    "Units can activate each of their abilities no more than once per turn.";
+  let message = "Units can activate their ability up to once per turn.";
 
   let abilityDetails = [];
   switch (unit.unitClass) {
@@ -60,73 +59,38 @@ const SelectUnitAbility = (props) => {
             </>
           ),
         },
-        {
-          optionName: "Fiery Heart",
-          abilityQualifier: <div className="abilityQualifier"></div>,
-          optionText: (
-            <>
-              <div>
-                ⬩Spend 1 skill to purge an adjacent ally’s Frost and Burn.
-              </div>
-            </>
-          ),
-        },
       ];
       break;
 
     case "Water Scion":
       message =
-        "Clear as Crystal: You can activate your abilities more than once per turn.";
+        "Clear as Crystal: You can activate your ability more than once per turn.";
       switch (unit.torrent) {
         case 2:
           message =
             message +
-            " (Torrent: The next 2 abilities you activate do not require tactics.";
+            " (Torrent: Your ability’s next 2 activations do not require tactics.";
           break;
         case 1:
           message =
             message +
-            " (Torrent: The next ability you activate does not require a tactic.";
+            " (Torrent: Your ability’s next activation does not require a tactic.";
           break;
       }
 
       abilityDetails = [
         {
-          optionName: "Hydrotherapy",
+          optionName: "Cold Embrace",
           abilityQualifier: (
             <div className="abilityQualifier">
               <img src={AdvanceSmall} style={{ height: 35 }} />
               {"\u00A0\u00A0or\u00A0\u00A0"}
-              <img src={InvokeSmall} style={{ height: 35 }} />
-            </div>
-          ),
-          optionText: (
-            <>
-              <div>
-                ⬩Purge an adjacent ally’s afflictions (except Root and
-                Anathema).
-              </div>
-              <div>⬩You may float 1 skill to search for 1 “Healing Rain”.</div>
-              <div>
-                <br />
-              </div>
-            </>
-          ),
-        },
-        {
-          optionName: "Cold Embrace",
-          abilityQualifier: (
-            <div className="abilityQualifier">
               <img src={AssaultSmall} style={{ height: 35 }} />
-              {"\u00A0\u00A0or\u00A0\u00A0"}
-              <img src={InvokeSmall} style={{ height: 35 }} />
             </div>
           ),
           optionText: (
             <>
-              <div>
-                ⬩Strike a frozen foe or freeze an adjacent foe for 2 turns.
-              </div>
+              <div>⬩Strike a frozen foe or freeze an adjacent foe.</div>
             </>
           ),
         },
@@ -370,12 +334,6 @@ const SelectUnitAbility = (props) => {
               (newGameState[unit.player].skillHand.length > 0 ||
                 unit.ember >= 2)
             );
-          case 1:
-            return (
-              (newGameState[unit.player].skillHand.length > 0 ||
-                unit.ember >= 2) &&
-              getZonesWithAllies(unit, 1, false).length > 0
-            );
         }
 
       case "Water Scion":
@@ -485,65 +443,11 @@ const SelectUnitAbility = (props) => {
               canSkip: "Return",
             },
           });
-        } else if (selectedChoice === 1) {
-          updateData = true;
-          newGameState.activatingSkill.push("FieryHeart");
-          newGameState.activatingUnit.push(unit);
-
-          newGameState.currentResolution.push({
-            resolution: "Tactic End",
-            unit: unit,
-            effect: true,
-          });
-
-          newGameState.currentResolution.push({
-            resolution: "Unit Ability",
-            resolution2: "Activating Fiery Heart",
-            unit: unit,
-          });
-
-          newGameState = animationDelay(newGameState, self);
-
-          break;
         }
         break;
 
       case "Water Scion":
         if (selectedChoice === 0) {
-          if (unit.torrent > 0) {
-            unit.torrent -= 1;
-            newGameState.activatingSkill.push("Hydrotherapy");
-            newGameState.activatingUnit.push(unit);
-
-            newGameState.currentResolution.push({
-              resolution: "Tactic End",
-              unit: unit,
-              effect: true,
-            });
-
-            newGameState.currentResolution.push({
-              resolution: "Unit Ability",
-              resolution2: "Activating Hydrotherapy",
-              unit: unit,
-            });
-
-            newGameState = animationDelay(newGameState, self);
-          } else {
-            newGameState.currentResolution.push({
-              resolution: "Unit Ability",
-              resolution2: "Ability - select tactic",
-              unit: unit,
-              details: {
-                title: "Hydrotherapy",
-                message: "Use an Advance or Invoke tactic.",
-                restriction: ["Advance", "Invoke"],
-                stock: 1,
-                reason: "Hydrotherapy",
-                canSkip: "Return",
-              },
-            });
-          }
-        } else if (selectedChoice === 1) {
           if (unit.torrent > 0) {
             unit.torrent -= 1;
 
@@ -571,7 +475,7 @@ const SelectUnitAbility = (props) => {
               details: {
                 title: "Cold Embrace",
                 message: "Use an Assault, or Invoke tactic.",
-                restriction: ["Assault", "Invoke"],
+                restriction: ["Advance", "Assault"],
                 stock: 1,
                 reason: "Cold Embrace",
                 canSkip: "Return",
@@ -855,13 +759,13 @@ const SelectUnitAbility = (props) => {
     <div className="modalBackdrop">
       <div className="modalV2">
         <div className="modalHeader2">
-          <div className="modalTitle2">{unit.unitClass} Abilities</div>
+          <div className="modalTitle2">{unit.unitClass} Ability</div>
         </div>
 
         <div className="modalContent2">
           <div className="modalContentText">{message}</div>
 
-          <div className="modalContent2Column">
+          <div className="modalContent1Column">
             {abilityDetails.map((detail, i) => (
               <div
                 key={i}

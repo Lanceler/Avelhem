@@ -33,7 +33,6 @@ const Board = (props) => {
     blast,
     grantRavager,
     freeze1,
-    freeze2,
     ignite,
     isAdjacent,
     paralyze1,
@@ -122,23 +121,6 @@ const Board = (props) => {
         );
         break;
 
-      case "freeze2":
-        newGameState = freeze2(
-          newGameState,
-          newGameState[unit.player].units[unit.unitIndex],
-          selectedUnit,
-          special
-        );
-        break;
-
-      case "fiery heart":
-        let fieryHeartAlly =
-          newGameState[selectedUnit.player].units[selectedUnit.unitIndex];
-
-        delete fieryHeartAlly.afflictions.burn;
-        delete fieryHeartAlly.afflictions.frost;
-        break;
-
       case "purification":
         let purificationAlly =
           newGameState[selectedUnit.player].units[selectedUnit.unitIndex];
@@ -172,15 +154,6 @@ const Board = (props) => {
         newGameState[selectedUnit.player].units[
           selectedUnit.unitIndex
         ].aether = 0;
-        break;
-
-      case "hydrotherapy":
-        let hydrotherapyAlly =
-          newGameState[selectedUnit.player].units[selectedUnit.unitIndex];
-
-        delete hydrotherapyAlly.afflictions.burn;
-        delete hydrotherapyAlly.afflictions.frost;
-        delete hydrotherapyAlly.afflictions.paralysis;
         break;
 
       case "aerial impetus prompt":
