@@ -476,61 +476,6 @@ export const useUnitAbilityEffects = () => {
     return newGameState;
   };
 
-  const particleBeam1 = (unitInfo) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    //end "Activating Particle Beam"
-    newGameState.currentResolution.pop();
-
-    //give unit activationCounter
-    unit.temporary.activation
-      ? (unit.temporary.activation += 1)
-      : (unit.temporary.activation = 1);
-
-    unit.temporary.usedFirstAbility = true;
-
-    newGameState.currentResolution.push({
-      resolution: "Unit Ability",
-      resolution2: "Particle Beam1",
-      unit: unit,
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Discard Skill",
-      unit: unit,
-      player: unit.player,
-      canSkip: false,
-      details: {
-        title: "Particle Beam",
-        message: "Spend 1 skill to blast a foe 2 spaces away.",
-        restriction: null,
-        reason: "Particle Beam",
-      },
-    });
-
-    return newGameState;
-  };
-
-  const particleBeam2 = (unitInfo) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    //end "Particle Beam1"
-    newGameState.currentResolution.pop();
-
-    enterSelectUnitMode(
-      getZonesWithEnemies(unit, 2),
-      unit,
-      newGameState,
-      null,
-      "blast",
-      null
-    );
-
-    return newGameState;
-  };
-
   const auraAmplication1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
@@ -566,50 +511,6 @@ export const useUnitAbilityEffects = () => {
       "amplify aura",
       null
     );
-
-    return newGameState;
-  };
-
-  const brandish1 = (unitInfo) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    //end "Activating Brandish"
-    newGameState.currentResolution.pop();
-
-    //give unit activationCounter
-    unit.temporary.activation
-      ? (unit.temporary.activation += 1)
-      : (unit.temporary.activation = 1);
-
-    unit.temporary.usedFirstAbility = true;
-
-    newGameState.currentResolution.push({
-      resolution: "Unit Ability",
-      resolution2: "Brandish1",
-      unit: unit,
-      details: {
-        title: "Brandish",
-        reason: "Brandish",
-      },
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Search Card",
-      player: self,
-      details: {
-        restriction: ["07-03"],
-        exclusion: [],
-        searchTitle: "Brandish",
-        searchMessage: "Search for 1 Frenzy Blade",
-        outcome: "Add",
-        revealTitle: null,
-        revealMessage: null,
-        messageTitle: null,
-        message: null,
-        specMessage: null,
-      },
-    });
 
     return newGameState;
   };
@@ -821,16 +722,10 @@ export const useUnitAbilityEffects = () => {
         return arcFlash2(unit);
 
       //Mana
-      case "particleBeam1":
-        return particleBeam1(unit);
-      case "particleBeam2":
-        return particleBeam2(unit);
       case "auraAmplication1":
         return auraAmplication1(unit);
 
       //Metal
-      case "brandish1":
-        return brandish1(unit);
       case "ballisticArmor1":
         return ballisticArmor1(unit);
       case "ballisticArmor2":

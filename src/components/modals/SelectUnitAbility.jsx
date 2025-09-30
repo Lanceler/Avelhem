@@ -211,19 +211,6 @@ const SelectUnitAbility = (props) => {
     case "Mana Scion":
       abilityDetails = [
         {
-          optionName: "Particle Beam",
-          abilityQualifier: (
-            <div className="abilityQualifier">
-              <img src={AssaultSmall} style={{ height: 35 }} />
-            </div>
-          ),
-          optionText: (
-            <>
-              <div>⬩Spend 1 skill to blast a foe within 2 spaces.</div>
-            </>
-          ),
-        },
-        {
           optionName: "Amplify Aura",
           abilityQualifier: <div className="abilityQualifier"></div>,
           optionText: (
@@ -240,20 +227,6 @@ const SelectUnitAbility = (props) => {
 
     case "Metal Scion":
       abilityDetails = [
-        {
-          optionName: "Brandish",
-          abilityQualifier: (
-            <div className="abilityQualifier">
-              <img src={InvokeSmall} style={{ height: 35 }} />
-            </div>
-          ),
-          optionText: (
-            <>
-              <div>⬩Search for 1 “Frenzy Blade”.</div>
-              <div>⬩Draw 1 skill or restore your Aether.</div>
-            </>
-          ),
-        },
         {
           optionName: "Ballistic Armor",
           abilityQualifier: <div className="abilityQualifier"></div>,
@@ -358,19 +331,12 @@ const SelectUnitAbility = (props) => {
       case "Mana Scion":
         switch (i) {
           case 0:
-            return (
-              getZonesWithEnemies(unit, 2).length > 0 &&
-              newGameState[unit.player].skillHand.length > 0
-            );
-          case 1:
             return canAmplifyAura(unit);
         }
 
       case "Metal Scion":
         switch (i) {
           case 0:
-            return true;
-          case 1:
             return unit.enhancements.shield > 0 || unit.enhancements.ward > 0;
         }
 
@@ -568,20 +534,6 @@ const SelectUnitAbility = (props) => {
 
       case "Mana Scion":
         if (selectedChoice === 0) {
-          newGameState.currentResolution.push({
-            resolution: "Unit Ability",
-            resolution2: "Ability - select tactic",
-            unit: unit,
-            details: {
-              title: "Particle Beam",
-              message: "Use an Assault tactic.",
-              restriction: ["Assault"],
-              stock: 1,
-              reason: "Particle Beam",
-              canSkip: "Return",
-            },
-          });
-        } else if (selectedChoice === 1) {
           updateData = true;
           newGameState.activatingSkill.push("AmplifyAura");
           newGameState.activatingUnit.push(unit);
@@ -604,20 +556,6 @@ const SelectUnitAbility = (props) => {
 
       case "Metal Scion":
         if (selectedChoice === 0) {
-          newGameState.currentResolution.push({
-            resolution: "Unit Ability",
-            resolution2: "Ability - select tactic",
-            unit: unit,
-            details: {
-              title: "Brandish",
-              message: "Use an Invoke tactic.",
-              restriction: ["Invoke"],
-              stock: 1,
-              reason: "Brandish",
-              canSkip: "Return",
-            },
-          });
-        } else if (selectedChoice === 1) {
           updateData = true;
           newGameState.activatingSkill.push("BallisticArmor");
           newGameState.activatingUnit.push(unit);
@@ -700,7 +638,7 @@ const SelectUnitAbility = (props) => {
       case "Learn-overview":
         switch (demoCount) {
           case 74:
-            return element2 === 1;
+            return element2 === 0;
 
           case 75:
             return element1 === "Select Button";

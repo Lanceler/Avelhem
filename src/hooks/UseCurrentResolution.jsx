@@ -1335,18 +1335,6 @@ const UseCurrentResolution = (props) => {
             </>
           );
 
-        case "Activating Particle Beam":
-          if (self === lastRes.unit.player) {
-            props.updateLocalState(applyAbility("particleBeam1", lastRes.unit));
-          }
-          break;
-
-        case "Particle Beam1":
-          if (self === lastRes.unit.player) {
-            props.updateLocalState(applyAbility("particleBeam2", lastRes.unit));
-          }
-          break;
-
         case "Activating Amplify Aura":
           if (self === lastRes.unit.player) {
             props.updateLocalState(
@@ -1354,26 +1342,6 @@ const UseCurrentResolution = (props) => {
             );
           }
           break;
-
-        case "Activating Brandish":
-          if (self === lastRes.unit.player) {
-            props.updateLocalState(applyAbility("brandish1", lastRes.unit));
-          }
-          break;
-
-        case "Brandish1":
-          return (
-            <>
-              {self === lastRes.unit.player && !props.hideModal && (
-                <SelectCustomChoice
-                  unit={lastRes.unit}
-                  details={lastRes.details}
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
 
         case "Activating Ballistic Armor":
           if (self === lastRes.unit.player) {

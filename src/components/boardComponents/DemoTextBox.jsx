@@ -1350,12 +1350,10 @@ const DemoTextBox = () => {
             return (
               <div>
                 Abilities are special actions available to Scions. Each Scion
-                class 2 exclusive abilities.
+                class 1 exclusive ability.
                 <br /> <br />
-                Some abilities require tactics to activate. For example,
-                Particle Beam uses an Assault tactic, and it allows Mana Scions
-                to attack foes up to 2 spaces away. (Normally, a unit would use
-                Assault to traverse or attack an adjacent foe.)
+                Some abilities require tactics to activate. In such cases, the
+                tactics would appear below the ability’s name.
               </div>
             );
 
@@ -1363,8 +1361,7 @@ const DemoTextBox = () => {
           case 75:
             return (
               <div>
-                Conversely, some abilities like Amplify Aura do not require
-                tactics.
+                Scions can activate their abilities up to once per turn.
                 <br /> <br />
                 Activate Amplify Aura.
               </div>
@@ -1562,8 +1559,8 @@ const DemoTextBox = () => {
             return (
               <div>
                 There are also Sovereign skills, whose facets are represented by
-                a crown rather than a unit’s icon. Like Avelhem cards, these are
-                activated by the Sovereigns directly from their hand.
+                a crown rather than a Scion’s icon. Like Avelhem cards, these
+                are activated by Sovereigns directly from their hand.
               </div>
             );
 

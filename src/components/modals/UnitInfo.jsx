@@ -155,17 +155,7 @@ const UnitInfo = (props) => {
       case "Mana Scion":
         return (
           <>
-            <p className="unitInfo-text-heading2">
-              1. Particle Beam{" "}
-              <span className="unitInfo-tactic-group">
-                <img src={AssaultSmall} className="unitInfo-tactic-icon" />
-              </span>
-            </p>
-            <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Spend 1 skill to blast a foe within 2 spaces.
-            </p>
-
-            <p className="unitInfo-text-heading2">2. Amplify Aura</p>
+            <p className="unitInfo-text-heading2">Amplify Aura</p>
             <p className="unitInfo-text-desc">
               ⬩Convert your or an adjacent ally’s Aether into Shield for 2
               turns.
@@ -176,18 +166,7 @@ const UnitInfo = (props) => {
       case "Metal Scion":
         return (
           <>
-            <p className="unitInfo-text-heading2">
-              1. Brandish{" "}
-              <span className="unitInfo-tactic-group">
-                <img src={InvokeSmall} className="unitInfo-tactic-icon" />
-              </span>
-            </p>
-            <p className="unitInfo-text-desc">⬩Search for 1 “Frenzy Blade”.</p>
-            <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Draw 1 skill or restore your Aether.
-            </p>
-
-            <p className="unitInfo-text-heading2">2. Ballistic Armor</p>
+            <p className="unitInfo-text-heading2">Ballistic Armor</p>
             <p className="unitInfo-text-desc">
               ⬩Spend your Shield or Ward to restore your Aether.
             </p>

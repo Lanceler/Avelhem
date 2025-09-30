@@ -176,13 +176,6 @@ const SelectCustomChoice = (props) => {
       ChoiceSecondMessage = "Blast.";
       break;
 
-    case "Brandish":
-      canFirstChoice = true;
-      canSecondChoice = true;
-      ChoiceFirstMessage = "Draw 1 skill.";
-      ChoiceSecondMessage = "Restore your Aether.";
-      break;
-
     case "Ballistic Armor":
       canFirstChoice = unit.enhancements.shield > 0;
       canSecondChoice = unit.enhancements.ward > 0;
@@ -573,14 +566,6 @@ const SelectCustomChoice = (props) => {
             resolution2: "Arsenal Onslaught1.1",
             unit: unit,
           });
-        }
-        break;
-
-      case "Brandish":
-        if (selectedChoice === 1) {
-          newGameState = drawSkill(newGameState);
-        } else {
-          unit.aether = 1;
         }
         break;
 

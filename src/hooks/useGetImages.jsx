@@ -107,11 +107,9 @@ import Galvanize from "../assets/abilities/Galvanize.jpg";
 import ArcFlash from "../assets/abilities/ArcFlash.jpg";
 import LightningRod from "../assets/abilities/LightningRod.jpg";
 import Defibrillation from "../assets/abilities/Defibrillation.jpg";
-import ParticleBeam from "../assets/abilities/ParticleBeam.jpg";
 import AmbianceAssimilation from "../assets/abilities/AmbianceAssimilation.jpg";
 import Overload from "../assets/abilities/Overload.jpg";
 import AmplifyAura from "../assets/abilities/AmplifyAura.jpg";
-import Brandish from "../assets/abilities/Brandish.jpg";
 import BallisticArmor from "../assets/abilities/BallisticArmor.jpg";
 import Conduction from "../assets/abilities/Conduction.jpg";
 import Flourish from "../assets/abilities/Flourish.jpg";
@@ -272,11 +270,9 @@ export const useGetImages = () => {
     ArcFlash,
     LightningRod,
     Defibrillation,
-    ParticleBeam,
     AmplifyAura,
     AmbianceAssimilation,
     Overload,
-    Brandish,
     Conduction,
     BallisticArmor,
     Flourish,
@@ -522,8 +518,6 @@ export const useGetImages = () => {
         return Aegis;
       case "06-04":
         return DisruptionField;
-      case "ParticleBeam":
-        return ParticleBeam;
       case "AmplifyAura":
         return AmplifyAura;
       case "AmbianceAssimilation":
@@ -543,8 +537,6 @@ export const useGetImages = () => {
         return FrenzyBlade;
       case "07-04":
         return ArsenalOnslaught;
-      case "Brandish":
-        return Brandish;
       case "Conduction":
         return Conduction;
       case "BallisticArmor":

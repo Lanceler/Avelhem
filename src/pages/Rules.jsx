@@ -1962,19 +1962,6 @@ export default function Rules() {
                       Frenzy Blade is a great follow-up for Aether-blasts that
                       were mitigated.
                     </li>
-                    <li>
-                      Their{" "}
-                      <span
-                        className="rule-view-card"
-                        onClick={() => {
-                          dispatch(updateMagnifiedSkill("Brandish"));
-                        }}
-                      >
-                        Brandish
-                      </span>{" "}
-                      ability allows allows them to use an Invoke tactic to
-                      search for this skill.
-                    </li>
                   </ul>
                 </li>
                 <li>
@@ -2039,25 +2026,6 @@ export default function Rules() {
                       This pairs well with the Ballistic Armor ability of Metal
                       Scions and the Aether-restoring effects of various
                       classes.
-                    </li>
-                  </ul>
-                </li>
-
-                <li>
-                  They can use an Assault tactic to activate{" "}
-                  <span
-                    className="rule-view-card"
-                    onClick={() => {
-                      dispatch(updateMagnifiedSkill("ParticleBeam"));
-                    }}
-                  >
-                    Particle Beam
-                  </span>
-                  , which allows them to attack foes within 2 spaces away.
-                  <ul>
-                    <li>
-                      This is especially useful against Land Scions who are
-                      ready to spring their Pitfall Traps.
                     </li>
                   </ul>
                 </li>

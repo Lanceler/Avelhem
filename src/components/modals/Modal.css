@@ -757,18 +757,6 @@
     /* background-color: aquamarine; */
 }
 
-
-
-.modal-option-oneshot {
-    color: #e8e8e8;
-    font-family: 'Merriweather', serif;
-    font-size: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-
 .modal-option-text {
     display: flex;
     flex-direction: column;
