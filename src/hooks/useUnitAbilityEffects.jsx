@@ -259,10 +259,10 @@ export const useUnitAbilityEffects = () => {
     //end "Activating Salt the Earth"
     newGameState.currentResolution.pop();
 
-    //Gain Aftershocks
-    unit.aftershock
-      ? (unit.aftershock = Math.min(unit.aftershock + 1, 2))
-      : (unit.aftershock = 1);
+    //Gain Leylines
+    unit.leyline
+      ? (unit.leyline = Math.min(unit.leyline + 1, 3))
+      : (unit.leyline = 1);
 
     newGameState = animationDelay(newGameState, unit.player, 1750);
 
@@ -276,19 +276,21 @@ export const useUnitAbilityEffects = () => {
     //end "Activating Mountain Stance"
     newGameState.currentResolution.pop();
 
-    //Gain 2 Aftershocks
-    unit.aftershock = 2;
+    //Gain 2 Leylines
+    unit.leyline
+      ? (unit.leyline = Math.min(3, unit.leyline + 2))
+      : (unit.leyline = 2);
 
     newGameState = animationDelay(newGameState, unit.player, 1750);
 
     return newGameState;
   };
 
-  const fortify1 = (unitInfo) => {
+  const convergence1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
-    //end "Activating Fortify"
+    //end "Activating Convergence"
     newGameState.currentResolution.pop();
 
     //give unit activationCounter
@@ -296,58 +298,24 @@ export const useUnitAbilityEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    unit.temporary.usedFirstAbility = true;
+    //Spend Leylines
+    delete unit.leyline;
 
-    //Gain Shield for 2 turns
-    unit.enhancements.shield
-      ? (unit.enhancements.shield = Math.max(2, unit.enhancements.shield))
-      : (unit.enhancements.shield = 2);
+    //Gain Shield
+    unit.enhancements.shield = 2;
 
-    if (canMove(unit) || canStrike(unit)) {
+    if (newGameState[unit.player].skillFloat > 0) {
       newGameState.currentResolution.push({
         resolution: "Unit Ability",
-        resolution2: "Fortify1",
-        unit: unit,
-        details: {
-          reason: "Fortify",
-          restriction: null,
-          title: "Fortify",
-          message: "You may float 1 skill to traverse or strike.",
-        },
-      });
-    }
-
-    return newGameState;
-  };
-
-  const leylineConvergence1 = (unitInfo) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    //end "Activating Leyline Convergence"
-    newGameState.currentResolution.pop();
-
-    //give unit activationCounter
-    unit.temporary.activation
-      ? (unit.temporary.activation += 1)
-      : (unit.temporary.activation = 1);
-
-    unit.temporary.usedSecondAbility = true;
-
-    unit.aether = 1;
-
-    if (canMove(unit)) {
-      newGameState.currentResolution.push({
-        resolution: "Unit Ability",
-        resolution2: "Leyline Convergence1",
+        resolution2: "Convergence1",
         player: self,
         unit: unit,
         details: {
-          reason: "Leyline Convergence",
-          title: "Leyline Convergence",
-          message: "You may traverse.",
+          reason: "Convergence",
+          title: "Convergence",
+          message: "You may draw 1 floating skill.",
           no: "Skip",
-          yes: "Traverse",
+          yes: "Draw",
         },
       });
     }
@@ -708,10 +676,8 @@ export const useUnitAbilityEffects = () => {
         return saltTheEarth1(unit);
       case "mountainStance1":
         return mountainStance1(unit);
-      case "fortify1":
-        return fortify1(unit);
-      case "leylineConvergence1":
-        return leylineConvergence1(unit);
+      case "convergence1":
+        return convergence1(unit);
 
       //Lightning
       case "galvanize1":

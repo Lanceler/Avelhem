@@ -124,41 +124,14 @@ const SelectUnitAbility = (props) => {
       break;
 
     case "Land Scion":
-      if (unit.aftershock === 2) {
-        message = `You may spend 2 Aftershocks to use an Advance tactic to activate your abilities.`;
-      }
-
       abilityDetails = [
         {
-          optionName: "Fortify",
-          abilityQualifier: (
-            <div className="abilityQualifier">
-              <img src={AssaultSmall} style={{ height: 35 }} />{" "}
-            </div>
-          ),
+          optionName: "Convergence",
+          abilityQualifier: <></>,
           optionText: (
             <>
-              <div>⬩Gain Shield for 2 turns.</div>
-              <div>⬩You may float 1 skill to traverse or strike.</div>
-            </>
-          ),
-        },
-        {
-          optionName: "Leyline Convergence",
-          abilityQualifier: (
-            <>
-              <div className="abilityQualifier"></div>
-              <div className="abilityQualifier">
-                <img src={MobilizeSmall} style={{ height: 30 }} />
-                <img src={MobilizeSmall} style={{ height: 30 }} />
-                <img src={MobilizeSmall} style={{ height: 30 }} />
-              </div>
-            </>
-          ),
-          optionText: (
-            <>
-              <div>⬩Restore your Aether.</div>
-              <div>⬩You may traverse.</div>
+              <div>⬩Spend 3 Leylines to gain Shield for 2 turns.</div>
+              <div>⬩You may draw 1 floating skill.</div>
             </>
           ),
         },
@@ -316,8 +289,7 @@ const SelectUnitAbility = (props) => {
       case "Land Scion":
         switch (i) {
           case 0:
-          case 1:
-            return true;
+            return unit.leyline >= 3;
         }
 
       case "Lightning Scion":
@@ -454,50 +426,24 @@ const SelectUnitAbility = (props) => {
 
       case "Land Scion":
         if (selectedChoice === 0) {
-          const fortifyMessage =
-            unit.aftershock === 2
-              ? "Use an Assault or Advance tactic."
-              : "Use an Assault tactic.";
+          newGameState.activatingSkill.push("Convergence");
+          newGameState.activatingUnit.push(unit);
 
-          const fortifyRestriction =
-            unit.aftershock === 2 ? ["Assault", "Advance"] : ["Assault"];
+          newGameState.currentResolution.push({
+            resolution: "Tactic End",
+            unit: unit,
+            effect: true,
+          });
 
           newGameState.currentResolution.push({
             resolution: "Unit Ability",
-            resolution2: "Ability - select tactic",
+            resolution2: "Activating Convergence",
             unit: unit,
-            details: {
-              title: "Fortify",
-              message: fortifyMessage,
-              restriction: fortifyRestriction,
-              stock: 1,
-              reason: "Fortify",
-              canSkip: "Return",
-            },
           });
-        } else if (selectedChoice === 1) {
-          const leylineConvergenceMessage =
-            unit.aftershock === 2
-              ? "Use an Advance tactic or 3 instances of Mobilize."
-              : "Use 3 instances of Mobilize.";
 
-          const leylineConvergenceRestriction =
-            unit.aftershock === 2 ? ["Mobilize", "Advance"] : ["Mobilize"];
-
-          newGameState.currentResolution.push({
-            resolution: "Unit Ability",
-            resolution2: "Ability - select tactic",
-            unit: unit,
-            details: {
-              title: "Leyline Convergence",
-              message: leylineConvergenceMessage,
-              restriction: leylineConvergenceRestriction,
-              stock: 3,
-              reason: "Leyline Convergence",
-              canSkip: "Return",
-            },
-          });
+          newGameState = animationDelay(newGameState, self);
         }
+
         break;
 
       case "Lightning Scion":

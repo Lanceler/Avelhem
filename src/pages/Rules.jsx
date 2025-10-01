@@ -1780,23 +1780,8 @@ export default function Rules() {
                   >
                     Mountain Stance
                   </span>{" "}
-                  talent grants them 2 Aftershocks, which improves the
-                  accessibility of their abilities.
-                </li>
-                <li>
-                  Their{" "}
-                  <span
-                    className="rule-view-card"
-                    onClick={() => {
-                      dispatch(updateMagnifiedSkill("Fortify"));
-                    }}
-                  >
-                    Fortify
-                  </span>{" "}
-                  ability allows allows them to use an Assault (or Advance by
-                  spending Aftershocks) tactic to gain Shield for 2 turns. They
-                  may then float 1 skill to traverse or strike, as a unit
-                  normally would with this tactic.
+                  talent grants them 2 Leylines, which improves the
+                  accessibility of their ability.
                 </li>
                 <li>
                   <span

@@ -225,13 +225,8 @@ const YouMayNoYes = (props) => {
         );
         break;
 
-      case "Leyline Convergence": // "Leyline Convergence1"
-        newGameState = enterMoveMode(
-          getVacantAdjacentZones(unit),
-          unit,
-          newGameState,
-          null
-        );
+      case "Convergence": // "Convergence1"
+        newGameState = drawSkill(newGameState);
         break;
 
       case "Chain Lightning Blast": // "Chain Lightning3"

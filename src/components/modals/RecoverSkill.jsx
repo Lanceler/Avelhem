@@ -61,7 +61,7 @@ const RecoverSkill = (props) => {
 
     if (props.details.outcome === "Add") {
       //add selected skill from vestige to hand
-      newGameState[self].skillHand.push(
+      newGameState[self].skillHand.unshift(
         newGameState[self].skillVestige.splice(
           newGameState[self].skillVestige.length - 1 - selectedSkill,
           1

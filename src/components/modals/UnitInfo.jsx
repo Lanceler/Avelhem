@@ -97,28 +97,12 @@ const UnitInfo = (props) => {
       case "Land Scion":
         return (
           <>
-            <p className="unitInfo-text-heading2">
-              1. Fortify{" "}
-              <span className="unitInfo-tactic-group">
-                <img src={AssaultSmall} className="unitInfo-tactic-icon" />
-              </span>
+            <p className="unitInfo-text-heading2">Convergence</p>
+            <p className="unitInfo-text-desc">
+              ⬩Spend 3 Leylines to gain Shield for 2 turns.
             </p>
-            <p className="unitInfo-text-desc ">⬩Gain Shield for 2 turns.</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩You may float 1 skill to traverse or strike.
-            </p>
-
-            <p className="unitInfo-text-heading2">
-              2. Leyline Convergence{" "}
-              <span className="unitInfo-tactic-group">
-                <img src={MobilizeSmall} className="unitInfo-tactic-mobilize" />
-                <img src={MobilizeSmall} className="unitInfo-tactic-mobilize" />
-                <img src={MobilizeSmall} className="unitInfo-tactic-mobilize" />
-              </span>
-            </p>
-            <p className="unitInfo-text-desc ">⬩Restore your Aether.</p>
-            <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩You may traverse.
+              ⬩You may draw 1 floating skill.
             </p>
           </>
         );
@@ -279,23 +263,16 @@ const UnitInfo = (props) => {
           <>
             <p className="unitInfo-text-heading2">1. Mountain Stance</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Upon ascension, gain 2 Aftershocks; you can have up to 2
-              Aftershocks.
+              ⬩Upon ascension, gain 2 Leylines; you can have up to 3 Leylines.
             </p>
 
             <p className="unitInfo-text-heading2">2. Salt the Earth</p>
             <p className="unitInfo-text-desc">
               ⬩You are immune to Paralysis (due to Land skills) and Root.
             </p>
-            <p className="unitInfo-text-desc">
-              ⬩When you successfully paralyze a foe, gain 1 Aftershock.
-            </p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩When you activate an ability, you may spend 2 Aftershocks to use{" "}
-              <span className="unitInfo-tactic-group2">
-                <img src={AdvanceSmall} className="unitInfo-tactic-icon2" />
-              </span>{" "}
-              in lieu of the required tactic.
+              ⬩When you restore your Aether or successfully paralyze a foe, gain
+              1 Leyline.
             </p>
           </>
         );
@@ -439,13 +416,22 @@ const UnitInfo = (props) => {
 
         <div className="info-modal-contents" style={{ pointerEvents: "all" }}>
           <div className="unitInfo-Abilities-Attributes">
-            <div className="unitInfo-Abilities">
+            {/* <div className="unitInfo-Abilities">
               <p className="unitInfo-text-heading1">
                 <u>
                   <strong>Ability</strong>
                 </u>
               </p>
               <div className="unitInfo-scroll scrollable">{abilities()}</div>
+            </div> */}
+
+            <div className="unitInfo-Talents ">
+              <p className="unitInfo-text-heading1">
+                <u>
+                  <strong>Talents</strong>
+                </u>
+              </p>
+              <div className="unitInfo-scroll ">{talents()}</div>
             </div>
 
             <div className="unitInfo-Attributes-SkillSet">
@@ -482,9 +468,9 @@ const UnitInfo = (props) => {
                         </p>
                       )}
 
-                      {unit.aftershock > 0 && (
+                      {unit.leyline > 0 && (
                         <p className="unitInfo-text-heading2">
-                          Aftershock: {unit.aftershock}
+                          Leyline: {unit.leyline}
                         </p>
                       )}
 
@@ -553,14 +539,23 @@ const UnitInfo = (props) => {
           </div>
 
           <div className="unitInfo-Talents-Statuses">
-            <div className="unitInfo-Talents ">
+            {/* <div className="unitInfo-Talents ">
               <p className="unitInfo-text-heading1">
                 <u>
                   <strong>Talents</strong>
                 </u>
               </p>
               <div className="unitInfo-scroll scrollable">{talents()}</div>
+            </div> */}
+            <div className="unitInfo-Abilities">
+              <p className="unitInfo-text-heading1">
+                <u>
+                  <strong>Ability</strong>
+                </u>
+              </p>
+              <div className="unitInfo-scroll scrollable">{abilities()}</div>
             </div>
+
             <div className="unitInfo-Statuses scrollable">
               {(unit.enhancements.ravager ||
                 unit.enhancements.ward ||

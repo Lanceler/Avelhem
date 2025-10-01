@@ -79,18 +79,6 @@ const FloatSkill = (props) => {
         });
         break;
 
-      case "Fortify":
-        newGameState.currentResolution.push({
-          resolution: "Unit Ability",
-          resolution2: "Fortify2",
-          unit: unit,
-          details: {
-            title: "Fortify",
-            reason: "Fortify",
-          },
-        });
-        break;
-
       case "Ballistic Armor":
         newGameState.currentResolution.push({
           resolution: "Unit Ability",

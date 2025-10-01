@@ -201,8 +201,8 @@ export const Piece = (props) => {
         limit = 3;
         break;
       case "Land Scion":
-        attr = "aftershock";
-        limit = 2;
+        attr = "leyline";
+        limit = 3;
         break;
       case "Lightning Scion":
         attr = "charge";

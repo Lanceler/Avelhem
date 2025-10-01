@@ -170,56 +170,6 @@ const SelectTacticViaEffect = (props) => {
         newGameState = animationDelay(newGameState, self);
         break;
 
-      case "Fortify":
-        if (newGameState.tactics[i].face === "Advance") {
-          delete unit.aftershock;
-        }
-
-        updateData = true;
-        newGameState.activatingSkill.push("Fortify");
-        newGameState.activatingUnit.push(unit);
-
-        newGameState.currentResolution.push({
-          resolution: "Tactic End",
-          unit: unit,
-          effect: true,
-        });
-
-        newGameState.currentResolution.push({
-          resolution: "Unit Ability",
-          resolution2: "Activating Fortify",
-          unit: unit,
-        });
-
-        newGameState = animationDelay(newGameState, self);
-        break;
-
-      case "Leyline Convergence":
-        if (newGameState.tactics[i].face === "Advance") {
-          delete unit.aftershock;
-        }
-
-        updateData = true;
-        newGameState.activatingSkill.push("LeylineConvergence");
-        newGameState.activatingUnit.push(unit);
-
-        //newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
-
-        newGameState.currentResolution.push({
-          resolution: "Tactic End",
-          unit: unit,
-          effect: true,
-        });
-
-        newGameState.currentResolution.push({
-          resolution: "Unit Ability",
-          resolution2: "Activating Leyline Convergence",
-          unit: unit,
-        });
-
-        newGameState = animationDelay(newGameState, self);
-        break;
-
       case "Galvanize":
         updateData = true;
         newGameState.activatingSkill.push("Galvanize");

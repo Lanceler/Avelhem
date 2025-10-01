@@ -63,7 +63,7 @@ const SelectHandMultiAvelhem = (props) => {
         const newAvelhemHand = [];
 
         for (let i of selectedAvelhems) {
-          newAvelhemHand.push(avelhemHand[i]);
+          newAvelhemHand.unshift(avelhemHand[i]);
         }
 
         //4. update vestige and hand

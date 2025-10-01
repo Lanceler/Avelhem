@@ -98,9 +98,8 @@ import Kleptothermy from "../assets/abilities/Kleptothermy.jpg";
 import Aeromancy from "../assets/abilities/Aeromancy.jpg";
 import ReapTheWhirlwind from "../assets/abilities/ReapTheWhirlwind.jpg";
 import SecondWind from "../assets/abilities/SecondWind.jpg";
-import Fortify from "../assets/abilities/Fortify.jpg";
-import LeylineConvergence from "../assets/abilities/LeylineConvergence.jpg";
 import MountainStance from "../assets/abilities/MountainStance.jpg";
+import Convergence from "../assets/abilities/Convergence.jpg";
 import SaltTheEarth from "../assets/abilities/SaltTheEarth.jpg";
 import SaltTheEarth2 from "../assets/abilities/SaltTheEarth2.jpg";
 import Galvanize from "../assets/abilities/Galvanize.jpg";
@@ -261,9 +260,8 @@ export const useGetImages = () => {
     Aeromancy,
     ReapTheWhirlwind,
     SecondWind,
-    Fortify,
-    LeylineConvergence,
     MountainStance,
+    Convergence,
     SaltTheEarth,
     SaltTheEarth2,
     Galvanize,
@@ -474,12 +472,10 @@ export const useGetImages = () => {
         return PitfallTrap;
       case "04-04":
         return Geomancy;
-      case "Fortify":
-        return Fortify;
-      case "LeylineConvergence":
-        return LeylineConvergence;
       case "MountainStance":
         return MountainStance;
+      case "Convergence":
+        return Convergence;
       case "SaltTheEarth":
         return SaltTheEarth;
       case "SaltTheEarth2":

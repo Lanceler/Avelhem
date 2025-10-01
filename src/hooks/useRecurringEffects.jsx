@@ -777,27 +777,47 @@ export const useRecurringEffects = () => {
 
     unit.aether = 1;
 
-    if (unit.unitClass === "Mana Scion" && !isMuted(unit)) {
-      newGameState.activatingUnit.push(unit);
-      newGameState.activatingSkill.push("Overload");
-      newGameState.currentResolution.push({
-        resolution: "Unit Talent",
-        resolution2: "Talent Conclusion",
-        unit: unit,
-      });
+    if (!isMuted(unit)) {
+      switch (unit.unitClass) {
+        case "Land Scion":
+          newGameState.activatingUnit.push(unit);
+          newGameState.activatingSkill.push("SaltTheEarth");
+          newGameState.currentResolution.push({
+            resolution: "Unit Talent",
+            resolution2: "Talent Conclusion",
+            unit: unit,
+          });
 
-      newGameState.currentResolution.push({
-        resolution: "Unit Talent",
-        resolution2: "Activating Overload",
-        unit: unit,
-        details: {
-          reason: "Overload",
-          title: "Overload",
-          message: "You may draw 1 skill.",
-          no: "Skip",
-          yes: "Draw",
-        },
-      });
+          newGameState.currentResolution.push({
+            resolution: "Unit Talent",
+            resolution2: "Activating Salt the Earth",
+            unit: unit,
+          });
+          break;
+
+        case "Mana Scion":
+          newGameState.activatingUnit.push(unit);
+          newGameState.activatingSkill.push("Overload");
+          newGameState.currentResolution.push({
+            resolution: "Unit Talent",
+            resolution2: "Talent Conclusion",
+            unit: unit,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Unit Talent",
+            resolution2: "Activating Overload",
+            unit: unit,
+            details: {
+              reason: "Overload",
+              title: "Overload",
+              message: "You may draw 1 skill.",
+              no: "Skip",
+              yes: "Draw",
+            },
+          });
+          break;
+      }
     }
 
     return newGameState;
@@ -1367,7 +1387,7 @@ export const useRecurringEffects = () => {
         attacker.temporary.pitfallTrapBlast = true;
       }
 
-      if (attacker.unitClass === "Land Scion" && attacker.aftershock !== 2) {
+      if (attacker.unitClass === "Land Scion" && attacker.leyline !== 3) {
         newGameState.activatingUnit.push(attacker);
         newGameState.activatingSkill.push("SaltTheEarth");
         newGameState.currentResolution.push({
@@ -1401,7 +1421,7 @@ export const useRecurringEffects = () => {
       delete unit.ember;
       delete unit.torrent;
       delete unit.cyclone;
-      delete unit.aftershock;
+      delete unit.leyline;
       delete unit.charge;
       delete unit.seal;
       delete unit.sharpness;
@@ -2266,7 +2286,7 @@ export const useRecurringEffects = () => {
     }
 
     //transfer card from deck to hand
-    newGameState[self].avelhemHand.push(
+    newGameState[self].avelhemHand.unshift(
       newGameState[self].avelhemRepertoire.pop()
     );
 
@@ -2296,7 +2316,9 @@ export const useRecurringEffects = () => {
 
   const drawSkill = (newGameState) => {
     //transfer card from deck to hand
-    newGameState[self].skillHand.push(newGameState[self].skillRepertoire.pop());
+    newGameState[self].skillHand.unshift(
+      newGameState[self].skillRepertoire.pop()
+    );
 
     //decrease floating count
 

@@ -132,13 +132,6 @@ const SelectCustomChoice = (props) => {
       ChoiceSecondMessage = "Recover 1 Land skill.";
       break;
 
-    case "Fortify":
-      canFirstChoice = canMove(unit);
-      canSecondChoice = canStrike(unit);
-      ChoiceFirstMessage = "Traverse.";
-      ChoiceSecondMessage = "Strike.";
-      break;
-
     case "Arc Flash3":
       canSkip = true;
       canFirstChoice = canMove(unit);
@@ -435,26 +428,6 @@ const SelectCustomChoice = (props) => {
               outcome: "Add",
             },
           });
-        }
-        break;
-
-      case "Fortify":
-        if (selectedChoice === 1) {
-          newGameState = enterMoveMode(
-            getVacantAdjacentZones(unit),
-            unit,
-            newGameState,
-            null
-          );
-        } else {
-          enterSelectUnitMode(
-            getZonesWithEnemies(unit, 1),
-            unit,
-            newGameState,
-            null,
-            "strike",
-            null
-          );
         }
         break;
 

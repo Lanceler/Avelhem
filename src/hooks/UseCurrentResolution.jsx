@@ -180,7 +180,7 @@ const UseCurrentResolution = (props) => {
       } else if (conclusion === "shatter") {
         newGameState[player].skillShattered.push(skill);
       } else if (conclusion === "retain") {
-        newGameState[player].skillHand.push(skill);
+        newGameState[player].skillHand.unshift(skill);
       }
 
       newGameState.activatingSkill.pop();
@@ -220,18 +220,18 @@ const UseCurrentResolution = (props) => {
         newGameState[player].skillRepertoire.push(skill);
         newGameState[player].skillFloat = newGameState[player].skillFloat + 1;
       } else if (skillConclusion === "retain") {
-        newGameState[player].skillHand.push(skill);
+        newGameState[player].skillHand.unshift(skill);
       }
 
       if (resonator === "SA-03") {
-        newGameState[player].skillHand.push(resonator);
+        newGameState[player].skillHand.unshift(resonator);
       } else if (resonatorConclusion === "discard") {
         newGameState[player].skillVestige.push(resonator);
       } else if (resonatorConclusion === "float") {
         newGameState[player].skillRepertoire.push(resonator);
         newGameState[player].skillFloat = newGameState[player].skillFloat + 1;
       } else if (resonatorConclusion === "retain") {
-        newGameState[player].skillHand.push(resonator);
+        newGameState[player].skillHand.unshift(resonator);
       }
 
       newGameState.activatingSkill.pop();
@@ -1219,61 +1219,11 @@ const UseCurrentResolution = (props) => {
           }
           break;
 
-        case "Activating Fortify":
+        case "Activating Convergence":
           if (self === lastRes.unit.player) {
-            props.updateLocalState(applyAbility("fortify1", lastRes.unit));
+            props.updateLocalState(applyAbility("convergence1", lastRes.unit));
           }
           break;
-
-        case "Fortify1":
-          return (
-            <>
-              {self === lastRes.unit.player && !props.hideModal && (
-                <FloatSkill
-                  unit={lastRes.unit}
-                  details={lastRes.details}
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
-
-        case "Fortify2":
-          return (
-            <>
-              {self === lastRes.unit.player && !props.hideModal && (
-                <SelectCustomChoice
-                  unit={lastRes.unit}
-                  details={lastRes.details}
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
-
-        case "Activating Leyline Convergence":
-          if (self === lastRes.unit.player) {
-            props.updateLocalState(
-              applyAbility("leylineConvergence1", lastRes.unit)
-            );
-          }
-          break;
-
-        case "Leyline Convergence1":
-          return (
-            <>
-              {self === lastRes.unit.player && !props.hideModal && (
-                <YouMayNoYes
-                  unit={lastRes.unit}
-                  details={lastRes.details}
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
 
         case "Activating Galvanize":
           if (self === lastRes.unit.player) {
@@ -1281,6 +1231,7 @@ const UseCurrentResolution = (props) => {
           }
           break;
 
+        case "Convergence1":
         case "Galvanize1":
           return (
             <>
