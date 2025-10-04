@@ -132,12 +132,11 @@ const SelectCustomChoice = (props) => {
       ChoiceSecondMessage = "Recover 1 Land skill.";
       break;
 
-    case "Arc Flash3":
-      canSkip = true;
-      canFirstChoice = canMove(unit);
-      canSecondChoice = canStrike(unit);
-      ChoiceFirstMessage = "Traverse.";
-      ChoiceSecondMessage = "Strike.";
+    case "Galvanize":
+      canFirstChoice = true;
+      canSecondChoice = unit.charge >= 3 && canStrike(unit);
+      ChoiceFirstMessage = "Gain 1 Charge.";
+      ChoiceSecondMessage = "Spend 3 Charges to strike.";
       break;
 
     case "Surge":
@@ -431,22 +430,37 @@ const SelectCustomChoice = (props) => {
         }
         break;
 
-      case "Arc Flash3":
+      case "Galvanize":
         if (selectedChoice === 1) {
-          newGameState = enterMoveMode(
-            getVacantAdjacentZones(unit),
-            unit,
-            newGameState,
-            null
-          );
+          unit.charge
+            ? (unit.charge = Math.min(3, unit.charge + 1))
+            : (unit.charge = 1);
+
+          if (canMove(unit)) {
+            newGameState.currentResolution.push({
+              resolution: "Unit Ability",
+              resolution2: "Galvanize2",
+              player: self,
+              unit: unit,
+              details: {
+                reason: "Galvanize",
+                title: "Galvanize",
+                message: "You may traverse.",
+                no: "Skip",
+                yes: "Traverse",
+              },
+            });
+          }
         } else {
+          unit.charge -= 3;
+
           enterSelectUnitMode(
             getZonesWithEnemies(unit, 1),
             unit,
             newGameState,
             null,
             "strike",
-            null
+            "Surge"
           );
         }
         break;

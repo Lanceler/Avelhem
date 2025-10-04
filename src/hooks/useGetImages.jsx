@@ -103,7 +103,6 @@ import Convergence from "../assets/abilities/Convergence.jpg";
 import SaltTheEarth from "../assets/abilities/SaltTheEarth.jpg";
 import SaltTheEarth2 from "../assets/abilities/SaltTheEarth2.jpg";
 import Galvanize from "../assets/abilities/Galvanize.jpg";
-import ArcFlash from "../assets/abilities/ArcFlash.jpg";
 import LightningRod from "../assets/abilities/LightningRod.jpg";
 import Defibrillation from "../assets/abilities/Defibrillation.jpg";
 import AmbianceAssimilation from "../assets/abilities/AmbianceAssimilation.jpg";
@@ -265,7 +264,6 @@ export const useGetImages = () => {
     SaltTheEarth,
     SaltTheEarth2,
     Galvanize,
-    ArcFlash,
     LightningRod,
     Defibrillation,
     AmplifyAura,
@@ -495,8 +493,6 @@ export const useGetImages = () => {
         return ValiantSpark;
       case "Galvanize":
         return Galvanize;
-      case "ArcFlash":
-        return ArcFlash;
       case "LightningRod":
         return LightningRod;
       case "Defibrillation":

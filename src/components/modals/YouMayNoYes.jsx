@@ -260,15 +260,6 @@ const YouMayNoYes = (props) => {
         );
         break;
 
-      case "Arc Flash": // "Arc Flash1"
-        newGameState = enterMoveMode(
-          getVacantAdjacentZones(unit),
-          unit,
-          newGameState,
-          null
-        );
-        break;
-
       case "Diffusion 2nd Blast": // "Diffusion4"
         enterSelectUnitMode(
           props.details.adjacentEnemies,

@@ -335,111 +335,15 @@ export const useUnitAbilityEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    unit.temporary.usedFirstAbility = true;
-
-    //Gain 1 charge
-    unit.charge
-      ? (unit.charge = Math.min(3, unit.charge + 1))
-      : (unit.charge = 1);
-
-    if (canMove(unit)) {
-      newGameState.currentResolution.push({
-        resolution: "Unit Ability",
-        resolution2: "Galvanize1",
-        player: self,
-        unit: unit,
-        details: {
-          reason: "Galvanize",
-          title: "Galvanize",
-          message: "You may traverse.",
-          no: "Skip",
-          yes: "Traverse",
-        },
-      });
-    }
-
-    return newGameState;
-  };
-
-  const arcFlash1 = (unitInfo) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    //end "Activating Arc Flash"
-    newGameState.currentResolution.pop();
-
-    //give unit activationCounter
-    unit.temporary.activation
-      ? (unit.temporary.activation += 1)
-      : (unit.temporary.activation = 1);
-
-    unit.temporary.usedSecondAbility = true;
-
-    //Spend 3 charges
-    unit.charge -= 3;
-
     newGameState.currentResolution.push({
       resolution: "Unit Ability",
-      resolution2: "Arc Flash2",
+      resolution2: "Galvanize1",
       unit: unit,
-    });
-
-    if (canMove(unit)) {
-      newGameState.currentResolution.push({
-        resolution: "Unit Ability",
-        resolution2: "Arc Flash1",
-        unit: unit,
-        details: {
-          reason: "Arc Flash",
-          title: "Arc Flash",
-          message: "You may traverse.",
-          no: "Skip",
-          yes: "Traverse",
-        },
-      });
-    }
-
-    newGameState.currentResolution.push({
-      resolution: "Search Card",
-      player: self,
       details: {
-        restriction: ["05-01", "05-02", "05-03", "05-04"],
-        exclusion: [],
-        searchTitle: "Arc Flash",
-        searchMessage: "Search for then float 1 Lightning skill",
-        outcome: "Float",
-        revealTitle: null,
-        revealMessage: null,
-        messageTitle: null,
-        message: null,
-        specMessage: null,
+        reason: "Galvanize",
+        title: "Galvanize",
       },
     });
-
-    return newGameState;
-  };
-
-  const arcFlash2 = (unitInfo) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    //end "Arc Flash2"
-    newGameState.currentResolution.pop();
-
-    if (unit && !isMuted(unit) && (canMove(unit) || canStrike(unit))) {
-      newGameState.currentResolution.push({
-        resolution: "Unit Ability",
-        resolution2: "Arc Flash3",
-        player: self,
-        unit: unit,
-        details: {
-          title: "Arc Flash",
-          reason: "Arc Flash3",
-        },
-      });
-
-      newGameState = animationDelay(newGameState, self);
-    }
 
     return newGameState;
   };
@@ -682,10 +586,6 @@ export const useUnitAbilityEffects = () => {
       //Lightning
       case "galvanize1":
         return galvanize1(unit);
-      case "arcFlash1":
-        return arcFlash1(unit);
-      case "arcFlash2":
-        return arcFlash2(unit);
 
       //Mana
       case "auraAmplication1":

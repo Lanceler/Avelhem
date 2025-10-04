@@ -111,28 +111,18 @@ const UnitInfo = (props) => {
         return (
           <>
             <p className="unitInfo-text-heading2">
-              1. Galvanize{" "}
+              Galvanize{" "}
               <span className="unitInfo-tactic-group">
                 <img src={MobilizeSmall} className="unitInfo-tactic-mobilize" />
                 <img src={MobilizeSmall} className="unitInfo-tactic-mobilize" />
               </span>
             </p>
-            <p className="unitInfo-text-desc ">⬩Gain 1 Charge.</p>
+            <p className="unitInfo-text-desc ">
+              ⬩Gain 1 Charge or spend 3 Charges to strike.
+            </p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩You may traverse.
+              ⬩If you have at least 1 Charge, you may traverse.
             </p>
-
-            <p className="unitInfo-text-heading2">
-              2. Arc Flash{" "}
-              <span className="unitInfo-tactic-group">
-                <img src={AssaultSmall} className="unitInfo-tactic-icon" />
-              </span>
-            </p>
-            <p className="unitInfo-text-desc">
-              ⬩Spend 3 Charges to search for then float 1 Lightning skill.
-            </p>
-            <p className="unitInfo-text-desc">⬩You may traverse.</p>
-            <p className="unitInfo-text-desc">⬩You may traverse or strike.</p>
           </>
         );
 

@@ -153,28 +153,8 @@ const SelectUnitAbility = (props) => {
           ),
           optionText: (
             <>
-              <div>⬩Gain 1 Charge.</div>
-              <div>⬩You may traverse.</div>
-            </>
-          ),
-        },
-        {
-          optionName: "Arc Flash",
-          abilityQualifier: (
-            <div className="abilityQualifier">
-              <img src={AssaultSmall} style={{ height: 35 }} />
-            </div>
-          ),
-          optionText: (
-            <>
-              <div>
-                ⬩Spend 3 Charges to search for then float 1 Lightning skill.
-              </div>
-              <div>⬩You may traverse.</div>
-              <div>⬩You may traverse or strike.</div>
-              <div>
-                <br />
-              </div>
+              <div>⬩Gain 1 Charge or spend 3 Charges to strike.</div>
+              <div>⬩If you have at least 1 Charge, you may traverse.</div>
             </>
           ),
         },
@@ -296,8 +276,6 @@ const SelectUnitAbility = (props) => {
         switch (i) {
           case 0:
             return true;
-          case 1:
-            return unit.charge >= 3;
         }
 
       case "Mana Scion":
@@ -458,20 +436,6 @@ const SelectUnitAbility = (props) => {
               restriction: ["Mobilize"],
               stock: 2,
               reason: "Galvanize",
-              canSkip: "Return",
-            },
-          });
-        } else if (selectedChoice === 1) {
-          newGameState.currentResolution.push({
-            resolution: "Unit Ability",
-            resolution2: "Ability - select tactic",
-            unit: unit,
-            details: {
-              title: "Arc Flash",
-              message: "Use an Assault tactic.",
-              restriction: ["Assault"],
-              stock: 1,
-              reason: "Arc Flash",
               canSkip: "Return",
             },
           });

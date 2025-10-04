@@ -1152,20 +1152,6 @@ const UseCurrentResolution = (props) => {
           }
           break;
 
-        case "Cold Embrace1":
-          return (
-            <>
-              {self === lastRes.unit.player && !props.hideModal && (
-                <SelectCustomChoice
-                  unit={lastRes.unit}
-                  details={lastRes.details}
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
-
         case "Activating Reap the Whirlwind":
           if (self === lastRes.unit.player) {
             props.updateLocalState(
@@ -1197,20 +1183,6 @@ const UseCurrentResolution = (props) => {
           }
           break;
 
-        case "Reap the Whirlwind3":
-          return (
-            <>
-              {self === lastRes.unit.player && !props.hideModal && (
-                <SelectCustomChoice
-                  unit={lastRes.unit}
-                  details={lastRes.details}
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
-
         case "Reap the Whirlwind4":
           if (self === lastRes.unit.player) {
             props.updateLocalState(
@@ -1232,51 +1204,11 @@ const UseCurrentResolution = (props) => {
           break;
 
         case "Convergence1":
-        case "Galvanize1":
+        case "Galvanize2":
           return (
             <>
               {self === lastRes.unit.player && !props.hideModal && (
                 <YouMayNoYes
-                  unit={lastRes.unit}
-                  details={lastRes.details}
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
-
-        case "Activating Arc Flash":
-          if (self === lastRes.unit.player) {
-            props.resolutionUpdate(applyAbility("arcFlash1", lastRes.unit));
-          }
-          break;
-
-        case "Arc Flash1":
-          return (
-            <>
-              {self === lastRes.unit.player && !props.hideModal && (
-                <YouMayNoYes
-                  unit={lastRes.unit}
-                  details={lastRes.details}
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
-
-        case "Arc Flash2":
-          if (self === lastRes.unit.player) {
-            props.updateLocalState(applyAbility("arcFlash2", lastRes.unit));
-          }
-          break;
-
-        case "Arc Flash3":
-          return (
-            <>
-              {self === lastRes.unit.player && !props.hideModal && (
-                <SelectCustomChoice
                   unit={lastRes.unit}
                   details={lastRes.details}
                   updateFirebase={props.updateFirebase}
@@ -1302,6 +1234,9 @@ const UseCurrentResolution = (props) => {
           }
           break;
 
+        case "Cold Embrace1":
+        case "Galvanize1":
+        case "Reap the Whirlwind3":
         case "Ballistic Armor1":
           return (
             <>
