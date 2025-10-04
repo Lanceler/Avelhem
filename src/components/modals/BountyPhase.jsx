@@ -424,22 +424,16 @@ const BountyPhase = (props) => {
     category: "Skill",
     items: [
       {
+        text: <>Reduce your burst skills’ activation cost to 4 DP.</>,
+        ind: 16,
+      },
+      {
         text: (
           <>
             <p style={{ fontSize: 19.5 }}>
               Your scions can use any skill that belongs to their class as a
               resonator
             </p>
-          </>
-        ),
-        ind: 16,
-      },
-      {
-        text: (
-          <>
-            You can activate
-            <br />
-            burst skills
           </>
         ),
         ind: 17,

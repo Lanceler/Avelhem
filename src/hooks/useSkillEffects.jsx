@@ -1386,33 +1386,20 @@ export const useSkillEffects = () => {
     //end "Thunder Thaumaturge1" resolution
     newGameState.currentResolution.pop();
 
-    if (
-      !["05-01", "05-02", "05-04"].some((s) =>
-        newGameState[unit.player].skillVestige.includes(s)
-      )
-    ) {
+    if (unit !== null && !isMuted(unit)) {
       newGameState.currentResolution.push({
-        resolution: "Misc.",
-        resolution2: "Message To Player",
-        player: self,
-        title: "Thunder Thaumaturge",
-        message: "You do not have any Lightning skills to recover.",
-      });
-    } else if (
-      unit !== null &&
-      !isMuted(unit) &&
-      newGameState[unit.player].skillHand.length > 0
-    ) {
-      newGameState.currentResolution.push({
-        resolution: "Discard Skill",
+        resolution: "Lightning Skill",
+        resolution2: "Thunder Thaumaturge2",
         unit: unit,
-        player: unit.player,
         details: {
+          restriction: ["05-01", "05-02", "05-03", "05-04"],
           title: "Thunder Thaumaturge",
-          message:
-            "You may spend 1 skill to recover then float 1 Lightning skill other than “Thunder Thaumaturge”.",
-          restriction: null,
           reason: "Thunder Thaumaturge",
+          message:
+            "Inspect 3 skills; you may add 1 Lightning skill among them to your hand.",
+          inspectionCount: 3,
+          select: "Single",
+          outcome: "Add",
         },
       });
     }
@@ -1432,28 +1419,70 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    if (unit.charge === 3) {
-      newGameState = drawSkill(newGameState);
-      newGameState = drawSkill(newGameState);
-      newGameState = drawSkill(newGameState);
-      newGameState = drawSkill(newGameState);
-    } else {
-      unit.charge = 3;
+    unit.charge
+      ? (unit.charge = Math.min(3, unit.charge + 1))
+      : (unit.charge = 1);
+
+    newGameState.currentResolution.push({
+      resolution: "Lightning Skill",
+      resolution2: "Valiant Spark2",
+      unit: unit,
+    });
+
+    if (canMove(unit)) {
+      newGameState.currentResolution.push({
+        resolution: "Lightning Skill",
+        resolution2: "Valiant Spark1",
+        unit: unit,
+        details: {
+          reason: "Valiant Spark",
+          title: "Valiant Spark",
+          message: "You may spend 1 Charge to traverse.",
+          no: "Skip",
+          yes: "Traverse",
+        },
+      });
     }
+    // if (
+    //   newGameState[unit.player].skillHand.length > 0 &&
+    //   !unit.temporary.usedSecondAbility &&
+    //   !isDisrupted(unit, 1)
+    // ) {
+    //   newGameState.currentResolution.push({
+    //     resolution: "Discard Skill",
+    //     unit: unit,
+    //     player: unit.player,
+    //     details: {
+    //       title: "Valiant Spark",
+    //       message: "You may spend 1 Lightning skill to activate “Arc Flash”.",
+    //       restriction: ["05-01", "05-02", "05-03"],
+    //       reason: "Valiant Spark",
+    //     },
+    //   });
+    // }
+
+    return newGameState;
+  };
+
+  const valiantSpark2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Valiant Spark2" resolution
+    newGameState.currentResolution.pop();
 
     if (
-      newGameState[unit.player].skillHand.length > 0 &&
-      !unit.temporary.usedSecondAbility &&
-      !isDisrupted(unit, 1)
+      unit !== null &&
+      !isMuted(unit) &&
+      unit.charge >= 2 &&
+      (canMove(unit) || canStrike(unit))
     ) {
       newGameState.currentResolution.push({
-        resolution: "Discard Skill",
+        resolution: "Lightning Skill",
+        resolution2: "Valiant Spark3",
         unit: unit,
-        player: unit.player,
         details: {
           title: "Valiant Spark",
-          message: "You may spend 1 Lightning skill to activate “Arc Flash”.",
-          restriction: ["05-01", "05-02", "05-03"],
           reason: "Valiant Spark",
         },
       });
@@ -2666,6 +2695,8 @@ export const useSkillEffects = () => {
         return thunderThaumaturge2(a);
       case "valiantSpark1":
         return valiantSpark1(a);
+      case "valiantSpark2":
+        return valiantSpark2(a);
 
       //Mana
       case "surge1":

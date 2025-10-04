@@ -395,7 +395,15 @@ export const useRecurringEffects = () => {
 
     const skillData = getSkillById(skill);
 
-    let conclusion = skillData.Method === "Burst" ? "shatter" : "discard";
+    // Burst skills are no longer shattered, but cost DP instead
+    // let conclusion = skillData.Method === "Burst" ? "shatter" : "discard";
+
+    let conclusion = "discard";
+
+    if (skillData.Method === "Burst") {
+      newGameState[unit.player].defiancePoints -=
+        newGameState[unit.player].bountyUpgrades.skill > 0 ? 4 : 6;
+    }
 
     if (unit.boosts.ambidexterity && skillData.Method === "Standard") {
       conclusion = "retain";
@@ -1792,10 +1800,11 @@ export const useRecurringEffects = () => {
       return false;
     }
 
-    //burst skills can be activated after upgrade is purchased
+    //burst skills cost 6 DP (4 if upgraded)
     if (
       allBurstSkills().includes(skill) &&
-      localGameState[self].bountyUpgrades.skill < 2
+      localGameState[self].defiancePoints <
+        (localGameState[self].bountyUpgrades.skill > 0 ? 4 : 6)
     ) {
       return false;
     }

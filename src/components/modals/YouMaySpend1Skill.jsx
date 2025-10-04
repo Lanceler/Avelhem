@@ -263,22 +263,6 @@ const YouMaySpend1Skill = (props) => {
         });
         break;
 
-      case "Thunder Thaumaturge":
-        newGameState.currentResolution.push({
-          resolution: "Recover Skill",
-          player: self,
-          details: {
-            title: "Thunder Thaumaturge",
-            reason: "Thunder Thaumaturge",
-            restriction: ["05-01", "05-02", "05-04"],
-            message:
-              "Recover then float 1 Lightning skill other than “Thunder Thaumaturge”.",
-            outcome: "Float",
-            reveal: true,
-          },
-        });
-        break;
-
       case "Lightning Rod":
         unit.charge
           ? (unit.charge = Math.min(3, unit.charge + 1))

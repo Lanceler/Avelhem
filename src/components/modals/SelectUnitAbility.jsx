@@ -114,8 +114,8 @@ const SelectUnitAbility = (props) => {
             <>
               <div>⬩Move to a zone within 2 spaces.</div>
               <div>
-                ⬩You may spend 2 Cyclones to restore your Aether or Aether-blast
-                an adjacent foe.
+                ⬩You may spend 2 Cyclones to either restore your Aether or
+                Aether-blast an adjacent foe.
               </div>
             </>
           ),

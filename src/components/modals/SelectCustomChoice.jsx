@@ -139,6 +139,14 @@ const SelectCustomChoice = (props) => {
       ChoiceSecondMessage = "Spend 3 Charges to strike.";
       break;
 
+    case "Valiant Spark":
+      canFirstChoice = true;
+      canFirstChoice = canMove(unit);
+      canSecondChoice = canStrike(unit);
+      ChoiceFirstMessage = "Spend 2 charges to traverse.";
+      ChoiceSecondMessage = "Spend 2 charges to strike.";
+      break;
+
     case "Surge":
       canFirstChoice = canMove(unit);
       canSecondChoice = canStrike(unit);
@@ -460,7 +468,28 @@ const SelectCustomChoice = (props) => {
             newGameState,
             null,
             "strike",
-            "Surge"
+            null
+          );
+        }
+        break;
+
+      case "Valiant Spark":
+        unit.charge -= 2;
+        if (selectedChoice === 1) {
+          newGameState = enterMoveMode(
+            getVacantAdjacentZones(unit),
+            unit,
+            newGameState,
+            null
+          );
+        } else {
+          enterSelectUnitMode(
+            getZonesWithEnemies(unit, 1),
+            unit,
+            newGameState,
+            null,
+            "strike",
+            null
           );
         }
         break;

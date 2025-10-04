@@ -58,7 +58,7 @@ const SelectResonator = (props) => {
   } else {
     validResonators = [props.skill.id, "SA-01", "SA-02", "SA-03"];
 
-    if (props.unit && localGameState[self].bountyUpgrades.skill > 0) {
+    if (props.unit && localGameState[self].bountyUpgrades.skill > 1) {
       validResonators = [
         ...validResonators,
         ...getScionSet(props.unit.unitClass),

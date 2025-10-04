@@ -88,8 +88,8 @@ const UnitInfo = (props) => {
               ⬩Move to a zone within 2 spaces.
             </p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩You may spend 2 Cyclones to restore your Aether or Aether-blast
-              an adjacent foe.
+              ⬩You may spend 2 Cyclones to either restore your Aether or
+              Aether-blast an adjacent foe.
             </p>
           </>
         );

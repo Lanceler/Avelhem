@@ -251,6 +251,10 @@ const YouMayNoYes = (props) => {
         );
         break;
 
+      case "Valiant Spark": // "Valiant Spark1"
+        unit.charge -= 1;
+      //DO NOT break
+
       case "Galvanize": // "Galvanize1"
         newGameState = enterMoveMode(
           getVacantAdjacentZones(unit),

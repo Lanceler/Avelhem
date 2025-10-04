@@ -2216,6 +2216,7 @@ const UseCurrentResolution = (props) => {
           }
           break;
 
+        case "Valiant Spark1":
         case "Zip And ZapR2":
           return (
             <>
@@ -2247,11 +2248,45 @@ const UseCurrentResolution = (props) => {
           }
           break;
 
+        case "Thunder Thaumaturge2":
+          return (
+            <>
+              {self === lastRes.unit.player && !props.hideModal && (
+                <InspectSkill
+                  unit={lastRes.unit}
+                  details={lastRes.details}
+                  hideOrRevealModale={props.hideOrRevealModale}
+                  updateFirebase={props.updateFirebase}
+                />
+              )}
+            </>
+          );
+
         case "Activating Valiant Spark":
           if (self === lastRes.unit.player) {
             props.updateLocalState(applySkill("valiantSpark1", lastRes.unit));
           }
           break;
+
+        case "Valiant Spark2":
+          if (self === lastRes.unit.player) {
+            props.updateLocalState(applySkill("valiantSpark2", lastRes.unit));
+          }
+          break;
+
+        case "Valiant Spark3":
+          return (
+            <>
+              {self === lastRes.unit.player && !props.hideModal && (
+                <SelectCustomChoice
+                  unit={lastRes.unit}
+                  details={lastRes.details}
+                  updateFirebase={props.updateFirebase}
+                  hideOrRevealModale={props.hideOrRevealModale}
+                />
+              )}
+            </>
+          );
       }
       break;
 

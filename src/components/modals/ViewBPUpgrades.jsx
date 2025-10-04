@@ -147,13 +147,13 @@ const ViewBPUpgrades = (props) => {
 
                   {upgrades.skill >= 1 && (
                     <p className="unitInfo-text-desc">
-                      1. Scions can use any skill that belongs to their class as
-                      a resonator.
+                      1. Burst skill activation cost reduce to 4 DP.
                     </p>
                   )}
                   {upgrades.skill >= 2 && (
                     <p className="unitInfo-text-desc">
-                      2. Can activate burst skills.
+                      2. Scions can use any skill that belongs to their class as
+                      a resonator.
                     </p>
                   )}
                   {upgrades.skill >= 3 && (
