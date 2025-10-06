@@ -624,7 +624,10 @@ const SelectUnitAbility = (props) => {
 
                     <div>{detail.abilityQualifier}</div>
                   </div>
-                  <div className="modalOptionText">{detail.optionText}</div>
+                  <div className="modalOptionText">
+                    {detail.optionText}
+                    <br />
+                  </div>
                 </div>
               </div>
             ))}

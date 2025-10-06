@@ -2325,7 +2325,7 @@ const UseCurrentResolution = (props) => {
 
         case "Diffusion2":
           if (self === lastRes.unit.player) {
-            selectEnemies(lastRes.unit, 1, null, "blast", "Diffusion");
+            selectEnemies(lastRes.unit, 2, null, "blast", "Diffusion");
           }
           break;
 

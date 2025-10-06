@@ -1748,7 +1748,7 @@ export const useRecurringEffects = () => {
     }
 
     const canDiffusionR = (unit) => {
-      if (getZonesWithEnemies(unit, 1).length < 1) {
+      if (getZonesWithEnemies(unit, 2).length < 1) {
         return false;
       }
 
@@ -1825,7 +1825,7 @@ export const useRecurringEffects = () => {
     };
 
     const canDiffusion = (unit) => {
-      if (getZonesWithEnemies(unit, 1).length < 1) {
+      if (getZonesWithEnemies(unit, 2).length < 1) {
         return false;
       }
 

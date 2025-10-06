@@ -232,7 +232,6 @@ const SelectTacticViaEffect = (props) => {
           resolution2: "Diffusion2",
           unit: unit,
         });
-        //newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
         break;
 
       case "Reminiscence":

@@ -309,17 +309,6 @@ export const useSkillEffects = () => {
       : (unit.temporary.activation = 1);
 
     if (resonator) {
-      if (!["SA-02", "SA-03"].includes(resonator)) {
-        newGameState.currentResolution.push({
-          resolution: "Misc.",
-          resolution2: "May float resonant skill unit",
-          unit: unit,
-          player: unit.player,
-          skill: "02-02",
-          resonator: resonator,
-        });
-      }
-
       newGameState.currentResolution.push({
         resolution: "Water Skill",
         resolution2: "Frigid BreathR1",
@@ -587,17 +576,6 @@ export const useSkillEffects = () => {
       : (unit.temporary.activation = 1);
 
     if (resonator) {
-      if (!["SA-02", "SA-03"].includes(resonator)) {
-        newGameState.currentResolution.push({
-          resolution: "Misc.",
-          resolution2: "Retain resonant skill unit",
-          unit: unit,
-          player: unit.player,
-          skill: "03-02",
-          resonator: resonator,
-        });
-      }
-
       newGameState.currentResolution.push({
         resolution: "Wind Skill",
         resolution2: "Gale ConjurationR1",
@@ -621,6 +599,7 @@ export const useSkillEffects = () => {
     // end "Gale ConjurationR1"
     newGameState.currentResolution.pop();
 
+    unit.cyclone = Math.min(3, unit.cyclone + 1);
     unit.aether = 1;
 
     const zonesWithAllies = getZonesWithAllies(unit, 1, false);
@@ -936,17 +915,6 @@ export const useSkillEffects = () => {
     delete unit.temporary.previousTarget;
 
     if (resonator) {
-      if (!["SA-02", "SA-03"].includes(resonator)) {
-        newGameState.currentResolution.push({
-          resolution: "Misc.",
-          resolution2: "May float resonant skill unit",
-          unit: unit,
-          player: unit.player,
-          skill: "04-02",
-          resonator: resonator,
-        });
-      }
-
       newGameState.currentResolution.push({
         resolution: "Land Skill",
         resolution2: "UpheavalR1",
@@ -1279,17 +1247,6 @@ export const useSkillEffects = () => {
     unit.charge -= 2;
 
     if (resonator) {
-      if (!["SA-02", "SA-03"].includes(resonator)) {
-        newGameState.currentResolution.push({
-          resolution: "Misc.",
-          resolution2: "May float resonant skill unit",
-          unit: unit,
-          player: unit.player,
-          skill: "05-02",
-          resonator: resonator,
-        });
-      }
-
       newGameState.currentResolution.push({
         resolution: "Lightning Skill",
         resolution2: "Zip And ZapR1",
@@ -1523,25 +1480,14 @@ export const useSkillEffects = () => {
 
     delete unit.temporary.previousTarget;
 
-    let d1Message = "Use an Assault tactic to blast an adjacent foe.";
+    let d1Message = "Use an Assault tactic to blast a foe within 2 spaces.";
     let d1Restriction = ["Assault"];
 
     if (resonator) {
-      if (!["SA-02", "SA-03"].includes(resonator)) {
-        newGameState.currentResolution.push({
-          resolution: "Misc.",
-          resolution2: "May float resonant skill unit",
-          unit: unit,
-          player: unit.player,
-          skill: "06-02",
-          resonator: resonator,
-        });
-      }
-
-      d1Message = "Use an Assault or Invoke tactic to blast an adjacent foe.";
+      d1Message =
+        "Use an Assault or Invoke tactic to blast a foe within 2 spaces.";
       d1Restriction = ["Assault", "Invoke"];
 
-      //2. Resonance
       newGameState.currentResolution.push({
         resolution: "Mana Skill",
         resolution2: "DiffusionR1",
@@ -1568,18 +1514,12 @@ export const useSkillEffects = () => {
 
   const diffusion2 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
-    const zones = JSON.parse(newGameState.zones);
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
     //end "Diffusion3" resolution
     newGameState.currentResolution.pop();
 
     let adjacentEnemies = getZonesWithEnemies(unit, 1);
-    adjacentEnemies = adjacentEnemies.filter(
-      (z) =>
-        zones[Math.floor(z / 5)][z % 5].unitIndex !==
-        unit.temporary.previousTarget
-    );
 
     if (unit !== null && !isMuted(unit)) {
       if (adjacentEnemies.length > 0) {
@@ -1591,7 +1531,7 @@ export const useSkillEffects = () => {
           details: {
             reason: "Diffusion 2nd Blast",
             title: "Diffusion",
-            message: "You may blast another adjacent foe.",
+            message: "You may blast an adjacent foe.",
             no: "Skip",
             yes: "Blast",
             adjacentEnemies: adjacentEnemies,
@@ -1611,12 +1551,6 @@ export const useSkillEffects = () => {
     newGameState.currentResolution.pop();
 
     if (unit !== null && !isMuted(unit)) {
-      unit.aether = 1;
-
-      unit.enhancements.shield
-        ? (unit.enhancements.shield = Math.max(2, unit.enhancements.shield))
-        : (unit.enhancements.shield = 2);
-
       newGameState = aetherRestoreSpecial(newGameState, unit);
     }
 
