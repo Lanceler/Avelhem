@@ -129,6 +129,7 @@ const Board = (props) => {
         delete purificationAlly.afflictions.frost;
         delete purificationAlly.afflictions.burn;
         delete purificationAlly.afflictions.infection;
+        delete purificationAlly.afflictions.anathema;
 
         if (isAdjacent(unit, purificationAlly)) {
           if (purificationAlly.enhancements.ward > 0) {

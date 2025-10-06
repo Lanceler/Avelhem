@@ -918,19 +918,9 @@ export default function Rules() {
                 <strong>Burst</strong>
                 <ul>
                   <li>
-                    Burst skills observe the general card mechanics with one
-                    major deviation.
+                    Burst skills function almost identical with standard skills.
                   </li>
-                  <li>
-                    Unlike other cards, burst skills are shattered (removed from
-                    play) rather than discarded after they conclude their
-                    effects. Discarding them via any other means (such as
-                    spending) would still send them to the vestige.
-                  </li>
-                  <li>
-                    Shattered skills are set aside where they are revealed to
-                    both Sovereigns.
-                  </li>
+                  <li>The difference is that they cost 6 DP to activate.</li>
                   <li>
                     Their icon is a hexagonal purple amethyst. For example, see{" "}
                     <span

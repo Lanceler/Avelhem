@@ -95,17 +95,6 @@ export const useSkillEffects = () => {
       : (unit.temporary.activation = 1);
 
     if (resonator) {
-      if (!["SA-02", "SA-03"].includes(resonator)) {
-        newGameState.currentResolution.push({
-          resolution: "Misc.",
-          resolution2: "May float resonant skill unit",
-          unit: unit,
-          player: unit.player,
-          skill: "01-02",
-          resonator: resonator,
-        });
-      }
-
       newGameState.currentResolution.push({
         resolution: "Fire Skill",
         resolution2: "ConflagrationR1",
@@ -2164,14 +2153,7 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    if (!unit.afflictions.burn) {
-      //burn would otherwise instantly purge overgrowth
-      unit.enhancements.overgrowth = true;
-    }
-
-    unit.blossom
-      ? (unit.blossom = Math.min(3, unit.blossom + 2))
-      : (unit.blossom = 2);
+    unit.blossom = 3;
 
     if (resonator) {
       if (!["SA-02", "SA-03"].includes(resonator)) {
@@ -2296,25 +2278,6 @@ export const useSkillEffects = () => {
         reason: "Castle of Thorns1",
       },
     });
-
-    if (unit.enhancements.overgrowth === true) {
-      // unit.enhancements.ward
-      //   ? (unit.enhancements.ward = Math.max(unit.enhancements.ward, 2))
-      //   : (unit.enhancements.ward = 2);
-
-      newGameState.currentResolution.push({
-        resolution: "Plant Skill",
-        resolution2: "Castle Of Thorns1",
-        unit: unit,
-        details: {
-          reason: "Castle of Thorns",
-          title: "Castle of Thorns",
-          message: "You may spend your Overgrowth to gain Ward for 2 turns.",
-          no: "Skip",
-          yes: "Spend",
-        },
-      });
-    }
 
     return newGameState;
   };

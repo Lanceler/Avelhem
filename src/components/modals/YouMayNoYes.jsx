@@ -350,7 +350,6 @@ const YouMayNoYes = (props) => {
         break;
 
       case "Castle of Thorns": // "Castle Of Thorns1"
-        delete unit.enhancements.overgrowth;
         unit.enhancements.ward
           ? (unit.enhancements.ward = Math.max(unit.enhancements.ward, 2))
           : (unit.enhancements.ward = 2);

@@ -85,7 +85,6 @@ export default function MyGames() {
         const playerData = {
           skillRepertoire: null,
           skillVestige: [],
-          skillShattered: [],
           skillHand: [],
           skillFloat: 0,
           avelhemRepertoire: [],

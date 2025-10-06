@@ -88,7 +88,6 @@ const UseCurrentResolution = (props) => {
     selectVengefulLegacy,
     selectViridianGraveActivator,
     strikeMove,
-    unitFloatSkill,
     unitRetainSkill,
     aetherBlastMitigate,
   } = useRecurringEffects();
@@ -177,8 +176,6 @@ const UseCurrentResolution = (props) => {
       } else if (conclusion === "float") {
         newGameState[player].skillRepertoire.push(skill);
         newGameState[player].skillFloat = newGameState[player].skillFloat + 1;
-      } else if (conclusion === "shatter") {
-        newGameState[player].skillShattered.push(skill);
       } else if (conclusion === "retain") {
         newGameState[player].skillHand.unshift(skill);
       }
@@ -1012,14 +1009,6 @@ const UseCurrentResolution = (props) => {
                 false,
                 true
               )
-            );
-          }
-          break;
-
-        case "May float resonant skill unit":
-          if (self === lastRes.player) {
-            props.updateLocalState(
-              unitFloatSkill(lastRes.unit, lastRes.skill, lastRes.resonator)
             );
           }
           break;

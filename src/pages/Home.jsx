@@ -58,7 +58,6 @@ export default function Home() {
         const playerData = {
           skillRepertoire: starterSkillRepertoire,
           skillVestige: [],
-          skillShattered: [],
           skillHand: [],
           skillFloat: 0,
           avelhemRepertoire: starterAvelhemRepertoire,

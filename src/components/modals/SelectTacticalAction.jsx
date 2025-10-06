@@ -509,8 +509,8 @@ const SelectTacticalAction = (props) => {
           <div className="modalContentText">
             {isRooted(unit) && (
               <>
-                You are rooted: You cannot strike, and you must spend 1 skill to
-                traverse or Aether-blast via tactical action.
+                You are rooted: You cannot strike, and you must spend 1 skill
+                toAether-blast via tactical action.
               </>
             )}
           </div>

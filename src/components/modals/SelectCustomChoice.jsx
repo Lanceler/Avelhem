@@ -74,7 +74,7 @@ const SelectCustomChoice = (props) => {
       canSecondChoice = getZonesWithAllies(unit, 2, false).length > 0;
       ChoiceFirstMessage = "Gain Ward for 2 turns.";
       ChoiceSecondMessage =
-        "Purge the turn-based afflictions (except Anathema) of an ally within 2 spaces; if they are adjacent, grant them Ward for 2 turns.";
+        "Purge the afflicitions of an ally within 2 spaces; if they are adjacent, grant them Ward for 2 turns.";
       break;
 
     case "Healing Rain":

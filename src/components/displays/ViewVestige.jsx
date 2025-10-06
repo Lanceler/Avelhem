@@ -18,12 +18,10 @@ const ViewVestige = (props) => {
   const { getCardImage } = useGetImages();
 
   let vestige = [];
-  let shattered = [];
 
   switch (props.vestige) {
     case "Skill":
       vestige = [...localGameState[props.team].skillVestige];
-      shattered = [...localGameState[props.team].skillShattered];
       break;
     case "Avelhem":
       vestige = [...localGameState[props.team].avelhemVestige];
@@ -34,11 +32,6 @@ const ViewVestige = (props) => {
   let reverseVestige = [];
   for (let c in vestige) {
     reverseVestige.unshift({ id: vestige[c], vestigeIndex: c });
-  }
-
-  let reverseShattered = [];
-  for (let c in shattered) {
-    reverseShattered.unshift({ id: shattered[c], shatteredIndex: c });
   }
 
   const handleSkip = () => {
@@ -112,32 +105,7 @@ const ViewVestige = (props) => {
                 </div>
               )}
 
-              {shattered.length > 0 && (
-                <>
-                  <div className="modalContentText">Shattered skills:</div>
-                  <div className="modalContent4Column">
-                    {reverseShattered.map((usableSkill, i) => (
-                      <div
-                        key={i}
-                        className={`modalOptionOutline modalCardOptionOutline `}
-                      >
-                        <div
-                          className={`modalCard 
-                          `}
-                        >
-                          <Skill
-                            usableSkill={usableSkill}
-                            canActivateSkill={true}
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </>
-              )}
-
-              {((props.team !== self || props.spectator) &&
-                shattered.length) === 0 && (
+              {(props.team !== self || props.spectator) && (
                 <div className="modalContentText">
                   No cards available for viewing.
                 </div>

@@ -550,7 +550,6 @@ const UnitInfo = (props) => {
               {(unit.enhancements.ravager ||
                 unit.enhancements.ward ||
                 unit.enhancements.shield ||
-                unit.enhancements.overgrowth ||
                 unit.boosts.ambidexterity) && (
                 <>
                   <p className="unitInfo-text-heading1">
@@ -590,19 +589,6 @@ const UnitInfo = (props) => {
                       <p className="unitInfo-text-desc unitInfo-text-last">
                         ⬩Negates the next attack that targets this unit, unless
                         they are enhanced with Ward.
-                      </p>
-                    </>
-                  )}
-
-                  {unit.enhancements.overgrowth && (
-                    <>
-                      <p className="unitInfo-text-heading2">Overgrowth</p>
-                      <p className="unitInfo-text-desc ">
-                        ⬩Afflicts adjacent foes with Root.
-                      </p>
-                      <p className="unitInfo-text-desc unitInfo-text-last">
-                        ⬩This enhancement is purged if the unit moves or has an
-                        affliction.
                       </p>
                     </>
                   )}

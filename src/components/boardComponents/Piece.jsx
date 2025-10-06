@@ -142,10 +142,6 @@ export const Piece = (props) => {
 
           {/* {showDisruption && <div className="seal2"></div>} */}
 
-          {unit.enhancements.overgrowth === true && (
-            <div className="overgrowth"></div>
-          )}
-
           <img
             src={getElementImage(unit.unitClass)}
             className="pieceScionClass"

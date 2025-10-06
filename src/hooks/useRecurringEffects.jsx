@@ -395,16 +395,15 @@ export const useRecurringEffects = () => {
 
     const skillData = getSkillById(skill);
 
-    // Burst skills are no longer shattered, but cost DP instead
-    // let conclusion = skillData.Method === "Burst" ? "shatter" : "discard";
-
     let conclusion = "discard";
 
+    // Burst skills cost DP
     if (skillData.Method === "Burst") {
       newGameState[unit.player].defiancePoints -=
         newGameState[unit.player].bountyUpgrades.skill > 0 ? 4 : 6;
     }
 
+    //ambidexterity retain effect
     if (unit.boosts.ambidexterity && skillData.Method === "Standard") {
       conclusion = "retain";
       delete newGameState[unit.player].units[unit.unitIndex].boosts
@@ -414,6 +413,15 @@ export const useRecurringEffects = () => {
     if (resonator) {
       //end Select Resonator resolution
       newGameState.currentResolution.pop();
+
+      if (
+        ![
+          "SA-02",
+          //  "SA-03"
+        ].includes(resonator)
+      ) {
+        conclusion = "float";
+      }
 
       newGameState.activatingResonator.push(resonator);
 
@@ -881,7 +889,6 @@ export const useRecurringEffects = () => {
     ) {
       delete unit.temporary.anathemaDelay;
       unit.afflictions.anathema = 2;
-      delete unit.enhancements.overgrowth;
     }
 
     return unit;
@@ -930,7 +937,6 @@ export const useRecurringEffects = () => {
     } else {
       victim.afflictions.burn = 1;
       delete victim.afflictions.frost;
-      delete victim.enhancements.overgrowth;
     }
 
     return newGameState;
@@ -1295,15 +1301,12 @@ export const useRecurringEffects = () => {
         }
       }
     } else {
-      //frost purges overgrowth
       victim.afflictions.frost
         ? (victim.afflictions.frost = Math.max(
             victim.afflictions.frost,
             duration
           ))
         : (victim.afflictions.frost = duration);
-
-      delete victim.enhancements.overgrowth;
     }
 
     return newGameState;
@@ -1375,15 +1378,12 @@ export const useRecurringEffects = () => {
           break;
       }
     } else {
-      //paralysis purges overgrowth
       victim.afflictions.paralysis
         ? (victim.afflictions.paralysis = Math.max(
             victim.afflictions.paralysis,
             duration
           ))
         : (victim.afflictions.paralysis = duration);
-
-      delete victim.enhancements.overgrowth;
 
       //If Cataclysmic Tempest
       if (special === "Cataclysmic Tempest") {
@@ -3220,10 +3220,8 @@ export const useRecurringEffects = () => {
 
     for (let z of zonesWithAdjacentEnemies) {
       const zone = zones[Math.floor(z / 5)][z % 5];
-      if (
-        newGameState[zone.player].units[zone.unitIndex].enhancements
-          .overgrowth === true
-      ) {
+      const rooter = newGameState[zone.player].units[zone.unitIndex];
+      if (rooter.blossom >= 3 && !isMuted(rooter)) {
         return true;
       }
     }
@@ -3249,13 +3247,13 @@ export const useRecurringEffects = () => {
     newGameState.zones = JSON.stringify(newZoneInfo);
 
     //update unit itself
-    // newGameState[mover.player].units[mover.unitIndex].row = Math.floor(
-    //   zoneId / 5
-    // );
-    // newGameState[mover.player].units[mover.unitIndex].column = zoneId % 5;
     mover.row = Math.floor(zoneId / 5);
     mover.column = zoneId % 5;
-    delete mover.enhancements.overgrowth;
+
+    if (mover.blossom > 0) {
+      mover.blossom -= 1;
+    }
+
     newGameState[mover.player].units[mover.unitIndex] = mover;
 
     //pop "Moving Unit" resolution <-- Manual movement
@@ -4299,29 +4297,6 @@ export const useRecurringEffects = () => {
     }
   };
 
-  const unitFloatSkill = (unitInfo, skill, resonator) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    newGameState.currentResolution.pop();
-
-    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    if (unit && !isMuted(unit)) {
-      if (!["SA-02", "SA-03"].includes(resonator)) {
-        newGameState.currentResolution.push({
-          resolution: "Misc.",
-          resolution2: "May float resonant skill",
-          unit: unit,
-          player: unit.player,
-          skill: skill,
-          resonator: resonator,
-        });
-      }
-    }
-
-    return newGameState;
-  };
-
   const unitRetainSkill = (unitInfo, skill, resonator) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -4533,7 +4508,6 @@ export const useRecurringEffects = () => {
     triggerThunderThaumaturge,
     triggerVengefulLegacy,
     triggerViridianGrave,
-    unitFloatSkill,
     unitRetainSkill,
     uponDebutTalents,
     aetherBlast,

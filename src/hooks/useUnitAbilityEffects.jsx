@@ -510,11 +510,6 @@ export const useUnitAbilityEffects = () => {
 
     unit.aether = 1;
 
-    if (!unit.afflictions.burn) {
-      //burn would otherwise instantly purge overgrowth
-      unit.enhancements.overgrowth = true;
-    }
-
     return newGameState;
   };
 

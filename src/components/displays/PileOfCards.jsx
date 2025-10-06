@@ -16,7 +16,6 @@ const PileOfCards = (props) => {
   const dispatch = useDispatch();
 
   const [floatingCards, setFloatingCards] = useState(0);
-  const [shatteredCards, setShatteredCards] = useState(0);
   const [isVestige, setIsVestige] = useState(false);
 
   const { getCardImage } = useGetImages();
@@ -46,12 +45,7 @@ const PileOfCards = (props) => {
         break;
 
       case "skillVestige":
-        // stack.push(...localGameState[team].skillShattered);
-        setStack([
-          ...localGameState[team][pile],
-          ...localGameState[team].skillShattered,
-        ]);
-        setShatteredCards(localGameState[team].skillShattered.length);
+        setStack([...localGameState[team][pile]]);
       //   break; DO NOT break
       case "avelhemVestige":
         setIsVestige(true);
@@ -144,9 +138,8 @@ const PileOfCards = (props) => {
             className={`pile-label ${floatingCards > 0 ? "with-float" : ""}`}
           >
             {`
-            Cards: ${stack.length - shatteredCards}
+            Cards: ${stack.length}
             ${floatingCards > 0 ? "(" + floatingCards.toString() + ")" : ""}
-            ${shatteredCards > 0 ? "(" + shatteredCards.toString() + ")" : ""}
             `}
           </div>
         )}
