@@ -367,20 +367,16 @@ const BountyPhase = (props) => {
       {
         text: (
           <>
-            Upgrade Invoke:
+            Upgrade Mobilize:
             <br />
-            Units may draw 1 skill via Aether-blast
+            Increase instances to 4
           </>
         ),
         ind: 10,
       },
       {
         text: (
-          <>
-            Upgrade Mobilize:
-            <br />
-            Increase instances to 4
-          </>
+          <>Once per turn, 1 unit may Aether-blast without using a tactic</>
         ),
         ind: 11,
       },

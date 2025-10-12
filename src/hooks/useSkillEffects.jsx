@@ -1748,17 +1748,6 @@ export const useSkillEffects = () => {
       : (unit.temporary.activation = 1);
 
     if (resonator) {
-      if (!["SA-02", "SA-03"].includes(resonator)) {
-        newGameState.currentResolution.push({
-          resolution: "Misc.",
-          resolution2: "Retain resonant skill unit",
-          unit: unit,
-          player: unit.player,
-          skill: "07-02",
-          resonator: resonator,
-        });
-      }
-
       newGameState.currentResolution.push({
         resolution: "Metal Skill",
         resolution2: "ReinforceR1",
@@ -1786,7 +1775,8 @@ export const useSkillEffects = () => {
     //end "ReinforceR1" resolution
     newGameState.currentResolution.pop();
 
-    //give unit activationCounter
+    newGameState = drawSkill(newGameState);
+
     unit.sharpness
       ? (unit.sharpness = Math.min(unit.sharpness + 1, 2))
       : (unit.sharpness = 1);
@@ -1849,19 +1839,10 @@ export const useSkillEffects = () => {
     //end "Frenzy Blade2" resolution
     newGameState.currentResolution.pop();
 
-    if (unit !== null && !isMuted(unit)) {
-      newGameState.currentResolution.push({
-        resolution: "Metal Skill",
-        resolution2: "Frenzy Blade3",
-        unit: unit,
-        details: {
-          reason: "Frenzy Blade",
-          title: "Frenzy Blade",
-          message: "You may spend 1 Sharpness to gain Shield foe 2 turns.",
-          no: "Skip",
-          yes: "Spend",
-        },
-      });
+    if (unit !== null && !isMuted(unit) && unit.sharpness > 1) {
+      unit.enhancements.shield
+        ? (unit.enhancements.shield = Math.max(unit.enhancements.shield, 2))
+        : (unit.enhancements.shield = 2);
     }
 
     return newGameState;
@@ -1939,7 +1920,7 @@ export const useSkillEffects = () => {
     if (
       unit !== null &&
       !isMuted(unit) &&
-      getZonesWithEnemies(unit, 1).length > 0 &&
+      getZonesWithEnemies(unit, 2).length > 0 &&
       newGameState[unit.player].skillHand.length > 0
     ) {
       newGameState.currentResolution.push({
@@ -1948,7 +1929,8 @@ export const useSkillEffects = () => {
         player: unit.player,
         details: {
           title: "Arsenal Onslaught",
-          message: "You may spend 1 skill to strike or blast an adjacent foe.",
+          message:
+            "You may spend 1 skill to either blast a foe within 2 spaces or strike.",
           restriction: null,
           reason: "Arsenal Onslaught Attack",
         },

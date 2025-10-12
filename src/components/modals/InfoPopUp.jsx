@@ -158,8 +158,7 @@ const InfoPopUp = (props) => {
             <div className="unitInfo-text-heading2">Unit Tactical Actions</div>
             <ol className="infoPopUp-list">
               <li className="unitInfo-text-desc">
-                ⬩Aether-blast an adjacent foe. ⬩If upgraded: You may draw 1
-                skill.
+                ⬩Aether-blast an adjacent foe.
               </li>
             </ol>
 

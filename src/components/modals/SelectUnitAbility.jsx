@@ -40,7 +40,7 @@ const SelectUnitAbility = (props) => {
   let updateLocal = true;
   let updateData = false;
 
-  let message = "Units can activate their ability up to once per turn.";
+  let message = "Scions can activate their ability once per turn.";
 
   let abilityDetails = [];
   switch (unit.unitClass) {

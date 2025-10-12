@@ -839,30 +839,6 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
-  const aetherBlastDraw = (unitInfo) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    newGameState.currentResolution.pop();
-
-    if (unit && !isMuted(unit)) {
-      newGameState.currentResolution.push({
-        resolution: "Misc.",
-        resolution2: "Aether-blast - Upgraded2",
-        unit: unit,
-        details: {
-          reason: "Aether-blast Invoke",
-          title: "Aether-blast (Invoke - Upgraded)",
-          message: "You may draw 1 skill.",
-          no: "Skip",
-          yes: "Draw",
-        },
-      });
-    }
-
-    return newGameState;
-  };
-
   const animationDelay = (newGameState, priority, time) => {
     const t = time ? time : 275;
 
@@ -2386,7 +2362,7 @@ export const useRecurringEffects = () => {
     // newZoneInfo[victim.row][victim.column].unitIndex = null;
     // newGameState.zones = JSON.stringify(newZoneInfo);
 
-    // "If the attack was lethal" subsequent effects
+    // "If the damage was lethal" subsequent effects
     // switch (special) {
     //   case "Parasite Bloom":
     //     // idk ;
@@ -2704,7 +2680,15 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
-  const enterMoveMode = (zoneIds, unit, gameState, tactic, canCancel, pop) => {
+  const enterMoveMode = (
+    zoneIds,
+    unit,
+    gameState,
+    tactic,
+    canCancel,
+    pop,
+    dice
+  ) => {
     let newGameState = gameState
       ? gameState
       : JSON.parse(JSON.stringify(localGameState));
@@ -2721,6 +2705,7 @@ export const useRecurringEffects = () => {
       tactic: tactic,
       canCancel: canCancel,
       mover: self,
+      dice: dice,
     });
 
     return newGameState;
@@ -2733,7 +2718,8 @@ export const useRecurringEffects = () => {
     tactic,
     reason,
     special,
-    canCancel
+    canCancel,
+    dice
   ) => {
     let newGameState = null;
     if (gameState) {
@@ -2752,6 +2738,7 @@ export const useRecurringEffects = () => {
       reason,
       special,
       canCancel,
+      dice,
     });
 
     dispatch(updateState(newGameState));
@@ -3373,7 +3360,7 @@ export const useRecurringEffects = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
     const mobilizeLimit =
-      newGameState[self].bountyUpgrades.tactics >= 2 ? 4 : 3;
+      newGameState[self].bountyUpgrades.tactics >= 1 ? 4 : 3;
 
     const dieFaces = [
       { face: "Advance", stock: 1, limit: 1 },
@@ -4404,7 +4391,6 @@ export const useRecurringEffects = () => {
     activateThunderThaumaturge,
     activateVengefulLegacy,
     activateViridianGrave,
-    aetherBlastDraw,
     aetherRestoreSpecial,
     animationDelay,
     applyAnathema,

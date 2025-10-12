@@ -43,13 +43,33 @@ const DemoTextBox = () => {
         setTutorialIndex(45);
         break;
 
+      case 50.1:
+        setTutorialIndex(49);
+        break;
+
       case 52:
         setTutorialIndex(50);
         break;
 
+      case 56.1:
+        setTutorialIndex(55);
+        break;
+
       case 58:
       case 59:
-        setTutorialIndex(56);
+        setTutorialIndex(56.1);
+        break;
+
+      case 62.1:
+        setTutorialIndex(61);
+        break;
+
+      case 62.2:
+        setTutorialIndex(62.1);
+        break;
+
+      case 63:
+        setTutorialIndex(62.2);
         break;
 
       case 67:
@@ -77,6 +97,7 @@ const DemoTextBox = () => {
         break;
 
       case 116:
+      case 116.1:
       case 117:
       case 118:
       case 119:
@@ -120,12 +141,30 @@ const DemoTextBox = () => {
         setTutorialIndex(47);
         break;
 
+      case tutorialIndex === 49:
+        setTutorialIndex(50.1);
+        break;
+
       case tutorialIndex === 50:
+      case tutorialIndex === 50.1:
         setTutorialIndex(52);
         break;
 
-      case [56, 57, 58].includes(tutorialIndex):
+      case [56, 56.1, 57, 58].includes(tutorialIndex):
         setTutorialIndex(59);
+        break;
+
+      case tutorialIndex === 61:
+        setTutorialIndex(62.1);
+        break;
+
+      case tutorialIndex === 62:
+      case tutorialIndex === 62.1:
+        setTutorialIndex(62.2);
+        break;
+
+      case tutorialIndex === 62.2:
+        setTutorialIndex(63);
         break;
 
       case tutorialIndex === 65:
@@ -152,7 +191,7 @@ const DemoTextBox = () => {
         setTutorialIndex(104);
         break;
 
-      case [114, 115, 116, 117, 118].includes(tutorialIndex):
+      case [114, 115, 116, 116.1, 117, 118].includes(tutorialIndex):
         setTutorialIndex(119);
         break;
 
@@ -317,18 +356,19 @@ const DemoTextBox = () => {
             };
 
           case 50:
+          case 50.1:
             return {
-              top: 40,
+              top: 30,
               left: 40,
-              width: 400,
+              width: 1000,
             };
 
           case 51:
           case 52:
             return {
-              top: 40,
+              top: 120,
               left: 20,
-              width: 400,
+              width: 350,
             };
 
           case 53:
@@ -516,9 +556,9 @@ const DemoTextBox = () => {
 
           case 100:
             return {
-              top: 320,
-              left: 970,
-              width: 420,
+              top: 200,
+              left: 770,
+              width: 620,
             };
 
           case 101:
@@ -591,6 +631,7 @@ const DemoTextBox = () => {
           case 114:
           case 115:
           case 116:
+          case 116.1:
           case 117:
           case 118:
           case 119:
@@ -683,10 +724,10 @@ const DemoTextBox = () => {
 
   const learnOveriewExclude = new Set([
     7, 14, 15, 20, 21, 22, 23, 24, 27, 28, 29, 31, 32, 33, 38, 40, 41, 43, 44,
-    46, 47, 49, 50, 51, 52, 53, 55, 56, 57, 58, 59, 61, 62, 63, 64, 66, 67, 68,
-    69, 72, 74, 75, 77, 79, 82, 84, 85, 86, 87, 89, 90, 91, 93, 99, 101, 102,
-    103, 104, 107, 110, 113, 115, 116, 117, 118, 119, 120, 121, 123, 124, 125,
-    130, 132,
+    46, 47, 49, 50, 50.1, 51, 52, 53, 55, 56, 56.1, 57, 58, 59, 61, 62, 62.1,
+    62.2, 63, 64, 66, 67, 68, 69, 72, 74, 75, 77, 79, 82, 84, 85, 86, 87, 89,
+    90, 91, 93, 99, 101, 102, 103, 104, 107, 110, 113, 115, 116, 116.1, 117,
+    118, 119, 120, 121, 123, 124, 125, 130, 132,
   ]);
 
   const showNext = () => {
@@ -1136,7 +1177,7 @@ const DemoTextBox = () => {
               <div>
                 Units can also use tactics to perform their own actions.
                 <br /> <br />
-                For the purposes of this demonstration, your tactics have been
+                For the purposes of this demonstration, your tactics will be
                 refreshed.
               </div>
             );
@@ -1150,19 +1191,28 @@ const DemoTextBox = () => {
             );
 
           case 50:
-            return <div>Click on the Advance tactic.</div>;
+          case 50.1:
+            return (
+              <div>
+                Units can perform 3 different tactical actions, each of which
+                requires specified tactics. As mentioned earlier, these present
+                overlaps.
+                <br /> <br />
+                Select Traverse.
+              </div>
+            );
 
           case 51:
           case 52:
             return (
               <div>
-                Units can use the Advance tactic to{" "}
+                Units can any tactic (except Invoke) to{" "}
                 <span className="goldText">traverse</span>, which is a keyword
                 that means “
                 <span className="goldText">move to a vacant adjacent zone</span>
-                ”. (Aether-blast will not be discussed in this tutorial.)
+                ”.
                 <br /> <br />
-                Click on Traverse.
+                Click on the Advance tactic to use it.
               </div>
             );
 
@@ -1180,8 +1230,6 @@ const DemoTextBox = () => {
           case 54:
             return (
               <div>
-                As mentioned earlier, tactics have some overlaps.
-                <br /> <br />
                 As with Advance, units can traverse via Mobilize. And since it
                 has 3 instances, it allows up to 3 units to move.
               </div>
@@ -1197,14 +1245,17 @@ const DemoTextBox = () => {
             );
 
           case 56:
-            return <div>Click on Mobilize.</div>;
+          case 56.1:
+            return <div>Click on Traverse again.</div>;
 
           case 57:
           case 58:
           case 59:
             return (
               <div>
-                Click on traverse, then make them move forward once more.
+                This time, click on the Mobilize tactic.
+                <br /> <br />
+                Then make them move forward once more.
               </div>
             );
 
@@ -1228,6 +1279,10 @@ const DemoTextBox = () => {
             );
 
           case 62:
+          case 62.1:
+            return <div>Click on Traverse again.</div>;
+
+          case 62.2:
             return (
               <div>
                 As you can see, Mobilize cannot be selected.
@@ -1350,22 +1405,17 @@ const DemoTextBox = () => {
             return (
               <div>
                 Abilities are special actions available to Scions. Each Scion
-                class 1 exclusive ability.
+                class has 1 exclusive ability.
                 <br /> <br />
                 Some abilities require tactics to activate. In such cases, the
-                tactics would appear below the ability’s name.
+                tactics would appear below the ability’s name, similar with
+                tactical actions.
               </div>
             );
 
           case 74:
           case 75:
-            return (
-              <div>
-                Scions can activate their abilities up to once per turn.
-                <br /> <br />
-                Activate Amplify Aura.
-              </div>
-            );
+            return <div>Activate Amplify Aura.</div>;
 
           case 76:
             return (
@@ -1433,8 +1483,9 @@ const DemoTextBox = () => {
             return (
               <div>
                 <span className="goldText">
-                  Units can use each of their abilities up to once per turn.
+                  Scions can use their ability up to once per turn.
                 </span>{" "}
+                <br /> <br />
                 Therefore, you will have to wait until your next turn before
                 your Mana Scion can activate Amplify Aura again.
               </div>
@@ -1502,10 +1553,10 @@ const DemoTextBox = () => {
           case 92:
             return (
               <div>
-                Your Mana Scion has regained their Aether (and its icon).
+                Your Mana Scion has regained their Aether.
                 <br /> <br />
-                This has triggered their Overload talent, which grants the
-                option to draw 1 skill.
+                Incidentally, Mana Scions have a talent that activates when this
+                happens. When their Aether is restored, you may draw 1 skill.
               </div>
             );
 
@@ -1516,11 +1567,12 @@ const DemoTextBox = () => {
             return (
               <div>
                 <span className="goldText">
-                  Sometimes, the sequence of your actions matters.
+                  The sequence of your actions matters.
                 </span>{" "}
-                Ascending your pawn to a Water Scion after activating Amplify
-                Aura resulted in your Mana Scion regaining their Aether after
-                they had expended it.
+                <br /> <br />
+                Had you ascended your pawn into a Water Scion before activating
+                the Mana Scion’s ability, the latter wouldn’t have their Aether
+                at this moment.
               </div>
             );
 
@@ -1538,7 +1590,7 @@ const DemoTextBox = () => {
             return (
               <div>
                 <span className="goldText">
-                  Skills can be activated by only those that match their facet
+                  Skills can be activated only by those that match their facet
                 </span>
                 , which is indicated by the icon in the card’s top-right corner.
                 <br /> <br />
@@ -1577,9 +1629,9 @@ const DemoTextBox = () => {
           case 100:
             return (
               <div>
-                Skills that belong to the Scion’s class are displayed. If
-                circumstances prevent the activation of a skill, the card will
-                be grayed out.
+                The display filters your hand to show only skills that belong to
+                the Scion’s class. If circumstances prevent the activation of a
+                skill, the card will be grayed out.
                 <br /> <br />
                 (Feel free to click on the magnifying glass icon on a card to
                 enlarge it for viewing. You can then click anywhere to close
@@ -1596,7 +1648,7 @@ const DemoTextBox = () => {
             return (
               <div>
                 Surge requires the activator to spend their Aether to traverse
-                or strike. (Fortunately, clever sequencing of actions restored
+                or strike. (Fortunately, clever sequencing of effects restored
                 your Mana Scion’s Aether.)
                 <br /> <br />
                 Select Strike.
@@ -1610,7 +1662,7 @@ const DemoTextBox = () => {
                 <br />
                 1. Target an adjacent foe. <br />
                 2. Attack them. <br />
-                3. If the attack was lethal, move into the zone they were
+                3. If the damage was lethal, move into the zone they were
                 occupying.
               </div>
             );
@@ -1711,14 +1763,17 @@ const DemoTextBox = () => {
 
           case 115:
           case 116:
+          case 116.1:
           case 117:
           case 118:
           case 119:
             return (
               <div>
                 Use 1 instance of your Mobilize tactic to move that pawn
-                forward. Open their tactics menu, then click on Mobilize,
-                traverse, and their destination.
+                forward.
+                <br /> <br />
+                Open their tactics menu, then click on traverse, Mobilize, and
+                their destination.
               </div>
             );
 
@@ -1813,8 +1868,8 @@ const DemoTextBox = () => {
           case 131:
             return (
               <div>
-                The opponent’s side of the board is now glowing red, which means
-                it’s their turn to make a decision.
+                The board is now glowing red, which means it’s your opponent’s
+                turn to make a decision.
               </div>
             );
 

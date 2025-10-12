@@ -4,6 +4,7 @@ import "./Modal.css";
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../../redux/gameState";
 import { updateDemo } from "../../redux/demoGuide";
+import { updateDemoCount } from "../../redux/demoCount";
 
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 import { useGetImages } from "../../hooks/useGetImages";
@@ -14,6 +15,7 @@ const SelectTacticViaEffect = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
+  const { demoCount } = useSelector((state) => state.demoCount);
 
   const [selectedChoice, setSelectedChoice] = useState(null);
 
@@ -26,7 +28,9 @@ const SelectTacticViaEffect = (props) => {
     drawAvelhem,
     drawSkill,
     enterMoveMode,
+    enterSelectUnitMode,
     getVacantAdjacentZones,
+    getZonesWithEnemies,
   } = useRecurringEffects();
 
   const { getTacticImage } = useGetImages();
@@ -77,10 +81,6 @@ const SelectTacticViaEffect = (props) => {
   };
 
   const handleProceed = (i) => {
-    // if (canUseTactic[i] && localGameState.tactics[i].stock > 0) {
-
-    // }
-
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
     //end Tactic Selection
@@ -96,18 +96,72 @@ const SelectTacticViaEffect = (props) => {
     let unit = null;
     if (props.unit) {
       unit = newGameState[props.unit.player].units[props.unit.unitIndex];
-
-      //prevent unit from using tactic again
-      if (newGameState.tactics[i].face === "Mobilize") {
-        if (i === 0) {
-          unit.temporary.used0thTactic = true;
-        } else if (i === 1) {
-          unit.temporary.used1stTactic = true;
-        }
-      }
     }
 
     switch (props.details.reason) {
+      //Actions
+      case "Traverse":
+        newGameState = enterMoveMode(
+          getVacantAdjacentZones(unit),
+          unit,
+          newGameState,
+          i,
+          true,
+          null,
+          i
+        );
+        break;
+
+      case "Aether-blast":
+        //give unit activationCounter
+        unit.temporary.activation
+          ? (unit.temporary.activation += 1)
+          : (unit.temporary.activation = 1);
+
+        newGameState.activatingUnit.push(unit);
+
+        newGameState.currentResolution.push({
+          resolution: "Tactic End",
+          unit: unit,
+        });
+
+        enterSelectUnitMode(
+          getZonesWithEnemies(props.unit, 1),
+          props.unit,
+          newGameState,
+          i,
+          "aether-blast",
+          null,
+          true,
+          i
+        );
+        break;
+
+      case "Strike":
+        //give unit activationCounter
+        unit.temporary.activation
+          ? (unit.temporary.activation += 1)
+          : (unit.temporary.activation = 1);
+
+        newGameState.activatingUnit.push(unit);
+
+        newGameState.currentResolution.push({
+          resolution: "Tactic End",
+          unit: unit,
+        });
+
+        enterSelectUnitMode(
+          getZonesWithEnemies(props.unit, 1),
+          props.unit,
+          newGameState,
+          i,
+          "strike",
+          null,
+          true,
+          i
+        );
+        break;
+
       //Abilities
       case "Afterburner":
         updateData = true;
@@ -151,6 +205,12 @@ const SelectTacticViaEffect = (props) => {
         break;
 
       case "Reap the Whirlwind":
+        //prevent unit from using tactic again
+        if (i === 0) {
+          unit.temporary.used0thTactic = true;
+        } else if (i === 1) {
+          unit.temporary.used1stTactic = true;
+        }
         updateData = true;
         newGameState.activatingSkill.push("ReapTheWhirlwind");
         newGameState.activatingUnit.push(unit);
@@ -171,6 +231,13 @@ const SelectTacticViaEffect = (props) => {
         break;
 
       case "Galvanize":
+        //prevent unit from using tactic again
+        if (i === 0) {
+          unit.temporary.used0thTactic = true;
+        } else if (i === 1) {
+          unit.temporary.used1stTactic = true;
+        }
+
         updateData = true;
         newGameState.activatingSkill.push("Galvanize");
         newGameState.activatingUnit.push(unit);
@@ -188,34 +255,17 @@ const SelectTacticViaEffect = (props) => {
         });
 
         newGameState = animationDelay(newGameState, self);
+
         break;
 
       //Skills
-
       case "Aerial Impetus":
         const mobilizeLimit =
-          newGameState[self].bountyUpgrades.tactics >= 2 ? 4 : 3;
+          newGameState[self].bountyUpgrades.tactics >= 1 ? 4 : 3;
 
         newGameState.tactics[i].stock = mobilizeLimit;
         newGameState.tactics[i].limit = mobilizeLimit;
         newGameState.tactics[i].face = "Mobilize";
-        break;
-
-      case "Surge":
-        newGameState.currentResolution.push({
-          resolution: "Mana Skill",
-          resolution2: "Surge3",
-          unit: unit,
-        });
-
-        newGameState = enterMoveMode(
-          getVacantAdjacentZones(unit),
-          unit,
-          newGameState,
-          null
-        );
-
-        //newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
         break;
 
       case "Diffusion":
@@ -284,29 +334,45 @@ const SelectTacticViaEffect = (props) => {
     props.hideOrRevealModale();
   };
 
-  const canClick = (element, element2) => {
+  const canClick = (element1, element2) => {
     switch (demoGuide) {
-      case "Learn1.123":
-        return element2 === 0;
+      case "Learn-overview":
+        switch (demoCount) {
+          case 51:
+            return element2 === 0;
 
-      case "Learn1.123.1":
-        return element === "Proceed";
+          case 57:
+          case 117:
+            return element2 === 1;
 
-      ///////
+          case 52:
+          case 58:
+          case 118:
+            return element1 === "Select Button";
+
+          case 62.2:
+            return element1 === "Return Button";
+        }
     }
   };
 
   const handleUpdateDemoGuide = () => {
     switch (demoGuide) {
-      case "Learn1.123":
-        dispatch(updateDemo("Learn1.123.1"));
-        break;
+      case "Learn-overview":
+        switch (demoCount) {
+          case 51:
+          case 52:
+          case 57:
+          case 58:
+          case 117:
+          case 118:
+            dispatch(updateDemoCount(demoCount + 1));
+            break;
 
-      case "Learn1.123.1":
-        dispatch(updateDemo("Learn1.124"));
-        break;
-
-      ////////////////
+          case 62.2:
+            dispatch(updateDemoCount(63));
+            break;
+        }
     }
   };
 
@@ -376,7 +442,9 @@ const SelectTacticViaEffect = (props) => {
         <div className="modalFooter">
           {selectedChoice !== null && (
             <button
-              className={`redButton2 ${canClick("Proceed") ? "demoClick" : ""}`}
+              className={`redButton2 ${
+                canClick("Select Button") ? "demoClick" : ""
+              }`}
               onClick={() => {
                 handleProceed(selectedChoice);
                 handleUpdateDemoGuide();
@@ -386,7 +454,15 @@ const SelectTacticViaEffect = (props) => {
             </button>
           )}
           {props.details.canSkip && selectedChoice === null && (
-            <button className="redButton2" onClick={() => handleSkip()}>
+            <button
+              className={`redButton2 ${
+                canClick("Return Button") ? "demoClick" : ""
+              }`}
+              onClick={() => {
+                handleSkip();
+                handleUpdateDemoGuide();
+              }}
+            >
               {skipMessage}
             </button>
           )}

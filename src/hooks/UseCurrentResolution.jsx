@@ -27,6 +27,7 @@ import RevealEnemyHand from "../components/modals/RevealEnemyHand";
 import RevealSkill from "../components/modals/RevealSkill";
 import SelectUnitAbility from "../components/modals/SelectUnitAbility";
 import SelectTacticalAction from "../components/modals/SelectTacticalAction";
+import SelectTacticalActionUnit from "../components/modals/SelectTacticalActionUnit";
 import SelectTacticalActionSovereign from "../components/modals/SelectTacticalActionSovereign";
 import TacticResults from "../components/modals/TacticResults";
 import TacticResults3 from "../components/modals/TacticResults3";
@@ -35,7 +36,6 @@ import FloatSkill from "../components/modals/FloatSkill";
 import YouMaySpend1Skill from "../components/modals/YouMaySpend1Skill";
 import YouMayNoYes from "../components/modals/YouMayNoYes";
 import VictoryScreen from "../components/modals/VictoryScreen";
-import SelectTactic from "../components/modals/SelectTactic";
 import SelectTacticViaEffect from "../components/modals/SelectTacticViaEffect";
 import SelectCustomChoice from "../components/modals/SelectCustomChoice";
 import ContingentTriggered from "../components/modals/ContingentTriggered";
@@ -52,7 +52,6 @@ const UseCurrentResolution = (props) => {
   const { applyAbility } = useUnitAbilityEffects();
 
   const {
-    aetherBlastDraw,
     applyAnathema,
     applyBurn,
     applyDamage,
@@ -877,9 +876,23 @@ const UseCurrentResolution = (props) => {
           return (
             <>
               {self === localGameState.turnPlayer && !props.hideModal && (
-                <SelectTactic
+                <SelectTacticalActionUnit
                   updateFirebase={props.updateFirebase}
                   unit={lastRes.unit}
+                />
+              )}
+            </>
+          );
+
+        case "Selecting Tactic":
+          return (
+            <>
+              {self === localGameState.turnPlayer && !props.hideModal && (
+                <SelectTacticViaEffect
+                  unit={lastRes.unit}
+                  details={lastRes.details}
+                  updateFirebase={props.updateFirebase}
+                  hideOrRevealModale={props.hideOrRevealModale}
                 />
               )}
             </>
@@ -944,26 +957,6 @@ const UseCurrentResolution = (props) => {
             props.resolutionUpdate(appointShield(lastRes.unit));
           }
           break;
-
-        case "Aether-blast - Upgraded":
-          if (self === lastRes.unit.player) {
-            props.resolutionUpdate(aetherBlastDraw(lastRes.unit));
-          }
-          break;
-
-        case "Aether-blast - Upgraded2":
-          return (
-            <>
-              {self === lastRes.unit.player && !props.hideModal && (
-                <YouMayNoYes
-                  unit={lastRes.unit}
-                  details={lastRes.details}
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
 
         case "Beseech - Upgraded":
         case "Cultivate - Upgraded":
@@ -2517,20 +2510,6 @@ const UseCurrentResolution = (props) => {
           }
           break;
 
-        case "Frenzy Blade3":
-          return (
-            <>
-              {self === lastRes.unit.player && !props.hideModal && (
-                <YouMayNoYes
-                  unit={lastRes.unit}
-                  details={lastRes.details}
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
-
         case "Activating Arsenal Onslaught":
           if (self === lastRes.unit.player) {
             props.updateLocalState(
@@ -2547,7 +2526,7 @@ const UseCurrentResolution = (props) => {
 
         case "Arsenal Onslaught1.1":
           if (self === lastRes.unit.player) {
-            selectEnemies(lastRes.unit, 1, null, "blast", null);
+            selectEnemies(lastRes.unit, 2, null, "blast", null);
           }
           break;
 

@@ -471,16 +471,18 @@ const BoardArea = (props) => {
     newGameState = move(newGameState, unit, zoneId, special);
 
     if (tacticUsed !== null) {
-      newGameState.tactics[tacticUsed].stock--;
+      // newGameState.tactics[tacticUsed].stock--;
 
-      if (tacticUsed === 0) {
-        newGameState[unit.player].units[
-          unit.unitIndex
-        ].temporary.used0thTactic = true;
-      } else if (tacticUsed === 1) {
-        newGameState[unit.player].units[
-          unit.unitIndex
-        ].temporary.used1stTactic = true;
+      if (newGameState.tactics[tacticUsed].face === "Mobilize") {
+        if (tacticUsed === 0) {
+          newGameState[unit.player].units[
+            unit.unitIndex
+          ].temporary.used0thTactic = true;
+        } else if (tacticUsed === 1) {
+          newGameState[unit.player].units[
+            unit.unitIndex
+          ].temporary.used1stTactic = true;
+        }
       }
     }
 

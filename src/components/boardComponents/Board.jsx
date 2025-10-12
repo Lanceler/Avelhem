@@ -46,10 +46,6 @@ const Board = (props) => {
   const selectUnit = (unit, selectedUnit, reason, special) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    if (props.tacticUsed !== null) {
-      newGameState.tactics[props.tacticUsed].stock--;
-    }
-
     //end ""Selecting Unit"
     newGameState.currentResolution.pop();
 

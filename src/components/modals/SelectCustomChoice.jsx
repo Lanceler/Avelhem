@@ -170,10 +170,10 @@ const SelectCustomChoice = (props) => {
 
     case "Arsenal Onslaught":
       canSkip = true;
-      canFirstChoice = canStrike(unit);
-      canSecondChoice = true;
-      ChoiceFirstMessage = "Strike.";
-      ChoiceSecondMessage = "Blast.";
+      canFirstChoice = true;
+      canSecondChoice = canStrike(unit);
+      ChoiceFirstMessage = "Blast a foe within 2 spaces.";
+      ChoiceSecondMessage = "Strike.";
       break;
 
     case "Ballistic Armor":
@@ -573,13 +573,13 @@ const SelectCustomChoice = (props) => {
         if (selectedChoice === 1) {
           newGameState.currentResolution.push({
             resolution: "Metal Skill",
-            resolution2: "Arsenal Onslaught1",
+            resolution2: "Arsenal Onslaught1.1",
             unit: unit,
           });
         } else {
           newGameState.currentResolution.push({
             resolution: "Metal Skill",
-            resolution2: "Arsenal Onslaught1.1",
+            resolution2: "Arsenal Onslaught1",
             unit: unit,
           });
         }

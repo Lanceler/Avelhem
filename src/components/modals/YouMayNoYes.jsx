@@ -86,10 +86,6 @@ const YouMayNoYes = (props) => {
         newGameState = endExecutionPhase2(newGameState);
         break;
 
-      case "Aether-blast Invoke": //Aether-blast - Upgraded2
-        newGameState = drawSkill(newGameState);
-        break;
-
       case "Assault - Avelhem Draw": // "Assault - Avelhem Draw"
       case "Beseech Draw": //"Beseech - Upgraded"
         newGameState = drawAvelhem(newGameState);
@@ -340,13 +336,6 @@ const YouMayNoYes = (props) => {
 
       case "Overload": //Activating Overload
         newGameState = drawSkill(newGameState);
-        break;
-
-      case "Frenzy Blade": // Frenzy Blade3
-        unit.sharpness -= 1;
-        unit.enhancements.shield
-          ? (unit.enhancements.shield = Math.max(unit.enhancements.shield, 2))
-          : (unit.enhancements.shield = 2);
         break;
 
       case "Castle of Thorns": // "Castle Of Thorns1"

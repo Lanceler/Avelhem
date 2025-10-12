@@ -1462,7 +1462,7 @@ export default function Rules() {
                 </span>{" "}
                 is simply “Strike”. This can be restated and expanded as 3
                 steps: “(1)Target an adjacent foe. (2)Attack them. (3)If the
-                attack was lethal, move to the zone they were occupying.”
+                damage was lethal, move to the zone they were occupying.”
               </p>
 
               <br />
@@ -1494,7 +1494,7 @@ export default function Rules() {
                 <li>Target an adjacent foe.</li>
                 <li>Attack them.</li>
                 <li>
-                  If the attack was lethal, move to the zone they were
+                  If the damage was lethal, move to the zone they were
                   occupying.
                 </li>
               </ul>
