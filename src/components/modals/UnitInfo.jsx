@@ -220,7 +220,7 @@ const UnitInfo = (props) => {
               ⬩You are immune to Frost and Burn.
             </p>
             <p className="unitInfo-text-desc">
-              ⬩You can activate abilities more than once per turn.
+              ⬩You can activate your ability more than once per turn.
             </p>
             <p className="unitInfo-text-desc unitInfo-text-last">
               ⬩Your attacks against frozen foes pierce Shield.

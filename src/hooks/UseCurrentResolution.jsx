@@ -26,9 +26,9 @@ import SelectHandMultiSkill from "../components/modals/SelectHandMultiSkill";
 import RevealEnemyHand from "../components/modals/RevealEnemyHand";
 import RevealSkill from "../components/modals/RevealSkill";
 import SelectUnitAbility from "../components/modals/SelectUnitAbility";
-import SelectTacticalAction from "../components/modals/SelectTacticalAction";
 import SelectTacticalActionUnit from "../components/modals/SelectTacticalActionUnit";
 import SelectTacticalActionSovereign from "../components/modals/SelectTacticalActionSovereign";
+import SelectTacticViaEffect from "../components/modals/SelectTacticViaEffect";
 import TacticResults from "../components/modals/TacticResults";
 import TacticResults3 from "../components/modals/TacticResults3";
 import RevealedSkillView from "../components/modals/RevealedSkillView";
@@ -36,7 +36,6 @@ import FloatSkill from "../components/modals/FloatSkill";
 import YouMaySpend1Skill from "../components/modals/YouMaySpend1Skill";
 import YouMayNoYes from "../components/modals/YouMayNoYes";
 import VictoryScreen from "../components/modals/VictoryScreen";
-import SelectTacticViaEffect from "../components/modals/SelectTacticViaEffect";
 import SelectCustomChoice from "../components/modals/SelectCustomChoice";
 import ContingentTriggered from "../components/modals/ContingentTriggered";
 import FloatResonator from "../components/modals/FloatResonator";
@@ -58,7 +57,6 @@ const UseCurrentResolution = (props) => {
     applyFrost,
     applyParalysis,
     applyScore,
-    appointShield,
     avelhemResonance,
     decrementBurn,
     decrementStatus,
@@ -898,20 +896,6 @@ const UseCurrentResolution = (props) => {
             </>
           );
 
-        case "Selecting Tactical Action":
-          return (
-            <>
-              {self === localGameState.turnPlayer && !props.hideModal && (
-                <SelectTacticalAction
-                  unit={lastRes.unit}
-                  dice={lastRes.dice}
-                  face={lastRes.face}
-                  updateFirebase={props.updateFirebase}
-                />
-              )}
-            </>
-          );
-
         case "Selecting Tactical Action - Sovereign":
           return (
             <>
@@ -944,26 +928,6 @@ const UseCurrentResolution = (props) => {
               {self === lastRes.player && !props.hideModal && (
                 <FloatSkill
                   unit={lastRes.unit}
-                  details={lastRes.details}
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
-
-        case "Appoint - Upgraded":
-          if (self === lastRes.unit.player) {
-            props.resolutionUpdate(appointShield(lastRes.unit));
-          }
-          break;
-
-        case "Beseech - Upgraded":
-        case "Cultivate - Upgraded":
-          return (
-            <>
-              {self === lastRes.player && !props.hideModal && (
-                <YouMayNoYes
                   details={lastRes.details}
                   updateFirebase={props.updateFirebase}
                   hideOrRevealModale={props.hideOrRevealModale}

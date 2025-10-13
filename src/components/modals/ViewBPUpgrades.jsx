@@ -62,24 +62,25 @@ const ViewBPUpgrades = (props) => {
             </div>
 
             <div>
-              {upgrades.acquisition > 0 && (
+              {upgrades.phases > 0 && (
                 <>
-                  <h3>Acquisition:</h3>
+                  <h3>Phases:</h3>
 
-                  {upgrades.acquisition >= 1 && (
+                  {upgrades.phases >= 1 && (
                     <p className="unitInfo-text-desc">
-                      1. Beseech upgraded: May draw 1 additional Avelhem.
+                      1. May draw 1 floating skill at start of Acquisition
+                      Phase.
                     </p>
                   )}
-                  {upgrades.acquisition >= 2 && (
+                  {upgrades.phases >= 2 && (
                     <p className="unitInfo-text-desc">
-                      2. Appoint upgraded: Pawns gain Shield for 2 turns.
+                      2. Battle Cry costs 2 skills; may spend 1 skill to roll a
+                      tactical die.
                     </p>
                   )}
-                  {upgrades.acquisition >= 3 && (
+                  {upgrades.phases >= 3 && (
                     <p className="unitInfo-text-desc">
-                      3. Cultivate upgraded: May spend 1 DP to draw 1 additional
-                      skill.
+                      3. Defiance Phase grants 2 DP.
                     </p>
                   )}
                   <br />
@@ -94,17 +95,19 @@ const ViewBPUpgrades = (props) => {
 
                   {upgrades.tactics >= 1 && (
                     <p className="unitInfo-text-desc">
-                      1. Invoke upgraded: May draw 1 skill via Aether-blast.
+                      1. Mobilize upgraded: Instances raised from 3 to 4.
                     </p>
                   )}
                   {upgrades.tactics >= 2 && (
                     <p className="unitInfo-text-desc">
-                      2. Mobilize upgraded: Instances raised from 3 to 4.
+                      2. Once per turn, 1 unit may Aether-blast without using a
+                      tactic.
                     </p>
                   )}
                   {upgrades.tactics >= 3 && (
                     <p className="unitInfo-text-desc">
-                      3. Advance upgraded: “Deploy Scion” unlocked.
+                      3. Advance upgraded: "Convert Tactic” and “Deploy Scion”
+                      unlocked.
                     </p>
                   )}
 

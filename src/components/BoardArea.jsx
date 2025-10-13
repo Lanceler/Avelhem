@@ -383,14 +383,6 @@ const BoardArea = (props) => {
         10,
         newGameState[self].bountyPoints + 1
       );
-
-      if (newGameState[self].bountyUpgrades.acquisition >= 2) {
-        newGameState.currentResolution.push({
-          resolution: "Misc.",
-          resolution2: "Appoint - Upgraded",
-          unit: newUnit,
-        });
-      }
     }
 
     //Draw Avelhem via Assault

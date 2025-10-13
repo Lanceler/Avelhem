@@ -69,7 +69,8 @@ const InfoPopUp = (props) => {
                 ⬩Deploy a pawn in your frontier.
               </li>
               <li className="unitInfo-text-desc">
-                ⬩Spend 6 DP to gain an Assault tactic.
+                ⬩Spend 3 DP to gain an Assault tactic.{" "}
+                <em>(Must be unlocked.)</em>
               </li>
               <li className="unitInfo-text-desc">
                 ⬩Float 1 skill to deploy a Scion in your frontier.{" "}

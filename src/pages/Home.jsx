@@ -68,7 +68,7 @@ export default function Home() {
           bountyPoints: 5,
           bountyUpgrades: {
             frontier: 0,
-            acquisition: 0,
+            phases: 0,
             coordination: 0,
             tactics: 0,
             avelhem: 0,

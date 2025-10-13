@@ -21,7 +21,6 @@ const AcquisitionPhase = (props) => {
     useRecurringEffects();
 
   let newGameState = JSON.parse(JSON.stringify(localGameState));
-  const upgrade = newGameState[self].bountyUpgrades.acquisition;
 
   let optionDetails = [
     {
@@ -31,39 +30,15 @@ const AcquisitionPhase = (props) => {
           You can have up to <br /> 8 units in play.
         </div>
       ),
-      optionText: (
-        <>
-          <div>⬩Deploy a pawn in your frontier.</div>
-          <div>
-            ⬩{upgrade < 2 && <>If upgraded: </>}
-            Grant them Shield for 2 turns.
-          </div>
-        </>
-      ),
+      optionText: <div>⬩Deploy a pawn in your frontier.</div>,
     },
     {
       optionName: "Beseech",
-      optionText: (
-        <>
-          <div>⬩Draw 2 Avelhems.</div>
-          <div>
-            ⬩{upgrade < 1 && <>If upgraded: </>}
-            You may draw 1 Avelhem.
-          </div>
-        </>
-      ),
+      optionText: <div>⬩Draw 2 Avelhems.</div>,
     },
     {
       optionName: "Cultivate",
-      optionText: (
-        <>
-          <div>⬩Draw 1 skill.</div>
-          <div>
-            ⬩{upgrade < 3 && <>If upgraded: </>}
-            You may spend 1 DP to draw 1 skill.
-          </div>
-        </>
-      ),
+      optionText: <div>⬩Draw 1 skill.</div>,
     },
   ];
 
@@ -120,21 +95,6 @@ const AcquisitionPhase = (props) => {
 
         newGameState = nextPhase(newGameState);
 
-        if (upgrade >= 1) {
-          newGameState.currentResolution.push({
-            resolution: "Misc.",
-            resolution2: "Beseech - Upgraded",
-            player: self,
-            details: {
-              reason: "Beseech Draw",
-              title: "Beseech",
-              message: "You may draw 1 Avelhem.",
-              no: "Skip",
-              yes: "Draw",
-            },
-          });
-        }
-
         dispatch(updateState(newGameState));
         props.updateFirebase(newGameState);
         break;
@@ -142,24 +102,6 @@ const AcquisitionPhase = (props) => {
       case 2:
         newGameState = drawSkill(newGameState);
         newGameState = nextPhase(newGameState);
-
-        if (
-          newGameState[self].bountyUpgrades.acquisition >= 3 &&
-          newGameState[self].defiancePoints > 0
-        ) {
-          newGameState.currentResolution.push({
-            resolution: "Misc.",
-            resolution2: "Cultivate - Upgraded",
-            player: self,
-            details: {
-              reason: "Cultivate Draw",
-              title: "Cultivate",
-              message: "You may spend 1 DP to draw 1 Skill.",
-              no: "Skip",
-              yes: "Draw",
-            },
-          });
-        }
 
         dispatch(updateState(newGameState));
         props.updateFirebase(newGameState);

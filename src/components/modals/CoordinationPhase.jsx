@@ -27,6 +27,8 @@ const CoordinationPhaseSelection = (props) => {
 
   let newGameState = JSON.parse(JSON.stringify(localGameState));
 
+  const upgrade = newGameState[self].bountyUpgrades.phases;
+
   let optionDetails = [
     {
       optionName: "Assent",
@@ -44,6 +46,14 @@ const CoordinationPhaseSelection = (props) => {
             ⬩Spend 3 skills to gain 1{" "}
             <img src={AssaultSmall} style={{ height: 21 }} />.
           </div>
+          <br />
+          <br />
+          <div className=" ">
+            <em>
+              {upgrade < 2 ? "If upgraded: " : "Upgraded: "}You may roll 1
+              tactical die or reduce the cost to 2 skills.
+            </em>
+          </div>
         </>
       ),
     },
@@ -56,6 +66,13 @@ const CoordinationPhaseSelection = (props) => {
       resolution: "Defiance Phase Selection",
     });
 
+    if (newGameState[self].bountyUpgrades.phases === 3) {
+      newGameState[self].defiancePoints = Math.min(
+        6,
+        newGameState[self].defiancePoints + 1
+      );
+    }
+
     return newGameState;
   };
 
@@ -64,7 +81,7 @@ const CoordinationPhaseSelection = (props) => {
       case 0:
         return true;
       case 1:
-        return newGameState[self].skillHand.length > 2;
+        return newGameState[self].skillHand.length >= `${upgrade >= 2 ? 2 : 3}`;
     }
   };
 
@@ -94,6 +111,12 @@ const CoordinationPhaseSelection = (props) => {
         break;
 
       case 1:
+        const battleCryMessage = `${
+          upgrade >= 2
+            ? "Spend 2 skills to gain 1 Assault tactic; you may spend an additional skill to roll a tactical die."
+            : "Spend 3 skills to gain 1 Assault tactic."
+        }`;
+
         newGameState.currentResolution.push({
           resolution: "Misc.",
           resolution2: "Battle Cry",
@@ -101,7 +124,7 @@ const CoordinationPhaseSelection = (props) => {
           details: {
             reason: "Battle Cry",
             title: "Battle Cry",
-            message: "Spend 3 skills to gain 1 Assault tactic.",
+            message: battleCryMessage,
             count: 3,
           },
         });

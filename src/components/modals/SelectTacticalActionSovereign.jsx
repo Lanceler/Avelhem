@@ -43,11 +43,17 @@ const SelectTacticalActionSovereign = (props) => {
         },
         {
           optionName: "Convert Tactic",
-          optionQualifier: null,
+          optionQualifier: (
+            <div>
+              {newGameState[self].bountyUpgrades.tactics < 3 && (
+                <div>Must be unlocked</div>
+              )}
+            </div>
+          ),
           optionText: (
             <>
               <div className="">
-                ⬩Spend 6 DP to reroll this tactic to{" "}
+                ⬩Spend 3 DP to reroll this tactic to{" "}
                 <img src={AssaultSmall} style={{ height: 21 }} />.
               </div>
             </>
@@ -161,7 +167,10 @@ const SelectTacticalActionSovereign = (props) => {
           case 0:
             return canDeploy();
           case 1:
-            return newGameState[self].defiancePoints >= 6;
+            return (
+              newGameState[self].bountyUpgrades.tactics >= 3 &&
+              newGameState[self].defiancePoints >= 3
+            );
           case 2:
             return (
               newGameState[self].bountyUpgrades.tactics >= 3 &&
@@ -236,7 +245,7 @@ const SelectTacticalActionSovereign = (props) => {
             break;
 
           case 1:
-            newGameState[self].defiancePoints -= 6;
+            newGameState[self].defiancePoints -= 3;
 
             //Gain assault command
             newGameState.tactics[props.dice].stock += 1;

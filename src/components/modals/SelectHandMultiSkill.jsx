@@ -17,6 +17,8 @@ const SelectHandMultiSkill = (props) => {
   const { demoCount } = useSelector((state) => state.demoCount);
   const dispatch = useDispatch();
 
+  let newGameState = JSON.parse(JSON.stringify(localGameState));
+
   const { avelhemToScion, drawSkill, endDefiancePhase, rollTactic } =
     useRecurringEffects();
   const { getScionSet } = useCardDatabase();
@@ -72,7 +74,6 @@ const SelectHandMultiSkill = (props) => {
   };
 
   const handleSelect = () => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
     newGameState.currentResolution.pop();
 
     //1. get list of selected cards
@@ -96,7 +97,14 @@ const SelectHandMultiSkill = (props) => {
         //1. gain assault tactic
         newGameState.tactics[0] = { face: "Assault", stock: 1, limit: 1 };
 
-        newGameState.tactics[1] = { face: "Null", stock: 0, limit: 1 };
+        if (
+          newGameState[self].bountyUpgrades.phases >= 2 &&
+          selectedSkills.length === 3
+        ) {
+          newGameState.tactics[1] = rollTactic();
+        } else {
+          newGameState.tactics[1] = { face: "Null", stock: 0, limit: 1 };
+        }
 
         //2. change phase
         newGameState.turnPhase = "Defiance";
@@ -104,6 +112,13 @@ const SelectHandMultiSkill = (props) => {
         newGameState.currentResolution.push({
           resolution: "Defiance Phase Selection",
         });
+
+        if (newGameState[self].bountyUpgrades.phases === 3) {
+          newGameState[self].defiancePoints = Math.min(
+            6,
+            newGameState[self].defiancePoints + 1
+          );
+        }
 
         //3. Display tactics
         newGameState.currentResolution.push({
@@ -282,7 +297,6 @@ const SelectHandMultiSkill = (props) => {
   };
 
   const handleSkip = () => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
     newGameState.currentResolution.pop();
 
     dispatch(updateState(newGameState));
@@ -387,9 +401,26 @@ const SelectHandMultiSkill = (props) => {
             )}
 
           {selectedSkills.length === props.details.count &&
-            ["Skill Hand Limit", "Battle Cry", "Cataclysmic Tempest"].includes(
+            ["Skill Hand Limit", "Cataclysmic Tempest"].includes(
               props.details.reason
             ) && (
+              <button
+                className={`redButton2 ${
+                  canClick("Button") ? "demoClick" : ""
+                }`}
+                onClick={() => {
+                  handleSelect();
+                  handleUpdateDemoGuide();
+                }}
+              >
+                {selectMessage}
+              </button>
+            )}
+
+          {(newGameState[self].bountyUpgrades.phases < 2
+            ? selectedSkills.length === props.details.count
+            : selectedSkills.length >= 2) &&
+            ["Battle Cry"].includes(props.details.reason) && (
               <button
                 className={`redButton2 ${
                   canClick("Button") ? "demoClick" : ""

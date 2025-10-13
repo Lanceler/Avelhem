@@ -61,20 +61,20 @@ const BountyPhase = (props) => {
         break;
 
       case 4:
-        newGameState[self].bountyUpgrades.acquisition = 1;
-        newGameState[self].bountyPoints -= acquisitionCosts[0];
+        newGameState[self].bountyUpgrades.phases = 1;
+        newGameState[self].bountyPoints -= phasesCosts[0];
         setSelectedChoice(null);
         break;
 
       case 5:
-        newGameState[self].bountyUpgrades.acquisition = 2;
-        newGameState[self].bountyPoints -= acquisitionCosts[1];
+        newGameState[self].bountyUpgrades.phases = 2;
+        newGameState[self].bountyPoints -= phasesCosts[1];
         setSelectedChoice(null);
         break;
 
       case 6:
-        newGameState[self].bountyUpgrades.acquisition = 3;
-        newGameState[self].bountyPoints -= acquisitionCosts[2];
+        newGameState[self].bountyUpgrades.phases = 3;
+        newGameState[self].bountyPoints -= phasesCosts[2];
         setSelectedChoice(null);
         break;
 
@@ -154,7 +154,7 @@ const BountyPhase = (props) => {
   };
 
   const frontierCosts = [6, 8, 10];
-  const acquisitionCosts = [3, 3, 4];
+  const phasesCosts = [3, 3, 4];
   const tacticsCosts = [3, 3, 4];
   const avelhemCosts = [3, 3, 4];
   const skillCosts = [3, 3, 4];
@@ -169,13 +169,13 @@ const BountyPhase = (props) => {
       localGameState[self].bountyUpgrades.frontier === 2,
   ];
 
-  const canAcquisition = [
-    localGameState[self].bountyPoints >= acquisitionCosts[0] &&
-      localGameState[self].bountyUpgrades.acquisition === 0,
-    localGameState[self].bountyPoints >= acquisitionCosts[1] &&
-      localGameState[self].bountyUpgrades.acquisition === 1,
-    localGameState[self].bountyPoints >= acquisitionCosts[2] &&
-      localGameState[self].bountyUpgrades.acquisition === 2,
+  const canPhases = [
+    localGameState[self].bountyPoints >= phasesCosts[0] &&
+      localGameState[self].bountyUpgrades.phases === 0,
+    localGameState[self].bountyPoints >= phasesCosts[1] &&
+      localGameState[self].bountyUpgrades.phases === 1,
+    localGameState[self].bountyPoints >= phasesCosts[2] &&
+      localGameState[self].bountyUpgrades.phases === 2,
   ];
 
   const canTactics = [
@@ -227,13 +227,13 @@ const BountyPhase = (props) => {
         return newGameState[self].bountyUpgrades.frontier >= 3;
 
       case 4:
-        return newGameState[self].bountyUpgrades.acquisition >= 1;
+        return newGameState[self].bountyUpgrades.phases >= 1;
 
       case 5:
-        return newGameState[self].bountyUpgrades.acquisition >= 2;
+        return newGameState[self].bountyUpgrades.phases >= 2;
 
       case 6:
-        return newGameState[self].bountyUpgrades.acquisition >= 3;
+        return newGameState[self].bountyUpgrades.phases >= 3;
 
       case 10:
         return newGameState[self].bountyUpgrades.tactics >= 1;
@@ -272,14 +272,14 @@ const BountyPhase = (props) => {
       case "Learn-overview":
         switch (demoCount) {
           case 20:
-            return element1 === "Acquisition Phase" && element2 === 0;
+            return element1 === "Phases" && element2 === 0;
 
           case 21:
           case 23:
             return element1 === "purchase";
 
           case 22:
-            return element1 === "Acquisition Phase" && element2 === 1;
+            return element1 === "Phases" && element2 === 1;
 
           case 24:
             return element1 === "proceed";
@@ -322,30 +322,24 @@ const BountyPhase = (props) => {
     can: canFrontier,
   };
 
-  const acquisitionBounty = {
-    category: "Acquisition Phase",
+  const phasesBounty = {
+    category: "Phases",
     items: [
       {
-        text: (
-          <>
-            Upgrade Beseech:
-            <br />
-            You may draw an additional Avelhem
-          </>
-        ),
+        text: "You may draw 1 floating skill at the start of your Acquisition Phase",
         ind: 4,
       },
       {
-        text: "Upgrade Appoint: Grant the pawn Shield for 2 turns",
+        text: "Reduce Battle Cry cost to 2 skills; you may spend 1 skill to roll a tactical die",
         ind: 5,
       },
       {
-        text: "Upgrade Cultivate: You may spend 1 DP to draw an additional skill",
+        text: "Defiance Phase grants 2 DP",
         ind: 6,
       },
     ],
-    cost: acquisitionCosts,
-    can: canAcquisition,
+    cost: phasesCosts,
+    can: canPhases,
   };
 
   const tacticsBounty = {
@@ -381,7 +375,7 @@ const BountyPhase = (props) => {
         ind: 11,
       },
       {
-        text: "Upgrade Advance: Unlock “Deploy Scion”",
+        text: "Upgrade Advance: Unlock  “Convert Tactic” and “Deploy Scion”",
         ind: 12,
       },
     ],
@@ -506,7 +500,7 @@ const BountyPhase = (props) => {
 
         <div className="modalScrollableY" style={{ pointerEvents: "all" }}>
           <BountyRow info={frontierBounty} />
-          <BountyRow info={acquisitionBounty} />
+          <BountyRow info={phasesBounty} />
           <BountyRow info={tacticsBounty} />
           <BountyRow info={avelhemBounty} />
           <BountyRow info={skillBounty} />

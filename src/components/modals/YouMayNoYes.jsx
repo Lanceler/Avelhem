@@ -87,13 +87,7 @@ const YouMayNoYes = (props) => {
         break;
 
       case "Assault - Avelhem Draw": // "Assault - Avelhem Draw"
-      case "Beseech Draw": //"Beseech - Upgraded"
         newGameState = drawAvelhem(newGameState);
-        break;
-
-      case "Cultivate Draw": //"Cultivate - Upgraded"
-        newGameState[self].defiancePoints -= 1;
-        newGameState = drawSkill(newGameState);
         break;
 
       case "Mitigate Aether-Blast": //"Mitigating Aether-Blast"

@@ -92,7 +92,7 @@ const SelectTacticalActionUnit = (props) => {
       ),
       optionText: (
         <>
-          <div className=" ">⬩Attack an adjacent foe.</div>
+          <div className=" ">⬩Target and attack an adjacent foe.</div>
           <div className=" ">
             ⬩If the damage was lethal, move to the zone they occupied.
           </div>

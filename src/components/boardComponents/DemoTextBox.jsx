@@ -965,8 +965,8 @@ const DemoTextBox = () => {
                 additional BP. You can make multiple purchases, as long as you
                 have enough BP.
                 <br /> <br />
-                Upgrade your Acquisition Phase twice, then proceed. (Feel free
-                to scroll down to view the other categories.)
+                Upgrade your Phases twice, then proceed. (Feel free to scroll
+                down to view the other categories.)
               </div>
             );
 
@@ -989,8 +989,7 @@ const DemoTextBox = () => {
                   dice to gain random tactics.
                 </span>{" "}
                 In desperate situations, they may opt to pick Battle Cry, which
-                guarantees an Assault tactic at the cost of 3 skill cards and
-                the second tactic.
+                guarantees an Assault tactic at a cost.
               </div>
             );
 
@@ -1869,7 +1868,7 @@ const DemoTextBox = () => {
             return (
               <div>
                 The board is now glowing red, which means it’s your opponent’s
-                turn to make a decision.
+                turn to act.
               </div>
             );
 

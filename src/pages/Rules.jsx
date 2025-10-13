@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 import "./Rules.css";
 
-import { useAuthContext } from "../hooks/useAuthContext";
 import { useGetImages } from "../hooks/useGetImages";
 
 import RulesImg from "../assets/others/Rules.png";
@@ -1023,7 +1022,10 @@ export default function Rules() {
                   Sovereign Actions:
                   <ul>
                     <li>Deploy a pawn.</li>
-                    <li>Spend 6 DP to convert to an Assault tactic.</li>
+                    <li>
+                      Spend 3 DP to convert to an Assault tactic.{" "}
+                      <em>(Must be unlocked via Bounty Phase.)</em>
+                    </li>
                     <li>
                       Float 1 skill to deploy a Scion.{" "}
                       <em>(Must be unlocked via Bounty Phase.)</em>

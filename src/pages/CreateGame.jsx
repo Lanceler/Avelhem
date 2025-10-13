@@ -96,7 +96,7 @@ export default function MyGames() {
           bountyUpgrades: {
             victory: 0,
             frontier: 0,
-            acquisition: 0,
+            phases: 0,
             coordination: 0,
             tactics: 0,
             avelhem: 0,

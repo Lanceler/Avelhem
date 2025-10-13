@@ -1505,21 +1505,6 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
-  const appointShield = (unitInfo) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    newGameState.currentResolution.pop();
-
-    if (unit) {
-      unit.enhancements.shield
-        ? (unit.enhancements.shield = Math.max(unit.enhancements.shield, 2))
-        : (unit.enhancements.shield = 2);
-    }
-
-    return newGameState;
-  };
-
   const ascendPawn = (
     newGameState,
     pawn,
@@ -4400,7 +4385,6 @@ export const useRecurringEffects = () => {
     applyFrost,
     applyParalysis,
     applyScore,
-    appointShield,
     ascendPawn,
     assignTactics,
     avelhemResonance,
