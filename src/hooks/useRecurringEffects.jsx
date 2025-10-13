@@ -1463,6 +1463,23 @@ export const useRecurringEffects = () => {
       newGameState.currentResolution.push({
         resolution: "Acquisition Phase Selection",
       });
+
+      if (
+        newGameState[enemy].bountyUpgrades.phases > 0 &&
+        newGameState[enemy].skillFloat > 0
+      ) {
+        newGameState.currentResolution.push({
+          resolution: "Acquisition Phase - Upgrade",
+          player: enemy,
+          details: {
+            reason: "Acquisition Phase Floating Draw",
+            title: "Acquisition Phase - Upgrade",
+            message: "You may draw 1 floating skill.",
+            no: "Skip",
+            yes: "Draw",
+          },
+        });
+      }
     }
 
     return newGameState;
@@ -2521,6 +2538,10 @@ export const useRecurringEffects = () => {
     newGameState.currentResolution.push({
       resolution: "Execution Phase",
     });
+
+    if (newGameState[self].bountyUpgrades.tactics >= 2) {
+      newGameState[self].freeAetherBlast = true;
+    }
 
     return newGameState;
   };

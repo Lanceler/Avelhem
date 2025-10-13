@@ -60,6 +60,10 @@ const Board = (props) => {
         );
         break;
 
+      case "aether-blast-free":
+        delete newGameState[self].freeAetherBlast;
+      //DO NOT BREAK
+
       case "aether-blast":
         newGameState = aetherBlast(
           newGameState,

@@ -16,6 +16,7 @@ import InfoPopUp from "./InfoPopUp";
 
 const SelectTacticalActionUnit = (props) => {
   const { localGameState } = useSelector((state) => state.gameState);
+  const { self } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
   const { demoCount } = useSelector((state) => state.demoCount);
   const dispatch = useDispatch();
@@ -32,7 +33,12 @@ const SelectTacticalActionUnit = (props) => {
   let updateLocal = true;
   //   let updateData = false;
 
-  //   let message = "Units can activate their ability up to once per turn.";
+  let message = "Select action.";
+
+  if (newGameState[self].freeAetherBlast) {
+    message =
+      message + " You may perform 1 Aether-blast without using a tactic.";
+  }
 
   let actionDetails = [];
 
@@ -270,7 +276,7 @@ const SelectTacticalActionUnit = (props) => {
         </div>
 
         <div className="modalContent2">
-          {/* <div className="modalContentText">{message}</div> */}
+          <div className="modalContentText">{message}</div>
 
           <div className="modalContent3Column">
             {actionDetails.map((detail, i) => (

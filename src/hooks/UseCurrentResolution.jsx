@@ -425,6 +425,19 @@ const UseCurrentResolution = (props) => {
         </>
       );
 
+    case "Acquisition Phase - Upgrade":
+      return (
+        <>
+          {self === lastRes.player && !props.hideModal && (
+            <YouMayNoYes
+              details={lastRes.details}
+              updateFirebase={props.updateFirebase}
+              hideOrRevealModale={props.hideOrRevealModale}
+            />
+          )}
+        </>
+      );
+
     case "Bounty Phase Selection":
       return (
         <>

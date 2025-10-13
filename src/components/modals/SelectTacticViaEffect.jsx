@@ -35,6 +35,8 @@ const SelectTacticViaEffect = (props) => {
 
   const { getTacticImage } = useGetImages();
 
+  let newGameState = JSON.parse(JSON.stringify(localGameState));
+
   let canUseTactic = [false, false];
 
   let skipMessage = "Skip";
@@ -81,8 +83,6 @@ const SelectTacticViaEffect = (props) => {
   };
 
   const handleProceed = (i) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
     //end Tactic Selection
     newGameState.currentResolution.pop();
 
@@ -320,6 +320,41 @@ const SelectTacticViaEffect = (props) => {
     }
   };
 
+  const handleFreeAetherBlast = () => {
+    //end Tactic Selection
+    newGameState.currentResolution.pop();
+
+    let unit = newGameState[props.unit.player].units[props.unit.unitIndex];
+
+    //give unit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation += 1)
+      : (unit.temporary.activation = 1);
+
+    newGameState.activatingUnit.push(unit);
+
+    newGameState.currentResolution.push({
+      resolution: "Tactic End",
+      unit: unit,
+    });
+
+    enterSelectUnitMode(
+      getZonesWithEnemies(props.unit, 1),
+      props.unit,
+      newGameState,
+      null,
+      "aether-blast-free",
+      null,
+      true,
+      null
+    );
+
+    dispatch(updateState(newGameState));
+    if (updateData === true) {
+      props.updateFirebase(newGameState);
+    }
+  };
+
   const handleSelect = (i) => {
     if (canUseTactic[i] && localGameState.tactics[i].stock > 0) {
       if (selectedChoice === i) {
@@ -466,6 +501,21 @@ const SelectTacticViaEffect = (props) => {
               {skipMessage}
             </button>
           )}
+          {props.details.reason === "Aether-blast" &&
+            newGameState[self].freeAetherBlast &&
+            selectedChoice === null && (
+              <button
+                className={`redButton2 ${
+                  canClick("Free Aether-blast") ? "demoClick" : ""
+                }`}
+                onClick={() => {
+                  handleFreeAetherBlast();
+                  handleUpdateDemoGuide();
+                }}
+              >
+                Proceed without tactic
+              </button>
+            )}
         </div>
       </div>
       {infoPopUp && <InfoPopUp info={infoPopUp} setInfoPopUp={setInfoPopUp} />}

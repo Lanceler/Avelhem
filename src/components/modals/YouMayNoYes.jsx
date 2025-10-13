@@ -86,6 +86,10 @@ const YouMayNoYes = (props) => {
         newGameState = endExecutionPhase2(newGameState);
         break;
 
+      case "Acquisition Phase Floating Draw": //Acquisition Phase - Upgrade
+        newGameState = drawSkill(newGameState);
+        break;
+
       case "Assault - Avelhem Draw": // "Assault - Avelhem Draw"
         newGameState = drawAvelhem(newGameState);
         break;
@@ -340,9 +344,6 @@ const YouMayNoYes = (props) => {
         break;
 
       case "Foreshadow Draw": //"Foreshadow Draw"
-        newGameState = drawSkill(newGameState);
-        break;
-
       case "Foreshadow Draw 2": //"Foreshadow Draw 2"
         newGameState = drawSkill(newGameState);
         break;
@@ -391,6 +392,24 @@ const YouMayNoYes = (props) => {
         newGameState.currentResolution.push({
           resolution: "Acquisition Phase Selection",
         });
+
+        if (
+          newGameState[self].bountyUpgrades.phases > 0 &&
+          newGameState[self].skillFloat > 0
+        ) {
+          newGameState.currentResolution.push({
+            resolution: "Acquisition Phase - Upgrade",
+            player: self,
+            details: {
+              reason: "Acquisition Phase Floating Draw",
+              title: "Acquisition Phase - Upgrade",
+              message: "You may draw 1 floating skill.",
+              no: "Skip",
+              yes: "Draw",
+            },
+          });
+        }
+
         break;
       default:
         break;
