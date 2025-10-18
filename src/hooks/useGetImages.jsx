@@ -95,7 +95,7 @@ import ColdEmbrace from "../assets/abilities/ColdEmbrace.jpg";
 import ClearAsCrystal from "../assets/abilities/ClearAsCrystal.jpg";
 import ClearAsCrystal2 from "../assets/abilities/ClearAsCrystal2.jpg";
 import Kleptothermy from "../assets/abilities/Kleptothermy.jpg";
-import Aeromancy from "../assets/abilities/Aeromancy.jpg";
+import SowTheWind from "../assets/abilities/SowTheWind.jpg";
 import ReapTheWhirlwind from "../assets/abilities/ReapTheWhirlwind.jpg";
 import SecondWind from "../assets/abilities/SecondWind.jpg";
 import MountainStance from "../assets/abilities/MountainStance.jpg";
@@ -256,7 +256,7 @@ export const useGetImages = () => {
     ClearAsCrystal,
     ClearAsCrystal2,
     Kleptothermy,
-    Aeromancy,
+    SowTheWind,
     ReapTheWhirlwind,
     SecondWind,
     MountainStance,
@@ -451,8 +451,8 @@ export const useGetImages = () => {
         return SymphonicScreech;
       case "03-04":
         return CataclysmicTempest;
-      case "Aeromancy":
-        return Aeromancy;
+      case "SowTheWind":
+        return SowTheWind;
       case "ReapTheWhirlwind":
         return ReapTheWhirlwind;
       case "SecondWind":

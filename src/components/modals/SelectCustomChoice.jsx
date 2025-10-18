@@ -190,6 +190,17 @@ const SelectCustomChoice = (props) => {
       ChoiceSecondMessage = "Prompt an adjacent ally to strike a rooted foe.";
       break;
 
+    case "Viridian Grave":
+      canSkip = true;
+      canFirstChoice = true;
+      canSecondChoice = ["08-01", "08-02", "08-03", "08-04"].some((s) =>
+        newGameState[self].skillVestige.includes(s)
+      );
+      ChoiceFirstMessage = "Spend 1 Blossom to gain Shield for 2 turns.";
+      ChoiceSecondMessage =
+        "Spend 1 Blossom to recover then float 1 Plant skill.";
+      break;
+
     case "Everblooming":
       canSkip = true;
       canFirstChoice = true;
@@ -610,6 +621,27 @@ const SelectCustomChoice = (props) => {
             player: self,
           });
         }
+        break;
+
+      case "Viridian Grave":
+        unit.blossom -= 1;
+
+        if (selectedChoice === 1) {
+          unit.enhancements.shield = 2;
+        } else {
+          newGameState.currentResolution.push({
+            resolution: "Recover Skill",
+            player: self,
+            details: {
+              title: "Viridian Grave",
+              reason: "Viridian Grave",
+              restriction: ["08-01", "08-02", "08-03", "08-04"],
+              message: "Recover then float 1 Plant skill.",
+              outcome: "Float",
+            },
+          });
+        }
+
         break;
 
       case "Everblooming":

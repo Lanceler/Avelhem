@@ -369,7 +369,7 @@ export const useRecurringEffects = () => {
 
     if (unit.cyclone !== 2) {
       newGameState.activatingUnit.push(unit);
-      newGameState.activatingSkill.push("Aeromancy");
+      newGameState.activatingSkill.push("SowTheWind");
       newGameState.currentResolution.push({
         resolution: "Unit Talent",
         resolution2: "Talent Conclusion",
@@ -378,7 +378,7 @@ export const useRecurringEffects = () => {
 
       newGameState.currentResolution.push({
         resolution: "Unit Talent",
-        resolution2: "Activating Aeromancy",
+        resolution2: "Activating Sow the Wind",
         unit: unit,
       });
     }
@@ -459,7 +459,7 @@ export const useRecurringEffects = () => {
 
     if (skillData.Facet === "Wind" && unit.cyclone !== 2) {
       newGameState.activatingUnit.push(unit);
-      newGameState.activatingSkill.push("Aeromancy");
+      newGameState.activatingSkill.push("SowTheWind");
       newGameState.currentResolution.push({
         resolution: "Unit Talent",
         resolution2: "Talent Conclusion",
@@ -468,7 +468,7 @@ export const useRecurringEffects = () => {
 
       newGameState.currentResolution.push({
         resolution: "Unit Talent",
-        resolution2: "Activating Aeromancy",
+        resolution2: "Activating Sow the Wind",
         unit: unit,
       });
     }
@@ -3594,7 +3594,7 @@ export const useRecurringEffects = () => {
     newGameState.currentResolution.pop();
 
     const zonesWithAllies = getZonesWithAllies(victim, 2, true);
-    let zonesWithAvianScions = [];
+    const zonesWithAvianScions = [];
 
     for (let z of zonesWithAllies) {
       const zone = zones[Math.floor(z / 5)][z % 5];

@@ -266,6 +266,13 @@ const Board = (props) => {
 
         break;
 
+      case "efflorescence":
+        const efflorescenceAlly =
+          newGameState[selectedUnit.player].units[selectedUnit.unitIndex];
+        efflorescenceAlly.blossom = 3;
+
+        break;
+
       case "viridian grave":
         newGameState = activateViridianGrave(newGameState, selectedUnit, unit);
         break;

@@ -1256,9 +1256,9 @@ const UseCurrentResolution = (props) => {
 
     case "Unit Talent":
       switch (lastRes.resolution2) {
-        case "Activating Aeromancy":
+        case "Activating Sow the Wind":
           if (self === lastRes.unit.player) {
-            props.updateLocalState(applyAbility("aeromancy1", lastRes.unit));
+            props.updateLocalState(applyAbility("sowTheWind1", lastRes.unit));
           }
           break;
 
@@ -1412,6 +1412,7 @@ const UseCurrentResolution = (props) => {
           break;
 
         case "ConflagrationR2":
+        case "Resplendence1":
           return (
             <>
               {self === lastRes.unit.player && !props.hideModal && (
@@ -1462,20 +1463,6 @@ const UseCurrentResolution = (props) => {
             props.updateLocalState(applySkill("resplendence1", lastRes.unit));
           }
           break;
-
-        case "Resplendence1":
-          return (
-            <>
-              {self === lastRes.unit.player && !props.hideModal && (
-                <YouMayNoYes
-                  unit={lastRes.unit}
-                  details={lastRes.details}
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
 
         case "Resplendence2":
           if (self === lastRes.unit.player) {
@@ -1663,20 +1650,6 @@ const UseCurrentResolution = (props) => {
               {self === lastRes.unit.player && !props.hideModal && (
                 <SelectCustomChoice
                   unit={lastRes.unit}
-                  details={lastRes.details}
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
-
-        case "Aerial Impetus Float":
-          return (
-            <>
-              {self === lastRes.unit.player && !props.hideModal && (
-                <FloatSkill
-                  unSkippable={true}
                   details={lastRes.details}
                   updateFirebase={props.updateFirebase}
                   hideOrRevealModale={props.hideOrRevealModale}
@@ -2568,6 +2541,7 @@ const UseCurrentResolution = (props) => {
           break;
 
         case "Sow and Reap1":
+        case "Viridian Grave1":
           return (
             <>
               {self === lastRes.unit.player && !props.hideModal && (
@@ -2604,6 +2578,21 @@ const UseCurrentResolution = (props) => {
             props.updateLocalState(applySkill("sowAndReap2", lastRes.unit));
           }
           break;
+
+        case "Efflorescence1":
+        case "Sow and Reap3":
+          return (
+            <>
+              {self === lastRes.unit.player && !props.hideModal && (
+                <YouMayNoYes
+                  unit={lastRes.unit}
+                  details={lastRes.details}
+                  updateFirebase={props.updateFirebase}
+                  hideOrRevealModale={props.hideOrRevealModale}
+                />
+              )}
+            </>
+          );
 
         case "Activating Efflorescence":
           if (self === lastRes.unit.player) {

@@ -237,7 +237,7 @@ const UnitInfo = (props) => {
               adjacent ally to traverse.
             </p>
 
-            <p className="unitInfo-text-heading2">2. Aeromancy</p>
+            <p className="unitInfo-text-heading2">2. Sow the Wind</p>
             <p className="unitInfo-text-desc">
               ⬩When you activate a skill, gain 1 Cyclone; you can have up to 3
               Cyclones.

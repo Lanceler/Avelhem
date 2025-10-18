@@ -47,7 +47,7 @@ export const useUnitAbilityEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    unit.temporary.usedFirstAbility = true;
+    unit.temporary.usedAbility = true;
 
     newGameState.currentResolution.push({
       resolution: "Unit Ability",
@@ -115,11 +115,11 @@ export const useUnitAbilityEffects = () => {
     return newGameState;
   };
 
-  const aeromancy1 = (unitInfo) => {
+  const sowTheWind1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
-    //end "Activating Aeromancy"
+    //end "Activating Sow the Wind"
     newGameState.currentResolution.pop();
 
     //Wind Scions gain Cyclone when activating skill
@@ -144,7 +144,7 @@ export const useUnitAbilityEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    unit.temporary.usedFirstAbility = true;
+    unit.temporary.usedAbility = true;
 
     newGameState.currentResolution.push({
       resolution: "Unit Ability",
@@ -298,6 +298,8 @@ export const useUnitAbilityEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
+    unit.temporary.usedAbility = true;
+
     //Spend Leylines
     delete unit.leyline;
 
@@ -335,6 +337,8 @@ export const useUnitAbilityEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
+    unit.temporary.usedAbility = true;
+
     newGameState.currentResolution.push({
       resolution: "Unit Ability",
       resolution2: "Galvanize1",
@@ -360,7 +364,7 @@ export const useUnitAbilityEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    unit.temporary.usedSecondAbility = true;
+    unit.temporary.usedAbility = true;
 
     const allies = getZonesWithAllies(unit, 1, true);
     const zones = JSON.parse(newGameState.zones);
@@ -399,7 +403,7 @@ export const useUnitAbilityEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    unit.temporary.usedSecondAbility = true;
+    unit.temporary.usedAbility = true;
 
     if (
       getZonesWithEnemies(unit, 1).length > 0 &&
@@ -557,8 +561,8 @@ export const useUnitAbilityEffects = () => {
         return coldEmbrace1(unit);
 
       //Wind
-      case "aeromancy1":
-        return aeromancy1(unit);
+      case "sowTheWind1":
+        return sowTheWind1(unit);
       case "reapTheWhirlwind1":
         return reapTheWhirlwind1(unit);
       case "reapTheWhirlwind2":

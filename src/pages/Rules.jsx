@@ -1177,12 +1177,12 @@ export default function Rules() {
                 <span
                   className="rule-view-card"
                   onClick={() => {
-                    dispatch(updateMagnifiedSkill("08-02"));
+                    dispatch(updateMagnifiedSkill("SA-03"));
                   }}
                 >
-                  Efflorescence
+                  Dark Halo
                 </span>{" "}
-                grants the activator Overgrowth indefinitely.
+                grants Ravager indefinitely.
               </p>
               <br />
               <p>

@@ -336,6 +336,22 @@ const YouMayNoYes = (props) => {
         newGameState = drawSkill(newGameState);
         break;
 
+      case "Sow and Reap": //Sow and Reap3
+        unit.blossom -= 1;
+        newGameState = drawSkill(newGameState);
+        break;
+
+      case "Efflorescence": //Efflorescence1
+        enterSelectUnitMode(
+          props.details.zonesWithPlantScions,
+          props.unit,
+          newGameState,
+          null,
+          "efflorescence",
+          "null"
+        );
+        break;
+
       case "Castle of Thorns": // "Castle Of Thorns1"
         unit.enhancements.ward
           ? (unit.enhancements.ward = Math.max(unit.enhancements.ward, 2))

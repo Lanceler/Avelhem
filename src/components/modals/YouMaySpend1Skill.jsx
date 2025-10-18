@@ -85,43 +85,6 @@ const YouMaySpend1Skill = (props) => {
     //newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
 
     switch (props.details.reason) {
-      case "Efflorescence1":
-        newGameState.currentResolution.push({
-          resolution: "Recover Skill",
-          player: self,
-          details: {
-            title: "Efflorescence",
-            reason: "Efflorescence",
-            restriction: ["08-01", "08-03", "08-04"],
-            message: "Recover 1 Plant skill other than “Efflorescence”.",
-            outcome: "Add",
-            reveal: true,
-          },
-        });
-
-        newGameState.currentResolution.push({
-          resolution: "Discard Skill",
-          unit: unit,
-          player: unit.player,
-          canSkip: false,
-          details: {
-            title: "Efflorescence",
-            message: "Choose the second skill to spend.",
-            restriction: null,
-            reason: "Efflorescence2",
-          },
-        });
-
-        newGameState = animationDelay(newGameState, self);
-        break;
-
-      case "Viridian Grave":
-        unit.enhancements.shield
-          ? (unit.enhancements.shield = Math.max(2, unit.enhancements.shield))
-          : (unit.enhancements.shield = 2);
-        //newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
-        break;
-
       case "Castle of Thorns1":
         newGameState.currentResolution.push({
           resolution: "Search Card",
@@ -279,43 +242,6 @@ const YouMaySpend1Skill = (props) => {
             reason: "Arsenal Onslaught",
           },
         });
-        break;
-
-      case "Efflorescence1":
-        newGameState.currentResolution.push({
-          resolution: "Recover Skill",
-          player: self,
-          details: {
-            title: "Efflorescence",
-            reason: "Efflorescence",
-            restriction: ["08-01", "08-03", "08-04"],
-            message: "Recover 1 Plant skill other than “Efflorescence”.",
-            outcome: "Add",
-            reveal: true,
-          },
-        });
-
-        newGameState.currentResolution.push({
-          resolution: "Discard Skill",
-          unit: unit,
-          player: unit.player,
-          canSkip: false,
-          details: {
-            title: "Efflorescence",
-            message: "Choose the second skill to spend.",
-            restriction: null,
-            reason: "Efflorescence2",
-          },
-        });
-
-        newGameState = animationDelay(newGameState, self);
-        break;
-
-      case "Viridian Grave":
-        unit.enhancements.shield
-          ? (unit.enhancements.shield = Math.max(2, unit.enhancements.shield))
-          : (unit.enhancements.shield = 2);
-        //newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
         break;
 
       case "Castle of Thorns1":

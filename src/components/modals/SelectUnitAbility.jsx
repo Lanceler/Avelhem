@@ -229,21 +229,11 @@ const SelectUnitAbility = (props) => {
       return false;
     }
 
-    if (unit.temporary.usedFirstAbility && i === 0) {
-      return false;
-    }
-
-    if (unit.temporary.usedSecondAbility && i === 1) {
+    if (unit.temporary.usedAbility) {
       return false;
     }
 
     switch (unit.unitClass) {
-      // case "Template":
-      //   switch (i) {
-      //     case 0:
-      //       return false;
-      //   }
-
       case "Fire Scion":
         switch (i) {
           case 0:

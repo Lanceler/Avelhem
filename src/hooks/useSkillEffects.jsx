@@ -182,7 +182,7 @@ export const useSkillEffects = () => {
 
   const blazeOfGlory2 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
-    const zones = JSON.parse(newGameState.zones);
+
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
     //end "Blaze of Glory2" resolution
@@ -1389,23 +1389,6 @@ export const useSkillEffects = () => {
         },
       });
     }
-    // if (
-    //   newGameState[unit.player].skillHand.length > 0 &&
-    //   !unit.temporary.usedSecondAbility &&
-    //   !isDisrupted(unit, 1)
-    // ) {
-    //   newGameState.currentResolution.push({
-    //     resolution: "Discard Skill",
-    //     unit: unit,
-    //     player: unit.player,
-    //     details: {
-    //       title: "Valiant Spark",
-    //       message: "You may spend 1 Lightning skill to activate “Arc Flash”.",
-    //       restriction: ["05-01", "05-02", "05-03"],
-    //       reason: "Valiant Spark",
-    //     },
-    //   });
-    // }
 
     return newGameState;
   };
@@ -1978,10 +1961,19 @@ export const useSkillEffects = () => {
     //end "Sow and Reap2" resolution
     newGameState.currentResolution.pop();
 
-    if (unit !== null && !isMuted(unit)) {
-      unit.blossom
-        ? (unit.blossom = Math.min(3, unit.blossom + 1))
-        : (unit.blossom = 1);
+    if (unit !== null && !isMuted(unit) && unit.blossom > 0) {
+      newGameState.currentResolution.push({
+        resolution: "Plant Skill",
+        resolution2: "Sow and Reap3",
+        unit: unit,
+        details: {
+          reason: "Sow and Reap",
+          title: "Sow and Reap",
+          message: "You may spend 1 Blossom to draw a skill.",
+          no: "Skip",
+          yes: "Draw",
+        },
+      });
     }
 
     return newGameState;
@@ -2059,6 +2051,7 @@ export const useSkillEffects = () => {
 
   const efflorescence1 = (unitInfo, resonator) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
+    const zones = JSON.parse(newGameState.zones);
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
     //end "Activating Efflorescence" resolution
@@ -2069,20 +2062,7 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    unit.blossom = 3;
-
     if (resonator) {
-      if (!["SA-02", "SA-03"].includes(resonator)) {
-        newGameState.currentResolution.push({
-          resolution: "Misc.",
-          resolution2: "Retain resonant skill unit",
-          unit: unit,
-          player: unit.player,
-          skill: "08-02",
-          resonator: resonator,
-        });
-      }
-
       newGameState.currentResolution.push({
         resolution: "Plant Skill",
         resolution2: "EfflorescenceR1",
@@ -2090,21 +2070,33 @@ export const useSkillEffects = () => {
       });
     }
 
-    if (
-      ["08-01", "08-03", "08-04"].some((s) =>
-        newGameState[unit.player].skillVestige.includes(s)
-      )
-    ) {
+    unit.blossom = 3;
+
+    const zonesWithAllies = getZonesWithAllies(unit, 2, false);
+    const zonesWithPlantScions = [];
+
+    for (let z of zonesWithAllies) {
+      const zone = zones[Math.floor(z / 5)][z % 5];
+      const unit = newGameState[zone.player].units[zone.unitIndex];
+
+      if (unit.unitClass === "Plant Scion") {
+        zonesWithPlantScions.push(z);
+      }
+    }
+
+    if (zonesWithPlantScions.length > 0) {
       newGameState.currentResolution.push({
-        resolution: "Discard Skill",
+        resolution: "Plant Skill",
+        resolution2: "Efflorescence1",
         unit: unit,
-        player: unit.player,
         details: {
+          reason: "Efflorescence",
           title: "Efflorescence",
           message:
-            "You may spend 2 skills to recover 1 Plant skill other than “Efflorescence”. Select 1st skill.",
-          restriction: null,
-          reason: "Efflorescence1",
+            "You may grant an ally Plant Scion within 2 spaces 3 Blossoms.",
+          no: "Skip",
+          yes: "Grant",
+          zonesWithPlantScions: zonesWithPlantScions,
         },
       });
     }
@@ -2121,6 +2113,7 @@ export const useSkillEffects = () => {
 
     if (unit !== null && !isMuted(unit)) {
       unit.hp = 2;
+      unit.aether = 1;
     }
 
     return newGameState;
@@ -2139,24 +2132,23 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    unit.blossom = 3;
+    newGameState = drawSkill(newGameState);
 
     if (isRooted(victimInfo)) {
       newGameState = drawSkill(newGameState);
-      newGameState = drawSkill(newGameState);
     }
 
-    newGameState.currentResolution.push({
-      resolution: "Discard Skill",
-      unit: unit,
-      player: unit.player,
-      details: {
-        title: "Viridian Grave",
-        message: "You may spend 1 skill to gain Shield for 2 turns.",
-        restriction: null,
-        reason: "Viridian Grave",
-      },
-    });
+    if (unit !== null && !isMuted(unit) && unit.blossom > 0) {
+      newGameState.currentResolution.push({
+        resolution: "Plant Skill",
+        resolution2: "Viridian Grave1",
+        unit: unit,
+        details: {
+          title: "Viridian Grave",
+          reason: "Viridian Grave",
+        },
+      });
+    }
 
     return newGameState;
   };

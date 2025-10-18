@@ -46,7 +46,7 @@ const CoordinationPhaseSelection = (props) => {
             ⬩Spend 3 skills to gain 1{" "}
             <img src={AssaultSmall} style={{ height: 21 }} />.
           </div>
-          <br />
+
           <br />
           <div className=" ">
             <em>

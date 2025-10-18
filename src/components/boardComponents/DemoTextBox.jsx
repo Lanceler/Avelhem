@@ -1205,7 +1205,7 @@ const DemoTextBox = () => {
           case 52:
             return (
               <div>
-                Units can any tactic (except Invoke) to{" "}
+                Units can use any tactic (except Invoke) to{" "}
                 <span className="goldText">traverse</span>, which is a keyword
                 that means “
                 <span className="goldText">move to a vacant adjacent zone</span>
@@ -1545,17 +1545,15 @@ const DemoTextBox = () => {
                 usual, zones containing eligible units will have an opaque blue
                 color.
                 <br /> <br />
-                Click on your Mana Scion.
+                Click on your Mana Scion to restore their Aether.
               </div>
             );
 
           case 92:
             return (
               <div>
-                Your Mana Scion has regained their Aether.
-                <br /> <br />
-                Incidentally, Mana Scions have a talent that activates when this
-                happens. When their Aether is restored, you may draw 1 skill.
+                Restoring a Mana Scion’s Aether activates their Overload talent,
+                which allows you to draw a skill.
               </div>
             );
 
