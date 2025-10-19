@@ -2368,6 +2368,7 @@ const UseCurrentResolution = (props) => {
           break;
 
         case "Magnetic Shockwave2.1":
+        case "Magnetic Shockwave3.1":
           return (
             <>
               {self === lastRes.unit.player && !props.hideModal && (
@@ -2389,20 +2390,6 @@ const UseCurrentResolution = (props) => {
           }
           break;
 
-        case "Magnetic Shockwave3.1":
-          return (
-            <>
-              {self === lastRes.unit.player && !props.hideModal && (
-                <YouMayNoYes
-                  unit={lastRes.unit}
-                  details={lastRes.details}
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
-
         case "Activating Reinforce":
           if (self === lastRes.unit.player) {
             props.updateLocalState(
@@ -2412,6 +2399,7 @@ const UseCurrentResolution = (props) => {
           break;
 
         case "Reinforce1":
+        case "Arsenal Onslaught6":
           return (
             <>
               {self === lastRes.unit.player && !props.hideModal && (
@@ -2515,20 +2503,6 @@ const UseCurrentResolution = (props) => {
             );
           }
           break;
-
-        case "Arsenal Onslaught6":
-          return (
-            <>
-              {self === lastRes.unit.player && !props.hideModal && (
-                <SelectCustomChoice
-                  unit={lastRes.unit}
-                  details={lastRes.details}
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
       }
       break;
 
@@ -2542,6 +2516,7 @@ const UseCurrentResolution = (props) => {
 
         case "Sow and Reap1":
         case "Viridian Grave1":
+        case "Castle Of Thorns1":
           return (
             <>
               {self === lastRes.unit.player && !props.hideModal && (
@@ -2625,26 +2600,6 @@ const UseCurrentResolution = (props) => {
         case "Activating Castle of Thorns":
           if (self === lastRes.unit.player) {
             props.updateLocalState(applySkill("castleOfThorns1", lastRes.unit));
-          }
-          break;
-
-        case "Castle Of Thorns1":
-          return (
-            <>
-              {self === lastRes.unit.player && !props.hideModal && (
-                <YouMayNoYes
-                  unit={lastRes.unit}
-                  details={lastRes.details}
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
-
-        case "Castle Of Thorns2":
-          if (self === lastRes.unit.player) {
-            props.updateLocalState(applySkill("castleOfThorns2", lastRes.unit));
           }
           break;
       }

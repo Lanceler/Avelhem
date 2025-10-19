@@ -29,7 +29,6 @@ const SelectCustomChoice = (props) => {
     canDeploy,
     canMove,
     canRaptorBlitzBlast,
-    canSowAndReapBlast,
     canSowAndReapStrike,
     canStrike,
     drawSkill,
@@ -42,6 +41,8 @@ const SelectCustomChoice = (props) => {
     getZonesWithEnemies,
     getZonesWithEnemiesAfflicted,
     isDisrupted,
+    isNearRootedFoe,
+    isRooted,
   } = useRecurringEffects();
 
   let newGameState = JSON.parse(JSON.stringify(localGameState));
@@ -184,9 +185,10 @@ const SelectCustomChoice = (props) => {
       break;
 
     case "Sow and Reap":
-      canFirstChoice = canSowAndReapBlast(unit);
+      canFirstChoice = isNearRootedFoe(unit, 2);
       canSecondChoice = canSowAndReapStrike(unit);
-      ChoiceFirstMessage = "Blast (pierce Shield) a foe within 2 spaces.";
+      ChoiceFirstMessage =
+        "Blast (pierce Shield) a rooted foe within 2 spaces.";
       ChoiceSecondMessage = "Prompt an adjacent ally to strike a rooted foe.";
       break;
 
@@ -199,6 +201,14 @@ const SelectCustomChoice = (props) => {
       ChoiceFirstMessage = "Spend 1 Blossom to gain Shield for 2 turns.";
       ChoiceSecondMessage =
         "Spend 1 Blossom to recover then float 1 Plant skill.";
+      break;
+
+    case "Castle Of Thorns":
+      canFirstChoice = isNearRootedFoe(unit, 1) && canStrike(unit);
+      canSecondChoice = true;
+      ChoiceFirstMessage = "Strike (pierce Shield) a rooted foe.";
+      ChoiceSecondMessage =
+        "Purge the Aether and Shield of all rooted foes within 2 spaces.";
       break;
 
     case "Everblooming":
@@ -640,6 +650,46 @@ const SelectCustomChoice = (props) => {
               outcome: "Float",
             },
           });
+        }
+        break;
+
+      case "Castle Of Thorns":
+        if (selectedChoice === 1) {
+          const zones = JSON.parse(newGameState.zones);
+          const zonesWithEnemies = getZonesWithEnemies(unit, 1);
+          let zonesWithRootedFoes = [];
+
+          for (let z of zonesWithEnemies) {
+            const zone = zones[Math.floor(z / 5)][z % 5];
+            const foe = newGameState[zone.player].units[zone.unitIndex];
+
+            if (isRooted(foe)) {
+              zonesWithRootedFoes.push(z);
+            }
+          }
+
+          enterSelectUnitMode(
+            zonesWithRootedFoes,
+            unit,
+            newGameState,
+            null,
+            "strike",
+            "castleOfThorns"
+          );
+        } else {
+          const zones = JSON.parse(newGameState.zones);
+
+          const zonesWithEnemies = getZonesWithEnemies(unit, 2);
+
+          for (let z of zonesWithEnemies) {
+            const zone = zones[Math.floor(z / 5)][z % 5];
+            const foe = newGameState[zone.player].units[zone.unitIndex];
+
+            if (isRooted(foe)) {
+              foe.aether = 0;
+              foe.enhancements.shield = 0;
+            }
+          }
         }
 
         break;

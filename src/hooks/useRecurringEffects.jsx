@@ -931,174 +931,6 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
-  // const applyDamage = (attackerInfo, victimInfo, type, special) => {
-  //   let newGameState = JSON.parse(JSON.stringify(localGameState));
-  //   newGameState.currentResolution.pop();
-
-  //   //Update info
-  //   let attacker =
-  //     newGameState[attackerInfo.player].units[attackerInfo.unitIndex];
-  //   let victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
-
-  //   //this can happen with effects like thunder thaumaturge
-  //   if (attacker === null || isMuted(attacker)) {
-  //     return newGameState;
-  //     // to do: Maybe push a resolution that displays a message
-  //   }
-
-  //   if (["Diffusion"].includes(special)) {
-  //     attacker.temporary.previousTarget = victim.unitIndex;
-  //   }
-
-  //   //checkBypassShield
-  //   let bypassShield = false;
-  //   switch (true) {
-  //     case victim.afflictions.frost > 0 && attacker.unitClass === "Water Scion":
-  //       bypassShield = true;
-  //       break;
-  //     case attacker.sharpness === 2 && type === "strike":
-  //       bypassShield = true;
-  //       break;
-  //     case special === "sowAndReapBlast":
-  //       bypassShield = true;
-  //       break;
-  //     default:
-  //       break;
-  //   }
-
-  //   //calculate AP
-  //   let aP = 1;
-  //   switch (true) {
-  //     // case victim.afflictions.anathema > 0:
-  //     //   aP = 5;
-  //     //   break;
-  //     case ["Geomancy", "Surge", "Diffusion"].includes(special):
-  //       aP = 2;
-  //       break;
-
-  //     default: //apply AP modifiers
-  //       if (attacker.sharpness > 0) {
-  //         aP += attacker.sharpness;
-  //       }
-
-  //       if (special === "Aether-blast-blocked") {
-  //         aP = Math.max(0, aP - 1);
-  //       }
-  //       break;
-  //   }
-
-  //   //reduce HP
-  //   switch (true) {
-  //     case victim.enhancements.ward > 0:
-  //       delete newGameState[victim.player].units[victim.unitIndex].enhancements
-  //         .ward;
-  //       break;
-  //     case bypassShield && victim.enhancements.shield > 0:
-  //       delete newGameState[victim.player].units[victim.unitIndex].enhancements
-  //         .shield;
-  //       newGameState[victim.player].units[victim.unitIndex].hp = victim.hp - aP;
-  //       break;
-  //     case victim.enhancements.shield > 0:
-  //       delete newGameState[victim.player].units[victim.unitIndex].enhancements
-  //         .shield;
-  //       break;
-  //     default:
-  //       newGameState[victim.player].units[victim.unitIndex].hp = victim.hp - aP;
-  //       break;
-  //   }
-
-  //   //survival
-  //   if (newGameState[victim.player].units[victim.unitIndex].hp > 0) {
-  //     const pushSurvivalResolution = (
-  //       resolution2,
-  //       player,
-  //       victim,
-  //       attacker
-  //     ) => {
-  //       newGameState.currentResolution.push({
-  //         resolution: "Triggering Contingent Skill",
-  //         resolution2,
-  //         player,
-  //         victim,
-  //         attacker,
-  //       });
-  //     };
-
-  //     if (newGameState.turnPlayer === victim.player) {
-  //       if (triggerSurvivalAlly(victim)) {
-  //         pushSurvivalResolution(
-  //           "Triggering Survival Ally",
-  //           victim.player,
-  //           victim,
-  //           attacker
-  //         );
-  //       }
-
-  //       if (triggerSurvivalEnemy(victim)) {
-  //         pushSurvivalResolution(
-  //           "Triggering Survival Enemy",
-  //           victim.player === "host" ? "guest" : "host",
-  //           victim,
-  //           attacker
-  //         );
-  //       }
-  //     } else {
-  //       if (triggerSurvivalEnemy(victim)) {
-  //         pushSurvivalResolution(
-  //           "Triggering Survival Enemy",
-  //           victim.player === "host" ? "guest" : "host",
-  //           victim,
-  //           attacker
-  //         );
-  //       }
-
-  //       if (triggerSurvivalAlly(victim)) {
-  //         pushSurvivalResolution(
-  //           "Triggering Survival Ally",
-  //           victim.player,
-  //           victim,
-  //           attacker
-  //         );
-  //       }
-  //     }
-
-  //     //Mana feedback
-  //     if (attacker.unitClass === "Mana Scion" && !isMuted(attacker)) {
-  //       newGameState.activatingUnit.push(attacker);
-  //       newGameState.activatingSkill.push("ManaFeedback");
-  //       newGameState.currentResolution.push({
-  //         resolution: "Unit Talent",
-  //         resolution2: "Talent Conclusion",
-  //         unit: attacker,
-  //       });
-
-  //       newGameState.currentResolution.push({
-  //         resolution: "Unit Talent",
-  //         resolution2: "Activating Mana Feedback",
-  //         unit: attacker,
-  //         details: {
-  //           reason: "Mana Feedback",
-  //           title: "Mana Feedback",
-  //           message: "You may draw 1 skill.",
-  //           no: "Skip",
-  //           yes: "Draw",
-  //         },
-  //       });
-  //     }
-  //   } else {
-  //     //elimination
-  //     newGameState = eliminateUnit(
-  //       newGameState,
-  //       attacker,
-  //       victim,
-  //       type,
-  //       special
-  //     );
-  //   }
-
-  //   return newGameState;
-  // };
-
   const applyDamage = (attackerInfo, victimInfo, type, special) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     newGameState.currentResolution.pop();
@@ -1110,16 +942,16 @@ export const useRecurringEffects = () => {
     // Edge case: attacker cannot attack
     if (!attacker || isMuted(attacker)) return newGameState;
 
-    // Store target for Diffusion
-    if (special === "Diffusion") {
-      attacker.temporary.previousTarget = victim.unitIndex;
-    }
+    // Store target for Diffusion <-- no longer the case
+    // if (special === "Diffusion") {
+    //   attacker.temporary.previousTarget = victim.unitIndex;
+    // }
 
     // Determine if shield should be bypassed
     const bypassShield =
       (victim.afflictions.frost > 0 && attacker.unitClass === "Water Scion") ||
       (attacker.sharpness === 2 && type === "strike") ||
-      special === "sowAndReapBlast";
+      ["sowAndReapBlast", "castleOfThorns"].includes(special);
 
     // Determine damage amount (AP)
     let aP = 1;
@@ -1901,7 +1733,7 @@ export const useRecurringEffects = () => {
         return canStrike(unit);
 
       case "08-01":
-        return canSowAndReapBlast(unit) || canSowAndReapStrike(unit);
+        return isNearRootedFoe(unit, 2) || canSowAndReapStrike(unit);
       case "08-02":
         return true;
       case "08-03":
@@ -2125,8 +1957,8 @@ export const useRecurringEffects = () => {
     return false;
   };
 
-  const canSowAndReapBlast = (unitInfo) => {
-    const enemies = getZonesWithEnemies(unitInfo, 2);
+  const isNearRootedFoe = (unitInfo, range) => {
+    const enemies = getZonesWithEnemies(unitInfo, range);
     const zones = JSON.parse(localGameState.zones);
 
     for (let i of enemies) {
@@ -2165,7 +1997,7 @@ export const useRecurringEffects = () => {
       const zone = zones[Math.floor(i / 5)][i % 5];
       const ally = localGameState[zone.player].units[zone.unitIndex];
 
-      if (canStrike(ally) && canSowAndReapBlast(ally)) {
+      if (canStrike(ally) && isNearRootedFoe(ally, 1)) {
         return true;
       }
     }
@@ -3564,11 +3396,7 @@ export const useRecurringEffects = () => {
       const zone = zones[Math.floor(z / 5)][z % 5];
       const unit = newGameState[zone.player].units[zone.unitIndex];
 
-      if (
-        unit.unitClass === "Metal Scion" &&
-        !isMuted(unit) &&
-        !isRooted(unit)
-      ) {
+      if (unit.unitClass === "Metal Scion" && canStrike(unit)) {
         zonesWithMetalScions.push(z);
       }
     }
@@ -3940,11 +3768,7 @@ export const useRecurringEffects = () => {
       const zone = zones[Math.floor(i / 5)][i % 5];
       const unit = localGameState[zone.player].units[zone.unitIndex];
 
-      if (
-        unit.unitClass === "Metal Scion" &&
-        !isMuted(unit) &&
-        !isRooted(unit)
-      ) {
+      if (unit.unitClass === "Metal Scion" && canStrike(unit)) {
         return true;
       }
     }
@@ -4421,7 +4245,7 @@ export const useRecurringEffects = () => {
     canDeploy,
     canDestine,
     canRaptorBlitzBlast,
-    canSowAndReapBlast,
+
     canSowAndReapStrike,
     canMove,
     canStrike,
@@ -4458,6 +4282,7 @@ export const useRecurringEffects = () => {
     isDisrupted,
     isImmobilized,
     isMuted,
+    isNearRootedFoe,
     isRooted,
     move,
     newUnitStats,

@@ -660,7 +660,7 @@ const UnitInfo = (props) => {
                         Burn ({unit.afflictions.burn} turn
                         {unit.afflictions.burn > 1 ? "s" : ""})
                       </p>
-                      <p className="unitInfo-text-desc  ">⬩Immune to Frost.</p>
+                      <p className="unitInfo-text-desc">⬩Immune to Frost.</p>
                       <p className="unitInfo-text-desc unitInfo-text-last">
                         ⬩Loses 1 HP during the Final Phase.
                       </p>
@@ -670,10 +670,8 @@ const UnitInfo = (props) => {
                   {isRooted(unit) && (
                     <>
                       <p className="unitInfo-text-heading2">Root</p>
-                      <p className="unitInfo-text-desc  ">⬩Cannot strike.</p>
                       <p className="unitInfo-text-desc unitInfo-text-last">
-                        ⬩Must spend 1 skill to traverse or Aether-blast via
-                        tactical action.
+                        ⬩Cannot strike.
                       </p>
                     </>
                   )}

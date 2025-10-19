@@ -72,60 +72,6 @@ const YouMaySpend1Skill = (props) => {
     return false;
   };
 
-  const handleBlossom = () => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = newGameState[props.unit.player].units[props.unit.unitIndex];
-    //note: unlike handleSelect, handleBlossom updates unit
-
-    //end Discarding Skill resolution
-    newGameState.currentResolution.pop();
-
-    unit.blossom = unit.blossom - 2;
-
-    //newGameState[props.unit.player].units[props.unit.unitIndex] = unit;
-
-    switch (props.details.reason) {
-      case "Castle of Thorns1":
-        newGameState.currentResolution.push({
-          resolution: "Search Card",
-          player: self,
-          details: {
-            restriction: ["08-01", "08-02", "08-03"],
-            exclusion: [],
-            searchTitle: "Castle of Thorns",
-            searchMessage: "Search for 1 Plant skill.",
-            outcome: "Add",
-            revealTitle: null,
-            revealMessage: null,
-            messageTitle: null,
-            message: null,
-            specMessage: null,
-          },
-        });
-        break;
-
-      case "Castle of Thorns2":
-        newGameState.currentResolution.push({
-          resolution: "Recover Skill",
-          player: self,
-          details: {
-            title: "Castle of Thorns",
-            reason: "Castle of Thorns",
-            restriction: ["08-01", "08-02", "08-03"],
-            message: "Recover 1 Plant skill.",
-            outcome: "Add",
-          },
-        });
-        break;
-
-      default:
-        break;
-    }
-
-    dispatch(updateState(newGameState));
-    //props.updateFirebase(newGameState);
-  };
-
   const handleEmber = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[props.unit.player].units[props.unit.unitIndex];
@@ -240,39 +186,6 @@ const YouMaySpend1Skill = (props) => {
           details: {
             title: "Arsenal Onslaught",
             reason: "Arsenal Onslaught",
-          },
-        });
-        break;
-
-      case "Castle of Thorns1":
-        newGameState.currentResolution.push({
-          resolution: "Search Card",
-          player: self,
-          details: {
-            restriction: ["08-01", "08-02", "08-03"],
-            exclusion: [],
-            searchTitle: "Castle of Thorns",
-            searchMessage: "Search for 1 Plant skill.",
-            outcome: "Add",
-            revealTitle: null,
-            revealMessage: null,
-            messageTitle: null,
-            message: null,
-            specMessage: null,
-          },
-        });
-        break;
-
-      case "Castle of Thorns2":
-        newGameState.currentResolution.push({
-          resolution: "Recover Skill",
-          player: self,
-          details: {
-            title: "Castle of Thorns",
-            reason: "Castle of Thorns",
-            restriction: ["08-01", "08-02", "08-03"],
-            message: "Recover 1 Plant skill.",
-            outcome: "Add",
           },
         });
         break;
@@ -490,12 +403,6 @@ const YouMaySpend1Skill = (props) => {
               }}
             >
               {SkipMessage}
-            </button>
-          )}
-
-          {selectedSkill === null && props.unit?.blossom > 1 && (
-            <button className="redButton2" onClick={() => handleBlossom()}>
-              Spend 2 Blossoms
             </button>
           )}
 

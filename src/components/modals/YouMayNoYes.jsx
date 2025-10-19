@@ -352,13 +352,6 @@ const YouMayNoYes = (props) => {
         );
         break;
 
-      case "Castle of Thorns": // "Castle Of Thorns1"
-        unit.enhancements.ward
-          ? (unit.enhancements.ward = Math.max(unit.enhancements.ward, 2))
-          : (unit.enhancements.ward = 2);
-
-        break;
-
       case "Foreshadow Draw": //"Foreshadow Draw"
       case "Foreshadow Draw 2": //"Foreshadow Draw 2"
         newGameState = drawSkill(newGameState);

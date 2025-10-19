@@ -9,7 +9,6 @@ export const useSkillEffects = () => {
     aetherRestoreSpecial,
     blast,
     canMove,
-    canSowAndReapBlast,
     canStrike,
     drawSkill,
     enterSelectUnitMode,
@@ -23,6 +22,7 @@ export const useSkillEffects = () => {
     isDisrupted,
     isImmobilized,
     isMuted,
+    isNearRootedFoe,
     isRooted,
     paralyze1,
     strike,
@@ -1461,8 +1461,6 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    delete unit.temporary.previousTarget;
-
     let d1Message = "Use an Assault tactic to blast a foe within 2 spaces.";
     let d1Restriction = ["Assault"];
 
@@ -2013,7 +2011,7 @@ export const useSkillEffects = () => {
       const zone = zones[Math.floor(z / 5)][z % 5];
       const ally = newGameState[zone.player].units[zone.unitIndex];
 
-      if (canSowAndReapBlast(ally) && canStrike(ally)) {
+      if (isNearRootedFoe(ally, 1) && canStrike(ally)) {
         adjacentStrikers.push(z);
       }
     }
@@ -2133,7 +2131,6 @@ export const useSkillEffects = () => {
       : (unit.temporary.activation = 1);
 
     newGameState = drawSkill(newGameState);
-
     if (isRooted(victimInfo)) {
       newGameState = drawSkill(newGameState);
     }
@@ -2165,66 +2162,21 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    unit.enhancements.shield
-      ? (unit.enhancements.shield = Math.max(unit.enhancements.shield, 2))
-      : (unit.enhancements.shield = 2);
+    unit.blossom
+      ? (unit.blossom = Math.min(3, unit.blossom + 1))
+      : (unit.blossom = 1);
+
+    unit.enhancements.ward = 2;
 
     newGameState.currentResolution.push({
       resolution: "Plant Skill",
-      resolution2: "Castle Of Thorns2",
+      resolution2: "Castle Of Thorns1",
       unit: unit,
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Discard Skill",
-      unit: unit,
-      player: unit.player,
       details: {
-        title: "Castle of Thorns",
-        message: "You may spend 1 skill to search for 1 Plant skill.",
-        restriction: null,
-        reason: "Castle of Thorns1",
+        title: "Castle Of Thorns",
+        reason: "Castle Of Thorns",
       },
     });
-
-    return newGameState;
-  };
-
-  const castleOfThorns2 = (unitInfo) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    //end "Castle Of Thorns2" resolution
-    newGameState.currentResolution.pop();
-
-    if (
-      !["08-01", "08-02", "08-03"].some((s) =>
-        newGameState[unit.player].skillVestige.includes(s)
-      )
-    ) {
-      newGameState.currentResolution.push({
-        resolution: "Misc.",
-        resolution2: "Message To Player",
-        player: self,
-        title: "Castle of Thorns",
-        message: "You do not have any Plant skills to recover.",
-      });
-    } else if (
-      newGameState[unit.player].skillHand.length > 0 ||
-      unit.blossom > 1
-    ) {
-      newGameState.currentResolution.push({
-        resolution: "Discard Skill",
-        unit: unit,
-        player: unit.player,
-        details: {
-          title: "Castle of Thorns",
-          message: "You may spend 1 skill to recover 1 Plant skill.",
-          restriction: null,
-          reason: "Castle of Thorns2",
-        },
-      });
-    }
 
     return newGameState;
   };
@@ -2626,8 +2578,6 @@ export const useSkillEffects = () => {
         return viridianGrave1(a, b);
       case "castleOfThorns1":
         return castleOfThorns1(a);
-      case "castleOfThorns2":
-        return castleOfThorns2(a);
 
       //Avian
       case "raptorBlitz1":
