@@ -111,8 +111,7 @@ import AmplifyAura from "../assets/abilities/AmplifyAura.jpg";
 import BallisticArmor from "../assets/abilities/BallisticArmor.jpg";
 import Conduction from "../assets/abilities/Conduction.jpg";
 import Flourish from "../assets/abilities/Flourish.jpg";
-import Ambrosia from "../assets/abilities/Ambrosia.jpg";
-import Everblooming from "../assets/abilities/Everblooming.jpg";
+import FuneralFlowers from "../assets/abilities/FuneralFlowers.jpg";
 
 import SkillCardBack from "../assets/skillcards/SkillCardBack.jpg";
 import AvelhemCardBack from "../assets/avelhemcards/AvelhemCardBack.jpg";
@@ -272,8 +271,7 @@ export const useGetImages = () => {
     Conduction,
     BallisticArmor,
     Flourish,
-    Ambrosia,
-    Everblooming,
+    FuneralFlowers,
     SkillCardBack,
     AvelhemCardBack,
     //statuses
@@ -548,10 +546,8 @@ export const useGetImages = () => {
         return CastleOfThorns;
       case "Flourish":
         return Flourish;
-      case "Ambrosia":
-        return Ambrosia;
-      case "Everblooming":
-        return Everblooming;
+      case "FuneralFlowers":
+        return FuneralFlowers;
 
       case "SA-01":
         return HeirsEndeavor;

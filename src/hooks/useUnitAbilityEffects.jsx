@@ -102,6 +102,9 @@ export const useUnitAbilityEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
+    //WATER SCIONS CAN USE ABILITY MULTIPLE TIMES
+    // unit.temporary.usedAbility = true;
+
     newGameState.currentResolution.push({
       resolution: "Unit Ability",
       resolution2: "Cold Embrace1",
@@ -468,78 +471,17 @@ export const useUnitAbilityEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
+    unit.temporary.usedAbility = true;
+
     newGameState.currentResolution.push({
       resolution: "Unit Ability",
       resolution2: "Flourish1",
       unit: unit,
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Discard Skill",
-      unit: unit,
-      player: unit.player,
-      canSkip: false,
       details: {
-        title: "Flourish",
-        message: "Choose the second skill to spend.",
-        restriction: null,
         reason: "Flourish",
+        title: "Flourish",
       },
     });
-
-    newGameState = animationDelay(newGameState, self);
-
-    newGameState.currentResolution.push({
-      resolution: "Discard Skill",
-      unit: unit,
-      player: unit.player,
-      canSkip: false,
-      details: {
-        title: "Flourish",
-        message: "Spend 2 skills to restore your Aether and gain Overgrowth.",
-        restriction: null,
-        reason: "Flourish",
-      },
-    });
-
-    return newGameState;
-  };
-
-  const flourish2 = (unitInfo) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    //end "Flourish1"
-    newGameState.currentResolution.pop();
-
-    unit.aether = 1;
-
-    return newGameState;
-  };
-
-  const ambrosia1 = (unitInfo) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    //end "Activating Ambrosia"
-    newGameState.currentResolution.pop();
-
-    //give unit activationCounter
-    unit.temporary.activation
-      ? (unit.temporary.activation += 1)
-      : (unit.temporary.activation = 1);
-
-    //Spend 1 Blossom
-    unit.blossom -= 1;
-
-    enterSelectUnitMode(
-      getZonesWithAllies(unit, 1, true),
-      unit,
-      newGameState,
-      null,
-      "ambrosia",
-      null
-    );
 
     return newGameState;
   };
@@ -599,10 +541,6 @@ export const useUnitAbilityEffects = () => {
       //Plant
       case "flourish1":
         return flourish1(unit);
-      case "flourish2":
-        return flourish2(unit);
-      case "ambrosia1":
-        return ambrosia1(unit);
     }
   };
 

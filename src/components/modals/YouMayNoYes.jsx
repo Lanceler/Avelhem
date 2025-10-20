@@ -311,6 +311,28 @@ const YouMayNoYes = (props) => {
         });
         break;
 
+      case "Funeral Flowers":
+        updateData = true;
+        newGameState.currentResolution.push({
+          resolution: "Search Card",
+          player: self,
+          details: {
+            restriction: ["08-03"],
+            exclusion: [],
+            searchTitle: "Funeral Flowers",
+            searchMessage: "Search for 1 Viridian Grave.",
+            outcome: "Add",
+            revealTitle: null,
+            revealMessage: null,
+            messageTitle: null,
+            message: null,
+            specMessage: null,
+          },
+        });
+        break;
+
+        break;
+
       case "Ambiance Assimilation":
         updateData = true;
 

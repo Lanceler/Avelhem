@@ -968,21 +968,6 @@ const UseCurrentResolution = (props) => {
           }
           break;
 
-        case "Rooted Traverse Movement":
-          if (self === lastRes.unit.player) {
-            props.updateLocalState(
-              enterMoveMode(
-                getVacantAdjacentZones(lastRes.unit),
-                lastRes.unit,
-                null,
-                lastRes.tactic,
-                false,
-                true
-              )
-            );
-          }
-          break;
-
         case "May float resonant skill":
           return (
             <>
@@ -1197,6 +1182,7 @@ const UseCurrentResolution = (props) => {
         case "Galvanize1":
         case "Reap the Whirlwind3":
         case "Ballistic Armor1":
+        case "Flourish1":
           return (
             <>
               {self === lastRes.unit.player && !props.hideModal && (
@@ -1238,17 +1224,19 @@ const UseCurrentResolution = (props) => {
           }
           break;
 
-        case "Flourish1":
-          if (self === lastRes.unit.player) {
-            props.updateLocalState(applyAbility("flourish2", lastRes.unit));
-          }
-          break;
-
-        case "Activating Ambrosia":
-          if (self === lastRes.unit.player) {
-            props.updateLocalState(applyAbility("ambrosia1", lastRes.unit));
-          }
-          break;
+        case "Flourish2":
+          return (
+            <>
+              {self === lastRes.unit.player && !props.hideModal && (
+                <SelectHandMultiSkill
+                  details={lastRes.details}
+                  unit={lastRes.unit}
+                  updateFirebase={props.updateFirebase}
+                  hideOrRevealModale={props.hideOrRevealModale}
+                />
+              )}
+            </>
+          );
 
         //end of abilities
       }
@@ -1271,7 +1259,6 @@ const UseCurrentResolution = (props) => {
           break;
 
         case "Activating Kleptothermy":
-        case "Activating Everblooming":
           return (
             <>
               {self === lastRes.unit.player && !props.hideModal && (
@@ -1303,6 +1290,7 @@ const UseCurrentResolution = (props) => {
         case "Activating Ambiance Assimilation":
         case "Activating Overload":
         case "Activating Conduction":
+        case "Activating Funeral Flowers":
           return (
             <>
               {self === lastRes.unit.player && !props.hideModal && (

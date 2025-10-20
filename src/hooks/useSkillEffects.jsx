@@ -2131,7 +2131,7 @@ export const useSkillEffects = () => {
       : (unit.temporary.activation = 1);
 
     newGameState = drawSkill(newGameState);
-    if (isRooted(victimInfo)) {
+    if (isRooted(victimInfo) || victimInfo.unitClass === "Plant Scion") {
       newGameState = drawSkill(newGameState);
     }
 
@@ -2238,17 +2238,6 @@ export const useSkillEffects = () => {
       : (unit.temporary.activation = 1);
 
     if (resonator) {
-      if (!["SA-02", "SA-03"].includes(resonator)) {
-        newGameState.currentResolution.push({
-          resolution: "Misc.",
-          resolution2: "May float resonant skill unit",
-          unit: unit,
-          player: unit.player,
-          skill: "09-02",
-          resonator: resonator,
-        });
-      }
-
       newGameState.currentResolution.push({
         resolution: "Avian Skill",
         resolution2: "ReconnaissanceR1",

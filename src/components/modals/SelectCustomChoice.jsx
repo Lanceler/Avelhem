@@ -211,15 +211,12 @@ const SelectCustomChoice = (props) => {
         "Purge the Aether and Shield of all rooted foes within 2 spaces.";
       break;
 
-    case "Everblooming":
-      canSkip = true;
-      canFirstChoice = true;
-      canSecondChoice =
-        unit.blossom >= 2 && newGameState[self].skillVestige.includes("08-02");
-
-      ChoiceFirstMessage = "Draw 1 skill";
+    case "Flourish":
+      canFirstChoice = newGameState[unit.player].skillHand.length > 1;
+      canSecondChoice = unit.blossom > 0;
+      ChoiceFirstMessage = "Spend 2 skills to gain 3 Blossoms.";
       ChoiceSecondMessage =
-        "Spend 2 Blossoms to recover then float 1 “Efflorescence”.";
+        "Spend 1 Blossom to purge your or an adjacent ally’s afflictions, except Anathema.";
       break;
 
     case "Raptor Blitz":
@@ -691,28 +688,35 @@ const SelectCustomChoice = (props) => {
             }
           }
         }
-
         break;
 
-      case "Everblooming":
+      case "Flourish":
         if (selectedChoice === 1) {
-          newGameState = drawSkill(newGameState);
-        } else {
-          if (unit) {
-            unit.blossom -= 2;
-          }
-
           newGameState.currentResolution.push({
-            resolution: "Recover Skill",
+            resolution: "Unit Ability",
+            resolution2: "Flourish2",
             player: self,
+            unit: unit,
             details: {
-              title: "Everblooming",
-              reason: "Everblooming",
-              restriction: ["08-02"],
-              message: "Recover then float 1 “Efflorescence”.",
-              outcome: "Float",
+              reason: "Flourish",
+              title: "Flourish",
+              message: "Spend 2 skills to gain 3 Blossoms.",
+              count: 2,
             },
           });
+
+          console.log(newGameState.currentResolution.at(-1).resolution2);
+        } else {
+          unit.blossom -= 1;
+
+          enterSelectUnitMode(
+            getZonesWithAllies(unit, 1, true),
+            unit,
+            newGameState,
+            null,
+            "flourish",
+            null
+          );
         }
         break;
 

@@ -153,15 +153,11 @@ const UnitInfo = (props) => {
       case "Plant Scion":
         return (
           <>
-            <p className="unitInfo-text-heading2">1. Flourish</p>
+            <p className="unitInfo-text-heading2">Flourish</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Spend 2 skills to restore your Aether and gain Overgrowth.
-            </p>
-
-            <p className="unitInfo-text-heading2">2. Ambrosia</p>
-            <p className="unitInfo-text-desc">
-              ⬩Spend 1 Blossom to purge your or an adjacent ally’s afflictions
-              (except Root and Anathema).
+              ⬩Spend 2 skills to gain 3 Blossoms or spend 1 Blossom to purge
+              your or an adjacent ally’s afflictions, except Anathema. (You can
+              activate this even if you are paralyzed.)
             </p>
           </>
         );
@@ -324,20 +320,17 @@ const UnitInfo = (props) => {
       case "Plant Scion":
         return (
           <>
-            <p className="unitInfo-text-heading2">1. Everblooming</p>
+            <p className="unitInfo-text-heading2">1. Funeral Flowers</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Upon elimination, you may draw 1 skill or spend 2 Blossoms to
-              recover then float 1 “Efflorescence”.
+              ⬩Upon elimination, you may search for 1 “Viridian Grave”.
             </p>
 
             <p className="unitInfo-text-heading2">2. Flora’s Reverence</p>
-            <p className="unitInfo-text-desc ">⬩You are immune to Root.</p>
-            <p className="unitInfo-text-desc">
-              ⬩You can activate abilities more than once per turn.
-            </p>
+            <p className="unitInfo-text-desc">⬩You are immune to Root.</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩You can spend 2 Blossoms in lieu of 1 skill; you can have up to 3
-              Blossoms.
+              ⬩You can have up to 3 Blossoms; purge 1 whenever you move (even if
+              you are muted). If you possess 3 Blossoms, foes are afflicted with
+              Root while adjacent to you.
             </p>
           </>
         );
@@ -421,7 +414,7 @@ const UnitInfo = (props) => {
                   <strong>Talents</strong>
                 </u>
               </p>
-              <div className="unitInfo-scroll ">{talents()}</div>
+              <div className="unitInfo-scroll scrollable">{talents()}</div>
             </div>
 
             <div className="unitInfo-Attributes-SkillSet">

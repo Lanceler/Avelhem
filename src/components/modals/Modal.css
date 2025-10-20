@@ -560,7 +560,7 @@
 }
 
 .unitInfo-text-desc {
-    font-size: 18px;
+    font-size: 17.75px;
     margin-left: 10px;
     line-height: 1.4;
 }
@@ -735,7 +735,8 @@
 }
 
 .modal-option-header-ability {
-    height: 115px;
+    height: 90px;
+    /* background-color: aqua; */
 }
 
 .modal-option-title {

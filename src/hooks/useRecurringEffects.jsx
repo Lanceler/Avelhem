@@ -2319,7 +2319,7 @@ export const useRecurringEffects = () => {
 
         case "Plant Scion":
           newGameState.activatingUnit.push(victim);
-          newGameState.activatingSkill.push("Everblooming");
+          newGameState.activatingSkill.push("FuneralFlowers");
 
           newGameState.currentResolution.push({
             resolution: "Unit Talent",
@@ -2329,12 +2329,13 @@ export const useRecurringEffects = () => {
 
           newGameState.currentResolution.push({
             resolution: "Unit Talent",
-            resolution2: "Activating Everblooming",
+            resolution2: "Activating Funeral Flowers",
             unit: victim,
             details: {
-              title: "Everblooming",
-              reason: "Everblooming",
-              // unitClone: victim, // Fungal Scion can trigger this talent, which will affect unit
+              title: "Funeral Flowers",
+              reason: "Funeral Flowers",
+              no: "Skip",
+              yes: "Search",
             },
           });
 

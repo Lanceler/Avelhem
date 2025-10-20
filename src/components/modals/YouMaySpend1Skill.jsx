@@ -190,39 +190,6 @@ const YouMaySpend1Skill = (props) => {
         });
         break;
 
-      case "Rooted Traverse":
-        newGameState.currentResolution.push({
-          resolution: "Misc.",
-          resolution2: "Rooted Traverse Movement",
-          unit: unit,
-          tactic: props.details.tactic,
-        });
-        break;
-
-      case "Rooted Aether-blast":
-        //give unit activationCounter
-        unit.temporary.activation
-          ? (unit.temporary.activation += 1)
-          : (unit.temporary.activation = 1);
-
-        //newGameState[unit.player].units[unit.unitIndex] = unit;
-        newGameState.activatingUnit.push(unit);
-
-        newGameState.currentResolution.push({
-          resolution: "Tactic End",
-          unit: unit,
-        });
-
-        enterSelectUnitMode(
-          getZonesWithEnemies(unit, 1),
-          unit,
-          newGameState,
-          props.details.tactic,
-          "aether-blast",
-          null
-        );
-        break;
-
       case "Vanguard Fleet1":
         enterMoveMode(getVacantAdjacentZones(unit), unit, newGameState, null);
         break;

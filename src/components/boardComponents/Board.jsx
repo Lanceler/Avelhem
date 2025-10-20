@@ -277,16 +277,13 @@ const Board = (props) => {
         newGameState = activateViridianGrave(newGameState, selectedUnit, unit);
         break;
 
-      case "ambrosia":
-        let ambrosiaAlly =
+      case "flourish":
+        let flourishAlly =
           newGameState[selectedUnit.player].units[selectedUnit.unitIndex];
 
-        delete ambrosiaAlly.afflictions.burn;
-        delete ambrosiaAlly.afflictions.frost;
-        delete ambrosiaAlly.afflictions.paralysis;
-
-        // newGameState[selectedUnit.player].units[selectedUnit.unitIndex] =
-        //   ambrosiaAlly;
+        delete flourishAlly.afflictions.burn;
+        delete flourishAlly.afflictions.frost;
+        delete flourishAlly.afflictions.paralysis;
         break;
 
       case "raptor blitz purge":

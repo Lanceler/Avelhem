@@ -33,6 +33,8 @@ const SelectHandMultiSkill = (props) => {
   let skipMessage = "Skip";
   let selectMessage = "Select";
 
+  const requiresExact = ["Skill Hand Limit", "Cataclysmic Tempest", "Flourish"];
+
   switch (props.details.reason) {
     case "Artifice":
     case "Battle Cry":
@@ -47,6 +49,10 @@ const SelectHandMultiSkill = (props) => {
     case "Cataclysmic Tempest":
       canSkip = false;
       selectMessage = "Float";
+      break;
+
+    case "Flourish":
+      canSkip = false;
       break;
 
     case "Transmute":
@@ -94,6 +100,11 @@ const SelectHandMultiSkill = (props) => {
 
     switch (props.details.reason) {
       case "Battle Cry":
+        //0. discard selected Skills
+        for (let card of selectedCards) {
+          newGameState[self].skillVestige.push(card);
+        }
+
         //1. gain assault tactic
         newGameState.tactics[0] = { face: "Assault", stock: 1, limit: 1 };
 
@@ -127,10 +138,10 @@ const SelectHandMultiSkill = (props) => {
           player: self,
         });
 
-      //DO NOT break; it will discard skills just like "Skill Hand Limit"
+        break;
 
       case "Skill Hand Limit":
-        //1. discard selected Skills
+        //0. discard selected Skills
         for (let card of selectedCards) {
           newGameState[self].skillVestige.push(card);
         }
@@ -182,6 +193,18 @@ const SelectHandMultiSkill = (props) => {
           newGameState[self].skillRepertoire.push(card);
           newGameState[self].skillFloat += 1;
         }
+        break;
+
+      case "Flourish":
+        //0. discard selected Skills
+        for (let card of selectedCards) {
+          newGameState[self].skillVestige.push(card);
+        }
+
+        //1. Gain Blossom
+        const flourishUnit =
+          newGameState[props.unit.player].units[props.unit.unitIndex];
+        flourishUnit.blossom = 3;
 
         break;
 
@@ -391,8 +414,9 @@ const SelectHandMultiSkill = (props) => {
             </button>
           )}
 
+          {/* Can be lower than limit */}
           {selectedSkills.length > 0 &&
-            !["Skill Hand Limit", "Battle Cry", "Cataclysmic Tempest"].includes(
+            !["Battle Cry", ...requiresExact].includes(
               props.details.reason
             ) && (
               <button className="redButton2" onClick={() => handleSelect()}>
@@ -400,10 +424,9 @@ const SelectHandMultiSkill = (props) => {
               </button>
             )}
 
+          {/* Must be exact */}
           {selectedSkills.length === props.details.count &&
-            ["Skill Hand Limit", "Cataclysmic Tempest"].includes(
-              props.details.reason
-            ) && (
+            requiresExact.includes(props.details.reason) && (
               <button
                 className={`redButton2 ${
                   canClick("Button") ? "demoClick" : ""
@@ -417,6 +440,7 @@ const SelectHandMultiSkill = (props) => {
               </button>
             )}
 
+          {/* Must be exact: 2 or 3*/}
           {(newGameState[self].bountyUpgrades.phases < 2
             ? selectedSkills.length === props.details.count
             : selectedSkills.length >= 2) &&

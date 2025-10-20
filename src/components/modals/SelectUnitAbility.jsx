@@ -195,7 +195,7 @@ const SelectUnitAbility = (props) => {
 
     case "Plant Scion":
       message =
-        "Flora’s Reverence: You can activate your abilities more than once per turn.";
+        "You can activate this ability even if you are paralyzed. " + message;
       abilityDetails = [
         {
           optionName: "Flourish",
@@ -203,19 +203,8 @@ const SelectUnitAbility = (props) => {
           optionText: (
             <>
               <div>
-                ⬩Spend 2 skills to restore your Aether and gain Overgrowth.
-              </div>
-            </>
-          ),
-        },
-        {
-          optionName: "Ambrosia",
-          abilityQualifier: <div className="abilityQualifier"></div>,
-          optionText: (
-            <>
-              <div>
-                ⬩Spend 1 Blossom to purge your or an adjacent ally’s afflictions
-                (except Root and Anathema).
+                ⬩Spend 2 skills to gain 3 Blossoms or spend 1 Blossom to purge
+                your or an adjacent ally’s afflictions, except Anathema.
               </div>
             </>
           ),
@@ -225,8 +214,20 @@ const SelectUnitAbility = (props) => {
   }
 
   const canChoice = (i) => {
-    if (isMuted(unit) || isDisrupted(unit, 1)) {
-      return false;
+    if (unit.unitClass === "Plant Scion") {
+      //Plant Scions can still use their ability if paralyzed
+      if (
+        unit.afflictions.anathema ||
+        unit.afflictions.frost ||
+        unit.afflictions.infection ||
+        isDisrupted(unit, 1)
+      ) {
+        return false;
+      }
+    } else {
+      if (isMuted(unit) || isDisrupted(unit, 1)) {
+        return false;
+      }
     }
 
     if (unit.temporary.usedAbility) {
@@ -284,12 +285,8 @@ const SelectUnitAbility = (props) => {
         switch (i) {
           case 0:
             return (
-              newGameState[unit.player].skillHand.length > 1 ||
-              (newGameState[unit.player].skillHand.length === 1 &&
-                unit.blossom > 1)
+              newGameState[unit.player].skillHand.length > 1 || unit.blossom > 0
             );
-          case 1:
-            return unit.blossom > 0;
         }
     }
 
@@ -495,24 +492,6 @@ const SelectUnitAbility = (props) => {
           });
 
           newGameState = animationDelay(newGameState, self);
-        } else if (selectedChoice === 1) {
-          updateData = true;
-          newGameState.activatingSkill.push("Ambrosia");
-          newGameState.activatingUnit.push(unit);
-
-          newGameState.currentResolution.push({
-            resolution: "Tactic End",
-            unit: unit,
-            effect: true,
-          });
-
-          newGameState.currentResolution.push({
-            resolution: "Unit Ability",
-            resolution2: "Activating Ambrosia",
-            unit: unit,
-          });
-
-          newGameState = animationDelay(newGameState, self);
         }
         break;
 
@@ -572,9 +551,6 @@ const SelectUnitAbility = (props) => {
             {abilityDetails.map((detail, i) => (
               <div
                 key={i}
-                // className={`modal-option-outline ${
-                //   selectedChoice === i ? "selected-modal-option" : ""
-                // } ${canClick("Ability", i) ? "demoClick" : ""}`}
                 className={`
                   modalOptionOutline
                   modalMediumOptionOutline ${
@@ -588,10 +564,6 @@ const SelectUnitAbility = (props) => {
                 }}
               >
                 <div
-                  // className={`modal-option-content ${
-                  //   canChoice(i) ? "" : "disabled-modal-option-content"
-                  // } `}
-
                   className={`modalMedium
                     ${canChoice(i) ? "" : "disabledModal"} 
                     ${canClick("Ability", i) ? "demoClick" : ""}
@@ -605,7 +577,7 @@ const SelectUnitAbility = (props) => {
                       className="modalOptionTitle"
                       style={
                         detail.optionName === "Reap the Whirlwind"
-                          ? { fontSize: 28 }
+                          ? { fontSize: 26 }
                           : {}
                       }
                     >
