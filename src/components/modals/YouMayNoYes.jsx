@@ -320,7 +320,7 @@ const YouMayNoYes = (props) => {
             restriction: ["08-03"],
             exclusion: [],
             searchTitle: "Funeral Flowers",
-            searchMessage: "Search for 1 Viridian Grave.",
+            searchMessage: "Search for 1 “Viridian Grave”.",
             outcome: "Add",
             revealTitle: null,
             revealMessage: null,

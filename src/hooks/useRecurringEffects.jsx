@@ -476,144 +476,21 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
-  const activateSovereignSkill = (newGameState, skill) => {
-    const activateTemplate = (newGameState, skill, resolution, resolution2) => {
-      newGameState.currentResolution.push({
-        resolution: "Skill Conclusion",
-        player: self,
-        unit: null,
-        skill: skill,
-        skillConclusion: "discard",
-      });
+  const activateSovereignSkill = (newGameState, skill, resonator = null) => {
+    let conclusion = "discard";
 
-      newGameState.currentResolution.push({
-        resolution: resolution,
-        resolution2: resolution2,
-        player: self,
-      });
+    newGameState.activatingSkill.push(skill);
+    newGameState.activatingUnit.push(null);
 
-      newGameState.activatingSkill.push(skill);
-      newGameState.activatingUnit.push(null);
+    if (resonator) {
+      newGameState.activatingResonator.push(resonator);
+      //end Select Resonator resolution
+      newGameState.currentResolution.pop();
 
-      newGameState = animationDelay(newGameState, self);
-
-      return newGameState;
-    };
-
-    switch (skill) {
-      case "SA-01":
-        return activateTemplate(
-          newGameState,
-          skill,
-          "Sovereign Standard Skill",
-          "Activating Heir’s Endeavor"
-        );
-
-      case "SA-02":
-        return activateTemplate(
-          newGameState,
-          skill,
-          "Sovereign Standard Skill",
-          "Activating Tea for Two"
-        );
-
-      case "SA-03":
-        return activateTemplate(
-          newGameState,
-          skill,
-          "Sovereign Standard Skill",
-          "Activating Dark Halo"
-        );
-
-      case "SA-04":
-        return activateTemplate(
-          newGameState,
-          skill,
-          "Sovereign Standard Skill",
-          "Activating Reminiscence"
-        );
-
-      case "SA-05":
-        return activateTemplate(
-          newGameState,
-          skill,
-          "Sovereign Standard Skill",
-          "Activating Foreshadow"
-        );
-
-      case "SB-01":
-        return activateTemplate(
-          newGameState,
-          skill,
-          "Sovereign Resonant Skill",
-          "Activating Transmute"
-        );
-
-      case "SB-02":
-        return activateTemplate(
-          newGameState,
-          skill,
-          "Sovereign Resonant Skill",
-          "Activating Ambidexterity"
-        );
-
-      case "SB-03":
-        return activateTemplate(
-          newGameState,
-          skill,
-          "Sovereign Resonant Skill",
-          "Activating Providence"
-        );
-
-      case "SB-04":
-        return activateTemplate(
-          newGameState,
-          skill,
-          "Sovereign Resonant Skill",
-          "Activating Fervent Prayer"
-        );
-
-      case "SB-05":
-        return activateTemplate(
-          newGameState,
-          skill,
-          "Sovereign Resonant Skill",
-          "Activating Press the Attack"
-        );
-
-      default:
-        return newGameState;
-    }
-  };
-
-  const activateSovereignSkillAndResonate = (
-    newGameState,
-    skill,
-    resonator
-  ) => {
-    //end Select Resonator resolution
-    newGameState.currentResolution.pop();
-
-    const activateResonanceTemplate = (
-      newGameState,
-      skill,
-      resolution,
-      resolution2,
-      resonator,
-      defaultConclusion
-    ) => {
       if (resonator === "SA-01") {
-        newGameState.currentResolution.push({
-          resolution: "Sovereign Resonant Skill",
-          resolution2: "Heirs Endeavor Resonance",
-          player: self,
-        });
-      }
-
-      let skillConclusion = "discard";
-
-      if (defaultConclusion === "retain" && resonator !== "SA-02") {
-        skillConclusion = defaultConclusion;
+        conclusion = "retain";
+      } else if (resonator !== "SA-02") {
+        conclusion = "float";
       }
 
       newGameState.currentResolution.push({
@@ -621,91 +498,30 @@ export const useRecurringEffects = () => {
         player: self,
         unit: null,
         skill: skill,
-        skillConclusion: skillConclusion, // either retain or discard
+        skillConclusion: conclusion,
         resonator: resonator,
         resonatorConclusion: "discard",
       });
-
-      if (defaultConclusion === "float" && resonator !== "SA-02") {
-        newGameState.currentResolution.push({
-          resolution: "Misc.",
-          resolution2: "May float resonant skill",
-          player: self,
-          skill: skill,
-          resonator: resonator,
-        });
-      }
-
+    } else {
       newGameState.currentResolution.push({
-        resolution: resolution,
-        resolution2: resolution2,
+        resolution: "Skill Conclusion",
         player: self,
-        resonator: resonator,
+        unit: null,
+        skill: skill,
+        skillConclusion: conclusion,
       });
-
-      newGameState = animationDelay(newGameState, self);
-
-      newGameState.activatingSkill.push(skill);
-      newGameState.activatingResonator.push(resonator);
-      newGameState.activatingUnit.push(null);
-
-      return newGameState;
-    };
-
-    switch (skill) {
-      case "SB-01":
-        return activateResonanceTemplate(
-          newGameState,
-          skill,
-          "Sovereign Resonant Skill",
-          "Activating Transmute",
-          resonator,
-          "retain"
-        );
-
-      case "SB-02":
-        return activateResonanceTemplate(
-          newGameState,
-          skill,
-          "Sovereign Resonant Skill",
-          "Activating Ambidexterity",
-          resonator,
-          "float"
-        );
-
-      case "SB-03":
-        return activateResonanceTemplate(
-          newGameState,
-          skill,
-          "Sovereign Resonant Skill",
-          "Activating Providence",
-          resonator,
-          "retain"
-        );
-
-      case "SB-04":
-        return activateResonanceTemplate(
-          newGameState,
-          skill,
-          "Sovereign Resonant Skill",
-          "Activating Fervent Prayer",
-          resonator,
-          "float"
-        );
-
-      case "SB-05":
-        return activateResonanceTemplate(
-          newGameState,
-          skill,
-          "Sovereign Resonant Skill",
-          "Activating Press the Attack",
-          resonator,
-          "retain"
-        );
-
-      default:
-        return newGameState;
     }
+
+    const skillData = getSkillById(skill);
+
+    newGameState.currentResolution.push({
+      resolution: "Sovereign " + skillData.Method + " Skill",
+      resolution2: "Activating " + skillData.Name,
+      resonator,
+      player: self,
+    });
+
+    return newGameState;
   };
 
   const activateThunderThaumaturge = (newGameState, unit, attacker) => {
@@ -2334,6 +2150,7 @@ export const useRecurringEffects = () => {
             details: {
               title: "Funeral Flowers",
               reason: "Funeral Flowers",
+              message: "You may search for 1 “Viridian Grave”.",
               no: "Skip",
               yes: "Search",
             },
@@ -4217,7 +4034,6 @@ export const useRecurringEffects = () => {
     activatePitfallTrap,
     activateSkill,
     activateSovereignSkill,
-    activateSovereignSkillAndResonate,
     activateSymphonicScreech,
     activateThunderThaumaturge,
     activateVengefulLegacy,

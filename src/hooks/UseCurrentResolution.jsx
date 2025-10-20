@@ -91,7 +91,6 @@ const UseCurrentResolution = (props) => {
 
   const {
     heirsEndeavor1,
-    heirsEndeavorResonance,
     teaForTwo1,
     reminiscence1,
     foreshadow1,
@@ -3010,12 +3009,6 @@ const UseCurrentResolution = (props) => {
               )}
             </>
           );
-
-        case "Heirs Endeavor Resonance":
-          if (self === lastRes.player) {
-            props.updateLocalState(heirsEndeavorResonance());
-          }
-          break;
       }
       break;
 

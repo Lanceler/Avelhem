@@ -22,7 +22,7 @@ const SelectResonator = (props) => {
   const [selectedSkill, setSelectedSkill] = useState(null);
 
   const { getScionSet } = useCardDatabase();
-  const { activateAvelhem, activateSkill, activateSovereignSkillAndResonate } =
+  const { activateAvelhem, activateSkill, activateSovereignSkill } =
     useRecurringEffects();
 
   let usableAvelhems = [];
@@ -139,7 +139,7 @@ const SelectResonator = (props) => {
         );
       } else {
         //Sovereign skill
-        newGameState = activateSovereignSkillAndResonate(
+        newGameState = activateSovereignSkill(
           newGameState,
           props.skill.id,
           usableSkills[selectedSkill].id

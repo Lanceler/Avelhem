@@ -48,30 +48,6 @@ export const useSovereignSkillEffects = () => {
     return newGameState;
   };
 
-  const heirsEndeavorResonance = () => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    //end "Heirs Endeavor Resonance"
-    newGameState.currentResolution.pop();
-
-    newGameState.currentResolution.push({
-      resolution: "Misc.",
-      resolution2: "Inspect Skill",
-      player: self,
-      details: {
-        restriction: sovereignSkillList(),
-        title: "Heir’s Endeavor",
-        reason: "Heir’s Endeavor",
-        message:
-          "Inspect 4 skills; you may add 1 Sovereign skill among them to your hand.",
-        inspectionCount: 4,
-        select: "Single",
-        outcome: "Add",
-      },
-    });
-
-    return newGameState;
-  };
-
   const teaForTwo1 = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -780,7 +756,6 @@ export const useSovereignSkillEffects = () => {
 
   return {
     heirsEndeavor1,
-    heirsEndeavorResonance,
     teaForTwo1,
     darkHalo1,
     reminiscence1,

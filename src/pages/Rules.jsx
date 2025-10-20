@@ -968,10 +968,9 @@ export default function Rules() {
                 >
                   Heir’s Endeavor
                 </span>{" "}
-                as a resonator can only resonate with Sovereign skills, and it
-                allows the activator to inspect skills when the resonance
-                concludes, while its primary effect of recovering a Sovereign
-                skill is ignored.
+                as a resonator can only resonate with Sovereign skills. When
+                doing so, its primary effect of recovering a Sovereign skill is
+                ignored.
               </p>
               <br />
               <h2>Float</h2>
