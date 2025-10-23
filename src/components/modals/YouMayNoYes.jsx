@@ -48,12 +48,19 @@ const YouMayNoYes = (props) => {
   }
 
   const handleNo = () => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
+    const newGameState = JSON.parse(JSON.stringify(localGameState));
     newGameState.currentResolution.pop();
 
-    if (props.details.reason === "Mitigate Aether-Blast") {
-      newGameState.activatingTarget.pop();
+    switch (props.details.reason) {
+      case "Mitigate Aether-Blast":
+        newGameState.activatingTarget.pop();
+        break;
+
+      case "Dark Halo":
+        newGameState[self].skillRepertoire.push(props.details.skill);
+        newGameState[self].skillFloat += 1;
+
+        break;
     }
 
     dispatch(updateState(newGameState));
@@ -374,6 +381,33 @@ const YouMayNoYes = (props) => {
         );
         break;
 
+      case "Dark Halo":
+        newGameState[self].skillVestige.push(props.details.skill);
+
+        newGameState.currentResolution.push({
+          resolution: "Search Card",
+          player: self,
+          details: {
+            restriction: getScionSet(props.details.unit.unitClass).filter((s) =>
+              allBurstSkills().includes(s)
+            ),
+            exclusion: [],
+            searchTitle: "Dark Halo",
+            searchMessage:
+              "Search for a burst skill that belongs to their class",
+            outcome: "Add",
+            revealTitle: "Dark Halo",
+            revealMessage: "Your opponent has searched for a burst skill.",
+            messageTitle: null,
+            message: null,
+            specMessage: `${
+              self === "host" ? "Gold" : "Silver"
+            } Sovereign has searched for a burst skill.`,
+          },
+        });
+
+        break;
+
       case "Foreshadow Draw": //"Foreshadow Draw"
       case "Foreshadow Draw 2": //"Foreshadow Draw 2"
         newGameState = drawSkill(newGameState);
@@ -396,9 +430,9 @@ const YouMayNoYes = (props) => {
           player: self,
           details: {
             restriction: getScionSet(props.details.unit.unitClass),
-            exclusion: allBurstSkills(),
+            exclusion: null,
             searchTitle: "Fated Rivalry",
-            searchMessage: "Search for skill that belongs to their class",
+            searchMessage: "Search for a skill that belongs to their class",
             outcome: "Add",
             revealTitle: null,
             revealMessage: null,

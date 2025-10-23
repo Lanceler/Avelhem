@@ -592,7 +592,7 @@ const UnitInfo = (props) => {
                         Ambidexterity (1 turn)
                       </p>
                       <p className="unitInfo-text-desc unitInfo-text-last">
-                        ⬩Next standard skill activated is retained.
+                        ⬩Next standard skill activated returns to hand.
                       </p>
                     </>
                   )}

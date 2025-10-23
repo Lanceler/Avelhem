@@ -207,25 +207,54 @@ const UseCurrentResolution = (props) => {
       //end "Resonance Conclusion"
       newGameState.currentResolution.pop();
 
-      if (skillConclusion === "discard") {
-        newGameState[player].skillVestige.push(skill);
-      } else if (skillConclusion === "float") {
-        newGameState[player].skillRepertoire.push(skill);
-        newGameState[player].skillFloat = newGameState[player].skillFloat + 1;
-      } else if (skillConclusion === "retain") {
-        newGameState[player].skillHand.unshift(skill);
+      if (resonator === "SA-03") {
+        newGameState.currentResolution.push({
+          resolution: "Misc.",
+          resolution2: "Dark Halo",
+          player: self,
+          details: {
+            reason: "Dark Halo",
+            title: "Dark Halo",
+            skill: skill,
+            unit: unitInfo,
+            message:
+              "You may discard the resonated skill to search for 1 Burst skill that belongs to the Scion’s class.",
+            no: "Skip",
+            yes: "Search",
+          },
+        });
+
+        //s
+      } else {
+        switch (skillConclusion) {
+          case "discard":
+            newGameState[player].skillVestige.push(skill);
+            break;
+
+          case "float":
+            newGameState[player].skillRepertoire.push(skill);
+            newGameState[player].skillFloat += 1;
+            break;
+
+          case "retain":
+            newGameState[player].skillHand.unshift(skill);
+            break;
+        }
       }
 
-      if (resonator === "SA-03") {
-        newGameState[player].skillHand.unshift(resonator);
-      } else if (resonatorConclusion === "discard") {
-        newGameState[player].skillVestige.push(resonator);
-      } else if (resonatorConclusion === "float") {
-        newGameState[player].skillRepertoire.push(resonator);
-        newGameState[player].skillFloat = newGameState[player].skillFloat + 1;
-      } else if (resonatorConclusion === "retain") {
-        newGameState[player].skillHand.unshift(resonator);
-      }
+      newGameState[player].skillVestige.push(resonator);
+
+      //UPDATE: Resonator is always discarded; keeping code just in case
+      // if (resonator === "SA-03") {
+      //   newGameState[player].skillHand.unshift(resonator);
+      // } else if (resonatorConclusion === "discard") {
+      //   newGameState[player].skillVestige.push(resonator);
+      // } else if (resonatorConclusion === "float") {
+      //   newGameState[player].skillRepertoire.push(resonator);
+      //   newGameState[player].skillFloat = newGameState[player].skillFloat + 1;
+      // } else if (resonatorConclusion === "retain") {
+      //   newGameState[player].skillHand.unshift(resonator);
+      // }
 
       newGameState.activatingSkill.pop();
       newGameState.activatingUnit.pop();
@@ -861,6 +890,7 @@ const UseCurrentResolution = (props) => {
 
         case "End Execution Phase Confirm":
         case "Assault - Avelhem Draw":
+        case "Dark Halo":
           return (
             <>
               {self === lastRes.player && !props.hideModal && (

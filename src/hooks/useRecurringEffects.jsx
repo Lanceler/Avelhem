@@ -414,12 +414,7 @@ export const useRecurringEffects = () => {
       //end Select Resonator resolution
       newGameState.currentResolution.pop();
 
-      if (
-        ![
-          "SA-02",
-          //  "SA-03"
-        ].includes(resonator)
-      ) {
+      if (!["SA-02"].includes(resonator)) {
         conclusion = "float";
       }
 

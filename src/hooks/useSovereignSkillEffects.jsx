@@ -240,6 +240,11 @@ export const useSovereignSkillEffects = () => {
     //end "Activating TransmuteR1" resolution
     newGameState.currentResolution.pop();
 
+    newGameState[self].defiancePoints = Math.min(
+      6,
+      newGameState[self].defiancePoints + 4
+    );
+
     for (let skill of skills) {
       const skillCode = skill.substring(0, 2);
 
