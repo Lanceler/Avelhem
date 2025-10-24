@@ -516,6 +516,8 @@ export const useRecurringEffects = () => {
       player: self,
     });
 
+    newGameState = animationDelay(newGameState, self);
+
     return newGameState;
   };
 
@@ -1916,7 +1918,7 @@ export const useRecurringEffects = () => {
     }
 
     //transfer card from deck to hand
-    newGameState[self].avelhemHand.unshift(
+    newGameState[self].avelhemHand.push(
       newGameState[self].avelhemRepertoire.pop()
     );
 
@@ -1946,9 +1948,7 @@ export const useRecurringEffects = () => {
 
   const drawSkill = (newGameState) => {
     //transfer card from deck to hand
-    newGameState[self].skillHand.unshift(
-      newGameState[self].skillRepertoire.pop()
-    );
+    newGameState[self].skillHand.push(newGameState[self].skillRepertoire.pop());
 
     //decrease floating count
 

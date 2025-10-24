@@ -79,15 +79,7 @@ const PlayerAvelhemHand = (props) => {
   };
 
   return (
-    <div className="mainSkillHand">
-      {selectedAvelhem && (
-        <SelectedAvelhem
-          selectedAvelhem={selectedAvelhem}
-          setSelectedAvelhem={setSelectedAvelhem}
-          updateFirebase={props.updateFirebase}
-          setRaise={setRaise}
-        />
-      )}
+    <>
       {raise === true && (
         <button
           className="collapse"
@@ -106,34 +98,52 @@ const PlayerAvelhemHand = (props) => {
           </svg>
         </button>
       )}
-      {localGameState[self] && (
-        <div
-          className="player-avelhemhand-container"
-          style={{
-            transform: `translateY(${raise ? -raiseHeight : 55}px)`,
-          }}
-          onClick={(e) => handleRaise(e)}
-        >
-          {localGameState[self].avelhemHand.map((card, index) => (
-            <div
-              onClick={() => {
-                handleCard(card, index);
-                handleUpdateDemoGuide();
-              }}
-              key={index}
-              className={`player-hand-card indivAvelhem ${
-                raise ? "enlargable" : ""
-              } ${canClick(card) ? "demoClick" : ""}`}
-              style={{
-                backgroundImage: `url(${getCardImage(card)})`,
-                top: Math.floor(index / 2) * -110,
-                left: 5 + (index % 2) * -60,
-              }}
-            ></div>
-          ))}
-        </div>
-      )}
-    </div>
+
+      <div className="mainSkillHand">
+        {selectedAvelhem && (
+          <SelectedAvelhem
+            selectedAvelhem={selectedAvelhem}
+            setSelectedAvelhem={setSelectedAvelhem}
+            updateFirebase={props.updateFirebase}
+            setRaise={setRaise}
+          />
+        )}
+
+        {localGameState[self] && (
+          <div
+            className="player-avelhemhand-container"
+            style={{
+              transform: `translateY(${raise ? -raiseHeight : 55}px)`,
+            }}
+            onClick={() => handleRaise()}
+          >
+            {localGameState[self].avelhemHand.map((card, index) => (
+              <div
+                className="hand-card-entrance"
+                key={index}
+                style={{ zIndex: index }}
+              >
+                <div
+                  onClick={() => {
+                    handleCard(card, index);
+                    handleUpdateDemoGuide();
+                  }}
+                  className={`player-hand-card ${raise ? "enlargable" : ""} ${
+                    canClick(card) ? "demoClick" : ""
+                  }`}
+                  style={{
+                    backgroundImage: `url(${getCardImage(card)})`,
+                    top: Math.floor(index / 2) * -110,
+                    left: 5 + (index % 2) * -60,
+                    transform: `rotate(${index % 2 === 0 ? "-5deg" : "5deg"})`,
+                  }}
+                ></div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 

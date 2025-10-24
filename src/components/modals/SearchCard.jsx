@@ -103,7 +103,7 @@ const SearchCard = (props) => {
         }
 
         //add selected avelhem from repertoire to hand
-        newGameState[self].avelhemHand.unshift(
+        newGameState[self].avelhemHand.push(
           newGameState[self].avelhemRepertoire.splice(
             newGameState[self].avelhemRepertoire.length - 1 - selectedCard,
             1
@@ -199,7 +199,7 @@ const SearchCard = (props) => {
 
       if (props.details.outcome === "Add") {
         //add selected skill from repertoire to hand
-        newGameState[self].skillHand.unshift(
+        newGameState[self].skillHand.push(
           newGameState[self].skillRepertoire.splice(
             newGameState[self].skillRepertoire.length - 1 - selectedCard,
             1

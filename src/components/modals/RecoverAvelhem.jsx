@@ -42,7 +42,7 @@ const RecoverAvelhem = (props) => {
 
     if (props.details.outcome === "Add") {
       //add selected Avelhem from vestige to hand
-      newGameState[self].avelhemHand.unshift(
+      newGameState[self].avelhemHand.push(
         newGameState[self].avelhemVestige.splice(
           newGameState[self].avelhemVestige.length - 1 - selectedAvelhem,
           1

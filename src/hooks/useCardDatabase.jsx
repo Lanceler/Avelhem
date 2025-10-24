@@ -216,12 +216,14 @@ export const useCardDatabase = () => {
       "04-04", //Geomancy
       "05-01", //Chain Lightning
       "05-02", //Zip and Zap
+      "05-04", //Valiant Spark
       "06-01", //Surge
       "06-02", //Diffusion
       "07-01", //Magnetic Shockwave
       "07-03", //Frenzy Blade
       "07-04", //Arsenal Onslaught
       "08-01", //Sow and Reap
+      "08-04", //Castle of Thorns
       "09-01", //Raptor Blitz
     ];
   };

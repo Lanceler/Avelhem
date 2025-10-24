@@ -110,29 +110,43 @@ const PlayerSkillHand = (props) => {
               // top: `${raise ? -raiseHeight : 55}px`,
               transform: `translateY(${raise ? -raiseHeight : 55}px)`,
             }}
-            onClick={(e) => handleRaise(e)}
+            onClick={() => handleRaise()}
           >
             {localGameState[self].skillHand.map((card, index) => (
               <div
-                onClick={() => {
-                  handleCard(card, index);
-                  handleUpdateDemoGuide();
-                }}
+                className="hand-card-entrance"
                 key={index}
-                className={`player-hand-card indivSkill ${
-                  raise ? "enlargable" : ""
-                }
+                style={{ zIndex: index }}
+              >
+                <div
+                  onClick={() => {
+                    handleCard(card, index);
+                    handleUpdateDemoGuide();
+                  }}
+                  className={`hand-card-entrance player-hand-card  ${
+                    raise ? "enlargable" : ""
+                  }
               ${canClick(card) ? "demoClick" : ""}
               `}
-                style={{
-                  backgroundImage: `url(${getCardImage(card)})`,
-                  // top: Math.floor(index / 4) * -110,
-                  top:
-                    Math.floor(index / 4) * -110 -
-                    Math.floor(((index + 1) % 4) / 2) * 10,
-                  left: (index % 4) * -60,
-                }}
-              ></div>
+                  style={{
+                    backgroundImage: `url(${getCardImage(card)})`,
+                    // top: Math.floor(index / 4) * -110,
+                    top:
+                      Math.floor(index / 4) * -110 -
+                      Math.floor(((index + 1) % 4) / 2) * 10,
+                    left: (index % 4) * -60,
+                    transform: `rotate(${
+                      index % 4 === 0
+                        ? -5
+                        : index % 4 === 1
+                        ? -2.5
+                        : index % 4 === 2
+                        ? 2.5
+                        : 5
+                    }deg)`,
+                  }}
+                ></div>
+              </div>
             ))}
           </div>
         )}

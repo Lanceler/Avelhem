@@ -173,7 +173,7 @@ const UseCurrentResolution = (props) => {
         newGameState[player].skillRepertoire.push(skill);
         newGameState[player].skillFloat = newGameState[player].skillFloat + 1;
       } else if (conclusion === "retain") {
-        newGameState[player].skillHand.unshift(skill);
+        newGameState[player].skillHand.push(skill);
       }
 
       newGameState.activatingSkill.pop();
@@ -237,7 +237,7 @@ const UseCurrentResolution = (props) => {
             break;
 
           case "retain":
-            newGameState[player].skillHand.unshift(skill);
+            newGameState[player].skillHand.push(skill);
             break;
         }
       }
@@ -246,14 +246,14 @@ const UseCurrentResolution = (props) => {
 
       //UPDATE: Resonator is always discarded; keeping code just in case
       // if (resonator === "SA-03") {
-      //   newGameState[player].skillHand.unshift(resonator);
+      //   newGameState[player].skillHand.push(resonator);
       // } else if (resonatorConclusion === "discard") {
       //   newGameState[player].skillVestige.push(resonator);
       // } else if (resonatorConclusion === "float") {
       //   newGameState[player].skillRepertoire.push(resonator);
       //   newGameState[player].skillFloat = newGameState[player].skillFloat + 1;
       // } else if (resonatorConclusion === "retain") {
-      //   newGameState[player].skillHand.unshift(resonator);
+      //   newGameState[player].skillHand.push(resonator);
       // }
 
       newGameState.activatingSkill.pop();
@@ -2998,22 +2998,6 @@ const UseCurrentResolution = (props) => {
             <>
               {self === lastRes.player && !props.hideModal && (
                 <FerventPrayerResonance
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
-
-        case "Fervent Prayer Reveal":
-          return (
-            <>
-              {self === lastRes.player && !props.hideModal && (
-                <RevealedSkillView
-                  avelhems={lastRes.avelhems}
-                  multi={true}
-                  title={lastRes.title}
-                  message={lastRes.message}
                   updateFirebase={props.updateFirebase}
                   hideOrRevealModale={props.hideOrRevealModale}
                 />

@@ -106,7 +106,7 @@ const InspectSkill = (props) => {
         case "Single":
           if (props.details.outcome === "Add") {
             //add selected Avelhem from repertoire to hand
-            newGameState[self].avelhemHand.unshift(
+            newGameState[self].avelhemHand.push(
               newGameState[self].avelhemRepertoire.splice(
                 newGameState[self].avelhemRepertoire.length - 1 - selectedSkill,
                 1
@@ -147,7 +147,7 @@ const InspectSkill = (props) => {
               SelectedRepertoireIndexes.push(selection[i].repertoireIndex);
 
               // add selected cards to hand in order they were selected
-              newGameState[self].avelhemHand.unshift(selection[i].id);
+              newGameState[self].avelhemHand.push(selection[i].id);
             }
 
             SelectedRepertoireIndexes.sort((a, b) => b - a);
@@ -179,7 +179,7 @@ const InspectSkill = (props) => {
         case "Single":
           if (props.details.outcome === "Add") {
             //add selected skill from repertoire to hand
-            newGameState[self].skillHand.unshift(
+            newGameState[self].skillHand.push(
               newGameState[self].skillRepertoire.splice(
                 newGameState[self].skillRepertoire.length - 1 - selectedSkill,
                 1
@@ -219,7 +219,7 @@ const InspectSkill = (props) => {
               SelectedRepertoireIndexes.push(selection[i].repertoireIndex);
 
               // add selected cards to hand in order they were selected
-              newGameState[self].skillHand.unshift(selection[i].id);
+              newGameState[self].skillHand.push(selection[i].id);
             }
 
             SelectedRepertoireIndexes.sort((a, b) => b - a);

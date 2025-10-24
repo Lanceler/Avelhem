@@ -53,6 +53,24 @@
     position: absolute;
 }
 
+.hand-card-entrance{
+    animation: handCard 2.0s ease-out;
+
+    /* scale: 1.5;
+        transform: translateY(-125px); */
+}
+
+@keyframes handCard {
+    0%{
+        /* scale: 2.5;
+        transform: translateY(-175px) ; */
+
+            scale: 2.25;
+                transform: translateY(-75px);
+    }
+
+}
+
 .player-hand-card {
     width: 140px;
     height: 196px;
@@ -74,24 +92,6 @@
 
 }
 
-.indivSkill:nth-child(4n+1){
-    transform: rotate(-5deg);
-}
-.indivSkill:nth-child(4n+2) {
-    transform: rotate(-2.5deg);
-}
-.indivSkill-card:nth-child(4n+3) {
-    transform: rotate(2.5deg);
-}
-.indivSkill:nth-child(4n+4) {
-    transform: rotate(5deg);
-}
-.indivAvelhem:nth-child(2n+1) {
-    transform: rotate(-5deg);
-}
-.indivAvelhem:nth-child(2n+2) {
-    transform: rotate(5deg);
-}
 
 .enlargable:hover {
     top: -16.8px;

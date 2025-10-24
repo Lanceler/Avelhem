@@ -53,13 +53,11 @@ export default function SelectFirstPlayer(props) {
 
     //extra draw for 2nd player
     if (choice === "host") {
-      newGameState.guest.skillHand.unshift(
+      newGameState.guest.skillHand.push(
         newGameState.guest.skillRepertoire.pop()
       );
     } else {
-      newGameState.host.skillHand.unshift(
-        newGameState.host.skillRepertoire.pop()
-      );
+      newGameState.host.skillHand.push(newGameState.host.skillRepertoire.pop());
     }
 
     const newZoneInfo = [...JSON.parse(localGameState.zones)];
