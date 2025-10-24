@@ -17,17 +17,6 @@ const SkillMultiSelect = (props) => {
 
   const image = getCardImage(props.usableSkill);
 
-  // const handleClick = () => {
-  //   if (props.canAdd) {
-  //     if (props.selectedSkills.includes(props.i)) {
-  //       props.selectedSkills.splice(props.selectedSkills.indexOf(props.i), 1);
-  //       props.setSelectedSkills([...props.selectedSkills]);
-  //     } else if (props.selectedSkills.length < props.addLimit) {
-  //       props.setSelectedSkills([...props.selectedSkills, props.i]);
-  //     }
-  //   }
-  // };
-
   return (
     <>
       <div

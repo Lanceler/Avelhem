@@ -2955,6 +2955,19 @@ const UseCurrentResolution = (props) => {
             </>
           );
 
+        case "ProvidenceR1":
+          return (
+            <>
+              {self === lastRes.player && !props.hideModal && (
+                <YouMayNoYes
+                  details={lastRes.details}
+                  updateFirebase={props.updateFirebase}
+                  hideOrRevealModale={props.hideOrRevealModale}
+                />
+              )}
+            </>
+          );
+
         case "Activating Fervent Prayer":
           if (self === lastRes.player) {
             props.updateLocalState(ferventPrayer1(lastRes.resonator));

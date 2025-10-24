@@ -299,13 +299,28 @@ const SelectTacticViaEffect = (props) => {
         newGameState = drawSkill(newGameState);
         newGameState = drawSkill(newGameState);
         newGameState = drawSkill(newGameState);
-        newGameState = drawAvelhem(newGameState);
+
         newGameState = drawAvelhem(newGameState);
         newGameState = drawAvelhem(newGameState);
 
         if (props.details.resonated === "resonated") {
           newGameState.tactics[i].stock += 1;
           newGameState.tactics[i].face = "Advance";
+
+          if (newGameState[self].defiancePoints >= 3) {
+            newGameState.currentResolution.push({
+              resolution: "Sovereign Resonant Skill",
+              resolution2: "ProvidenceR1",
+              player: self,
+              details: {
+                reason: "Providence",
+                title: "Providence",
+                message: "You may spend 3 DP to gain 1 BP.",
+                no: "Skip",
+                yes: "Spend DP",
+              },
+            });
+          }
         }
 
         break;

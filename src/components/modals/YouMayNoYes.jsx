@@ -413,6 +413,16 @@ const YouMayNoYes = (props) => {
         newGameState = drawSkill(newGameState);
         break;
 
+      case "Providence":
+        newGameState[self].defiancePoints -= 3;
+
+        newGameState[self].bountyPoints = Math.min(
+          10,
+          newGameState[self].bountyPoints + 1
+        );
+
+        break;
+
       case "Press the Attack Avelhem":
         newGameState = drawAvelhem(newGameState);
         break;
