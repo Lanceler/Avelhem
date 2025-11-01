@@ -185,6 +185,7 @@ const SelectHandMultiSkill = (props) => {
             selectedCards.length > 1 ? "s" : ""
           } at the bottom of their repertoire and drew the same number.`,
         });
+
         break;
 
       case "Cataclysmic Tempest":

@@ -30,7 +30,6 @@ const SelectUnitAbility = (props) => {
     getVacant2SpaceZones,
     getZonesWithAllies,
     getZonesWithEnemies,
-    isDisrupted,
     isMuted,
   } = useRecurringEffects();
 
@@ -172,6 +171,7 @@ const SelectUnitAbility = (props) => {
                 ⬩Convert your or an adjacent ally’s Aether into Shield for 2
                 turns.
               </div>
+              <div>⬩You may spend 3 Ambiances to recover 1 Mana skill.</div>
             </>
           ),
         },
@@ -219,13 +219,12 @@ const SelectUnitAbility = (props) => {
       if (
         unit.afflictions.anathema ||
         unit.afflictions.frost ||
-        unit.afflictions.infection ||
-        isDisrupted(unit, 1)
+        unit.afflictions.infection
       ) {
         return false;
       }
     } else {
-      if (isMuted(unit) || isDisrupted(unit, 1)) {
+      if (isMuted(unit)) {
         return false;
       }
     }

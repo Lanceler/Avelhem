@@ -1052,7 +1052,7 @@ export const useRecurringEffects = () => {
       delete unit.cyclone;
       delete unit.leyline;
       delete unit.charge;
-      delete unit.seal;
+      delete unit.ambiance;
       delete unit.sharpness;
       delete unit.blossom;
     };
@@ -1532,9 +1532,6 @@ export const useRecurringEffects = () => {
         return false;
       case "06-04":
         return true;
-      // return ["06-01", "06-02", "06-03"].some((s) =>
-      //   localGameState[self].skillHand.includes(s)
-      // );
 
       case "07-01":
         return getZonesWithEnemies(unit, 1).length > 0 ? true : false;
@@ -1888,7 +1885,7 @@ export const useRecurringEffects = () => {
 
     for (let u in units) {
       if (units[u]) {
-        let unit = units[u];
+        const unit = units[u];
 
         unit.afflictions.anathema ? unit.afflictions.anathema-- : null;
         unit.afflictions.paralysis ? unit.afflictions.paralysis-- : null;
@@ -1896,15 +1893,8 @@ export const useRecurringEffects = () => {
 
         unit.enhancements.shield ? unit.enhancements.shield-- : null;
         unit.enhancements.ward ? unit.enhancements.ward-- : null;
-
-        unit.seal ? unit.seal-- : null;
-
-        unit = units[u];
       }
     }
-
-    // newGameState[self].units = units; <--- line not needed
-
     return newGameState;
   };
 
@@ -2093,10 +2083,6 @@ export const useRecurringEffects = () => {
             resolution: "Unit Talent",
             resolution2: "Activating Second Wind",
             unit: victim,
-            details: {
-              title: "Second Wind",
-              reason: "Second Wind",
-            },
           });
 
           newGameState = animationDelay(newGameState, victim.player);
@@ -2116,13 +2102,6 @@ export const useRecurringEffects = () => {
             resolution: "Unit Talent",
             resolution2: "Activating Ambiance Assimilation",
             unit: victim,
-            details: {
-              reason: "Ambiance Assimilation",
-              title: "Ambiance Assimilation",
-              message: "You may search for 1 Mana skill.",
-              no: "Skip",
-              yes: "Search",
-            },
           });
 
           newGameState = animationDelay(newGameState, victim.player);
@@ -2779,30 +2758,6 @@ export const useRecurringEffects = () => {
       Math.abs(unit1.column - unit2.column) <= 1
     ) {
       return true;
-    }
-
-    return false;
-  };
-
-  const isDisrupted = (unit, range) => {
-    if (unit.enhancements.score) {
-      return false;
-    }
-
-    //Note: range 1 prevents abilities & non-burst skill activation
-    //Note: range 2 prevents aether-blasts and mitigation
-
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    const zones = JSON.parse(localGameState.zones);
-
-    const zonesWithEnemies = getZonesWithEnemies(unit, range);
-
-    for (let z of zonesWithEnemies) {
-      const zone = zones[Math.floor(z / 5)][z % 5];
-      const enemy = newGameState[zone.player].units[zone.unitIndex];
-      if (enemy.seal > 0 && !isMuted(enemy)) {
-        return true;
-      }
     }
 
     return false;
@@ -3988,12 +3943,7 @@ export const useRecurringEffects = () => {
 
     newGameState.currentResolution.pop();
 
-    if (
-      !isMuted(attacker) &&
-      victim.aether &&
-      !isMuted(victim) &&
-      !isDisrupted(victim, 1)
-    ) {
+    if (!isMuted(attacker) && victim.aether && !isMuted(victim)) {
       newGameState.currentResolution.push({
         resolution: "Mitigating Aether-Blast2",
         unit: victim,
@@ -4091,7 +4041,6 @@ export const useRecurringEffects = () => {
     grantRavager,
     ignite,
     isAdjacent,
-    isDisrupted,
     isImmobilized,
     isMuted,
     isNearRootedFoe,

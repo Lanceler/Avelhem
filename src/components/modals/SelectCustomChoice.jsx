@@ -40,7 +40,6 @@ const SelectCustomChoice = (props) => {
     getZonesWithAllies,
     getZonesWithEnemies,
     getZonesWithEnemiesAfflicted,
-    isDisrupted,
     isNearRootedFoe,
     isRooted,
   } = useRecurringEffects();
@@ -119,7 +118,7 @@ const SelectCustomChoice = (props) => {
     case "Reap the Whirlwind":
       canSkip = true;
       canFirstChoice = true;
-      canSecondChoice = unit.aether && canBlast(unit) && !isDisrupted(unit, 1);
+      canSecondChoice = unit.aether && canBlast(unit);
       ChoiceFirstMessage = "Spend 2 Cyclones to restore your Aether.";
       ChoiceSecondMessage = "Spend 2 Cyclones to Aether-blast an adjacent foe.";
       break;
@@ -248,9 +247,9 @@ const SelectCustomChoice = (props) => {
         newGameState[self].skillVestige.includes(s)
       );
       canSecondChoice = true;
-      ChoiceFirstMessage = "Recover then reveal 1 burst skill.";
+      ChoiceFirstMessage = "Recover 1 burst skill.";
       ChoiceSecondMessage =
-        "Search for any skill; if successful, reveal and discard it.";
+        "Search for 1 burst skill; if successful, discard it and draw 1 skill.";
       break;
   }
 
@@ -804,7 +803,7 @@ const SelectCustomChoice = (props) => {
               title: "Foreshadow",
               reason: "Foreshadow",
               restriction: allBurstSkills(),
-              message: "Recover then reveal 1 burst skill.",
+              message: "Recover 1 burst skill.",
               outcome: "Add",
               reveal: true,
             },
@@ -814,11 +813,10 @@ const SelectCustomChoice = (props) => {
             resolution: "Search Card",
             player: self,
             details: {
-              restriction: null,
+              restriction: allBurstSkills(),
               exclusion: [],
               searchTitle: "Foreshadow",
-              searchMessage:
-                "Search for any skill; if successful, reveal and discard it",
+              searchMessage: "Search for 1 burst skill",
               outcome: "Foreshadow",
               revealTitle: "Foreshadow",
               revealMessage:

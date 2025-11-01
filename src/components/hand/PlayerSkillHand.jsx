@@ -7,7 +7,6 @@ import { updateDemo } from "../../redux/demoGuide";
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import { useGetImages } from "../../hooks/useGetImages";
-import { useCardDatabase } from "../../hooks/useCardDatabase";
 
 import SelectedSkill from "./SelectedSkill";
 
@@ -18,7 +17,6 @@ const PlayerSkillHand = (props) => {
   const dispatch = useDispatch();
 
   const { getCardImage } = useGetImages();
-  const { getSkillById } = useCardDatabase();
 
   const [raise, setRaise] = useState(false);
   const [raiseHeight, setRaiseHeight] = useState(0);
@@ -107,47 +105,39 @@ const PlayerSkillHand = (props) => {
           <div
             className="player-skillhand-container"
             style={{
-              // top: `${raise ? -raiseHeight : 55}px`,
               transform: `translateY(${raise ? -raiseHeight : 55}px)`,
             }}
             onClick={() => handleRaise()}
           >
-            {localGameState[self].skillHand.map((card, index) => (
-              <div
-                className="hand-card-entrance"
-                key={index}
-                style={{ zIndex: index }}
-              >
+            {localGameState[self].skillHand.map((card, index) => {
+              const skillRotate = `skill-rotate-${index % 4}`;
+
+              return (
                 <div
-                  onClick={() => {
-                    handleCard(card, index);
-                    handleUpdateDemoGuide();
-                  }}
-                  className={`hand-card-entrance player-hand-card  ${
-                    raise ? "enlargable" : ""
-                  }
-              ${canClick(card) ? "demoClick" : ""}
-              `}
-                  style={{
-                    backgroundImage: `url(${getCardImage(card)})`,
-                    // top: Math.floor(index / 4) * -110,
-                    top:
-                      Math.floor(index / 4) * -110 -
-                      Math.floor(((index + 1) % 4) / 2) * 10,
-                    left: (index % 4) * -60,
-                    transform: `rotate(${
-                      index % 4 === 0
-                        ? -5
-                        : index % 4 === 1
-                        ? -2.5
-                        : index % 4 === 2
-                        ? 2.5
-                        : 5
-                    }deg)`,
-                  }}
-                ></div>
-              </div>
-            ))}
+                  className={`hand-card-entrance ${
+                    raise ? "enlargableIndex" : ""
+                  }`}
+                  key={index}
+                >
+                  <div
+                    onClick={() => {
+                      handleCard(card, index);
+                      handleUpdateDemoGuide();
+                    }}
+                    className={`player-hand-card ${skillRotate} ${
+                      raise ? "enlargable" : ""
+                    } ${canClick(card) ? "demoClick" : ""}`}
+                    style={{
+                      backgroundImage: `url(${getCardImage(card)})`,
+                      top:
+                        Math.floor(index / 4) * -110 -
+                        Math.floor(((index + 1) % 4) / 2) * 10,
+                      left: (index % 4) * -60,
+                    }}
+                  ></div>
+                </div>
+              );
+            })}
           </div>
         )}
       </div>

@@ -276,6 +276,17 @@ const YouMayNoYes = (props) => {
         );
         break;
 
+      case "Disruption Field": // "Disruption Field1"
+        unit.aether = 0;
+        const zones = props.details.zones;
+
+        for (let z of props.details.foes) {
+          const zone = zones[Math.floor(z / 5)][z % 5];
+          newGameState[zone.player].units[zone.unitIndex].aether = 0;
+        }
+
+        break;
+
       case "Magnetic Shockwave 2nd Paralyze": // "Magnetic Shockwave2.1"
         enterSelectUnitMode(
           props.details.adjacentEnemies,
@@ -338,27 +349,32 @@ const YouMayNoYes = (props) => {
         });
         break;
 
+      case "Amplify Aura":
+        unit.ambiance = 0;
+
+        newGameState.currentResolution.push({
+          resolution: "Recover Skill",
+          player: self,
+          details: {
+            title: "Amplify Aura",
+            reason: "Amplify Aura",
+            restriction: ["06-01", "06-02", "06-03", "06-04"],
+            message: "Recover 1 Mana skill.",
+            outcome: "Add",
+          },
+        });
+
         break;
 
       case "Ambiance Assimilation":
-        updateData = true;
-
-        newGameState.currentResolution.push({
-          resolution: "Search Card",
-          player: self,
-          details: {
-            restriction: ["06-01", "06-02", "06-03", "06-04"],
-            exclusion: [],
-            searchTitle: "Ambiance Assimilation",
-            searchMessage: "Search for 1 Mana skill",
-            outcome: "Add",
-            revealTitle: null,
-            revealMessage: null,
-            messageTitle: null,
-            message: null,
-            specMessage: null,
-          },
-        });
+        enterSelectUnitMode(
+          props.details.zonesWithManaScions,
+          props.unit,
+          newGameState,
+          null,
+          "ambiance assimilation",
+          "null"
+        );
         break;
 
       case "Overload": //Activating Overload
@@ -388,28 +404,22 @@ const YouMayNoYes = (props) => {
           resolution: "Search Card",
           player: self,
           details: {
-            restriction: getScionSet(props.details.unit.unitClass).filter((s) =>
-              allBurstSkills().includes(s)
-            ),
+            restriction: getScionSet(props.details.unit.unitClass),
             exclusion: [],
             searchTitle: "Dark Halo",
-            searchMessage:
-              "Search for a burst skill that belongs to their class",
+            searchMessage: "Search for 1 skill that belongs to their class",
             outcome: "Add",
-            revealTitle: "Dark Halo",
-            revealMessage: "Your opponent has searched for a burst skill.",
+            revealTitle: null,
+            revealMessage: null,
             messageTitle: null,
             message: null,
-            specMessage: `${
-              self === "host" ? "Gold" : "Silver"
-            } Sovereign has searched for a burst skill.`,
+            specMessage: null,
           },
         });
 
         break;
 
-      case "Foreshadow Draw": //"Foreshadow Draw"
-      case "Foreshadow Draw 2": //"Foreshadow Draw 2"
+      case "Foreshadow": //"Foreshadow2"
         newGameState = drawSkill(newGameState);
         break;
 

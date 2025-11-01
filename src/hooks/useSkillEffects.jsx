@@ -19,7 +19,6 @@ export const useSkillEffects = () => {
     getZonesWithEnemiesNoAether,
     getZonesWithEnemiesRooted,
     isAdjacent,
-    isDisrupted,
     isImmobilized,
     isMuted,
     isNearRootedFoe,
@@ -1568,6 +1567,7 @@ export const useSkillEffects = () => {
   const disruptionField1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+    const zones = JSON.parse(newGameState.zones);
 
     //end "Activating Disruption Field" resolution
     newGameState.currentResolution.pop();
@@ -1577,37 +1577,34 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    unit.seal = 3;
+    unit.ambiance
+      ? (unit.ambiance = Math.min(3, unit.ambiance + 2))
+      : (unit.ambiance = 2);
 
-    // unit.enhancements.shield
-    //   ? (unit.enhancements.shield = Math.max(1, unit.enhancements.shield))
-    //   : (unit.enhancements.shield = 1);
+    const zonesWithAdjacentEnemies = getZonesWithEnemies(unit, 1);
 
-    // const zones = JSON.parse(newGameState.zones);
-    // let enemyZones = getZonesWithEnemies(unit, 1);
-    // for (let i of enemyZones) {
-    //   const zone = zones[Math.floor(i / 5)][i % 5];
-    //   const enemy = newGameState[zone.player].units[zone.unitIndex];
+    for (let z of zonesWithAdjacentEnemies) {
+      const zone = zones[Math.floor(z / 5)][z % 5];
+      newGameState[zone.player].units[zone.unitIndex].aether = 0;
+    }
 
-    //   delete enemy.enhancements.shield;
-    //   delete enemy.enhancements.ward;
-
-    //   newGameState[zone.player].units[zone.unitIndex] = enemy;
-    // }
-
-    // newGameState.currentResolution.push({
-    //   resolution: "Discard Skill",
-    //   unit: unit,
-    //   player: unit.player,
-    //   canSkip: false,
-    //   details: {
-    //     title: "Disruption Field",
-    //     message:
-    //       "Spend 1 Mana skill to gain Disruption and Shield for 2 turns each.",
-    //     restriction: ["06-01", "06-02", "06-03"],
-    //     reason: "Disruption Field",
-    //   },
-    // });
+    if (unit.aether) {
+      newGameState.currentResolution.push({
+        resolution: "Mana Skill",
+        resolution2: "Disruption Field1",
+        unit: unit,
+        details: {
+          reason: "Disruption Field",
+          title: "Disruption Field",
+          message:
+            "You may spend your Aether to purge the Aether of all foes within 2 spaces.",
+          no: "Skip",
+          yes: "Purge",
+          foes: getZonesWithEnemies(unit, 2),
+          zones: zones,
+        },
+      });
+    }
 
     return newGameState;
   };

@@ -207,7 +207,7 @@ export default function Demo() {
               unitIndex: 4,
               row: 1,
               column: 3,
-              unitClass: "Pawn",
+              unitClass: "Wind Scion",
               hp: 1,
               aether: 1,
               afflictions: {},

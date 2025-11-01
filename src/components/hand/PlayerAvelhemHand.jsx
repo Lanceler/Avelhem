@@ -117,29 +117,33 @@ const PlayerAvelhemHand = (props) => {
             }}
             onClick={() => handleRaise()}
           >
-            {localGameState[self].avelhemHand.map((card, index) => (
-              <div
-                className="hand-card-entrance"
-                key={index}
-                style={{ zIndex: index }}
-              >
+            {localGameState[self].avelhemHand.map((card, index) => {
+              const avelhemRotate = `avelhem-rotate-${index % 2}`;
+
+              return (
                 <div
-                  onClick={() => {
-                    handleCard(card, index);
-                    handleUpdateDemoGuide();
-                  }}
-                  className={`player-hand-card ${raise ? "enlargable" : ""} ${
-                    canClick(card) ? "demoClick" : ""
+                  className={`hand-card-entrance ${
+                    raise ? "enlargableIndex" : ""
                   }`}
-                  style={{
-                    backgroundImage: `url(${getCardImage(card)})`,
-                    top: Math.floor(index / 2) * -110,
-                    left: 5 + (index % 2) * -60,
-                    transform: `rotate(${index % 2 === 0 ? "-5deg" : "5deg"})`,
-                  }}
-                ></div>
-              </div>
-            ))}
+                  key={index}
+                >
+                  <div
+                    onClick={() => {
+                      handleCard(card, index);
+                      handleUpdateDemoGuide();
+                    }}
+                    className={`player-hand-card ${avelhemRotate} ${
+                      raise ? "enlargable" : ""
+                    } ${canClick(card) ? "demoClick" : ""}`}
+                    style={{
+                      backgroundImage: `url(${getCardImage(card)})`,
+                      top: Math.floor(index / 2) * -110,
+                      left: 5 + (index % 2) * -60,
+                    }}
+                  ></div>
+                </div>
+              );
+            })}
           </div>
         )}
       </div>

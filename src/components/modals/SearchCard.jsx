@@ -7,7 +7,7 @@ import { updateState } from "../../redux/gameState";
 import { updateDemo } from "../../redux/demoGuide";
 
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
-import { useCardDatabase } from "../../hooks/useCardDatabase";
+// import { useCardDatabase } from "../../hooks/useCardDatabase";
 
 import Skill from "../hand/Skill";
 
@@ -18,12 +18,12 @@ const SearchCard = (props) => {
 
   const dispatch = useDispatch();
 
-  const { avelhemToScion, refillRepertoireSkill, shuffleCards } =
+  const { avelhemToScion, drawSkill, refillRepertoireSkill, shuffleCards } =
     useRecurringEffects();
 
   const [selectedCard, setSelectedCard] = useState(null);
 
-  const { allBurstSkills } = useCardDatabase();
+  // const { allBurstSkills } = useCardDatabase();
 
   let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -229,17 +229,6 @@ const SearchCard = (props) => {
           newGameState[self].skillFloat += 1;
         }
       } else if (props.details.outcome === "Foreshadow") {
-        let chosenSkill =
-          newGameState[self].skillRepertoire[
-            newGameState[self].skillRepertoire.length - 1 - selectedCard
-          ];
-
-        if (allBurstSkills().includes(chosenSkill)) {
-          newGameState.currentResolution[
-            newGameState.currentResolution.length - 2
-          ].discardedBurst = true;
-        }
-
         //add selected skill from repertoire to vestige
         newGameState[self].skillVestige.push(
           newGameState[self].skillRepertoire.splice(
@@ -274,6 +263,11 @@ const SearchCard = (props) => {
         ...newGameState[self].skillRepertoire,
         ...floaters,
       ];
+    }
+
+    if (props.details.outcome === "Foreshadow") {
+      //draw Skill
+      newGameState = drawSkill(newGameState);
     }
 
     dispatch(updateState(newGameState));

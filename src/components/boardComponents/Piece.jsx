@@ -113,8 +113,6 @@ export const Piece = (props) => {
   };
 
   const pieceBase = () => {
-    // const showDisruption = unit.seal > 0 && !isMuted(unit);
-
     const ascensionColors = {
       "Fire Scion": "#ff8b1e",
       "Water Scion": "#03afff",
@@ -139,8 +137,6 @@ export const Piece = (props) => {
       >
         <>
           <div className="deployImpact"></div>
-
-          {/* {showDisruption && <div className="seal2"></div>} */}
 
           <img
             src={getElementImage(unit.unitClass)}
@@ -205,7 +201,7 @@ export const Piece = (props) => {
         limit = 3;
         break;
       case "Mana Scion":
-        attr = "seal";
+        attr = "ambiance";
         limit = 3;
         break;
       case "Metal Scion":

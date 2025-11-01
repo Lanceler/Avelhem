@@ -135,13 +135,6 @@ export const useSovereignSkillEffects = () => {
 
     newGameState.currentResolution.push({
       resolution: "Sovereign Standard Skill",
-      resolution2: "Foreshadow2",
-      player: self,
-      discardedBurst: false,
-    });
-
-    newGameState.currentResolution.push({
-      resolution: "Sovereign Standard Skill",
       resolution2: "Foreshadow1",
       player: self,
       unit: null,
@@ -151,30 +144,13 @@ export const useSovereignSkillEffects = () => {
       },
     });
 
-    return newGameState;
-  };
-
-  const foreshadow2 = (discardedBurst) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    //end "Foreshadow2" resolution
-    newGameState.currentResolution.pop();
-
-    if (discardedBurst) {
-      newGameState.currentResolution.push({
-        resolution: "Sovereign Standard Skill",
-        resolution2: "Foreshadow3",
-        player: self,
-      });
-    }
-
     if (newGameState[self].skillFloat > 0) {
       newGameState.currentResolution.push({
         resolution: "Sovereign Standard Skill",
-        resolution2: "Foreshadow Draw",
+        resolution2: "Foreshadow2",
         player: self,
         details: {
-          reason: "Foreshadow Draw",
+          reason: "Foreshadow",
           title: "Foreshadow",
           message: "You may draw 1 floating skill.",
           no: "Skip",
@@ -182,28 +158,6 @@ export const useSovereignSkillEffects = () => {
         },
       });
     }
-
-    return newGameState;
-  };
-
-  const foreshadow3 = () => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    //end "Foreshadow3" resolution
-    newGameState.currentResolution.pop();
-
-    newGameState.currentResolution.push({
-      resolution: "Sovereign Standard Skill",
-      resolution2: "Foreshadow Draw",
-      player: self,
-      details: {
-        reason: "Foreshadow Draw 2",
-        title: "Foreshadow",
-        message: "Since you searched for a burst skill, you may draw 1 skill.",
-        no: "Skip",
-        yes: "Draw",
-      },
-    });
 
     return newGameState;
   };
@@ -765,8 +719,8 @@ export const useSovereignSkillEffects = () => {
     darkHalo1,
     reminiscence1,
     foreshadow1,
-    foreshadow2,
-    foreshadow3,
+    // foreshadow2,
+    // foreshadow3,
     transmute1,
     transmuteR1,
     ambidexterity1,

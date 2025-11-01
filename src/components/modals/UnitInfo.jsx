@@ -134,6 +134,9 @@ const UnitInfo = (props) => {
               ⬩Convert your or an adjacent ally’s Aether into Shield for 2
               turns.
             </p>
+            <p className="unitInfo-text-desc unitInfo-text-last">
+              ⬩You may spend 3 Ambiances to recover 1 Mana skill.
+            </p>
           </>
         );
 
@@ -285,7 +288,9 @@ const UnitInfo = (props) => {
           <>
             <p className="unitInfo-text-heading2">1. Ambiance Assimilation</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Upon elimination, you may search for 1 Mana skill.
+              ⬩Upon elimination, you may grant an ally Mana Scion within 2
+              spaces all your Ambiances plus an additional 1; you can have up to
+              3 Ambiances.
             </p>
 
             <p className="unitInfo-text-heading2">2. Overload</p>
@@ -463,9 +468,9 @@ const UnitInfo = (props) => {
                         </p>
                       )}
 
-                      {unit.seal > 0 && (
+                      {unit.ambiance > 0 && (
                         <p className="unitInfo-text-heading2">
-                          Seal: {unit.seal}
+                          Ambiance: {unit.ambiance}
                         </p>
                       )}
 

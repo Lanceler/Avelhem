@@ -94,8 +94,6 @@ const UseCurrentResolution = (props) => {
     teaForTwo1,
     reminiscence1,
     foreshadow1,
-    foreshadow2,
-    foreshadow3,
     darkHalo1,
 
     transmute1,
@@ -218,7 +216,7 @@ const UseCurrentResolution = (props) => {
             skill: skill,
             unit: unitInfo,
             message:
-              "You may discard the resonated skill to search for 1 Burst skill that belongs to the Scion’s class.",
+              "You may discard the resonated skill to search for 1 skill that belongs to the Scion’s class.",
             no: "Skip",
             yes: "Search",
           },
@@ -1178,6 +1176,7 @@ const UseCurrentResolution = (props) => {
 
         case "Convergence1":
         case "Galvanize2":
+        case "Amplify Aura2":
           return (
             <>
               {self === lastRes.unit.player && !props.hideModal && (
@@ -1193,9 +1192,13 @@ const UseCurrentResolution = (props) => {
 
         case "Activating Amplify Aura":
           if (self === lastRes.unit.player) {
-            props.updateLocalState(
-              applyAbility("auraAmplication1", lastRes.unit)
-            );
+            props.updateLocalState(applyAbility("amplifyAura1", lastRes.unit));
+          }
+          break;
+
+        case "Amplify Aura1":
+          if (self === lastRes.unit.player) {
+            props.updateLocalState(applyAbility("amplifyAura2", lastRes.unit));
           }
           break;
 
@@ -1316,10 +1319,10 @@ const UseCurrentResolution = (props) => {
             </>
           );
 
-        case "Activating Ambiance Assimilation":
         case "Activating Overload":
         case "Activating Conduction":
         case "Activating Funeral Flowers":
+        case "Ambiance Assimilation1":
           return (
             <>
               {self === lastRes.unit.player && !props.hideModal && (
@@ -1373,6 +1376,14 @@ const UseCurrentResolution = (props) => {
         case "Activating Salt the Earth":
           if (self === lastRes.unit.player) {
             props.updateLocalState(applyAbility("saltTheEarth1", lastRes.unit));
+          }
+          break;
+
+        case "Activating Ambiance Assimilation":
+          if (self === lastRes.unit.player) {
+            props.updateLocalState(
+              applyAbility("ambianceAssimilation1", lastRes.unit)
+            );
           }
           break;
 
@@ -2296,6 +2307,7 @@ const UseCurrentResolution = (props) => {
           break;
 
         case "Diffusion4":
+        case "Disruption Field1":
           return (
             <>
               {self === lastRes.unit.player && !props.hideModal && (
@@ -2851,12 +2863,6 @@ const UseCurrentResolution = (props) => {
           );
 
         case "Foreshadow2":
-          if (self === lastRes.player) {
-            props.updateLocalState(foreshadow2(lastRes.discardedBurst));
-          }
-          break;
-
-        case "Foreshadow Draw":
           return (
             <>
               {self === lastRes.player && !props.hideModal && (
@@ -2868,12 +2874,6 @@ const UseCurrentResolution = (props) => {
               )}
             </>
           );
-
-        case "Foreshadow3":
-          if (self === lastRes.player) {
-            props.updateLocalState(foreshadow3());
-          }
-          break;
       }
       break;
 

@@ -355,7 +355,7 @@ export const useUnitAbilityEffects = () => {
     return newGameState;
   };
 
-  const auraAmplication1 = (unitInfo) => {
+  const amplifyAura1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
@@ -368,6 +368,14 @@ export const useUnitAbilityEffects = () => {
       : (unit.temporary.activation = 1);
 
     unit.temporary.usedAbility = true;
+
+    if (unit.ambiance === 3) {
+      newGameState.currentResolution.push({
+        resolution: "Unit Ability",
+        resolution2: "Amplify Aura1",
+        unit: unit,
+      });
+    }
 
     const allies = getZonesWithAllies(unit, 1, true);
     const zones = JSON.parse(newGameState.zones);
@@ -390,6 +398,83 @@ export const useUnitAbilityEffects = () => {
       "amplify aura",
       null
     );
+
+    return newGameState;
+  };
+
+  const amplifyAura2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Amplify Aura1"
+    newGameState.currentResolution.pop();
+
+    if (
+      !["06-01", "06-02", "06-03", "06-04"].some((s) =>
+        newGameState[unit.player].skillVestige.includes(s)
+      )
+    ) {
+      newGameState.currentResolution.push({
+        resolution: "Misc.",
+        resolution2: "Message To Player",
+        player: self,
+        title: "Amplify Aura",
+        message: "You do not have any Mana skills to recover.",
+      });
+    } else {
+      newGameState.currentResolution.push({
+        resolution: "Unit Ability",
+        resolution2: "Amplify Aura2",
+        unit: unit,
+        details: {
+          reason: "Amplify Aura",
+          title: "Amplify Aura",
+          message: "You may spend 3 Ambiances to recover 1 Mana skill.",
+          no: "Skip",
+          yes: "Recover",
+        },
+      });
+    }
+
+    return newGameState;
+  };
+
+  const ambianceAssimilation1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    const zones = JSON.parse(newGameState.zones);
+    // Unit is dead; do not update info
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Ambiance Assimilation" resolution
+    newGameState.currentResolution.pop();
+
+    const zonesWithAllies = getZonesWithAllies(unit, 2, false);
+    const zonesWithManaScions = [];
+
+    for (let z of zonesWithAllies) {
+      const zone = zones[Math.floor(z / 5)][z % 5];
+      const unit = newGameState[zone.player].units[zone.unitIndex];
+
+      if (unit.unitClass === "Mana Scion") {
+        zonesWithManaScions.push(z);
+      }
+    }
+    if (zonesWithManaScions.length > 0) {
+      newGameState.currentResolution.push({
+        resolution: "Unit Talent",
+        resolution2: "Ambiance Assimilation1",
+        unit: unit,
+        details: {
+          reason: "Ambiance Assimilation",
+          title: "Ambiance Assimilation",
+          message:
+            "You may grant an ally Mana Scion within 2 spaces all your Ambiances plus an additional 1.",
+          no: "Skip",
+          yes: "Grant",
+          zonesWithManaScions: zonesWithManaScions,
+        },
+      });
+    }
 
     return newGameState;
   };
@@ -529,8 +614,12 @@ export const useUnitAbilityEffects = () => {
         return galvanize1(unit);
 
       //Mana
-      case "auraAmplication1":
-        return auraAmplication1(unit);
+      case "amplifyAura1":
+        return amplifyAura1(unit);
+      case "amplifyAura2":
+        return amplifyAura2(unit);
+      case "ambianceAssimilation1":
+        return ambianceAssimilation1(unit);
 
       //Metal
       case "ballisticArmor1":

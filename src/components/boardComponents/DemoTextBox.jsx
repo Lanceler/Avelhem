@@ -868,7 +868,7 @@ const DemoTextBox = () => {
               <div>
                 Lastly, Sovereigns set their Defiance Points (DP) to 3.
                 <br /> <br />
-                Alongside Bounty Points (BP), these are located between one’s
+                Alongside Bounty Points (BP), these are displayed between one’s
                 skill and Avelhem repertoires.
               </div>
             );
@@ -1159,11 +1159,11 @@ const DemoTextBox = () => {
           case 45:
             return (
               <div>
-                A Sovereign, you can use 2 Mobilize instances to draw 1 skill.
+                You can use 2 Mobilize instances to draw 1 skill.
                 <br /> <br />
                 Note: These instances must come from a single source. In other
-                words, you are not allowed to use 1 instance each from 2
-                different Mobilize tactics.
+                words, you are not allowed to use instances from 2 different
+                Mobilize tactics.
               </div>
             );
 
@@ -1284,7 +1284,8 @@ const DemoTextBox = () => {
           case 62.2:
             return (
               <div>
-                As you can see, Mobilize cannot be selected.
+                As you can see, Mobilize cannot be selected despite its 2
+                remaining instances.
                 <br /> <br />
                 Press Return.
               </div>
@@ -1420,9 +1421,9 @@ const DemoTextBox = () => {
             return (
               <div>
                 Amplify Aura allows a Mana Scion to convert their own or their
-                adjacent ally’s Aether into a Shield that lasts 2 turns. Shield
-                is a status condition that negates the next attack that the unit
-                would receive.
+                adjacent ally’s Aether into a Shield that lasts 2 turns. (It
+                also has an optional second effect, which will be ignored for
+                now as it is unapplicable.)
                 <br /> <br />
                 Like cards, activated abilities are displayed at the left of the
                 board. Ability cards are for visual reference only; they are not
@@ -1494,9 +1495,7 @@ const DemoTextBox = () => {
           case 85:
             return (
               <div>
-                We have gone through tactics and abilities. Up next is the
-                activation of skills, but let’s first activate another Avelhem
-                card.
+                Let’s activate another Avelhem card.
                 <br /> <br />
                 Raise your Avelhem hand, then click on your Water Avelhem.
               </div>
@@ -1516,14 +1515,14 @@ const DemoTextBox = () => {
             return (
               <div>
                 <span className="goldText">
-                  Scions also possess talents, which are passive effects that
+                  Units possess talents, which are passive effects that
                   automatically activate when applicable.
                 </span>{" "}
                 In the case of Water Scions, their Kleptothermy talent activates
                 the moment they ascend.
                 <br /> <br />
-                (Note: As with ability cards, the talent card is just a visual
-                reference and not a game component.)
+                (Note: As with ability cards, talent cards are just visual
+                references and not game components.)
               </div>
             );
 
@@ -1542,7 +1541,7 @@ const DemoTextBox = () => {
             return (
               <div>
                 You must now select the recipient of Kleptothermy’s effect. As
-                usual, zones containing eligible units will have an opaque blue
+                always, zones containing eligible units will have an opaque blue
                 color.
                 <br /> <br />
                 Click on your Mana Scion to restore their Aether.
@@ -1564,19 +1563,20 @@ const DemoTextBox = () => {
             return (
               <div>
                 <span className="goldText">
-                  The sequence of your actions matters.
+                  Tip: The sequence of your actions can matter.
                 </span>{" "}
                 <br /> <br />
                 Had you ascended your pawn into a Water Scion before activating
-                the Mana Scion’s ability, the latter wouldn’t have their Aether
-                at this moment.
+                the Mana Scion’s ability, the latter would be lacking their
+                Aether at this moment.
               </div>
             );
 
           case 95:
             return (
               <div>
-                Now let’s talk about skills.
+                We’ve discussed tactics and abilities. Now let’s go through
+                skills.
                 <br /> <br />
                 Skills are cards that enable Sovereign and units to perform
                 special actions.
@@ -1607,9 +1607,9 @@ const DemoTextBox = () => {
           case 98:
             return (
               <div>
-                There are also Sovereign skills, whose facets are represented by
-                a crown rather than a Scion’s icon. Like Avelhem cards, these
-                are activated by Sovereigns directly from their hand.
+                Sovereign skills’ facets are represented by a crown rather than
+                a unit’s icon. Like Avelhem cards, these are activated by the
+                Sovereigns directly from their hand.
               </div>
             );
 
@@ -1645,8 +1645,8 @@ const DemoTextBox = () => {
             return (
               <div>
                 Surge requires the activator to spend their Aether to traverse
-                or strike. (Fortunately, clever sequencing of effects restored
-                your Mana Scion’s Aether.)
+                or strike. (Fortunately, clever sequencing of effects had
+                restored your Mana Scion’s Aether.)
                 <br /> <br />
                 Select Strike.
               </div>
@@ -1686,9 +1686,9 @@ const DemoTextBox = () => {
                   removed from the board.
                 </span>
                 <br /> <br />
-                The Sovereign who owns the eliminated unit receives 2 DP, while
-                their opponent is awarded 1 BP. Consequently, your opponent now
-                has 5 DP, while you have 1 BP.
+                Furthermore, the attacker’s Sovereign is awarded 1 BP, while
+                their opponent receives 2 DP. Consequently, you now have 1 BP,
+                and your opponent has 5 DP.
               </div>
             );
 
@@ -1753,8 +1753,8 @@ const DemoTextBox = () => {
                   As a reminder, your objective is to move a unit onto your
                   opponent’s base.
                 </span>{" "}
-                For demonstration purposes, a pawn has been deployed 1 row away
-                from their base.
+                For demonstration purposes, a Wind Scion has been deployed 1 row
+                away from their base.
               </div>
             );
 
@@ -1766,7 +1766,7 @@ const DemoTextBox = () => {
           case 119:
             return (
               <div>
-                Use 1 instance of your Mobilize tactic to move that pawn
+                Use 1 instance of your Mobilize tactic to move that Wind Scion
                 forward.
                 <br /> <br />
                 Open their tactics menu, then click on traverse, Mobilize, and
@@ -1840,10 +1840,15 @@ const DemoTextBox = () => {
           case 128:
             return (
               <div>
-                Units that have scored remain in play, but they cannot be
-                interacted with. They still count toward to their owner’s unit
-                limit. (Sovereigns can control up to 8 units at a time, and no
-                more than 2 allied Scions may share the same class.)
+                Units that have scored cannot be interacted with, but they
+                remain in play and count towards to their owner’s unit limit.
+                (Sovereigns can control up to 8 units at a time, and no more
+                than 2 allied Scions may share the same class.)
+                <br /> <br />
+                This has placed you in a slight disadvantage: You are now
+                limited to 7 functional units and 1 functional Wind Scion.
+                Scoring with a second Wind Scion would render all your Wind
+                skills and Avelhems effectless.
               </div>
             );
 

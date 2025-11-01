@@ -236,6 +236,20 @@ const Board = (props) => {
         }
         break;
 
+      case "ambiance assimilation":
+        const additionalAmbiance = unit.ambiance ? unit.ambiance + 1 : 1;
+        const ambianceAlly =
+          newGameState[selectedUnit.player].units[selectedUnit.unitIndex];
+
+        ambianceAlly.ambiance
+          ? (ambianceAlly.ambiance = Math.min(
+              3,
+              ambianceAlly.ambiance + additionalAmbiance
+            ))
+          : (ambianceAlly.ambiance = Math.min(3, additionalAmbiance));
+
+        break;
+
       case "frenzy blade":
         newGameState = activateFrenzyBlade(newGameState, selectedUnit, unit);
         break;

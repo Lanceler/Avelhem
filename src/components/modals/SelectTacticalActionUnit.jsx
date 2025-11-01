@@ -24,8 +24,7 @@ const SelectTacticalActionUnit = (props) => {
   const [selectedChoice, setSelectedChoice] = useState(null);
   const [infoPopUp, setInfoPopUp] = useState(null);
 
-  const { canBlast, canMove, canStrike, isDisrupted, isImmobilized } =
-    useRecurringEffects();
+  const { canBlast, canMove, canStrike, isImmobilized } = useRecurringEffects();
 
   let newGameState = JSON.parse(JSON.stringify(localGameState));
   let unit = newGameState[props.unit.player].units[props.unit.unitIndex];
@@ -117,12 +116,7 @@ const SelectTacticalActionUnit = (props) => {
         return canMove(unit);
 
       case 1:
-        return (
-          unit.aether &&
-          canBlast(unit) &&
-          unit.unitClass !== "Pawn" &&
-          !isDisrupted(unit, 1)
-        );
+        return unit.aether && canBlast(unit) && unit.unitClass !== "Pawn";
 
       case 2:
         return canStrike(unit);
