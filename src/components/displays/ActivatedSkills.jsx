@@ -22,15 +22,18 @@ const ActivatedSkills = () => {
         <AnimatePresence>
           {localGameState.activatingSkill.map((card, i) => (
             <motion.div
-              // layout={true}
-              // initial={{ opacity: 0, scale: 0.5 }}
               animate={{
                 opacity: 1,
                 scale: 1,
                 rotate: (localGameState.activatingSkill.length - (i + 1)) * -10,
               }}
               transition={{ duration: 0.4, scale: 0.5 }}
-              exit={{ opacity: 0, scale: 1.5 }}
+              exit={{
+                opacity: 0.0,
+                scale: 1.25,
+                y: -150,
+                transition: { duration: 0.75, ease: "easeOut" },
+              }}
               key={card + i}
               className={`activatedSkill displayedSkills ${
                 localGameState.activatingSkill.length - 1 === i
@@ -87,7 +90,19 @@ const ActivatedSkills = () => {
                   localGameState.activatingResonator[0]
                 )})`,
               }}
-            ></motion.div>
+            >
+              <button
+                className="zoom-button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  dispatch(
+                    updateMagnifiedSkill(localGameState.activatingResonator[0])
+                  );
+                }}
+              >
+                <FontAwesomeIcon icon={faMagnifyingGlass} />
+              </button>
+            </motion.div>
           )}
         </AnimatePresence>
       </div>

@@ -657,8 +657,9 @@ export const useSovereignSkillEffects = () => {
     return newGameState;
   };
 
-  const vengefulLegacy2 = (unit) => {
+  const vengefulLegacy2 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
     //end "Vengeful Legacy2" resolution
     newGameState.currentResolution.pop();
