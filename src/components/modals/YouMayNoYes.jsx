@@ -226,10 +226,6 @@ const YouMayNoYes = (props) => {
         );
         break;
 
-      case "Convergence": // "Convergence1"
-        newGameState = drawSkill(newGameState);
-        break;
-
       case "Chain Lightning Blast": // "Chain Lightning3"
         unit.charge -= 1;
         newGameState.currentResolution.push({
@@ -350,7 +346,7 @@ const YouMayNoYes = (props) => {
         break;
 
       case "Amplify Aura":
-        unit.ambiance = 0;
+        unit.ambiance -= 2;
 
         newGameState.currentResolution.push({
           resolution: "Recover Skill",

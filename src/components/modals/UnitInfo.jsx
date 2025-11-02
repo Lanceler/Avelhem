@@ -98,11 +98,8 @@ const UnitInfo = (props) => {
         return (
           <>
             <p className="unitInfo-text-heading2">Convergence</p>
-            <p className="unitInfo-text-desc">
-              ⬩Spend 3 Leylines to gain Shield for 2 turns.
-            </p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩You may draw 1 floating skill.
+              ⬩Spend 3 Leylines to draw 1 skill and gain Shield for 2 turns.
             </p>
           </>
         );
@@ -135,7 +132,7 @@ const UnitInfo = (props) => {
               turns.
             </p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩You may spend 3 Ambiances to recover 1 Mana skill.
+              ⬩You may spend 2 Ambiances to recover 1 Mana skill.
             </p>
           </>
         );

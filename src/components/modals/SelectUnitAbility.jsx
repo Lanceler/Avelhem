@@ -129,8 +129,9 @@ const SelectUnitAbility = (props) => {
           abilityQualifier: <></>,
           optionText: (
             <>
-              <div>⬩Spend 3 Leylines to gain Shield for 2 turns.</div>
-              <div>⬩You may draw 1 floating skill.</div>
+              <div>
+                ⬩Spend 3 Leylines to draw 1 skill and gain Shield for 2 turns.
+              </div>
             </>
           ),
         },
@@ -171,7 +172,7 @@ const SelectUnitAbility = (props) => {
                 ⬩Convert your or an adjacent ally’s Aether into Shield for 2
                 turns.
               </div>
-              <div>⬩You may spend 3 Ambiances to recover 1 Mana skill.</div>
+              <div>⬩You may spend 2 Ambiances to recover 1 Mana skill.</div>
             </>
           ),
         },

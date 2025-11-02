@@ -12,6 +12,7 @@ export const useUnitAbilityEffects = () => {
     animationDelay,
     canMove,
     canStrike,
+    drawSkill,
     enterSelectUnitMode,
     getZonesAerialImpetusAlly,
     getZonesWithAllies,
@@ -309,21 +310,7 @@ export const useUnitAbilityEffects = () => {
     //Gain Shield
     unit.enhancements.shield = 2;
 
-    if (newGameState[unit.player].skillFloat > 0) {
-      newGameState.currentResolution.push({
-        resolution: "Unit Ability",
-        resolution2: "Convergence1",
-        player: self,
-        unit: unit,
-        details: {
-          reason: "Convergence",
-          title: "Convergence",
-          message: "You may draw 1 floating skill.",
-          no: "Skip",
-          yes: "Draw",
-        },
-      });
-    }
+    newGameState = drawSkill(newGameState);
 
     return newGameState;
   };
@@ -369,7 +356,7 @@ export const useUnitAbilityEffects = () => {
 
     unit.temporary.usedAbility = true;
 
-    if (unit.ambiance === 3) {
+    if (unit.ambiance >= 2) {
       newGameState.currentResolution.push({
         resolution: "Unit Ability",
         resolution2: "Amplify Aura1",
@@ -429,7 +416,7 @@ export const useUnitAbilityEffects = () => {
         details: {
           reason: "Amplify Aura",
           title: "Amplify Aura",
-          message: "You may spend 3 Ambiances to recover 1 Mana skill.",
+          message: "You may spend 2 Ambiances to recover 1 Mana skill.",
           no: "Skip",
           yes: "Recover",
         },

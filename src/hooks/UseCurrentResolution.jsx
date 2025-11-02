@@ -1174,7 +1174,6 @@ const UseCurrentResolution = (props) => {
           }
           break;
 
-        case "Convergence1":
         case "Galvanize2":
         case "Amplify Aura2":
           return (
