@@ -204,8 +204,32 @@ const SelectUnitAbility = (props) => {
           optionText: (
             <>
               <div>
-                ⬩Spend 2 skills to gain 3 Blossoms or spend 1 Blossom to purge
+                ⬩Spend 2 skills to gain 3 Blossoms; or spend 1 Blossom to purge
                 your or an adjacent ally’s afflictions, except Anathema.
+              </div>
+            </>
+          ),
+        },
+      ];
+      break;
+
+    case "Avian Scion":
+      abilityDetails = [
+        {
+          optionName: "Hawk Eye",
+          abilityQualifier: (
+            <div className="abilityQualifier">
+              <img src={AdvanceSmall} style={{ height: 35 }} />
+              {"\u00A0\u00A0or\u00A0\u00A0"}
+              <img src={InvokeSmall} style={{ height: 35 }} />
+            </div>
+          ),
+          optionText: (
+            <>
+              <div>
+                ⬩Aether-blast a foe within 2 spaces (you may spend 2 Devotions
+                in lieu of Aether); or spend 2 Devotions to grant yourself or an
+                ally within 2 spaces Shield for 2 turns.
               </div>
             </>
           ),
@@ -288,6 +312,15 @@ const SelectUnitAbility = (props) => {
               newGameState[unit.player].skillHand.length > 1 || unit.blossom > 0
             );
         }
+
+      case "Avian Scion":
+        switch (i) {
+          case 0:
+            return (
+              unit.devotion > 1 ||
+              (unit.aether && getZonesWithEnemies(unit, 2).length > 0)
+            );
+        }
     }
 
     return false;
@@ -335,7 +368,7 @@ const SelectUnitAbility = (props) => {
         if (selectedChoice === 0) {
           if (unit.torrent > 0) {
             unit.torrent -= 1;
-
+            updateData = true;
             newGameState.activatingSkill.push("ColdEmbrace");
             newGameState.activatingUnit.push(unit);
 
@@ -359,7 +392,7 @@ const SelectUnitAbility = (props) => {
               unit: unit,
               details: {
                 title: "Cold Embrace",
-                message: "Use an Assault, or Invoke tactic.",
+                message: "Use an Advance or Assault tactic.",
                 restriction: ["Advance", "Assault"],
                 stock: 1,
                 reason: "Cold Embrace",
@@ -391,6 +424,7 @@ const SelectUnitAbility = (props) => {
 
       case "Land Scion":
         if (selectedChoice === 0) {
+          updateData = true;
           newGameState.activatingSkill.push("Convergence");
           newGameState.activatingUnit.push(unit);
 
@@ -492,6 +526,24 @@ const SelectUnitAbility = (props) => {
           });
 
           newGameState = animationDelay(newGameState, self);
+        }
+        break;
+
+      case "Avian Scion":
+        if (selectedChoice === 0) {
+          newGameState.currentResolution.push({
+            resolution: "Unit Ability",
+            resolution2: "Ability - select tactic",
+            unit: unit,
+            details: {
+              title: "Hawk Eye",
+              message: "Use an Advance or Invoke tactic.",
+              restriction: ["Advance", "Invoke"],
+              stock: 1,
+              reason: "Hawk Eye",
+              canSkip: "Return",
+            },
+          });
         }
         break;
 

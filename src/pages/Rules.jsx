@@ -694,7 +694,7 @@ export default function Rules() {
                 affliction is delayed until the unit has resolved all the
                 effects they have activated. For example, suppose a Scion
                 activates a skill card that lets them attack and then perform an
-                additional effect. If the skill’s attack eliminates an enemy,
+                additional effect. If the skill’s attack eliminates a foe,
                 Anathema will be delayed until the entire skill has concluded.
               </p>
               <br />
@@ -1284,7 +1284,7 @@ export default function Rules() {
                   <strong>Root</strong>: Prevents the unit from performing a
                   strike. Forces the unit to spend 1 skill when they traverse or
                   Aether-blast via tactical action. This status is purged if the
-                  unit is not adjacent to an enemy enhanced with Overgrowth.
+                  unit is not adjacent to a foe enhanced with Overgrowth.
                 </li>
               </ul>
               <br />

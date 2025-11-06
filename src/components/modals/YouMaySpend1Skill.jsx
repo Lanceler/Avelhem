@@ -205,6 +205,17 @@ const YouMaySpend1Skill = (props) => {
         );
         break;
 
+      case "Swan Song":
+        enterSelectUnitMode(
+          props.details.allies,
+          unit,
+          newGameState,
+          null,
+          "swan song",
+          null
+        );
+        break;
+
       case "Destine":
         //end Defiance Phase Selection
         newGameState.currentResolution.pop();

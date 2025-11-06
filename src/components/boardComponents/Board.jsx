@@ -218,22 +218,9 @@ const Board = (props) => {
           selectedUnit.unitIndex
         ].aether = 0;
 
-        if (
-          newGameState[selectedUnit.player].units[selectedUnit.unitIndex]
-            .enhancements.shield > 0
-        ) {
-          newGameState[selectedUnit.player].units[
-            selectedUnit.unitIndex
-          ].enhancements.shield = Math.max(
-            newGameState[selectedUnit.player].units[selectedUnit.unitIndex]
-              .enhancements.shield,
-            2
-          );
-        } else {
-          newGameState[selectedUnit.player].units[
-            selectedUnit.unitIndex
-          ].enhancements.shield = 2;
-        }
+        newGameState[selectedUnit.player].units[
+          selectedUnit.unitIndex
+        ].enhancements.shield = 2;
         break;
 
       case "ambiance assimilation":
@@ -311,15 +298,22 @@ const Board = (props) => {
         break;
 
       case "vanguard fleet":
-        let vanguardFleetUser = newGameState[unit.player].units[unit.unitIndex];
-
-        vanguardFleetUser.temporary.previousTarget = selectedUnit.unitIndex;
+        newGameState[unit.player].units[
+          unit.unitIndex
+        ].temporary.previousTarget = selectedUnit.unitIndex;
 
         newGameState.currentResolution.push({
           resolution: "Avian Skill",
           resolution2: "Vanguard Fleet Prompt",
           unit: selectedUnit,
         });
+        break;
+
+      case "hawk eye":
+      case "swan song":
+        newGameState[selectedUnit.player].units[
+          selectedUnit.unitIndex
+        ].enhancements.shield = 2;
         break;
 
       case "ambidexterity":

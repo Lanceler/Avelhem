@@ -499,7 +499,12 @@ export default function Repertoire() {
             }`}
           >
             <div className="repertoire-header">
-              <div className="">Avelhem Selection</div>
+              <div className="">
+                Avelhem Selection{" "}
+                <span className="selection-limit">
+                  ({avelhemRepertoire.length} / 20)
+                </span>
+              </div>
               <div className="repertoire-buttons">
                 <button
                   className="repertoire-button repertoire-show-selection"
@@ -587,7 +592,12 @@ export default function Repertoire() {
             }`}
           >
             <div className="repertoire-header">
-              <div className="">Skill Selection</div>
+              <div className="">
+                Skill Selection{" "}
+                <span className="selection-limit">
+                  ({skillRepertoire.length} / 50)
+                </span>
+              </div>
               <div className="repertoire-buttons">
                 <button
                   className="repertoire-button repertoire-show-selection"

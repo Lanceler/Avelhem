@@ -558,6 +558,78 @@ export const useUnitAbilityEffects = () => {
     return newGameState;
   };
 
+  const hawkEye1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Hawk Eye"
+    newGameState.currentResolution.pop();
+
+    //give unit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation += 1)
+      : (unit.temporary.activation = 1);
+
+    unit.temporary.usedAbility = true;
+
+    newGameState.currentResolution.push({
+      resolution: "Unit Ability",
+      resolution2: "Hawk Eye1",
+      unit: unit,
+      details: {
+        title: "Hawk Eye",
+        reason: "Hawk Eye",
+      },
+    });
+
+    return newGameState;
+  };
+
+  const wingsOfDevotion1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Wings Of Devotion"
+    newGameState.currentResolution.pop();
+
+    //Gain Devotion
+    unit.devotion
+      ? (unit.devotion = Math.min(unit.devotion + 1, 3))
+      : (unit.devotion = 1);
+
+    newGameState = animationDelay(newGameState, unit.player, 1750);
+
+    return newGameState;
+  };
+
+  const swanSong1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    const unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Swan Song" resolution
+    newGameState.currentResolution.pop();
+
+    const allies = getZonesWithAllies(unitInfo, 1, false);
+
+    if (allies.length > 0) {
+      newGameState.currentResolution.push({
+        resolution: "Discard Skill",
+        unit: unit,
+        player: unit.player,
+        details: {
+          title: "Swan Song",
+          message:
+            "You may spend 1 skill to grant an adjacent ally Shield for 2 turns.",
+          restriction: null,
+          reason: "Swan Song",
+          allies: allies,
+        },
+      });
+    }
+
+    return newGameState;
+  };
+
   //end of list
 
   const applyAbility = (effect, unit) => {
@@ -617,6 +689,14 @@ export const useUnitAbilityEffects = () => {
       //Plant
       case "flourish1":
         return flourish1(unit);
+
+      //Avian
+      case "hawkEye1":
+        return hawkEye1(unit);
+      case "wingsOfDevotion1":
+        return wingsOfDevotion1(unit);
+      case "swanSong1":
+        return swanSong1(unit);
     }
   };
 

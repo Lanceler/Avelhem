@@ -369,13 +369,13 @@ const BountyPhase = (props) => {
         ind: 10,
       },
       {
-        text: (
-          <>Once per turn, 1 unit may Aether-blast without using a tactic</>
-        ),
+        text: "Upgrade Advance: Unlock  “Convert Tactic",
         ind: 11,
       },
       {
-        text: "Upgrade Advance: Unlock  “Convert Tactic” and “Deploy Scion”",
+        text: (
+          <>Once per turn, 1 unit may Aether-blast without using a tactic</>
+        ),
         ind: 12,
       },
     ],

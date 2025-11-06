@@ -191,11 +191,14 @@ export default function MyGames() {
 
         <div
           className="create-game-elemental"
+          // style={{
+          //   backgroundImage: `url(${[getBannerImage("Avian")]})`,
+          //   filter: "grayscale(0.9)",
+          // }}
           style={{
             backgroundImage: `url(${[getBannerImage("Avian")]})`,
-            filter: "grayscale(0.9)",
           }}
-          // onClick={() => onCreateGame("Familiars’ Followup")}
+          onClick={() => onCreateGame("Familiars’ Followup")}
         >
           <div className="create-game-fadingbanners">
             {bannerImages2.map((url, z) => (
@@ -210,12 +213,12 @@ export default function MyGames() {
 
           <div className="create-game-banner-text">
             <div className="create-game-title">
-              {/* <>FAMILIARS’ </>
+              <>FAMILIARS’ </>
               <br />
-              <>FOLLOWUP</> */}
-              <>COMING </>
+              <>FOLLOWUP</>
+              {/* <>COMING </>
               <br className="create-game-line-break" />
-              <>SOON</>
+              <>SOON</> */}
             </div>
             <div className="create-game-desc">
               <strong>Expansion Including:</strong> <br />

@@ -223,7 +223,24 @@ const SelectCustomChoice = (props) => {
       canSecondChoice = canRaptorBlitzBlast(unit);
       ChoiceFirstMessage = "Purge the Aether of a foe within 2 spaces.";
       ChoiceSecondMessage = "Blast an adjacent foe that has no Aether.";
+      break;
 
+    case "Hawk Eye":
+      canFirstChoice =
+        (unit.devotion > 1 || unit.aether) &&
+        getZonesWithEnemies(unit, 2).length > 0;
+      canSecondChoice = unit.devotion > 1;
+      ChoiceFirstMessage =
+        "Aether-blast a foe within 2 spaces (you may spend 2 Devotions in lieu of Aether).";
+      ChoiceSecondMessage =
+        "Spend 2 Devotions to grant yourself or an ally within 2 spaces Shield for 2 turns.";
+      break;
+
+    case "Hawk Eye2":
+      canFirstChoice = unit.aether;
+      canSecondChoice = unit.devotion > 1;
+      ChoiceFirstMessage = "Spend your Aether.";
+      ChoiceSecondMessage = "Spend 2 Devotions.";
       break;
 
     case "Tea for Two":
@@ -732,6 +749,55 @@ const SelectCustomChoice = (props) => {
             resolution2: "Raptor Blitz Blast",
             unit: unit,
           });
+        }
+        break;
+
+      case "Hawk Eye":
+        if (selectedChoice === 1) {
+          newGameState.currentResolution.push({
+            resolution: "Unit Ability",
+            resolution2: "Hawk Eye2",
+            unit: unit,
+            details: {
+              title: "Hawk Eye",
+              reason: "Hawk Eye2",
+            },
+          });
+        } else {
+          unit.devotion -= 2;
+          enterSelectUnitMode(
+            getZonesWithAllies(unit, 2, true),
+            null,
+            newGameState,
+            null,
+            "hawk eye",
+            null
+          );
+        }
+        break;
+
+      case "Hawk Eye2":
+        if (selectedChoice === 1) {
+          enterSelectUnitMode(
+            getZonesWithEnemies(unit, 2),
+            unit,
+            newGameState,
+            null,
+            "aether-blast",
+            null
+          );
+          break;
+        } else {
+          unit.devotion -= 2;
+          unit.temporary.hawkEye = true;
+          enterSelectUnitMode(
+            getZonesWithEnemies(unit, 2),
+            unit,
+            newGameState,
+            null,
+            "aether-blast",
+            null
+          );
         }
         break;
 

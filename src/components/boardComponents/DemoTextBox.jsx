@@ -1848,7 +1848,7 @@ const DemoTextBox = () => {
                 This has placed you in a slight disadvantage: You are now
                 limited to 7 functional units and 1 functional Wind Scion.
                 Scoring with a second Wind Scion would render all your Wind
-                skills and Avelhems effectless.
+                skills and Avelhems useless.
               </div>
             );
 

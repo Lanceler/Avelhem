@@ -255,7 +255,26 @@ const SelectTacticViaEffect = (props) => {
         });
 
         newGameState = animationDelay(newGameState, self);
+        break;
 
+      case "Hawk Eye":
+        updateData = true;
+        newGameState.activatingSkill.push("HawkEye");
+        newGameState.activatingUnit.push(unit);
+
+        newGameState.currentResolution.push({
+          resolution: "Tactic End",
+          unit: unit,
+          effect: true,
+        });
+
+        newGameState.currentResolution.push({
+          resolution: "Unit Ability",
+          resolution2: "Activating Hawk Eye",
+          unit: unit,
+        });
+
+        newGameState = animationDelay(newGameState, self);
         break;
 
       //Skills

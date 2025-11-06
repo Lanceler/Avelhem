@@ -107,7 +107,7 @@ export default function MyRepertoires() {
         </div>
 
         {/* EXPANSION BELOW */}
-        {/* <div className="repertoires-selection">
+        <div className="repertoires-selection">
           {userData &&
             userData.repertoire2.map((rep, index) => (
               <Link
@@ -124,7 +124,7 @@ export default function MyRepertoires() {
                 </div>
               </Link>
             ))}
-        </div> */}
+        </div>
       </div>
 
       {isLoading && <Loading />}

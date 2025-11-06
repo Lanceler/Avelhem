@@ -122,6 +122,7 @@ export const Piece = (props) => {
       "Mana Scion": "#fff894",
       "Metal Scion": "#bcbcc4",
       "Plant Scion": "#fa69ff",
+      "Avian Scion": "#04078fff",
     };
 
     const bgColor = ascensionColors[unit.unitClass] || "#e8e8e8";
@@ -212,6 +213,11 @@ export const Piece = (props) => {
         attr = "blossom";
         limit = 3;
         break;
+      case "Avian Scion":
+        attr = "devotion";
+        limit = 3;
+        break;
+
       default:
         attr = null;
         limit = 0;

@@ -155,9 +155,27 @@ const UnitInfo = (props) => {
           <>
             <p className="unitInfo-text-heading2">Flourish</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Spend 2 skills to gain 3 Blossoms or spend 1 Blossom to purge
+              ⬩Spend 2 skills to gain 3 Blossoms; or spend 1 Blossom to purge
               your or an adjacent ally’s afflictions, except Anathema. (You can
               activate this even if you are paralyzed.)
+            </p>
+          </>
+        );
+
+      case "Avian Scion":
+        return (
+          <>
+            <p className="unitInfo-text-heading2">
+              Hawk Eye{" "}
+              <span className="unitInfo-tactic-group">
+                <img src={AdvanceSmall} className="unitInfo-tactic-icon" />
+                <img src={InvokeSmall} className="unitInfo-tactic-icon" />
+              </span>
+            </p>
+            <p className="unitInfo-text-desc unitInfo-text-last">
+              ⬩Aether-blast a foe within 2 spaces (you may spend 2 Devotions in
+              lieu of Aether); or spend 2 Devotions to grant yourself or an ally
+              within 2 spaces Shield for 2 turns.
             </p>
           </>
         );
@@ -257,8 +275,8 @@ const UnitInfo = (props) => {
               ⬩You are immune to Paralysis (due to Land skills) and Root.
             </p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩When you restore your Aether or successfully paralyze a foe, gain
-              1 Leyline.
+              ⬩When your Aether is restored or you successfully paralyze a foe,
+              gain 1 Leyline.
             </p>
           </>
         );
@@ -333,6 +351,23 @@ const UnitInfo = (props) => {
               ⬩You can have up to 3 Blossoms; purge 1 whenever you move (even if
               you are muted). If you possess 3 Blossoms, foes are afflicted with
               Root while adjacent to you.
+            </p>
+          </>
+        );
+
+      case "Avian Scion":
+        return (
+          <>
+            <p className="unitInfo-text-heading2">1. Swan Song</p>
+            <p className="unitInfo-text-desc unitInfo-text-last">
+              ⬩Upon elimination, you may spend 1 skill to grant an adjacent ally
+              Shield for 2 turns.
+            </p>
+
+            <p className="unitInfo-text-heading2">2. Wings of Devotion</p>
+            <p className="unitInfo-text-desc unitInfo-text-last">
+              ⬩When your Shield expires at the Final Phase or your Aether is
+              restored, gain 1 Devotion; you can have up to 3 Devotions.
             </p>
           </>
         );
@@ -479,6 +514,11 @@ const UnitInfo = (props) => {
                       {unit.blossom > 0 && (
                         <p className="unitInfo-text-heading2">
                           Blossom: {unit.blossom}
+                        </p>
+                      )}
+                      {unit.devotion > 0 && (
+                        <p className="unitInfo-text-heading2">
+                          Devotion: {unit.devotion}
                         </p>
                       )}
                     </>

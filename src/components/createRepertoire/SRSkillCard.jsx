@@ -1,11 +1,19 @@
-import React, { useState } from "react";
 import "./SkillCard.css";
+import React, { useState } from "react";
+
+import { useDispatch } from "react-redux";
 
 import { useGetImages } from "../../hooks/useGetImages";
+
+import { updateMagnifiedSkill } from "../../redux/magnifySkill";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 import { motion, useMotionValue } from "framer-motion";
 
 const SRSkillCard = (props) => {
+  const dispatch = useDispatch();
   const { getCardImage } = useGetImages();
   const image = getCardImage(props.cardInfo.CardId);
 
@@ -33,6 +41,16 @@ const SRSkillCard = (props) => {
       onClick={() => allowFunction()}
     >
       {!image && <div> {props.cardInfo.Name}</div>}
+
+      <button
+        className="zoom-button"
+        onClick={(e) => {
+          e.stopPropagation();
+          dispatch(updateMagnifiedSkill(props.cardInfo.CardId));
+        }}
+      >
+        <FontAwesomeIcon icon={faMagnifyingGlass} />
+      </button>
     </motion.div>
   );
 };

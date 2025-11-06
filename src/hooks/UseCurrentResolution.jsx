@@ -949,32 +949,32 @@ const UseCurrentResolution = (props) => {
             </>
           );
 
-        case "Advance Deploy Scion: Choose Element":
-          return (
-            <>
-              {self === lastRes.player && !props.hideModal && (
-                <SelectElement
-                  details={lastRes.details}
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
+        // case "Advance Deploy Scion: Choose Element":
+        //   return (
+        //     <>
+        //       {self === lastRes.player && !props.hideModal && (
+        //         <SelectElement
+        //           details={lastRes.details}
+        //           updateFirebase={props.updateFirebase}
+        //           hideOrRevealModale={props.hideOrRevealModale}
+        //         />
+        //       )}
+        //     </>
+        //   );
 
-        case "Advance Deploy Scion: Float Skill":
-          return (
-            <>
-              {self === lastRes.player && !props.hideModal && (
-                <FloatSkill
-                  unit={lastRes.unit}
-                  details={lastRes.details}
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
+        // case "Advance Deploy Scion: Float Skill":
+        //   return (
+        //     <>
+        //       {self === lastRes.player && !props.hideModal && (
+        //         <FloatSkill
+        //           unit={lastRes.unit}
+        //           details={lastRes.details}
+        //           updateFirebase={props.updateFirebase}
+        //           hideOrRevealModale={props.hideOrRevealModale}
+        //         />
+        //       )}
+        //     </>
+        //   );
 
         case "Tactic Results":
           return (
@@ -1174,21 +1174,6 @@ const UseCurrentResolution = (props) => {
           }
           break;
 
-        case "Galvanize2":
-        case "Amplify Aura2":
-          return (
-            <>
-              {self === lastRes.unit.player && !props.hideModal && (
-                <YouMayNoYes
-                  unit={lastRes.unit}
-                  details={lastRes.details}
-                  updateFirebase={props.updateFirebase}
-                  hideOrRevealModale={props.hideOrRevealModale}
-                />
-              )}
-            </>
-          );
-
         case "Activating Amplify Aura":
           if (self === lastRes.unit.player) {
             props.updateLocalState(applyAbility("amplifyAura1", lastRes.unit));
@@ -1209,15 +1194,38 @@ const UseCurrentResolution = (props) => {
           }
           break;
 
+        case "Activating Hawk Eye":
+          if (self === lastRes.unit.player) {
+            props.updateLocalState(applyAbility("hawkEye1", lastRes.unit));
+          }
+          break;
+
         case "Cold Embrace1":
         case "Galvanize1":
         case "Reap the Whirlwind3":
         case "Ballistic Armor1":
         case "Flourish1":
+        case "Hawk Eye1":
+        case "Hawk Eye2":
           return (
             <>
               {self === lastRes.unit.player && !props.hideModal && (
                 <SelectCustomChoice
+                  unit={lastRes.unit}
+                  details={lastRes.details}
+                  updateFirebase={props.updateFirebase}
+                  hideOrRevealModale={props.hideOrRevealModale}
+                />
+              )}
+            </>
+          );
+
+        case "Galvanize2":
+        case "Amplify Aura2":
+          return (
+            <>
+              {self === lastRes.unit.player && !props.hideModal && (
+                <YouMayNoYes
                   unit={lastRes.unit}
                   details={lastRes.details}
                   updateFirebase={props.updateFirebase}
@@ -1383,6 +1391,20 @@ const UseCurrentResolution = (props) => {
             props.updateLocalState(
               applyAbility("ambianceAssimilation1", lastRes.unit)
             );
+          }
+          break;
+
+        case "Activating Wings of Devotion":
+          if (self === lastRes.unit.player) {
+            props.updateLocalState(
+              applyAbility("wingsOfDevotion1", lastRes.unit)
+            );
+          }
+          break;
+
+        case "Activating Swan Song":
+          if (self === lastRes.unit.player) {
+            props.updateLocalState(applyAbility("swanSong1", lastRes.unit));
           }
           break;
 

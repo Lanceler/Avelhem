@@ -168,15 +168,15 @@ const SelectTacticalActionSovereign = (props) => {
             return canDeploy();
           case 1:
             return (
-              newGameState[self].bountyUpgrades.tactics >= 3 &&
-              newGameState[self].defiancePoints >= 3
+              newGameState[self].bountyUpgrades.tactics >= 2 &&
+              newGameState[self].defiancePoints >= 2
             );
-          case 2:
-            return (
-              newGameState[self].bountyUpgrades.tactics >= 3 &&
-              canDeploy() &&
-              newGameState[self].skillHand.length > 0
-            );
+          // case 2:
+          //   return (
+          //     newGameState[self].bountyUpgrades.tactics >= 3 &&
+          //     canDeploy() &&
+          //     newGameState[self].skillHand.length > 0
+          //   );
         }
         break;
 
@@ -252,22 +252,22 @@ const SelectTacticalActionSovereign = (props) => {
             newGameState.tactics[props.dice].face = "Assault";
             break;
 
-          case 2:
-            //refund stock
-            newGameState.tactics[props.dice].stock += 1;
+          // case 2:
+          //   //refund stock
+          //   newGameState.tactics[props.dice].stock += 1;
 
-            newGameState.currentResolution.push({
-              resolution: "Misc.",
-              resolution2: "Advance Deploy Scion: Choose Element",
-              player: self,
-              details: {
-                reason: "Advance Deploy Scion",
-                title: "Deploy Scion",
-                tactic: props.dice,
-                message: "Deploy a Scion; choose their class.",
-              },
-            });
-            break;
+          //   newGameState.currentResolution.push({
+          //     resolution: "Misc.",
+          //     resolution2: "Advance Deploy Scion: Choose Element",
+          //     player: self,
+          //     details: {
+          //       reason: "Advance Deploy Scion",
+          //       title: "Deploy Scion",
+          //       tactic: props.dice,
+          //       message: "Deploy a Scion; choose their class.",
+          //     },
+          //   });
+          //   break;
         }
         break;
 

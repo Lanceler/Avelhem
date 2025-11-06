@@ -112,6 +112,9 @@ import BallisticArmor from "../assets/abilities/BallisticArmor.jpg";
 import Conduction from "../assets/abilities/Conduction.jpg";
 import Flourish from "../assets/abilities/Flourish.jpg";
 import FuneralFlowers from "../assets/abilities/FuneralFlowers.jpg";
+import HawkEye from "../assets/abilities/HawkEye.jpg";
+import WingsOfDevotion from "../assets/abilities/WingsOfDevotion.jpg";
+import SwanSong from "../assets/abilities/SwanSong.jpg";
 
 import SkillCardBack from "../assets/skillcards/SkillCardBack.jpg";
 import AvelhemCardBack from "../assets/avelhemcards/AvelhemCardBack.jpg";
@@ -272,6 +275,9 @@ export const useGetImages = () => {
     BallisticArmor,
     Flourish,
     FuneralFlowers,
+    HawkEye,
+    WingsOfDevotion,
+    SwanSong,
     SkillCardBack,
     AvelhemCardBack,
     //statuses
@@ -596,6 +602,12 @@ export const useGetImages = () => {
         return GuardianWings;
       case "09-04":
         return VanguardFleet;
+      case "HawkEye":
+        return HawkEye;
+      case "WingsOfDevotion":
+        return WingsOfDevotion;
+      case "SwanSong":
+        return SwanSong;
 
       default:
         return "";

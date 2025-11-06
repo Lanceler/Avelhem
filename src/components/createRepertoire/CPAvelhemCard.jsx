@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import "./AvelhemCard.css";
 
 import { useSelector, useDispatch } from "react-redux";

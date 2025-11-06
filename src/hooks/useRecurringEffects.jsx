@@ -645,6 +645,24 @@ export const useRecurringEffects = () => {
               yes: "Draw",
             },
           });
+
+          newGameState = animationDelay(newGameState, unit.player, 1750);
+          break;
+
+        case "Avian Scion":
+          newGameState.activatingUnit.push(unit);
+          newGameState.activatingSkill.push("WingsOfDevotion");
+          newGameState.currentResolution.push({
+            resolution: "Unit Talent",
+            resolution2: "Talent Conclusion",
+            unit: unit,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Unit Talent",
+            resolution2: "Activating Wings of Devotion",
+            unit: unit,
+          });
           break;
       }
     }
@@ -1891,6 +1909,26 @@ export const useRecurringEffects = () => {
         unit.afflictions.paralysis ? unit.afflictions.paralysis-- : null;
         unit.afflictions.frost ? unit.afflictions.frost-- : null;
 
+        if (
+          unit.unitClass === "Avian Scion" &&
+          !isMuted(unit) &&
+          unit.enhancements.shield === 1
+        ) {
+          newGameState.activatingUnit.push(unit);
+          newGameState.activatingSkill.push("WingsOfDevotion");
+          newGameState.currentResolution.push({
+            resolution: "Unit Talent",
+            resolution2: "Talent Conclusion",
+            unit: unit,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Unit Talent",
+            resolution2: "Activating Wings of Devotion",
+            unit: unit,
+          });
+        }
+
         unit.enhancements.shield ? unit.enhancements.shield-- : null;
         unit.enhancements.ward ? unit.enhancements.ward-- : null;
       }
@@ -2133,6 +2171,25 @@ export const useRecurringEffects = () => {
           newGameState = animationDelay(newGameState, victim.player);
           break;
 
+        case "Avian Scion":
+          newGameState.activatingUnit.push(victim);
+          newGameState.activatingSkill.push("SwanSong");
+
+          newGameState.currentResolution.push({
+            resolution: "Unit Talent",
+            resolution2: "Talent Conclusion",
+            unit: victim,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Unit Talent",
+            resolution2: "Activating Swan Song",
+            unit: victim,
+          });
+
+          newGameState = animationDelay(newGameState, victim.player);
+          break;
+
         default:
           break;
       }
@@ -2163,7 +2220,7 @@ export const useRecurringEffects = () => {
       resolution: "Execution Phase",
     });
 
-    if (newGameState[self].bountyUpgrades.tactics >= 2) {
+    if (newGameState[self].bountyUpgrades.tactics >= 3) {
       newGameState[self].freeAetherBlast = true;
     }
 
@@ -3930,7 +3987,14 @@ export const useRecurringEffects = () => {
       newGameState.activatingTarget.push(victim);
     }
 
-    newGameState[attacker.player].units[attacker.unitIndex].aether = 0;
+    if (
+      newGameState[attacker.player].units[attacker.unitIndex].temporary.hawkEye
+    ) {
+      delete newGameState[attacker.player].units[attacker.unitIndex].temporary
+        .hawkEye;
+    } else {
+      newGameState[attacker.player].units[attacker.unitIndex].aether = 0;
+    }
 
     return newGameState;
   };

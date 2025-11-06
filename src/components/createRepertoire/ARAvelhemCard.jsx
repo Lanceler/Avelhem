@@ -1,11 +1,18 @@
-import React, { useState, useEffect } from "react";
 import "./AvelhemCard.css";
+
+import { useDispatch } from "react-redux";
+import { updateMagnifiedSkill } from "../../redux/magnifySkill";
+import { useState } from "react";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+
+import { motion } from "framer-motion";
 
 import { useGetImages } from "../../hooks/useGetImages";
 
-import { motion, useMotionValue, useScroll } from "framer-motion";
-
 const ARAvelhemCard = (props) => {
+  const dispatch = useDispatch();
   const { getCardImage } = useGetImages();
   const image = getCardImage(props.cardInfo.CardId);
 
@@ -15,8 +22,6 @@ const ARAvelhemCard = (props) => {
     if (!isClicked) {
       setIsClicked(true);
       props.returnToAvelhemCardPool(props.index, props.cardInfo.CardPoolIndex);
-    } else {
-      console.log(isClicked);
     }
   };
 
@@ -34,6 +39,16 @@ const ARAvelhemCard = (props) => {
       onClick={() => handleClick()}
     >
       {!image && <div> {props.cardInfo.Name}</div>}
+
+      <button
+        className="zoom-button"
+        onClick={(e) => {
+          e.stopPropagation();
+          dispatch(updateMagnifiedSkill(props.cardInfo.CardId));
+        }}
+      >
+        <FontAwesomeIcon icon={faMagnifyingGlass} />
+      </button>
     </motion.div>
   );
 };

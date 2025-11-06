@@ -31,9 +31,9 @@ const SelectElement = (props) => {
   }
 
   let canSkip = false;
-  if (props.details.reason === "Advance Deploy Scion") {
-    canSkip = true;
-  }
+  // if (props.details.reason === "Advance Deploy Scion") {
+  //   canSkip = true;
+  // }
 
   const canDeployScion = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
@@ -58,7 +58,7 @@ const SelectElement = (props) => {
   const canChoice = (choice) => {
     switch (props.details.reason) {
       case "Power at the Final Hour":
-      case "Advance Deploy Scion":
+        // case "Advance Deploy Scion":
         return !classList[choice] || classList[choice] < 2;
 
       default:
@@ -92,25 +92,25 @@ const SelectElement = (props) => {
         );
         break;
 
-      case "Advance Deploy Scion":
-        updateData = false;
+      // case "Advance Deploy Scion":
+      //   updateData = false;
 
-        newGameState.currentResolution.push({
-          resolution: "Misc.",
-          resolution2: "Advance Deploy Scion: Float Skill",
-          player: self,
-          details: {
-            reason: "Advance Deploy Scion",
-            restriction: null,
-            title: "Deploy Scion",
-            tactic: props.details.tactic,
-            scionClass: selectedChoice,
-            message: `Float 1 skill to deploy ${
-              ["A", "E", "I", "O", "U"].includes(selectedChoice[1]) ? "an" : "a"
-            } ${selectedChoice} in your frontier.`,
-          },
-        });
-        break;
+      //   newGameState.currentResolution.push({
+      //     resolution: "Misc.",
+      //     resolution2: "Advance Deploy Scion: Float Skill",
+      //     player: self,
+      //     details: {
+      //       reason: "Advance Deploy Scion",
+      //       restriction: null,
+      //       title: "Deploy Scion",
+      //       tactic: props.details.tactic,
+      //       scionClass: selectedChoice,
+      //       message: `Float 1 skill to deploy ${
+      //         ["A", "E", "I", "O", "U"].includes(selectedChoice[1]) ? "an" : "a"
+      //       } ${selectedChoice} in your frontier.`,
+      //     },
+      //   });
+      //   break;
 
       default:
         break;

@@ -8,6 +8,8 @@ import { updateDemo } from "../../redux/demoGuide";
 
 import { useCardDatabase } from "../../hooks/useCardDatabase";
 
+import { useRecurringEffects } from "../../hooks/useRecurringEffects";
+
 import Skill from "../hand/Skill";
 
 const RevealEnemyHand = (props) => {
@@ -16,6 +18,8 @@ const RevealEnemyHand = (props) => {
   const { demoGuide } = useSelector((state) => state.demoGuide);
 
   const { allContingentSkills } = useCardDatabase();
+
+  const { aetherRestoreSpecial } = useRecurringEffects();
 
   const dispatch = useDispatch();
 
@@ -28,7 +32,7 @@ const RevealEnemyHand = (props) => {
   }
 
   const handleSkip = () => {
-    const newGameState = JSON.parse(JSON.stringify(localGameState));
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[props.unit.player].units[props.unit.unitIndex];
 
     newGameState.currentResolution.pop();
@@ -42,6 +46,9 @@ const RevealEnemyHand = (props) => {
             ? (unit.enhancements.shield = Math.max(2, unit.enhancements.shield))
             : (unit.enhancements.shield = 2)
           : null;
+
+        newGameState = aetherRestoreSpecial(newGameState, unit);
+
         break;
 
       default:

@@ -24,14 +24,14 @@ const ActivatedSkills = () => {
             <motion.div
               animate={{
                 opacity: 1,
-                scale: 1,
+                // scale: 1,
                 rotate: (localGameState.activatingSkill.length - (i + 1)) * -10,
               }}
               transition={{ duration: 0.4, scale: 0.5 }}
               exit={{
                 opacity: 0.0,
                 scale: 1.25,
-                y: -150,
+                y: -350,
                 transition: { duration: 0.75, ease: "easeOut" },
               }}
               key={card + i}

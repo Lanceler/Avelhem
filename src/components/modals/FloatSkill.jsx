@@ -126,16 +126,16 @@ const FloatSkill = (props) => {
 
         break;
 
-      case "Advance Deploy Scion":
-        //consume tactic
-        newGameState.tactics[props.details.tactic].stock -= 1;
+      // case "Advance Deploy Scion":
+      //   //consume tactic
+      //   newGameState.tactics[props.details.tactic].stock -= 1;
 
-        newGameState.currentResolution.push({
-          resolution: "Deploying Scion",
-          zoneIds: getVacantFrontier(),
-          scionClass: props.details.scionClass,
-        });
-        break;
+      //   newGameState.currentResolution.push({
+      //     resolution: "Deploying Scion",
+      //     zoneIds: getVacantFrontier(),
+      //     scionClass: props.details.scionClass,
+      //   });
+      //   break;
 
       default:
         break;

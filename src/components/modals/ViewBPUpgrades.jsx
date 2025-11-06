@@ -100,14 +100,14 @@ const ViewBPUpgrades = (props) => {
                   )}
                   {upgrades.tactics >= 2 && (
                     <p className="unitInfo-text-desc">
-                      2. Once per turn, 1 unit may Aether-blast without using a
-                      tactic.
+                      2. Advance upgraded: "Convert Tactic” (Spend 3 FD to gain
+                      an Assault tactic).
                     </p>
                   )}
                   {upgrades.tactics >= 3 && (
                     <p className="unitInfo-text-desc">
-                      3. Advance upgraded: "Convert Tactic” and “Deploy Scion”
-                      unlocked.
+                      3. Once per turn, 1 unit may Aether-blast without using a
+                      tactic.
                     </p>
                   )}
 

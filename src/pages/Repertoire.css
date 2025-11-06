@@ -144,8 +144,6 @@
     align-items: center;
 
 
-    
-
 }
 
 .repertoire-header {
@@ -269,12 +267,19 @@
     visibility: hidden;
 }
 
+    .selection-limit {
+        display: none;
+    }
 
 
 /* //////////////////////////////////// */
 
 
 @media screen and (max-width: 800px) {
+
+    .selection-limit{
+        display: inline;
+    }
     
 
     .repertoire-input-box {
