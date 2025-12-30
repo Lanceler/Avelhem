@@ -41,19 +41,19 @@ export const useSignUp = () => {
           displayName: res.user.displayName,
           repertoire: [
             {
-              name: "Starter Repertoire 1",
+              name: "Default Repertoire 1",
               skillRepertoire: starterSkillRepertoire,
               avelhemRepertoire: starterAvelhemRepertoire,
               description: "The default repertoire provided to new accounts.",
             },
             {
-              name: "Starter Repertoire 2",
+              name: "Default Repertoire 2",
               skillRepertoire: starterSkillRepertoire,
               avelhemRepertoire: starterAvelhemRepertoire,
               description: "The default repertoire provided to new accounts.",
             },
             {
-              name: "Starter Repertoire 3",
+              name: "Default Repertoire 3",
               skillRepertoire: starterSkillRepertoire,
               avelhemRepertoire: starterAvelhemRepertoire,
               description: "The default repertoire provided to new accounts.",
@@ -61,22 +61,25 @@ export const useSignUp = () => {
           ],
           repertoire2: [
             {
-              name: "Starter Repertoire 4",
+              name: "Default Repertoire 4",
               skillRepertoire: starterSkillRepertoire,
               avelhemRepertoire: starterAvelhemRepertoire,
-              description: "The default repertoire provided to new accounts.",
+              description:
+                "The default repertoire provided to new accounts. (Playable in Expansion only.)",
             },
             {
-              name: "Starter Repertoire 5",
+              name: "Default Repertoire 5",
               skillRepertoire: starterSkillRepertoire,
               avelhemRepertoire: starterAvelhemRepertoire,
-              description: "The default repertoire provided to new accounts.",
+              description:
+                "The default repertoire provided to new accounts. (Playable in Expansion only.)",
             },
             {
-              name: "Starter Repertoire 6",
+              name: "Default Repertoire 6",
               skillRepertoire: starterSkillRepertoire,
               avelhemRepertoire: starterAvelhemRepertoire,
-              description: "The default repertoire provided to new accounts.",
+              description:
+                "The default repertoire provided to new accounts. (Playable in Expansion only.)",
             },
           ],
         });

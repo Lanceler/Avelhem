@@ -55,10 +55,15 @@ import ViridianGrave from "../assets/skillcards/ViridianGrave.jpg";
 import CastleOfThorns from "../assets/skillcards/CastleOfThorns.jpg";
 
 import AvianAvelhem from "../assets/avelhemcards/AvianAvelhem.jpg";
+import AvianAvelhemRecover from "../assets/avelhemcards/AvianAvelhemRecover.jpg";
 import RaptorBlitz from "../assets/skillcards/RaptorBlitz.jpg";
 import Reconnaissance from "../assets/skillcards/Reconnaissance.jpg";
 import GuardianWings from "../assets/skillcards/GuardianWings.jpg";
 import VanguardFleet from "../assets/skillcards/VanguardFleet.jpg";
+
+import InsectAvelhem from "../assets/avelhemcards/InsectAvelhem.jpg";
+import InsectAvelhemRecover from "../assets/avelhemcards/InsectAvelhemRecover.jpg";
+import Infestation from "../assets/skillcards/Infestation.jpg";
 
 import HeirsEndeavor from "../assets/skillcards/HeirsEndeavor.jpg";
 import TeaForTwo from "../assets/skillcards/TeaForTwo.jpg";
@@ -86,6 +91,7 @@ import ManaScion from "../assets/scionIcons/ManaScion.png";
 import MetalScion from "../assets/scionIcons/MetalScion.png";
 import PlantScion from "../assets/scionIcons/PlantScion.png";
 import AvianScion from "../assets/scionIcons/AvianScion.png";
+import InsectScion from "../assets/scionIcons/InsectScion.png";
 
 import Afterburner from "../assets/abilities/Afterburner.jpg";
 import EternalEmber from "../assets/abilities/EternalEmber.jpg";
@@ -125,7 +131,6 @@ import Aether from "../assets/attributeIcons/Aether.png";
 import HP from "../assets/attributeIcons/HP.png";
 import BurnGif from "../assets/attributeIcons/BurnGif.gif";
 import FrostbiteGif from "../assets/attributeIcons/FrostbiteGif.gif";
-import ParalysisGif from "../assets/attributeIcons/ParalysisGif.gif";
 import RootGif from "../assets/attributeIcons/RootGif.gif";
 import AmbidexterityIcon from "../assets/others/AmbidexterityIcon.png";
 
@@ -183,63 +188,100 @@ export const useGetImages = () => {
     LoadingBanner,
     HeirBanner,
     ChallengeBanner,
+
+    //others
+    Crosshair,
+    UnitAbility,
+    UnitProfile,
+    UnitSkill,
+    UnitTactic,
+    AdvanceSmall,
+    MobilizeSmall,
+    AssaultSmall,
+    InvokeSmall,
+    RallySmall,
+    Advance,
+    Mobilize,
+    Assault,
+    Invoke,
+    Rally,
+
     //
     FireAvelhem,
     IgnitionPropulsion,
     Conflagration,
     BlazeOfGlory,
     Resplendence,
+
     WaterAvelhem,
     Purification,
     FrigidBreath,
     HealingRain,
     GlacialTorrent,
+
     WindAvelhem,
     AerialImpetus,
     GaleConjuration,
     SymphonicScreech,
     CataclysmicTempest,
+
     LandAvelhem,
     Crystallization,
     Upheaval,
     PitfallTrap,
     Geomancy,
+
     LightningAvelhem,
     ChainLightning,
     ZipAndZap,
     ThunderThaumaturge,
     ValiantSpark,
+
     ManaAvelhem,
     Surge,
     Diffusion,
     Aegis,
     DisruptionField,
+
     MetalAvelhem,
     MagneticShockwave,
     Reinforce,
     FrenzyBlade,
     ArsenalOnslaught,
+
     PlantAvelhem,
     SowAndReap,
     Efflorescence,
     ViridianGrave,
     CastleOfThorns,
+
+    AvianAvelhem,
+    RaptorBlitz,
+    Reconnaissance,
+    GuardianWings,
+    VanguardFleet,
+
+    InsectAvelhem,
+    Infestation,
+
     HeirsEndeavor,
     TeaForTwo,
     DarkHalo,
     Reminiscence,
     Foreshadow,
+
     Transmute,
     Ambidexterity,
     Providence,
     FerventPrayer,
     PressTheAttack,
+
     PowerAtTheFinalHour,
     FatedRivalry,
     MatchMadeInHeaven,
     VengefulLegacy,
     BlackBusinessCard,
-    // Coalescence,
+
     Pawn,
     FireScion,
     WaterScion,
@@ -250,6 +292,8 @@ export const useGetImages = () => {
     MetalScion,
     PlantScion,
     AvianScion,
+    InsectScion,
+
     Afterburner,
     EternalEmber,
     EternalEmber2,
@@ -287,25 +331,8 @@ export const useGetImages = () => {
     HP,
     BurnGif,
     FrostbiteGif,
-    ParalysisGif,
     RootGif,
     AmbidexterityIcon,
-    //others
-    Crosshair,
-    UnitAbility,
-    UnitProfile,
-    UnitSkill,
-    UnitTactic,
-    AdvanceSmall,
-    MobilizeSmall,
-    AssaultSmall,
-    InvokeSmall,
-    RallySmall,
-    Advance,
-    Mobilize,
-    Assault,
-    Invoke,
-    Rally,
   ];
 
   const getBannerImage = (banner) => {
@@ -594,6 +621,8 @@ export const useGetImages = () => {
       //expansion
       case 9:
         return AvianAvelhem;
+      case "9Alt":
+        return AvianAvelhemRecover;
       case "09-01":
         return RaptorBlitz;
       case "09-02":
@@ -608,6 +637,13 @@ export const useGetImages = () => {
         return WingsOfDevotion;
       case "SwanSong":
         return SwanSong;
+
+      case 12:
+        return InsectAvelhem;
+      case "12Alt":
+        return InsectAvelhemRecover;
+      case "12-01":
+        return Infestation;
 
       default:
         return "";
@@ -645,6 +681,9 @@ export const useGetImages = () => {
 
       case "Avian Scion":
         return AvianScion;
+
+      case "Insect Scion":
+        return InsectScion;
 
       default:
         return null;

@@ -311,7 +311,7 @@ export const useSovereignSkillEffects = () => {
     newGameState.currentResolution.pop();
 
     //spend DP
-    newGameState[self].defiancePoints -= 2;
+    newGameState[self].defiancePoints -= 1;
 
     let selectLimit = 2;
     if (resonator) {

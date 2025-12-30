@@ -767,10 +767,39 @@ const BoardArea = (props) => {
                 <div
                   key={index}
                   className="tacticSovereign"
-                  style={{
-                    backgroundImage: `url(${getTacticImage(tactic.face)})`,
-                  }}
-                ></div>
+                  // style={{
+                  //   backgroundImage: `url(${getTacticImage(tactic.face)})`,
+                  // }}
+                >
+                  <div
+                    className="tacticSovereignImage"
+                    style={{
+                      backgroundImage: `url(${getTacticImage("Invoke")})`,
+                      opacity: `${tactic.face === "Invoke" ? 1 : 0}`,
+                    }}
+                  ></div>
+                  <div
+                    className="tacticSovereignImage"
+                    style={{
+                      backgroundImage: `url(${getTacticImage("Advance")})`,
+                      opacity: `${tactic.face === "Advance" ? 1 : 0}`,
+                    }}
+                  ></div>
+                  <div
+                    className="tacticSovereignImage"
+                    style={{
+                      backgroundImage: `url(${getTacticImage("Assault")})`,
+                      opacity: `${tactic.face === "Assault" ? 1 : 0}`,
+                    }}
+                  ></div>
+                  <div
+                    className="tacticSovereignImage"
+                    style={{
+                      backgroundImage: `url(${getTacticImage("Mobilize")})`,
+                      opacity: `${tactic.face === "Mobilize" ? 1 : 0}`,
+                    }}
+                  ></div>
+                </div>
               </div>
             </div>
 

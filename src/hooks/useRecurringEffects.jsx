@@ -1353,6 +1353,9 @@ export const useRecurringEffects = () => {
 
       case 9:
         return "Avian Scion";
+
+      case 12:
+        return "Insect Scion";
       default:
         return null;
     }
@@ -1626,8 +1629,6 @@ export const useRecurringEffects = () => {
         return true;
       case "SA-03": // Dark Halo
         return getZonesWithScions(self).length > 0;
-      // return hasScion(self);
-
       case "SA-04": // Reminiscence
         return (
           localGameState[self].skillVestige.length > 0 ||
@@ -1648,7 +1649,7 @@ export const useRecurringEffects = () => {
         return hasTactic(["Invoke"]);
 
       case "SB-04": // Fervent Prayer
-        return localGameState[self].defiancePoints >= 2;
+        return localGameState[self].defiancePoints > 0;
 
       case "SB-05": // Press the Attack
         return canPressTheAttack();

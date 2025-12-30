@@ -22,6 +22,7 @@ export const useCardDatabase = () => {
 
     // Expansion
     makeAvelhemCard("Avian Avelhem", 9),
+    makeAvelhemCard("Insect Avelhem", 12),
   ];
 
   const makeSkillCard = (name, stock, facet, method, id) => {
@@ -86,6 +87,11 @@ export const useCardDatabase = () => {
     makeSkillCard("Guardian Wings", SL, "Avian", "Contingent", "09-03"),
     makeSkillCard("Vanguard Fleet", 1, "Avian", "Burst", "09-04"),
 
+    makeSkillCard("Infestation", SL, "Insect", "Standard", "12-01"),
+    makeSkillCard("Virulent Venom", SL, "Insect", "Resonant", "12-02"),
+    makeSkillCard("Perturb", SL, "Insect", "Contingent", "12-03"),
+    makeSkillCard("Vector of Pestilence", 1, "Insect", "Burst", "12-04"),
+
     //Sovereign
     makeSkillCard("Heir’s Endeavor", 2, "Sovereign", "Standard", "SA-01"),
     makeSkillCard("Tea for Two", 2, "Sovereign", "Standard", "SA-02"),
@@ -126,8 +132,6 @@ export const useCardDatabase = () => {
     // },
   ];
 
-  const skillCardListExpansion = ["09-01", "09-02", "09-03", "09-04"];
-
   const getScionSet = (unitClass) => {
     switch (unitClass) {
       case "Fire Scion":
@@ -151,10 +155,22 @@ export const useCardDatabase = () => {
       case "Avian Scion":
         return ["09-01", "09-02", "09-03", "09-04"];
 
+      case "Insect Scion":
+        return ["12-01", "12-02", "12-03", "12-04"];
+
       default:
         return;
     }
   };
+
+  const skillCardListExpansion = [
+    // "09-01",
+    // "09-02",
+    // "09-03",
+    // "09-04",
+    ...getScionSet("Avian Scion"),
+    ...getScionSet("Insect Scion"),
+  ];
 
   const getAvelhemById = (id) => {
     return avelhemCardList.find((card) => card.CardId === id);

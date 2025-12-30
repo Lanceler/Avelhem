@@ -307,14 +307,23 @@
 }
 
 .tacticSovereign {
-    height: 100px;
-    width: 100px;
+        height: 100px;
+            width: 100px;
     padding: 5px;
     margin: 5px;
+    cursor: pointer;
+    position: relative;
+}
+
+.tacticSovereignImage {
+    height: 100px;
+    width: 100px;
+    padding: 0px;
+    margin: 0px;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    cursor: pointer;
+    position: absolute;
 }
 
 .tacticSovereignLabel {

@@ -10,7 +10,6 @@ import Aether from "../../assets/attributeIcons/Aether.png";
 import HP from "../../assets/attributeIcons/HP.png";
 import BurnGif from "../../assets/attributeIcons/BurnGif.gif";
 import FrostbiteGif from "../../assets/attributeIcons/FrostbiteGif.gif";
-import ParalysisGif from "../../assets/attributeIcons/ParalysisGif.gif";
 import RootGif from "../../assets/attributeIcons/RootGif.gif";
 import AmbidexterityIcon from "../../assets/others/AmbidexterityIcon.png";
 
@@ -295,6 +294,18 @@ export const Piece = (props) => {
             unit.hp < 1 && !unit.enhancements.score ? "eliminated-piece" : ""
           }`}
         >
+          {unit.afflictions.paralysis > 0 && (
+            <div
+              className={`star-container ${
+                unit.afflictions.paralysis == 1 ? "star-container-2" : ""
+              }`}
+            >
+              <div className="star star-1"></div>
+              <div className="star star-2"></div>
+              <div className="star star-3"></div>
+            </div>
+          )}
+
           {pieceBase()}
           {attribute()}
           {bottomAttributeContainer()}
@@ -311,17 +322,6 @@ export const Piece = (props) => {
                 src={FrostbiteGif}
                 className={`frost ${
                   unit.afflictions.frost == 1 ? "frost-1" : "frost-2"
-                }`}
-              />
-            </>
-          )}
-
-          {unit.afflictions.paralysis > 0 && (
-            <>
-              <img
-                src={ParalysisGif}
-                className={`paralyzed ${
-                  unit.afflictions.paralysis === 1 ? "fade-in-out-paralyze" : ""
                 }`}
               />
             </>
