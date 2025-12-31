@@ -164,12 +164,8 @@ export const useCardDatabase = () => {
   };
 
   const skillCardListExpansion = [
-    // "09-01",
-    // "09-02",
-    // "09-03",
-    // "09-04",
     ...getScionSet("Avian Scion"),
-    ...getScionSet("Insect Scion"),
+    // ...getScionSet("Insect Scion"),
   ];
 
   const getAvelhemById = (id) => {

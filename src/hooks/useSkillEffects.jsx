@@ -23,7 +23,7 @@ export const useSkillEffects = () => {
     isMuted,
     isNearRootedFoe,
     isRooted,
-    paralyze1,
+    paralyze,
     strike,
   } = useRecurringEffects();
 
@@ -1023,7 +1023,7 @@ export const useSkillEffects = () => {
       victim: victim,
     });
 
-    newGameState = paralyze1(newGameState, unit, victim, "Pitfall Trap");
+    newGameState = paralyze(newGameState, unit, victim, "Pitfall Trap");
 
     return newGameState;
   };
@@ -1314,7 +1314,7 @@ export const useSkillEffects = () => {
       unit: unit,
     });
 
-    newGameState = paralyze1(
+    newGameState = paralyze(
       newGameState,
       unit,
       attacker,
@@ -2404,6 +2404,68 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
+  const virulentVenom1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Virulent Venom" resolution
+    newGameState.currentResolution.pop();
+
+    //give unit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation += 1)
+      : (unit.temporary.activation = 1);
+
+    delete unit.temporary.previousTarget;
+
+    newGameState.currentResolution.push({
+      resolution: "Insect Skill",
+      resolution2: "Virulent Venom2",
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Insect Skill",
+      resolution2: "Virulent Venom1",
+      unit: unit,
+    });
+
+    return newGameState;
+  };
+
+  const virulentVenom2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    const zones = JSON.parse(newGameState.zones);
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Virulent Venom2" resolution
+    newGameState.currentResolution.pop();
+
+    if (newGameState[self].skillHand.length > 5) {
+      let adjacentEnemies = getZonesWithEnemies(unit, 1);
+      adjacentEnemies = adjacentEnemies.filter(
+        (z) =>
+          zones[Math.floor(z / 5)][z % 5].unitIndex !==
+          unit.temporary.previousTarget
+      );
+
+      if (adjacentEnemies.length > 0 || unit.pheromone === 3) {
+        newGameState.currentResolution.push({
+          resolution: "Insect Skill",
+          resolution2: "Virulent Venom3",
+          unit: unit,
+          details: {
+            title: "Virulent Venom",
+            reason: "Virulent Venom",
+            adjacentEnemies: adjacentEnemies,
+          },
+        });
+      }
+    }
+
+    return newGameState;
+  };
+
   //end of list
 
   const applySkill = (effect, a, b) => {
@@ -2579,6 +2641,12 @@ export const useSkillEffects = () => {
         return vanguardFleet1(a);
       case "vanguardFleet2":
         return vanguardFleet2(a);
+
+      //Insect
+      case "virulentVenom1":
+        return virulentVenom1(a);
+      case "virulentVenom2":
+        return virulentVenom2(a);
     }
   };
 

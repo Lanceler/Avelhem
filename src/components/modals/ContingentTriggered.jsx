@@ -210,16 +210,20 @@ const ContingentTriggered = (props) => {
           targetType = "blast";
           break;
 
-        case "paralyze1":
-          targetType = "paralyze (1 turn)";
+        case "paralyze":
+          targetType = "paralyze";
           break;
 
-        case "freeze1":
-          targetType = "freeze (1 turn)";
+        case "freeze":
+          targetType = "freeze";
           break;
 
         case "ignite":
           targetType = "ignite";
+          break;
+
+        case "infect":
+          targetType = "infect";
           break;
       }
 

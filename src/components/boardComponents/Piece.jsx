@@ -116,12 +116,13 @@ export const Piece = (props) => {
       "Fire Scion": "#ff8b1e",
       "Water Scion": "#03afff",
       "Wind Scion": "#8dfdb2",
-      "Land Scion": "#747475",
-      "Lightning Scion": "#411cc7",
+      "Land Scion": "#838385ff",
+      "Lightning Scion": "#2c00caff",
       "Mana Scion": "#fff894",
-      "Metal Scion": "#bcbcc4",
+      "Metal Scion": "#d4d4dbff",
       "Plant Scion": "#fa69ff",
-      "Avian Scion": "#04078fff",
+      "Avian Scion": "#000296ff",
+      "Insect Scion": "#440e70ff",
     };
 
     const bgColor = ascensionColors[unit.unitClass] || "#e8e8e8";
@@ -216,6 +217,10 @@ export const Piece = (props) => {
         attr = "devotion";
         limit = 3;
         break;
+      case "Insect Scion":
+        attr = "pheromone";
+        limit = 3;
+        break;
 
       default:
         attr = null;
@@ -291,47 +296,44 @@ export const Piece = (props) => {
       {unit && (
         <div
           className={`${
-            unit.hp < 1 && !unit.enhancements.score ? "eliminated-piece" : ""
+            unit.hp < 1 && !unit.enhancements.score
+              ? "eliminated-piece"
+              : "normal-piece"
           }`}
         >
-          {unit.afflictions.paralysis > 0 && (
-            <div
-              className={`star-container ${
-                unit.afflictions.paralysis == 1 ? "star-container-2" : ""
-              }`}
-            >
-              <div className="star star-1"></div>
-              <div className="star star-2"></div>
-              <div className="star star-3"></div>
-            </div>
-          )}
-
           {pieceBase()}
           {attribute()}
           {bottomAttributeContainer()}
 
-          {unit.afflictions.burn > 0 && (
-            <>
-              <img src={BurnGif} className="burn" />
-            </>
-          )}
-
-          {unit.afflictions.frost > 0 && (
-            <>
-              <img
-                src={FrostbiteGif}
-                className={`frost ${
-                  unit.afflictions.frost == 1 ? "frost-1" : "frost-2"
+          <div className="afflictions-container">
+            {unit.afflictions.paralysis > 0 && (
+              <div
+                className={`star-container ${
+                  unit.afflictions.paralysis == 1 ? "star-container-2" : ""
                 }`}
-              />
-            </>
-          )}
+              >
+                <div className="star star-1"></div>
+                <div className="star star-2"></div>
+                <div className="star star-3"></div>
+              </div>
+            )}
 
-          {unit.boosts.ambidexterity === true && (
-            <>
-              <img src={AmbidexterityIcon} className="ambidexterity" />
-            </>
-          )}
+            {unit.afflictions.burn > 0 && (
+              <>
+                <img src={BurnGif} className="burn" />
+              </>
+            )}
+
+            {unit.afflictions.frost > 0 && (
+              <img src={FrostbiteGif} className="frost frost-1" />
+            )}
+
+            {unit.boosts.ambidexterity === true && (
+              <>
+                <img src={AmbidexterityIcon} className="ambidexterity" />
+              </>
+            )}
+          </div>
         </div>
       )}
     </div>

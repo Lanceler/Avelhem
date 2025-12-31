@@ -92,7 +92,7 @@ const RevealSkill = (props) => {
           props.unit,
           newGameState,
           null,
-          "paralyze1",
+          "paralyze",
           "Upheaval"
         );
         break;

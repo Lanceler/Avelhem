@@ -236,6 +236,22 @@ const SelectUnitAbility = (props) => {
         },
       ];
       break;
+
+    case "Insect Scion":
+      abilityDetails = [
+        {
+          optionName: "Gestation",
+          abilityQualifier: <div className="abilityQualifier"></div>,
+          optionText: (
+            <>
+              <div>
+                ⬩Spend 3 Pheromones to restore your Aether and draw 1 skill.
+              </div>
+            </>
+          ),
+        },
+      ];
+      break;
   }
 
   const canChoice = (i) => {
@@ -320,6 +336,12 @@ const SelectUnitAbility = (props) => {
               unit.devotion > 1 ||
               (unit.aether && getZonesWithEnemies(unit, 2).length > 0)
             );
+        }
+
+      case "Insect Scion":
+        switch (i) {
+          case 0:
+            return unit.pheromone >= 3;
         }
     }
 
@@ -544,6 +566,28 @@ const SelectUnitAbility = (props) => {
               canSkip: "Return",
             },
           });
+        }
+        break;
+
+      case "Insect Scion":
+        if (selectedChoice === 0) {
+          updateData = true;
+          newGameState.activatingSkill.push("Gestation");
+          newGameState.activatingUnit.push(unit);
+
+          newGameState.currentResolution.push({
+            resolution: "Tactic End",
+            unit: unit,
+            effect: true,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Unit Ability",
+            resolution2: "Activating Gestation",
+            unit: unit,
+          });
+
+          newGameState = animationDelay(newGameState, self);
         }
         break;
 

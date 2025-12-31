@@ -55,6 +55,7 @@ const UseCurrentResolution = (props) => {
     applyBurn,
     applyDamage,
     applyFrost,
+    applyInfection,
     applyParalysis,
     applyScore,
     avelhemResonance,
@@ -350,6 +351,33 @@ const UseCurrentResolution = (props) => {
 
     if (attacker !== null && !isMuted(attacker)) {
       newGameState = applyFrost(newGameState, victimInfo, duration);
+    }
+
+    dispatch(updateState(newGameState));
+    props.updateFirebase(newGameState);
+  };
+
+  const resolveApplyInfection = (
+    attackerInfo,
+    victimInfo,
+    duration,
+    special
+  ) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    const attacker =
+      newGameState[attackerInfo.player].units[attackerInfo.unitIndex];
+
+    newGameState.currentResolution.pop();
+
+    if (attacker !== null && !isMuted(attacker)) {
+      newGameState = applyInfection(
+        newGameState,
+        attackerInfo,
+        victimInfo,
+        duration,
+        special
+      );
     }
 
     dispatch(updateState(newGameState));
@@ -694,6 +722,17 @@ const UseCurrentResolution = (props) => {
     case "Apply Frost":
       if (self === lastRes.attacker.player) {
         resolveApplyFrost(lastRes.attacker, lastRes.victim, lastRes.duration);
+      }
+      break;
+
+    case "Apply Infection":
+      if (self === lastRes.attacker.player) {
+        resolveApplyInfection(
+          lastRes.attacker,
+          lastRes.victim,
+          lastRes.duration,
+          lastRes.special
+        );
       }
       break;
 
@@ -1200,6 +1239,12 @@ const UseCurrentResolution = (props) => {
           }
           break;
 
+        case "Activating Gestation":
+          if (self === lastRes.unit.player) {
+            props.updateLocalState(applyAbility("gestation1", lastRes.unit));
+          }
+          break;
+
         case "Cold Embrace1":
         case "Galvanize1":
         case "Reap the Whirlwind3":
@@ -1408,6 +1453,12 @@ const UseCurrentResolution = (props) => {
           }
           break;
 
+        case "Activating Trophallaxis":
+          if (self === lastRes.unit.player) {
+            props.updateLocalState(applyAbility("trophallaxis1", lastRes.unit));
+          }
+          break;
+
         case "Talent Conclusion":
           if (self === lastRes.unit.player) {
             talentConclusion();
@@ -1565,7 +1616,7 @@ const UseCurrentResolution = (props) => {
 
         case "Frigid Breath1":
           if (self === lastRes.unit.player) {
-            selectEnemies(lastRes.unit, 2, null, "freeze1", null);
+            selectEnemies(lastRes.unit, 2, null, "freeze", null);
           }
           break;
 
@@ -1591,7 +1642,7 @@ const UseCurrentResolution = (props) => {
 
         case "Frigid Breath4":
           if (self === lastRes.unit.player) {
-            selectEnemies(lastRes.unit, 1, null, "freeze1", null);
+            selectEnemies(lastRes.unit, 1, null, "freeze", null);
           }
           break;
 
@@ -1860,7 +1911,7 @@ const UseCurrentResolution = (props) => {
               lastRes.unit,
               1,
               null,
-              "paralyze1",
+              "paralyze",
               "Cataclysmic Tempest"
             );
           }
@@ -1971,7 +2022,7 @@ const UseCurrentResolution = (props) => {
 
         case "Upheaval1":
           if (self === lastRes.unit.player) {
-            selectEnemies(lastRes.unit, 1, null, "paralyze1", "Upheaval");
+            selectEnemies(lastRes.unit, 1, null, "paralyze", "Upheaval");
           }
           break;
 
@@ -2118,7 +2169,7 @@ const UseCurrentResolution = (props) => {
               lastRes.unit,
               1,
               null,
-              "paralyze1",
+              "paralyze",
               "ChainLightningParalysis"
             );
           }
@@ -2401,7 +2452,7 @@ const UseCurrentResolution = (props) => {
               lastRes.unit,
               1,
               null,
-              "paralyze1",
+              "paralyze",
               "MagneticShockwave1stParalysis"
             );
           }
@@ -2540,7 +2591,7 @@ const UseCurrentResolution = (props) => {
 
         case "Arsenal Onslaught3.5":
           if (self === lastRes.unit.player) {
-            selectEnemies(lastRes.unit, 1, null, "paralyze1", null);
+            selectEnemies(lastRes.unit, 1, null, "paralyze", null);
           }
           break;
 
@@ -2768,9 +2819,50 @@ const UseCurrentResolution = (props) => {
             selectAndMoveUnit(lastRes.unit);
           }
           break;
-
-        ///------------
       }
+      break;
+
+    case "Insect Skill":
+      switch (lastRes.resolution2) {
+        case "Activating Virulent Venom":
+          if (self === lastRes.unit.player) {
+            props.updateLocalState(applySkill("virulentVenom1", lastRes.unit));
+          }
+          break;
+
+        case "Virulent Venom1":
+          if (self === lastRes.unit.player) {
+            selectEnemies(
+              lastRes.unit,
+              1,
+              null,
+              "infect",
+              "VirulentVenom1stInfect"
+            );
+          }
+          break;
+
+        case "Virulent Venom2":
+          if (self === lastRes.unit.player) {
+            props.updateLocalState(applySkill("virulentVenom2", lastRes.unit));
+          }
+          break;
+
+        case "Virulent Venom3":
+          return (
+            <>
+              {self === lastRes.unit.player && !props.hideModal && (
+                <SelectCustomChoice
+                  unit={lastRes.unit}
+                  details={lastRes.details}
+                  updateFirebase={props.updateFirebase}
+                  hideOrRevealModale={props.hideOrRevealModale}
+                />
+              )}
+            </>
+          );
+      }
+
       break;
 
     case "Sovereign Standard Skill":

@@ -951,6 +951,78 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const applyInfection = (
+    newGameState,
+    attackerInfo,
+    victimInfo,
+    duration,
+    special
+  ) => {
+    const attacker =
+      newGameState[attackerInfo.player].units[attackerInfo.unitIndex];
+    const victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
+
+    //Insect Scions are immune to infection from Insect skills
+    //Water Scions are immune to infection
+    //Lightning Scions are immune to infection if they have 3 charges
+    const isImmuneToInfection = () =>
+      (["VirulentVenom1stInfect", "insect skill"].includes(special) &&
+        victim.unitClass === "Insect Scion" &&
+        !isMuted(victim)) ||
+      (victim.unitClass === "Water Scion" && !isMuted(victim)) ||
+      (victim.charge === 3 && !isMuted(victim));
+
+    //record previous target
+    if (["VirulentVenom1stInfect"].includes(special)) {
+      attacker.temporary.previousTarget = victim.unitIndex;
+    }
+
+    //Victim enhanced with ward negates affliction
+    if (victim.enhancements.ward) {
+      delete victim.enhancements.ward;
+      return newGameState;
+    }
+
+    if (isImmuneToInfection()) {
+      newGameState.activatingUnit.push(victim);
+      newGameState.currentResolution.push({
+        resolution: "Unit Talent",
+        resolution2: "Talent Conclusion",
+        unit: victim,
+      });
+
+      switch (victim.unitClass) {
+        // case "Insect Scion":
+        //   newGameState = applyTalentMessage(
+        //     newGameState,
+        //     "SaltTheEarth2",
+        //     "Salt the Earth",
+        //     "Salt the Earth grants Land Scions immunity to Paralysis due to Land skills.",
+        //     attackerInfo.player
+        //   );
+        //   break;
+        case "Lightning Scion":
+          newGameState = applyTalentMessage(
+            newGameState,
+            "Defibrillation",
+            "Defibrillation",
+            "Defibrillation grants Lightning Scions immunity to Infection if they possess 3 Charges.",
+            attackerInfo.player
+          );
+          break;
+      }
+    } else {
+      victim.afflictions.infection
+        ? (victim.afflictions.infection = Math.max(
+            victim.afflictions.infection,
+            duration
+          ))
+        : (victim.afflictions.infection = duration);
+    }
+
+    return newGameState;
+  };
+
   const applyParalysis = (
     newGameState,
     attackerInfo,
@@ -1383,6 +1455,23 @@ export const useRecurringEffects = () => {
       newGameState.activatingTarget.push(victim);
     }
 
+    //Insect Talent
+    if (attacker.unitClass === "Insect Scion") {
+      newGameState.activatingUnit.push(attacker);
+      newGameState.activatingSkill.push("Trophallaxis");
+      newGameState.currentResolution.push({
+        resolution: "Unit Talent",
+        resolution2: "Talent Conclusion",
+        unit: attacker,
+      });
+
+      newGameState.currentResolution.push({
+        resolution: "Unit Talent",
+        resolution2: "Activating Trophallaxis",
+        unit: attacker,
+      });
+    }
+
     return newGameState;
   };
 
@@ -1574,14 +1663,15 @@ export const useRecurringEffects = () => {
 
       case "09-01":
         return getZonesWithEnemies(unit, 2).length > 0;
-
       case "09-02":
         return true;
-
       case "09-03":
         return false;
       case "09-04":
         return true;
+
+      case "12-01":
+        return getZonesWithEnemies(unit, 1).length > 0 ? true : false;
 
       default:
         return false;
@@ -1784,6 +1874,53 @@ export const useRecurringEffects = () => {
     }
 
     return false;
+  };
+
+  const infect = (newGameState, attacker, victim, special) => {
+    if (newGameState === null) {
+      newGameState = JSON.parse(JSON.stringify(localGameState));
+    }
+
+    newGameState.currentResolution.push({
+      resolution: "Apply Infection",
+      attacker: attacker,
+      victim: victim,
+      special: special,
+      type: "infect",
+      duration: 1,
+    });
+
+    //to do in the future: consider bypass Target
+    if (triggerTarget(attacker, victim, "infect")) {
+      newGameState.currentResolution.push({
+        resolution: "Triggering Contingent Skill",
+        resolution2: "Triggering Target",
+        attacker: attacker,
+        victim: victim,
+        type: "infect",
+      });
+
+      newGameState.activatingTarget.push(victim);
+    }
+
+    //Insect Talent
+    if (attacker.unitClass === "Insect Scion") {
+      newGameState.activatingUnit.push(attacker);
+      newGameState.activatingSkill.push("Trophallaxis");
+      newGameState.currentResolution.push({
+        resolution: "Unit Talent",
+        resolution2: "Talent Conclusion",
+        unit: attacker,
+      });
+
+      newGameState.currentResolution.push({
+        resolution: "Unit Talent",
+        resolution2: "Activating Trophallaxis",
+        unit: attacker,
+      });
+    }
+
+    return newGameState;
   };
 
   const isNearRootedFoe = (unitInfo, range) => {
@@ -2454,24 +2591,24 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
-  const freeze1 = (newGameState, attacker, victim, special) => {
+  const freeze = (newGameState, attacker, victim, special) => {
     newGameState.currentResolution.push({
       resolution: "Apply Frost",
       attacker: attacker,
       victim: victim,
       special: special,
-      type: "freeze1",
+      type: "freeze",
       duration: 1,
     });
 
     //to do in the future: consider bypass Target
-    if (triggerTarget(attacker, victim, "freeze1")) {
+    if (triggerTarget(attacker, victim, "freeze")) {
       newGameState.currentResolution.push({
         resolution: "Triggering Contingent Skill",
         resolution2: "Triggering Target",
         attacker: attacker,
         victim: victim,
-        type: "freeze1",
+        type: "freeze",
       });
 
       newGameState.activatingTarget.push(victim);
@@ -2948,7 +3085,7 @@ export const useRecurringEffects = () => {
     };
   };
 
-  const paralyze1 = (newGameState, attacker, victim, special) => {
+  const paralyze = (newGameState, attacker, victim, special) => {
     if (newGameState === null) {
       newGameState = JSON.parse(JSON.stringify(localGameState));
     }
@@ -2958,21 +3095,38 @@ export const useRecurringEffects = () => {
       attacker: attacker,
       victim: victim,
       special: special,
-      type: "paralyze1",
+      type: "paralyze",
       duration: 1,
     });
 
     //to do in the future: consider bypass Target
-    if (triggerTarget(attacker, victim, "paralyze1")) {
+    if (triggerTarget(attacker, victim, "paralyze")) {
       newGameState.currentResolution.push({
         resolution: "Triggering Contingent Skill",
         resolution2: "Triggering Target",
         attacker: attacker,
         victim: victim,
-        type: "paralyze1",
+        type: "paralyze",
       });
 
       newGameState.activatingTarget.push(victim);
+    }
+
+    //Insect Talent
+    if (attacker.unitClass === "Insect Scion") {
+      newGameState.activatingUnit.push(attacker);
+      newGameState.activatingSkill.push("Trophallaxis");
+      newGameState.currentResolution.push({
+        resolution: "Unit Talent",
+        resolution2: "Talent Conclusion",
+        unit: attacker,
+      });
+
+      newGameState.currentResolution.push({
+        resolution: "Unit Talent",
+        resolution2: "Activating Trophallaxis",
+        unit: attacker,
+      });
     }
 
     return newGameState;
@@ -3499,6 +3653,23 @@ export const useRecurringEffects = () => {
       newGameState.activatingTarget.push(victim);
     }
 
+    //Insect Talent
+    if (attacker.unitClass === "Insect Scion") {
+      newGameState.activatingUnit.push(attacker);
+      newGameState.activatingSkill.push("Trophallaxis");
+      newGameState.currentResolution.push({
+        resolution: "Unit Talent",
+        resolution2: "Talent Conclusion",
+        unit: attacker,
+      });
+
+      newGameState.currentResolution.push({
+        resolution: "Unit Talent",
+        resolution2: "Activating Trophallaxis",
+        unit: attacker,
+      });
+    }
+
     return newGameState;
   };
 
@@ -3997,6 +4168,23 @@ export const useRecurringEffects = () => {
       newGameState[attacker.player].units[attacker.unitIndex].aether = 0;
     }
 
+    //Insect Talent
+    if (attacker.unitClass === "Insect Scion") {
+      newGameState.activatingUnit.push(attacker);
+      newGameState.activatingSkill.push("Trophallaxis");
+      newGameState.currentResolution.push({
+        resolution: "Unit Talent",
+        resolution2: "Talent Conclusion",
+        unit: attacker,
+      });
+
+      newGameState.currentResolution.push({
+        resolution: "Unit Talent",
+        resolution2: "Activating Trophallaxis",
+        unit: attacker,
+      });
+    }
+
     return newGameState;
   };
 
@@ -4054,7 +4242,9 @@ export const useRecurringEffects = () => {
     applyBurn,
     applyBurnDamage,
     applyDamage,
+
     applyFrost,
+    applyInfection,
     applyParalysis,
     applyScore,
     ascendPawn,
@@ -4089,8 +4279,7 @@ export const useRecurringEffects = () => {
     enterSelectUnitMode,
     floatAvelhem,
     floatSkill,
-    freeze1,
-
+    freeze,
     getVacant2SpaceZones,
     getVacantAdjacentZones,
     getVacantFrontier,
@@ -4105,6 +4294,7 @@ export const useRecurringEffects = () => {
     getZonesWithScions,
     grantRavager,
     ignite,
+    infect,
     isAdjacent,
     isImmobilized,
     isMuted,
@@ -4112,7 +4302,7 @@ export const useRecurringEffects = () => {
     isRooted,
     move,
     newUnitStats,
-    paralyze1,
+    paralyze,
     refillRepertoireAvelhem,
     refillRepertoireSkill,
     rollTactic,

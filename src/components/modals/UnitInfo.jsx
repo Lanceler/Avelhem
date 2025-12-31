@@ -179,6 +179,18 @@ const UnitInfo = (props) => {
             </p>
           </>
         );
+
+      case "Insect Scion":
+        return (
+          <>
+            <p className="unitInfo-text-heading2">
+              Gestation <span className="unitInfo-tactic-group"></span>
+            </p>
+            <p className="unitInfo-text-desc unitInfo-text-last">
+              ⬩Spend 3 Pheromones to restore your Aether and draw 1 skill.
+            </p>
+          </>
+        );
     }
   };
 
@@ -371,6 +383,27 @@ const UnitInfo = (props) => {
             </p>
           </>
         );
+
+      case "Insect Scion":
+        return (
+          <>
+            <p className="unitInfo-text-heading2">1. Terminal Chrysallis</p>
+            <p className="unitInfo-text-desc unitInfo-text-last">
+              ⬩Upon elimination, if your hand contains at least 6 skills, you
+              may spend 1 skill to recover 1 Insect skill.
+            </p>
+
+            <p className="unitInfo-text-heading2">2. Trophallaxis</p>
+            <p className="unitInfo-text-desc">
+              ⬩You are immune to Infection (due to Insect skills) and your
+              movements do not trigger “Perturb”.
+            </p>
+            <p className="unitInfo-text-desc unitInfo-text-last">
+              ⬩When you target a foe, gain 1 Pheromone; you can have up to 3
+              Pheromones.
+            </p>
+          </>
+        );
     }
   };
 
@@ -521,6 +554,11 @@ const UnitInfo = (props) => {
                           Devotion: {unit.devotion}
                         </p>
                       )}
+                      {unit.pheromone > 0 && (
+                        <p className="unitInfo-text-heading2">
+                          Pheromone: {unit.pheromone}
+                        </p>
+                      )}
                     </>
                   )}
 
@@ -645,6 +683,7 @@ const UnitInfo = (props) => {
                 unit.afflictions.paralysis ||
                 unit.afflictions.frost ||
                 unit.afflictions.burn ||
+                unit.afflictions.infection ||
                 isRooted(unit)) && (
                 <>
                   <p className="unitInfo-text-heading1">
@@ -697,7 +736,21 @@ const UnitInfo = (props) => {
                       </p>
                       <p className="unitInfo-text-desc">⬩Immune to Frost.</p>
                       <p className="unitInfo-text-desc unitInfo-text-last">
-                        ⬩Loses 1 HP during the Final Phase.
+                        ⬩Will lose 1 HP during the Final Phase.
+                      </p>
+                    </>
+                  )}
+
+                  {unit.afflictions.infection > 0 && (
+                    <>
+                      <p className="unitInfo-text-heading2">
+                        Infection ({unit.afflictions.infection} turn
+                        {unit.afflictions.infection > 1 ? "s" : ""})
+                      </p>
+                      <p className="unitInfo-text-desc">⬩Muted.</p>
+                      <p className="unitInfo-text-desc unitInfo-text-last">
+                        ⬩Must spend 1 skill during the Final Phase; will lose 1
+                        HP otherwise.
                       </p>
                     </>
                   )}

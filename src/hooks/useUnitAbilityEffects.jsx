@@ -630,6 +630,43 @@ export const useUnitAbilityEffects = () => {
     return newGameState;
   };
 
+  const gestation1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Gestation"
+    newGameState.currentResolution.pop();
+
+    //give unit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation += 1)
+      : (unit.temporary.activation = 1);
+
+    unit.temporary.usedAbility = true;
+    unit.pheromone = 0;
+    unit.aether = 1;
+    newGameState = drawSkill(newGameState);
+
+    return newGameState;
+  };
+
+  const trophallaxis1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Trophallaxis"
+    newGameState.currentResolution.pop();
+
+    //Gain Pheromone
+    unit.pheromone
+      ? (unit.pheromone = Math.min(unit.pheromone + 1, 3))
+      : (unit.pheromone = 1);
+
+    newGameState = animationDelay(newGameState, unit.player, 1750);
+
+    return newGameState;
+  };
+
   //end of list
 
   const applyAbility = (effect, unit) => {
@@ -697,6 +734,12 @@ export const useUnitAbilityEffects = () => {
         return wingsOfDevotion1(unit);
       case "swanSong1":
         return swanSong1(unit);
+
+      //Insect
+      case "gestation1":
+        return gestation1(unit);
+      case "trophallaxis1":
+        return trophallaxis1(unit);
     }
   };
 

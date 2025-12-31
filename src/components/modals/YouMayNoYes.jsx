@@ -190,7 +190,7 @@ const YouMayNoYes = (props) => {
           props.unit,
           newGameState,
           null,
-          "paralyze1",
+          "paralyze",
           "Cataclysmic Tempest"
         );
         break;
@@ -221,7 +221,7 @@ const YouMayNoYes = (props) => {
           props.unit,
           newGameState,
           null,
-          "paralyze1",
+          "paralyze",
           "Geomancy"
         );
         break;
@@ -289,7 +289,7 @@ const YouMayNoYes = (props) => {
           props.unit,
           newGameState,
           null,
-          "paralyze1",
+          "paralyze",
           null
         );
         break;

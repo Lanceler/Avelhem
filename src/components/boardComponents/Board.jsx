@@ -32,10 +32,11 @@ const Board = (props) => {
     avelhemToScion,
     blast,
     grantRavager,
-    freeze1,
+    freeze,
     ignite,
+    infect,
     isAdjacent,
-    paralyze1,
+    paralyze,
     strike,
     aetherBlast,
   } = useRecurringEffects();
@@ -103,8 +104,8 @@ const Board = (props) => {
 
         break;
 
-      case "paralyze1":
-        newGameState = paralyze1(
+      case "infect":
+        newGameState = infect(
           newGameState,
           newGameState[unit.player].units[unit.unitIndex],
           selectedUnit,
@@ -112,8 +113,17 @@ const Board = (props) => {
         );
         break;
 
-      case "freeze1":
-        newGameState = freeze1(
+      case "paralyze":
+        newGameState = paralyze(
+          newGameState,
+          newGameState[unit.player].units[unit.unitIndex],
+          selectedUnit,
+          special
+        );
+        break;
+
+      case "freeze":
+        newGameState = freeze(
           newGameState,
           newGameState[unit.player].units[unit.unitIndex],
           selectedUnit,

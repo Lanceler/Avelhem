@@ -124,6 +124,8 @@ import FuneralFlowers from "../assets/abilities/FuneralFlowers.jpg";
 import HawkEye from "../assets/abilities/HawkEye.jpg";
 import WingsOfDevotion from "../assets/abilities/WingsOfDevotion.jpg";
 import SwanSong from "../assets/abilities/SwanSong.jpg";
+import Trophallaxis from "../assets/abilities/Trophallaxis.jpg";
+import Gestation from "../assets/abilities/Gestation.jpg";
 
 import SkillCardBack from "../assets/skillcards/SkillCardBack.jpg";
 import AvelhemCardBack from "../assets/avelhemcards/AvelhemCardBack.jpg";
@@ -328,6 +330,8 @@ export const useGetImages = () => {
     HawkEye,
     WingsOfDevotion,
     SwanSong,
+    Trophallaxis,
+    Gestation,
     SkillCardBack,
     AvelhemCardBack,
     //statuses
@@ -656,6 +660,10 @@ export const useGetImages = () => {
         return Perturb;
       case "12-04":
         return VectorOfPestilence;
+      case "Trophallaxis":
+        return Trophallaxis;
+      case "Gestation":
+        return Gestation;
 
       default:
         return "";

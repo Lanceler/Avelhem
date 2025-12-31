@@ -243,6 +243,14 @@ const SelectCustomChoice = (props) => {
       ChoiceSecondMessage = "Spend 2 Devotions.";
       break;
 
+    case "Virulent Venom":
+      canSkip = true;
+      canFirstChoice = props.details.adjacentEnemies.length > 0;
+      canSecondChoice = unit.pheromone === 3;
+      ChoiceFirstMessage = "Infect a different adjacent foe.";
+      ChoiceSecondMessage = "Spend 3 Pheromones to raise your HP to 2.";
+      break;
+
     case "Tea for Two":
       canFirstChoice = true;
       canSecondChoice = true;
@@ -401,7 +409,7 @@ const SelectCustomChoice = (props) => {
             unit,
             newGameState,
             null,
-            "freeze1",
+            "freeze",
             null
           );
         }
@@ -798,6 +806,23 @@ const SelectCustomChoice = (props) => {
             "aether-blast",
             null
           );
+        }
+        break;
+
+      case "Virulent Venom":
+        if (selectedChoice === 1) {
+          enterSelectUnitMode(
+            props.details.adjacentEnemies,
+            unit,
+            newGameState,
+            null,
+            "infect",
+            "insect skill"
+          );
+          break;
+        } else {
+          unit.pheromone -= 3;
+          unit.hp = 2;
         }
         break;
 
