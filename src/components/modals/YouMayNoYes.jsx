@@ -272,7 +272,7 @@ const YouMayNoYes = (props) => {
         );
         break;
 
-      case "Disruption Field": // "Disruption Field1"
+      case "Aura Flux": // "Aura Flux1"
         unit.aether = 0;
         const zones = props.details.zones;
 

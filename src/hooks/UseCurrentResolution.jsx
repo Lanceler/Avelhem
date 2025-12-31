@@ -2328,7 +2328,7 @@ const UseCurrentResolution = (props) => {
           break;
 
         case "Diffusion4":
-        case "Disruption Field1":
+        case "Aura Flux1":
           return (
             <>
               {self === lastRes.unit.player && !props.hideModal && (
@@ -2377,11 +2377,9 @@ const UseCurrentResolution = (props) => {
             </>
           );
 
-        case "Activating Disruption Field":
+        case "Activating Aura Flux":
           if (self === lastRes.unit.player) {
-            props.updateLocalState(
-              applySkill("disruptionField1", lastRes.unit)
-            );
+            props.updateLocalState(applySkill("auraFlux1", lastRes.unit));
           }
           break;
       }

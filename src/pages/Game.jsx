@@ -192,16 +192,27 @@ export default function Game() {
       });
     } else if (gameData) {
       if (!user) {
-        setPlayerStatus("login");
-        setBanner({
-          title: (
-            <>
-              INVITED BY: <br />
-              {gameData.hostName}
-            </>
-          ),
-          buttonText: <>Log in to play</>,
-        });
+        if (!gameData.guestId) {
+          setPlayerStatus("login");
+          setBanner({
+            title: (
+              <>
+                INVITED BY: <br />
+                {gameData.hostName}
+              </>
+            ),
+            buttonText: <>Log in to play</>,
+          });
+        } else {
+          if (
+            gameData.gameState.guest.skillRepertoire &&
+            gameData.gameState.host.skillRepertoire
+          )
+            setPlayerStatus("spectate");
+          else {
+            setPlayerStatus("spectate wait");
+          }
+        }
       } else if (userRole === "host") {
         if (!gameData.guestId) {
           setPlayerStatus("waiting");

@@ -70,7 +70,7 @@ export const useCardDatabase = () => {
     makeSkillCard("Surge", SL, "Mana", "Standard", "06-01"),
     makeSkillCard("Diffusion", SL, "Mana", "Resonant", "06-02"),
     makeSkillCard("Aegis", SL, "Mana", "Contingent", "06-03"),
-    makeSkillCard("Disruption Field", 1, "Mana", "Burst", "06-04"),
+    makeSkillCard("Aura Flux", 1, "Mana", "Burst", "06-04"),
 
     makeSkillCard("Magnetic Shockwave", SL, "Metal", "Standard", "07-01"),
     makeSkillCard("Reinforce", SL, "Metal", "Resonant", "07-02"),
@@ -87,8 +87,8 @@ export const useCardDatabase = () => {
     makeSkillCard("Guardian Wings", SL, "Avian", "Contingent", "09-03"),
     makeSkillCard("Vanguard Fleet", 1, "Avian", "Burst", "09-04"),
 
-    makeSkillCard("Infestation", SL, "Insect", "Standard", "12-01"),
-    makeSkillCard("Virulent Venom", SL, "Insect", "Resonant", "12-02"),
+    makeSkillCard("Virulent Venom", SL, "Insect", "Standard", "12-01"),
+    makeSkillCard("Infestation", SL, "Insect", "Resonant", "12-02"),
     makeSkillCard("Perturb", SL, "Insect", "Contingent", "12-03"),
     makeSkillCard("Vector of Pestilence", 1, "Insect", "Burst", "12-04"),
 
@@ -199,6 +199,7 @@ export const useCardDatabase = () => {
       "07-04",
       "08-04",
       "09-04",
+      "12-04",
       // "SD-01",
     ];
   };
@@ -214,11 +215,32 @@ export const useCardDatabase = () => {
       "07-03",
       "08-03",
       "09-03",
+      "12-03",
+
       "SC-01",
       "SC-02",
       "SC-03",
       "SC-04",
       "SC-05",
+    ];
+  };
+
+  const infestationList = () => {
+    return [
+      //Paralyze
+      "03-04", //Cataclysmic Tempes
+      "04-02", //Upheaval
+      "04-03", //Pitfall Trap
+      "04-04", //Geomancy
+      "05-01", //Chain Lightning
+      "05-03", //Thunder Thaumaturge
+      "07-01", //Magnetic Shockwave
+      "07-04", //Arsenal Onslaught
+
+      //Infect
+      "12-01", //Virulent Venom
+      "12-02", //Infestation
+      "12-04", //Vector of Pestilence
     ];
   };
 
@@ -241,6 +263,8 @@ export const useCardDatabase = () => {
       "08-01", //Sow and Reap
       "08-04", //Castle of Thorns
       "09-01", //Raptor Blitz
+      "12-02", //Infestation
+      "12-03", //Perturb
     ];
   };
 
@@ -342,6 +366,7 @@ export const useCardDatabase = () => {
     getSkillIndex,
     allBurstSkills,
     allContingentSkills,
+    infestationList,
     pressTheAttackList,
     sovereignSkillList,
     starterAvelhemRepertoire,

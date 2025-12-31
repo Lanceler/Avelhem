@@ -1564,12 +1564,12 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
-  const disruptionField1 = (unitInfo) => {
+  const auraFlux1 = (unitInfo) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
     const zones = JSON.parse(newGameState.zones);
 
-    //end "Activating Disruption Field" resolution
+    //end "Activating Aura Flux" resolution
     newGameState.currentResolution.pop();
 
     //give unit activationCounter
@@ -1591,11 +1591,11 @@ export const useSkillEffects = () => {
     if (unit.aether) {
       newGameState.currentResolution.push({
         resolution: "Mana Skill",
-        resolution2: "Disruption Field1",
+        resolution2: "Aura Flux1",
         unit: unit,
         details: {
-          reason: "Disruption Field",
-          title: "Disruption Field",
+          reason: "Aura Flux",
+          title: "Aura Flux",
           message:
             "You may spend your Aether to purge the Aether of all foes within 2 spaces.",
           no: "Skip",
@@ -1604,6 +1604,15 @@ export const useSkillEffects = () => {
           zones: zones,
         },
       });
+    }
+
+    const zonesWithAdjacentAllies = getZonesWithAllies(unit, 1, false);
+
+    for (let z of zonesWithAdjacentAllies) {
+      const zone = zones[Math.floor(z / 5)][z % 5];
+      const u = newGameState[zone.player].units[zone.unitIndex];
+
+      newGameState = aetherRestoreSpecial(newGameState, u);
     }
 
     return newGameState;
@@ -2278,14 +2287,6 @@ export const useSkillEffects = () => {
       ? (unit.temporary.activation += 1)
       : (unit.temporary.activation = 1);
 
-    // victim.enhancements.shield
-    //   ? (victim.enhancements.shield = Math.max(1, victim.enhancements.shield))
-    //   : (victim.enhancements.shield = 1);
-
-    // if (victim.unitClass === "Avian Scion") {
-    //   newGameState = aetherRestoreSpecial(newGameState, unit);
-    // }
-
     newGameState.currentResolution.push({
       resolution: "Avian Skill",
       resolution2: "Guardian Wings Float",
@@ -2518,8 +2519,8 @@ export const useSkillEffects = () => {
         return diffusionR2(a);
       case "aegis1":
         return aegis1(a, b);
-      case "disruptionField1":
-        return disruptionField1(a);
+      case "auraFlux1":
+        return auraFlux1(a);
 
       //Metal
       case "magneticShockwave1":

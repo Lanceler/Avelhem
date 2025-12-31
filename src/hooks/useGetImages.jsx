@@ -38,7 +38,7 @@ import ManaAvelhemRecover from "../assets/avelhemcards/ManaAvelhemRecover.jpg";
 import Surge from "../assets/skillcards/Surge.jpg";
 import Diffusion from "../assets/skillcards/Diffusion.jpg";
 import Aegis from "../assets/skillcards/Aegis.jpg";
-import DisruptionField from "../assets/skillcards/DisruptionField.jpg";
+import AuraFlux from "../assets/skillcards/AuraFlux.jpg";
 
 import MetalAvelhem from "../assets/avelhemcards/MetalAvelhem.jpg";
 import MetalAvelhemRecover from "../assets/avelhemcards/MetalAvelhemRecover.jpg";
@@ -63,7 +63,10 @@ import VanguardFleet from "../assets/skillcards/VanguardFleet.jpg";
 
 import InsectAvelhem from "../assets/avelhemcards/InsectAvelhem.jpg";
 import InsectAvelhemRecover from "../assets/avelhemcards/InsectAvelhemRecover.jpg";
+import VirulentVenom from "../assets/skillcards/VirulentVenom.jpg";
 import Infestation from "../assets/skillcards/Infestation.jpg";
+import Perturb from "../assets/skillcards/Perturb.jpg";
+import VectorOfPestilence from "../assets/skillcards/VectorOfPestilence.jpg";
 
 import HeirsEndeavor from "../assets/skillcards/HeirsEndeavor.jpg";
 import TeaForTwo from "../assets/skillcards/TeaForTwo.jpg";
@@ -241,7 +244,7 @@ export const useGetImages = () => {
     Surge,
     Diffusion,
     Aegis,
-    DisruptionField,
+    AuraFlux,
 
     MetalAvelhem,
     MagneticShockwave,
@@ -262,7 +265,10 @@ export const useGetImages = () => {
     VanguardFleet,
 
     InsectAvelhem,
+    VirulentVenom,
     Infestation,
+    Perturb,
+    VectorOfPestilence,
 
     HeirsEndeavor,
     TeaForTwo,
@@ -540,7 +546,7 @@ export const useGetImages = () => {
       case "06-03":
         return Aegis;
       case "06-04":
-        return DisruptionField;
+        return AuraFlux;
       case "AmplifyAura":
         return AmplifyAura;
       case "AmbianceAssimilation":
@@ -643,7 +649,13 @@ export const useGetImages = () => {
       case "12Alt":
         return InsectAvelhemRecover;
       case "12-01":
+        return VirulentVenom;
+      case "12-02":
         return Infestation;
+      case "12-03":
+        return Perturb;
+      case "12-04":
+        return VectorOfPestilence;
 
       default:
         return "";
