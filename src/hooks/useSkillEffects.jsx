@@ -1,9 +1,12 @@
 import { useSelector } from "react-redux";
 import { useRecurringEffects } from "./useRecurringEffects";
+import { useCardDatabase } from "./useCardDatabase";
 
 export const useSkillEffects = () => {
   const { localGameState } = useSelector((state) => state.gameState);
   const { self, enemy } = useSelector((state) => state.teams);
+
+  const { infestationList } = useCardDatabase();
 
   const {
     aetherRestoreSpecial,
@@ -2418,6 +2421,7 @@ export const useSkillEffects = () => {
 
     delete unit.temporary.previousTarget;
 
+    //if 6+ skills; will count when resolving
     newGameState.currentResolution.push({
       resolution: "Insect Skill",
       resolution2: "Virulent Venom2",
@@ -2441,7 +2445,11 @@ export const useSkillEffects = () => {
     //end "Virulent Venom2" resolution
     newGameState.currentResolution.pop();
 
-    if (newGameState[self].skillHand.length > 5) {
+    if (
+      unit !== null &&
+      !isMuted(unit) &&
+      newGameState[self].skillHand.length > 5
+    ) {
       let adjacentEnemies = getZonesWithEnemies(unit, 1);
       adjacentEnemies = adjacentEnemies.filter(
         (z) =>
@@ -2461,6 +2469,106 @@ export const useSkillEffects = () => {
           },
         });
       }
+    }
+
+    return newGameState;
+  };
+
+  const infestation1 = (unitInfo, resonator) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Infestation" resolution
+    newGameState.currentResolution.pop();
+
+    //give unit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation += 1)
+      : (unit.temporary.activation = 1);
+
+    delete unit.temporary.validTargets;
+    delete unit.temporary.validTargets2;
+
+    if (resonator) {
+      // newGameState.currentResolution.push({
+      //   resolution: "Insect Skill",
+      //   resolution2: "InfestationR1",
+      //   unit: unit,
+      // });
+
+      newGameState.currentResolution.push({
+        resolution: "Search Card",
+        player: self,
+        details: {
+          restriction: infestationList(),
+          exclusion: [],
+          searchTitle: "Infestation",
+          searchMessage:
+            "Search for 1 skill that enables the activator to paralyze or infect",
+          outcome: "Add",
+          revealTitle: "Infestation",
+          revealMessage: "Your opponent has searched for and revealed a skill.",
+          messageTitle: null,
+          message: null,
+          specMessage: `${
+            self === "host" ? "Gold" : "Silver"
+          } Sovereign has searched for and revealed a skill.`,
+        },
+      });
+    }
+
+    //if 6+ skills; will count when resolving
+    newGameState.currentResolution.push({
+      resolution: "Insect Skill",
+      resolution2: "Infestation1",
+      unit: unit,
+    });
+
+    //get valid targets
+    unit.temporary.validTargets = [
+      ...getZonesWithEnemiesAfflicted(unit, 1, "paralysis"),
+      ...getZonesWithEnemiesAfflicted(unit, 1, "infection"),
+      ...getZonesWithEnemiesRooted(unit, 1),
+    ];
+
+    enterSelectUnitMode(
+      unit.temporary.validTargets,
+      unit,
+      newGameState,
+      null,
+      "blast",
+      "infestationBlast"
+    );
+
+    return newGameState;
+  };
+
+  const infestation2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    const zones = JSON.parse(newGameState.zones);
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Infestation1" resolution
+    newGameState.currentResolution.pop();
+
+    if (
+      unit !== null &&
+      !isMuted(unit) &&
+      newGameState[self].skillHand.length > 5 &&
+      unit.temporary.validTargets2.length > 0
+    ) {
+      newGameState.currentResolution.push({
+        resolution: "Insect Skill",
+        resolution2: "Infestation2",
+        unit: unit,
+        details: {
+          reason: "Infestation",
+          title: "Infestation",
+          message: "You may infect a foe adjacent to the initial one.",
+          no: "Skip",
+          yes: "Infect",
+        },
+      });
     }
 
     return newGameState;
@@ -2647,6 +2755,10 @@ export const useSkillEffects = () => {
         return virulentVenom1(a);
       case "virulentVenom2":
         return virulentVenom2(a);
+      case "infestation1":
+        return infestation1(a, b);
+      case "infestation2":
+        return infestation2(a);
     }
   };
 

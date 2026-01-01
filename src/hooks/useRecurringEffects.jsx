@@ -795,6 +795,11 @@ export const useRecurringEffects = () => {
 
     let triggerColdEmbrace = false;
 
+    // Get adjacent targets for Infestation follow-up
+    if (["infestationBlast"].includes(special)) {
+      attacker.temporary.validTargets2 = getZonesWithAllies(victim, 1, false);
+    }
+
     // Apply damage
     if (victim.enhancements.ward > 0) {
       delete victim.enhancements.ward;
@@ -1521,6 +1526,7 @@ export const useRecurringEffects = () => {
       case "07-02":
       case "08-02":
       case "09-02":
+      case "12-02":
         return canActivateSkill(unit, skill);
 
       default:
@@ -1672,6 +1678,13 @@ export const useRecurringEffects = () => {
 
       case "12-01":
         return getZonesWithEnemies(unit, 1).length > 0 ? true : false;
+
+      case "12-02":
+        return (
+          getZonesWithEnemiesAfflicted(unit, 1, "paralysis").length > 0 ||
+          getZonesWithEnemiesAfflicted(unit, 1, "infection").length > 0 ||
+          getZonesWithEnemiesRooted(unit, 1).length > 0
+        );
 
       default:
         return false;
@@ -2961,12 +2974,7 @@ export const useRecurringEffects = () => {
   const isImmobilized = (unit) => {
     const afflictions = unit.afflictions;
 
-    if (
-      unit.enhancements.score ||
-      afflictions.paralysis ||
-      afflictions.frost ||
-      afflictions.infection
-    ) {
+    if (unit.enhancements.score || afflictions.paralysis || afflictions.frost) {
       return true;
     }
 

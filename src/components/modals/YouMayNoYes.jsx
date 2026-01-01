@@ -393,6 +393,17 @@ const YouMayNoYes = (props) => {
         );
         break;
 
+      case "Infestation": // "Infestation2"
+        enterSelectUnitMode(
+          props.unit.temporary.validTargets2,
+          props.unit,
+          newGameState,
+          null,
+          "infect",
+          "insect skill"
+        );
+        break;
+
       case "Dark Halo":
         newGameState[self].skillVestige.push(props.details.skill);
 

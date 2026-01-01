@@ -2861,6 +2861,34 @@ const UseCurrentResolution = (props) => {
               )}
             </>
           );
+
+        case "Activating Infestation":
+          if (self === lastRes.unit.player) {
+            props.updateLocalState(
+              applySkill("infestation1", lastRes.unit, lastRes.resonator)
+            );
+          }
+          break;
+
+        case "Infestation1":
+          if (self === lastRes.unit.player) {
+            props.updateLocalState(applySkill("infestation2", lastRes.unit));
+          }
+          break;
+
+        case "Infestation2":
+          return (
+            <>
+              {self === lastRes.unit.player && !props.hideModal && (
+                <YouMayNoYes
+                  unit={lastRes.unit}
+                  details={lastRes.details}
+                  updateFirebase={props.updateFirebase}
+                  hideOrRevealModale={props.hideOrRevealModale}
+                />
+              )}
+            </>
+          );
       }
 
       break;

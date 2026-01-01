@@ -509,17 +509,21 @@ const Board = (props) => {
 
     switch (option) {
       case "Info":
-        props.setUnitInfor(expandedUnit);
+        let testing = false;
+        // testing = true; //for testing: quick movement
 
-        // //for testing: quick movement
-        // props.updateLocalState(
-        //   enterMoveMode(
-        //     getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
-        //     expandedUnit,
-        //     newGameState,
-        //     null
-        //   )
-        // );
+        if (testing) {
+          props.updateLocalState(
+            enterMoveMode(
+              getZonesInRange(expandedUnit.row, expandedUnit.column, 1, false),
+              expandedUnit,
+              newGameState,
+              null
+            )
+          );
+        } else {
+          props.setUnitInfor(expandedUnit);
+        }
 
         break;
 
