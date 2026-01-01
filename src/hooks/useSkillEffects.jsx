@@ -21,6 +21,7 @@ export const useSkillEffects = () => {
     getZonesWithEnemiesAfflicted,
     getZonesWithEnemiesNoAether,
     getZonesWithEnemiesRooted,
+    infect,
     isAdjacent,
     isImmobilized,
     isMuted,
@@ -2574,6 +2575,74 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
+  const perturb1 = (unitInfo, victimInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+    let victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
+
+    //end "Activating Perturb" resolution
+    newGameState.currentResolution.pop();
+
+    //give unit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation += 1)
+      : (unit.temporary.activation = 1);
+
+    delete unit.temporary.pitfallTrapBlast;
+
+    newGameState.currentResolution.push({
+      resolution: "Insect Skill",
+      resolution2: "Perturb2",
+      unit: unit,
+      victim: victim,
+    });
+
+    victim.aether = 0;
+
+    newGameState.currentResolution.push({
+      resolution: "Insect Skill",
+      resolution2: "Perturb1",
+      player: unit.player,
+      victim: victim,
+    });
+
+    return newGameState;
+  };
+
+  const perturb2 = (unitInfo, victimInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+    let victim = newGameState[victimInfo.player].units[victimInfo.unitIndex];
+
+    //end "Perturb2" resolution
+    newGameState.currentResolution.pop();
+
+    if (
+      unit !== null &&
+      !isMuted(unit) &&
+      newGameState[self].skillHand.length > 5 &&
+      unit.aether === 1 &&
+      victim?.hp > 0
+    ) {
+      newGameState.currentResolution.push({
+        resolution: "Insect Skill",
+        resolution2: "Perturb3",
+        unit: unit,
+        details: {
+          reason: "Perturb",
+          title: "Perturb",
+          message: "You may Aether-blast them.",
+          no: "Skip",
+          yes: "Blast",
+          victim: victim,
+        },
+      });
+    }
+
+    return newGameState;
+  };
+
   //end of list
 
   const applySkill = (effect, a, b) => {
@@ -2759,6 +2828,10 @@ export const useSkillEffects = () => {
         return infestation1(a, b);
       case "infestation2":
         return infestation2(a);
+      case "perturb1":
+        return perturb1(a, b);
+      case "perturb2":
+        return perturb2(a, b);
     }
   };
 

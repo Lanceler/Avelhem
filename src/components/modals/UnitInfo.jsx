@@ -269,7 +269,7 @@ const UnitInfo = (props) => {
               Cyclones.
             </p>
             <p className="unitInfo-text-desc unitInfo-text-last">
-              ⬩Your actions do not trigger a motion contingency.
+              ⬩Your movements do not trigger “Pitfall Trap”.
             </p>
           </>
         );
@@ -361,8 +361,8 @@ const UnitInfo = (props) => {
             <p className="unitInfo-text-desc">⬩You are immune to Root.</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
               ⬩You can have up to 3 Blossoms; purge 1 whenever you move (even if
-              you are muted). If you possess 3 Blossoms, foes are afflicted with
-              Root while adjacent to you.
+              you are muted). If you possess at least Blossoms, foes are
+              afflicted with Root while adjacent to you.
             </p>
           </>
         );

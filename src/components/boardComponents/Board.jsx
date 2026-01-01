@@ -23,6 +23,7 @@ const Board = (props) => {
     activateFrenzyBlade,
     activateHealingRain,
     activateGuardianWings,
+    activatePerturb,
     activatePitfallTrap,
     activateViridianGrave,
     activateSymphonicScreech,
@@ -324,6 +325,10 @@ const Board = (props) => {
         newGameState[selectedUnit.player].units[
           selectedUnit.unitIndex
         ].enhancements.shield = 2;
+        break;
+
+      case "perturb":
+        newGameState = activatePerturb(newGameState, selectedUnit, unit);
         break;
 
       case "ambidexterity":

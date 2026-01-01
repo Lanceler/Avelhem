@@ -139,10 +139,16 @@ export const Piece = (props) => {
         <>
           <div className="deployImpact"></div>
 
-          <img
-            src={getElementImage(unit.unitClass)}
-            className="pieceScionClass"
-          />
+          <div className="pieceScionClass">
+            <img
+              src={getElementImage(unit.unitClass)}
+              className="pieceScionClassImage"
+            />
+
+            {unit.afflictions.infection > 0 && (
+              <div className="infectionGlow"></div>
+            )}
+          </div>
 
           {unit.unitClass !== "Pawn" && (
             <div

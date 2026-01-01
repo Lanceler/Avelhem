@@ -81,6 +81,7 @@ const UseCurrentResolution = (props) => {
     selectGuardianWingsActivator,
     selectHealingRainActivator,
     selectMatchMadeInHeavenPawn,
+    selectPerturbActivator,
     selectPitfallTrapActivator,
     selectSymphonicScreechActivator,
     selectVengefulLegacy,
@@ -197,8 +198,7 @@ const UseCurrentResolution = (props) => {
     unitInfo,
     skill,
     skillConclusion,
-    resonator,
-    resonatorConclusion
+    resonator
   ) => {
     setTimeout(() => {
       let newGameState = JSON.parse(JSON.stringify(localGameState));
@@ -2889,6 +2889,51 @@ const UseCurrentResolution = (props) => {
               )}
             </>
           );
+
+        case "Select Perturb Activator":
+          if (self === lastRes.player) {
+            selectPerturbActivator(lastRes.mover);
+          }
+          break;
+
+        case "Activating Perturb":
+          if (self === lastRes.unit.player) {
+            //Do not use UpdateGameStateOnly
+            props.resolutionUpdate(
+              applySkill("perturb1", lastRes.unit, lastRes.victim)
+            );
+          }
+          break;
+
+        case "Perturb1":
+          if (self === lastRes.player) {
+            selectAndMoveUnit(lastRes.victim);
+          }
+          break;
+
+        case "Perturb2":
+          if (self === lastRes.unit.player) {
+            props.updateLocalState(
+              applySkill("perturb2", lastRes.unit, lastRes.victim)
+            );
+          }
+          break;
+
+        case "Perturb3":
+          return (
+            <>
+              {self === lastRes.unit.player && !props.hideModal && (
+                <YouMayNoYes
+                  unit={lastRes.unit}
+                  details={lastRes.details}
+                  updateFirebase={props.updateFirebase}
+                  hideOrRevealModale={props.hideOrRevealModale}
+                />
+              )}
+            </>
+          );
+
+        //---
       }
 
       break;

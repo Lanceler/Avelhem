@@ -319,6 +319,33 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const activatePerturb = (newGameState, unit, victim) => {
+    //end Triggering Target resolution
+    // newGameState.currentResolution.pop() <-- NOT needed
+
+    newGameState.currentResolution.push({
+      resolution: "Skill Conclusion",
+      player: self,
+      unit: unit,
+      skill: "12-03",
+      skillConclusion: "discard",
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Insect Skill",
+      resolution2: "Activating Perturb",
+      unit: unit,
+      victim: victim,
+    });
+
+    newGameState.activatingSkill.push("12-03");
+    newGameState.activatingUnit.push(unit);
+
+    newGameState = applySymphonicScreech(unit, newGameState);
+
+    return newGameState;
+  };
+
   const activatePitfallTrap = (newGameState, unit, victim) => {
     //end Triggering Target resolution
     // newGameState.currentResolution.pop() <-- NOT needed
@@ -1678,13 +1705,14 @@ export const useRecurringEffects = () => {
 
       case "12-01":
         return getZonesWithEnemies(unit, 1).length > 0 ? true : false;
-
       case "12-02":
         return (
           getZonesWithEnemiesAfflicted(unit, 1, "paralysis").length > 0 ||
           getZonesWithEnemiesAfflicted(unit, 1, "infection").length > 0 ||
           getZonesWithEnemiesRooted(unit, 1).length > 0
         );
+      case "12-03":
+        return false;
 
       default:
         return false;
@@ -3017,7 +3045,7 @@ export const useRecurringEffects = () => {
     for (let z of zonesWithAdjacentEnemies) {
       const zone = zones[Math.floor(z / 5)][z % 5];
       const rooter = newGameState[zone.player].units[zone.unitIndex];
-      if (rooter.blossom >= 3 && !isMuted(rooter)) {
+      if (rooter.blossom >= 2 && !isMuted(rooter)) {
         return true;
       }
     }
@@ -3495,6 +3523,38 @@ export const useRecurringEffects = () => {
     );
   };
 
+  const selectPerturbActivator = (mover) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    if (!zones) {
+      return;
+    }
+
+    //end "Select Perturb Activator"
+    newGameState.currentResolution.pop();
+
+    const zonesWithEnemies = getZonesWithEnemies(mover, 1);
+    let zonesWithInsectScions = [];
+
+    for (let z of zonesWithEnemies) {
+      const zone = zones[Math.floor(z / 5)][z % 5];
+      const unit = newGameState[zone.player].units[zone.unitIndex];
+
+      if (unit.unitClass === "Insect Scion" && !isMuted(unit)) {
+        zonesWithInsectScions.push(z);
+      }
+    }
+
+    enterSelectUnitMode(
+      zonesWithInsectScions,
+      mover,
+      newGameState,
+      null,
+      "perturb",
+      null
+    );
+  };
+
   const selectPitfallTrapActivator = (mover) => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -3843,12 +3903,29 @@ export const useRecurringEffects = () => {
   };
 
   const triggerMotion = (mover, special) => {
-    if (mover.unitClass === "Wind Scion" && !isMuted(mover)) {
+    return triggerPitfallTrap(mover, special) || triggerPerturb(mover);
+  };
+
+  const triggerPerturb = (mover) => {
+    if (mover.unitClass === "Insect Scion" && !isMuted(mover)) {
       return false;
     }
 
-    if (triggerPitfallTrap(mover, special)) {
-      return true;
+    //Must be able to traverse
+    if (!canMove(mover) || isImmobilized(mover)) {
+      return false;
+    }
+
+    const zones = JSON.parse(localGameState.zones);
+    const adjacentEnemies = getZonesWithEnemies(mover, 1);
+
+    for (let i of adjacentEnemies) {
+      const zone = zones[Math.floor(i / 5)][i % 5];
+      const unit = localGameState[zone.player].units[zone.unitIndex];
+
+      if (unit.unitClass === "Insect Scion" && !isMuted(unit)) {
+        return true;
+      }
     }
 
     return false;
@@ -3856,6 +3933,10 @@ export const useRecurringEffects = () => {
 
   const triggerPitfallTrap = (mover, special) => {
     if (special === "strike") {
+      return false;
+    }
+
+    if (mover.unitClass === "Wind Scion" && !isMuted(mover)) {
       return false;
     }
 
@@ -4237,6 +4318,7 @@ export const useRecurringEffects = () => {
     activateGuardianWings,
     activateMatchMadeInHeaven,
     activatePowerAtTheFinalHour,
+    activatePerturb,
     activatePitfallTrap,
     activateSkill,
     activateSovereignSkill,
@@ -4327,6 +4409,7 @@ export const useRecurringEffects = () => {
     selectHealingRainActivator,
     selectGuardianWingsActivator,
     selectMatchMadeInHeavenPawn,
+    selectPerturbActivator,
     selectPitfallTrapActivator,
     selectSymphonicScreechActivator,
     selectVengefulLegacy,
@@ -4343,6 +4426,7 @@ export const useRecurringEffects = () => {
     triggerHealingRain,
     triggerMatchMadeInHeaven,
     triggerMotion,
+    triggerPerturb,
     triggerPitfallTrap,
     triggerPowerAtTheFinalHour,
     triggerThunderThaumaturge,

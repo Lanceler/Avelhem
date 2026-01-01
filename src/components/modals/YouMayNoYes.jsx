@@ -19,6 +19,7 @@ const YouMayNoYes = (props) => {
   const { allBurstSkills, getScionSet } = useCardDatabase();
 
   const {
+    aetherBlast,
     aetherRestoreSpecial,
     drawAvelhem,
     drawSkill,
@@ -393,7 +394,7 @@ const YouMayNoYes = (props) => {
         );
         break;
 
-      case "Infestation": // "Infestation2"
+      case "Infestation": // Infestation2
         enterSelectUnitMode(
           props.unit.temporary.validTargets2,
           props.unit,
@@ -401,6 +402,14 @@ const YouMayNoYes = (props) => {
           null,
           "infect",
           "insect skill"
+        );
+        break;
+
+      case "Perturb": // Perturb3
+        newGameState = aetherBlast(
+          newGameState,
+          props.unit,
+          props.details.victim
         );
         break;
 

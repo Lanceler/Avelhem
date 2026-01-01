@@ -37,6 +37,7 @@ const ContingentTriggered = (props) => {
     triggerGuardianWings,
     triggerHealingRain,
     triggerMatchMadeInHeaven,
+    triggerPerturb,
     triggerPitfallTrap,
     triggerPowerAtTheFinalHour,
     triggerThunderThaumaturge,
@@ -127,6 +128,8 @@ const ContingentTriggered = (props) => {
       //Motion
       case "04-03":
         return triggerPitfallTrap(props.mover);
+      case "12-03":
+        return triggerPerturb(props.mover);
 
       //Survival
       case "02-03":
@@ -181,7 +184,7 @@ const ContingentTriggered = (props) => {
       break;
 
     case "Motion":
-      contingentSkills.push(...["04-03"]);
+      contingentSkills.push(...["04-03", "12-03"]);
       filterSkills();
       contingencySkip(props.contingencyType);
       break;
@@ -341,6 +344,15 @@ const ContingentTriggered = (props) => {
         newGameState.currentResolution.push({
           resolution: "Land Skill",
           resolution2: "Select Pitfall Trap Activator",
+          mover: props.mover,
+          player: self,
+        });
+        break;
+
+      case "12-03":
+        newGameState.currentResolution.push({
+          resolution: "Insect Skill",
+          resolution2: "Select Perturb Activator",
           mover: props.mover,
           player: self,
         });
