@@ -28,6 +28,7 @@ const SelectElement = (props) => {
 
   if (localGameState.expansion === "Familiars’ Followup") {
     facets.push("Avian Scion");
+    facets.push("Insect Scion");
   }
 
   let canSkip = false;

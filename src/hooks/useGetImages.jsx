@@ -125,6 +125,8 @@ import HawkEye from "../assets/abilities/HawkEye.jpg";
 import WingsOfDevotion from "../assets/abilities/WingsOfDevotion.jpg";
 import SwanSong from "../assets/abilities/SwanSong.jpg";
 import Trophallaxis from "../assets/abilities/Trophallaxis.jpg";
+import Trophallaxis2 from "../assets/abilities/Trophallaxis2.jpg";
+import TerminalChrysallis from "../assets/abilities/TerminalChrysallis.jpg";
 import Gestation from "../assets/abilities/Gestation.jpg";
 
 import SkillCardBack from "../assets/skillcards/SkillCardBack.jpg";
@@ -168,6 +170,7 @@ import ManaBanner from "../assets/banners/ManaBanner.jpg";
 import MetalBanner from "../assets/banners/MetalBanner.jpg";
 import PlantBanner from "../assets/banners/PlantBanner.jpg";
 import AvianBanner from "../assets/banners/AvianBanner.jpg";
+import InsectBanner from "../assets/banners/InsectBanner.jpg";
 
 import FireBG from "../assets/banners/FireBG.jpg";
 import WaterBG from "../assets/banners/WaterBG.jpg";
@@ -331,6 +334,8 @@ export const useGetImages = () => {
     WingsOfDevotion,
     SwanSong,
     Trophallaxis,
+    Trophallaxis2,
+    TerminalChrysallis,
     Gestation,
     SkillCardBack,
     AvelhemCardBack,
@@ -400,6 +405,9 @@ export const useGetImages = () => {
 
       case "Avian":
         return AvianBanner;
+
+      case "Insect":
+        return InsectBanner;
 
       //
 
@@ -662,8 +670,12 @@ export const useGetImages = () => {
         return VectorOfPestilence;
       case "Trophallaxis":
         return Trophallaxis;
+      case "Trophallaxis2":
+        return Trophallaxis2;
       case "Gestation":
         return Gestation;
+      case "TerminalChrysallis":
+        return TerminalChrysallis;
 
       default:
         return "";

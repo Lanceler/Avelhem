@@ -140,6 +140,7 @@ const SelectCustomChoice = (props) => {
       break;
 
     case "Valiant Spark":
+      canSkip = true;
       canFirstChoice = true;
       canFirstChoice = canMove(unit);
       canSecondChoice = canStrike(unit);

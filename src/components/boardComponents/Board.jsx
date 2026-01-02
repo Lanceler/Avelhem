@@ -102,7 +102,6 @@ const Board = (props) => {
 
       case "burn damage":
         newGameState = applyBurnDamage(newGameState, selectedUnit);
-
         break;
 
       case "infect":
@@ -112,6 +111,20 @@ const Board = (props) => {
           selectedUnit,
           special
         );
+        break;
+
+      case "infect damage":
+        newGameState.currentResolution.push({
+          resolution: "Discard Skill",
+          unit: selectedUnit,
+          player: selectedUnit.player,
+          details: {
+            title: "Infection",
+            message: "Spend your Aether or 1 skill; otherwise, lose 1 HP.",
+            restriction: null,
+            reason: "Infection",
+          },
+        });
         break;
 
       case "paralyze":
@@ -296,6 +309,7 @@ const Board = (props) => {
         delete flourishAlly.afflictions.burn;
         delete flourishAlly.afflictions.frost;
         delete flourishAlly.afflictions.paralysis;
+        delete flourishAlly.afflictions.infection;
         break;
 
       case "raptor blitz purge":

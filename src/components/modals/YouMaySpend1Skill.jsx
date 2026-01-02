@@ -23,6 +23,7 @@ const YouMaySpend1Skill = (props) => {
     avelhemToScion,
     canAscend,
     drawSkill,
+    eliminateUnit,
     enterMoveMode,
     enterSelectUnitMode,
     getVacantAdjacentZones,
@@ -34,9 +35,13 @@ const YouMaySpend1Skill = (props) => {
   const [selectedSkill, setSelectedSkill] = useState(null);
 
   let SkipMessage = "Skip";
-
-  if (props.details.reason === "Destine") {
-    SkipMessage = "Return";
+  switch (props.details.reason) {
+    case "Destine":
+      SkipMessage = "Return";
+      break;
+    case "Infection":
+      SkipMessage = "Lose 1 HP";
+      break;
   }
 
   let usableSkills = [];
@@ -79,7 +84,7 @@ const YouMaySpend1Skill = (props) => {
     //end Discarding Skill resolution
     newGameState.currentResolution.pop();
 
-    delete unit.ember;
+    unit.ember -= 2;
 
     switch (props.details.reason) {
       case "From the Ashes":
@@ -104,6 +109,20 @@ const YouMaySpend1Skill = (props) => {
         });
         break;
     }
+
+    dispatch(updateState(newGameState));
+    //props.updateFirebase(newGameState);
+  };
+
+  const handleAether = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[props.unit.player].units[props.unit.unitIndex];
+
+    //end Discarding Skill resolution
+    newGameState.currentResolution.pop();
+
+    unit.aether = 0;
+    delete unit.afflictions.infection;
 
     dispatch(updateState(newGameState));
     //props.updateFirebase(newGameState);
@@ -216,6 +235,24 @@ const YouMaySpend1Skill = (props) => {
         );
         break;
 
+      case "Terminal Chrysallis":
+        newGameState.currentResolution.push({
+          resolution: "Recover Skill",
+          player: self,
+          details: {
+            title: "Terminal Chrysallis",
+            reason: "Terminal Chrysallis",
+            restriction: ["12-01", "12-02", "12-03", "12-04"],
+            message: "Recover 1 Insect skill.",
+            outcome: "Add",
+          },
+        });
+        break;
+
+      case "Infection":
+        delete unit.afflictions.infection;
+        break;
+
       case "Destine":
         //end Defiance Phase Selection
         newGameState.currentResolution.pop();
@@ -277,8 +314,21 @@ const YouMaySpend1Skill = (props) => {
   const handleSkip = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    //end Discarding Skill resolution
-    newGameState.currentResolution.pop();
+    if (props.details.reason === "Infection") {
+      let unit = props.unit
+        ? newGameState[props.unit.player].units[props.unit.unitIndex]
+        : null;
+
+      //end Discarding Skill resolution
+      newGameState.currentResolution.pop();
+
+      delete unit.afflictions.infection;
+      unit.hp -= 1;
+
+      if (unit.hp < 1) {
+        newGameState = eliminateUnit(newGameState, null, unit, null, "infect");
+      }
+    }
 
     dispatch(updateState(newGameState));
     props.updateFirebase(newGameState);
@@ -389,6 +439,14 @@ const YouMaySpend1Skill = (props) => {
               Spend 2 Embers
             </button>
           )}
+
+          {selectedSkill === null &&
+            props.details.reason === "Infection" &&
+            props.unit.aether > 0 && (
+              <button className="redButton2" onClick={() => handleAether()}>
+                Spend Aether
+              </button>
+            )}
 
           {selectedSkill !== null && (
             <button

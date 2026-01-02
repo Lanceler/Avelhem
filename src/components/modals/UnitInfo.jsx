@@ -243,7 +243,7 @@ const UnitInfo = (props) => {
 
             <p className="unitInfo-text-heading2">2. Clear as Crystal</p>
             <p className="unitInfo-text-desc">
-              ⬩You are immune to Frost and Burn.
+              ⬩You are immune to Frost, Burn, and Infection.
             </p>
             <p className="unitInfo-text-desc">
               ⬩You can activate your ability more than once per turn.
@@ -361,7 +361,7 @@ const UnitInfo = (props) => {
             <p className="unitInfo-text-desc">⬩You are immune to Root.</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
               ⬩You can have up to 3 Blossoms; purge 1 whenever you move (even if
-              you are muted). If you possess at least Blossoms, foes are
+              you are muted). If you possess at least 2 Blossoms, foes are
               afflicted with Root while adjacent to you.
             </p>
           </>
@@ -749,8 +749,8 @@ const UnitInfo = (props) => {
                       </p>
                       <p className="unitInfo-text-desc">⬩Muted.</p>
                       <p className="unitInfo-text-desc unitInfo-text-last">
-                        ⬩Must spend 1 skill during the Final Phase; will lose 1
-                        HP otherwise.
+                        ⬩Must spend Aether or 1 skill during the Final Phase;
+                        will lose 1 HP otherwise.
                       </p>
                     </>
                   )}

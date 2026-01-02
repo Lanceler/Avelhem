@@ -29,6 +29,7 @@ const YouMayNoYes = (props) => {
     getVacantAdjacentZones,
     getVacantFrontier,
     getZonesWithEnemies,
+    infect,
     refillRepertoireSkill,
   } = useRecurringEffects();
 
@@ -410,6 +411,26 @@ const YouMayNoYes = (props) => {
           newGameState,
           props.unit,
           props.details.victim
+        );
+        break;
+
+      case "Vector of Pestilence2.5": // "Vector of Pestilence2.5"
+        newGameState = enterMoveMode(
+          getVacantAdjacentZones(unit),
+          unit,
+          newGameState,
+          null
+        );
+        break;
+
+      case "Vector of Pestilence3.5": // "Vector of Pestilence3.5"
+        enterSelectUnitMode(
+          getZonesWithEnemies(props.unit, 1),
+          props.unit,
+          newGameState,
+          null,
+          "infect",
+          "insect skill"
         );
         break;
 

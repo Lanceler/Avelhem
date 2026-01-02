@@ -210,10 +210,18 @@ const BoardArea = (props) => {
     setExpandedUnit(null);
 
     if (localGameState) {
-      setEnemyDP(localGameState[enemy].defiancePoints);
-      setSelfDP(localGameState[self].defiancePoints);
-      setEnemyBP(localGameState[enemy].bountyPoints);
-      setSelfBP(localGameState[self].bountyPoints);
+      let s = "host";
+      let e = "guest";
+
+      if (props.userRole === "guest") {
+        s = "guest";
+        e = "host";
+      }
+
+      setEnemyDP(localGameState[e].defiancePoints);
+      setSelfDP(localGameState[s].defiancePoints);
+      setEnemyBP(localGameState[e].bountyPoints);
+      setSelfBP(localGameState[s].bountyPoints);
       setDie1(
         localGameState?.tactics[0]?.stock + localGameState?.tactics[0]?.face
       );
@@ -995,6 +1003,7 @@ const BoardArea = (props) => {
                     </div>
 
                     <UseCurrentResolution
+                      localGameState={localGameState}
                       userRole={userRole}
                       updateFirebase={updateFirebase}
                       hideModal={hideModal}

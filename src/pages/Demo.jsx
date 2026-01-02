@@ -108,16 +108,6 @@ export default function Demo() {
     }
   };
 
-  // const canClick = (element) => {
-  //   switch (demoGuide) {
-  //     case "Learn1.82":
-  //       return element === "Switch Player Button";
-  //   }
-  // };
-
-  // const handleUpdateDemoGuide = () => {
-  // };
-
   useEffect(() => {
     if ([7, 8, 9, 20, 29, 33, 49, 114].includes(demoCount)) {
       scriptedDemo();

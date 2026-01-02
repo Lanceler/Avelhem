@@ -165,7 +165,7 @@ export const useCardDatabase = () => {
 
   const skillCardListExpansion = [
     ...getScionSet("Avian Scion"),
-    // ...getScionSet("Insect Scion"),
+    ...getScionSet("Insect Scion"),
   ];
 
   const getAvelhemById = (id) => {

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateState } from "../redux/gameState";
@@ -43,7 +43,8 @@ import FloatResonator from "../components/modals/FloatResonator";
 import FerventPrayerResonance from "../components/skillModals/FerventPrayerResonance";
 
 const UseCurrentResolution = (props) => {
-  const { localGameState } = useSelector((state) => state.gameState);
+  // const { localGameState } = useSelector((state) => state.gameState);
+  const localGameState = props.localGameState;
   const { self, enemy } = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
@@ -60,6 +61,7 @@ const UseCurrentResolution = (props) => {
     applyScore,
     avelhemResonance,
     decrementBurn,
+    decrementInfection,
     decrementStatus,
     drawSkill,
     endDefiancePhase2,
@@ -87,8 +89,8 @@ const UseCurrentResolution = (props) => {
     selectVengefulLegacy,
     selectViridianGraveActivator,
     strikeMove,
-    unitRetainSkill,
     aetherBlastMitigate,
+    vectorOfPestilenceZones,
   } = useRecurringEffects();
 
   const {
@@ -278,35 +280,24 @@ const UseCurrentResolution = (props) => {
     }, 250);
   };
 
-  const skillResonanceRetain = () => {
-    const newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    //end "Retain resonant skill"
-    newGameState.currentResolution.pop();
-
-    newGameState.currentResolution[
-      newGameState.currentResolution.length - 1
-    ].skillConclusion = "retain";
-
-    dispatch(updateState(newGameState));
-  };
-
   const tacticEnd = (unitInfo, effect) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+    setTimeout(() => {
+      let newGameState = JSON.parse(JSON.stringify(localGameState));
+      let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
 
-    //end "Tactic End"
-    newGameState.currentResolution.pop();
+      //end "Tactic End"
+      newGameState.currentResolution.pop();
 
-    newGameState.activatingUnit.pop();
-    if (effect) {
-      newGameState.activatingSkill.pop();
-    }
+      newGameState.activatingUnit.pop();
+      if (effect) {
+        newGameState.activatingSkill.pop();
+      }
 
-    unit = applyAnathema(unit);
+      unit = applyAnathema(unit);
 
-    dispatch(updateState(newGameState));
-    props.updateFirebase(newGameState);
+      dispatch(updateState(newGameState));
+      props.updateFirebase(newGameState);
+    }, 250);
   };
 
   const talentConclusion = () => {
@@ -320,41 +311,44 @@ const UseCurrentResolution = (props) => {
       newGameState.activatingUnit.pop();
 
       dispatch(updateState(newGameState));
-
       props.updateFirebase(newGameState);
     }, 250);
   };
 
   const resolveApplyBurn = (attackerInfo, victimInfo) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    setTimeout(() => {
+      let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    const attacker =
-      newGameState[attackerInfo.player].units[attackerInfo.unitIndex];
+      const attacker =
+        newGameState[attackerInfo.player].units[attackerInfo.unitIndex];
 
-    newGameState.currentResolution.pop();
+      newGameState.currentResolution.pop();
 
-    if (attacker !== null && !isMuted(attacker)) {
-      newGameState = applyBurn(newGameState, victimInfo);
-    }
+      if (attacker !== null && !isMuted(attacker)) {
+        newGameState = applyBurn(newGameState, victimInfo);
+      }
 
-    dispatch(updateState(newGameState));
-    props.updateFirebase(newGameState);
+      dispatch(updateState(newGameState));
+      props.updateFirebase(newGameState);
+    }, 250);
   };
 
   const resolveApplyFrost = (attackerInfo, victimInfo, duration) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    setTimeout(() => {
+      let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    const attacker =
-      newGameState[attackerInfo.player].units[attackerInfo.unitIndex];
+      const attacker =
+        newGameState[attackerInfo.player].units[attackerInfo.unitIndex];
 
-    newGameState.currentResolution.pop();
+      newGameState.currentResolution.pop();
 
-    if (attacker !== null && !isMuted(attacker)) {
-      newGameState = applyFrost(newGameState, victimInfo, duration);
-    }
+      if (attacker !== null && !isMuted(attacker)) {
+        newGameState = applyFrost(newGameState, victimInfo, duration);
+      }
 
-    dispatch(updateState(newGameState));
-    props.updateFirebase(newGameState);
+      dispatch(updateState(newGameState));
+      props.updateFirebase(newGameState);
+    }, 250);
   };
 
   const resolveApplyInfection = (
@@ -363,25 +357,27 @@ const UseCurrentResolution = (props) => {
     duration,
     special
   ) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    setTimeout(() => {
+      let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    const attacker =
-      newGameState[attackerInfo.player].units[attackerInfo.unitIndex];
+      const attacker =
+        newGameState[attackerInfo.player].units[attackerInfo.unitIndex];
 
-    newGameState.currentResolution.pop();
+      newGameState.currentResolution.pop();
 
-    if (attacker !== null && !isMuted(attacker)) {
-      newGameState = applyInfection(
-        newGameState,
-        attackerInfo,
-        victimInfo,
-        duration,
-        special
-      );
-    }
+      if (attacker !== null && !isMuted(attacker)) {
+        newGameState = applyInfection(
+          newGameState,
+          attackerInfo,
+          victimInfo,
+          duration,
+          special
+        );
+      }
 
-    dispatch(updateState(newGameState));
-    props.updateFirebase(newGameState);
+      dispatch(updateState(newGameState));
+      props.updateFirebase(newGameState);
+    }, 250);
   };
 
   const resolveApplyParalysis = (
@@ -390,25 +386,27 @@ const UseCurrentResolution = (props) => {
     duration,
     special
   ) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    setTimeout(() => {
+      let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    const attacker =
-      newGameState[attackerInfo.player].units[attackerInfo.unitIndex];
+      const attacker =
+        newGameState[attackerInfo.player].units[attackerInfo.unitIndex];
 
-    newGameState.currentResolution.pop();
+      newGameState.currentResolution.pop();
 
-    if (attacker !== null && !isMuted(attacker)) {
-      newGameState = applyParalysis(
-        newGameState,
-        attackerInfo,
-        victimInfo,
-        duration,
-        special
-      );
-    }
+      if (attacker !== null && !isMuted(attacker)) {
+        newGameState = applyParalysis(
+          newGameState,
+          attackerInfo,
+          victimInfo,
+          duration,
+          special
+        );
+      }
 
-    dispatch(updateState(newGameState));
-    props.updateFirebase(newGameState);
+      dispatch(updateState(newGameState));
+      props.updateFirebase(newGameState);
+    }, 250);
   };
 
   const selectAndMoveUnit = (unit) => {
@@ -423,7 +421,9 @@ const UseCurrentResolution = (props) => {
   // ================================================
   // ================================================
 
-  const lastRes = localGameState.currentResolution.at(-1) ?? { resolution: "" };
+  const lastRes = localGameState.currentResolution.at(-1) ?? {
+    resolution: "",
+  };
 
   if (props.userRole === "spectator") {
     switch (lastRes.resolution2) {
@@ -629,6 +629,12 @@ const UseCurrentResolution = (props) => {
         case "Burn Decrement":
           if (self === lastRes.player) {
             props.resolutionUpdate(decrementBurn());
+          }
+          break;
+
+        case "Infection Decrement":
+          if (self === lastRes.player) {
+            props.resolutionUpdate(decrementInfection());
           }
           break;
 
@@ -1049,29 +1055,6 @@ const UseCurrentResolution = (props) => {
             </>
           );
 
-        case "Retain resonant skill unit":
-          return (
-            <>
-              {self === lastRes.player && !props.hideModal && (
-                <>
-                  {props.updateLocalState(
-                    unitRetainSkill(
-                      lastRes.unit,
-                      lastRes.skill,
-                      lastRes.resonator
-                    )
-                  )}
-                </>
-              )}
-            </>
-          );
-
-        case "Retain resonant skill":
-          if (self === lastRes.player) {
-            skillResonanceRetain();
-          }
-          break;
-
         case "Inspect Skill":
           return (
             <>
@@ -1456,6 +1439,14 @@ const UseCurrentResolution = (props) => {
         case "Activating Trophallaxis":
           if (self === lastRes.unit.player) {
             props.updateLocalState(applyAbility("trophallaxis1", lastRes.unit));
+          }
+          break;
+
+        case "Activating Terminal Chrysallis":
+          if (self === lastRes.unit.player) {
+            props.updateLocalState(
+              applyAbility("terminalChrysallis1", lastRes.unit)
+            );
           }
           break;
 
@@ -2920,6 +2911,8 @@ const UseCurrentResolution = (props) => {
           break;
 
         case "Perturb3":
+        case "Vector of Pestilence2.5":
+        case "Vector of Pestilence3.5":
           return (
             <>
               {self === lastRes.unit.player && !props.hideModal && (
@@ -2932,6 +2925,45 @@ const UseCurrentResolution = (props) => {
               )}
             </>
           );
+
+        case "Activating Vector of Pestilence":
+          if (self === lastRes.unit.player) {
+            props.updateLocalState(
+              applySkill("vectorOfPestilence1", lastRes.unit)
+            );
+          }
+          break;
+
+        case "Vector of Pestilence1":
+          if (self === lastRes.unit.player) {
+            props.updateLocalState(
+              enterMoveMode(
+                vectorOfPestilenceZones(lastRes.unit),
+                lastRes.unit,
+                null,
+                null,
+                false,
+                true
+              )
+            );
+          }
+          break;
+
+        case "Vector of Pestilence2":
+          if (self === lastRes.unit.player) {
+            props.updateLocalState(
+              applySkill("vectorOfPestilence2", lastRes.unit)
+            );
+          }
+          break;
+
+        case "Vector of Pestilence3":
+          if (self === lastRes.unit.player) {
+            props.updateLocalState(
+              applySkill("vectorOfPestilence3", lastRes.unit)
+            );
+          }
+          break;
 
         //---
       }

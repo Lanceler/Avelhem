@@ -2643,6 +2643,96 @@ export const useSkillEffects = () => {
     return newGameState;
   };
 
+  const vectorOfPestilence1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Vector of Pestilence" resolution
+    newGameState.currentResolution.pop();
+
+    //give unit activationCounter
+    unit.temporary.activation
+      ? (unit.temporary.activation += 1)
+      : (unit.temporary.activation = 1);
+
+    newGameState.currentResolution.push({
+      resolution: "Insect Skill",
+      resolution2: "Vector of Pestilence3",
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Insect Skill",
+      resolution2: "Vector of Pestilence2",
+      unit: unit,
+    });
+
+    newGameState.currentResolution.push({
+      resolution: "Insect Skill",
+      resolution2: "Vector of Pestilence1",
+      unit: unit,
+    });
+
+    return newGameState;
+  };
+
+  const vectorOfPestilence2 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Vector of Pestilence2" resolution
+    newGameState.currentResolution.pop();
+
+    if (
+      unit !== null &&
+      !isMuted(unit) &&
+      newGameState[self].skillHand.length > 5 &&
+      canMove(unit)
+    ) {
+      newGameState.currentResolution.push({
+        resolution: "Insect Skill",
+        resolution2: "Vector of Pestilence2.5",
+        unit: unit,
+        details: {
+          reason: "Vector of Pestilence2.5",
+          title: "Vector of Pestilence",
+          message: "You may traverse.",
+          no: "Skip",
+          yes: "Traverse",
+        },
+      });
+    }
+
+    return newGameState;
+  };
+
+  const vectorOfPestilence3 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Vector of Pestilence3" resolution
+    newGameState.currentResolution.pop();
+
+    if (unit !== null && !isMuted(unit)) {
+      if (getZonesWithEnemies(unit, 1).length > 0) {
+        newGameState.currentResolution.push({
+          resolution: "Insect Skill",
+          resolution2: "Vector of Pestilence3.5",
+          unit: unit,
+          details: {
+            reason: "Vector of Pestilence3.5",
+            title: "Vector of Pestilence",
+            message: "You may infect an adjacent foe.",
+            no: "Skip",
+            yes: "Infect",
+          },
+        });
+      }
+    }
+
+    return newGameState;
+  };
+
   //end of list
 
   const applySkill = (effect, a, b) => {
@@ -2832,6 +2922,12 @@ export const useSkillEffects = () => {
         return perturb1(a, b);
       case "perturb2":
         return perturb2(a, b);
+      case "vectorOfPestilence1":
+        return vectorOfPestilence1(a);
+      case "vectorOfPestilence2":
+        return vectorOfPestilence2(a);
+      case "vectorOfPestilence3":
+        return vectorOfPestilence3(a);
     }
   };
 

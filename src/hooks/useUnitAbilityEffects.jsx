@@ -667,6 +667,45 @@ export const useUnitAbilityEffects = () => {
     return newGameState;
   };
 
+  const terminalChrysallis1 = (unitInfo) => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+    // Unit is dead; do not update info
+    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
+
+    //end "Activating Terminal Chrysallis" resolution
+    newGameState.currentResolution.pop();
+
+    if (newGameState[self].skillHand.length > 5) {
+      if (
+        !["12-01", "12-02", "12-03", "12-04"].some((s) =>
+          newGameState[unit.player].skillVestige.includes(s)
+        )
+      ) {
+        newGameState.currentResolution.push({
+          resolution: "Misc.",
+          resolution2: "Message To Player",
+          player: self,
+          title: "Terminal Chrysallis",
+          message: "You do not have any Insect skills to recover.",
+        });
+      } else {
+        newGameState.currentResolution.push({
+          resolution: "Discard Skill",
+          unit: unit,
+          player: unit.player,
+          details: {
+            title: "Terminal Chrysallis",
+            message: "You may spend 1 skill to recover 1 Insect skill.",
+            restriction: null,
+            reason: "Terminal Chrysallis",
+          },
+        });
+      }
+    }
+
+    return newGameState;
+  };
+
   //end of list
 
   const applyAbility = (effect, unit) => {
@@ -740,6 +779,8 @@ export const useUnitAbilityEffects = () => {
         return gestation1(unit);
       case "trophallaxis1":
         return trophallaxis1(unit);
+      case "terminalChrysallis1":
+        return terminalChrysallis1(unit);
     }
   };
 

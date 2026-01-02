@@ -998,11 +998,11 @@ export const useRecurringEffects = () => {
     //Water Scions are immune to infection
     //Lightning Scions are immune to infection if they have 3 charges
     const isImmuneToInfection = () =>
-      (["VirulentVenom1stInfect", "insect skill"].includes(special) &&
-        victim.unitClass === "Insect Scion" &&
+      (victim.unitClass === "Insect Scion" &&
+        ["VirulentVenom1stInfect", "insect skill"].includes(special) &&
         !isMuted(victim)) ||
       (victim.unitClass === "Water Scion" && !isMuted(victim)) ||
-      (victim.charge === 3 && !isMuted(victim));
+      (victim.charge >= 2 && !isMuted(victim));
 
     //record previous target
     if (["VirulentVenom1stInfect"].includes(special)) {
@@ -1024,21 +1024,32 @@ export const useRecurringEffects = () => {
       });
 
       switch (victim.unitClass) {
-        // case "Insect Scion":
-        //   newGameState = applyTalentMessage(
-        //     newGameState,
-        //     "SaltTheEarth2",
-        //     "Salt the Earth",
-        //     "Salt the Earth grants Land Scions immunity to Paralysis due to Land skills.",
-        //     attackerInfo.player
-        //   );
-        //   break;
+        case "Water Scion":
+          newGameState = applyTalentMessage(
+            newGameState,
+            "ClearAsCrystal2",
+            "Clear as Crystal",
+            "Clear as Crystal grants Water Scions immunity to Infection.",
+            attackerInfo.player
+          );
+          break;
+
         case "Lightning Scion":
           newGameState = applyTalentMessage(
             newGameState,
             "Defibrillation",
             "Defibrillation",
-            "Defibrillation grants Lightning Scions immunity to Infection if they possess 3 Charges.",
+            "Defibrillation grants Lightning Scions immunity to Infection if they possess at least 2 Charges.",
+            attackerInfo.player
+          );
+          break;
+
+        case "Insect Scion":
+          newGameState = applyTalentMessage(
+            newGameState,
+            "Trophallaxis2",
+            "Trophallaxis",
+            "Trophallaxis grants Insect Scions immunity to Infection.",
             attackerInfo.player
           );
           break;
@@ -1072,7 +1083,7 @@ export const useRecurringEffects = () => {
       (["Upheaval", "Pitfall Trap", "Geomancy"].includes(special) &&
         victim.unitClass === "Land Scion" &&
         !isMuted(victim)) ||
-      (victim.charge === 3 && !isMuted(victim));
+      (victim.charge >= 2 && !isMuted(victim));
 
     //record previous target
     if (
@@ -1115,7 +1126,7 @@ export const useRecurringEffects = () => {
             newGameState,
             "Defibrillation",
             "Defibrillation",
-            "Defibrillation grants Lightning Scions immunity to Paralysis if they possess 3 Charges.",
+            "Defibrillation grants Lightning Scions immunity to Paralysis if they possess at least 2 Charges.",
             attackerInfo.player
           );
           break;
@@ -1561,6 +1572,42 @@ export const useRecurringEffects = () => {
     }
   };
 
+  const vectorOfPestilenceZones = (unit) => {
+    //get vacant adjacent zones
+    const adjacentZones = getVacantAdjacentZones(unit);
+
+    if (adjacentZones.length < 1) {
+      return [];
+    }
+
+    const validZones = new Set();
+    const zones = JSON.parse(localGameState.zones);
+
+    for (let z of adjacentZones) {
+      //z = zoneId = row * 5 + column
+
+      const row = Math.floor(z / 5);
+      const column = z % 5;
+
+      //get zones adjacent to the vacant adjacent zones.
+      const zonesAdjacentToAdjacent = getZonesInRange(row, column, 1, false);
+
+      for (let i of zonesAdjacentToAdjacent) {
+        const zone = zones[Math.floor(i / 5)][i % 5];
+
+        //if zone has foe
+        if (zone.player && zone.player !== unit.player) {
+          const foe = localGameState[zone.player].units[zone.unitIndex];
+          if (foe.afflictions.infection > 0) {
+            validZones.add(z);
+          }
+        }
+      }
+    }
+
+    return [...validZones];
+  };
+
   const canActivateSkill = (unit, skill) => {
     if (isMuted(unit)) {
       return false;
@@ -1713,6 +1760,8 @@ export const useRecurringEffects = () => {
         );
       case "12-03":
         return false;
+      case "12-04":
+        return vectorOfPestilenceZones(unit).length > 0;
 
       default:
         return false;
@@ -2072,6 +2121,60 @@ export const useRecurringEffects = () => {
     return newGameState;
   };
 
+  const decrementInfection = () => {
+    let newGameState = JSON.parse(JSON.stringify(localGameState));
+
+    let units = newGameState[self].units;
+
+    let infectedUnits = [];
+    for (let i in units) {
+      if (units[i] && units[i].afflictions.infection) {
+        infectedUnits.push(i);
+      }
+    }
+
+    if (infectedUnits.length === 0) {
+      newGameState.currentResolution.pop();
+    } else {
+      let zonesWithInfectedUnits = [];
+
+      for (let i in infectedUnits) {
+        const unit = newGameState[self].units[infectedUnits[i]];
+        const zoneId = unit.row * 5 + unit.column;
+
+        zonesWithInfectedUnits.push(zoneId);
+      }
+
+      newGameState.currentResolution.push({
+        resolution: "Selecting",
+        resolution2: "Selecting Unit",
+        player: self,
+        zoneIds: zonesWithInfectedUnits,
+        unit: null,
+        tactic: null,
+        reason: "infect damage",
+        special: null,
+      });
+
+      let infectMessage =
+        "You have 1 unit afflicted with Infection. Click on it to apply damage.";
+
+      if (infectedUnits.length > 1) {
+        infectMessage = `You have ${infectedUnits.length} units afflicted with Infection. Select which unit to apply Infection damage to first.`;
+      }
+
+      newGameState.currentResolution.push({
+        resolution: "Misc.",
+        resolution2: "Message To Player",
+        player: self,
+        title: "Final Phase",
+        message: infectMessage,
+      });
+    }
+
+    return newGameState;
+  };
+
   const decrementStatus = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
@@ -2369,6 +2472,25 @@ export const useRecurringEffects = () => {
           newGameState = animationDelay(newGameState, victim.player);
           break;
 
+        case "Insect Scion":
+          newGameState.activatingUnit.push(victim);
+          newGameState.activatingSkill.push("TerminalChrysallis");
+
+          newGameState.currentResolution.push({
+            resolution: "Unit Talent",
+            resolution2: "Talent Conclusion",
+            unit: victim,
+          });
+
+          newGameState.currentResolution.push({
+            resolution: "Unit Talent",
+            resolution2: "Activating Terminal Chrysallis",
+            unit: victim,
+          });
+
+          newGameState = animationDelay(newGameState, victim.player);
+          break;
+
         default:
           break;
       }
@@ -2465,16 +2587,19 @@ export const useRecurringEffects = () => {
       player: self,
     });
 
+    //4.5. Decrement the duration of your units’ infection affliction in your desired sequence.
+    newGameState.currentResolution.push({
+      resolution: "Final Phase",
+      resolution2: "Infection Decrement",
+      player: self,
+    });
+
     //4. Decrement the duration of your units’ Burn affliction in your desired sequence sequence.
     newGameState.currentResolution.push({
       resolution: "Final Phase",
       resolution2: "Burn Decrement",
       player: self,
     });
-
-    //3.5 reset Avelhem Search/Recover usage
-    delete newGameState[self].hasAvelhemSearch;
-    delete newGameState[self].hasAvelhemRecover;
 
     //3. Forfeit unused tactics and remove your units’ boosts.
     newGameState.tactics = [];
@@ -4200,27 +4325,6 @@ export const useRecurringEffects = () => {
     }
   };
 
-  const unitRetainSkill = (unitInfo, skill, resonator) => {
-    let newGameState = JSON.parse(JSON.stringify(localGameState));
-
-    newGameState.currentResolution.pop();
-
-    let unit = newGameState[unitInfo.player].units[unitInfo.unitIndex];
-
-    if (unit && !isMuted(unit)) {
-      newGameState.currentResolution.push({
-        resolution: "Misc.",
-        resolution2: "Retain resonant skill",
-        unit: unit,
-        player: unit.player,
-        skill: skill,
-        resonator: resonator,
-      });
-    }
-
-    return newGameState;
-  };
-
   const aetherBlast = (newGameState, attacker, victim) => {
     newGameState.currentResolution.push({
       resolution: "Apply Damage",
@@ -4332,7 +4436,6 @@ export const useRecurringEffects = () => {
     applyBurn,
     applyBurnDamage,
     applyDamage,
-
     applyFrost,
     applyInfection,
     applyParalysis,
@@ -4352,14 +4455,15 @@ export const useRecurringEffects = () => {
     canDeploy,
     canDestine,
     canRaptorBlitzBlast,
-
     canSowAndReapStrike,
     canMove,
     canStrike,
     decrementBurn,
+    decrementInfection,
     decrementStatus,
     drawAvelhem,
     drawSkill,
+    eliminateUnit,
     eliminateUnit2,
     endDefiancePhase,
     endDefiancePhase2,
@@ -4432,8 +4536,8 @@ export const useRecurringEffects = () => {
     triggerThunderThaumaturge,
     triggerVengefulLegacy,
     triggerViridianGrave,
-    unitRetainSkill,
     uponDebutTalents,
+    vectorOfPestilenceZones,
     aetherBlast,
     aetherBlastMitigate,
   };

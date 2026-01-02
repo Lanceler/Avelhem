@@ -31,6 +31,7 @@ export default function MyGames() {
 
   const { getBannerImage } = useGetImages();
   const [bannerIndex, setBannerIndex] = useState(0);
+  const [bannerIndex2, setBannerIndex2] = useState(0);
 
   const bannerImages = [
     getBannerImage("Fire"),
@@ -44,7 +45,7 @@ export default function MyGames() {
     // getBannerImage("Sovereign"),
   ];
 
-  const bannerImages2 = [getBannerImage("Avian")];
+  const bannerImages2 = [getBannerImage("Avian"), getBannerImage("Insect")];
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -53,6 +54,14 @@ export default function MyGames() {
 
     return () => clearInterval(interval); // Cleanup the interval on component unmount
   }, [bannerImages.length]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setBannerIndex2((prevIndex) => (prevIndex + 1) % bannerImages2.length);
+    }, 4500);
+
+    return () => clearInterval(interval); // Cleanup the interval on component unmount
+  }, [bannerImages2.length]);
 
   const onCreateGame = async (expansion) => {
     if (!isLoading) {
@@ -191,12 +200,8 @@ export default function MyGames() {
 
         <div
           className="create-game-elemental"
-          // style={{
-          //   backgroundImage: `url(${[getBannerImage("Avian")]})`,
-          //   filter: "grayscale(0.9)",
-          // }}
           style={{
-            backgroundImage: `url(${[getBannerImage("Avian")]})`,
+            backgroundImage: `url(${bannerImages2[bannerIndex2]})`,
           }}
           onClick={() => onCreateGame("Familiars’ Followup")}
         >
@@ -206,7 +211,7 @@ export default function MyGames() {
                 key={url}
                 src={url}
                 className="banner-slide"
-                style={{ zIndex: z, opacity: `${z === bannerIndex ? 1 : 0}` }}
+                style={{ zIndex: z, opacity: `${z === bannerIndex2 ? 1 : 0}` }}
               />
             ))}
           </div>
@@ -222,7 +227,7 @@ export default function MyGames() {
             </div>
             <div className="create-game-desc">
               <strong>Expansion Including:</strong> <br />
-              Avian (& more to be added)
+              Avian, Insect, & more to be added
             </div>
           </div>
         </div>

@@ -129,7 +129,7 @@
 }
 
 .enlargable:hover {
-    transform: scale(1.4) translateY(-20%);
+    transform: scale(1.25) translateY(-20%);
     z-index: 600;
     
 }
