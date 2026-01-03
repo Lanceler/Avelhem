@@ -92,6 +92,16 @@ const SelectedAvelhem = (props) => {
     props.setSelectedAvelhem(null);
   };
 
+  const handleInfo = () => {
+    props.setUnitInfor({
+      unitClass: scionClass,
+      player: "Info",
+      enhancements: {},
+      boosts: {},
+      afflictions: {},
+    });
+  };
+
   const canClick = (element1) => {
     switch (demoGuide) {
       case "Learn-overview":
@@ -146,6 +156,13 @@ const SelectedAvelhem = (props) => {
         </div>
 
         <div className="selectedCardModal-right">
+          <button
+            className="redButton selectedCardModal-buttons"
+            onClick={() => handleInfo()}
+          >
+            Scion Info
+          </button>
+
           {canRecover && (
             <>
               <button
@@ -166,6 +183,7 @@ const SelectedAvelhem = (props) => {
               </button>
             </>
           )} */}
+
           {canActivateAvelhem && (
             <>
               <button

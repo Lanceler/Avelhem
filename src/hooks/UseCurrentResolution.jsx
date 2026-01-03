@@ -934,6 +934,7 @@ const UseCurrentResolution = (props) => {
         case "End Execution Phase Confirm":
         case "Assault - Avelhem Draw":
         case "Dark Halo":
+        case "Skill - Upgrade":
           return (
             <>
               {self === lastRes.player && !props.hideModal && (

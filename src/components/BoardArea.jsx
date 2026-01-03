@@ -1050,6 +1050,7 @@ const BoardArea = (props) => {
                                 {userRole !== "spectator" && (
                                   <PlayerAvelhemHand
                                     updateFirebase={updateFirebase}
+                                    setUnitInfor={setUnitInfor}
                                   />
                                 )}
                                 {userRole === "spectator" && (

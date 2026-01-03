@@ -101,12 +101,6 @@ const ActivatedSkills = () => {
               className="activatedSkill displayedSkills topmostDisplay"
               style={{
                 left: 5,
-                // filter: `${
-                //   localGameState.activatingSkill.length === 1
-                //     ? ""
-                //     : "grayscale(65%)"
-                // }`,
-
                 backgroundImage: `url(${getCardImage(
                   localGameState.activatingResonator[0]
                 )})`,

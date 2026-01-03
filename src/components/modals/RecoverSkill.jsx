@@ -80,6 +80,21 @@ const RecoverSkill = (props) => {
       newGameState[self].skillFloat = newGameState[self].skillFloat + 1;
     }
 
+    if (newGameState[self].bountyUpgrades.skill >= 3) {
+      newGameState.currentResolution.push({
+        resolution: "Misc.",
+        resolution2: "Skill - Upgrade",
+        player: self,
+        details: {
+          reason: "Skill - Upgrade",
+          title: "Skill - Upgrade",
+          message: "You may draw 1 skill.",
+          no: "Skip",
+          yes: "Draw",
+        },
+      });
+    }
+
     dispatch(updateState(newGameState));
     props.updateFirebase(newGameState);
   };

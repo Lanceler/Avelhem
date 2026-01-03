@@ -150,6 +150,21 @@ const SearchCard = (props) => {
         ...floaters,
       ];
     } else {
+      if (newGameState[self].bountyUpgrades.skill >= 3) {
+        newGameState.currentResolution.push({
+          resolution: "Misc.",
+          resolution2: "Skill - Upgrade",
+          player: self,
+          details: {
+            reason: "Skill - Upgrade",
+            title: "Skill - Upgrade",
+            message: "You may draw 1 skill.",
+            no: "Skip",
+            yes: "Draw",
+          },
+        });
+      }
+
       if (props.details.messageTitle) {
         let message = props.details.message;
         let specMessage = props.details.specMessage;
@@ -266,7 +281,6 @@ const SearchCard = (props) => {
     }
 
     if (props.details.outcome === "Foreshadow") {
-      //draw Skill
       newGameState = drawSkill(newGameState);
     }
 
@@ -308,6 +322,21 @@ const SearchCard = (props) => {
         ...newGameState[self].skillRepertoire,
         ...floaters,
       ];
+
+      if (newGameState[self].bountyUpgrades.skill >= 3) {
+        newGameState.currentResolution.push({
+          resolution: "Misc.",
+          resolution2: "Skill - Upgrade",
+          player: self,
+          details: {
+            reason: "Skill - Upgrade",
+            title: "Skill - Upgrade",
+            message: "You may draw 1 skill.",
+            no: "Skip",
+            yes: "Draw",
+          },
+        });
+      }
     }
 
     newGameState.currentResolution.push({

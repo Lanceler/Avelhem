@@ -66,7 +66,7 @@ const CoordinationPhaseSelection = (props) => {
       resolution: "Defiance Phase Selection",
     });
 
-    if (newGameState[self].bountyUpgrades.phases >= 3) {
+    if (upgrade >= 3) {
       newGameState[self].defiancePoints = Math.min(
         6,
         newGameState[self].defiancePoints + 2

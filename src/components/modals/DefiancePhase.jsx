@@ -130,12 +130,12 @@ const DefiancePhaseSelection = (props) => {
           details: {
             restriction: sovereignSkillList(),
             exclusion: [],
-            searchTitle: "Ex Machina",
+            searchTitle: "Exceed",
             searchMessage: "Search for 1 Sovereign Skill",
             outcome: "Add",
             revealTitle: null,
             revealMessage: null,
-            messageTitle: "Ex Machina",
+            messageTitle: "Exceed",
             message: "Your opponent has searched for 1 Sovereign skill.",
             specMessage: `${
               self === "host" ? "Gold" : "Silver"
@@ -209,7 +209,7 @@ const DefiancePhaseSelection = (props) => {
     //Destine
     newGameState[self].defiancePoints >= defianceCosts[3] && canDestine(),
 
-    //Ex Machina
+    //Exceed
     newGameState[self].defiancePoints >= defianceCosts[4],
     //Finesse
     newGameState[self].defiancePoints >= defianceCosts[5],
@@ -233,7 +233,7 @@ const DefiancePhaseSelection = (props) => {
       desc: "Spend 1 Scion skill to ascend an ally pawn to the matching class.",
     },
     {
-      title: "Ex Machina",
+      title: "Exceed",
       desc: (
         <>
           Search for <br />1 Sovereign skill.

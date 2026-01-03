@@ -985,11 +985,11 @@ const DemoTextBox = () => {
             return (
               <div>
                 <span className="goldText">
-                  By design, the Initiator will often pick Assent and roll 2
-                  dice to gain random tactics.
+                  By design, players will more than often pick Assent to gain
+                  tactics via dice roll.
                 </span>{" "}
                 In desperate situations, they may opt to pick Battle Cry, which
-                guarantees an Assault tactic at a cost.
+                mitigates randomness and guarantees an Assault tactic at a cost.
               </div>
             );
 
@@ -1589,7 +1589,7 @@ const DemoTextBox = () => {
                 <span className="goldText">
                   Skills can be activated only by those that match their facet
                 </span>
-                , which is indicated by the icon in the card’s top-right corner.
+                , which is indicated by the icon at the card’s top-left corner.
                 <br /> <br />
                 Surge is a Mana skill; thus, its activation is exclusive to Mana
                 Scions.

@@ -104,6 +104,7 @@ const PlayerAvelhemHand = (props) => {
           <SelectedAvelhem
             selectedAvelhem={selectedAvelhem}
             setSelectedAvelhem={setSelectedAvelhem}
+            setUnitInfor={props.setUnitInfor}
             updateFirebase={props.updateFirebase}
             setRaise={setRaise}
           />

@@ -123,12 +123,12 @@ const ViewBPUpgrades = (props) => {
 
                   {upgrades.avelhem >= 1 && (
                     <p className="unitInfo-text-desc">
-                      1. Avelhem resonance grants Shield for 2 turns.
+                      1. Avelhem hand limit raised to 1.
                     </p>
                   )}
                   {upgrades.avelhem >= 2 && (
                     <p className="unitInfo-text-desc">
-                      2. Avelhem hand limit raised to 1
+                      2. Ascension via Avelhem grants Shield for 2 turns.
                     </p>
                   )}
                   {upgrades.avelhem >= 3 && (
@@ -150,18 +150,19 @@ const ViewBPUpgrades = (props) => {
 
                   {upgrades.skill >= 1 && (
                     <p className="unitInfo-text-desc">
-                      1. Burst skill activation cost reduce to 4 DP.
+                      1. Scions can use any skill that belongs to their class as
+                      a resonator.
                     </p>
                   )}
                   {upgrades.skill >= 2 && (
                     <p className="unitInfo-text-desc">
-                      2. Scions can use any skill that belongs to their class as
-                      a resonator.
+                      2. Skill hand limit raised to 12.
                     </p>
                   )}
                   {upgrades.skill >= 3 && (
                     <p className="unitInfo-text-desc">
-                      3. Skill hand limit raised to 12.
+                      3. May draw 1 skill after a searching or recovering a
+                      skill.
                     </p>
                   )}
 

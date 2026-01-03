@@ -421,6 +421,7 @@
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: #b30000;
+    
 }
 
 */ .scroll-color-auto {
@@ -455,37 +456,47 @@
     position: absolute;
     z-index: 300;
     margin: 5px;
-    right: 0
+    right: 30px;    
 }
 
 
-
-
-.unitInfo-Abilities-Attributes {
+.unitInfo-Abilities-Talents {
     position: relative;
     display: flex;
+    flex-direction: column;
     gap: 1rem;
-    height: 280px;
-}
-
-.unitInfo-Abilities {
-    padding: 7px;
-    position: relative;
-
     width: 400px;
+    padding: 8px;
+    height: 560px;
+    overflow-y: scroll;
 
+    /* background-color: #b30000; */
 }
 
+.unitInfo-Attributes-Statuses {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 400px;
+    padding: 8px;
+    height: 560px;
+    overflow-y: scroll;
+
+    /* background-color: #b30000; */
+}
+
+.unitInfo-Abilities, .unitInfo-Talents,
 .unitInfo-Attributes {
     padding: 7px;
     position: relative;
-    width: 350px;
+    border-radius: 10px;
 }
-
 
 .unitInfo-Attributes-SkillSet {
     display: flex;
     flex-direction: column;
+    border-radius: 10px;
 }
 
 .unit-info-skill-set {
@@ -499,7 +510,7 @@
     margin: 0px 10px;
     background-size: cover;
     background-position: center;
-    border-radius: 5px;
+    border-radius: 3px;
     position: relative;
     transition: transform 0.15s ease-in-out;
 }
@@ -507,49 +518,49 @@
 .unit-info-skill:hover {
     filter: brightness(1.2);
     cursor: pointer;
-    transform: scale(1.2);
-}
-
-
-
-.unitInfo-Talents-Statuses {
-    margin-top: 10px;
-    position: relative;
-    display: flex;
-    gap: 1rem;
-    height: 300px;
-}
-
-.unitInfo-Talents {
-    padding: 7px;
-    position: relative;
-    width: 400px;
-}
-
-.unitInfo-scroll {
-    height: 80%;
-    padding: 0;
-    position: relative;
+    transform: scale(1.15);
 }
 
 .unitInfo-Statuses {
     padding: 7px;
+    margin-top: 4px;
     position: relative;
-    width: 350px;
+    display: flex;
+    flex-direction: column;
+    /* gap: 1rem; */
+    border-radius: 10px;
+    
+}
+
+.unitInfo-Abilities:hover, .unitInfo-Talents:hover,
+.unitInfo-Attributes:hover, .unitInfo-Statuses:hover {
+    background-color: #e8e8e84f;
+    transition: 0.75s;
 }
 
 
-.unitInfo-text {
+
+
+.unitInfo-scroll {
+    /* height: 80%; */
+    padding: 0;
+    position: relative;
+}
+
+
+
+/* .unitInfo-text {
     color: #333;
     font-family: 'Merriweather', serif;
     padding: 0px 5px;
     margin: 0;
-}
+} */
 
 .unitInfo-text-heading1 {
-    font-family: 'Raleway, sans-serif', Times, serif;
+    
     font-size: 1.5em;
     margin-bottom: 5px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
 }
 
 .unitInfo-text-heading2 {
@@ -830,7 +841,6 @@
     display: flex;
     flex-direction: column;
     /* pointer-events: all; */
-    
     cursor: default;
 }
 
@@ -845,7 +855,51 @@
     height: 100px;
     background: linear-gradient(to bottom, rgba(126, 126, 126, 0.75), rgba(219, 208, 208, 0.75) 100%);
     box-shadow: 0px 3px 1px 1px rgba(0, 0, 0, 0.40);
+    
 }
+
+
+
+.unit-info-modal {
+    height: 700px;
+    width: 800px;
+    margin: 100px auto;
+    background: linear-gradient(to bottom, rgb(17, 207, 255), rgba(144, 198, 223, 0.75) 100%);
+    border-radius: 10px;
+    border: goldenrod 8px ridge;
+    display: flex;
+    flex-direction: column;
+    /* pointer-events: all; */
+    cursor: default;
+    color: #161616;
+}
+
+.unit-info-modal-foe {
+    background: linear-gradient(to bottom, rgb(182, 5, 5), rgba(197, 119, 119, 0.85) 100%);
+    /* background: linear-gradient(to bottom, rgb(214, 57, 18), rgba(223, 160, 118, 0.85) 100%); */
+}
+
+
+.unit-info-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    padding: 0px 25px;
+    margin-bottom: 10px;
+    height: 100px;
+    background: linear-gradient(to bottom, rgba(103, 225, 255, 0.75), rgba(6, 148, 214, 0.75) 100%);
+    
+    
+    box-shadow: 0px 3px 1px 1px rgba(0, 0, 0, 0.40);
+    color: #161616;
+}
+
+.unit-info-header-foe {
+    /* background: linear-gradient(to bottom, rgb(87, 4, 4), rgb(202, 12, 12) 100%); */
+    background: linear-gradient(to bottom, rgb(255, 95, 95) -10%, rgb(134, 0, 0) 100%);
+}
+
 
 .unit-info-icon {
     width: 75px;

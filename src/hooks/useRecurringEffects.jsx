@@ -426,8 +426,7 @@ export const useRecurringEffects = () => {
 
     // Burst skills cost DP
     if (skillData.Method === "Burst") {
-      newGameState[unit.player].defiancePoints -=
-        newGameState[unit.player].bountyUpgrades.skill > 0 ? 4 : 6;
+      newGameState[unit.player].defiancePoints -= 4;
     }
 
     //ambidexterity retain effect
@@ -1039,7 +1038,7 @@ export const useRecurringEffects = () => {
             newGameState,
             "Defibrillation",
             "Defibrillation",
-            "Defibrillation grants Lightning Scions immunity to Infection if they possess at least 2 Charges.",
+            "Defibrillation grants Lightning Scions immunity to Infection if they have at least 2 Charges.",
             attackerInfo.player
           );
           break;
@@ -1126,7 +1125,7 @@ export const useRecurringEffects = () => {
             newGameState,
             "Defibrillation",
             "Defibrillation",
-            "Defibrillation grants Lightning Scions immunity to Paralysis if they possess at least 2 Charges.",
+            "Defibrillation grants Lightning Scions immunity to Paralysis if they ave at least 2 Charges.",
             attackerInfo.player
           );
           break;
@@ -1308,7 +1307,6 @@ export const useRecurringEffects = () => {
     resonator,
     unit2
   ) => {
-    // let newGameState = JSON.parse(JSON.stringify(localGameState));
     let unit = newGameState[pawn.player].units[pawn.unitIndex];
 
     unit.unitClass = scionClass;
@@ -1322,6 +1320,12 @@ export const useRecurringEffects = () => {
     }
 
     switch (method) {
+      case "Avelhem":
+        if (newGameState[unit.player].bountyUpgrades.avelhem >= 2) {
+          unit.enhancements.shield = 2;
+        }
+        break;
+
       case "Fated Rivalry":
         newGameState.currentResolution.push({
           resolution: "Sovereign Contingent Skill",
@@ -1434,11 +1438,6 @@ export const useRecurringEffects = () => {
     newGameState.currentResolution.pop();
 
     unit.enhancements.ravager = true;
-
-    if (newGameState[unit.player].bountyUpgrades.avelhem > 0)
-      unit.enhancements.shield
-        ? (unit.enhancements.shield = Math.max(2, unit.enhancements.shield))
-        : (unit.enhancements.shield = 2);
 
     if (resonator === "SA-02") {
       newGameState = drawSkill(newGameState);
@@ -1613,11 +1612,10 @@ export const useRecurringEffects = () => {
       return false;
     }
 
-    //burst skills cost 6 DP (4 if upgraded)
+    //burst skills cost 4 DP
     if (
       allBurstSkills().includes(skill) &&
-      localGameState[self].defiancePoints <
-        (localGameState[self].bountyUpgrades.skill > 0 ? 4 : 6)
+      localGameState[self].defiancePoints < 4
     ) {
       return false;
     }
@@ -2537,11 +2535,7 @@ export const useRecurringEffects = () => {
   const endExecutionPhase = () => {
     let newGameState = JSON.parse(JSON.stringify(localGameState));
 
-    const hasUnusedAvelhems =
-      (newGameState[self].bountyUpgrades.avelhem < 1 &&
-        newGameState[self].avelhemHand.length > 0) ||
-      (newGameState[self].bountyUpgrades.avelhem >= 1 &&
-        newGameState[self].avelhemHand.length > 1);
+    const hasUnusedAvelhems = newGameState[self].avelhemHand.length > 0;
 
     const message = hasUnusedAvelhems
       ? "Unused Avelhems are discarded at the Final Phase. Do you still wish to end the Execution Phase?"
@@ -2626,7 +2620,9 @@ export const useRecurringEffects = () => {
     newGameState[enemy].units = enemyUnits;
 
     //2. Selectively discard skills in excess of your hand limit.
-    const skillHandlimit = newGameState[self].bountyUpgrades.skill > 2 ? 12 : 8;
+    const skillHandlimit =
+      newGameState[self].bountyUpgrades.skill >= 2 ? 10 : 8;
+
     if (newGameState[self].skillHand.length > skillHandlimit) {
       const excessSkills = newGameState[self].skillHand.length - skillHandlimit;
 
@@ -2649,7 +2645,7 @@ export const useRecurringEffects = () => {
     //However, you can retain 1 if purchased the Avelhem upgrade.
     if (
       newGameState[self].avelhemHand.length > 0 &&
-      newGameState[self].bountyUpgrades.avelhem > 1
+      newGameState[self].bountyUpgrades.avelhem >= 1
     ) {
       newGameState.currentResolution.push({
         resolution: "Final Phase",
@@ -2658,7 +2654,7 @@ export const useRecurringEffects = () => {
         details: {
           reason: "Avelhem Hand Limit",
           title: "Final Phase",
-          message: `You may retain up to 1 Avelhem; discard the rest.`,
+          message: `You may select 1 Avelhem to retain; discard the rest.`,
           count: 1,
         },
       });

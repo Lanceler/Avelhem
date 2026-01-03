@@ -369,7 +369,13 @@ const BountyPhase = (props) => {
         ind: 10,
       },
       {
-        text: "Upgrade Advance: Unlock  “Convert Tactic",
+        text: (
+          <>
+            Upgrade Advance: Unlock the
+            <br />
+            “Convert Tactic” action
+          </>
+        ),
         ind: 11,
       },
       {
@@ -387,11 +393,11 @@ const BountyPhase = (props) => {
     category: "Avelhem",
     items: [
       {
-        text: "Avelhem resonance grants the unit Shield for 2 turns",
+        text: "Increase your Avelhem hand limit to 1",
         ind: 13,
       },
       {
-        text: "Increase your Avelhem hand limit to 1",
+        text: "Units gain Shield for 2 turns upon Ascension via Avelhem",
         ind: 14,
       },
       {
@@ -414,22 +420,22 @@ const BountyPhase = (props) => {
     category: "Skill",
     items: [
       {
-        text: <>Reduce your burst skills’ activation cost to 4 DP.</>,
-        ind: 16,
-      },
-      {
         text: (
           <>
             <p style={{ fontSize: 19.5 }}>
-              Your scions can use any skill that belongs to their class as a
+              Your Scions can use any skill that belongs to their class as a
               resonator
             </p>
           </>
         ),
+        ind: 16,
+      },
+      {
+        text: "Increase your skill hand limit to 10",
         ind: 17,
       },
       {
-        text: "Increase your skill hand limit to 12",
+        text: "You may draw 1 skill after you search or recover a skill",
         ind: 18,
       },
     ],

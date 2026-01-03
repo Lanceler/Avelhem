@@ -1,10 +1,7 @@
-import React from "react";
 import "./Modal.css";
 
 import { updateMagnifiedSkill } from "../../redux/magnifySkill";
-
 import { useGetImages } from "../../hooks/useGetImages";
-
 import { useRecurringEffects } from "../../hooks/useRecurringEffects";
 
 import AdvanceSmall from "../../assets/diceIcons/AdvanceSmall.png";
@@ -13,12 +10,12 @@ import AssaultSmall from "../../assets/diceIcons/AssaultSmall.png";
 import InvokeSmall from "../../assets/diceIcons/InvokeSmall.png";
 
 import { updateDemoCount } from "../../redux/demoCount";
-
 import { useCardDatabase } from "../../hooks/useCardDatabase";
 
 import { useSelector, useDispatch } from "react-redux";
+import { redirect } from "react-router-dom";
 const UnitInfo = (props) => {
-  const { self } = useSelector((state) => state.teams);
+  const { self, enemy } = useSelector((state) => state.teams);
   const { demoGuide } = useSelector((state) => state.demoGuide);
   const { demoCount } = useSelector((state) => state.demoCount);
   const dispatch = useDispatch();
@@ -28,10 +25,10 @@ const UnitInfo = (props) => {
   const { getScionSet } = useCardDatabase();
 
   const unit = props.unit;
-
-  const team = unit.player === self ? "Ally" : "Foe";
-
+  const team = unit.player === enemy ? "Foe" : "Ally";
   const skillSet = getScionSet(unit.unitClass);
+
+  const info = props.unit.player === "Info";
 
   const handleCollapse = () => {
     props.setUnitInfor(null);
@@ -192,6 +189,19 @@ const UnitInfo = (props) => {
           </>
         );
     }
+  };
+
+  const ability = () => {
+    return (
+      <>
+        <p className="unitInfo-text-heading1">
+          <u>
+            <strong>Ability</strong>
+          </u>
+        </p>
+        <div className="unitInfo-scroll scrollable">{abilities()}</div>
+      </>
+    );
   };
 
   const talents = () => {
@@ -361,7 +371,7 @@ const UnitInfo = (props) => {
             <p className="unitInfo-text-desc">⬩You are immune to Root.</p>
             <p className="unitInfo-text-desc unitInfo-text-last">
               ⬩You can have up to 3 Blossoms; purge 1 whenever you move (even if
-              you are muted). If you possess at least 2 Blossoms, foes are
+              you are muted). If you have at least 2 Blossoms, foes are
               afflicted with Root while adjacent to you.
             </p>
           </>
@@ -407,7 +417,20 @@ const UnitInfo = (props) => {
     }
   };
 
-  const canClick = (element1, element2) => {
+  const talent = () => {
+    return (
+      <>
+        <p className="unitInfo-text-heading1">
+          <u>
+            <strong>Talents</strong>
+          </u>
+        </p>
+        <div className="unitInfo-scroll scrollable">{talents()}</div>
+      </>
+    );
+  };
+
+  const canClick = (element1) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
@@ -421,16 +444,276 @@ const UnitInfo = (props) => {
     }
   };
 
+  const attributes = () => {
+    return (
+      <>
+        {!props.info && (
+          <div className="unitInfo-Attributes">
+            <p className="unitInfo-text-heading1">
+              <u>
+                <strong>Attributes</strong>
+              </u>
+            </p>
+
+            <div className="unitInfo-scroll scrollable">
+              {!unit.enhancements.score && (
+                <>
+                  <p className="unitInfo-text-heading2">HP: {unit.hp}</p>
+                  <p className="unitInfo-text-heading2">
+                    Aether: {unit.aether ? "Present" : "None"}
+                  </p>
+
+                  {unit.ember > 0 && (
+                    <p className="unitInfo-text-heading2">
+                      Ember: {unit.ember}
+                    </p>
+                  )}
+
+                  {unit.torrent > 0 && (
+                    <p className="unitInfo-text-heading2">
+                      Torrent: {unit.torrent}
+                    </p>
+                  )}
+
+                  {unit.cyclone > 0 && (
+                    <p className="unitInfo-text-heading2">
+                      Cyclone: {unit.cyclone}
+                    </p>
+                  )}
+
+                  {unit.leyline > 0 && (
+                    <p className="unitInfo-text-heading2">
+                      Leyline: {unit.leyline}
+                    </p>
+                  )}
+
+                  {unit.charge > 0 && (
+                    <p className="unitInfo-text-heading2">
+                      Charge: {unit.charge}
+                    </p>
+                  )}
+
+                  {unit.ambiance > 0 && (
+                    <p className="unitInfo-text-heading2">
+                      Ambiance: {unit.ambiance}
+                    </p>
+                  )}
+
+                  {unit.sharpness > 0 && (
+                    <p className="unitInfo-text-heading2">
+                      Sharpness: {unit.sharpness}
+                    </p>
+                  )}
+                  {unit.blossom > 0 && (
+                    <p className="unitInfo-text-heading2">
+                      Blossom: {unit.blossom}
+                    </p>
+                  )}
+                  {unit.devotion > 0 && (
+                    <p className="unitInfo-text-heading2">
+                      Devotion: {unit.devotion}
+                    </p>
+                  )}
+                  {unit.pheromone > 0 && (
+                    <p className="unitInfo-text-heading2">
+                      Pheromone: {unit.pheromone}
+                    </p>
+                  )}
+                </>
+              )}
+
+              {unit.enhancements.score && (
+                <>
+                  <p className="unitInfo-text-heading2">
+                    This unit has scored.
+                  </p>
+                </>
+              )}
+            </div>
+          </div>
+        )}
+
+        {unit.unitClass !== "Pawn" && (
+          <div className="unitInfo-Attributes">
+            <p className="unitInfo-text-heading1">
+              <u>
+                <strong>Skill Set</strong>
+              </u>
+            </p>
+
+            <div className="unit-info-skill-set">
+              {skillSet.map((skill, i) => (
+                <div
+                  key={i}
+                  className={`unit-info-skill                          
+                          ${canClick("Skill", i) ? "demoClick" : ""}`}
+                  style={{
+                    backgroundImage: `url(${getCardImage(skill)})`,
+                  }}
+                  onClick={() => {
+                    dispatch(updateMagnifiedSkill(skill));
+                    // handleUpdateDemoGuide(i);
+                  }}
+                ></div>
+              ))}
+            </div>
+          </div>
+        )}
+      </>
+    );
+  };
+
+  const statuses = () => {
+    return (
+      <>
+        {(unit.enhancements.ravager ||
+          unit.enhancements.ward ||
+          unit.enhancements.shield ||
+          unit.boosts.ambidexterity) && (
+          <>
+            <p className="unitInfo-text-heading1">
+              <u>
+                <strong>Enhancements</strong>
+              </u>
+            </p>
+
+            {unit.enhancements.ravager && (
+              <>
+                <p className="unitInfo-text-heading2">Ravager</p>
+                <p className="unitInfo-text-desc unitInfo-text-last">
+                  ⬩Immune to Anathema.
+                </p>
+              </>
+            )}
+
+            {unit.enhancements.ward > 0 && (
+              <>
+                <p className="unitInfo-text-heading2">
+                  Ward ({unit.enhancements.ward} turn
+                  {unit.enhancements.ward > 1 ? "s" : ""})
+                </p>
+                <p className="unitInfo-text-desc unitInfo-text-last">
+                  ⬩Negates the next attack or affliction that targets this unit.
+                </p>
+              </>
+            )}
+
+            {unit.enhancements.shield > 0 && (
+              <>
+                <p className="unitInfo-text-heading2">
+                  Shield ({unit.enhancements.shield} turn
+                  {unit.enhancements.shield > 1 ? "s" : ""})
+                </p>
+                <p className="unitInfo-text-desc unitInfo-text-last">
+                  ⬩Negates the next attack that targets this unit, unless they
+                  are enhanced with Ward.
+                </p>
+              </>
+            )}
+
+            {unit.boosts.ambidexterity && (
+              <>
+                <p className="unitInfo-text-heading2">Ambidexterity (1 turn)</p>
+                <p className="unitInfo-text-desc unitInfo-text-last">
+                  ⬩Next standard skill activated returns to hand.
+                </p>
+              </>
+            )}
+          </>
+        )}
+
+        {(unit.afflictions.anathema ||
+          unit.afflictions.paralysis ||
+          unit.afflictions.frost ||
+          unit.afflictions.burn ||
+          unit.afflictions.infection ||
+          isRooted(unit)) && (
+          <>
+            <p className="unitInfo-text-heading1">
+              <u>
+                <strong>Afflictions</strong>
+              </u>
+            </p>
+
+            {unit.afflictions.anathema > 0 && (
+              <>
+                <p className="unitInfo-text-heading2">
+                  Anathema ({unit.afflictions.anathema} turn
+                  {unit.afflictions.anathema > 1 ? "s" : ""})
+                </p>
+                <p className="unitInfo-text-desc unitInfo-text-last">⬩Muted.</p>
+              </>
+            )}
+
+            {unit.afflictions.paralysis > 0 && (
+              <>
+                <p className="unitInfo-text-heading2">
+                  Paralysis ({unit.afflictions.paralysis} turn
+                  {unit.afflictions.paralysis > 1 ? "s" : ""})
+                </p>
+                <p className="unitInfo-text-desc unitInfo-text-last">
+                  ⬩Muted and immobilized.
+                </p>
+              </>
+            )}
+
+            {unit.afflictions.frost > 0 && (
+              <>
+                <p className="unitInfo-text-heading2">
+                  Frost ({unit.afflictions.frost} turn
+                  {unit.afflictions.frost > 1 ? "s" : ""})
+                </p>
+                <p className="unitInfo-text-desc unitInfo-text-last">
+                  ⬩Muted and immobilized.
+                </p>
+              </>
+            )}
+
+            {unit.afflictions.burn > 0 && (
+              <>
+                <p className="unitInfo-text-heading2">
+                  Burn ({unit.afflictions.burn} turn
+                  {unit.afflictions.burn > 1 ? "s" : ""})
+                </p>
+                <p className="unitInfo-text-desc">⬩Immune to Frost.</p>
+                <p className="unitInfo-text-desc unitInfo-text-last">
+                  ⬩Will lose 1 HP during the Final Phase.
+                </p>
+              </>
+            )}
+
+            {unit.afflictions.infection > 0 && (
+              <>
+                <p className="unitInfo-text-heading2">
+                  Infection ({unit.afflictions.infection} turn
+                  {unit.afflictions.infection > 1 ? "s" : ""})
+                </p>
+                <p className="unitInfo-text-desc">⬩Muted.</p>
+                <p className="unitInfo-text-desc unitInfo-text-last">
+                  ⬩Must spend Aether or 1 skill during the Final Phase; will
+                  lose 1 HP otherwise.
+                </p>
+              </>
+            )}
+
+            {isRooted(unit) && (
+              <>
+                <p className="unitInfo-text-heading2">Root</p>
+                <p className="unitInfo-text-desc unitInfo-text-last">
+                  ⬩Cannot strike.
+                </p>
+              </>
+            )}
+          </>
+        )}
+      </>
+    );
+  };
+
   const handleUpdateDemoGuide = (i) => {
     switch (demoGuide) {
       case "Learn-overview":
         switch (demoCount) {
-          // case 97:
-          //   if (i === 0) {
-          //     dispatch(updateDemoCount(demoCount + 1));
-          //   }
-          //   break;
-
           case 82:
           case 113:
             if (i === "Collapse") {
@@ -440,16 +723,25 @@ const UnitInfo = (props) => {
         }
     }
   };
+
   return (
     <div className="modal-backdrop">
-      <div className="info-modal">
-        <div className="info-modal-header">
+      <div
+        className={`unit-info-modal ${
+          team === "Foe" ? "unit-info-modal-foe" : ""
+        }`}
+      >
+        <div
+          className={`unit-info-header ${
+            team === "Foe" ? "unit-info-header-foe" : ""
+          }`}
+        >
           <img
             src={getElementImage(unit.unitClass)}
             className="unit-info-icon "
           />
-          <div className="info-modal-title">
-            {`${unit.unitClass} (${team})`}
+          <div className="info-modal-title" style={{ color: "#161616" }}>
+            {`${unit.unitClass} (${info ? "Info" : team})`}
           </div>
 
           <svg
@@ -463,309 +755,24 @@ const UnitInfo = (props) => {
               handleUpdateDemoGuide("Collapse");
             }}
           >
-            <path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm121.6 313.1c4.7 4.7 4.7 12.3 0 17L338 377.6c-4.7 4.7-12.3 4.7-17 0L256 312l-65.1 65.6c-4.7 4.7-12.3 4.7-17 0L134.4 338c-4.7-4.7-4.7-12.3 0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3 0-17l39.6-39.6c4.7-4.7 12.3-4.7 17 0l65 65.7 65.1-65.6c4.7-4.7 12.3-4.7 17 0l39.6 39.6c4.7 4.7 4.7 12.3 0 17L312 256l65.6 65.1z" />
+            <path
+              d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm121.6 313.1c4.7 4.7 4.7 12.3 0 17L338 377.6c-4.7 4.7-12.3 4.7-17 0L256 312l-65.1 65.6c-4.7 4.7-12.3 4.7-17 0L134.4 338c-4.7-4.7-4.7-12.3 0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3 0-17l39.6-39.6c4.7-4.7 12.3-4.7 17 0l65 65.7 65.1-65.6c4.7-4.7 12.3-4.7 17 0l39.6 39.6c4.7 4.7 4.7 12.3 0 17L312 256l65.6 65.1z"
+              style={{ fill: `${team === "Foe" ? "#0c0c0c" : ""}` }}
+            />
           </svg>
         </div>
-
-        <div className="info-modal-contents" style={{ pointerEvents: "all" }}>
-          <div className="unitInfo-Abilities-Attributes">
-            {/* <div className="unitInfo-Abilities">
-              <p className="unitInfo-text-heading1">
-                <u>
-                  <strong>Ability</strong>
-                </u>
-              </p>
-              <div className="unitInfo-scroll scrollable">{abilities()}</div>
-            </div> */}
-
-            <div className="unitInfo-Talents ">
-              <p className="unitInfo-text-heading1">
-                <u>
-                  <strong>Talents</strong>
-                </u>
-              </p>
-              <div className="unitInfo-scroll scrollable">{talents()}</div>
-            </div>
-
-            <div className="unitInfo-Attributes-SkillSet">
-              <div className="unitInfo-Attributes">
-                <p className="unitInfo-text-heading1">
-                  <u>
-                    <strong>Attributes</strong>
-                  </u>
-                </p>
-
-                <div className="unitInfo-scroll scrollable">
-                  {!unit.enhancements.score && (
-                    <>
-                      <p className="unitInfo-text-heading2">HP: {unit.hp}</p>
-                      <p className="unitInfo-text-heading2">
-                        Aether: {unit.aether ? "Present" : "None"}
-                      </p>
-
-                      {unit.ember > 0 && (
-                        <p className="unitInfo-text-heading2">
-                          Ember: {unit.ember}
-                        </p>
-                      )}
-
-                      {unit.torrent > 0 && (
-                        <p className="unitInfo-text-heading2">
-                          Torrent: {unit.torrent}
-                        </p>
-                      )}
-
-                      {unit.cyclone > 0 && (
-                        <p className="unitInfo-text-heading2">
-                          Cyclone: {unit.cyclone}
-                        </p>
-                      )}
-
-                      {unit.leyline > 0 && (
-                        <p className="unitInfo-text-heading2">
-                          Leyline: {unit.leyline}
-                        </p>
-                      )}
-
-                      {unit.charge > 0 && (
-                        <p className="unitInfo-text-heading2">
-                          Charge: {unit.charge}
-                        </p>
-                      )}
-
-                      {unit.ambiance > 0 && (
-                        <p className="unitInfo-text-heading2">
-                          Ambiance: {unit.ambiance}
-                        </p>
-                      )}
-
-                      {unit.sharpness > 0 && (
-                        <p className="unitInfo-text-heading2">
-                          Sharpness: {unit.sharpness}
-                        </p>
-                      )}
-                      {unit.blossom > 0 && (
-                        <p className="unitInfo-text-heading2">
-                          Blossom: {unit.blossom}
-                        </p>
-                      )}
-                      {unit.devotion > 0 && (
-                        <p className="unitInfo-text-heading2">
-                          Devotion: {unit.devotion}
-                        </p>
-                      )}
-                      {unit.pheromone > 0 && (
-                        <p className="unitInfo-text-heading2">
-                          Pheromone: {unit.pheromone}
-                        </p>
-                      )}
-                    </>
-                  )}
-
-                  {unit.enhancements.score && (
-                    <>
-                      <p className="unitInfo-text-heading2">
-                        This unit has scored.
-                      </p>
-                    </>
-                  )}
-                </div>
-              </div>
-
-              {unit.unitClass !== "Pawn" && (
-                <div className="unitInfo-Attributes">
-                  <p className="unitInfo-text-heading1">
-                    <u>
-                      <strong>Skill Set</strong>
-                    </u>
-                  </p>
-
-                  <div className="unit-info-skill-set">
-                    {skillSet.map((skill, i) => (
-                      <div
-                        key={i}
-                        className={`unit-info-skill                          
-                          ${canClick("Skill", i) ? "demoClick" : ""}`}
-                        style={{
-                          backgroundImage: `url(${getCardImage(skill)})`,
-                        }}
-                        onClick={() => {
-                          dispatch(updateMagnifiedSkill(skill));
-                          // handleUpdateDemoGuide(i);
-                        }}
-                      ></div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
+        {/* ////////////////////////////////// */}
+        <div
+          className="info-modal-contents"
+          style={{ pointerEvents: "all", display: "flex" }}
+        >
+          <div className="unitInfo-Abilities-Talents scrollable">
+            <div className="unitInfo-Abilities">{ability()}</div>
+            <div className="unitInfo-Talents ">{talent()}</div>
           </div>
-
-          <div className="unitInfo-Talents-Statuses">
-            {/* <div className="unitInfo-Talents ">
-              <p className="unitInfo-text-heading1">
-                <u>
-                  <strong>Talents</strong>
-                </u>
-              </p>
-              <div className="unitInfo-scroll scrollable">{talents()}</div>
-            </div> */}
-            <div className="unitInfo-Abilities">
-              <p className="unitInfo-text-heading1">
-                <u>
-                  <strong>Ability</strong>
-                </u>
-              </p>
-              <div className="unitInfo-scroll scrollable">{abilities()}</div>
-            </div>
-
-            <div className="unitInfo-Statuses scrollable">
-              {(unit.enhancements.ravager ||
-                unit.enhancements.ward ||
-                unit.enhancements.shield ||
-                unit.boosts.ambidexterity) && (
-                <>
-                  <p className="unitInfo-text-heading1">
-                    <u>
-                      <strong>Enhancements</strong>
-                    </u>
-                  </p>
-
-                  {unit.enhancements.ravager && (
-                    <>
-                      <p className="unitInfo-text-heading2">Ravager</p>
-                      <p className="unitInfo-text-desc unitInfo-text-last">
-                        ⬩Immune to Anathema.
-                      </p>
-                    </>
-                  )}
-
-                  {unit.enhancements.ward > 0 && (
-                    <>
-                      <p className="unitInfo-text-heading2">
-                        Ward ({unit.enhancements.ward} turn
-                        {unit.enhancements.ward > 1 ? "s" : ""})
-                      </p>
-                      <p className="unitInfo-text-desc unitInfo-text-last">
-                        ⬩Negates the next attack or affliction that targets this
-                        unit.
-                      </p>
-                    </>
-                  )}
-
-                  {unit.enhancements.shield > 0 && (
-                    <>
-                      <p className="unitInfo-text-heading2">
-                        Shield ({unit.enhancements.shield} turn
-                        {unit.enhancements.shield > 1 ? "s" : ""})
-                      </p>
-                      <p className="unitInfo-text-desc unitInfo-text-last">
-                        ⬩Negates the next attack that targets this unit, unless
-                        they are enhanced with Ward.
-                      </p>
-                    </>
-                  )}
-
-                  {unit.boosts.ambidexterity && (
-                    <>
-                      <p className="unitInfo-text-heading2">
-                        Ambidexterity (1 turn)
-                      </p>
-                      <p className="unitInfo-text-desc unitInfo-text-last">
-                        ⬩Next standard skill activated returns to hand.
-                      </p>
-                    </>
-                  )}
-                </>
-              )}
-
-              {(unit.afflictions.anathema ||
-                unit.afflictions.paralysis ||
-                unit.afflictions.frost ||
-                unit.afflictions.burn ||
-                unit.afflictions.infection ||
-                isRooted(unit)) && (
-                <>
-                  <p className="unitInfo-text-heading1">
-                    <u>
-                      <strong>Afflictions</strong>
-                    </u>
-                  </p>
-
-                  {unit.afflictions.anathema > 0 && (
-                    <>
-                      <p className="unitInfo-text-heading2">
-                        Anathema ({unit.afflictions.anathema} turn
-                        {unit.afflictions.anathema > 1 ? "s" : ""})
-                      </p>
-                      <p className="unitInfo-text-desc unitInfo-text-last">
-                        ⬩Muted.
-                      </p>
-                    </>
-                  )}
-
-                  {unit.afflictions.paralysis > 0 && (
-                    <>
-                      <p className="unitInfo-text-heading2">
-                        Paralysis ({unit.afflictions.paralysis} turn
-                        {unit.afflictions.paralysis > 1 ? "s" : ""})
-                      </p>
-                      <p className="unitInfo-text-desc unitInfo-text-last">
-                        ⬩Muted and immobilized.
-                      </p>
-                    </>
-                  )}
-
-                  {unit.afflictions.frost > 0 && (
-                    <>
-                      <p className="unitInfo-text-heading2">
-                        Frost ({unit.afflictions.frost} turn
-                        {unit.afflictions.frost > 1 ? "s" : ""})
-                      </p>
-                      <p className="unitInfo-text-desc unitInfo-text-last">
-                        ⬩Muted and immobilized.
-                      </p>
-                    </>
-                  )}
-
-                  {unit.afflictions.burn > 0 && (
-                    <>
-                      <p className="unitInfo-text-heading2">
-                        Burn ({unit.afflictions.burn} turn
-                        {unit.afflictions.burn > 1 ? "s" : ""})
-                      </p>
-                      <p className="unitInfo-text-desc">⬩Immune to Frost.</p>
-                      <p className="unitInfo-text-desc unitInfo-text-last">
-                        ⬩Will lose 1 HP during the Final Phase.
-                      </p>
-                    </>
-                  )}
-
-                  {unit.afflictions.infection > 0 && (
-                    <>
-                      <p className="unitInfo-text-heading2">
-                        Infection ({unit.afflictions.infection} turn
-                        {unit.afflictions.infection > 1 ? "s" : ""})
-                      </p>
-                      <p className="unitInfo-text-desc">⬩Muted.</p>
-                      <p className="unitInfo-text-desc unitInfo-text-last">
-                        ⬩Must spend Aether or 1 skill during the Final Phase;
-                        will lose 1 HP otherwise.
-                      </p>
-                    </>
-                  )}
-
-                  {isRooted(unit) && (
-                    <>
-                      <p className="unitInfo-text-heading2">Root</p>
-                      <p className="unitInfo-text-desc unitInfo-text-last">
-                        ⬩Cannot strike.
-                      </p>
-                    </>
-                  )}
-                </>
-              )}
-            </div>
+          <div className="unitInfo-Attributes-Statuses scrollable">
+            <div className="unitInfo-Attributes-SkillSet">{attributes()}</div>
+            <div className="unitInfo-Statuses">{statuses()}</div>
           </div>
         </div>
       </div>

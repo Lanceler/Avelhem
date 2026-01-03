@@ -511,7 +511,7 @@ export default function Rules() {
                   Destine: Spend 2 DP and 1 Scion skill to ascend an ally pawn
                   to the matching class.
                 </li>
-                <li>Ex Machina: Spend 3 DP to search for 1 Sovereign skill.</li>
+                <li>Exceed: Spend 3 DP to search for 1 Sovereign skill.</li>
                 <li>Finesse: Spend 3 DP to draw 1 skill.</li>
               </ul>
               <br />

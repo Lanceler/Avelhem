@@ -44,6 +44,7 @@ const YouMayNoYes = (props) => {
       "Mitigate Aether-Blast",
       "Press the Attack Avelhem",
       "Fated Rivalry",
+      "Skill - Upgrade",
     ].includes(props.details.reason)
   ) {
     updateData = true;
@@ -95,6 +96,7 @@ const YouMayNoYes = (props) => {
         newGameState = endExecutionPhase2(newGameState);
         break;
 
+      case "Skill - Upgrade": //Skill - Upgrade
       case "Acquisition Phase Floating Draw": //Acquisition Phase - Upgrade
         newGameState = drawSkill(newGameState);
         break;
